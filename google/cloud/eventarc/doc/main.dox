@@ -96,6 +96,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `EventarcClient`:
+
+@snippet eventarc_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [EventarcClient](@ref EventarcClient-endpoint-snippet)
+ [PublisherClient](@ref PublisherClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -114,4 +122,16 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page EventarcClient-endpoint-snippet Override EventarcClient Endpoint Configuration
+
+@snippet google/cloud/eventarc/samples/eventarc_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page PublisherClient-endpoint-snippet Override PublisherClient Endpoint Configuration
+
+@snippet google/cloud/eventarc/samples/publisher_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

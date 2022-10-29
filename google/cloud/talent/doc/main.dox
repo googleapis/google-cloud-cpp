@@ -109,6 +109,17 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `CompanyServiceClient`:
+
+@snippet company_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [CompanyServiceClient](@ref CompanyServiceClient-endpoint-snippet)
+ [CompletionClient](@ref CompletionClient-endpoint-snippet)
+ [EventServiceClient](@ref EventServiceClient-endpoint-snippet)
+ [JobServiceClient](@ref JobServiceClient-endpoint-snippet)
+ [TenantServiceClient](@ref TenantServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -127,4 +138,34 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page CompanyServiceClient-endpoint-snippet Override CompanyServiceClient Endpoint Configuration
+
+@snippet google/cloud/talent/samples/company_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page CompletionClient-endpoint-snippet Override CompletionClient Endpoint Configuration
+
+@snippet google/cloud/talent/samples/completion_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page EventServiceClient-endpoint-snippet Override EventServiceClient Endpoint Configuration
+
+@snippet google/cloud/talent/samples/event_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page JobServiceClient-endpoint-snippet Override JobServiceClient Endpoint Configuration
+
+@snippet google/cloud/talent/samples/job_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page TenantServiceClient-endpoint-snippet Override TenantServiceClient Endpoint Configuration
+
+@snippet google/cloud/talent/samples/tenant_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

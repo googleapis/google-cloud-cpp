@@ -111,6 +111,17 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `AutoscalingPolicyServiceClient`:
+
+@snippet autoscaling_policy_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [AutoscalingPolicyServiceClient](@ref AutoscalingPolicyServiceClient-endpoint-snippet)
+ [BatchControllerClient](@ref BatchControllerClient-endpoint-snippet)
+ [ClusterControllerClient](@ref ClusterControllerClient-endpoint-snippet)
+ [JobControllerClient](@ref JobControllerClient-endpoint-snippet)
+ [WorkflowTemplateServiceClient](@ref WorkflowTemplateServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -129,4 +140,34 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page AutoscalingPolicyServiceClient-endpoint-snippet Override AutoscalingPolicyServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/samples/autoscaling_policy_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page BatchControllerClient-endpoint-snippet Override BatchControllerClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/samples/batch_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ClusterControllerClient-endpoint-snippet Override ClusterControllerClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/samples/cluster_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page JobControllerClient-endpoint-snippet Override JobControllerClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/samples/job_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page WorkflowTemplateServiceClient-endpoint-snippet Override WorkflowTemplateServiceClient Endpoint Configuration
+
+@snippet google/cloud/dataproc/samples/workflow_template_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

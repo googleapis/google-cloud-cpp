@@ -97,6 +97,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `Controller2Client`:
+
+@snippet controller2_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [Controller2Client](@ref Controller2Client-endpoint-snippet)
+ [Debugger2Client](@ref Debugger2Client-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -115,4 +123,16 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page Controller2Client-endpoint-snippet Override Controller2Client Endpoint Configuration
+
+@snippet google/cloud/debugger/samples/controller2_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page Debugger2Client-endpoint-snippet Override Debugger2Client Endpoint Configuration
+
+@snippet google/cloud/debugger/samples/debugger2_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

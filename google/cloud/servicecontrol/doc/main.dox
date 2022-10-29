@@ -97,6 +97,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `QuotaControllerClient`:
+
+@snippet quota_controller_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [QuotaControllerClient](@ref QuotaControllerClient-endpoint-snippet)
+ [ServiceControllerClient](@ref ServiceControllerClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -115,4 +123,16 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page QuotaControllerClient-endpoint-snippet Override QuotaControllerClient Endpoint Configuration
+
+@snippet google/cloud/servicecontrol/samples/quota_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ServiceControllerClient-endpoint-snippet Override ServiceControllerClient Endpoint Configuration
+
+@snippet google/cloud/servicecontrol/samples/service_controller_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

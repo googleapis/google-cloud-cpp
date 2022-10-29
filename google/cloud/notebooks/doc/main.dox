@@ -97,6 +97,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `ManagedNotebookServiceClient`:
+
+@snippet managed_notebook_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [ManagedNotebookServiceClient](@ref ManagedNotebookServiceClient-endpoint-snippet)
+ [NotebookServiceClient](@ref NotebookServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -116,4 +124,16 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page ManagedNotebookServiceClient-endpoint-snippet Override ManagedNotebookServiceClient Endpoint Configuration
+
+@snippet google/cloud/notebooks/samples/managed_notebook_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page NotebookServiceClient-endpoint-snippet Override NotebookServiceClient Endpoint Configuration
+
+@snippet google/cloud/notebooks/samples/notebook_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

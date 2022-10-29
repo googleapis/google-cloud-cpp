@@ -148,6 +148,20 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `AnalyticsHubServiceClient`:
+
+@snippet analytics_hub_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [AnalyticsHubServiceClient](@ref AnalyticsHubServiceClient-endpoint-snippet)
+ [BigQueryReadClient](@ref BigQueryReadClient-endpoint-snippet)
+ [BigQueryWriteClient](@ref BigQueryWriteClient-endpoint-snippet)
+ [ConnectionServiceClient](@ref ConnectionServiceClient-endpoint-snippet)
+ [DataTransferServiceClient](@ref DataTransferServiceClient-endpoint-snippet)
+ [MigrationServiceClient](@ref MigrationServiceClient-endpoint-snippet)
+ [ModelServiceClient](@ref ModelServiceClient-endpoint-snippet)
+ [ReservationServiceClient](@ref ReservationServiceClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Next Steps
@@ -166,4 +180,52 @@ library to change this default.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page AnalyticsHubServiceClient-endpoint-snippet Override AnalyticsHubServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/analytics_hub_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page BigQueryReadClient-endpoint-snippet Override BigQueryReadClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/bigquery_read_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page BigQueryWriteClient-endpoint-snippet Override BigQueryWriteClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/bigquery_write_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ConnectionServiceClient-endpoint-snippet Override ConnectionServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/connection_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page DataTransferServiceClient-endpoint-snippet Override DataTransferServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/data_transfer_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page MigrationServiceClient-endpoint-snippet Override MigrationServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/migration_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ModelServiceClient-endpoint-snippet Override ModelServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/model_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ReservationServiceClient-endpoint-snippet Override ReservationServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/reservation_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

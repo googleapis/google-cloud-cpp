@@ -106,6 +106,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `RevisionsClient`:
+
+@snippet revisions_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [RevisionsClient](@ref RevisionsClient-endpoint-snippet)
+ [ServicesClient](@ref ServicesClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -124,4 +132,16 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page RevisionsClient-endpoint-snippet Override RevisionsClient Endpoint Configuration
+
+@snippet google/cloud/run/samples/revisions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ServicesClient-endpoint-snippet Override ServicesClient Endpoint Configuration
+
+@snippet google/cloud/run/samples/services_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

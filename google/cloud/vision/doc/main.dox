@@ -98,6 +98,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `ImageAnnotatorClient`:
+
+@snippet image_annotator_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [ImageAnnotatorClient](@ref ImageAnnotatorClient-endpoint-snippet)
+ [ProductSearchClient](@ref ProductSearchClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -116,4 +124,16 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page ImageAnnotatorClient-endpoint-snippet Override ImageAnnotatorClient Endpoint Configuration
+
+@snippet google/cloud/vision/samples/image_annotator_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ProductSearchClient-endpoint-snippet Override ProductSearchClient Endpoint Configuration
+
+@snippet google/cloud/vision/samples/product_search_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

@@ -100,6 +100,15 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `DataCatalogClient`:
+
+@snippet data_catalog_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [DataCatalogClient](@ref DataCatalogClient-endpoint-snippet)
+ [PolicyTagManagerClient](@ref PolicyTagManagerClient-endpoint-snippet)
+ [PolicyTagManagerSerializationClient](@ref PolicyTagManagerSerializationClient-endpoint-snippet)
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -118,4 +127,22 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page DataCatalogClient-endpoint-snippet Override DataCatalogClient Endpoint Configuration
+
+@snippet google/cloud/datacatalog/samples/data_catalog_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page PolicyTagManagerClient-endpoint-snippet Override PolicyTagManagerClient Endpoint Configuration
+
+@snippet google/cloud/datacatalog/samples/policy_tag_manager_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page PolicyTagManagerSerializationClient-endpoint-snippet Override PolicyTagManagerSerializationClient Endpoint Configuration
+
+@snippet google/cloud/datacatalog/samples/policy_tag_manager_serialization_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

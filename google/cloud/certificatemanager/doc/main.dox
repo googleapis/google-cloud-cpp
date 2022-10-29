@@ -93,6 +93,10 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `CertificateManagerClient`:
+
+@snippet certificate_manager_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -111,4 +115,10 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page CertificateManagerClient-endpoint-snippet Override CertificateManagerClient Endpoint Configuration
+
+@snippet google/cloud/certificatemanager/samples/certificate_manager_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

@@ -100,6 +100,10 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `ProfilerServiceClient`:
+
+@snippet profiler_client_samples.cc set-client-endpoint
+
 <!-- inject-endpoint-snippet-end -->
 
 ## Retry, Backoff, and Idempotency Policies.
@@ -118,4 +122,10 @@ can override the default policies.
 */
 
 // <!-- inject-endpoint-pages-start -->
+
+/*! @page ProfilerServiceClient-endpoint-snippet Override ProfilerServiceClient Endpoint Configuration
+
+@snippet google/cloud/profiler/samples/profiler_client_samples.cc set-client-endpoint
+
+*/
 // <!-- inject-endpoint-pages-end -->

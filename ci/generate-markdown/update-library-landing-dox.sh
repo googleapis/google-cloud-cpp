@@ -27,8 +27,9 @@ fi
 cd "${PROJECT_ROOT}"
 readonly LIBRARY=$1
 
-lib="google/cloud/${LIBRARY}"
-if [[ ! -r "${lib}/doc/main.dox" ]]; then
+readonly LIB="google/cloud/${LIBRARY}"
+readonly MAIN_DOX="google/cloud/${LIBRARY}/doc/main.dox"
+if [[ ! -r "${MAIN_DOX}" ]]; then
   exit 0
 fi
 
@@ -37,7 +38,7 @@ inject_end="<!-- inject-endpoint-env-vars-end -->"
 env_vars=("")
 while IFS= read -r -d $'\0' option_defaults_cc; do
   service="$(basename "${option_defaults_cc}" _option_defaults.cc)"
-  connection_h="${lib}/${service}_connection.h"
+  connection_h="${LIB}/${service}_connection.h"
   # Should we generate documentation for GOOGLE_CLOUD_CPP_.*_AUTHORITY too?
   variable_re='GOOGLE_CLOUD_CPP_.*_ENDPOINT'
   variable=$(grep -om1 "${variable_re}" "${option_defaults_cc}")
@@ -52,10 +53,43 @@ while IFS= read -r -d $'\0' option_defaults_cc; do
   env_vars+=("  \`EndpointOption\` (which defaults to ${endpoint})")
   env_vars+=("  used by \`${make_connection}()\`.")
   env_vars+=("")
-done < <(git ls-files -z -- "${lib}/internal/*_option_defaults.cc")
-sed -i -f - "${lib}/doc/main.dox" <<EOT
+done < <(git ls-files -z -- "${LIB}/internal/*_option_defaults.cc")
+
+sed -i -f - "${MAIN_DOX}" <<EOT
 /${inject_start}/,/${inject_end}/c \\
 ${inject_start}\\
 $(printf '%s\\\n' "${env_vars[@]}")
 ${inject_end}
 EOT
+
+IFS= mapfile -d $'\0' -t samples_cc < <(git ls-files -z -- "${LIB}/samples/*_client_samples.cc")
+
+(
+  sed '/<!-- inject-endpoint-snippet-start -->/q' "${MAIN_DOX}"
+  if [[ ${#samples_cc[@]} -gt 0 ]]; then
+    sample_cc="${samples_cc[0]}"
+    client_name="$(sed -n '/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p' "${sample_cc}")"
+    echo 'For example, this will override the default endpoint for `'"${client_name}"'`:'
+    echo
+    echo "@snippet $(basename "${sample_cc}") set-client-endpoint"
+    if [[ ${#samples_cc[@]} -gt 1 ]]; then
+      echo
+      echo "Follow these links to find examples for other \\c *Client classes:"
+      for sample_cc in "${samples_cc[@]}"; do
+        sed -n "/main-dox-marker: / s;// main-dox-marker: \(.*\); [\1](@ref \1-endpoint-snippet);p" "${sample_cc}"
+      done
+    fi
+  fi
+  echo
+  sed -n '/<!-- inject-endpoint-snippet-end -->/,$p' "${MAIN_DOX}"
+) | sponge "${MAIN_DOX}"
+
+(
+  sed '/<!-- inject-endpoint-pages-start -->/q' "${MAIN_DOX}"
+  for sample_cc in "${samples_cc[@]}"; do
+    client_name=$(sed -n "/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p" "${sample_cc}")
+    printf '\n/*! @page %s-endpoint-snippet Override %s Endpoint Configuration\n\n@snippet %s set-client-endpoint\n\n*/\n' \
+      "${client_name}" "${client_name}" "${sample_cc}"
+  done
+  sed -n '/<!-- inject-endpoint-pages-end -->/,$p' "${MAIN_DOX}"
+) | sponge "${MAIN_DOX}"
