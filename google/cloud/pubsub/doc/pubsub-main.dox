@@ -50,11 +50,7 @@ the Cloud Pub/Sub C++ client library API.
 @include quickstart.cc
 @endparblock
 
-## API Notes
-
-The following are general notes about using the library.
-
-### Environment Variables
+## Environment Variables
 
 There are several environment variables that can be set to configure certain
 behaviors in the library.
@@ -112,6 +108,40 @@ there is no value.
 @par Example
 @snippet samples.cc example-status-or
 
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.  For example, this will override the default
+endpoint for `google::cloud::pubsub::Publisher`:
+
+@snippet client_samples.cc publisher-set-endpoint
+
+Follow these links for additional examples
+ [Subscriber](@ref Subscriber-endpoint-snippet)
+ [BlockingPublisher](@ref BlockingPublisher-endpoint-snippet)
+ [TopicAdminClient](@ref TopicAdminClient-endpoint-snippet)
+ [SubscriptionAdminClient](@ref SubscriptionAdminClient-endpoint-snippet)
+ [SchemaAdminClient](@ref SchemaAdminClient-endpoint-snippet)
+ [Publisher](@ref Publisher-endpoint-snippet)
+
+## Override the authentication configuration
+
+In some cases, you may need to override the default authentication credentials
+used by the client library. Use the `google::cloud::UnifiedCredentialsOption`
+when initializing the client library to change the default.  For example, this
+will override the default to use a service account key file:
+
+@snippet client_samples.cc publisher-service-account
+
+Follow these links for additional examples
+ [Subscriber](@ref Subscriber-service-account-snippet)
+ [BlockingPublisher](@ref BlockingPublisher-service-account-snippet)
+ [TopicAdminClient](@ref TopicAdminClient-service-account-snippet)
+ [SubscriptionAdminClient](@ref SubscriptionAdminClient-service-account-snippet)
+ [SchemaAdminClient](@ref SchemaAdminClient-service-account-snippet)
+ [Publisher](@ref Publisher-service-account-snippet)
+
 ## Next Steps
 
 - @ref publisher-mock
@@ -124,5 +154,79 @@ there is no value.
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 [quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsub/quickstart
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
+
+*/
+
+/*! @page Publisher-endpoint-snippet Override @c Publisher Default Endpoint
+
+@snippet google/cloud/pubsub/samples/client_samples.cc publisher-set-endpoint
+
+*/
+
+/*! @page Subscriber-endpoint-snippet Override @c Subscriber Default Endpoint
+
+@snippet google/cloud/pubsub/samples/client_samples.cc subscriber-set-endpoint
+
+*/
+
+/*! @page BlockingPublisher-endpoint-snippet Override @c BlockingPublisher Default Endpoint
+
+@snippet google/cloud/pubsub/samples/client_samples.cc blocking-publisher-set-endpoint
+
+*/
+
+/*! @page TopicAdminClient-endpoint-snippet Override @c TopicAdminClient Default Endpoint
+
+@snippet google/cloud/pubsub/samples/client_samples.cc topic-admin-client-set-endpoint
+
+*/
+
+/*! @page SubscriptionAdminClient-endpoint-snippet Override @c SubscriptionAdminClient Default Endpoint
+
+@snippet google/cloud/pubsub/samples/client_samples.cc schema-admin-client-set-endpoint
+
+*/
+
+/*! @page SchemaAdminClient-endpoint-snippet Override @c SchemaAdminClient Default Endpoint
+
+@snippet google/cloud/pubsub/samples/client_samples.cc schema-admin-client-set-endpoint
+
+*/
+
+
+
+/*! @page Publisher-service-account-snippet Override @c Publisher Default Authentication
+
+@snippet google/cloud/pubsub/samples/client_samples.cc publisher-service-account
+
+*/
+
+/*! @page Subscriber-service-account-snippet Override @c Subscriber Default Authentication
+
+@snippet google/cloud/pubsub/samples/client_samples.cc subscriber-service-account
+
+*/
+
+/*! @page BlockingPublisher-service-account-snippet Override @c BlockingPublisher Default Authentication
+
+@snippet google/cloud/pubsub/samples/client_samples.cc blocking-publisher-service-account
+
+*/
+
+/*! @page TopicAdminClient-service-account-snippet Override @c TopicAdminClient Default Authentication
+
+@snippet google/cloud/pubsub/samples/client_samples.cc topic-admin-client-service-account
+
+*/
+
+/*! @page SubscriptionAdminClient-service-account-snippet Override @c SubscriptionAdminClient Default Authentication
+
+@snippet google/cloud/pubsub/samples/client_samples.cc schema-admin-client-service-account
+
+*/
+
+/*! @page SchemaAdminClient-service-account-snippet Override @c SchemaAdminClient Default Authentication
+
+@snippet google/cloud/pubsub/samples/client_samples.cc schema-admin-client-service-account
 
 */
