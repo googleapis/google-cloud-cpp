@@ -22,6 +22,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/example_driver.h"
 #include <fstream>
 #include <string>
 #include <vector>
