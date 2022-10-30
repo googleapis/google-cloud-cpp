@@ -39,9 +39,7 @@ void PublisherSetEndpoint(std::vector<std::string> const& argv) {
   }
   //! [publisher-set-endpoint]
   namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::future;
   using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
     return pubsub::Publisher(pubsub::MakePublisherConnection(
@@ -60,9 +58,7 @@ void PublisherServiceAccountKey(std::vector<std::string> const& argv) {
   }
   //! [publisher-service-account]
   namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::future;
   using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id, std::string const& keyfile) {
     auto is = std::ifstream(keyfile);
     is.exceptions(std::ios::badbit);
@@ -85,9 +81,7 @@ void SubscriberSetEndpoint(std::vector<std::string> const& argv) {
   }
   //! [subscriber-set-endpoint]
   namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::future;
   using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string subscription_id) {
     auto subscription =
         pubsub::Subscription(std::move(project_id), std::move(subscription_id));
@@ -107,9 +101,7 @@ void SubscriberServiceAccountKey(std::vector<std::string> const& argv) {
   }
   //! [subscriber-service-account]
   namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::future;
   using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
   [](std::string project_id, std::string subscription_id,
      std::string const& keyfile) {
     auto is = std::ifstream(keyfile);
@@ -133,9 +125,7 @@ void BlockingPublisherSetEndpoint(std::vector<std::string> const& argv) {
   }
   //! [blocking-publisher-set-endpoint]
   namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::future;
   using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
   []() {
     return pubsub::BlockingPublisher(pubsub::MakeBlockingPublisherConnection(
         Options{}.set<google::cloud::EndpointOption>(
@@ -152,9 +142,7 @@ void BlockingPublisherServiceAccountKey(std::vector<std::string> const& argv) {
   }
   //! [blocking-publisher-service-account]
   namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::future;
   using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
   [](std::string const& keyfile) {
     auto is = std::ifstream(keyfile);
     is.exceptions(std::ios::badbit);
@@ -174,9 +162,7 @@ void TopicAdminClientSetEndpoint(std::vector<std::string> const& argv) {
   }
   //! [topic-admin-client-set-endpoint]
   namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::future;
   using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
   []() {
     return pubsub::TopicAdminClient(pubsub::MakeTopicAdminConnection(
         Options{}.set<google::cloud::EndpointOption>(
@@ -193,9 +179,7 @@ void TopicAdminClientServiceAccountKey(std::vector<std::string> const& argv) {
   }
   //! [topic-admin-client-service-account]
   namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::future;
   using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
   [](std::string const& keyfile) {
     auto is = std::ifstream(keyfile);
     is.exceptions(std::ios::badbit);
@@ -216,9 +200,7 @@ void SubscriptionAdminClientSetEndpoint(std::vector<std::string> const& argv) {
   }
   //! [subscription-admin-client-set-endpoint]
   namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::future;
   using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
   []() {
     return pubsub::SubscriptionAdminClient(
         pubsub::MakeSubscriptionAdminConnection(
@@ -238,9 +220,7 @@ void SubscriptionAdminClientServiceAccountKey(
   }
   //! [subscription-admin-client-service-account]
   namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::future;
   using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
   [](std::string const& keyfile) {
     auto is = std::ifstream(keyfile);
     is.exceptions(std::ios::badbit);
@@ -261,9 +241,7 @@ void SchemaAdminClientSetEndpoint(std::vector<std::string> const& argv) {
   }
   //! [schema-admin-client-set-endpoint]
   namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::future;
   using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
   []() {
     return pubsub::SchemaAdminClient(pubsub::MakeSchemaAdminConnection(
         Options{}.set<google::cloud::EndpointOption>(
@@ -280,9 +258,7 @@ void SchemaAdminClientServiceAccountKey(std::vector<std::string> const& argv) {
   }
   //! [schema-admin-client-service-account]
   namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::future;
   using ::google::cloud::Options;
-  using ::google::cloud::StatusOr;
   [](std::string const& keyfile) {
     auto is = std::ifstream(keyfile);
     is.exceptions(std::ios::badbit);
