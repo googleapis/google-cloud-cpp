@@ -57,8 +57,9 @@ endforeach ()
 export_list_to_bazel("pubsub_samples_unit_tests.bzl"
                      "pubsub_samples_unit_tests" YEAR "2020")
 
-set(pubsub_client_integration_samples # cmake-format: sort
-                                      blocking_samples.cc samples.cc)
+set(pubsub_client_integration_samples
+    # cmake-format: sort
+    blocking_samples.cc client_samples.cc samples.cc)
 if (TARGET google-cloud-cpp::iam)
     list(APPEND pubsub_client_integration_samples iam_samples.cc)
 endif ()
