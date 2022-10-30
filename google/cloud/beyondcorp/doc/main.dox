@@ -8,8 +8,7 @@ resources and enables zero-trust access. Using the BeyondCorp Enterprise APIs,
 enterprises can set up multi-cloud and on-prem connectivity using the App
 Connector hybrid connectivity solution.
 
-While this library is **GA**, please note Google Cloud C++ client libraries do
-**not** follow [Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
