@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
-#include "google/cloud/pubsub/samples/samples.pb.h"
 #include "google/cloud/pubsub/schema_admin_client.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
@@ -22,6 +21,7 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include <google/cloud/pubsub/samples/samples.pb.h>
 #include <condition_variable>
 #include <mutex>
 #include <tuple>
