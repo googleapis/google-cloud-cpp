@@ -78,6 +78,46 @@ which should give you a taste of the Cloud Bigtable C++ client library API.
   actually print anything until the application sets a backend or they set this
   environment variable.
 
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.  For example, this will override the default
+endpoint for `google::cloud::bigtable::Table`:
+
+@snippet client_samples.cc table-set-endpoint
+
+Follow these links for additional examples
+ [BigtableTableAdminClient](@ref BigtableTableAdminClient-set-endpoint-snippet)
+ [InstanceTableAdminClient](@ref BigtableInstanceAdminClient-set-endpoint-snippet)
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+@snippet client_samples.cc table-with-service-account
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+Follow these links for additional examples
+ [BigtableTableAdminClient](@ref BigtableTableAdminClient-with-service-account-snippet)
+ [InstanceTableAdminClient](@ref BigtableInstanceAdminClient-with-service-account-snippet)
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
 ## Next Steps
 
 - @ref bigtable-hello-world "Hello World Example"
@@ -114,4 +154,34 @@ which should give you a taste of the Cloud Bigtable C++ client library API.
 [github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/README%2Emd
 [github-install]: https://github.com/googleapis/google-cloud-cpp/blob/main/INSTALL%2Emd
 
+*/
+
+/*! @page Table-set-endpoint Override @c Table Default Endpoint
+
+@snippet google/cloud/bigtable/examples/client_samples.cc table-set-endpoint
+*/
+
+/*! @page Table-with-service-account-snippet Override @c Table Default Authentication
+
+@snippet google/cloud/bigtable/examples/client_samples.cc table-with-service-account
+*/
+
+/*! @page BigtableTableAdminClient-set-endpoint-snippet Override @c BigtableTableAdminClient Default Endpoint
+
+@snippet google/cloud/bigtable/examples/client_samples.cc table-admin-client-set-endpoint
+*/
+
+/*! @page BigtableTableAdminClient-with-service-account-snippet Override @c BigtableTableAdminClient Default Authentication
+
+@snippet google/cloud/bigtable/examples/client_samples.cc table-admin-client-with-service-account
+*/
+
+/*! @page BigtableInstanceAdminClient-set-endpoint-snippet Override @c BigtableInstanceAdminClient Default Endpoint
+
+@snippet google/cloud/bigtable/examples/client_samples.cc instance-admin-client-set-endpoint
+*/
+
+/*! @page BigtableInstanceAdminClient-with-service-account-snippet Override @c BigtableInstanceAdminClient Default Authentication
+
+@snippet google/cloud/bigtable/examples/client_samples.cc instance-admin-client-with-service-account
 */
