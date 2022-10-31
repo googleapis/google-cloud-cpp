@@ -168,20 +168,20 @@ guide for more details.
 
 /*! @page BigtableTableAdminClient-set-endpoint-snippet Override @c BigtableTableAdminClient Default Endpoint
 
-@snippet google/cloud/bigtable/examples/client_samples.cc table-admin-client-set-endpoint
+@snippet google/cloud/bigtable/admin/samples/bigtable_table_admin_client_samples.cc set-client-endpoint
 */
 
 /*! @page BigtableTableAdminClient-with-service-account-snippet Override @c BigtableTableAdminClient Default Authentication
 
-@snippet google/cloud/bigtable/examples/client_samples.cc table-admin-client-with-service-account
+@snippet google/cloud/bigtable/admin/samples/bigtable_table_admin_client_samples.cc with-service-account
 */
 
 /*! @page BigtableInstanceAdminClient-set-endpoint-snippet Override @c BigtableInstanceAdminClient Default Endpoint
 
-@snippet google/cloud/bigtable/examples/client_samples.cc instance-admin-client-set-endpoint
+@snippet google/cloud/bigtable/admin/samples/bigtable_instance_admin_client_samples.cc set-client-endpoint
 */
 
 /*! @page BigtableInstanceAdminClient-with-service-account-snippet Override @c BigtableInstanceAdminClient Default Authentication
 
-@snippet google/cloud/bigtable/examples/client_samples.cc instance-admin-client-with-service-account
+@snippet google/cloud/bigtable/admin/samples/bigtable_instance_admin_client_samples.cc with-service-account
 */
