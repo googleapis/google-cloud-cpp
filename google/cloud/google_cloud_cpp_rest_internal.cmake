@@ -93,10 +93,10 @@ target_compile_options(google_cloud_cpp_rest_internal
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 set_target_properties(
     google_cloud_cpp_rest_internal
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::rest-internal"
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::rest_internal"
                VERSION ${PROJECT_VERSION}
                SOVERSION ${PROJECT_VERSION_MAJOR})
-add_library(google-cloud-cpp::rest-internal ALIAS
+add_library(google-cloud-cpp::rest_internal ALIAS
             google_cloud_cpp_rest_internal)
 
 # Export the CMake targets to make it easy to create configuration files.
@@ -158,7 +158,7 @@ function (google_cloud_cpp_rest_internal_add_test fname labels)
     google_cloud_cpp_add_executable(target "rest_internal" "${fname}")
     target_link_libraries(
         ${target}
-        PRIVATE google-cloud-cpp::rest-internal
+        PRIVATE google-cloud-cpp::rest_internal
                 google_cloud_cpp_testing
                 google_cloud_cpp_testing_rest
                 google-cloud-cpp::common
@@ -263,7 +263,7 @@ if (BUILD_TESTING)
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
             ${target}
-            PRIVATE google-cloud-cpp::rest-internal google-cloud-cpp::common
+            PRIVATE google-cloud-cpp::rest_internal google-cloud-cpp::common
                     benchmark::benchmark_main)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
