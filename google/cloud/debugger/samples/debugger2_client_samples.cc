@@ -18,11 +18,15 @@
 
 #include "google/cloud/debugger/debugger2_client.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
+#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/example_driver.h"
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
 
+// main-dox-marker: Debugger2Client
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -36,16 +40,42 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
       "private.googleapis.com");
   auto client = google::cloud::debugger::Debugger2Client(
       google::cloud::debugger::MakeDebugger2Connection(options));
-  // Use the `client` object as usual
   //! [set-client-endpoint]
 }
 
-// main-dox-marker: Debugger2Client
+void WithServiceAccount(std::vector<std::string> const& argv) {
+  if (argv.size() != 1 || argv[0] == "--help") {
+    throw google::cloud::testing_util::Usage{"with-service-account <keyfile>"};
+  }
+  //! [with-service-account]
+  [](std::string const& keyfile) {
+    auto is = std::ifstream(keyfile);
+    is.exceptions(std::ios::badbit);  // Minimal error handling in examples
+    auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
+    auto options =
+        google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
+            google::cloud::MakeServiceAccountCredentials(contents));
+    return google::cloud::debugger::Debugger2Client(
+        google::cloud::debugger::MakeDebugger2Connection(options));
+  }
+  //! [with-service-account]
+  (argv.at(0));
+}
+
 void AutoRun(std::vector<std::string> const& argv) {
-  if (!argv.empty()) throw google::cloud::testing_util::Usage{"auto"};
+  namespace examples = ::google::cloud::testing_util;
+  using ::google::cloud::internal::GetEnv;
+  if (!argv.empty()) throw examples::Usage{"auto"};
+  examples::CheckEnvironmentVariablesAreSet(
+      {"GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE"});
+  auto const keyfile =
+      GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 
   std::cout << "\nRunning SetClientEndpoint() example" << std::endl;
   SetClientEndpoint({});
+
+  std::cout << "\nRunning WithServiceAccount() example" << std::endl;
+  WithServiceAccount({keyfile});
 }
 
 }  // namespace
@@ -53,6 +83,7 @@ void AutoRun(std::vector<std::string> const& argv) {
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
       {"set-client-endpoint", SetClientEndpoint},
+      {"with-service-account", WithServiceAccount},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
