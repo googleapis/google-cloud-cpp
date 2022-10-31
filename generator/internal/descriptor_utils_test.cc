@@ -36,6 +36,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
+using ::google::protobuf::MethodDescriptor;
 using ::testing::AllOf;
 using ::testing::ElementsAre;
 using ::testing::Eq;
@@ -480,6 +481,14 @@ char const* const kServiceProto =
     "    };\n"
     "    option (google.api.method_signature) = \"namespace\";\n"
     "  }\n"
+    "  // Leading comments about rpc Method9.\n"
+    "  rpc Method9(PaginatedInput) returns (PaginatedOutput) {\n"
+    "    option (google.api.http) = {\n"
+    "       get: \"/v1/foo\"\n"
+    "       body: \"*\"\n"
+    "    };\n"
+    "  }\n"
+
     "}\n";
 
 struct MethodVarsTestValues {
@@ -594,6 +603,56 @@ TEST_F(CreateMethodVarsTest, SkipMethodsWithDeprecatedFields) {
             method_vars->second.end());
   EXPECT_NE(method_vars->second.find("method_signature3"),
             method_vars->second.end());
+}
+
+TEST_F(CreateMethodVarsTest, ParseHttpExtensionWithPrefixAndSuffix) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(5);
+  auto info = ParseHttpExtension(*method);
+  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
+  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  EXPECT_THAT(extension_info.url_path,
+              Eq("/v1/{parent=projects/*/instances/*}/databases"));
+  EXPECT_THAT(extension_info.request_field_name, Eq("parent"));
+  EXPECT_THAT(extension_info.url_substitution, Eq("projects/*/instances/*"));
+  EXPECT_THAT(extension_info.body, Eq("*"));
+  EXPECT_THAT(extension_info.http_verb, Eq("Post"));
+  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/"));
+  EXPECT_THAT(extension_info.path_suffix, Eq("/databases"));
+}
+
+TEST_F(CreateMethodVarsTest, ParseHttpExtensionWithOnlyPrefix) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(1);
+  auto info = ParseHttpExtension(*method);
+  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
+  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  EXPECT_THAT(extension_info.url_path,
+              Eq("/v1/{name=projects/*/instances/*/backups/*}"));
+  EXPECT_THAT(extension_info.request_field_name, Eq("name"));
+  EXPECT_THAT(extension_info.url_substitution,
+              Eq("projects/*/instances/*/backups/*"));
+  EXPECT_THAT(extension_info.body, Eq(""));
+  EXPECT_THAT(extension_info.http_verb, Eq("Delete"));
+  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/"));
+  EXPECT_THAT(extension_info.path_suffix, Eq(""));
+}
+
+TEST_F(CreateMethodVarsTest, ParseHttpExtensionSimpleInfo) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(9);
+  auto info = ParseHttpExtension(*method);
+  ASSERT_TRUE(absl::holds_alternative<HttpSimpleInfo>(info));
+  auto extension_info = absl::get<HttpSimpleInfo>(info);
+  EXPECT_THAT(extension_info.url_path, Eq("/v1/foo"));
+  EXPECT_THAT(extension_info.body, Eq("*"));
+  EXPECT_THAT(extension_info.http_verb, Eq("Get"));
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
@@ -751,6 +810,9 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_request_body", "*"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "default_idempotency", "kNonIdempotent"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method5", "method_rest_path",
+            "absl::StrCat(\"/v1/\",request.parent(),\"/databases\")"),
         // Method6
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "method_request_param_key", "name"),
@@ -798,7 +860,10 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_request_param_key", "namespace.name"),
         MethodVarsTestValues("google.protobuf.Service.Method8",
                              "method_request_param_value",
-                             "namespace_().name()")),
+                             "namespace_().name()"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method8", "method_rest_path",
+            "absl::StrCat(\"/v1/\",request.namespace_().name(),\"\")")),
     [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;
