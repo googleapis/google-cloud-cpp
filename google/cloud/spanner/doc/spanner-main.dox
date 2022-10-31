@@ -49,11 +49,7 @@ the Cloud Spanner C++ client library API.
 
 @include quickstart.cc
 
-## API Notes
-
-The following are general notes about using the library.
-
-### Environment Variables
+## Environment Variables
 
 There are several environment variables that can be set to configure certain
 behaviors in the library.
@@ -134,6 +130,36 @@ there is no value.
 
 @snippet samples.cc example-status-or
 
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.  For example, this will override the default
+endpoint for `google::cloud::spanner::Client`:
+
+@snippet client_samples.cc client-set-endpoint
+
+Follow these links for additional examples
+ [DatabaseAdminClient](@ref DatabaseAdminClient-set-endpoint-snippet)
+ [InstanceAdminClient](@ref InstanceAdminClient-set-endpoint-snippet)
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+@snippet client_samples.cc client-with-service-account
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+Follow these links for additional examples
+ [DatabaseAdminClient](@ref DatabaseAdminClient-with-service-account-snippet)
+ [InstanceAdminClient](@ref InstanceAdminClient-with-service-account-snippet)
+
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -167,5 +193,41 @@ period between retries.
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 [quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/spanner/quickstart
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
+
+*/
+
+/*! @page Client-set-endpoint-snippet Override Client Default Endpoint
+
+@snippet google/cloud/spanner/samples/client_samples.cc client-set-endpoint
+
+*/
+
+/*! @page Client-with-service-account-snippet Override Client Default Authentication
+
+@snippet google/cloud/spanner/samples/client_samples.cc client-with-service-account
+
+*/
+
+/*! @page DatabaseAdminClient-set-endpoint-snippet Override DatabaseAdminClient Default Endpoint
+
+@snippet google/cloud/spanner/admin/samples/database_admin_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page DatabaseAdminClient-with-service-account-snippet Override DatabaseAdminClient Default Authentication
+
+@snippet google/cloud/spanner/admin/samples/database_admin_client_samples.cc with-service-account
+
+*/
+
+/*! @page InstanceAdminClient-set-endpoint-snippet Override InstanceAdminClient Default Endpoint
+
+@snippet google/cloud/spanner/admin/samples/instance_admin_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page InstanceAdminClient-with-service-account-snippet Override InstanceAdminClient Default Authentication
+
+@snippet google/cloud/spanner/admin/samples/instance_admin_client_samples.cc with-service-account
 
 */
