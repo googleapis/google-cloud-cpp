@@ -85,10 +85,30 @@ IFS= mapfile -d $'\0' -t samples_cc < <(git ls-files -z -- "${LIB}/samples/*_cli
 ) | sponge "${MAIN_DOX}"
 
 (
+  sed '/<!-- inject-service-account-snippet-start -->/q' "${MAIN_DOX}"
+  if [[ ${#samples_cc[@]} -gt 0 ]]; then
+    sample_cc="${samples_cc[0]}"
+    client_name="$(sed -n '/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p' "${sample_cc}")"
+    echo "@snippet $(basename "${sample_cc}") with-service-account"
+    if [[ ${#samples_cc[@]} -gt 1 ]]; then
+      echo
+      echo "Follow these links to find examples for other \\c *Client classes:"
+      for sample_cc in "${samples_cc[@]}"; do
+        sed -n "/main-dox-marker: / s;// main-dox-marker: \(.*\); [\1](@ref \1-service-account-snippet);p" "${sample_cc}"
+      done
+    fi
+  fi
+  echo
+  sed -n '/<!-- inject-service-account-snippet-end -->/,$p' "${MAIN_DOX}"
+) | sponge "${MAIN_DOX}"
+
+(
   sed '/<!-- inject-endpoint-pages-start -->/q' "${MAIN_DOX}"
   for sample_cc in "${samples_cc[@]}"; do
     client_name=$(sed -n "/main-dox-marker: / s;// main-dox-marker: \(.*\);\1;p" "${sample_cc}")
     printf '\n/*! @page %s-endpoint-snippet Override %s Endpoint Configuration\n\n@snippet %s set-client-endpoint\n\n*/\n' \
+      "${client_name}" "${client_name}" "${sample_cc}"
+    printf '\n/*! @page %s-service-account-snippet Override %s Authentication Defaults\n\n@snippet %s with-service-account\n\n*/\n' \
       "${client_name}" "${client_name}" "${sample_cc}"
   done
   sed -n '/<!-- inject-endpoint-pages-end -->/,$p' "${MAIN_DOX}"
