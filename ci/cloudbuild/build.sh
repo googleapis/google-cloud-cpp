@@ -191,6 +191,13 @@ export TRIGGER_TYPE
 export VERBOSE_FLAG
 export LOG_LINKER_PAT
 
+# Default to generating all libraries.
+if [ -n "${GENERATE_GOLDEN_ONLY+set}" ]; then
+  GENERATE_GOLDEN_ONLY=${GENERATE_GOLDEN_ONLY:-}
+else
+  GENERATE_GOLDEN_ONLY=""
+fi
+
 # --local is the most fundamental build mode, in that all other builds
 # eventually call this one. For example, a --docker build will build the
 # specified docker image, then in a container from that image it will run the
@@ -290,13 +297,6 @@ fi
 
 # Default to --docker mode since no other mode was specified.
 DOCKER_FLAG="true"
-
-# Default to generating all libraries.
-if [ -n "${GENERATE_GOLDEN_ONLY+set}" ]; then
-  GENERATE_GOLDEN_ONLY=${GENERATE_GOLDEN_ONLY:-}
-else
-  GENERATE_GOLDEN_ONLY=""
-fi
 
 # Uses docker to locally build the specified image and run the build command.
 if [[ "${DOCKER_FLAG}" = "true" ]]; then

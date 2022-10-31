@@ -25,6 +25,7 @@ options:
     'COMMIT_SHA=${COMMIT_SHA}',
     'PR_NUMBER=${_PR_NUMBER}',
     'TRIGGER_TYPE=${_TRIGGER_TYPE}',
+    'GENERATE_GOLDEN_ONLY=""',
     'CONSOLE_LOG_URL=https://console.cloud.google.com/cloud-build/builds;region=us-east1/${BUILD_ID};tab=detail?project=${PROJECT_ID}',
     'RAW_LOG_URL=https://storage.googleapis.com/${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}/log-${BUILD_ID}.txt'
   ]
