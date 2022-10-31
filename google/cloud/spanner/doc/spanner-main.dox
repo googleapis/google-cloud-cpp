@@ -135,7 +135,7 @@ there is no value.
 In some cases, you may need to override the default endpoint used by the client
 library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.  For example, this will override the default
-endpoint for `google::cloud::pubsub::Publisher`:
+endpoint for `google::cloud::spanner::Client`:
 
 @snippet client_samples.cc client-set-endpoint
 
