@@ -127,12 +127,19 @@ Follow these links for additional examples
 
 ## Override the authentication configuration
 
-In some cases, you may need to override the default authentication credentials
-used by the client library. Use the `google::cloud::UnifiedCredentialsOption`
-when initializing the client library to change the default.  For example, this
-will override the default to use a service account key file:
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
 
 @snippet client_samples.cc publisher-service-account
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
 
 Follow these links for additional examples
  [Subscriber](@ref Subscriber-service-account-snippet)
@@ -141,6 +148,9 @@ Follow these links for additional examples
  [SubscriptionAdminClient](@ref SubscriptionAdminClient-service-account-snippet)
  [SchemaAdminClient](@ref SchemaAdminClient-service-account-snippet)
  [Publisher](@ref Publisher-service-account-snippet)
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
 
 ## Next Steps
 
