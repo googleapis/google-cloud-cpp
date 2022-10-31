@@ -15,8 +15,9 @@
 # ~~~
 
 function (spanner_client_define_samples)
-    set(spanner_client_integration_samples # cmake-format: sort
-                                           postgresql_samples.cc samples.cc)
+    set(spanner_client_integration_samples
+        # cmake-format: sort
+        client_samples.cc postgresql_samples.cc samples.cc)
     set(spanner_client_unit_samples # cmake-format: sort
                                     mock_execute_query.cc)
 
