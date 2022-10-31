@@ -291,6 +291,13 @@ fi
 # Default to --docker mode since no other mode was specified.
 DOCKER_FLAG="true"
 
+# Default to generating all libraries.
+if [ -n "${GENERATE_GOLDEN_ONLY+set}" ]; then
+  GENERATE_GOLDEN_ONLY=${GENERATE_GOLDEN_ONLY:-}
+else
+  GENERATE_GOLDEN_ONLY=""
+fi
+
 # Uses docker to locally build the specified image and run the build command.
 if [[ "${DOCKER_FLAG}" = "true" ]]; then
   io::log_h1 "Starting docker build: ${BUILD_FLAG}"
@@ -346,6 +353,9 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     # Makes the host's gcloud credentials visible inside the docker container,
     # which we need for integration tests.
     "--volume=${HOME}/.config/gcloud:/h/.config/gcloud:Z"
+    # Makes the generate-libraries build ONLY touch golden files in the
+    # generator dir.
+    "--env=GENERATE_GOLDEN_ONLY=${GENERATE_GOLDEN_ONLY}"
   )
   # All GOOGLE_CLOUD_* env vars will be passed to the docker container.
   for e in $(env); do
