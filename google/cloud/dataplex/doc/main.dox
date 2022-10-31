@@ -120,6 +120,13 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet content_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [ContentServiceClient](@ref ContentServiceClient-service-account-snippet)
+ [DataplexServiceClient](@ref DataplexServiceClient-service-account-snippet)
+ [MetadataServiceClient](@ref MetadataServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -155,15 +162,33 @@ can override the default policies.
 
 */
 
+/*! @page ContentServiceClient-service-account-snippet Override ContentServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/samples/content_client_samples.cc with-service-account
+
+*/
+
 /*! @page DataplexServiceClient-endpoint-snippet Override DataplexServiceClient Endpoint Configuration
 
 @snippet google/cloud/dataplex/samples/dataplex_client_samples.cc set-client-endpoint
 
 */
 
+/*! @page DataplexServiceClient-service-account-snippet Override DataplexServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/samples/dataplex_client_samples.cc with-service-account
+
+*/
+
 /*! @page MetadataServiceClient-endpoint-snippet Override MetadataServiceClient Endpoint Configuration
 
 @snippet google/cloud/dataplex/samples/metadata_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page MetadataServiceClient-service-account-snippet Override MetadataServiceClient Authentication Defaults
+
+@snippet google/cloud/dataplex/samples/metadata_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

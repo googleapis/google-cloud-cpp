@@ -108,6 +108,8 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet access_approval_client_samples.cc with-service-account
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -145,6 +147,12 @@ can override the default policies.
 /*! @page AccessApprovalClient-endpoint-snippet Override AccessApprovalClient Endpoint Configuration
 
 @snippet google/cloud/accessapproval/samples/access_approval_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page AccessApprovalClient-service-account-snippet Override AccessApprovalClient Authentication Defaults
+
+@snippet google/cloud/accessapproval/samples/access_approval_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

@@ -109,6 +109,8 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet secret_manager_client_samples.cc with-service-account
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -140,6 +142,12 @@ can override the default policies.
 /*! @page SecretManagerServiceClient-endpoint-snippet Override SecretManagerServiceClient Endpoint Configuration
 
 @snippet google/cloud/secretmanager/samples/secret_manager_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page SecretManagerServiceClient-service-account-snippet Override SecretManagerServiceClient Authentication Defaults
+
+@snippet google/cloud/secretmanager/samples/secret_manager_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

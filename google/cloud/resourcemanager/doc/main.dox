@@ -120,6 +120,13 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet folders_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [FoldersClient](@ref FoldersClient-service-account-snippet)
+ [OrganizationsClient](@ref OrganizationsClient-service-account-snippet)
+ [ProjectsClient](@ref ProjectsClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -155,15 +162,33 @@ can override the default policies.
 
 */
 
+/*! @page FoldersClient-service-account-snippet Override FoldersClient Authentication Defaults
+
+@snippet google/cloud/resourcemanager/samples/folders_client_samples.cc with-service-account
+
+*/
+
 /*! @page OrganizationsClient-endpoint-snippet Override OrganizationsClient Endpoint Configuration
 
 @snippet google/cloud/resourcemanager/samples/organizations_client_samples.cc set-client-endpoint
 
 */
 
+/*! @page OrganizationsClient-service-account-snippet Override OrganizationsClient Authentication Defaults
+
+@snippet google/cloud/resourcemanager/samples/organizations_client_samples.cc with-service-account
+
+*/
+
 /*! @page ProjectsClient-endpoint-snippet Override ProjectsClient Endpoint Configuration
 
 @snippet google/cloud/resourcemanager/samples/projects_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ProjectsClient-service-account-snippet Override ProjectsClient Authentication Defaults
+
+@snippet google/cloud/resourcemanager/samples/projects_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

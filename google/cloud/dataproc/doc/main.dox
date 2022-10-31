@@ -132,6 +132,15 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet autoscaling_policy_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [AutoscalingPolicyServiceClient](@ref AutoscalingPolicyServiceClient-service-account-snippet)
+ [BatchControllerClient](@ref BatchControllerClient-service-account-snippet)
+ [ClusterControllerClient](@ref ClusterControllerClient-service-account-snippet)
+ [JobControllerClient](@ref JobControllerClient-service-account-snippet)
+ [WorkflowTemplateServiceClient](@ref WorkflowTemplateServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -167,9 +176,21 @@ can override the default policies.
 
 */
 
+/*! @page AutoscalingPolicyServiceClient-service-account-snippet Override AutoscalingPolicyServiceClient Authentication Defaults
+
+@snippet google/cloud/dataproc/samples/autoscaling_policy_client_samples.cc with-service-account
+
+*/
+
 /*! @page BatchControllerClient-endpoint-snippet Override BatchControllerClient Endpoint Configuration
 
 @snippet google/cloud/dataproc/samples/batch_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page BatchControllerClient-service-account-snippet Override BatchControllerClient Authentication Defaults
+
+@snippet google/cloud/dataproc/samples/batch_controller_client_samples.cc with-service-account
 
 */
 
@@ -179,15 +200,33 @@ can override the default policies.
 
 */
 
+/*! @page ClusterControllerClient-service-account-snippet Override ClusterControllerClient Authentication Defaults
+
+@snippet google/cloud/dataproc/samples/cluster_controller_client_samples.cc with-service-account
+
+*/
+
 /*! @page JobControllerClient-endpoint-snippet Override JobControllerClient Endpoint Configuration
 
 @snippet google/cloud/dataproc/samples/job_controller_client_samples.cc set-client-endpoint
 
 */
 
+/*! @page JobControllerClient-service-account-snippet Override JobControllerClient Authentication Defaults
+
+@snippet google/cloud/dataproc/samples/job_controller_client_samples.cc with-service-account
+
+*/
+
 /*! @page WorkflowTemplateServiceClient-endpoint-snippet Override WorkflowTemplateServiceClient Endpoint Configuration
 
 @snippet google/cloud/dataproc/samples/workflow_template_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page WorkflowTemplateServiceClient-service-account-snippet Override WorkflowTemplateServiceClient Authentication Defaults
+
+@snippet google/cloud/dataproc/samples/workflow_template_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

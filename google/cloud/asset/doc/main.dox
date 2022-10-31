@@ -107,6 +107,8 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet asset_client_samples.cc with-service-account
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -139,6 +141,12 @@ can override the default policies.
 /*! @page AssetServiceClient-endpoint-snippet Override AssetServiceClient Endpoint Configuration
 
 @snippet google/cloud/asset/samples/asset_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page AssetServiceClient-service-account-snippet Override AssetServiceClient Authentication Defaults
+
+@snippet google/cloud/asset/samples/asset_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

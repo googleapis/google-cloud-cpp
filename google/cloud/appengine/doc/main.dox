@@ -144,6 +144,18 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet applications_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [ApplicationsClient](@ref ApplicationsClient-service-account-snippet)
+ [AuthorizedCertificatesClient](@ref AuthorizedCertificatesClient-service-account-snippet)
+ [AuthorizedDomainsClient](@ref AuthorizedDomainsClient-service-account-snippet)
+ [DomainMappingsClient](@ref DomainMappingsClient-service-account-snippet)
+ [FirewallClient](@ref FirewallClient-service-account-snippet)
+ [InstancesClient](@ref InstancesClient-service-account-snippet)
+ [ServicesClient](@ref ServicesClient-service-account-snippet)
+ [VersionsClient](@ref VersionsClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -179,9 +191,21 @@ can override the default policies.
 
 */
 
+/*! @page ApplicationsClient-service-account-snippet Override ApplicationsClient Authentication Defaults
+
+@snippet google/cloud/appengine/samples/applications_client_samples.cc with-service-account
+
+*/
+
 /*! @page AuthorizedCertificatesClient-endpoint-snippet Override AuthorizedCertificatesClient Endpoint Configuration
 
 @snippet google/cloud/appengine/samples/authorized_certificates_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page AuthorizedCertificatesClient-service-account-snippet Override AuthorizedCertificatesClient Authentication Defaults
+
+@snippet google/cloud/appengine/samples/authorized_certificates_client_samples.cc with-service-account
 
 */
 
@@ -191,9 +215,21 @@ can override the default policies.
 
 */
 
+/*! @page AuthorizedDomainsClient-service-account-snippet Override AuthorizedDomainsClient Authentication Defaults
+
+@snippet google/cloud/appengine/samples/authorized_domains_client_samples.cc with-service-account
+
+*/
+
 /*! @page DomainMappingsClient-endpoint-snippet Override DomainMappingsClient Endpoint Configuration
 
 @snippet google/cloud/appengine/samples/domain_mappings_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page DomainMappingsClient-service-account-snippet Override DomainMappingsClient Authentication Defaults
+
+@snippet google/cloud/appengine/samples/domain_mappings_client_samples.cc with-service-account
 
 */
 
@@ -203,9 +239,21 @@ can override the default policies.
 
 */
 
+/*! @page FirewallClient-service-account-snippet Override FirewallClient Authentication Defaults
+
+@snippet google/cloud/appengine/samples/firewall_client_samples.cc with-service-account
+
+*/
+
 /*! @page InstancesClient-endpoint-snippet Override InstancesClient Endpoint Configuration
 
 @snippet google/cloud/appengine/samples/instances_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page InstancesClient-service-account-snippet Override InstancesClient Authentication Defaults
+
+@snippet google/cloud/appengine/samples/instances_client_samples.cc with-service-account
 
 */
 
@@ -215,9 +263,21 @@ can override the default policies.
 
 */
 
+/*! @page ServicesClient-service-account-snippet Override ServicesClient Authentication Defaults
+
+@snippet google/cloud/appengine/samples/services_client_samples.cc with-service-account
+
+*/
+
 /*! @page VersionsClient-endpoint-snippet Override VersionsClient Endpoint Configuration
 
 @snippet google/cloud/appengine/samples/versions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page VersionsClient-service-account-snippet Override VersionsClient Authentication Defaults
+
+@snippet google/cloud/appengine/samples/versions_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

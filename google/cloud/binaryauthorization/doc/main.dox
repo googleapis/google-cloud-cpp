@@ -120,6 +120,13 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet binauthz_management_service_v1_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [BinauthzManagementServiceV1Client](@ref BinauthzManagementServiceV1Client-service-account-snippet)
+ [SystemPolicyV1Client](@ref SystemPolicyV1Client-service-account-snippet)
+ [ValidationHelperV1Client](@ref ValidationHelperV1Client-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -155,15 +162,33 @@ can override the default policies.
 
 */
 
+/*! @page BinauthzManagementServiceV1Client-service-account-snippet Override BinauthzManagementServiceV1Client Authentication Defaults
+
+@snippet google/cloud/binaryauthorization/samples/binauthz_management_service_v1_client_samples.cc with-service-account
+
+*/
+
 /*! @page SystemPolicyV1Client-endpoint-snippet Override SystemPolicyV1Client Endpoint Configuration
 
 @snippet google/cloud/binaryauthorization/samples/system_policy_v1_client_samples.cc set-client-endpoint
 
 */
 
+/*! @page SystemPolicyV1Client-service-account-snippet Override SystemPolicyV1Client Authentication Defaults
+
+@snippet google/cloud/binaryauthorization/samples/system_policy_v1_client_samples.cc with-service-account
+
+*/
+
 /*! @page ValidationHelperV1Client-endpoint-snippet Override ValidationHelperV1Client Endpoint Configuration
 
 @snippet google/cloud/binaryauthorization/samples/validation_helper_v1_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ValidationHelperV1Client-service-account-snippet Override ValidationHelperV1Client Authentication Defaults
+
+@snippet google/cloud/binaryauthorization/samples/validation_helper_v1_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

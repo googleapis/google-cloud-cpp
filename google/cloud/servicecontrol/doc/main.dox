@@ -115,6 +115,12 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet quota_controller_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [QuotaControllerClient](@ref QuotaControllerClient-service-account-snippet)
+ [ServiceControllerClient](@ref ServiceControllerClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -150,9 +156,21 @@ can override the default policies.
 
 */
 
+/*! @page QuotaControllerClient-service-account-snippet Override QuotaControllerClient Authentication Defaults
+
+@snippet google/cloud/servicecontrol/samples/quota_controller_client_samples.cc with-service-account
+
+*/
+
 /*! @page ServiceControllerClient-endpoint-snippet Override ServiceControllerClient Endpoint Configuration
 
 @snippet google/cloud/servicecontrol/samples/service_controller_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ServiceControllerClient-service-account-snippet Override ServiceControllerClient Authentication Defaults
+
+@snippet google/cloud/servicecontrol/samples/service_controller_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->
