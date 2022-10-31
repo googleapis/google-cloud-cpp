@@ -40,6 +40,7 @@ if (BUILD_TESTING)
         bigtable_hello_world.cc
         bigtable_instance_admin_snippets.cc
         bigtable_table_admin_backup_snippets.cc
+        client_samples.cc
         data_async_snippets.cc
         data_filter_snippets.cc
         data_snippets.cc
