@@ -256,7 +256,7 @@ target_link_libraries(
            absl::time
            absl::variant
            google-cloud-cpp::common
-           google-cloud-cpp::rest-internal
+           google-cloud-cpp::rest_internal
            nlohmann_json::nlohmann_json
            Crc32c::crc32c
            CURL::libcurl
