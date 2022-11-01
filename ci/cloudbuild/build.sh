@@ -191,13 +191,6 @@ export TRIGGER_TYPE
 export VERBOSE_FLAG
 export LOG_LINKER_PAT
 
-# Default to generating all libraries.
-if [ -n "${GENERATE_GOLDEN_ONLY+set}" ]; then
-  GENERATE_GOLDEN_ONLY=${GENERATE_GOLDEN_ONLY:-}
-else
-  GENERATE_GOLDEN_ONLY=""
-fi
-
 # --local is the most fundamental build mode, in that all other builds
 # eventually call this one. For example, a --docker build will build the
 # specified docker image, then in a container from that image it will run the
@@ -355,7 +348,7 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     "--volume=${HOME}/.config/gcloud:/h/.config/gcloud:Z"
     # Makes the generate-libraries build ONLY touch golden files in the
     # generator dir.
-    "--env=GENERATE_GOLDEN_ONLY=${GENERATE_GOLDEN_ONLY}"
+    "--env=GENERATE_GOLDEN_ONLY=${GENERATE_GOLDEN_ONLY-}"
   )
   # All GOOGLE_CLOUD_* env vars will be passed to the docker container.
   for e in $(env); do

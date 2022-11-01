@@ -51,7 +51,7 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   git ls-files -z -- '*.h' '*.cc' |
     xargs -P "$(nproc)" -n 1 -0 clang-format -i
 else
-  io::log_red "Only formatting generator golden code."
+  io::log_red "Only formatting generated golden code."
   git ls-files -z -- 'generator/integration_tests/golden/internal/*.h' \
     'generator/integration_tests/golden/*.h' \
     'generator/integration_tests/golden/internal/*.cc' \
@@ -63,7 +63,7 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   io::log_h2 "Updating protobuf lists/deps"
   external/googleapis/update_libraries.sh
 else
-  io::log_red "Skipping update of generated libraries dependencies."
+  io::log_red "Skipping update of protobuf lists/deps."
 fi
 
 # This build should fail if any generated files differ from what was checked
