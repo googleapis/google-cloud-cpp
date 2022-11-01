@@ -77,9 +77,18 @@ google_cloud_cpp_proto_library(
     pubsub_samples_protos samples.proto PROTO_PATH_DIRECTORIES
     ${CMAKE_CURRENT_SOURCE_DIR} LOCAL_INCLUDE)
 
+# Generate a target for each integration test.
+foreach (fname ${pubsub_client_integration_samples})
+    google_cloud_cpp_add_executable(target "pubsub" "${fname}")
+    add_test(NAME ${target} COMMAND ${target})
+    target_link_libraries(
+        ${target} PRIVATE pubsub_samples_protos pubsub_samples_common
+                          google_cloud_cpp_testing google-cloud-cpp::pubsub)
+    google_cloud_cpp_add_common_options(${target})
+endforeach ()
+
 # Generate a target for each unit test.
-foreach (fname ${pubsub_client_integration_samples}
-               ${pubsub_client_unit_samples})
+foreach (fname ${pubsub_client_unit_samples})
     google_cloud_cpp_add_executable(target "pubsub" "${fname}")
     add_test(NAME ${target} COMMAND ${target})
     target_link_libraries(
