@@ -179,7 +179,6 @@ In addition, these existing libraries are now GA:
 - feat(generator): includes samples in DOXYGEN_EXAMPLE_PATH ([#10126](https://github.com/googleapis/google-cloud-cpp/pull/10126))
 - feat(generator): build scripts for samples ([#10125](https://github.com/googleapis/google-cloud-cpp/pull/10125))
 - feat(generator): generate simple samples for `*Client` ([#10118](https://github.com/googleapis/google-cloud-cpp/pull/10118))
-- doc: mocks library / StreamRange ([#10122](https://github.com/googleapis/google-cloud-cpp/pull/10122))
 - feat: add mock library w/ StreamRange ([#9998](https://github.com/googleapis/google-cloud-cpp/pull/9998))
 - doc(common): several fixes from a post-merge review ([#10111](https://github.com/googleapis/google-cloud-cpp/pull/10111))
 - doc(common): make authentication docs easier to find ([#10110](https://github.com/googleapis/google-cloud-cpp/pull/10110))
