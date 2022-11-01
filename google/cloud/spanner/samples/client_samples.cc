@@ -27,12 +27,12 @@
 
 namespace {
 
-void ClientSetEndpoint(std::vector<std::string> const& argv) {
+void SetClientEndpoint(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw google::cloud::testing_util::Usage{
-        "client-set-endpoint <project-id> <instance-id> <database-id>"};
+        "set-client-endpoint <project-id> <instance-id> <database-id>"};
   }
-  //! [client-set-endpoint]
+  //! [set-client-endpoint]
   namespace spanner = ::google::cloud::spanner;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& database_id) {
@@ -41,17 +41,17 @@ void ClientSetEndpoint(std::vector<std::string> const& argv) {
     return spanner::Client(spanner::MakeConnection(
         spanner::Database(project_id, instance_id, database_id), options));
   }
-  //! [client-set-endpoint]
+  //! [set-client-endpoint]
   (argv.at(0), argv.at(1), argv.at(2));
 }
 
-void ClientWithServiceAccount(std::vector<std::string> const& argv) {
+void WithServiceAccount(std::vector<std::string> const& argv) {
   if (argv.size() != 4) {
     throw google::cloud::testing_util::Usage{
-        "client-with-service-account <project-id> <instance-id> <database-id> "
+        "with-service-account <project-id> <instance-id> <database-id> "
         "<keyfile>"};
   }
-  //! [client-with-service-account]
+  //! [with-service-account]
   namespace spanner = ::google::cloud::spanner;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& database_id, std::string const& keyfile) {
@@ -64,7 +64,7 @@ void ClientWithServiceAccount(std::vector<std::string> const& argv) {
     return spanner::Client(spanner::MakeConnection(
         spanner::Database(project_id, instance_id, database_id), options));
   }
-  //! [client-with-service-account]
+  //! [with-service-account]
   (argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
@@ -87,14 +87,14 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto const keyfile =
       GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 
-  std::cout << "\nRunning ClientSetEndpoint() example" << std::endl;
-  ClientSetEndpoint({project_id, instance_id, database_id});
+  std::cout << "\nRunning SetClientEndpoint() example" << std::endl;
+  SetClientEndpoint({project_id, instance_id, database_id});
 
   if (!emulator) {
     // On the emulator this blocks, as the emulator does not support credentials
     // that require SSL.
-    std::cout << "\nRunning ClientWithServiceAccount() example" << std::endl;
-    ClientWithServiceAccount({project_id, instance_id, database_id, keyfile});
+    std::cout << "\nRunning WithServiceAccount() example" << std::endl;
+    WithServiceAccount({project_id, instance_id, database_id, keyfile});
   }
 
   std::cout << "\nAutoRun done" << std::endl;
@@ -104,8 +104,8 @@ void AutoRun(std::vector<std::string> const& argv) {
 
 int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
   google::cloud::testing_util::Example example({
-      {"client-set-endpoint", ClientSetEndpoint},
-      {"client-with-service-account", ClientWithServiceAccount},
+      {"set-client-endpoint", SetClientEndpoint},
+      {"with-service-account", WithServiceAccount},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);

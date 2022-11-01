@@ -137,7 +137,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.  For example, this will override the default
 endpoint for `google::cloud::spanner::Client`:
 
-@snippet client_samples.cc client-set-endpoint
+@snippet client_samples.cc set-client-endpoint
 
 Follow these links for additional examples
  [DatabaseAdminClient](@ref DatabaseAdminClient-set-endpoint-snippet)
@@ -150,7 +150,7 @@ Some applications cannot use the default authentication mechanism (known as
 `google::cloud::UnifiedCredentialsOption`. The following example shows how
 to explicitly load a service account key file.
 
-@snippet client_samples.cc client-with-service-account
+@snippet client_samples.cc with-service-account
 
 Keep in mind that we chose this as an example because it is relatively easy to
 understand. Consult the [Best practices for managing service account keys]
@@ -198,13 +198,13 @@ period between retries.
 
 /*! @page Client-set-endpoint-snippet Override Client Default Endpoint
 
-@snippet google/cloud/spanner/samples/client_samples.cc client-set-endpoint
+@snippet google/cloud/spanner/samples/client_samples.cc set-client-endpoint
 
 */
 
 /*! @page Client-with-service-account-snippet Override Client Default Authentication
 
-@snippet google/cloud/spanner/samples/client_samples.cc client-with-service-account
+@snippet google/cloud/spanner/samples/client_samples.cc with-service-account
 
 */
 
