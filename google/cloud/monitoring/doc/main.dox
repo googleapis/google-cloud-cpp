@@ -152,6 +152,19 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet alert_policy_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [AlertPolicyServiceClient](@ref AlertPolicyServiceClient-service-account-snippet)
+ [DashboardsServiceClient](@ref DashboardsServiceClient-service-account-snippet)
+ [GroupServiceClient](@ref GroupServiceClient-service-account-snippet)
+ [MetricServiceClient](@ref MetricServiceClient-service-account-snippet)
+ [MetricsScopesClient](@ref MetricsScopesClient-service-account-snippet)
+ [NotificationChannelServiceClient](@ref NotificationChannelServiceClient-service-account-snippet)
+ [QueryServiceClient](@ref QueryServiceClient-service-account-snippet)
+ [ServiceMonitoringServiceClient](@ref ServiceMonitoringServiceClient-service-account-snippet)
+ [UptimeCheckServiceClient](@ref UptimeCheckServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -187,9 +200,21 @@ can override the default policies.
 
 */
 
+/*! @page AlertPolicyServiceClient-service-account-snippet Override AlertPolicyServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/samples/alert_policy_client_samples.cc with-service-account
+
+*/
+
 /*! @page DashboardsServiceClient-endpoint-snippet Override DashboardsServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/dashboards_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page DashboardsServiceClient-service-account-snippet Override DashboardsServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/samples/dashboards_client_samples.cc with-service-account
 
 */
 
@@ -199,9 +224,21 @@ can override the default policies.
 
 */
 
+/*! @page GroupServiceClient-service-account-snippet Override GroupServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/samples/group_client_samples.cc with-service-account
+
+*/
+
 /*! @page MetricServiceClient-endpoint-snippet Override MetricServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/metric_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page MetricServiceClient-service-account-snippet Override MetricServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/samples/metric_client_samples.cc with-service-account
 
 */
 
@@ -211,9 +248,21 @@ can override the default policies.
 
 */
 
+/*! @page MetricsScopesClient-service-account-snippet Override MetricsScopesClient Authentication Defaults
+
+@snippet google/cloud/monitoring/samples/metrics_scopes_client_samples.cc with-service-account
+
+*/
+
 /*! @page NotificationChannelServiceClient-endpoint-snippet Override NotificationChannelServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/notification_channel_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page NotificationChannelServiceClient-service-account-snippet Override NotificationChannelServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/samples/notification_channel_client_samples.cc with-service-account
 
 */
 
@@ -223,15 +272,33 @@ can override the default policies.
 
 */
 
+/*! @page QueryServiceClient-service-account-snippet Override QueryServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/samples/query_client_samples.cc with-service-account
+
+*/
+
 /*! @page ServiceMonitoringServiceClient-endpoint-snippet Override ServiceMonitoringServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/service_monitoring_client_samples.cc set-client-endpoint
 
 */
 
+/*! @page ServiceMonitoringServiceClient-service-account-snippet Override ServiceMonitoringServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/samples/service_monitoring_client_samples.cc with-service-account
+
+*/
+
 /*! @page UptimeCheckServiceClient-endpoint-snippet Override UptimeCheckServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/uptime_check_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page UptimeCheckServiceClient-service-account-snippet Override UptimeCheckServiceClient Authentication Defaults
+
+@snippet google/cloud/monitoring/samples/uptime_check_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

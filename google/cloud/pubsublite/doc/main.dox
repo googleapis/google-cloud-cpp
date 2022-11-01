@@ -117,6 +117,12 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet admin_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [AdminServiceClient](@ref AdminServiceClient-service-account-snippet)
+ [TopicStatsServiceClient](@ref TopicStatsServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -151,9 +157,21 @@ can override the default policies.
 
 */
 
+/*! @page AdminServiceClient-service-account-snippet Override AdminServiceClient Authentication Defaults
+
+@snippet google/cloud/pubsublite/samples/admin_client_samples.cc with-service-account
+
+*/
+
 /*! @page TopicStatsServiceClient-endpoint-snippet Override TopicStatsServiceClient Endpoint Configuration
 
 @snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page TopicStatsServiceClient-service-account-snippet Override TopicStatsServiceClient Authentication Defaults
+
+@snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

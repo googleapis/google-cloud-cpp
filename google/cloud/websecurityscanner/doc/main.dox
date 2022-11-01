@@ -109,6 +109,8 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet web_security_scanner_client_samples.cc with-service-account
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -140,6 +142,12 @@ can override the default policies.
 /*! @page WebSecurityScannerClient-endpoint-snippet Override WebSecurityScannerClient Endpoint Configuration
 
 @snippet google/cloud/websecurityscanner/samples/web_security_scanner_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page WebSecurityScannerClient-service-account-snippet Override WebSecurityScannerClient Authentication Defaults
+
+@snippet google/cloud/websecurityscanner/samples/web_security_scanner_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

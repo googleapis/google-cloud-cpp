@@ -118,6 +118,12 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet ekm_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [EkmServiceClient](@ref EkmServiceClient-service-account-snippet)
+ [KeyManagementServiceClient](@ref KeyManagementServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -152,9 +158,21 @@ can override the default policies.
 
 */
 
+/*! @page EkmServiceClient-service-account-snippet Override EkmServiceClient Authentication Defaults
+
+@snippet google/cloud/kms/samples/ekm_client_samples.cc with-service-account
+
+*/
+
 /*! @page KeyManagementServiceClient-endpoint-snippet Override KeyManagementServiceClient Endpoint Configuration
 
 @snippet google/cloud/kms/samples/key_management_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page KeyManagementServiceClient-service-account-snippet Override KeyManagementServiceClient Authentication Defaults
+
+@snippet google/cloud/kms/samples/key_management_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

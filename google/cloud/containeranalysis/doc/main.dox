@@ -116,6 +116,12 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet container_analysis_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [ContainerAnalysisClient](@ref ContainerAnalysisClient-service-account-snippet)
+ [GrafeasClient](@ref GrafeasClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -151,9 +157,21 @@ can override the default policies.
 
 */
 
+/*! @page ContainerAnalysisClient-service-account-snippet Override ContainerAnalysisClient Authentication Defaults
+
+@snippet google/cloud/containeranalysis/samples/container_analysis_client_samples.cc with-service-account
+
+*/
+
 /*! @page GrafeasClient-endpoint-snippet Override GrafeasClient Endpoint Configuration
 
 @snippet google/cloud/containeranalysis/samples/grafeas_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page GrafeasClient-service-account-snippet Override GrafeasClient Authentication Defaults
+
+@snippet google/cloud/containeranalysis/samples/grafeas_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

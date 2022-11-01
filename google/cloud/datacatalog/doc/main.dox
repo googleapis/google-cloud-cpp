@@ -119,6 +119,13 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet data_catalog_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [DataCatalogClient](@ref DataCatalogClient-service-account-snippet)
+ [PolicyTagManagerClient](@ref PolicyTagManagerClient-service-account-snippet)
+ [PolicyTagManagerSerializationClient](@ref PolicyTagManagerSerializationClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -154,15 +161,33 @@ can override the default policies.
 
 */
 
+/*! @page DataCatalogClient-service-account-snippet Override DataCatalogClient Authentication Defaults
+
+@snippet google/cloud/datacatalog/samples/data_catalog_client_samples.cc with-service-account
+
+*/
+
 /*! @page PolicyTagManagerClient-endpoint-snippet Override PolicyTagManagerClient Endpoint Configuration
 
 @snippet google/cloud/datacatalog/samples/policy_tag_manager_client_samples.cc set-client-endpoint
 
 */
 
+/*! @page PolicyTagManagerClient-service-account-snippet Override PolicyTagManagerClient Authentication Defaults
+
+@snippet google/cloud/datacatalog/samples/policy_tag_manager_client_samples.cc with-service-account
+
+*/
+
 /*! @page PolicyTagManagerSerializationClient-endpoint-snippet Override PolicyTagManagerSerializationClient Endpoint Configuration
 
 @snippet google/cloud/datacatalog/samples/policy_tag_manager_serialization_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page PolicyTagManagerSerializationClient-service-account-snippet Override PolicyTagManagerSerializationClient Authentication Defaults
+
+@snippet google/cloud/datacatalog/samples/policy_tag_manager_serialization_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

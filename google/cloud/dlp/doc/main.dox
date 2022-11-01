@@ -109,6 +109,8 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet dlp_client_samples.cc with-service-account
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -141,6 +143,12 @@ can override the default policies.
 /*! @page DlpServiceClient-endpoint-snippet Override DlpServiceClient Endpoint Configuration
 
 @snippet google/cloud/dlp/samples/dlp_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page DlpServiceClient-service-account-snippet Override DlpServiceClient Authentication Defaults
+
+@snippet google/cloud/dlp/samples/dlp_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

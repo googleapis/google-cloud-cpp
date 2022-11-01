@@ -121,6 +121,13 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet budget_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [BudgetServiceClient](@ref BudgetServiceClient-service-account-snippet)
+ [CloudBillingClient](@ref CloudBillingClient-service-account-snippet)
+ [CloudCatalogClient](@ref CloudCatalogClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -155,15 +162,33 @@ can override the default policies.
 
 */
 
+/*! @page BudgetServiceClient-service-account-snippet Override BudgetServiceClient Authentication Defaults
+
+@snippet google/cloud/billing/samples/budget_client_samples.cc with-service-account
+
+*/
+
 /*! @page CloudBillingClient-endpoint-snippet Override CloudBillingClient Endpoint Configuration
 
 @snippet google/cloud/billing/samples/cloud_billing_client_samples.cc set-client-endpoint
 
 */
 
+/*! @page CloudBillingClient-service-account-snippet Override CloudBillingClient Authentication Defaults
+
+@snippet google/cloud/billing/samples/cloud_billing_client_samples.cc with-service-account
+
+*/
+
 /*! @page CloudCatalogClient-endpoint-snippet Override CloudCatalogClient Endpoint Configuration
 
 @snippet google/cloud/billing/samples/cloud_catalog_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page CloudCatalogClient-service-account-snippet Override CloudCatalogClient Authentication Defaults
+
+@snippet google/cloud/billing/samples/cloud_catalog_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

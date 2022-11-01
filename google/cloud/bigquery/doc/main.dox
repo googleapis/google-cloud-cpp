@@ -172,6 +172,18 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet analytics_hub_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [AnalyticsHubServiceClient](@ref AnalyticsHubServiceClient-service-account-snippet)
+ [BigQueryReadClient](@ref BigQueryReadClient-service-account-snippet)
+ [BigQueryWriteClient](@ref BigQueryWriteClient-service-account-snippet)
+ [ConnectionServiceClient](@ref ConnectionServiceClient-service-account-snippet)
+ [DataTransferServiceClient](@ref DataTransferServiceClient-service-account-snippet)
+ [MigrationServiceClient](@ref MigrationServiceClient-service-account-snippet)
+ [ModelServiceClient](@ref ModelServiceClient-service-account-snippet)
+ [ReservationServiceClient](@ref ReservationServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -207,9 +219,21 @@ guide for more details.
 
 */
 
+/*! @page AnalyticsHubServiceClient-service-account-snippet Override AnalyticsHubServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/analytics_hub_client_samples.cc with-service-account
+
+*/
+
 /*! @page BigQueryReadClient-endpoint-snippet Override BigQueryReadClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/samples/bigquery_read_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page BigQueryReadClient-service-account-snippet Override BigQueryReadClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/bigquery_read_client_samples.cc with-service-account
 
 */
 
@@ -219,9 +243,21 @@ guide for more details.
 
 */
 
+/*! @page BigQueryWriteClient-service-account-snippet Override BigQueryWriteClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/bigquery_write_client_samples.cc with-service-account
+
+*/
+
 /*! @page ConnectionServiceClient-endpoint-snippet Override ConnectionServiceClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/samples/connection_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ConnectionServiceClient-service-account-snippet Override ConnectionServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/connection_client_samples.cc with-service-account
 
 */
 
@@ -231,9 +267,21 @@ guide for more details.
 
 */
 
+/*! @page DataTransferServiceClient-service-account-snippet Override DataTransferServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/data_transfer_client_samples.cc with-service-account
+
+*/
+
 /*! @page MigrationServiceClient-endpoint-snippet Override MigrationServiceClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/samples/migration_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page MigrationServiceClient-service-account-snippet Override MigrationServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/migration_client_samples.cc with-service-account
 
 */
 
@@ -243,9 +291,21 @@ guide for more details.
 
 */
 
+/*! @page ModelServiceClient-service-account-snippet Override ModelServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/model_client_samples.cc with-service-account
+
+*/
+
 /*! @page ReservationServiceClient-endpoint-snippet Override ReservationServiceClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/samples/reservation_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ReservationServiceClient-service-account-snippet Override ReservationServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/reservation_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

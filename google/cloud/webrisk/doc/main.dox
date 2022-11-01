@@ -108,6 +108,8 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet web_risk_client_samples.cc with-service-account
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -139,6 +141,12 @@ can override the default policies.
 /*! @page WebRiskServiceClient-endpoint-snippet Override WebRiskServiceClient Endpoint Configuration
 
 @snippet google/cloud/webrisk/samples/web_risk_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page WebRiskServiceClient-service-account-snippet Override WebRiskServiceClient Authentication Defaults
+
+@snippet google/cloud/webrisk/samples/web_risk_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

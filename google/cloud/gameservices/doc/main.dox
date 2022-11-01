@@ -125,6 +125,14 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet game_server_clusters_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [GameServerClustersServiceClient](@ref GameServerClustersServiceClient-service-account-snippet)
+ [GameServerConfigsServiceClient](@ref GameServerConfigsServiceClient-service-account-snippet)
+ [GameServerDeploymentsServiceClient](@ref GameServerDeploymentsServiceClient-service-account-snippet)
+ [RealmsServiceClient](@ref RealmsServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -160,9 +168,21 @@ can override the default policies.
 
 */
 
+/*! @page GameServerClustersServiceClient-service-account-snippet Override GameServerClustersServiceClient Authentication Defaults
+
+@snippet google/cloud/gameservices/samples/game_server_clusters_client_samples.cc with-service-account
+
+*/
+
 /*! @page GameServerConfigsServiceClient-endpoint-snippet Override GameServerConfigsServiceClient Endpoint Configuration
 
 @snippet google/cloud/gameservices/samples/game_server_configs_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page GameServerConfigsServiceClient-service-account-snippet Override GameServerConfigsServiceClient Authentication Defaults
+
+@snippet google/cloud/gameservices/samples/game_server_configs_client_samples.cc with-service-account
 
 */
 
@@ -172,9 +192,21 @@ can override the default policies.
 
 */
 
+/*! @page GameServerDeploymentsServiceClient-service-account-snippet Override GameServerDeploymentsServiceClient Authentication Defaults
+
+@snippet google/cloud/gameservices/samples/game_server_deployments_client_samples.cc with-service-account
+
+*/
+
 /*! @page RealmsServiceClient-endpoint-snippet Override RealmsServiceClient Endpoint Configuration
 
 @snippet google/cloud/gameservices/samples/realms_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page RealmsServiceClient-service-account-snippet Override RealmsServiceClient Authentication Defaults
+
+@snippet google/cloud/gameservices/samples/realms_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

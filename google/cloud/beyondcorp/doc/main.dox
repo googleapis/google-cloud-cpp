@@ -132,6 +132,15 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet app_connections_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [AppConnectionsServiceClient](@ref AppConnectionsServiceClient-service-account-snippet)
+ [AppConnectorsServiceClient](@ref AppConnectorsServiceClient-service-account-snippet)
+ [AppGatewaysServiceClient](@ref AppGatewaysServiceClient-service-account-snippet)
+ [ClientConnectorServicesServiceClient](@ref ClientConnectorServicesServiceClient-service-account-snippet)
+ [ClientGatewaysServiceClient](@ref ClientGatewaysServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -167,9 +176,21 @@ can override the default policies.
 
 */
 
+/*! @page AppConnectionsServiceClient-service-account-snippet Override AppConnectionsServiceClient Authentication Defaults
+
+@snippet google/cloud/beyondcorp/samples/app_connections_client_samples.cc with-service-account
+
+*/
+
 /*! @page AppConnectorsServiceClient-endpoint-snippet Override AppConnectorsServiceClient Endpoint Configuration
 
 @snippet google/cloud/beyondcorp/samples/app_connectors_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page AppConnectorsServiceClient-service-account-snippet Override AppConnectorsServiceClient Authentication Defaults
+
+@snippet google/cloud/beyondcorp/samples/app_connectors_client_samples.cc with-service-account
 
 */
 
@@ -179,15 +200,33 @@ can override the default policies.
 
 */
 
+/*! @page AppGatewaysServiceClient-service-account-snippet Override AppGatewaysServiceClient Authentication Defaults
+
+@snippet google/cloud/beyondcorp/samples/app_gateways_client_samples.cc with-service-account
+
+*/
+
 /*! @page ClientConnectorServicesServiceClient-endpoint-snippet Override ClientConnectorServicesServiceClient Endpoint Configuration
 
 @snippet google/cloud/beyondcorp/samples/client_connector_services_client_samples.cc set-client-endpoint
 
 */
 
+/*! @page ClientConnectorServicesServiceClient-service-account-snippet Override ClientConnectorServicesServiceClient Authentication Defaults
+
+@snippet google/cloud/beyondcorp/samples/client_connector_services_client_samples.cc with-service-account
+
+*/
+
 /*! @page ClientGatewaysServiceClient-endpoint-snippet Override ClientGatewaysServiceClient Endpoint Configuration
 
 @snippet google/cloud/beyondcorp/samples/client_gateways_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ClientGatewaysServiceClient-service-account-snippet Override ClientGatewaysServiceClient Authentication Defaults
+
+@snippet google/cloud/beyondcorp/samples/client_gateways_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

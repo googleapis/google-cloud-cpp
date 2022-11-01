@@ -114,6 +114,12 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet eventarc_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [EventarcClient](@ref EventarcClient-service-account-snippet)
+ [PublisherClient](@ref PublisherClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -149,9 +155,21 @@ can override the default policies.
 
 */
 
+/*! @page EventarcClient-service-account-snippet Override EventarcClient Authentication Defaults
+
+@snippet google/cloud/eventarc/samples/eventarc_client_samples.cc with-service-account
+
+*/
+
 /*! @page PublisherClient-endpoint-snippet Override PublisherClient Endpoint Configuration
 
 @snippet google/cloud/eventarc/samples/publisher_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page PublisherClient-service-account-snippet Override PublisherClient Authentication Defaults
+
+@snippet google/cloud/eventarc/samples/publisher_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

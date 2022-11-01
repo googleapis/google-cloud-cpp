@@ -116,6 +116,12 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet executions_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [ExecutionsClient](@ref ExecutionsClient-service-account-snippet)
+ [WorkflowsClient](@ref WorkflowsClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -150,9 +156,21 @@ can override the default policies.
 
 */
 
+/*! @page ExecutionsClient-service-account-snippet Override ExecutionsClient Authentication Defaults
+
+@snippet google/cloud/workflows/samples/executions_client_samples.cc with-service-account
+
+*/
+
 /*! @page WorkflowsClient-endpoint-snippet Override WorkflowsClient Endpoint Configuration
 
 @snippet google/cloud/workflows/samples/workflows_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page WorkflowsClient-service-account-snippet Override WorkflowsClient Authentication Defaults
+
+@snippet google/cloud/workflows/samples/workflows_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

@@ -123,6 +123,12 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet revisions_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [RevisionsClient](@ref RevisionsClient-service-account-snippet)
+ [ServicesClient](@ref ServicesClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -158,9 +164,21 @@ can override the default policies.
 
 */
 
+/*! @page RevisionsClient-service-account-snippet Override RevisionsClient Authentication Defaults
+
+@snippet google/cloud/run/samples/revisions_client_samples.cc with-service-account
+
+*/
+
 /*! @page ServicesClient-endpoint-snippet Override ServicesClient Endpoint Configuration
 
 @snippet google/cloud/run/samples/services_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ServicesClient-service-account-snippet Override ServicesClient Authentication Defaults
+
+@snippet google/cloud/run/samples/services_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

@@ -147,6 +147,13 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet iam_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [IAMClient](@ref IAMClient-service-account-snippet)
+ [IAMCredentialsClient](@ref IAMCredentialsClient-service-account-snippet)
+ [IAMPolicyClient](@ref IAMPolicyClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -183,15 +190,33 @@ guide for more details.
 
 */
 
+/*! @page IAMClient-service-account-snippet Override IAMClient Authentication Defaults
+
+@snippet google/cloud/iam/samples/iam_client_samples.cc with-service-account
+
+*/
+
 /*! @page IAMCredentialsClient-endpoint-snippet Override IAMCredentialsClient Endpoint Configuration
 
 @snippet google/cloud/iam/samples/iam_credentials_client_samples.cc set-client-endpoint
 
 */
 
+/*! @page IAMCredentialsClient-service-account-snippet Override IAMCredentialsClient Authentication Defaults
+
+@snippet google/cloud/iam/samples/iam_credentials_client_samples.cc with-service-account
+
+*/
+
 /*! @page IAMPolicyClient-endpoint-snippet Override IAMPolicyClient Endpoint Configuration
 
 @snippet google/cloud/iam/samples/iam_policy_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page IAMPolicyClient-service-account-snippet Override IAMPolicyClient Authentication Defaults
+
+@snippet google/cloud/iam/samples/iam_policy_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

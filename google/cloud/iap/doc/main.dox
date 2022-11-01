@@ -114,6 +114,12 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet identity_aware_proxy_admin_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [IdentityAwareProxyAdminServiceClient](@ref IdentityAwareProxyAdminServiceClient-service-account-snippet)
+ [IdentityAwareProxyOAuthServiceClient](@ref IdentityAwareProxyOAuthServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -149,9 +155,21 @@ can override the default policies.
 
 */
 
+/*! @page IdentityAwareProxyAdminServiceClient-service-account-snippet Override IdentityAwareProxyAdminServiceClient Authentication Defaults
+
+@snippet google/cloud/iap/samples/identity_aware_proxy_admin_client_samples.cc with-service-account
+
+*/
+
 /*! @page IdentityAwareProxyOAuthServiceClient-endpoint-snippet Override IdentityAwareProxyOAuthServiceClient Endpoint Configuration
 
 @snippet google/cloud/iap/samples/identity_aware_proxy_o_auth_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page IdentityAwareProxyOAuthServiceClient-service-account-snippet Override IdentityAwareProxyOAuthServiceClient Authentication Defaults
+
+@snippet google/cloud/iap/samples/identity_aware_proxy_o_auth_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

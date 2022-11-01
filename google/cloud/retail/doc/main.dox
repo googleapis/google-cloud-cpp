@@ -136,6 +136,16 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet catalog_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [CatalogServiceClient](@ref CatalogServiceClient-service-account-snippet)
+ [CompletionServiceClient](@ref CompletionServiceClient-service-account-snippet)
+ [PredictionServiceClient](@ref PredictionServiceClient-service-account-snippet)
+ [ProductServiceClient](@ref ProductServiceClient-service-account-snippet)
+ [SearchServiceClient](@ref SearchServiceClient-service-account-snippet)
+ [UserEventServiceClient](@ref UserEventServiceClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -171,9 +181,21 @@ can override the default policies.
 
 */
 
+/*! @page CatalogServiceClient-service-account-snippet Override CatalogServiceClient Authentication Defaults
+
+@snippet google/cloud/retail/samples/catalog_client_samples.cc with-service-account
+
+*/
+
 /*! @page CompletionServiceClient-endpoint-snippet Override CompletionServiceClient Endpoint Configuration
 
 @snippet google/cloud/retail/samples/completion_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page CompletionServiceClient-service-account-snippet Override CompletionServiceClient Authentication Defaults
+
+@snippet google/cloud/retail/samples/completion_client_samples.cc with-service-account
 
 */
 
@@ -183,9 +205,21 @@ can override the default policies.
 
 */
 
+/*! @page PredictionServiceClient-service-account-snippet Override PredictionServiceClient Authentication Defaults
+
+@snippet google/cloud/retail/samples/prediction_client_samples.cc with-service-account
+
+*/
+
 /*! @page ProductServiceClient-endpoint-snippet Override ProductServiceClient Endpoint Configuration
 
 @snippet google/cloud/retail/samples/product_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ProductServiceClient-service-account-snippet Override ProductServiceClient Authentication Defaults
+
+@snippet google/cloud/retail/samples/product_client_samples.cc with-service-account
 
 */
 
@@ -195,9 +229,21 @@ can override the default policies.
 
 */
 
+/*! @page SearchServiceClient-service-account-snippet Override SearchServiceClient Authentication Defaults
+
+@snippet google/cloud/retail/samples/search_client_samples.cc with-service-account
+
+*/
+
 /*! @page UserEventServiceClient-endpoint-snippet Override UserEventServiceClient Endpoint Configuration
 
 @snippet google/cloud/retail/samples/user_event_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page UserEventServiceClient-service-account-snippet Override UserEventServiceClient Authentication Defaults
+
+@snippet google/cloud/retail/samples/user_event_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

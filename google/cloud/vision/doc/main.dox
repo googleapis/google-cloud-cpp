@@ -116,6 +116,12 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet image_annotator_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [ImageAnnotatorClient](@ref ImageAnnotatorClient-service-account-snippet)
+ [ProductSearchClient](@ref ProductSearchClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -151,9 +157,21 @@ can override the default policies.
 
 */
 
+/*! @page ImageAnnotatorClient-service-account-snippet Override ImageAnnotatorClient Authentication Defaults
+
+@snippet google/cloud/vision/samples/image_annotator_client_samples.cc with-service-account
+
+*/
+
 /*! @page ProductSearchClient-endpoint-snippet Override ProductSearchClient Endpoint Configuration
 
 @snippet google/cloud/vision/samples/product_search_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ProductSearchClient-service-account-snippet Override ProductSearchClient Authentication Defaults
+
+@snippet google/cloud/vision/samples/product_search_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

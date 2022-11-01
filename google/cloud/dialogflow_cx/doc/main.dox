@@ -187,6 +187,26 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet agents_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [AgentsClient](@ref AgentsClient-service-account-snippet)
+ [ChangelogsClient](@ref ChangelogsClient-service-account-snippet)
+ [DeploymentsClient](@ref DeploymentsClient-service-account-snippet)
+ [EntityTypesClient](@ref EntityTypesClient-service-account-snippet)
+ [EnvironmentsClient](@ref EnvironmentsClient-service-account-snippet)
+ [ExperimentsClient](@ref ExperimentsClient-service-account-snippet)
+ [FlowsClient](@ref FlowsClient-service-account-snippet)
+ [IntentsClient](@ref IntentsClient-service-account-snippet)
+ [PagesClient](@ref PagesClient-service-account-snippet)
+ [SecuritySettingsServiceClient](@ref SecuritySettingsServiceClient-service-account-snippet)
+ [SessionEntityTypesClient](@ref SessionEntityTypesClient-service-account-snippet)
+ [SessionsClient](@ref SessionsClient-service-account-snippet)
+ [TestCasesClient](@ref TestCasesClient-service-account-snippet)
+ [TransitionRouteGroupsClient](@ref TransitionRouteGroupsClient-service-account-snippet)
+ [VersionsClient](@ref VersionsClient-service-account-snippet)
+ [WebhooksClient](@ref WebhooksClient-service-account-snippet)
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -222,9 +242,21 @@ can override the default policies.
 
 */
 
+/*! @page AgentsClient-service-account-snippet Override AgentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/agents_client_samples.cc with-service-account
+
+*/
+
 /*! @page ChangelogsClient-endpoint-snippet Override ChangelogsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/changelogs_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ChangelogsClient-service-account-snippet Override ChangelogsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/changelogs_client_samples.cc with-service-account
 
 */
 
@@ -234,9 +266,21 @@ can override the default policies.
 
 */
 
+/*! @page DeploymentsClient-service-account-snippet Override DeploymentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/deployments_client_samples.cc with-service-account
+
+*/
+
 /*! @page EntityTypesClient-endpoint-snippet Override EntityTypesClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/entity_types_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page EntityTypesClient-service-account-snippet Override EntityTypesClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/entity_types_client_samples.cc with-service-account
 
 */
 
@@ -246,9 +290,21 @@ can override the default policies.
 
 */
 
+/*! @page EnvironmentsClient-service-account-snippet Override EnvironmentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/environments_client_samples.cc with-service-account
+
+*/
+
 /*! @page ExperimentsClient-endpoint-snippet Override ExperimentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/experiments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page ExperimentsClient-service-account-snippet Override ExperimentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/experiments_client_samples.cc with-service-account
 
 */
 
@@ -258,9 +314,21 @@ can override the default policies.
 
 */
 
+/*! @page FlowsClient-service-account-snippet Override FlowsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/flows_client_samples.cc with-service-account
+
+*/
+
 /*! @page IntentsClient-endpoint-snippet Override IntentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/intents_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page IntentsClient-service-account-snippet Override IntentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/intents_client_samples.cc with-service-account
 
 */
 
@@ -270,9 +338,21 @@ can override the default policies.
 
 */
 
+/*! @page PagesClient-service-account-snippet Override PagesClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/pages_client_samples.cc with-service-account
+
+*/
+
 /*! @page SecuritySettingsServiceClient-endpoint-snippet Override SecuritySettingsServiceClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/security_settings_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page SecuritySettingsServiceClient-service-account-snippet Override SecuritySettingsServiceClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/security_settings_client_samples.cc with-service-account
 
 */
 
@@ -282,9 +362,21 @@ can override the default policies.
 
 */
 
+/*! @page SessionEntityTypesClient-service-account-snippet Override SessionEntityTypesClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/session_entity_types_client_samples.cc with-service-account
+
+*/
+
 /*! @page SessionsClient-endpoint-snippet Override SessionsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/sessions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page SessionsClient-service-account-snippet Override SessionsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/sessions_client_samples.cc with-service-account
 
 */
 
@@ -294,9 +386,21 @@ can override the default policies.
 
 */
 
+/*! @page TestCasesClient-service-account-snippet Override TestCasesClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/test_cases_client_samples.cc with-service-account
+
+*/
+
 /*! @page TransitionRouteGroupsClient-endpoint-snippet Override TransitionRouteGroupsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/transition_route_groups_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page TransitionRouteGroupsClient-service-account-snippet Override TransitionRouteGroupsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/transition_route_groups_client_samples.cc with-service-account
 
 */
 
@@ -306,9 +410,21 @@ can override the default policies.
 
 */
 
+/*! @page VersionsClient-service-account-snippet Override VersionsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/versions_client_samples.cc with-service-account
+
+*/
+
 /*! @page WebhooksClient-endpoint-snippet Override WebhooksClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/webhooks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page WebhooksClient-service-account-snippet Override WebhooksClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/webhooks_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

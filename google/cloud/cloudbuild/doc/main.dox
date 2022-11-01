@@ -106,6 +106,8 @@ Some applications cannot use the default authentication mechanism (known as
 to explicitly load a service account key file.
 
 <!-- inject-service-account-snippet-start -->
+@snippet cloud_build_client_samples.cc with-service-account
+
 <!-- inject-service-account-snippet-end -->
 
 Keep in mind that we chose this as an example because it is relatively easy to
@@ -138,6 +140,12 @@ can override the default policies.
 /*! @page CloudBuildClient-endpoint-snippet Override CloudBuildClient Endpoint Configuration
 
 @snippet google/cloud/cloudbuild/samples/cloud_build_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page CloudBuildClient-service-account-snippet Override CloudBuildClient Authentication Defaults
+
+@snippet google/cloud/cloudbuild/samples/cloud_build_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->
