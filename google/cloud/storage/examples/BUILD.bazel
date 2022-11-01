@@ -60,6 +60,5 @@ load(":storage_examples.bzl", "storage_examples")
         "//:storage",
         "//google/cloud/storage:google_cloud_cpp_storage_grpc",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_examples]

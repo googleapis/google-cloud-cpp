@@ -65,6 +65,5 @@ load(":bigtable_examples.bzl", "bigtable_examples")
         "//:grpc_utils",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
     ],
 ) for test in bigtable_examples]

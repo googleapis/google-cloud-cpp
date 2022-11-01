@@ -19,7 +19,6 @@ package(default_visibility = ["//visibility:private"])
 licenses(["notice"])  # Apache 2.0
 
 load(":spanner_client_integration_samples.bzl", "spanner_client_integration_samples")
-load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
@@ -33,9 +32,10 @@ load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
         "//:spanner",
         "//google/cloud/spanner:spanner_client_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
     ],
 ) for test in spanner_client_integration_samples]
+
+load(":spanner_client_unit_samples.bzl", "spanner_client_unit_samples")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),

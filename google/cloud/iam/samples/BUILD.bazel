@@ -31,7 +31,6 @@ load(":iam_client_samples.bzl", "iam_client_samples")
         "//:common",
         "//:iam",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
     ],
 ) for test in iam_client_samples]
 
