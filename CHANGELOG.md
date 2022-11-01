@@ -152,7 +152,6 @@ In addition, these existing libraries are now GA:
 - feat(pubsub): implement blocking publisher ([#10055](https://github.com/googleapis/google-cloud-cpp/pull/10055))
 - feat(pubsub): implement per-call options for `Subscriber` ([#10043](https://github.com/googleapis/google-cloud-cpp/pull/10043))
 - fix(pubsub): limit `ModifyAckDeadlineRequest` size ([#10032](https://github.com/googleapis/google-cloud-cpp/pull/10032))
-- fix(pubsub): race condition capturing batching timer ([#9996](https://github.com/googleapis/google-cloud-cpp/pull/9996))
 - fix(pubsub): faster shutdowns for `Publisher` ([#9991](https://github.com/googleapis/google-cloud-cpp/pull/9991))
 
 ### [Spanner](/google/cloud/spanner/README.md)
@@ -168,7 +167,6 @@ In addition, these existing libraries are now GA:
 - fix(rest): return complete payloads for errors ([#10051](https://github.com/googleapis/google-cloud-cpp/pull/10051))
 - feat(storage): support `Autoclass` feature ([#10003](https://github.com/googleapis/google-cloud-cpp/pull/10003))
 - feat(storage): faster `InsertObject()` uploads ([#9997](https://github.com/googleapis/google-cloud-cpp/pull/9997))
-- feat(GCS+gRPC): use alternative names in ACLs ([#9992](https://github.com/googleapis/google-cloud-cpp/pull/9992))
 - fix(storage): respect MIME message boundary size limits ([#9965](https://github.com/googleapis/google-cloud-cpp/pull/9965))
 
 ### [Common Libraries](/google/cloud/README.md)
