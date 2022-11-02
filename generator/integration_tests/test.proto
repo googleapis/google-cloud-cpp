@@ -838,7 +838,7 @@ service GoldenKitchenSink {
   // Does Nothing.
   rpc DoNothing(google.protobuf.Empty) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get: "/v1/doNothing"
+      post: "/v1/doNothing"
     };
     option (google.api.method_signature) = "";
   }
