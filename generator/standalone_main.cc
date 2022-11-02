@@ -253,6 +253,9 @@ int main(int argc, char** argv) {
       args.emplace_back("--cpp_codegen_opt=additional_proto_file=" +
                         additional_proto_file);
     }
+    if (service.generate_rest_transport()) {
+      args.emplace_back("--cpp_codegen_opt=generate_rest_transport=true");
+    }
     args.emplace_back(service.service_proto_path());
     for (auto const& additional_proto_file : service.additional_proto_files()) {
       args.emplace_back(additional_proto_file);

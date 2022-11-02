@@ -95,6 +95,11 @@ message ServiceConfiguration {
 
   // Control whether round-robin decorator is generated.
   bool generate_round_robin_decorator = 16;
+
+  // While most services default to gRPC, a handful are REST only. Additionally,
+  // most gRPC services can also support REST via gRPC/HTTP transcoding
+  // https://cloud.google.com/endpoints/docs/grpc/transcoding.
+  bool generate_rest_transport = 17;
 }
 
 message GeneratorConfiguration {
