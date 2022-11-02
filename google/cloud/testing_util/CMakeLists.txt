@@ -24,6 +24,8 @@ add_library(
     async_sequencer.h
     check_predicate_becomes_false.h
     chrono_literals.h
+    chrono_matchers.cc
+    chrono_matchers.h
     command_line_parsing.cc
     command_line_parsing.h
     contains_once.h

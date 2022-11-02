@@ -20,6 +20,7 @@ google_cloud_cpp_testing_hdrs = [
     "async_sequencer.h",
     "check_predicate_becomes_false.h",
     "chrono_literals.h",
+    "chrono_matchers.h",
     "command_line_parsing.h",
     "contains_once.h",
     "example_driver.h",
@@ -38,6 +39,7 @@ google_cloud_cpp_testing_hdrs = [
 ]
 
 google_cloud_cpp_testing_srcs = [
+    "chrono_matchers.cc",
     "command_line_parsing.cc",
     "example_driver.cc",
     "integration_test.cc",
