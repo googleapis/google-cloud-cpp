@@ -920,7 +920,7 @@ TEST(PredicateUtilsTest, HasRoutingHeaderWrongUrlFormat) {
       HasRoutingHeader(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, HasHttpAnnotationRoutingHeaderAnnotationMissing) {
+TEST(PredicateUtilsTest, HasNoHttpAnnotation) {
   google::protobuf::FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
