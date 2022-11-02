@@ -36,7 +36,7 @@ file="README.md"
 (
   mapfile -t libraries < <(bazelisk --batch query \
     --noshow_progress --noshow_loading_progress \
-    'kind(cc_library, //:all) except filter("experimental|mocks|common|grpc_utils", kind(cc_library, //:all))' |
+    'kind(cc_library, //:all) except filter("experimental|mocks|common|grpc_utils|internal", kind(cc_library, //:all))' |
     sed -e 's;//:;;' |
     LC_ALL=C sort)
   sed '/<!-- inject-GA-libraries-start -->/q' "${file}"
