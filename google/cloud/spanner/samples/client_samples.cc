@@ -75,7 +75,6 @@ void AutoRun(std::vector<std::string> const& argv) {
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
       "GOOGLE_CLOUD_PROJECT",
-      "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE",
   });
   auto const emulator = GetEnv("SPANNER_EMULATOR_HOST").has_value();
   auto const project_id = GetEnv("GOOGLE_CLOUD_PROJECT").value();
@@ -84,8 +83,6 @@ void AutoRun(std::vector<std::string> const& argv) {
       google::cloud::spanner_testing::RandomInstanceName(generator);
   auto const database_id =
       google::cloud::spanner_testing::RandomDatabaseName(generator);
-  auto const keyfile =
-      GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
 
   std::cout << "\nRunning SetClientEndpoint() example" << std::endl;
   SetClientEndpoint({project_id, instance_id, database_id});
@@ -93,6 +90,11 @@ void AutoRun(std::vector<std::string> const& argv) {
   if (!emulator) {
     // On the emulator this blocks, as the emulator does not support credentials
     // that require SSL.
+    examples::CheckEnvironmentVariablesAreSet({
+        "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE",
+    });
+    auto const keyfile =
+        GetEnv("GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE").value();
     std::cout << "\nRunning WithServiceAccount() example" << std::endl;
     WithServiceAccount({project_id, instance_id, database_id, keyfile});
   }
