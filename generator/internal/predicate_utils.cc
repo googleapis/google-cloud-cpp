@@ -134,6 +134,12 @@ bool HasRoutingHeader(MethodDescriptor const& method) {
   return absl::holds_alternative<HttpExtensionInfo>(result);
 }
 
+bool HasHttpAnnotation(google::protobuf::MethodDescriptor const& method) {
+  auto result = ParseHttpExtension(method);
+  return absl::holds_alternative<HttpExtensionInfo>(result) ||
+         absl::holds_alternative<HttpSimpleInfo>(result);
+}
+
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google

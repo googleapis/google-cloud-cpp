@@ -84,6 +84,12 @@ bool IsLongrunningMetadataTypeUsedAsResponse(
 bool HasRoutingHeader(google::protobuf::MethodDescriptor const& method);
 
 /**
+ * Determines if the method contains a google.api.http annotation necessary for
+ * supporting REST transport.
+ */
+bool HasHttpAnnotation(google::protobuf::MethodDescriptor const& method);
+
+/**
  * If method meets pagination criteria, provides paginated field type and field
  * name.
  *
