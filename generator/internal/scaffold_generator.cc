@@ -36,9 +36,10 @@ auto constexpr kApiIndexFilename = "api-index-v1.json";
 
 std::string LibraryName(
     google::cloud::cpp::generator::ServiceConfiguration const& service) {
-  auto const l = service.product_path().find_last_of('/');
-  if (l == std::string::npos) return {};
-  return service.product_path().substr(l + 1);
+  std::vector<std::string> v = absl::StrSplit(service.product_path(), '/');
+  if (v.size() < 3) return {};
+  if (v[0] != "google" && v[1] != "cloud") return {};
+  return v[2];
 }
 
 std::string SiteRoot(
