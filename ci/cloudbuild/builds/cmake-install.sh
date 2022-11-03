@@ -61,7 +61,6 @@ expected_dirs+=(
   ./include/google/appengine/logging/v1
   ./include/google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging/v1
-  ./include/google/cloud/bigtable/admin/mocks
   ./include/google/cloud/bigtable/mocks
   # no RPC services in google/cloud/certificatemanager/logging
   ./include/google/cloud/certificatemanager/logging
@@ -89,7 +88,6 @@ expected_dirs+=(
   # no gRPC services in google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging/v1
-  ./include/google/cloud/spanner/admin/mocks
   ./include/google/cloud/spanner/internal
   ./include/google/cloud/spanner/mocks
   ./include/google/cloud/storage/oauth2
@@ -115,7 +113,6 @@ expected_dirs+=(
   ./lib64/cmake/google_cloud_cpp_pubsub_mocks
   ./lib64/cmake/google_cloud_cpp_rest_internal
   ./lib64/cmake/google_cloud_cpp_rest_protobuf_internal
-  ./lib64/cmake/google_cloud_cpp_spanner
   ./lib64/pkgconfig
 )
 

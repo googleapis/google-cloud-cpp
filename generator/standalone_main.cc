@@ -109,8 +109,6 @@ int WriteInstallDirectories(
       install_directories.push_back(p);
     }
     auto const lib = google::cloud::generator_internal::LibraryName(service);
-    // Bigtable and Spanner use a custom path for generated code.
-    if (lib == "admin") continue;
     // Services without a connection do not create mocks.
     if (!service.omit_connection()) {
       install_directories.push_back("./include/" + product_path + "/mocks");
@@ -137,8 +135,6 @@ int WriteFeatureList(
       return 1;
     }
     auto feature = google::cloud::generator_internal::LibraryName(service);
-    // Spanner and Bigtable use a custom directory for generated files
-    if (feature == "admin") continue;
     features.push_back(std::move(feature));
   }
   std::sort(features.begin(), features.end());

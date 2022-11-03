@@ -93,6 +93,7 @@
 ./include/google/cloud/bigtable
 ./include/google/cloud/bigtable/admin
 ./include/google/cloud/bigtable/admin/internal
+./include/google/cloud/bigtable/admin/mocks
 ./include/google/cloud/bigtable/internal
 ./include/google/cloud/billing
 ./include/google/cloud/billing/budgets
@@ -346,6 +347,7 @@
 ./include/google/cloud/spanner
 ./include/google/cloud/spanner/admin
 ./include/google/cloud/spanner/admin/internal
+./include/google/cloud/spanner/admin/mocks
 ./include/google/cloud/speech
 ./include/google/cloud/speech/internal
 ./include/google/cloud/speech/mocks
@@ -543,6 +545,7 @@
 ./lib64/cmake/google_cloud_cpp_servicemanagement
 ./lib64/cmake/google_cloud_cpp_serviceusage
 ./lib64/cmake/google_cloud_cpp_shell
+./lib64/cmake/google_cloud_cpp_spanner
 ./lib64/cmake/google_cloud_cpp_speech
 ./lib64/cmake/google_cloud_cpp_storage
 ./lib64/cmake/google_cloud_cpp_storagetransfer
