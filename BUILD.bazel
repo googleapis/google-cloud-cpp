@@ -265,6 +265,14 @@ cc_library(
 )
 
 cc_library(
+    name = "storage_mocks",
+    testonly = True,
+    deps = [
+        "//google/cloud/storage:storage_client_testing",
+    ],
+)
+
+cc_library(
     name = "experimental-storage-grpc",
     tags = ["manual"],
     deps = [
