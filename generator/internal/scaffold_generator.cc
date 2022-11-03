@@ -37,8 +37,8 @@ auto constexpr kApiIndexFilename = "api-index-v1.json";
 std::string LibraryName(
     google::cloud::cpp::generator::ServiceConfiguration const& service) {
   std::vector<std::string> v = absl::StrSplit(service.product_path(), '/');
-  // Assume we are given: google/cloud/<library>/...
-  if (v.size() < 2) return {};
+  if (v.size() < 3) return {};
+  if (v[0] != "google" && v[1] != "cloud") return {};
   return v[2];
 }
 

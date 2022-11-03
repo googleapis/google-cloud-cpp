@@ -31,7 +31,7 @@ namespace generator_internal {
  * In `google-cloud-cpp` libraries called `foo` live in the `google/cloud/foo`
  * directory. The names of CMake targets, Bazel rules, pkg-config modules,
  * features, etc. are based on the library name. This function returns the
- * name give a service configuration.
+ * name given a service configuration.
  *
  * This function assumes the service configuration has already been validated.
  */
