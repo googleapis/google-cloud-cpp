@@ -45,6 +45,20 @@ char const* const kHierarchy[] = {
     "/external/googleapis/protodeps/",
 };
 
+TEST(ScaffoldGeneratorTest, LibraryName) {
+  google::cloud::cpp::generator::ServiceConfiguration service;
+  service.set_product_path("google/cloud/test");
+  EXPECT_EQ("test", LibraryName(service));
+
+  service.set_product_path("google/cloud/test/v1");
+  EXPECT_EQ("test", LibraryName(service));
+
+  // LibraryName() is only called when we are generating scaffolding, or
+  // updating our CI. We do not care much about the error case.
+  service.set_product_path("bad-directory-structure");
+  EXPECT_EQ("", LibraryName(service));
+}
+
 class ScaffoldGenerator : public ::testing::Test {
  protected:
   ~ScaffoldGenerator() override {
@@ -113,10 +127,6 @@ class ScaffoldGenerator : public ::testing::Test {
   std::string path_;
   google::cloud::cpp::generator::ServiceConfiguration service_;
 };
-
-TEST_F(ScaffoldGenerator, LibraryName) {
-  EXPECT_EQ("test", LibraryName(service()));
-}
 
 TEST_F(ScaffoldGenerator, Vars) {
   auto const ga = ScaffoldVars(path(), service(), false);
