@@ -25,4 +25,5 @@ service {
   gen_async_rpcs: ["GetDatabase", "DropDatabase", "StreamingRead", "StreamingWrite"]
   retryable_status_codes: ["GoldenKitchenSink.kInternal", "kUnavailable", "GoldenThingAdmin.kDeadlineExceeded"]
   generate_round_robin_decorator: true
+  generate_rest_transport: true
 }
