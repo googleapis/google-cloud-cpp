@@ -96,6 +96,8 @@ cc_library(
         ":google_cloud_cpp_generator_testing_cc_proto",
         "//:common",
         "//:grpc_utils",
+        "//:rest_internal",
+        "//:rest_protobuf_internal",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/strings",
         "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
@@ -124,6 +126,7 @@ filegroup(
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_generator_golden_tests]
