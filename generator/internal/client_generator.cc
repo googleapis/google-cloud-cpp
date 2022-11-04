@@ -140,7 +140,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
-      if (IsDeprecatedMethodSignature(method, i)) continue;
+      if (OmitMethodSignature(method, i)) continue;
       std::string const method_string = absl::StrCat(
           "  $method_name$($method_signature", i, "$Options opts = {});\n");
       std::string const signature = method_signature_extension[i];
@@ -382,7 +382,7 @@ $client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
-      if (IsDeprecatedMethodSignature(method, i)) continue;
+      if (OmitMethodSignature(method, i)) continue;
       std::string method_string =
           absl::StrCat("$client_class_name$::$method_name$($method_signature",
                        i, "$Options opts) {\n");

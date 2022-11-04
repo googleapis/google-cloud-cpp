@@ -490,7 +490,13 @@ char const* const kServiceProto =
     "       body: \"*\"\n"
     "    };\n"
     "  }\n"
-
+    "  // Leading comments about rpc Method10.\n"
+    "  rpc Method10(Bar) returns (Empty) {\n"
+    "    option (google.api.method_signature) = \"name\";\n"
+    "    option (google.api.method_signature) = \"parent\";\n"
+    "    option (google.api.method_signature) = \"name,parent,number\";\n"
+    "    option (google.api.method_signature) = \"name,title,number\";\n"
+    "  }\n"
     "}\n";
 
 struct MethodVarsTestValues {
@@ -606,6 +612,18 @@ TEST_F(CreateMethodVarsTest, SkipMethodsWithDeprecatedFields) {
             method_vars->second.end());
   EXPECT_NE(method_vars->second.find("method_signature3"),
             method_vars->second.end());
+}
+
+TEST_F(CreateMethodVarsTest, SkipMethodOverloadsWithDuplicateSignatures) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
+  auto method_vars = vars_.find("google.protobuf.Service.Method10");
+  ASSERT_NE(method_vars, vars_.end());
+  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature0", _)));
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature1", _))));
+  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature2", _)));
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature3", _))));
 }
 
 TEST_F(CreateMethodVarsTest, ParseHttpExtensionWithPrefixAndSuffix) {
