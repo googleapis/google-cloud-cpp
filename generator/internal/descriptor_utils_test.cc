@@ -37,7 +37,9 @@ using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
 using ::google::protobuf::MethodDescriptor;
+using ::testing::_;
 using ::testing::AllOf;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::Field;
@@ -492,13 +494,14 @@ char const* const kServiceProto =
     "}\n";
 
 struct MethodVarsTestValues {
-  MethodVarsTestValues(std::string m, std::string k, std::string v)
+  MethodVarsTestValues(std::string m, std::string k,
+                       absl::optional<std::string> v)
       : method(std::move(m)),
         vars_key(std::move(k)),
         expected_value(std::move(v)) {}
   std::string method;
   std::string vars_key;
-  std::string expected_value;
+  absl::optional<std::string> expected_value;
 };
 
 class CreateMethodVarsTest
@@ -660,9 +663,16 @@ TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
       pool_.FindFileByName("google/foo/v1/service.proto");
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_iter = vars_.find(GetParam().method);
-  EXPECT_TRUE(method_iter != vars_.end());
-  auto iter = method_iter->second.find(GetParam().vars_key);
-  EXPECT_EQ(iter->second, GetParam().expected_value);
+  ASSERT_TRUE(method_iter != vars_.end());
+  if (GetParam().expected_value.has_value()) {
+    EXPECT_THAT(
+        method_iter->second,
+        Contains(Pair(GetParam().vars_key, *GetParam().expected_value)));
+  } else {
+    // If the optional is not engaged, the key should not be present.
+    EXPECT_THAT(method_iter->second,
+                Not(Contains(Pair(GetParam().vars_key, _))));
+  }
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -826,12 +836,16 @@ INSTANTIATE_TEST_SUITE_P(
                              "projects/*/instances/*/databases/*"),
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "default_idempotency", "kIdempotent"),
+        MethodVarsTestValues("google.protobuf.Service.Method6",
+                             "method_signature0", absl::nullopt),
         MethodVarsTestValues(
             "google.protobuf.Service.Method6", "method_signature1",
             "std::map<std::string, std::string> const& labels, "),
         MethodVarsTestValues(
             "google.protobuf.Service.Method6", "method_request_setters1",
             "  *request.mutable_labels() = {labels.begin(), labels.end()};\n"),
+        MethodVarsTestValues("google.protobuf.Service.Method6",
+                             "method_signature2", absl::nullopt),
         // Method7
         MethodVarsTestValues("google.protobuf.Service.Method7",
                              "longrunning_metadata_type",
