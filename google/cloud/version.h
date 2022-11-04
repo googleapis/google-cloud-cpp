@@ -51,31 +51,38 @@
 #define GOOGLE_CLOUD_CPP_GENERATED_NS GOOGLE_CLOUD_CPP_NS
 
 namespace google {
-/**
- * Contains all the Google Cloud C++ Library APIs.
- */
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
- * The Google Cloud Storage C++ Client major version.
+ * The Google Cloud C++ Client major version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
 int constexpr version_major() { return GOOGLE_CLOUD_CPP_VERSION_MAJOR; }
 
 /**
- * The Google Cloud Storage C++ Client minor version.
+ * The Google Cloud C++ Client minor version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
 int constexpr version_minor() { return GOOGLE_CLOUD_CPP_VERSION_MINOR; }
 
 /**
- * The Google Cloud Storage C++ Client patch version.
+ * The Google Cloud C++ Client patch version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
 int constexpr version_patch() { return GOOGLE_CLOUD_CPP_VERSION_PATCH; }
+
+/**
+ * The Google Cloud C++ Client pre-release version.
+ *
+ * @see https://semver.org/spec/v2.0.0.html for details.
+ */
+constexpr char const* version_pre_release() {
+  return GOOGLE_CLOUD_CPP_PRE_RELEASE;
+}
 
 namespace internal {
 auto constexpr kMaxMinorVersions = 100;
@@ -93,7 +100,7 @@ int constexpr version() {
          version_patch();
 }
 
-/// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
+/// The version as a string, in MAJOR.MINOR.PATCH[-PRE][+gitrev] format.
 std::string version_string();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

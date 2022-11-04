@@ -38,11 +38,9 @@
 
 namespace google {
 namespace cloud {
-/**
- * Contains all the Cloud Bigtable C++ client APIs.
- */
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * The Cloud Bigtable C++ Client major version.
  *
@@ -64,10 +62,19 @@ int constexpr version_minor() { return google::cloud::version_minor(); }
  */
 int constexpr version_patch() { return google::cloud::version_patch(); }
 
+/**
+ * The Cloud Bigtable C++ Client pre-release version.
+ *
+ * @see https://semver.org/spec/v2.0.0.html for details.
+ */
+constexpr char const* version_pre_release() {
+  return google::cloud::version_pre_release();
+}
+
 /// A single integer representing the Major/Minor/Patch version.
 int constexpr version() { return google::cloud::version(); }
 
-/// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
+/// The version as a string, in MAJOR.MINOR.PATCH[-PRE][+gitrev] format.
 std::string version_string();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

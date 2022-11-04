@@ -40,34 +40,36 @@
 #define SPANNER_CLIENT_NS GOOGLE_CLOUD_CPP_NS
 
 namespace google {
-/**
- * The namespace Google Cloud Platform C++ client libraries.
- */
 namespace cloud {
-/**
- * Contains all the Cloud Spanner C++ client types and functions.
- */
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
- * The Cloud spanner C++ Client major version.
+ * The Cloud Spanner C++ Client major version.
  */
 int constexpr VersionMajor() { return google::cloud::version_major(); }
 
 /**
- * The Cloud spanner C++ Client minor version.
+ * The Cloud Spanner C++ Client minor version.
  */
 int constexpr VersionMinor() { return google::cloud::version_minor(); }
 
 /**
- * The Cloud spanner C++ Client patch version.
+ * The Cloud Spanner C++ Client patch version.
  */
 int constexpr VersionPatch() { return google::cloud::version_patch(); }
+
+/**
+ * The Cloud Spanner C++ Client pre-release version.
+ */
+constexpr char const* VersionPreRelease() {
+  return google::cloud::version_pre_release();
+}
 
 /// A single integer representing the Major/Minor/Patch version.
 int constexpr Version() { return google::cloud::version(); }
 
-/// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
+/// The version as a string, in MAJOR.MINOR.PATCH[-PRE][+gitrev] format.
 std::string VersionString();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
