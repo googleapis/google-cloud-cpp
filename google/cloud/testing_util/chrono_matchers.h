@@ -15,28 +15,57 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHRONO_MATCHERS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHRONO_MATCHERS_H
 
-#include "google/cloud/internal/port_platform.h"
+#include "google/cloud/internal/type_traits.h"
+#include "google/cloud/version.h"
 #include "absl/time/time.h"
 #include <chrono>
 #include <ostream>
 
+namespace google {
+namespace cloud {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace internal {
+
+template <class Rep, class Period>
+constexpr bool kIsChronoDurationOstreamable =
+    google::cloud::internal::IsOStreamable<
+        std::chrono::duration<Rep, Period>>::kValue;
+
+template <class Clock, class Duration>
+constexpr bool kIsChronoTimePointOstreamable =
+    google::cloud::internal::IsOStreamable<
+        std::chrono::time_point<Clock, Duration>>::kValue;
+
+}  // namespace internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace cloud
+}  // namespace google
+
 /**
  * Provide `std::chrono::duration` and `std::chrono::time_point` output
- * streaming for pre-C++20 builds (it is standard in C++20 and beyond).
- * This enables the printing of legible chrono values from googletest,
- * rather than raw bytes, when a match fails.
+ * streaming when otherwise unsupported. This enables the printing of
+ * legible chrono values from googletest, rather than raw bytes, when a
+ * match fails.
+ *
+ * It is strictly undefined behavior to add to any `std` namespace, but
+ * it works, and, in this test-only case, is well worth it.
  */
-#if GOOGLE_CLOUD_CPP_CPP_VERSION < 202002L
 namespace std {
 namespace chrono {
 
-template <class Rep, class Period>
-std::ostream& operator<<(
+template <class Rep, class Period,
+          typename = typename std::enable_if<
+              !google::cloud::internal::kIsChronoDurationOstreamable<
+                  Rep, Period>>::type>
+std::ostream& operator<<(  //
     std::ostream& str, std::chrono::duration<Rep, Period> const& value) {
   return str << absl::FromChrono(value);
 }
 
-template <class Clock, class Duration>
+template <class Clock, class Duration,
+          typename = typename std::enable_if<
+              !google::cloud::internal::kIsChronoTimePointOstreamable<
+                  Clock, Duration>>::type>
 std::ostream& operator<<(
     std::ostream& str, std::chrono::time_point<Clock, Duration> const& value) {
   return str << absl::FromChrono(value);
@@ -44,6 +73,5 @@ std::ostream& operator<<(
 
 }  // namespace chrono
 }  // namespace std
-#endif  // GOOGLE_CLOUD_CPP_CPP_VERSION < 202002L
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHRONO_MATCHERS_H
