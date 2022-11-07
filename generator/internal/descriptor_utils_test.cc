@@ -500,14 +500,13 @@ char const* const kServiceProto =
     "}\n";
 
 struct MethodVarsTestValues {
-  MethodVarsTestValues(std::string m, std::string k,
-                       absl::optional<std::string> v)
+  MethodVarsTestValues(std::string m, std::string k, std::string v)
       : method(std::move(m)),
         vars_key(std::move(k)),
         expected_value(std::move(v)) {}
   std::string method;
   std::string vars_key;
-  absl::optional<std::string> expected_value;
+  std::string expected_value;
 };
 
 class CreateMethodVarsTest
@@ -604,14 +603,10 @@ TEST_F(CreateMethodVarsTest, SkipMethodsWithDeprecatedFields) {
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_vars = vars_.find("google.protobuf.Service.Method6");
   ASSERT_NE(method_vars, vars_.end());
-  EXPECT_EQ(method_vars->second.find("method_signature0"),
-            method_vars->second.end());
-  EXPECT_NE(method_vars->second.find("method_signature1"),
-            method_vars->second.end());
-  EXPECT_EQ(method_vars->second.find("method_signature2"),
-            method_vars->second.end());
-  EXPECT_NE(method_vars->second.find("method_signature3"),
-            method_vars->second.end());
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature0", _))));
+  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature1", _)));
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature2", _))));
+  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature3", _)));
 }
 
 TEST_F(CreateMethodVarsTest, SkipMethodOverloadsWithDuplicateSignatures) {
@@ -682,15 +677,8 @@ TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_iter = vars_.find(GetParam().method);
   ASSERT_TRUE(method_iter != vars_.end());
-  if (GetParam().expected_value.has_value()) {
-    EXPECT_THAT(
-        method_iter->second,
-        Contains(Pair(GetParam().vars_key, *GetParam().expected_value)));
-  } else {
-    // If the optional is not engaged, the key should not be present.
-    EXPECT_THAT(method_iter->second,
-                Not(Contains(Pair(GetParam().vars_key, _))));
-  }
+  EXPECT_THAT(method_iter->second,
+              Contains(Pair(GetParam().vars_key, GetParam().expected_value)));
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -861,16 +849,12 @@ INSTANTIATE_TEST_SUITE_P(
                              "projects/*/instances/*/databases/*"),
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "default_idempotency", "kIdempotent"),
-        MethodVarsTestValues("google.protobuf.Service.Method6",
-                             "method_signature0", absl::nullopt),
         MethodVarsTestValues(
             "google.protobuf.Service.Method6", "method_signature1",
             "std::map<std::string, std::string> const& labels, "),
         MethodVarsTestValues(
             "google.protobuf.Service.Method6", "method_request_setters1",
             "  *request.mutable_labels() = {labels.begin(), labels.end()};\n"),
-        MethodVarsTestValues("google.protobuf.Service.Method6",
-                             "method_signature2", absl::nullopt),
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "method_http_query_parameters",
                              ",\n{std::make_pair(\"not_used_anymore\", "
