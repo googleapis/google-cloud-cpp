@@ -10,7 +10,8 @@ Client Libraries. Including:
   authentication in the client libraries. See @ref guac for more
   details on authentication.
 - [Options](@ref google::cloud::Options) are used to override the client library
-  default configuration.
+  default configuration. See @ref options for more details on library
+  configuration.
 - [Status](@ref google::cloud::Status) error codes and details from an
   operation.
 - [StatusOr<T>](@ref google::cloud::StatusOr) returns a value on success

@@ -60,6 +60,8 @@ class Credentials {
 
 /**
  * A wrapper to store credentials into an options
+ *
+ * @ingroup options
  * @ingroup guac
  */
 struct UnifiedCredentialsOption {
@@ -210,6 +212,8 @@ std::shared_ptr<Credentials> MakeServiceAccountCredentials(
 
 /**
  * Configure the delegates for `MakeImpersonateServiceAccountCredentials()`
+ *
+ * @ingroup options
  * @ingroup guac
  */
 struct DelegatesOption {
@@ -218,6 +222,8 @@ struct DelegatesOption {
 
 /**
  * Configure the scopes for `MakeImpersonateServiceAccountCredentials()`
+ *
+ * @ingroup options
  * @ingroup guac
  */
 struct ScopesOption {
@@ -226,6 +232,8 @@ struct ScopesOption {
 
 /**
  * Configure the access token lifetime
+ *
+ * @ingroup options
  * @ingroup guac
  */
 struct AccessTokenLifetimeOption {
@@ -271,6 +279,7 @@ struct AccessTokenLifetimeOption {
  * [grpc::SslCredentialsOptions]:
  * https://grpc.github.io/grpc/cpp/structgrpc_1_1_ssl_credentials_options.html
  *
+ * @ingroup options
  * @ingroup guac
  */
 struct CARootsFilePathOption {

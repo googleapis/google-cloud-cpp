@@ -30,6 +30,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * The gRPC credentials used by clients configured with this object.
+ *
+ * @ingroup options
  */
 struct GrpcCredentialOption {
   using Type = std::shared_ptr<grpc::ChannelCredentials>;
@@ -48,6 +50,8 @@ struct GrpcCredentialOption {
  * - `pubsub::MakeSubscriberConnection()`
  * - `spanner::MakeConnection()`
  * - `storage_experimental::DefaultGrpcClient()`
+ *
+ * @ingroup options
  */
 struct GrpcNumChannelsOption {
   using Type = int;
@@ -68,6 +72,8 @@ struct GrpcNumChannelsOption {
  *
  * @see https://grpc.github.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
  * @see https://grpc.github.io/grpc/core/group__grpc__arg__keys.html
+ *
+ * @ingroup options
  */
 struct GrpcChannelArgumentsOption {
   using Type = std::map<std::string, std::string>;
@@ -89,6 +95,8 @@ struct GrpcChannelArgumentsOption {
  *
  * @see https://grpc.github.io/grpc/cpp/classgrpc_1_1_channel_arguments.html
  * @see https://grpc.github.io/grpc/core/group__grpc__arg__keys.html
+ *
+ * @ingroup options
  */
 struct GrpcChannelArgumentsNativeOption {
   using Type = grpc::ChannelArguments;
@@ -96,6 +104,8 @@ struct GrpcChannelArgumentsNativeOption {
 
 /**
  * The `TracingOptions` to use when printing grpc protocol buffer messages.
+ *
+ * @ingroup options
  */
 struct GrpcTracingOptionsOption {
   using Type = TracingOptions;
@@ -111,6 +121,8 @@ struct GrpcTracingOptionsOption {
  *     `GrpcBackgroundThreadsFactoryOption` are mutually exclusive. This option
  *     will be ignored if either `GrpcCompletionQueueOption` or
  *     `GrpcBackgroundThreadsFactoryOption` are set.
+ *
+ * @ingroup options
  */
 struct GrpcBackgroundThreadPoolSizeOption {
   using Type = std::size_t;
@@ -126,6 +138,8 @@ struct GrpcBackgroundThreadPoolSizeOption {
  *
  * @note `GrpcBackgroundThreadPoolSizeOption`, `GrpcCompletionQueueOption`, and
  *     `GrpcBackgroundThreadsFactoryOption` are mutually exclusive.
+ *
+ * @ingroup options
  */
 struct GrpcCompletionQueueOption {
   using Type = CompletionQueue;
@@ -149,6 +163,8 @@ using BackgroundThreadsFactory =
  * @note `GrpcBackgroundThreadPoolSizeOption`, `GrpcCompletionQueueOption`, and
  *     `GrpcBackgroundThreadsFactoryOption` are mutually exclusive. This option
  *     will be ignored if `GrpcCompletionQueueOption` is set.
+ *
+ * @ingroup options
  */
 struct GrpcBackgroundThreadsFactoryOption {
   using Type = BackgroundThreadsFactory;

@@ -85,6 +85,8 @@ inline T const& DefaultValue() {
  * std::set<std::string> const& bar = opts.get<BarOption>();
  * assert(bar == std::set<std::string>{"hello", "world"});
  * @endcode
+ *
+ * @ingroup options
  */
 class Options {
  private:
