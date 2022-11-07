@@ -29,12 +29,12 @@ namespace internal {
 template <class Rep, class Period>
 constexpr bool kIsChronoDurationOstreamable =
     google::cloud::internal::IsOStreamable<
-        std::chrono::duration<Rep, Period>>::kValue;
+        std::chrono::duration<Rep, Period>>::value;
 
 template <class Clock, class Duration>
 constexpr bool kIsChronoTimePointOstreamable =
     google::cloud::internal::IsOStreamable<
-        std::chrono::time_point<Clock, Duration>>::kValue;
+        std::chrono::time_point<Clock, Duration>>::value;
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
