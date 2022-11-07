@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHRONO_MATCHERS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHRONO_MATCHERS_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHRONO_OUTPUT_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHRONO_OUTPUT_H
 
 #include "google/cloud/internal/type_traits.h"
 #include "google/cloud/version.h"
@@ -43,9 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 
 /**
  * Provide `std::chrono::duration` and `std::chrono::time_point` output
- * streaming when otherwise unsupported. This enables the printing of
- * legible chrono values from googletest, rather than raw bytes, when a
- * match fails.
+ * streaming when otherwise unsupported.
  *
  * It is strictly undefined behavior to add to any `std` namespace, but
  * it works, and, in this test-only case, is well worth it.
@@ -74,4 +72,4 @@ std::ostream& operator<<(
 }  // namespace chrono
 }  // namespace std
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHRONO_MATCHERS_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_CHRONO_OUTPUT_H

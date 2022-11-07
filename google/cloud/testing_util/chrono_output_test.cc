@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/testing_util/chrono_matchers.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include <gtest/gtest.h>
 #include <chrono>
 
@@ -21,12 +21,12 @@ namespace {
 // Tautological tests to at least verify that `std::chrono` values are
 // comparable and streamable.
 
-TEST(ChronoMatchers, Duration) {
+TEST(ChronoOutput, Duration) {
   auto d = std::chrono::milliseconds(500);
   EXPECT_LE(d, d) << d;
 }
 
-TEST(ChronoMatchers, TimePoint) {
+TEST(ChronoOutput, TimePoint) {
   auto t = std::chrono::system_clock::now();
   EXPECT_LE(t, t) << t;
 }
