@@ -42,6 +42,7 @@
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/compiler/cpp/names.h>
 #include <regex>
+#include <set>
 #include <string>
 
 using ::google::protobuf::FieldDescriptor;
@@ -181,12 +182,14 @@ void SetMethodSignatureMethodVars(
     VarsDictionary& method_vars) {
   auto method_signature_extension =
       method.options().GetRepeatedExtension(google::api::method_signature);
+  std::set<std::string> method_signature_uids;
   for (int i = 0; i < method_signature_extension.size(); ++i) {
     google::protobuf::Descriptor const* input_type = method.input_type();
     std::vector<std::string> parameters =
         absl::StrSplit(method_signature_extension[i], ',', absl::SkipEmpty());
     std::string method_signature;
     std::string method_request_setters;
+    std::string method_signature_uid;
     bool field_deprecated = false;
     for (auto& parameter : parameters) {
       absl::StripAsciiWhitespace(&parameter);
@@ -198,45 +201,49 @@ void SetMethodSignatureMethodVars(
         break;
       }
       auto const parameter_name = FieldName(parameter_descriptor);
+      std::string cpp_type;
       if (parameter_descriptor->is_map()) {
-        method_signature += absl::StrFormat(
-            "std::map<%s, %s> const& %s",
+        cpp_type = absl::StrFormat(
+            "std::map<%s, %s> const&",
             CppTypeToString(parameter_descriptor->message_type()->map_key()),
-            CppTypeToString(parameter_descriptor->message_type()->map_value()),
-            parameter_name);
+            CppTypeToString(parameter_descriptor->message_type()->map_value()));
         method_request_setters += absl::StrFormat(
             "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
             parameter_name, parameter_name, parameter_name);
       } else if (parameter_descriptor->is_repeated()) {
-        method_signature += absl::StrFormat(
-            "std::vector<%s> const& %s", CppTypeToString(parameter_descriptor),
-            parameter_name);
+        cpp_type = absl::StrFormat("std::vector<%s> const&",
+                                   CppTypeToString(parameter_descriptor));
         method_request_setters += absl::StrFormat(
             "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
             parameter_name, parameter_name, parameter_name);
       } else if (parameter_descriptor->type() ==
                  FieldDescriptor::TYPE_MESSAGE) {
-        method_signature += absl::StrFormat(
-            "%s const& %s", CppTypeToString(parameter_descriptor),
-            parameter_name);
+        cpp_type =
+            absl::StrFormat("%s const&", CppTypeToString(parameter_descriptor));
         method_request_setters += absl::StrFormat(
             "  *request.mutable_%s() = %s;\n", parameter_name, parameter_name);
       } else {
         switch (parameter_descriptor->cpp_type()) {
           case FieldDescriptor::CPPTYPE_STRING:
-            method_signature += absl::StrFormat(
-                "%s const& %s", CppTypeToString(parameter_descriptor),
-                parameter_name);
+            cpp_type = absl::StrFormat("%s const&",
+                                       CppTypeToString(parameter_descriptor));
             break;
           default:
-            method_signature += absl::StrFormat(
-                "%s %s", CppTypeToString(parameter_descriptor), parameter_name);
+            cpp_type = CppTypeToString(parameter_descriptor);
         }
         method_request_setters += absl::StrFormat(
             "  request.set_%s(%s);\n", parameter_name, parameter_name);
       }
-      method_signature += ", ";
+      method_signature += absl::StrFormat("%s %s, ", cpp_type, parameter_name);
+      method_signature_uid += absl::StrFormat("%s,", cpp_type);
     }
+    // If method signatures conflict (because the parameters are of identical
+    // types), we should generate the first signature in the conflict set and
+    // drop the rest.
+    //
+    // See: https://google.aip.dev/client-libraries/4232#method-signatures_1
+    auto p = method_signature_uids.insert(method_signature_uid);
+    if (!p.second) continue;
     if (field_deprecated) continue;
     std::string key = "method_signature" + std::to_string(i);
     method_vars[key] = method_signature;

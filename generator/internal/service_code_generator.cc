@@ -195,7 +195,7 @@ ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
   return include_paths;
 }
 
-bool ServiceCodeGenerator::IsDeprecatedMethodSignature(
+bool ServiceCodeGenerator::OmitMethodSignature(
     google::protobuf::MethodDescriptor const& method,
     int method_signature_number) const {
   auto method_vars = service_method_vars_.find(method.full_name());
