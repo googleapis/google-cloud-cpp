@@ -404,6 +404,7 @@ void SetHttpGetQueryParameters(
     void operator()(absl::monostate) {
       method_vars["method_http_query_parameters"] = method.full_name();
     }
+
     google::protobuf::MethodDescriptor const& method;
     VarsDictionary& method_vars;
   };
