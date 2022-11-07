@@ -86,6 +86,10 @@ class LoggingServiceV2Connection {
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
       AsyncTailLogEntries(ExperimentalTag);
+
+  virtual future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+  AsyncWriteLogEntries(
+      google::logging::v2::WriteLogEntriesRequest const& request);
 };
 
 /**

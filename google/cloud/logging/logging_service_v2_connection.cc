@@ -80,6 +80,14 @@ LoggingServiceV2Connection::AsyncTailLogEntries(ExperimentalTag) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+LoggingServiceV2Connection::AsyncWriteLogEntries(
+    google::logging::v2::WriteLogEntriesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::logging::v2::WriteLogEntriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
