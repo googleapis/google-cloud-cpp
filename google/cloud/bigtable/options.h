@@ -69,6 +69,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * @see https://cloud.google.com/bigtable/docs/replication-overview#app-profiles
  *     for how app profiles are used to achieve replication.
+ *
+ * @ingroup bigtable-options
  */
 struct AppProfileIdOption {
   using Type = std::string;
@@ -109,6 +111,8 @@ struct InstanceAdminEndpointOption {
  * Minimum time in ms to refresh connections.
  *
  * The server will not disconnect idle connections before this time.
+ *
+ * @ingroup bigtable-options
  */
 struct MinConnectionRefreshOption {
   using Type = std::chrono::milliseconds;
@@ -123,6 +127,8 @@ struct MinConnectionRefreshOption {
  *
  * @note If this value is less than the value of `MinConnectionRefreshOption`,
  * it will be set to the value of `MinConnectionRefreshOption`.
+ *
+ * @ingroup bigtable-options
  */
 struct MaxConnectionRefreshOption {
   using Type = std::chrono::milliseconds;
@@ -145,17 +151,29 @@ using DataLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         bigtable::internal::SafeGrpcRetry>;
 
-/// Option to configure the retry policy used by `Table`.
+/**
+ * Option to configure the retry policy used by `Table`.
+ *
+ * @ingroup bigtable-options
+ */
 struct DataRetryPolicyOption {
   using Type = std::shared_ptr<DataRetryPolicy>;
 };
 
-/// Option to configure the backoff policy used by `Table`.
+/**
+ * Option to configure the backoff policy used by `Table`.
+ *
+ * @ingroup bigtable-options
+ */
 struct DataBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to configure the idempotency policy used by `Table`.
+/**
+ *  Option to configure the idempotency policy used by `Table`.
+ *
+ * @ingroup bigtable-options
+ */
 struct IdempotentMutationPolicyOption {
   using Type = std::shared_ptr<bigtable::IdempotentMutationPolicy>;
 };
