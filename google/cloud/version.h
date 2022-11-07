@@ -51,6 +51,9 @@
 #define GOOGLE_CLOUD_CPP_GENERATED_NS GOOGLE_CLOUD_CPP_NS
 
 namespace google {
+/**
+ * Contains all the Google Cloud C++ Library APIs.
+ */
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
@@ -81,7 +84,7 @@ int constexpr version_patch() { return GOOGLE_CLOUD_CPP_VERSION_PATCH; }
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
 constexpr char const* version_pre_release() {
-  return GOOGLE_CLOUD_CPP_PRE_RELEASE;
+  return GOOGLE_CLOUD_CPP_VERSION_PRE_RELEASE;
 }
 
 namespace internal {

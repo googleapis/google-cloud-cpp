@@ -38,6 +38,9 @@
 
 namespace google {
 namespace cloud {
+/**
+ * Contains all the Cloud Bigtable C++ client APIs.
+ */
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 

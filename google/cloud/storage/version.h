@@ -38,6 +38,9 @@
 
 namespace google {
 namespace cloud {
+/**
+ * Contains all the Google Cloud Storage C++ client APIs.
+ */
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 

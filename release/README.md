@@ -22,7 +22,7 @@ the `main` branch. This is displayed in the GitHub page for the project.
 
 ### Update CMakeLists.txt
 
-Set the pre-release version (project DESCRIPTION) to the empty string.
+Set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to the empty string.
 
 ### Update CHANGELOG.md
 
@@ -109,7 +109,7 @@ Working in your fork of `google-cloud-cpp`: bump the version numbers to the
 send the PR for review against `main`. You need to:
 
 - In the top-level `CMakeLists.txt` file, increment the version number,
-  and set the pre-release version (project DESCRIPTION) to "rc".
+  and set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to "rc".
 - Add a "vX.Y.Z - TBD" header, corresponding to the new version number,
   to the `CHANGELOG.md` file.
 - Update the ABI baseline to include the new version numbers in the inline

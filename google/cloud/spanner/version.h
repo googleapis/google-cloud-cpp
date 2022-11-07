@@ -41,6 +41,9 @@
 
 namespace google {
 namespace cloud {
+/**
+ * Contains all the Cloud Spanner C++ client types and functions.
+ */
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
