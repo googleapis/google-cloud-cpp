@@ -16,6 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TYPE_TRAITS_H
 
 #include "google/cloud/version.h"
+#include <iosfwd>
+#include <type_traits>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -36,6 +39,19 @@ namespace internal {
  */
 template <typename...>
 using void_t = void;
+
+//@{
+/**
+ * A helper to detect if a type is output streamable.
+ */
+template <typename T, typename = void>
+class IsOStreamable : public std::false_type {};
+
+template <typename T>
+class IsOStreamable<
+    T, void_t<decltype(std::declval<std::ostream&>() << std::declval<T>())>>
+    : public std::true_type {};
+//@}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
