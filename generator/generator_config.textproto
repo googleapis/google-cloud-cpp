@@ -941,6 +941,7 @@ service {
   service_proto_path: "google/logging/v2/logging.proto"
   product_path: "google/cloud/logging"
   initial_copyright_year: "2021"
+  gen_async_rpcs: ["WriteLogEntries"]
   retryable_status_codes: ["kInternal", "kUnavailable"]
 }
 
