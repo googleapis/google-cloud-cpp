@@ -26,7 +26,7 @@ In general, function call overrides take precedence over `*Client` overrides,
 and these in turn take precedence over any overrides in the `*Connection`
 override.  However, most options can only be set when the `*Connection` object
 is created, you need to consult the documentation for an option to determine
-if they
+if they are usable for a specific function call.
 
 Consider this example:
 
@@ -69,10 +69,10 @@ client level. Meanwhile, `rpc_3` will retry the request 5 times, because the
 value at the `*Client` level overrides the value at the `*Connection` level.
 Likewise, `rpc_2` will retry the request 3 times, because this is the value
 in the `*Connection` and there are no overrides in the client or function calls.
-Finally, `rpc_1` will use the default, for this service the default is to
+Finally, `rpc_1` will use the default. For this service the default is to
 retry for 30 minutes.
 
-Note that only the connection overrides the `g::EndpointOption`, overriding
+Note that only the connection overrides the `g::EndpointOption`. Overriding
 this option at the `*Client` or function call level would have no effect.
 
 ## Library-specific Options
