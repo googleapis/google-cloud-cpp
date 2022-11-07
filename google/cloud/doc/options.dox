@@ -25,7 +25,7 @@ For most libraries overrides can be made at 3 different levels:
 In general, function call overrides take precedence over `*Client` overrides,
 and these in turn take precedence over any overrides in the `*Connection`
 override.  However, most options can only be set when the `*Connection` object
-is created, you need to consult the documentation for an option to determine
+is created.  You need to consult the documentation for an option to determine
 if they are usable for a specific function call.
 
 Consider this example:
