@@ -252,7 +252,23 @@ void SetMethodSignatureMethodVars(
   }
 }
 
+std::string FormatFieldAccessorCall(
+    google::protobuf::MethodDescriptor const& method,
+    std::string const& field_name) {
+  std::vector<std::string> chunks;
+  auto const* input_type = method.input_type();
+  for (auto const& sv : absl::StrSplit(field_name, '.')) {
+    auto const chunk = std::string(sv);
+    auto const* chunk_descriptor = input_type->FindFieldByName(chunk);
+    chunks.push_back(FieldName(chunk_descriptor));
+    input_type = chunk_descriptor->message_type();
+  }
+  return absl::StrJoin(chunks, "().");
+}
+
 void SetHttpResourceRoutingMethodVars(
+    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
+        parsed_http_info,
     google::protobuf::MethodDescriptor const& method,
     VarsDictionary& method_vars) {
   struct HttpInfoVisitor {
@@ -274,16 +290,8 @@ void SetHttpResourceRoutingMethodVars(
       method_vars["method_request_url_substitution"] = info.url_substitution;
       std::string param = info.request_field_name;
       method_vars["method_request_param_key"] = param;
-      std::vector<std::string> chunks;
-      auto const* input_type = method.input_type();
-      for (auto const& sv : absl::StrSplit(param, '.')) {
-        auto const chunk = std::string(sv);
-        auto const* chunk_descriptor = input_type->FindFieldByName(chunk);
-        chunks.push_back(FieldName(chunk_descriptor));
-        input_type = chunk_descriptor->message_type();
-      }
       method_vars["method_request_param_value"] =
-          absl::StrJoin(chunks, "().") + "()";
+          FormatFieldAccessorCall(method, param) + "()";
       method_vars["method_request_body"] = info.body;
       method_vars["method_http_verb"] = info.http_verb;
       method_vars["method_rest_path"] =
@@ -314,8 +322,95 @@ void SetHttpResourceRoutingMethodVars(
     VarsDictionary& method_vars;
   };
 
-  auto info = ParseHttpExtension(method);
-  absl::visit(HttpInfoVisitor(method, method_vars), info);
+  absl::visit(HttpInfoVisitor(method, method_vars), parsed_http_info);
+}
+
+// RestClient::Get does not use request body, so per
+// https://cloud.google.com/apis/design/standard_methods, for HTTP transcoding
+// we need to turn the request fields into query parameters.
+// TODO(#10176): Consider adding support for repeated simple fields.
+void SetHttpGetQueryParameters(
+    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
+        parsed_http_info,
+    google::protobuf::MethodDescriptor const& method,
+    VarsDictionary& method_vars) {
+  struct HttpInfoVisitor {
+    HttpInfoVisitor(google::protobuf::MethodDescriptor const& method,
+                    VarsDictionary& method_vars)
+        : method(method), method_vars(method_vars) {}
+    void FormatQueryParameterCode(
+        std::string const& http_verb,
+        absl::optional<std::string> const& param_field_name) {
+      if (http_verb == "Get") {
+        std::vector<std::pair<std::string, protobuf::FieldDescriptor::CppType>>
+            remaining_request_fields;
+        auto const* request = method.input_type();
+        for (int i = 0; i < request->field_count(); ++i) {
+          auto const* field = request->field(i);
+          // Only attempt to make non-repeated, simple fields query parameters.
+          if (!field->is_repeated() &&
+              field->cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+            if (!param_field_name || field->name() != *param_field_name) {
+              remaining_request_fields.emplace_back(
+                  std::make_pair(field->name(), field->cpp_type()));
+            }
+          }
+        }
+        method_vars["method_http_query_parameters"] = absl::StrCat(
+            ",\n{",
+            absl::StrJoin(
+                remaining_request_fields, ",\n",
+                [&](std::string* out,
+                    std::pair<std::string,
+                              protobuf::FieldDescriptor::CppType> const& i) {
+                  if (i.second == protobuf::FieldDescriptor::CPPTYPE_STRING) {
+                    out->append(
+                        absl::StrFormat("std::make_pair(\"%s\", request.%s())",
+                                        i.first, i.first));
+                  } else {
+                    out->append(absl::StrFormat(
+                        "std::make_pair(\"%s\", std::to_string(request.%s()))",
+                        i.first, i.first));
+                  }
+                }),
+            "}");
+      }
+    }
+
+    // This visitor handles the case where the url field contains a token
+    // surrounded by curly braces:
+    //   patch: "/v1/{parent=projects/*/instances/*}/databases\"
+    // In this case 'parent' is expected to be found as a field in the protobuf
+    // request message and is already included in the url. No need to duplicate
+    // it as a query parameter.
+    void operator()(HttpExtensionInfo const& info) {
+      FormatQueryParameterCode(
+          info.http_verb,
+          FormatFieldAccessorCall(method, info.request_field_name));
+    }
+
+    // This visitor handles the case where no request field is specified in the
+    // url:
+    //   get: "/v1/foo/bar"
+    // In this case, all non-repeated, simple fields should be query parameters.
+    void operator()(HttpSimpleInfo const& info) {
+      FormatQueryParameterCode(info.http_verb, {});
+    }
+
+    // This visitor is an error diagnostic, in case we encounter an url that the
+    // generator does not currently parse. Emitting the method name causes code
+    // generation that does not compile and points to the proto location to be
+    // investigated.
+    void operator()(absl::monostate) {
+      method_vars["method_http_query_parameters"] = method.full_name();
+    }
+
+    google::protobuf::MethodDescriptor const& method;
+    VarsDictionary& method_vars;
+  };
+
+  method_vars["method_http_query_parameters"] = "";
+  absl::visit(HttpInfoVisitor(method, method_vars), parsed_http_info);
 }
 
 std::string DefaultIdempotencyFromHttpOperation(
@@ -925,7 +1020,9 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
       }
     }
     SetMethodSignatureMethodVars(method, method_vars);
-    SetHttpResourceRoutingMethodVars(method, method_vars);
+    auto parsed_http_info = ParseHttpExtension(method);
+    SetHttpResourceRoutingMethodVars(parsed_http_info, method, method_vars);
+    SetHttpGetQueryParameters(parsed_http_info, method, method_vars);
     service_methods_vars[method.full_name()] = method_vars;
   }
   return service_methods_vars;

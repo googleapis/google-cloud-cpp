@@ -713,6 +713,9 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Empty,google/"
                              "foo/v1/service.proto#L31}"),
+        MethodVarsTestValues("google.protobuf.Service.Method0",
+                             "method_http_query_parameters",
+                             "google.protobuf.Service.Method0"),
         // Method1
         MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
                              "Method1"),
@@ -726,6 +729,8 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
                              "foo/v1/service.proto#L16}"),
+        MethodVarsTestValues("google.protobuf.Service.Method1",
+                             "method_http_query_parameters", ""),
         // Method2
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "longrunning_metadata_type",
@@ -755,6 +760,8 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_longrunning_deduced_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
                              "foo/v1/service.proto#L16}"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "method_http_query_parameters", ""),
         // Method3
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_metadata_type",
@@ -864,6 +871,10 @@ INSTANTIATE_TEST_SUITE_P(
             "  *request.mutable_labels() = {labels.begin(), labels.end()};\n"),
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "method_signature2", absl::nullopt),
+        MethodVarsTestValues("google.protobuf.Service.Method6",
+                             "method_http_query_parameters",
+                             ",\n{std::make_pair(\"not_used_anymore\", "
+                             "request.not_used_anymore())}"),
         // Method7
         MethodVarsTestValues("google.protobuf.Service.Method7",
                              "longrunning_metadata_type",
@@ -895,7 +906,14 @@ INSTANTIATE_TEST_SUITE_P(
                              "namespace_().name()"),
         MethodVarsTestValues(
             "google.protobuf.Service.Method8", "method_rest_path",
-            "absl::StrCat(\"/v1/\",request.namespace_().name(),\"\")")),
+            "absl::StrCat(\"/v1/\",request.namespace_().name(),\"\")"),
+        // Method9
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method9", "method_http_query_parameters",
+            ",\n{std::make_pair(\"page_size\", "
+            "std::to_string(request.page_size())),\nstd::make_pair(\"page_"
+            "token\", request.page_token()),\nstd::make_pair(\"name\", "
+            "request.name())}")),
     [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;
