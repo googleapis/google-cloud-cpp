@@ -80,6 +80,8 @@ add_library(
     internal/publisher_stub.h
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
+    internal/pull_ack_handler.cc
+    internal/pull_ack_handler.h
     internal/rejects_with_ordering_key.cc
     internal/rejects_with_ordering_key.h
     internal/schema_auth_decorator.cc
@@ -268,6 +270,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/extend_leases_with_retry_test.cc
         internal/flow_controlled_publisher_connection_test.cc
         internal/ordering_key_publisher_connection_test.cc
+        internal/pull_ack_handler_test.cc
         internal/rejects_with_ordering_key_test.cc
         internal/sequential_batch_sink_test.cc
         internal/session_shutdown_manager_test.cc
