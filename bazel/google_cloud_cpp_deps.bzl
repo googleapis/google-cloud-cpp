@@ -182,4 +182,7 @@ def google_cloud_cpp_deps():
             ],
             sha256 = "ac07840513072b7fcebda6e821068aa04889018f24e10e46181068fb214d7e56",
             build_file = Label("//bazel:crc32c.BUILD"),
+            patch_tool = "patch",
+            patch_args = ["-p1"],
+            patches = [Label("//bazel:configure_template.bzl.patch")],
         )
