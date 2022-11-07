@@ -1,6 +1,6 @@
 --- /dev/null	2022-10-16 17:03:40.015999686 +0000
-+++ bazel/configure_template.bzl	2022-09-09 14:17:54.700804137 +0000
-@@ -0,0 +1,39 @@
++++ bazel/configure_template.bzl	2022-11-07 22:08:29.135633955 +0000
+@@ -0,0 +1,40 @@
 +# Copyright 2022 Google LLC
 +#
 +# Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,8 +18,9 @@
 +"""
 +Define a rule to configure .in template files.
 +
-+We use custom *.BUILD files for two external dependencies that do not natively support Bazel: crc32c and libcurl.
-+Both require configuring a `.in` file. This creates a rules to perform this configuration.
++We use a custom *.BUILD file for crc32c as it does not support Bazel.
++It requires configuring a `.in` file. This creates a rule to perform this
++configuration.
 +"""
 +
 +def _configure_template_impl(ctx):
