@@ -33,6 +33,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * or (2) use a beta or EAP version of the service. When using a beta or EAP
  * version of the service, the AuthorityOption should also be set to the usual
  * hostname of the service.
+ *
+ * @ingroup options
  */
 struct EndpointOption {
   using Type = std::string;
@@ -47,6 +49,8 @@ struct EndpointOption {
  * system or library.
  *
  * @see https://tools.ietf.org/html/rfc7231#section-5.5.3
+ *
+ * @ingroup options
  */
 struct UserAgentProductsOption {
   using Type = std::vector<std::string>;
@@ -76,6 +80,8 @@ struct TracingComponentsOption {
  *     information about the `seviceusage.services.use` permission, including
  *     default roles that grant it.
  * @see https://cloud.google.com/apis/docs/system-parameters
+ *
+ * @ingroup options
  */
 struct UserProjectOption {
   using Type = std::string;
@@ -93,6 +99,8 @@ struct UserProjectOption {
  *
  * Setting this option to the empty string has no effect, i.e., no headers are
  * set. This can be useful if you are not using Google's production environment.
+ *
+ * @ingroup options
  */
 struct AuthorityOption {
   using Type = std::string;
