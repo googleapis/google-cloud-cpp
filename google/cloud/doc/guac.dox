@@ -1,6 +1,8 @@
 /*!
 @defgroup guac Authentication Components
 
+## Overview
+
 Most services in Google Cloud Platform require the client to authenticate the
 requests. Notable exceptions include public buckets in GCS and public data
 sets in BigQuery. The C++ client libraries are automatically configured
