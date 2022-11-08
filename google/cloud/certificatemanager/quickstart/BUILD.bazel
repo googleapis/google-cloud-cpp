@@ -20,6 +20,6 @@ cc_binary(
         "quickstart.cc",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//:certificatemanager",
+        "@google_cloud_cpp//:certificatemanager",
     ],
 )

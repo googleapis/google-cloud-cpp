@@ -38,6 +38,6 @@ DEPRECATED_TARGETS = [
         "verify_deprecated_targets.cc",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//" + target,
+        "@google_cloud_cpp//" + target,
     ],
 ) for target in DEPRECATED_TARGETS]
