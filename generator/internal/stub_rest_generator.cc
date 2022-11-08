@@ -69,26 +69,19 @@ Status StubRestGenerator::GenerateHeader() {
   // clang-format on
 
   for (auto const& method : methods()) {
-    HeaderPrintMethod(
-        method,
-        {MethodPattern(
-             {{IsResponseTypeEmpty,
-               // clang-format off
-    "\n  virtual Status $method_name$(\n",
-    "\n  virtual StatusOr<$response_type$> $method_name$(\n"},
-   {"    rest_internal::RestContext& rest_context,\n"
-    "    $request_type$ const& request) = 0;\n"
-                  // clang-format on
-              }},
-             All(HasHttpAnnotation, IsNonStreaming,
-                 Not(IsLongrunningOperation))),
-         MethodPattern({{R"""(
-  virtual StatusOr<google::longrunning::Operation> $method_name$(
+    if (HasHttpAnnotation(method) && IsNonStreaming(method)) {
+      if (IsResponseTypeEmpty(method)) {
+        HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  virtual Status $method_name$()""");
+      } else {
+        HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  virtual StatusOr<$response_type$> $method_name$()""");
+      }
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
       rest_internal::RestContext& rest_context,
       $request_type$ const& request) = 0;
-)"""}},
-                       And(HasHttpAnnotation, IsLongrunningOperation))},
-        __FILE__, __LINE__);
+)""");
+    }
   }
 
   // close abstract interface Stub base class
@@ -110,25 +103,19 @@ Status StubRestGenerator::GenerateHeader() {
   // clang-format on
 
   for (auto const& method : methods()) {
-    HeaderPrintMethod(
-        method,
-        {MethodPattern({{IsResponseTypeEmpty,
-                         // clang-format off
-    "\n  Status\n",
-    "\n  StatusOr<$response_type$>\n"},
-    {"  $method_name$(\n"
-    "    rest_internal::RestContext& rest_context,\n"
-    "    $request_type$ const& request) override;\n"}},
-                       // clang-format on
-                       All(HasHttpAnnotation, IsNonStreaming,
-                           Not(IsLongrunningOperation))),
-         MethodPattern({{R"""(
-  StatusOr<google::longrunning::Operation> $method_name$(
+    if (HasHttpAnnotation(method) && IsNonStreaming(method)) {
+      if (IsResponseTypeEmpty(method)) {
+        HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  Status $method_name$()""");
+      } else {
+        HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  StatusOr<$response_type$> $method_name$()""");
+      }
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
       rest_internal::RestContext& rest_context,
       $request_type$ const& request) override;
-)"""}},
-                       And(HasHttpAnnotation, IsLongrunningOperation))},
-        __FILE__, __LINE__);
+)""");
+    }
   }
 
   // private members and close default stub class definition
@@ -182,28 +169,31 @@ Status StubRestGenerator::GenerateCc() {
 
   // default stub class member methods
   for (auto const& method : methods()) {
-    CcPrintMethod(
-        method,
-        {
-            MethodPattern(
-                {{IsResponseTypeEmpty,
-                  // clang-format off
-    "\nStatus\n",
-    "\nStatusOr<$response_type$>\n"},
-   {"Default$stub_rest_class_name$::$method_name$(\n"
-    "      rest_internal::RestContext& rest_context,\n"
-    "      $request_type$ const& request) {\n"},
-    {IsResponseTypeEmpty,
-    "  return rest_internal::$method_http_verb$(\n",
-    "  return rest_internal::$method_http_verb$<$response_type$>(\n"},
-   {"      *rest_client_, rest_context, request,\n"},
-   {"      $method_rest_path$$method_http_query_parameters$);\n"},
-   {"}\n"}
-   },
-                // clang-format on
-                And(HasHttpAnnotation, IsNonStreaming)),
-        },
-        __FILE__, __LINE__);
+    if (HasHttpAnnotation(method) && IsNonStreaming(method)) {
+      if (IsResponseTypeEmpty(method)) {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+Status)""");
+      } else {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+StatusOr<$response_type$>)""");
+      }
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+Default$stub_rest_class_name$::$method_name$(
+      rest_internal::RestContext& rest_context,
+      $request_type$ const& request) {)""");
+      if (IsResponseTypeEmpty(method)) {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+  return rest_internal::$method_http_verb$()""");
+      } else {
+        CcPrintMethod(method, __FILE__, __LINE__, R"""(
+  return rest_internal::$method_http_verb$<$response_type$>()""");
+      }
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+      *rest_client_, rest_context, request,
+      $method_rest_path$$method_http_query_parameters$);
+}
+)""");
+    }
   }
 
   CcCloseNamespaces();
