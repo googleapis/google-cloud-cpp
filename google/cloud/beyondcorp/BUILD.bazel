@@ -41,11 +41,6 @@ cc_library(
     name = "google_cloud_cpp_beyondcorp",
     srcs = [":srcs"],
     hdrs = [":hdrs"],
-    # TODO(#9340): fix the Windows builds.
-    target_compatible_with = select({
-        "@platforms//os:windows": ["@platforms//:incompatible"],
-        "//conditions:default": [],
-    }),
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
