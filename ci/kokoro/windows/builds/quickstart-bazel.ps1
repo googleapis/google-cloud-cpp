@@ -40,8 +40,8 @@ function Get-Released-Quickstarts {
 
     Push-Location "${project_root}/google/cloud/bigtable/quickstart"
     bazelisk $bazel_common_flags version | Out-Null
-    bazelisk $bazel_common_flags query --noshow_progress --noshow_loading_progress "filter(/quickstart:quickstart$, kind(cc_binary, @com_github_googleapis_google_cloud_cpp//google/...))" |
-        ForEach-Object { $_.replace("@com_github_googleapis_google_cloud_cpp//google/cloud/", "").replace("/quickstart:quickstart", "") } |
+    bazelisk $bazel_common_flags query --noshow_progress --noshow_loading_progress "filter(/quickstart:quickstart$, kind(cc_binary, @google_cloud_cpp//google/...))" |
+        ForEach-Object { $_.replace("@google_cloud_cpp//google/cloud/", "").replace("/quickstart:quickstart", "") } |
         # The following quickstarts have problems building on Windows:
         #   TODO(#8145) - asset (TRUE/FALSE macros)
         #   TODO(#10067) - batch (awaiting non-experimental target)
