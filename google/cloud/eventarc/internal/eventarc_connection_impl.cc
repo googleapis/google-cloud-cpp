@@ -456,6 +456,36 @@ EventarcConnectionImpl::DeleteChannelConnection(
       __func__);
 }
 
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcConnectionImpl::GetGoogleChannelConfig(
+    google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetGoogleChannelConfig(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&
+                 request) {
+        return stub_->GetGoogleChannelConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcConnectionImpl::UpdateGoogleChannelConfig(
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateGoogleChannelConfig(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+              request) {
+        return stub_->UpdateGoogleChannelConfig(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal
 }  // namespace cloud

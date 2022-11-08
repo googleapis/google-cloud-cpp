@@ -111,6 +111,16 @@ class EventarcConnectionImpl : public eventarc::EventarcConnection {
       google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
           request) override;
 
+  StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+  GetGoogleChannelConfig(
+      google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+  UpdateGoogleChannelConfig(
+      google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+          request) override;
+
  private:
   std::unique_ptr<eventarc::EventarcRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

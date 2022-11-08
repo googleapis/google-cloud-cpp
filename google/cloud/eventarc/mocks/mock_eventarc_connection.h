@@ -125,6 +125,19 @@ class MockEventarcConnection : public eventarc::EventarcConnection {
       (google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
            request),
       (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>,
+              GetGoogleChannelConfig,
+              (google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>,
+      UpdateGoogleChannelConfig,
+      (google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -18,6 +18,7 @@
 
 #include "google/cloud/dialogflow_es/internal/participants_stub.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/participant.grpc.pb.h>
 #include <memory>
@@ -90,6 +91,21 @@ DefaultParticipantsStub::AnalyzeContent(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+DefaultParticipantsStub::AsyncStreamingAnalyzeContent(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  return google::cloud::internal::MakeStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>(
+      cq, std::move(context),
+      [this](grpc::ClientContext* context, grpc::CompletionQueue* cq) {
+        return grpc_stub_->PrepareAsyncStreamingAnalyzeContent(context, cq);
+      });
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>

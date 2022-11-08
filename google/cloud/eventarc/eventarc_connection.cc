@@ -152,6 +152,18 @@ EventarcConnection::DeleteChannelConnection(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcConnection::GetGoogleChannelConfig(
+    google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcConnection::UpdateGoogleChannelConfig(
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<EventarcConnection> MakeEventarcConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,

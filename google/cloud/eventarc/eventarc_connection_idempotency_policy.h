@@ -86,6 +86,14 @@ class EventarcConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteChannelConnection(
       google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
           request);
+
+  virtual google::cloud::Idempotency GetGoogleChannelConfig(
+      google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&
+          request);
+
+  virtual google::cloud::Idempotency UpdateGoogleChannelConfig(
+      google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+          request);
 };
 
 std::unique_ptr<EventarcConnectionIdempotencyPolicy>

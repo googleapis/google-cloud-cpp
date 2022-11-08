@@ -87,79 +87,81 @@ class HubServiceClient {
   //@}
 
   ///
-  /// Lists hubs in a given project.
+  /// Lists the Network Connectivity Center hubs associated with a given
+  /// project.
   ///
   /// @param parent  Required. The parent resource's name.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   /// [google.cloud.networkconnectivity.v1.ListHubsRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L317}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L322}
   /// [google.cloud.networkconnectivity.v1.Hub]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
       std::string const& parent, Options opts = {});
 
   ///
-  /// Lists hubs in a given project.
+  /// Lists the Network Connectivity Center hubs associated with a given
+  /// project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::ListHubsRequest,google/cloud/networkconnectivity/v1/hub.proto#L317}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::ListHubsRequest,google/cloud/networkconnectivity/v1/hub.proto#L322}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   /// [google.cloud.networkconnectivity.v1.ListHubsRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L317}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L322}
   /// [google.cloud.networkconnectivity.v1.Hub]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   StreamRange<google::cloud::networkconnectivity::v1::Hub> ListHubs(
       google::cloud::networkconnectivity::v1::ListHubsRequest request,
       Options opts = {});
 
   ///
-  /// Gets details about the specified hub.
+  /// Gets details about a Network Connectivity Center hub.
   ///
   /// @param name  Required. The name of the hub resource to get.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   /// [google.cloud.networkconnectivity.v1.GetHubRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L353}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L362}
   /// [google.cloud.networkconnectivity.v1.Hub]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
       std::string const& name, Options opts = {});
 
   ///
-  /// Gets details about the specified hub.
+  /// Gets details about a Network Connectivity Center hub.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::GetHubRequest,google/cloud/networkconnectivity/v1/hub.proto#L353}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::GetHubRequest,google/cloud/networkconnectivity/v1/hub.proto#L362}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   /// [google.cloud.networkconnectivity.v1.GetHubRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L353}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L362}
   /// [google.cloud.networkconnectivity.v1.Hub]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   StatusOr<google::cloud::networkconnectivity::v1::Hub> GetHub(
       google::cloud::networkconnectivity::v1::GetHubRequest const& request,
       Options opts = {});
 
   ///
-  /// Creates a new hub in the specified project.
+  /// Creates a new Network Connectivity Center hub in the specified project.
   ///
   /// @param parent  Required. The parent resource.
   /// @param hub  Required. The initial values for a new hub.
@@ -167,12 +169,12 @@ class HubServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   /// [google.cloud.networkconnectivity.v1.CreateHubRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L364}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L375}
   /// [google.cloud.networkconnectivity.v1.Hub]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
       std::string const& parent,
@@ -180,99 +182,101 @@ class HubServiceClient {
       std::string const& hub_id, Options opts = {});
 
   ///
-  /// Creates a new hub in the specified project.
+  /// Creates a new Network Connectivity Center hub in the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::CreateHubRequest,google/cloud/networkconnectivity/v1/hub.proto#L364}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::CreateHubRequest,google/cloud/networkconnectivity/v1/hub.proto#L375}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   /// [google.cloud.networkconnectivity.v1.CreateHubRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L364}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L375}
   /// [google.cloud.networkconnectivity.v1.Hub]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> CreateHub(
       google::cloud::networkconnectivity::v1::CreateHubRequest const& request,
       Options opts = {});
 
   ///
-  /// Updates the description and/or labels of the specified hub.
+  /// Updates the description and/or labels of a Network Connectivity Center
+  /// hub.
   ///
   /// @param hub  Required. The state that the hub should be in after the
   /// update.
   /// @param update_mask  Optional. In the case of an update to an existing hub,
-  /// field mask is used to specify
-  ///  the fields to be overwritten. The fields specified in the update_mask are
-  ///  relative to the resource, not the full request. A field is overwritten if
-  ///  it is in the mask. If the user does not provide a mask, then all fields
-  ///  are overwritten.
+  /// field mask is used
+  ///  to specify the fields to be overwritten. The fields specified in the
+  ///  update_mask are relative to the resource, not the full request. A field
+  ///  is overwritten if it is in the mask. If the user does not provide a mask,
+  ///  then all fields are overwritten.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L397}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L410}
   /// [google.cloud.networkconnectivity.v1.Hub]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
       google::cloud::networkconnectivity::v1::Hub const& hub,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
-  /// Updates the description and/or labels of the specified hub.
+  /// Updates the description and/or labels of a Network Connectivity Center
+  /// hub.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::UpdateHubRequest,google/cloud/networkconnectivity/v1/hub.proto#L397}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::UpdateHubRequest,google/cloud/networkconnectivity/v1/hub.proto#L410}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Hub,google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   /// [google.cloud.networkconnectivity.v1.UpdateHubRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L397}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L410}
   /// [google.cloud.networkconnectivity.v1.Hub]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L200}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L198}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::Hub>> UpdateHub(
       google::cloud::networkconnectivity::v1::UpdateHubRequest const& request,
       Options opts = {});
 
   ///
-  /// Deletes the specified hub.
+  /// Deletes a Network Connectivity Center hub.
   ///
   /// @param name  Required. The name of the hub to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::OperationMetadata,google/cloud/networkconnectivity/v1/common.proto#L31}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::OperationMetadata,google/cloud/networkconnectivity/v1/common.proto#L40}
   ///
   /// [google.cloud.networkconnectivity.v1.DeleteHubRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L426}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L441}
   /// [google.cloud.networkconnectivity.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L31}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteHub(std::string const& name, Options opts = {});
 
   ///
-  /// Deletes the specified hub.
+  /// Deletes a Network Connectivity Center hub.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::DeleteHubRequest,google/cloud/networkconnectivity/v1/hub.proto#L426}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::DeleteHubRequest,google/cloud/networkconnectivity/v1/hub.proto#L441}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::OperationMetadata,google/cloud/networkconnectivity/v1/common.proto#L31}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::OperationMetadata,google/cloud/networkconnectivity/v1/common.proto#L40}
   ///
   /// [google.cloud.networkconnectivity.v1.DeleteHubRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L426}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L441}
   /// [google.cloud.networkconnectivity.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L31}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteHub(
@@ -280,79 +284,81 @@ class HubServiceClient {
       Options opts = {});
 
   ///
-  /// Lists the spokes in the specified project and location.
+  /// Lists the Network Connectivity Center spokes in a specified project and
+  /// location.
   ///
   /// @param parent  Required. The parent resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   /// [google.cloud.networkconnectivity.v1.ListSpokesRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L453}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L469}
   /// [google.cloud.networkconnectivity.v1.Spoke]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
       std::string const& parent, Options opts = {});
 
   ///
-  /// Lists the spokes in the specified project and location.
+  /// Lists the Network Connectivity Center spokes in a specified project and
+  /// location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::ListSpokesRequest,google/cloud/networkconnectivity/v1/hub.proto#L453}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::ListSpokesRequest,google/cloud/networkconnectivity/v1/hub.proto#L469}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   /// [google.cloud.networkconnectivity.v1.ListSpokesRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L453}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L469}
   /// [google.cloud.networkconnectivity.v1.Spoke]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   StreamRange<google::cloud::networkconnectivity::v1::Spoke> ListSpokes(
       google::cloud::networkconnectivity::v1::ListSpokesRequest request,
       Options opts = {});
 
   ///
-  /// Gets details about the specified spoke.
+  /// Gets details about a Network Connectivity Center spoke.
   ///
   /// @param name  Required. The name of the spoke resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   /// [google.cloud.networkconnectivity.v1.GetSpokeRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L489}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L507}
   /// [google.cloud.networkconnectivity.v1.Spoke]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
       std::string const& name, Options opts = {});
 
   ///
-  /// Gets details about the specified spoke.
+  /// Gets details about a Network Connectivity Center spoke.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::GetSpokeRequest,google/cloud/networkconnectivity/v1/hub.proto#L489}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::GetSpokeRequest,google/cloud/networkconnectivity/v1/hub.proto#L507}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   /// [google.cloud.networkconnectivity.v1.GetSpokeRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L489}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L507}
   /// [google.cloud.networkconnectivity.v1.Spoke]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   StatusOr<google::cloud::networkconnectivity::v1::Spoke> GetSpoke(
       google::cloud::networkconnectivity::v1::GetSpokeRequest const& request,
       Options opts = {});
 
   ///
-  /// Creates a spoke in the specified project and location.
+  /// Creates a Network Connectivity Center spoke.
   ///
   /// @param parent  Required. The parent resource.
   /// @param spoke  Required. The initial values for a new spoke.
@@ -360,12 +366,12 @@ class HubServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   /// [google.cloud.networkconnectivity.v1.CreateSpokeRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L500}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L519}
   /// [google.cloud.networkconnectivity.v1.Spoke]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
       std::string const& parent,
@@ -373,99 +379,99 @@ class HubServiceClient {
       std::string const& spoke_id, Options opts = {});
 
   ///
-  /// Creates a spoke in the specified project and location.
+  /// Creates a Network Connectivity Center spoke.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::CreateSpokeRequest,google/cloud/networkconnectivity/v1/hub.proto#L500}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::CreateSpokeRequest,google/cloud/networkconnectivity/v1/hub.proto#L519}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   /// [google.cloud.networkconnectivity.v1.CreateSpokeRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L500}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L519}
   /// [google.cloud.networkconnectivity.v1.Spoke]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> CreateSpoke(
       google::cloud::networkconnectivity::v1::CreateSpokeRequest const& request,
       Options opts = {});
 
   ///
-  /// Updates the parameters of the specified spoke.
+  /// Updates the parameters of a Network Connectivity Center spoke.
   ///
   /// @param spoke  Required. The state that the spoke should be in after the
   /// update.
   /// @param update_mask  Optional. In the case of an update to an existing
-  /// spoke, field mask is used to
-  ///  specify the fields to be overwritten. The fields specified in the
+  /// spoke, field mask is used
+  ///  to specify the fields to be overwritten. The fields specified in the
   ///  update_mask are relative to the resource, not the full request. A field
   ///  is overwritten if it is in the mask. If the user does not provide a mask,
   ///  then all fields are overwritten.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L533}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L554}
   /// [google.cloud.networkconnectivity.v1.Spoke]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
       google::cloud::networkconnectivity::v1::Spoke const& spoke,
       google::protobuf::FieldMask const& update_mask, Options opts = {});
 
   ///
-  /// Updates the parameters of the specified spoke.
+  /// Updates the parameters of a Network Connectivity Center spoke.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::UpdateSpokeRequest,google/cloud/networkconnectivity/v1/hub.proto#L533}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::UpdateSpokeRequest,google/cloud/networkconnectivity/v1/hub.proto#L554}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::Spoke,google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   /// [google.cloud.networkconnectivity.v1.UpdateSpokeRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L533}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L554}
   /// [google.cloud.networkconnectivity.v1.Spoke]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L265}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L266}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>> UpdateSpoke(
       google::cloud::networkconnectivity::v1::UpdateSpokeRequest const& request,
       Options opts = {});
 
   ///
-  /// Deletes the specified spoke.
+  /// Deletes a Network Connectivity Center spoke.
   ///
   /// @param name  Required. The name of the spoke to delete.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::OperationMetadata,google/cloud/networkconnectivity/v1/common.proto#L31}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::OperationMetadata,google/cloud/networkconnectivity/v1/common.proto#L40}
   ///
   /// [google.cloud.networkconnectivity.v1.DeleteSpokeRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L562}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L585}
   /// [google.cloud.networkconnectivity.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L31}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteSpoke(std::string const& name, Options opts = {});
 
   ///
-  /// Deletes the specified spoke.
+  /// Deletes a Network Connectivity Center spoke.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::DeleteSpokeRequest,google/cloud/networkconnectivity/v1/hub.proto#L562}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::DeleteSpokeRequest,google/cloud/networkconnectivity/v1/hub.proto#L585}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::networkconnectivity::v1::OperationMetadata,google/cloud/networkconnectivity/v1/common.proto#L31}
+  /// @googleapis_link{google::cloud::networkconnectivity::v1::OperationMetadata,google/cloud/networkconnectivity/v1/common.proto#L40}
   ///
   /// [google.cloud.networkconnectivity.v1.DeleteSpokeRequest]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L562}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/hub.proto#L585}
   /// [google.cloud.networkconnectivity.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L31}
+  /// @googleapis_reference_link{google/cloud/networkconnectivity/v1/common.proto#L40}
   ///
   future<StatusOr<google::cloud::networkconnectivity::v1::OperationMetadata>>
   DeleteSpoke(

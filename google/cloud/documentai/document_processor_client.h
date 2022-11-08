@@ -108,12 +108,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessResponse,google/cloud/documentai/v1/document_processor_service.proto#L322}
+  /// @googleapis_link{google::cloud::documentai::v1::ProcessResponse,google/cloud/documentai/v1/document_processor_service.proto#L324}
   ///
   /// [google.cloud.documentai.v1.ProcessRequest]:
   /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L254}
   /// [google.cloud.documentai.v1.ProcessResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L322}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L324}
   ///
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
       std::string const& name, Options opts = {});
@@ -126,12 +126,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessResponse,google/cloud/documentai/v1/document_processor_service.proto#L322}
+  /// @googleapis_link{google::cloud::documentai::v1::ProcessResponse,google/cloud/documentai/v1/document_processor_service.proto#L324}
   ///
   /// [google.cloud.documentai.v1.ProcessRequest]:
   /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L254}
   /// [google.cloud.documentai.v1.ProcessResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L322}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L324}
   ///
   StatusOr<google::cloud::documentai::v1::ProcessResponse> ProcessDocument(
       google::cloud::documentai::v1::ProcessRequest const& request,
@@ -150,12 +150,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::BatchProcessResponse,google/cloud/documentai/v1/document_processor_service.proto#L357}
+  /// @googleapis_link{google::cloud::documentai::v1::BatchProcessResponse,google/cloud/documentai/v1/document_processor_service.proto#L359}
   ///
   /// [google.cloud.documentai.v1.BatchProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L332}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L334}
   /// [google.cloud.documentai.v1.BatchProcessResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L357}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L359}
   ///
   future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
   BatchProcessDocuments(std::string const& name, Options opts = {});
@@ -165,16 +165,16 @@ class DocumentProcessorServiceClient {
   /// to Cloud Storage as JSON in the [Document] format.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::BatchProcessRequest,google/cloud/documentai/v1/document_processor_service.proto#L332}
+  /// @googleapis_link{google::cloud::documentai::v1::BatchProcessRequest,google/cloud/documentai/v1/document_processor_service.proto#L334}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::BatchProcessResponse,google/cloud/documentai/v1/document_processor_service.proto#L357}
+  /// @googleapis_link{google::cloud::documentai::v1::BatchProcessResponse,google/cloud/documentai/v1/document_processor_service.proto#L359}
   ///
   /// [google.cloud.documentai.v1.BatchProcessRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L332}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L334}
   /// [google.cloud.documentai.v1.BatchProcessResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L357}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L359}
   ///
   future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
   BatchProcessDocuments(
@@ -191,12 +191,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::FetchProcessorTypesResponse,google/cloud/documentai/v1/document_processor_service.proto#L437}
+  /// @googleapis_link{google::cloud::documentai::v1::FetchProcessorTypesResponse,google/cloud/documentai/v1/document_processor_service.proto#L439}
   ///
   /// [google.cloud.documentai.v1.FetchProcessorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L424}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L426}
   /// [google.cloud.documentai.v1.FetchProcessorTypesResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L437}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L439}
   ///
   StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
   FetchProcessorTypes(std::string const& parent, Options opts = {});
@@ -206,16 +206,16 @@ class DocumentProcessorServiceClient {
   /// because it is not paginated.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::FetchProcessorTypesRequest,google/cloud/documentai/v1/document_processor_service.proto#L424}
+  /// @googleapis_link{google::cloud::documentai::v1::FetchProcessorTypesRequest,google/cloud/documentai/v1/document_processor_service.proto#L426}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::FetchProcessorTypesResponse,google/cloud/documentai/v1/document_processor_service.proto#L437}
+  /// @googleapis_link{google::cloud::documentai::v1::FetchProcessorTypesResponse,google/cloud/documentai/v1/document_processor_service.proto#L439}
   ///
   /// [google.cloud.documentai.v1.FetchProcessorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L424}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L426}
   /// [google.cloud.documentai.v1.FetchProcessorTypesResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L437}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L439}
   ///
   StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
   FetchProcessorTypes(
@@ -234,7 +234,7 @@ class DocumentProcessorServiceClient {
   /// @googleapis_link{google::cloud::documentai::v1::ProcessorType,google/cloud/documentai/v1/processor_type.proto#L32}
   ///
   /// [google.cloud.documentai.v1.ListProcessorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L443}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L445}
   /// [google.cloud.documentai.v1.ProcessorType]:
   /// @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
@@ -245,14 +245,14 @@ class DocumentProcessorServiceClient {
   /// Lists the processor types that exist.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::ListProcessorTypesRequest,google/cloud/documentai/v1/document_processor_service.proto#L443}
+  /// @googleapis_link{google::cloud::documentai::v1::ListProcessorTypesRequest,google/cloud/documentai/v1/document_processor_service.proto#L445}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::documentai::v1::ProcessorType,google/cloud/documentai/v1/processor_type.proto#L32}
   ///
   /// [google.cloud.documentai.v1.ListProcessorTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L443}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L445}
   /// [google.cloud.documentai.v1.ProcessorType]:
   /// @googleapis_reference_link{google/cloud/documentai/v1/processor_type.proto#L32}
   ///
@@ -269,12 +269,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L109}
+  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L113}
   ///
   /// [google.cloud.documentai.v1.ListProcessorsRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L473}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L475}
   /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L109}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L113}
   ///
   StreamRange<google::cloud::documentai::v1::Processor> ListProcessors(
       std::string const& parent, Options opts = {});
@@ -283,16 +283,16 @@ class DocumentProcessorServiceClient {
   /// Lists all processors which belong to this project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::ListProcessorsRequest,google/cloud/documentai/v1/document_processor_service.proto#L473}
+  /// @googleapis_link{google::cloud::documentai::v1::ListProcessorsRequest,google/cloud/documentai/v1/document_processor_service.proto#L475}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L109}
+  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L113}
   ///
   /// [google.cloud.documentai.v1.ListProcessorsRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L473}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L475}
   /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L109}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L113}
   ///
   StreamRange<google::cloud::documentai::v1::Processor> ListProcessors(
       google::cloud::documentai::v1::ListProcessorsRequest request,
@@ -305,12 +305,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L109}
+  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L113}
   ///
   /// [google.cloud.documentai.v1.GetProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L503}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L505}
   /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L109}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L113}
   ///
   StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
       std::string const& name, Options opts = {});
@@ -319,16 +319,16 @@ class DocumentProcessorServiceClient {
   /// Gets a processor detail.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::GetProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L503}
+  /// @googleapis_link{google::cloud::documentai::v1::GetProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L505}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L109}
+  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L113}
   ///
   /// [google.cloud.documentai.v1.GetProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L503}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L505}
   /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L109}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L113}
   ///
   StatusOr<google::cloud::documentai::v1::Processor> GetProcessor(
       google::cloud::documentai::v1::GetProcessorRequest const& request,
@@ -341,12 +341,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessorVersion,google/cloud/documentai/v1/processor.proto#L36}
+  /// @googleapis_link{google::cloud::documentai::v1::ProcessorVersion,google/cloud/documentai/v1/processor.proto#L37}
   ///
   /// [google.cloud.documentai.v1.GetProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L514}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L516}
   /// [google.cloud.documentai.v1.ProcessorVersion]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L36}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L37}
   ///
   StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
       std::string const& name, Options opts = {});
@@ -355,16 +355,16 @@ class DocumentProcessorServiceClient {
   /// Gets a processor version detail.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::GetProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L514}
+  /// @googleapis_link{google::cloud::documentai::v1::GetProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L516}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessorVersion,google/cloud/documentai/v1/processor.proto#L36}
+  /// @googleapis_link{google::cloud::documentai::v1::ProcessorVersion,google/cloud/documentai/v1/processor.proto#L37}
   ///
   /// [google.cloud.documentai.v1.GetProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L514}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L516}
   /// [google.cloud.documentai.v1.ProcessorVersion]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L36}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L37}
   ///
   StatusOr<google::cloud::documentai::v1::ProcessorVersion> GetProcessorVersion(
       google::cloud::documentai::v1::GetProcessorVersionRequest const& request,
@@ -379,12 +379,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessorVersion,google/cloud/documentai/v1/processor.proto#L36}
+  /// @googleapis_link{google::cloud::documentai::v1::ProcessorVersion,google/cloud/documentai/v1/processor.proto#L37}
   ///
   /// [google.cloud.documentai.v1.ListProcessorVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L525}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L527}
   /// [google.cloud.documentai.v1.ProcessorVersion]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L36}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L37}
   ///
   StreamRange<google::cloud::documentai::v1::ProcessorVersion>
   ListProcessorVersions(std::string const& parent, Options opts = {});
@@ -393,16 +393,16 @@ class DocumentProcessorServiceClient {
   /// Lists all versions of a processor.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::ListProcessorVersionsRequest,google/cloud/documentai/v1/document_processor_service.proto#L525}
+  /// @googleapis_link{google::cloud::documentai::v1::ListProcessorVersionsRequest,google/cloud/documentai/v1/document_processor_service.proto#L527}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ProcessorVersion,google/cloud/documentai/v1/processor.proto#L36}
+  /// @googleapis_link{google::cloud::documentai::v1::ProcessorVersion,google/cloud/documentai/v1/processor.proto#L37}
   ///
   /// [google.cloud.documentai.v1.ListProcessorVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L525}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L527}
   /// [google.cloud.documentai.v1.ProcessorVersion]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L36}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L37}
   ///
   StreamRange<google::cloud::documentai::v1::ProcessorVersion>
   ListProcessorVersions(
@@ -417,12 +417,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorVersionMetadata,google/cloud/documentai/v1/document_processor_service.proto#L566}
+  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorVersionMetadata,google/cloud/documentai/v1/document_processor_service.proto#L568}
   ///
   /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L555}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L557}
   /// [google.cloud.documentai.v1.DeleteProcessorVersionMetadata]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L566}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L568}
   ///
   future<
       StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
@@ -433,16 +433,16 @@ class DocumentProcessorServiceClient {
   /// will be deleted.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L555}
+  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L557}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorVersionMetadata,google/cloud/documentai/v1/document_processor_service.proto#L566}
+  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorVersionMetadata,google/cloud/documentai/v1/document_processor_service.proto#L568}
   ///
   /// [google.cloud.documentai.v1.DeleteProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L555}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L557}
   /// [google.cloud.documentai.v1.DeleteProcessorVersionMetadata]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L566}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L568}
   ///
   future<
       StatusOr<google::cloud::documentai::v1::DeleteProcessorVersionMetadata>>
@@ -458,12 +458,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DeployProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L583}
+  /// @googleapis_link{google::cloud::documentai::v1::DeployProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L585}
   ///
   /// [google.cloud.documentai.v1.DeployProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L572}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L574}
   /// [google.cloud.documentai.v1.DeployProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L583}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L585}
   ///
   future<
       StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
@@ -473,16 +473,16 @@ class DocumentProcessorServiceClient {
   /// Deploys the processor version.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::DeployProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L572}
+  /// @googleapis_link{google::cloud::documentai::v1::DeployProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L574}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DeployProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L583}
+  /// @googleapis_link{google::cloud::documentai::v1::DeployProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L585}
   ///
   /// [google.cloud.documentai.v1.DeployProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L572}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L574}
   /// [google.cloud.documentai.v1.DeployProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L583}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L585}
   ///
   future<
       StatusOr<google::cloud::documentai::v1::DeployProcessorVersionResponse>>
@@ -499,12 +499,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::UndeployProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L605}
+  /// @googleapis_link{google::cloud::documentai::v1::UndeployProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L607}
   ///
   /// [google.cloud.documentai.v1.UndeployProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L594}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L596}
   /// [google.cloud.documentai.v1.UndeployProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L605}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L607}
   ///
   future<
       StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
@@ -514,16 +514,16 @@ class DocumentProcessorServiceClient {
   /// Undeploys the processor version.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::UndeployProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L594}
+  /// @googleapis_link{google::cloud::documentai::v1::UndeployProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L596}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::UndeployProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L605}
+  /// @googleapis_link{google::cloud::documentai::v1::UndeployProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L607}
   ///
   /// [google.cloud.documentai.v1.UndeployProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L594}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L596}
   /// [google.cloud.documentai.v1.UndeployProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L605}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L607}
   ///
   future<
       StatusOr<google::cloud::documentai::v1::UndeployProcessorVersionResponse>>
@@ -545,12 +545,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L109}
+  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L113}
   ///
   /// [google.cloud.documentai.v1.CreateProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L619}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L621}
   /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L109}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L113}
   ///
   StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
       std::string const& parent,
@@ -562,16 +562,16 @@ class DocumentProcessorServiceClient {
   /// The processor will be at "ENABLED" state by default after its creation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::CreateProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L619}
+  /// @googleapis_link{google::cloud::documentai::v1::CreateProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L621}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L109}
+  /// @googleapis_link{google::cloud::documentai::v1::Processor,google/cloud/documentai/v1/processor.proto#L113}
   ///
   /// [google.cloud.documentai.v1.CreateProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L619}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L621}
   /// [google.cloud.documentai.v1.Processor]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L109}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/processor.proto#L113}
   ///
   StatusOr<google::cloud::documentai::v1::Processor> CreateProcessor(
       google::cloud::documentai::v1::CreateProcessorRequest const& request,
@@ -585,12 +585,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorMetadata,google/cloud/documentai/v1/document_processor_service.proto#L646}
+  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorMetadata,google/cloud/documentai/v1/document_processor_service.proto#L648}
   ///
   /// [google.cloud.documentai.v1.DeleteProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L635}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L637}
   /// [google.cloud.documentai.v1.DeleteProcessorMetadata]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L646}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L648}
   ///
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
   DeleteProcessor(std::string const& name, Options opts = {});
@@ -600,16 +600,16 @@ class DocumentProcessorServiceClient {
   /// enabled and then deletes all artifacts associated with this processor.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L635}
+  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L637}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorMetadata,google/cloud/documentai/v1/document_processor_service.proto#L646}
+  /// @googleapis_link{google::cloud::documentai::v1::DeleteProcessorMetadata,google/cloud/documentai/v1/document_processor_service.proto#L648}
   ///
   /// [google.cloud.documentai.v1.DeleteProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L635}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L637}
   /// [google.cloud.documentai.v1.DeleteProcessorMetadata]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L646}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L648}
   ///
   future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>
   DeleteProcessor(
@@ -620,16 +620,16 @@ class DocumentProcessorServiceClient {
   /// Enables a processor
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::EnableProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L652}
+  /// @googleapis_link{google::cloud::documentai::v1::EnableProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L654}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::EnableProcessorResponse,google/cloud/documentai/v1/document_processor_service.proto#L664}
+  /// @googleapis_link{google::cloud::documentai::v1::EnableProcessorResponse,google/cloud/documentai/v1/document_processor_service.proto#L666}
   ///
   /// [google.cloud.documentai.v1.EnableProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L652}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L654}
   /// [google.cloud.documentai.v1.EnableProcessorResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L664}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L666}
   ///
   future<StatusOr<google::cloud::documentai::v1::EnableProcessorResponse>>
   EnableProcessor(
@@ -640,16 +640,16 @@ class DocumentProcessorServiceClient {
   /// Disables a processor
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::DisableProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L675}
+  /// @googleapis_link{google::cloud::documentai::v1::DisableProcessorRequest,google/cloud/documentai/v1/document_processor_service.proto#L677}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::DisableProcessorResponse,google/cloud/documentai/v1/document_processor_service.proto#L687}
+  /// @googleapis_link{google::cloud::documentai::v1::DisableProcessorResponse,google/cloud/documentai/v1/document_processor_service.proto#L689}
   ///
   /// [google.cloud.documentai.v1.DisableProcessorRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L675}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L677}
   /// [google.cloud.documentai.v1.DisableProcessorResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L687}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L689}
   ///
   future<StatusOr<google::cloud::documentai::v1::DisableProcessorResponse>>
   DisableProcessor(
@@ -664,16 +664,16 @@ class DocumentProcessorServiceClient {
   /// [BatchProcessDocuments][google.cloud.documentai.v1.DocumentProcessorService.BatchProcessDocuments].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::SetDefaultProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L698}
+  /// @googleapis_link{google::cloud::documentai::v1::SetDefaultProcessorVersionRequest,google/cloud/documentai/v1/document_processor_service.proto#L700}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::SetDefaultProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L719}
+  /// @googleapis_link{google::cloud::documentai::v1::SetDefaultProcessorVersionResponse,google/cloud/documentai/v1/document_processor_service.proto#L721}
   ///
   /// [google.cloud.documentai.v1.SetDefaultProcessorVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L698}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L700}
   /// [google.cloud.documentai.v1.SetDefaultProcessorVersionResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L719}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L721}
   ///
   future<StatusOr<
       google::cloud::documentai::v1::SetDefaultProcessorVersionResponse>>
@@ -692,12 +692,12 @@ class DocumentProcessorServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ReviewDocumentResponse,google/cloud/documentai/v1/document_processor_service.proto#L768}
+  /// @googleapis_link{google::cloud::documentai::v1::ReviewDocumentResponse,google/cloud/documentai/v1/document_processor_service.proto#L770}
   ///
   /// [google.cloud.documentai.v1.ReviewDocumentRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L731}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L733}
   /// [google.cloud.documentai.v1.ReviewDocumentResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L768}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L770}
   ///
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
   ReviewDocument(std::string const& human_review_config, Options opts = {});
@@ -707,16 +707,16 @@ class DocumentProcessorServiceClient {
   /// by the specified processor.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::documentai::v1::ReviewDocumentRequest,google/cloud/documentai/v1/document_processor_service.proto#L731}
+  /// @googleapis_link{google::cloud::documentai::v1::ReviewDocumentRequest,google/cloud/documentai/v1/document_processor_service.proto#L733}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::documentai::v1::ReviewDocumentResponse,google/cloud/documentai/v1/document_processor_service.proto#L768}
+  /// @googleapis_link{google::cloud::documentai::v1::ReviewDocumentResponse,google/cloud/documentai/v1/document_processor_service.proto#L770}
   ///
   /// [google.cloud.documentai.v1.ReviewDocumentRequest]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L731}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L733}
   /// [google.cloud.documentai.v1.ReviewDocumentResponse]:
-  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L768}
+  /// @googleapis_reference_link{google/cloud/documentai/v1/document_processor_service.proto#L770}
   ///
   future<StatusOr<google::cloud::documentai::v1::ReviewDocumentResponse>>
   ReviewDocument(

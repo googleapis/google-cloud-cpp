@@ -119,6 +119,18 @@ class EventarcMetadata : public EventarcStub {
       google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
           request) override;
 
+  StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+  GetGoogleChannelConfig(
+      grpc::ClientContext& context,
+      google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request)
+      override;
+
+  StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+  UpdateGoogleChannelConfig(
+      grpc::ClientContext& context,
+      google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
