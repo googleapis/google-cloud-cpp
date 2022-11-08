@@ -26,7 +26,7 @@ local_repository(
 
 # Load indirect dependencies due to
 #     https://github.com/bazelbuild/bazel/issues/1943
-load("@cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+load("@google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 
 google_cloud_cpp_deps()
 
