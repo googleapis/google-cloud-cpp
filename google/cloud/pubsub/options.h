@@ -49,14 +49,20 @@ namespace cloud {
 namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// The retry policy
-/// @ingroup pubsub-options
+/**
+ * The retry policy
+ *
+ * @ingroup pubsub-options
+ */
 struct RetryPolicyOption {
   using Type = std::shared_ptr<pubsub::RetryPolicy>;
 };
 
-/// The backoff policy
-/// @ingroup pubsub-options
+/**
+ * The backoff policy
+ *
+ * @ingroup pubsub-options
+ */
 struct BackoffPolicyOption {
   using Type = std::shared_ptr<pubsub::BackoffPolicy>;
 };
@@ -192,6 +198,8 @@ struct FullPublisherActionOption {
  *
  * If set, the client library turns on gRPC compression for batches larger (in
  * bytes) than the give threshold.
+ *
+ * @ingroup pubsub-options
  */
 struct CompressionThresholdOption {
   using Type = std::size_t;
