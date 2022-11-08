@@ -1,0 +1,88 @@
+/*!
+@defgroup options Client Library Configuration
+
+## Overview
+
+While the client libraries defaults should work for most applications, there
+are multiple runtime configuration options that applications may need to set.
+For example, the application may need to override the endpoint used to access
+the service, or change the retry policies to be more strict (or lenient) than
+the defaults.
+
+Applications use `google::cloud::Options` to override the defaults. You can
+think of an instance of `google::cloud::Options` as a set of overrides, indexed
+by a C++ type that uniquely identifies the option.  There is no need for
+applications to fill this set with the defaults.
+
+## Override Priority
+
+For most libraries overrides can be made at 3 different levels:
+
+- Function calls
+- `*Client` objects
+- `*Connection` objects
+
+In general, function call overrides take precedence over `*Client` overrides,
+and these in turn take precedence over any overrides in the `*Connection`
+override.  However, most options can only be set when the `*Connection` object
+is created.  You need to consult the documentation for an option to determine
+if they are usable for a specific function call.
+
+Consider this example:
+
+@code
+#include "google/cloud/kms/key_management_client.h"
+#include "google/cloud/kms/key_management_connection.h"
+#include "google/cloud/kms/key_management_options.h"
+#include "google/cloud/common_options.h"
+
+using kms = ::google::cloud::kms;
+using g = ::google::cloud;
+
+// `parent` must be in the form "projects/<project-id>/locations/<region-id>".
+//  For example F("projects/my-project/locations/us-central1")
+void F(std::string const& parent) {
+  auto retry = [](int n) { return kms::LimitedErrorCountRetryPolicy(n).clone(); };
+
+  auto conn_1 = kms::MakeKeyManagementServiceConnection();
+  auto conn_2 = kms::MakeKeyManagementServiceConnection(
+    g::Options{}
+        .set<g::EndpointOption>("private.googleapis.com")
+        .set<kms::KeyManagementServiceRetryPolicyOption>(retry(3)));
+
+  auto client_1 = kms::KeyManagementServiceClient(conn_1);
+  auto client_2 = kms::KeyManagementServiceClient(conn_2);
+  auto client_3 = kms::KeyManagementServiceClient(conn_2, g::Options{}
+         .set<kms::KeyManagementServiceRetryPolicyOption>(retry(5));
+
+  auto rpc_1 = client_1.ListKeyRings(parent);
+  auto rpc_2 = client_2.ListKeyRings(parent);
+  auto rpc_3 = client_3.ListKeyRings(parent);
+  auto rpc_4 = client_3.ListKeyRights(parent,
+      g::Options{}.set<kms::KeyManagementServiceRetryPolicyOption>(retry(7)));
+}
+@endcode
+
+In this case, `rpc_4` will retry the request up to 7 times, because the value
+of the `kms::RetryPolicyOption` overrides the values at the connection or
+client level. Meanwhile, `rpc_3` will retry the request 5 times, because the
+value at the `*Client` level overrides the value at the `*Connection` level.
+Likewise, `rpc_2` will retry the request 3 times, because this is the value
+in the `*Connection` and there are no overrides in the client or function calls.
+Finally, `rpc_1` will use the default. For this service the default is to
+retry for 30 minutes.
+
+Note that only the connection overrides the `g::EndpointOption`. Overriding
+this option at the `*Client` or function call level would have no effect.
+
+## Library-specific Options
+
+All libraries have options that are only meaningful for that library (and
+ignored by other libraries). In some cases, the option may be specific to a
+*service* (sometimes called "an API").  In the previous example, the
+`kms::KeyManagementServiceRetryPolicyOption` is only applicable to
+`kms::KeyManagementServiceClient` and `kms::KeyManagementServiceConnection`.
+Other services in the same library (e.g., `kms::EkmServiceClient`) will ignore
+this option.  Likewise, other services in different libraries (e.g.
+`pubsub::Publisher`) will also ignore the option.
+*/
