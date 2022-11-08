@@ -31,26 +31,48 @@ namespace cloud {
 namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
 struct FoldersRetryPolicyOption {
   using Type = std::shared_ptr<FoldersRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
 struct FoldersBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct FoldersPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
 struct FoldersConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<FoldersConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
+struct FoldersPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to Folders.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
 using FoldersPolicyOptionList =
     OptionList<FoldersRetryPolicyOption, FoldersBackoffPolicyOption,
                FoldersPollingPolicyOption,

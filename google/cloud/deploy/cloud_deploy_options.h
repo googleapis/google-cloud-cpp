@@ -31,26 +31,48 @@ namespace cloud {
 namespace deploy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-deploy-options
+ */
 struct CloudDeployRetryPolicyOption {
   using Type = std::shared_ptr<CloudDeployRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-deploy-options
+ */
 struct CloudDeployBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct CloudDeployPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-deploy-options
+ */
 struct CloudDeployConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<CloudDeployConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-deploy-options
+ */
+struct CloudDeployPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to CloudDeploy.
+ *
+ * @ingroup google-cloud-deploy-options
+ */
 using CloudDeployPolicyOptionList =
     OptionList<CloudDeployRetryPolicyOption, CloudDeployBackoffPolicyOption,
                CloudDeployPollingPolicyOption,

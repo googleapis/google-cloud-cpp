@@ -31,26 +31,48 @@ namespace cloud {
 namespace serviceusage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-serviceusage-options
+ */
 struct ServiceUsageRetryPolicyOption {
   using Type = std::shared_ptr<ServiceUsageRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-serviceusage-options
+ */
 struct ServiceUsageBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct ServiceUsagePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-serviceusage-options
+ */
 struct ServiceUsageConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<ServiceUsageConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-serviceusage-options
+ */
+struct ServiceUsagePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to ServiceUsage.
+ *
+ * @ingroup google-cloud-serviceusage-options
+ */
 using ServiceUsagePolicyOptionList =
     OptionList<ServiceUsageRetryPolicyOption, ServiceUsageBackoffPolicyOption,
                ServiceUsagePollingPolicyOption,

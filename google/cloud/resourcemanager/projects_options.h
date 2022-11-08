@@ -31,26 +31,48 @@ namespace cloud {
 namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
 struct ProjectsRetryPolicyOption {
   using Type = std::shared_ptr<ProjectsRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
 struct ProjectsBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct ProjectsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
 struct ProjectsConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<ProjectsConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
+struct ProjectsPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to Projects.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
 using ProjectsPolicyOptionList =
     OptionList<ProjectsRetryPolicyOption, ProjectsBackoffPolicyOption,
                ProjectsPollingPolicyOption,

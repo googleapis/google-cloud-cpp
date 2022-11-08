@@ -31,21 +31,38 @@ namespace cloud {
 namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-debugger-options
+ */
 struct Debugger2RetryPolicyOption {
   using Type = std::shared_ptr<Debugger2RetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-debugger-options
+ */
 struct Debugger2BackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-debugger-options
+ */
 struct Debugger2ConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<Debugger2ConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to Debugger2.
+ *
+ * @ingroup google-cloud-debugger-options
+ */
 using Debugger2PolicyOptionList =
     OptionList<Debugger2RetryPolicyOption, Debugger2BackoffPolicyOption,
                Debugger2ConnectionIdempotencyPolicyOption>;

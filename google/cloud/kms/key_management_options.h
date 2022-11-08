@@ -31,21 +31,38 @@ namespace cloud {
 namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-kms-options
+ */
 struct KeyManagementServiceRetryPolicyOption {
   using Type = std::shared_ptr<KeyManagementServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-kms-options
+ */
 struct KeyManagementServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-kms-options
+ */
 struct KeyManagementServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<KeyManagementServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to KeyManagementService.
+ *
+ * @ingroup google-cloud-kms-options
+ */
 using KeyManagementServicePolicyOptionList =
     OptionList<KeyManagementServiceRetryPolicyOption,
                KeyManagementServiceBackoffPolicyOption,

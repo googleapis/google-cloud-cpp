@@ -31,26 +31,48 @@ namespace cloud {
 namespace datamigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-datamigration-options
+ */
 struct DataMigrationServiceRetryPolicyOption {
   using Type = std::shared_ptr<DataMigrationServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-datamigration-options
+ */
 struct DataMigrationServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct DataMigrationServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-datamigration-options
+ */
 struct DataMigrationServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<DataMigrationServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-datamigration-options
+ */
+struct DataMigrationServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to DataMigrationService.
+ *
+ * @ingroup google-cloud-datamigration-options
+ */
 using DataMigrationServicePolicyOptionList =
     OptionList<DataMigrationServiceRetryPolicyOption,
                DataMigrationServiceBackoffPolicyOption,

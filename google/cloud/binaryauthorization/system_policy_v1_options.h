@@ -31,21 +31,38 @@ namespace cloud {
 namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-binaryauthorization-options
+ */
 struct SystemPolicyV1RetryPolicyOption {
   using Type = std::shared_ptr<SystemPolicyV1RetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-binaryauthorization-options
+ */
 struct SystemPolicyV1BackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-binaryauthorization-options
+ */
 struct SystemPolicyV1ConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<SystemPolicyV1ConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to SystemPolicyV1.
+ *
+ * @ingroup google-cloud-binaryauthorization-options
+ */
 using SystemPolicyV1PolicyOptionList =
     OptionList<SystemPolicyV1RetryPolicyOption,
                SystemPolicyV1BackoffPolicyOption,

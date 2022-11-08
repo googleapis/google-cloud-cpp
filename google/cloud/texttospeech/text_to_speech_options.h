@@ -31,21 +31,38 @@ namespace cloud {
 namespace texttospeech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-texttospeech-options
+ */
 struct TextToSpeechRetryPolicyOption {
   using Type = std::shared_ptr<TextToSpeechRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-texttospeech-options
+ */
 struct TextToSpeechBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-texttospeech-options
+ */
 struct TextToSpeechConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<TextToSpeechConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to TextToSpeech.
+ *
+ * @ingroup google-cloud-texttospeech-options
+ */
 using TextToSpeechPolicyOptionList =
     OptionList<TextToSpeechRetryPolicyOption, TextToSpeechBackoffPolicyOption,
                TextToSpeechConnectionIdempotencyPolicyOption>;

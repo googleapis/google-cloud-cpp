@@ -31,26 +31,48 @@ namespace cloud {
 namespace shell {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-shell-options
+ */
 struct CloudShellServiceRetryPolicyOption {
   using Type = std::shared_ptr<CloudShellServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-shell-options
+ */
 struct CloudShellServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct CloudShellServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-shell-options
+ */
 struct CloudShellServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<CloudShellServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-shell-options
+ */
+struct CloudShellServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to CloudShellService.
+ *
+ * @ingroup google-cloud-shell-options
+ */
 using CloudShellServicePolicyOptionList =
     OptionList<CloudShellServiceRetryPolicyOption,
                CloudShellServiceBackoffPolicyOption,

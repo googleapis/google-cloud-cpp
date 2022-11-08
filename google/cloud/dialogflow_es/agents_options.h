@@ -31,26 +31,48 @@ namespace cloud {
 namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-dialogflow_es-options
+ */
 struct AgentsRetryPolicyOption {
   using Type = std::shared_ptr<AgentsRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-dialogflow_es-options
+ */
 struct AgentsBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct AgentsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-dialogflow_es-options
+ */
 struct AgentsConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<AgentsConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-dialogflow_es-options
+ */
+struct AgentsPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to Agents.
+ *
+ * @ingroup google-cloud-dialogflow_es-options
+ */
 using AgentsPolicyOptionList =
     OptionList<AgentsRetryPolicyOption, AgentsBackoffPolicyOption,
                AgentsPollingPolicyOption,
