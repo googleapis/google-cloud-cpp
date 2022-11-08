@@ -293,17 +293,3 @@ cc_library(
         "//google/cloud:google_cloud_cpp_mocks",
     ],
 )
-
-cc_library(
-    name = "rest_internal",
-    deps = [
-        "//google/cloud:google_cloud_cpp_rest_internal",
-    ],
-)
-
-cc_library(
-    name = "rest_protobuf_internal",
-    deps = [
-        "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
-    ],
-)
