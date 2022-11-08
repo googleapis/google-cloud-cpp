@@ -20,6 +20,6 @@ cc_binary(
         "quickstart.cc",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//:talent",
+        "@google_cloud_cpp//:talent",
     ],
 )
