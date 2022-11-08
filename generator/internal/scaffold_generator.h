@@ -60,6 +60,8 @@ void GenerateCMakeLists(std::ostream& os,
                         std::map<std::string, std::string> const& variables);
 void GenerateDoxygenMainPage(
     std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateDoxygenOptionsPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateQuickstartReadme(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateQuickstartSkeleton(

@@ -14,6 +14,7 @@
 
 #include "generator/internal/scaffold_generator.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
@@ -82,6 +83,8 @@ std::map<std::string, std::string> ScaffoldVars(
   auto const library = LibraryName(service);
   vars["copyright_year"] = service.initial_copyright_year();
   vars["library"] = library;
+  vars["product_options_page"] = absl::StrCat(
+      absl::StrReplaceAll(service.product_path(), {{"/", "-"}}), "options");
   vars["site_root"] = SiteRoot(service);
   vars["library_prefix"] = experimental ? "experimental-" : "";
   vars["doxygen_version_suffix"] = experimental ? " (Experimental)" : "";
@@ -117,6 +120,7 @@ void GenerateScaffold(
       {"BUILD.bazel", GenerateBuild},
       {"CMakeLists.txt", GenerateCMakeLists},
       {"doc/main.dox", GenerateDoxygenMainPage},
+      {"doc/options.dox", GenerateDoxygenOptionsPage},
       {"quickstart/README.md", GenerateQuickstartReadme},
       {"quickstart/quickstart.cc", GenerateQuickstartSkeleton},
       {"quickstart/CMakeLists.txt", GenerateQuickstartCMake},
@@ -635,6 +639,24 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 // <!-- inject-endpoint-pages-end -->
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateDoxygenOptionsPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(/*!
+@defgroup $product_options_page$ $title$ Configuration Options
+
+This library uses the same mechanism (`google::cloud::Options`) and the common
+[options](@ref options) as all other C++ client libraries for its configuration.
+Some `*Option` classes, which are only used in this library, are documented in
+this page.
+
+@see @ref options - for an overview of client library configuration.
+*/
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');

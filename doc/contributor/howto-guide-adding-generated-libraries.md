@@ -236,6 +236,7 @@ were written by a robot:
 - `google/cloud/${library}/README.md`
 - `google/cloud/${library}/quickstart/README.md`
 - `google/cloud/${library}/doc/main.dox`
+- `google/cloud/${library}/doc/options.dox`
 
 The Cloud documentation links (`cloud.google.com/*/docs/*`) in these files are
 not always valid. Find the correct urls and update the links.

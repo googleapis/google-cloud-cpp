@@ -56,36 +56,72 @@ Status OptionsGenerator::GenerateHeader() {
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;
 
-  HeaderPrint({// clang-format off
-   {"\n"
-    "/// Option to use with `google::cloud::Options`.\n"
-    "struct $retry_policy_name$Option {\n"
-    "  using Type = std::shared_ptr<$retry_policy_name$>;\n"
-    "};\n"
-    "\n"
-    "/// Option to use with `google::cloud::Options`.\n"
-    "struct $service_name$BackoffPolicyOption {\n"
-    "  using Type = std::shared_ptr<BackoffPolicy>;\n"
-    "};\n"},
-   {[this]{return HasLongrunningMethod();},
-    "\n"
-    "/// Option to use with `google::cloud::Options`.\n"
-    "struct $service_name$PollingPolicyOption {\n"
-    "  using Type = std::shared_ptr<PollingPolicy>;\n"
-    "};\n", ""},
-   {"\n"
-    "/// Option to use with `google::cloud::Options`.\n"
-    "struct $idempotency_class_name$Option {\n"
-    "  using Type = std::shared_ptr<$idempotency_class_name$>;\n"
-    "};\n"},
-   {"\n"
-    "using $service_name$PolicyOptionList =\n"
-    "    OptionList<$service_name$RetryPolicyOption,\n"
-    "               $service_name$BackoffPolicyOption,\n"},
-   {[this]{return HasLongrunningMethod();},
-    "               $service_name$PollingPolicyOption,\n", ""},
-   {"               $idempotency_class_name$Option>;\n"}});
-               // clang-format on
+  HeaderPrint(
+      R"""(
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup $product_options_page$
+ */
+struct $retry_policy_name$Option {
+  using Type = std::shared_ptr<$retry_policy_name$>;
+};
+
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup $product_options_page$
+ */
+struct $service_name$BackoffPolicyOption {
+  using Type = std::shared_ptr<BackoffPolicy>;
+};
+
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup $product_options_page$
+ */
+struct $idempotency_class_name$Option {
+  using Type = std::shared_ptr<$idempotency_class_name$>;
+};
+)""");
+
+  if (HasLongrunningMethod()) {
+    HeaderPrint(R"""(
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup $product_options_page$
+ */
+struct $service_name$PollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to $service_name$.
+ *
+ * @ingroup $product_options_page$
+ */
+using $service_name$PolicyOptionList =
+    OptionList<$service_name$RetryPolicyOption,
+               $service_name$BackoffPolicyOption,
+               $service_name$PollingPolicyOption,
+               $idempotency_class_name$Option>;
+)""");
+  } else {
+    HeaderPrint(R"""(
+/**
+ * The options applicable to $service_name$.
+ *
+ * @ingroup $product_options_page$
+ */
+using $service_name$PolicyOptionList =
+    OptionList<$service_name$RetryPolicyOption,
+               $service_name$BackoffPolicyOption,
+               $idempotency_class_name$Option>;
+)""");
+  }
 
   HeaderCloseNamespaces();
   // close header guard
