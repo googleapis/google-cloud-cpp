@@ -23,6 +23,11 @@ project(
     google-cloud-cpp
     VERSION 2.5.0
     LANGUAGES CXX)
+set(PROJECT_VERSION_PRE_RELEASE "rc")
+
+if (NOT "${PROJECT_VERSION_PRE_RELEASE}" STREQUAL "")
+    set(PROJECT_VERSION "${PROJECT_VERSION}-${PROJECT_VERSION_PRE_RELEASE}")
+endif ()
 
 if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
     # AppleClang defaults to C++98, so we bump it to C++14.

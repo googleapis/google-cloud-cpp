@@ -20,17 +20,24 @@ enumerated below.
 Before beginning the release process, verify all CI builds are passing on
 the `main` branch. This is displayed in the GitHub page for the project.
 
+### Update CMakeLists.txt
+
+Set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to the empty string.
+
 ### Update CHANGELOG.md
 
-To update the top-level [`CHANGELOG.md`] file, you run the script
+To update the [`CHANGELOG.md`] file, first change the "TBD" placeholder
+in the latest release header to the current YYYY-MM.
+
+Then run the script
 
 ```bash
 release/changes.sh
 ```
 
 to output a summary of the potentially interesting changes since the previous
-release. You paste the output into the relevant section in the `CHANGELOG.md`
-file, and manually tweak as needed.
+release. Paste that output below the release header updated above,
+and manually tweak as needed.
 
 - A change in an existing library warrants its own library section.
 - Library sections should be listed in alphabetical order (Update `sections` in `release/changes.sh`).
@@ -101,7 +108,10 @@ Working in your fork of `google-cloud-cpp`: bump the version numbers to the
 *next* version, i.e., one version past the release you just did above. Then
 send the PR for review against `main`. You need to:
 
-- Update the version number in the top-level `CMakeLists.txt` file.
+- In the top-level `CMakeLists.txt` file, increment the version number,
+  and set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to "rc".
+- Add a "vX.Y.Z - TBD" header, corresponding to the new version number,
+  to the `CHANGELOG.md` file.
 - Update the ABI baseline to include the new version numbers in the inline
   namespace by running `ci/cloudbuild/build.sh -t check-api-pr`. This will
   leave the updated ABI files in `ci/abi-dumps`, and also update the
