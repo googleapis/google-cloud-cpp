@@ -262,6 +262,28 @@ AccessContextManagerMetadata::AsyncDeleteGcpUserAccessBinding(
                                                  request);
 }
 
+StatusOr<google::iam::v1::Policy> AccessContextManagerMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->SetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::Policy> AccessContextManagerMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->GetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AccessContextManagerMetadata::TestIamPermissions(
+    grpc::ClientContext& context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->TestIamPermissions(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

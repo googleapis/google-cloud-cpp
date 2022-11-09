@@ -23,6 +23,8 @@
 #include "google/cloud/dialogflow_es/internal/participants_stub.h"
 #include "google/cloud/dialogflow_es/participants_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/experimental_tag.h"
+#include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
@@ -83,6 +85,11 @@ class ParticipantsConnection {
   virtual StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
   AnalyzeContent(
       google::cloud::dialogflow::v2::AnalyzeContentRequest const& request);
+
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+      AsyncStreamingAnalyzeContent(ExperimentalTag);
 
   virtual StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(

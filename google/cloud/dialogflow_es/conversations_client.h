@@ -295,12 +295,12 @@ class ConversationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Message,google/cloud/dialogflow/v2/participant.proto#L213}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Message,google/cloud/dialogflow/v2/participant.proto#L261}
   ///
   /// [google.cloud.dialogflow.v2.ListMessagesRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L311}
   /// [google.cloud.dialogflow.v2.Message]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L213}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L261}
   ///
   StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
       std::string const& parent, Options opts = {});
@@ -317,12 +317,12 @@ class ConversationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Message,google/cloud/dialogflow/v2/participant.proto#L213}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Message,google/cloud/dialogflow/v2/participant.proto#L261}
   ///
   /// [google.cloud.dialogflow.v2.ListMessagesRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L311}
   /// [google.cloud.dialogflow.v2.Message]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L213}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L261}
   ///
   StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
       google::cloud::dialogflow::v2::ListMessagesRequest request,

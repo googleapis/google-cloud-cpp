@@ -128,6 +128,15 @@ class AccessContextManagerConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteGcpUserAccessBinding(
       google::identity::accesscontextmanager::v1::
           DeleteGcpUserAccessBindingRequest const& request);
+
+  virtual google::cloud::Idempotency SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual google::cloud::Idempotency TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<AccessContextManagerConnectionIdempotencyPolicy>

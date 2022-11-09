@@ -168,6 +168,24 @@ EventarcMetadata::AsyncDeleteChannelConnection(
   return child_->AsyncDeleteChannelConnection(cq, std::move(context), request);
 }
 
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcMetadata::GetGoogleChannelConfig(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetGoogleChannelConfig(context, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcMetadata::UpdateGoogleChannelConfig(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+        request) {
+  SetMetadata(context, "google_channel_config.name=" +
+                           request.google_channel_config().name());
+  return child_->UpdateGoogleChannelConfig(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

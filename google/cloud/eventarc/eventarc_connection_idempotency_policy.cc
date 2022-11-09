@@ -115,6 +115,16 @@ Idempotency EventarcConnectionIdempotencyPolicy::DeleteChannelConnection(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency EventarcConnectionIdempotencyPolicy::GetGoogleChannelConfig(
+    google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency EventarcConnectionIdempotencyPolicy::UpdateGoogleChannelConfig(
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<EventarcConnectionIdempotencyPolicy>
 MakeDefaultEventarcConnectionIdempotencyPolicy() {
   return absl::make_unique<EventarcConnectionIdempotencyPolicy>();

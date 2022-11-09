@@ -396,6 +396,40 @@ AccessContextManagerLogging::AsyncDeleteGcpUserAccessBinding(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::iam::v1::Policy> AccessContextManagerLogging::SetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::iam::v1::SetIamPolicyRequest const& request) {
+        return child_->SetIamPolicy(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::Policy> AccessContextManagerLogging::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return child_->GetIamPolicy(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AccessContextManagerLogging::TestIamPermissions(
+    grpc::ClientContext& context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::iam::v1::TestIamPermissionsRequest const& request) {
+        return child_->TestIamPermissions(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

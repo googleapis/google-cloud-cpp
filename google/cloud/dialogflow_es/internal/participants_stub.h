@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_PARTICIPANTS_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_INTERNAL_PARTICIPANTS_STUB_H
 
+#include "google/cloud/async_streaming_read_write_rpc.h"
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/cloud/dialogflow/v2/participant.grpc.pb.h>
@@ -58,6 +60,13 @@ class ParticipantsStub {
   AnalyzeContent(
       grpc::ClientContext& context,
       google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) = 0;
+
+  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+  AsyncStreamingAnalyzeContent(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) = 0;
 
   virtual StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(
@@ -109,6 +118,13 @@ class DefaultParticipantsStub : public ParticipantsStub {
   AnalyzeContent(grpc::ClientContext& client_context,
                  google::cloud::dialogflow::v2::AnalyzeContentRequest const&
                      request) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+  AsyncStreamingAnalyzeContent(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(grpc::ClientContext& client_context,

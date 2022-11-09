@@ -247,6 +247,34 @@ EventarcLogging::AsyncDeleteChannelConnection(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcLogging::GetGoogleChannelConfig(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&
+                 request) {
+        return child_->GetGoogleChannelConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcLogging::UpdateGoogleChannelConfig(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+              request) {
+        return child_->UpdateGoogleChannelConfig(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

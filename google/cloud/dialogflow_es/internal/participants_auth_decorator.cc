@@ -17,6 +17,7 @@
 // source: google/cloud/dialogflow/v2/participant.proto
 
 #include "google/cloud/dialogflow_es/internal/participants_auth_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_auth.h"
 #include <google/cloud/dialogflow/v2/participant.grpc.pb.h>
 #include <memory>
 
@@ -73,6 +74,24 @@ ParticipantsAuth::AnalyzeContent(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->AnalyzeContent(context, request);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+ParticipantsAuth::AsyncStreamingAnalyzeContent(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using StreamAuth = google::cloud::internal::AsyncStreamingReadWriteRpcAuth<
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>;
+
+  auto& child = child_;
+  auto call = [child, cq](std::unique_ptr<grpc::ClientContext> ctx) {
+    return child->AsyncStreamingAnalyzeContent(cq, std::move(ctx));
+  };
+  return absl::make_unique<StreamAuth>(
+      std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
