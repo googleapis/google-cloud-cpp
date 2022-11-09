@@ -79,6 +79,8 @@ function quickstart::build_one_quickstart() {
   io::log "[ Make ]"
   local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/makefile-${bin_dir_suffix}"
   mkdir -p "${makefile_bin_dir}"
+  io::run env PKG_CONFIG_PATH="${prefix}/lib64/pkgconfig:${prefix}/lib/pkgconfig:${PKG_CONFIG_PATH:-}" pkg-config google_cloud_cpp_bigquery --libs
+  io::run env PKG_CONFIG_PATH="${prefix}/lib64/pkgconfig:${prefix}/lib/pkgconfig:${PKG_CONFIG_PATH:-}" pkg-config google_cloud_cpp_bigquery
   PKG_CONFIG_PATH="${prefix}/lib64/pkgconfig:${prefix}/lib/pkgconfig:${PKG_CONFIG_PATH:-}" \
     make -C "${src_dir}" BIN="${makefile_bin_dir}"
 }
