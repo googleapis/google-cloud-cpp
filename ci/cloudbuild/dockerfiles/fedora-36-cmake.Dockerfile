@@ -179,16 +179,8 @@ ENV CLOUDSDK_PYTHON=python3.10
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
-# The Cloud Pub/Sub emulator needs Java, and so does `bazel coverage` :shrug:
-# Bazel needs the '-devel' version with javac.
-RUN dnf makecache && dnf install -y java-latest-openjdk-devel
-
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.15.0/bazelisk-linux-${ARCH}" && \
-    chmod +x /usr/bin/bazelisk && \
-    ln -s /usr/bin/bazelisk /usr/bin/bazel
-
-RUN dnf makecache && dnf install -y "dnf-command(debuginfo-install)"
-RUN dnf makecache && dnf debuginfo-install -y libstdc++
+# The Cloud Pub/Sub emulator needs Java :shrug:
+RUN dnf makecache && dnf install -y java-latest-openjdk
 
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.

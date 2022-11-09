@@ -7,7 +7,7 @@ github:
 name: libcxx-ci
 substitutions:
   _BUILD_NAME: libcxx
-  _DISTRO: fedora-36
+  _DISTRO: fedora-36-bazel
   _TRIGGER_TYPE: ci
 tags:
 - ci
