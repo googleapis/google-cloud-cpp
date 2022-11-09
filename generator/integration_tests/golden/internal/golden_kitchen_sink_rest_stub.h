@@ -37,35 +37,35 @@ class GoldenKitchenSinkRestStub {
   virtual ~GoldenKitchenSinkRestStub() = default;
 
   virtual StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListLogsResponse> ListLogs(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListLogsRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) = 0;
 
   virtual Status DoNothing(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::protobuf::Empty const& request) = 0;
 
   virtual Status ExplicitRouting1(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) = 0;
 
   virtual Status ExplicitRouting2(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) = 0;
 };
 
@@ -79,35 +79,35 @@ class DefaultGoldenKitchenSinkRestStub : public GoldenKitchenSinkRestStub {
       Options options);
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListLogsResponse> ListLogs(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListLogsRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
 
   Status DoNothing(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::protobuf::Empty const& request) override;
 
   Status ExplicitRouting1(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
   Status ExplicitRouting2(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
  private:

@@ -39,7 +39,7 @@ DefaultGoldenKitchenSinkRestStub::DefaultGoldenKitchenSinkRestStub(
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 DefaultGoldenKitchenSinkRestStub::GenerateAccessToken(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return rest_internal::Post<google::test::admin::database::v1::GenerateAccessTokenResponse>(
       *rest_client_, rest_context, request,
@@ -48,7 +48,7 @@ DefaultGoldenKitchenSinkRestStub::GenerateAccessToken(
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 DefaultGoldenKitchenSinkRestStub::GenerateIdToken(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
   return rest_internal::Post<google::test::admin::database::v1::GenerateIdTokenResponse>(
       *rest_client_, rest_context, request,
@@ -57,7 +57,7 @@ DefaultGoldenKitchenSinkRestStub::GenerateIdToken(
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 DefaultGoldenKitchenSinkRestStub::WriteLogEntries(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
   return rest_internal::Post<google::test::admin::database::v1::WriteLogEntriesResponse>(
       *rest_client_, rest_context, request,
@@ -66,7 +66,7 @@ DefaultGoldenKitchenSinkRestStub::WriteLogEntries(
 
 StatusOr<google::test::admin::database::v1::ListLogsResponse>
 DefaultGoldenKitchenSinkRestStub::ListLogs(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListLogsRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListLogsResponse>(
       *rest_client_, rest_context, request,
@@ -77,7 +77,7 @@ std::make_pair("page_token", request.page_token())});
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 DefaultGoldenKitchenSinkRestStub::ListServiceAccountKeys(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListServiceAccountKeysResponse>(
       *rest_client_, rest_context, request,
@@ -85,27 +85,24 @@ DefaultGoldenKitchenSinkRestStub::ListServiceAccountKeys(
 {});
 }
 
-Status
-DefaultGoldenKitchenSinkRestStub::DoNothing(
-      rest_internal::RestContext& rest_context,
+Status DefaultGoldenKitchenSinkRestStub::DoNothing(
+      google::cloud::rest_internal::RestContext& rest_context,
       google::protobuf::Empty const& request) {
   return rest_internal::Post(
       *rest_client_, rest_context, request,
       "/v1/doNothing");
 }
 
-Status
-DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(
-      rest_internal::RestContext& rest_context,
+Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return rest_internal::Post(
       *rest_client_, rest_context, request,
       absl::StrCat("/v1/",request.table_name(),":explicitRouting1"));
 }
 
-Status
-DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
-      rest_internal::RestContext& rest_context,
+Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return rest_internal::Post(
       *rest_client_, rest_context, request,
