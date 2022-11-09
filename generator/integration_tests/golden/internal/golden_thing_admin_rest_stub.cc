@@ -40,7 +40,7 @@ DefaultGoldenThingAdminRestStub::DefaultGoldenThingAdminRestStub(
 
 StatusOr<google::test::admin::database::v1::ListDatabasesResponse>
 DefaultGoldenThingAdminRestStub::ListDatabases(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListDatabasesRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListDatabasesResponse>(
       *rest_client_, rest_context, request,
@@ -51,7 +51,7 @@ std::make_pair("page_token", request.page_token())});
 
 StatusOr<google::longrunning::Operation>
 DefaultGoldenThingAdminRestStub::CreateDatabase(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   return rest_internal::Post<google::longrunning::Operation>(
       *rest_client_, rest_context, request,
@@ -60,7 +60,7 @@ DefaultGoldenThingAdminRestStub::CreateDatabase(
 
 StatusOr<google::test::admin::database::v1::Database>
 DefaultGoldenThingAdminRestStub::GetDatabase(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetDatabaseRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::Database>(
       *rest_client_, rest_context, request,
@@ -70,16 +70,15 @@ DefaultGoldenThingAdminRestStub::GetDatabase(
 
 StatusOr<google::longrunning::Operation>
 DefaultGoldenThingAdminRestStub::UpdateDatabaseDdl(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   return rest_internal::Patch<google::longrunning::Operation>(
       *rest_client_, rest_context, request,
       absl::StrCat("/v1/",request.database(),"/ddl"));
 }
 
-Status
-DefaultGoldenThingAdminRestStub::DropDatabase(
-      rest_internal::RestContext& rest_context,
+Status DefaultGoldenThingAdminRestStub::DropDatabase(
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::DropDatabaseRequest const& request) {
   return rest_internal::Delete(
       *rest_client_, rest_context, request,
@@ -88,7 +87,7 @@ DefaultGoldenThingAdminRestStub::DropDatabase(
 
 StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
 DefaultGoldenThingAdminRestStub::GetDatabaseDdl(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::GetDatabaseDdlResponse>(
       *rest_client_, rest_context, request,
@@ -98,7 +97,7 @@ DefaultGoldenThingAdminRestStub::GetDatabaseDdl(
 
 StatusOr<google::iam::v1::Policy>
 DefaultGoldenThingAdminRestStub::SetIamPolicy(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::SetIamPolicyRequest const& request) {
   return rest_internal::Post<google::iam::v1::Policy>(
       *rest_client_, rest_context, request,
@@ -107,7 +106,7 @@ DefaultGoldenThingAdminRestStub::SetIamPolicy(
 
 StatusOr<google::iam::v1::Policy>
 DefaultGoldenThingAdminRestStub::GetIamPolicy(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::GetIamPolicyRequest const& request) {
   return rest_internal::Post<google::iam::v1::Policy>(
       *rest_client_, rest_context, request,
@@ -116,7 +115,7 @@ DefaultGoldenThingAdminRestStub::GetIamPolicy(
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DefaultGoldenThingAdminRestStub::TestIamPermissions(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::TestIamPermissionsRequest const& request) {
   return rest_internal::Post<google::iam::v1::TestIamPermissionsResponse>(
       *rest_client_, rest_context, request,
@@ -125,7 +124,7 @@ DefaultGoldenThingAdminRestStub::TestIamPermissions(
 
 StatusOr<google::longrunning::Operation>
 DefaultGoldenThingAdminRestStub::CreateBackup(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::CreateBackupRequest const& request) {
   return rest_internal::Post<google::longrunning::Operation>(
       *rest_client_, rest_context, request,
@@ -134,7 +133,7 @@ DefaultGoldenThingAdminRestStub::CreateBackup(
 
 StatusOr<google::test::admin::database::v1::Backup>
 DefaultGoldenThingAdminRestStub::GetBackup(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetBackupRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::Backup>(
       *rest_client_, rest_context, request,
@@ -144,16 +143,15 @@ DefaultGoldenThingAdminRestStub::GetBackup(
 
 StatusOr<google::test::admin::database::v1::Backup>
 DefaultGoldenThingAdminRestStub::UpdateBackup(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::UpdateBackupRequest const& request) {
   return rest_internal::Patch<google::test::admin::database::v1::Backup>(
       *rest_client_, rest_context, request,
       absl::StrCat("/v1/",request.backup().name(),""));
 }
 
-Status
-DefaultGoldenThingAdminRestStub::DeleteBackup(
-      rest_internal::RestContext& rest_context,
+Status DefaultGoldenThingAdminRestStub::DeleteBackup(
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::DeleteBackupRequest const& request) {
   return rest_internal::Delete(
       *rest_client_, rest_context, request,
@@ -162,7 +160,7 @@ DefaultGoldenThingAdminRestStub::DeleteBackup(
 
 StatusOr<google::test::admin::database::v1::ListBackupsResponse>
 DefaultGoldenThingAdminRestStub::ListBackups(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListBackupsRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListBackupsResponse>(
       *rest_client_, rest_context, request,
@@ -174,7 +172,7 @@ std::make_pair("page_token", request.page_token())});
 
 StatusOr<google::longrunning::Operation>
 DefaultGoldenThingAdminRestStub::RestoreDatabase(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   return rest_internal::Post<google::longrunning::Operation>(
       *rest_client_, rest_context, request,
@@ -183,7 +181,7 @@ DefaultGoldenThingAdminRestStub::RestoreDatabase(
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
 DefaultGoldenThingAdminRestStub::ListDatabaseOperations(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListDatabaseOperationsResponse>(
       *rest_client_, rest_context, request,
@@ -195,7 +193,7 @@ std::make_pair("page_token", request.page_token())});
 
 StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>
 DefaultGoldenThingAdminRestStub::ListBackupOperations(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListBackupOperationsResponse>(
       *rest_client_, rest_context, request,

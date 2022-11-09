@@ -38,71 +38,71 @@ class GoldenThingAdminRestStub {
   virtual ~GoldenThingAdminRestStub() = default;
 
   virtual StatusOr<google::test::admin::database::v1::ListDatabasesResponse> ListDatabases(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListDatabasesRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateDatabase(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::Database> GetDatabase(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) = 0;
 
   virtual Status DropDatabase(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::DropDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse> GetDatabaseDdl(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetDatabaseDdlRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::SetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
 
   virtual StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::TestIamPermissionsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> CreateBackup(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::CreateBackupRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::Backup> GetBackup(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetBackupRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::Backup> UpdateBackup(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::UpdateBackupRequest const& request) = 0;
 
   virtual Status DeleteBackup(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::DeleteBackupRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListBackupsResponse> ListBackups(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListBackupsRequest const& request) = 0;
 
   virtual StatusOr<google::longrunning::Operation> RestoreDatabase(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) = 0;
 
   virtual StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse> ListBackupOperations(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListBackupOperationsRequest const& request) = 0;
 };
 
@@ -116,71 +116,71 @@ class DefaultGoldenThingAdminRestStub : public GoldenThingAdminRestStub {
       Options options);
 
   StatusOr<google::test::admin::database::v1::ListDatabasesResponse> ListDatabases(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListDatabasesRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateDatabase(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::Database> GetDatabase(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
   Status DropDatabase(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::DropDatabaseRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse> GetDatabaseDdl(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetDatabaseDdlRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::SetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::GetIamPolicyRequest const& request) override;
 
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> CreateBackup(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::Backup> GetBackup(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetBackupRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::Backup> UpdateBackup(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::UpdateBackupRequest const& request) override;
 
   Status DeleteBackup(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::DeleteBackupRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListBackupsResponse> ListBackups(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListBackupsRequest const& request) override;
 
   StatusOr<google::longrunning::Operation> RestoreDatabase(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse> ListDatabaseOperations(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListDatabaseOperationsRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse> ListBackupOperations(
-      rest_internal::RestContext& rest_context,
+      google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListBackupOperationsRequest const& request) override;
 
  private:
