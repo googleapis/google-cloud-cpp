@@ -1,7 +1,9 @@
 # Connectors API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Connectors API][cloud-service-docs], a service to Enables users to create and manage connections to Google Cloud services and third-party business applications using the Connectors interface.
+[Connectors API][cloud-service-docs], a service that enables users to create and
+manage connections to Google Cloud services and third-party business
+applications.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -31,21 +33,22 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/connectors/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/connectors/connectors_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location-id\n";
     return 1;
   }
 
   namespace connectors = ::google::cloud::connectors;
-  auto client = connectors::Client(connectors::MakeConnection(/* EDIT HERE */));
+  auto client =
+      connectors::ConnectorsClient(connectors::MakeConnectorsConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto r : client.ListConnections(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
@@ -86,7 +89,7 @@ as well as how to properly format your code.
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 
-[cloud-service-docs]: https://cloud.google.com/connectors
+[cloud-service-docs]: https://cloud.google.com/apigee/docs/api-platform/connectors/about-connectors
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-connectors/latest/
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/connectors

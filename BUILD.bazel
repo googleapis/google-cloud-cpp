@@ -50,6 +50,7 @@ GA_LIBRARIES = [
     "channel",
     "cloudbuild",
     "composer",
+    "connectors",
     "contactcenterinsights",
     "container",
     "containeranalysis",

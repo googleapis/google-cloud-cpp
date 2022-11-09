@@ -2,8 +2,9 @@
 
 @mainpage Connectors API C++ Client Library
 
-An idiomatic C++ client library for the [Connectors API][cloud-service-docs], a service
-to Enables users to create and manage connections to Google Cloud services and third-party business applications using the Connectors interface.
+An idiomatic C++ client library for the [Connectors API][cloud-service-docs], a
+service that enables users to create and manage connections to Google Cloud
+services and third-party business applications.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -127,7 +128,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/connectors
+[cloud-service-docs]: https://cloud.google.com/apigee/docs/api-platform/connectors/about-connectors
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

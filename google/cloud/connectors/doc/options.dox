@@ -1,5 +1,5 @@
 /*!
-@defgroup google-cloud-connectorsoptions Connectors API Configuration Options
+@defgroup google-cloud-connectors-options Connectors API Configuration Options
 
 This library uses the same mechanism (`google::cloud::Options`) and the common
 [options](@ref options) as all other C++ client libraries for its configuration.
