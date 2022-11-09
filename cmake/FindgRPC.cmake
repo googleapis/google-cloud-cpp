@@ -269,35 +269,12 @@ if (_gRPC_grpc++_LIBRARY)
             APPEND
             PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc protobuf::libprotobuf
                      Threads::Threads)
-        if (CMAKE_VERSION VERSION_GREATER 3.8)
-            # gRPC++ requires C++14 (soon), but only CMake-3.8 introduced a
-            # compiler feature to meet that requirement.
-            set_property(
-                TARGET gRPC::grpc++
-                APPEND
-                PROPERTY INTERFACE_COMPILE_FEATURES cxx_std_14)
-        elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-            # CMake 3.5 is still alive and kicking in some older distros, use
-            # the compiler-specific versions in these cases.
-            set_property(
-                TARGET gRPC::grpc++
-                APPEND
-                PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++14")
-        elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-            set_property(
-                TARGET gRPC::grpc++
-                APPEND
-                PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++14")
-        else ()
-            message(
-                WARNING
-                    "gRPC::grpc++ requires C++14, but this module"
-                    " (${CMAKE_CURRENT_LIST_FILE})"
-                    " cannot enable it for the library target in your CMake and"
-                    " compiler versions. You need to enable C++14 in the"
-                    " CMakeLists.txt for your project. Consider filing a bug"
-                    " so we can fix this problem.")
-        endif ()
+        # gRPC++ requires C++14. It does not yet define the compile features, so
+        # we define the feature ourselves.
+        set_property(
+            TARGET gRPC::grpc++
+            APPEND
+            PROPERTY INTERFACE_COMPILE_FEATURES cxx_std_14)
     endif ()
 endif ()
 
