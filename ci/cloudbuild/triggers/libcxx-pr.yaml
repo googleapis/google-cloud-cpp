@@ -8,7 +8,7 @@ github:
 name: libcxx-pr
 substitutions:
   _BUILD_NAME: libcxx
-  _DISTRO: fedora-36
+  _DISTRO: fedora-36-bazel
   _TRIGGER_TYPE: pr
 tags:
 - pr

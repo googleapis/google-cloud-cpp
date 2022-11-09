@@ -7,7 +7,7 @@ github:
 name: integration-production-ci
 substitutions:
   _BUILD_NAME: integration-production
-  _DISTRO: fedora-36
+  _DISTRO: fedora-36-cmake
   _TRIGGER_TYPE: ci
 tags:
 - ci

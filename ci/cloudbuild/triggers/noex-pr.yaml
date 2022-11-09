@@ -8,7 +8,7 @@ github:
 name: noex-pr
 substitutions:
   _BUILD_NAME: noex
-  _DISTRO: fedora-36
+  _DISTRO: fedora-36-cmake
   _TRIGGER_TYPE: pr
 tags:
 - pr
