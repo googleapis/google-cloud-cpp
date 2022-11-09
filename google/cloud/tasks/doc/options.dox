@@ -1,0 +1,10 @@
+/*!
+@defgroup google-cloud-tasks-options Cloud Tasks API Configuration Options
+
+This library uses the same mechanism (`google::cloud::Options`) and the common
+[options](@ref options) as all other C++ client libraries for its configuration.
+Some `*Option` classes, which are only used in this library, are documented in
+this page.
+
+@see @ref options - for an overview of client library configuration.
+*/

@@ -31,21 +31,38 @@ namespace cloud {
 namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-billing-options
+ */
 struct CloudCatalogRetryPolicyOption {
   using Type = std::shared_ptr<CloudCatalogRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-billing-options
+ */
 struct CloudCatalogBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-billing-options
+ */
 struct CloudCatalogConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<CloudCatalogConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to CloudCatalog.
+ *
+ * @ingroup google-cloud-billing-options
+ */
 using CloudCatalogPolicyOptionList =
     OptionList<CloudCatalogRetryPolicyOption, CloudCatalogBackoffPolicyOption,
                CloudCatalogConnectionIdempotencyPolicyOption>;

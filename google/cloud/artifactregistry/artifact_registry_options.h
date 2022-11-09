@@ -31,26 +31,48 @@ namespace cloud {
 namespace artifactregistry {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-artifactregistry-options
+ */
 struct ArtifactRegistryRetryPolicyOption {
   using Type = std::shared_ptr<ArtifactRegistryRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-artifactregistry-options
+ */
 struct ArtifactRegistryBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct ArtifactRegistryPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-artifactregistry-options
+ */
 struct ArtifactRegistryConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<ArtifactRegistryConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-artifactregistry-options
+ */
+struct ArtifactRegistryPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to ArtifactRegistry.
+ *
+ * @ingroup google-cloud-artifactregistry-options
+ */
 using ArtifactRegistryPolicyOptionList =
     OptionList<ArtifactRegistryRetryPolicyOption,
                ArtifactRegistryBackoffPolicyOption,

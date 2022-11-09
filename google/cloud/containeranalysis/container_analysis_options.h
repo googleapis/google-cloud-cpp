@@ -31,21 +31,38 @@ namespace cloud {
 namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-containeranalysis-options
+ */
 struct ContainerAnalysisRetryPolicyOption {
   using Type = std::shared_ptr<ContainerAnalysisRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-containeranalysis-options
+ */
 struct ContainerAnalysisBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-containeranalysis-options
+ */
 struct ContainerAnalysisConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<ContainerAnalysisConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to ContainerAnalysis.
+ *
+ * @ingroup google-cloud-containeranalysis-options
+ */
 using ContainerAnalysisPolicyOptionList =
     OptionList<ContainerAnalysisRetryPolicyOption,
                ContainerAnalysisBackoffPolicyOption,

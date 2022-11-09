@@ -31,21 +31,38 @@ namespace cloud {
 namespace scheduler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-scheduler-options
+ */
 struct CloudSchedulerRetryPolicyOption {
   using Type = std::shared_ptr<CloudSchedulerRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-scheduler-options
+ */
 struct CloudSchedulerBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-scheduler-options
+ */
 struct CloudSchedulerConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<CloudSchedulerConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to CloudScheduler.
+ *
+ * @ingroup google-cloud-scheduler-options
+ */
 using CloudSchedulerPolicyOptionList =
     OptionList<CloudSchedulerRetryPolicyOption,
                CloudSchedulerBackoffPolicyOption,

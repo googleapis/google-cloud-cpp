@@ -31,21 +31,38 @@ namespace cloud {
 namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-servicedirectory-options
+ */
 struct LookupServiceRetryPolicyOption {
   using Type = std::shared_ptr<LookupServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-servicedirectory-options
+ */
 struct LookupServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-servicedirectory-options
+ */
 struct LookupServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<LookupServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to LookupService.
+ *
+ * @ingroup google-cloud-servicedirectory-options
+ */
 using LookupServicePolicyOptionList =
     OptionList<LookupServiceRetryPolicyOption, LookupServiceBackoffPolicyOption,
                LookupServiceConnectionIdempotencyPolicyOption>;

@@ -31,21 +31,38 @@ namespace cloud {
 namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-servicecontrol-options
+ */
 struct ServiceControllerRetryPolicyOption {
   using Type = std::shared_ptr<ServiceControllerRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-servicecontrol-options
+ */
 struct ServiceControllerBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-servicecontrol-options
+ */
 struct ServiceControllerConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<ServiceControllerConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to ServiceController.
+ *
+ * @ingroup google-cloud-servicecontrol-options
+ */
 using ServiceControllerPolicyOptionList =
     OptionList<ServiceControllerRetryPolicyOption,
                ServiceControllerBackoffPolicyOption,

@@ -31,26 +31,48 @@ namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-dialogflow_cx-options
+ */
 struct FlowsRetryPolicyOption {
   using Type = std::shared_ptr<FlowsRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-dialogflow_cx-options
+ */
 struct FlowsBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct FlowsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-dialogflow_cx-options
+ */
 struct FlowsConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<FlowsConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-dialogflow_cx-options
+ */
+struct FlowsPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to Flows.
+ *
+ * @ingroup google-cloud-dialogflow_cx-options
+ */
 using FlowsPolicyOptionList =
     OptionList<FlowsRetryPolicyOption, FlowsBackoffPolicyOption,
                FlowsPollingPolicyOption,

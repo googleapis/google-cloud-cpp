@@ -31,26 +31,48 @@ namespace cloud {
 namespace ids {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-ids-options
+ */
 struct IDSRetryPolicyOption {
   using Type = std::shared_ptr<IDSRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-ids-options
+ */
 struct IDSBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct IDSPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-ids-options
+ */
 struct IDSConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<IDSConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-ids-options
+ */
+struct IDSPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to IDS.
+ *
+ * @ingroup google-cloud-ids-options
+ */
 using IDSPolicyOptionList =
     OptionList<IDSRetryPolicyOption, IDSBackoffPolicyOption,
                IDSPollingPolicyOption, IDSConnectionIdempotencyPolicyOption>;
