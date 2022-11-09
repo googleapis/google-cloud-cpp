@@ -47,7 +47,8 @@ function Get-Released-Quickstarts {
         #   TODO(#10067) - batch (awaiting non-experimental target)
         #   TODO(#8125) - channel (DOMAIN macro)
         #   TODO(#8785) - storagetransfer (UID_MAX/GID_MAX macros)
-        Where-Object { -not ("asset", "batch", "channel", "storagetransfer" -contains $_) } |
+        #   TODO(#10208) - beyondcorp (cleanup after next release)
+        Where-Object { -not ("asset", "batch", "channel", "storagetransfer", "beyondcorp" -contains $_) } |
         # TODO(#9923) - compiling all quickstarts on Windows is too slow
         Get-Random -Count 10
     Pop-Location
