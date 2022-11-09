@@ -897,8 +897,7 @@ INSTANTIATE_TEST_SUITE_P(
                              R"""(,
       {std::make_pair("page_size", std::to_string(request.page_size())),
        std::make_pair("page_token", request.page_token()),
-       std::make_pair("name", request.name())
-      })""")),
+       std::make_pair("name", request.name())})""")),
     [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;

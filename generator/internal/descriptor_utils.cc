@@ -368,16 +368,11 @@ void SetHttpGetQueryParameters(
         };
         if (remaining_request_fields.empty()) {
           method_vars["method_http_query_parameters"] = ", {}";
-        } else if (remaining_request_fields.size() == 1) {
-          method_vars["method_http_query_parameters"] = absl::StrCat(
-              ",\n      {",
-              absl::StrJoin(remaining_request_fields, ",\n       ", format),
-              "}");
         } else {
           method_vars["method_http_query_parameters"] = absl::StrCat(
               ",\n      {",
               absl::StrJoin(remaining_request_fields, ",\n       ", format),
-              "\n      }");
+              "}");
         }
       }
     }
