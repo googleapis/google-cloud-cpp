@@ -356,24 +356,24 @@ void SetHttpGetQueryParameters(
             }
           }
         }
-        method_vars["method_http_query_parameters"] = absl::StrCat(
-            ",\n{",
-            absl::StrJoin(
-                remaining_request_fields, ",\n",
-                [&](std::string* out,
-                    std::pair<std::string,
-                              protobuf::FieldDescriptor::CppType> const& i) {
-                  if (i.second == protobuf::FieldDescriptor::CPPTYPE_STRING) {
-                    out->append(
-                        absl::StrFormat("std::make_pair(\"%s\", request.%s())",
+        auto format = [](auto* out, auto const& i) {
+          if (i.second == protobuf::FieldDescriptor::CPPTYPE_STRING) {
+            out->append(absl::StrFormat("std::make_pair(\"%s\", request.%s())",
                                         i.first, i.first));
-                  } else {
-                    out->append(absl::StrFormat(
-                        "std::make_pair(\"%s\", std::to_string(request.%s()))",
-                        i.first, i.first));
-                  }
-                }),
-            "}");
+            return;
+          }
+          out->append(absl::StrFormat(
+              "std::make_pair(\"%s\", std::to_string(request.%s()))", i.first,
+              i.first));
+        };
+        if (remaining_request_fields.empty()) {
+          method_vars["method_http_query_parameters"] = ", {}";
+        } else {
+          method_vars["method_http_query_parameters"] = absl::StrCat(
+              ",\n      {",
+              absl::StrJoin(remaining_request_fields, ",\n       ", format),
+              "}");
+        }
       }
     }
 
