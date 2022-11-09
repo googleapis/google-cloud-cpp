@@ -19,8 +19,11 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-// These keys need to be unique, but there's no other required format.
-char const kStatusPayloadGrpcProto[] = "StatusProtoSerialized";
+char const* StatusPayloadGrpcProto() {
+  // These keys need to be unique, but there's no other required format.
+  static char const kStatusPayloadGrpcProto[] = "StatusProtoSerialized";
+  return kStatusPayloadGrpcProto;
+}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

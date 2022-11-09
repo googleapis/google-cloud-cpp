@@ -43,7 +43,7 @@ TEST(StatusUtils, SessionNotFoundResourceInfo) {
 
   // A status with the right ResourceInfo doesn't need a particular message.
   Status still_not_found(not_found.code(), "foo bar", not_found.error_info());
-  std::string const key = internal::kStatusPayloadGrpcProto;
+  std::string const key = internal::StatusPayloadGrpcProto();
   auto payload = internal::GetPayload(not_found, key);
   ASSERT_TRUE(payload.has_value());
   internal::SetPayload(still_not_found, key, *std::move(payload));

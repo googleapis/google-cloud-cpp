@@ -121,7 +121,7 @@ google::cloud::Status MakeStatusFromRpcError(google::rpc::Status const& proto) {
   }
   auto status = Status(code, proto.message(), GetErrorInfo(proto));
   google::cloud::internal::SetPayload(
-      status, google::cloud::internal::kStatusPayloadGrpcProto,
+      status, google::cloud::internal::StatusPayloadGrpcProto(),
       proto.SerializeAsString());
   return status;
 }

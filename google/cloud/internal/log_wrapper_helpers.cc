@@ -103,7 +103,7 @@ std::string DebugString(Status const& status, TracingOptions const& options) {
   std::ostringstream os;
   os << status;
   auto payload =
-      internal::GetPayload(status, internal::kStatusPayloadGrpcProto);
+      internal::GetPayload(status, internal::StatusPayloadGrpcProto());
   google::rpc::Status proto;
   if (payload && proto.ParseFromString(*payload)) {
     // See https://cloud.google.com/apis/design/errors#error_payloads
