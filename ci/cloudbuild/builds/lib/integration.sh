@@ -152,8 +152,6 @@ function integration::bazel_with_emulators() {
     "generator/..."
     # BigQuery integration tests
     "google/cloud/bigquery/..."
-    # IAM and IAM Credentials integration tests
-    "google/cloud/iam/..."
     # Logging integration tests
     "google/cloud/logging/..."
     # Pub/Sub Lite integration tests
