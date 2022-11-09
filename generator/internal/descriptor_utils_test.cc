@@ -857,8 +857,8 @@ INSTANTIATE_TEST_SUITE_P(
             "  *request.mutable_labels() = {labels.begin(), labels.end()};\n"),
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "method_http_query_parameters",
-                             ",\n{std::make_pair(\"not_used_anymore\", "
-                             "request.not_used_anymore())}"),
+                             R"""(,
+      {std::make_pair("not_used_anymore", request.not_used_anymore())})"""),
         // Method7
         MethodVarsTestValues("google.protobuf.Service.Method7",
                              "longrunning_metadata_type",
@@ -892,12 +892,13 @@ INSTANTIATE_TEST_SUITE_P(
             "google.protobuf.Service.Method8", "method_rest_path",
             "absl::StrCat(\"/v1/\",request.namespace_().name(),\"\")"),
         // Method9
-        MethodVarsTestValues(
-            "google.protobuf.Service.Method9", "method_http_query_parameters",
-            ",\n{std::make_pair(\"page_size\", "
-            "std::to_string(request.page_size())),\nstd::make_pair(\"page_"
-            "token\", request.page_token()),\nstd::make_pair(\"name\", "
-            "request.name())}")),
+        MethodVarsTestValues("google.protobuf.Service.Method9",
+                             "method_http_query_parameters",
+                             R"""(,
+      {std::make_pair("page_size", std::to_string(request.page_size())),
+       std::make_pair("page_token", request.page_token()),
+       std::make_pair("name", request.name())
+      })""")),
     [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;
