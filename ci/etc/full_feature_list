@@ -19,6 +19,7 @@ certificatemanager
 channel
 cloudbuild
 composer
+connectors
 contactcenterinsights
 container
 containeranalysis
