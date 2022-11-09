@@ -1,4 +1,4 @@
-# Copyright 2022 Google LLC
+# Copyright 2021 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -166,7 +166,7 @@ RUN curl -sSL https://github.com/universal-ctags/ctags/archive/refs/tags/p5.9.20
 # https://github.com/lvc/abi-dumper/pull/29. We can switch back to `dnf install
 # abi-dumper` once it has the fix.
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/lvc/abi-dumper/archive/16bb467cd7d343dd3a16782b151b56cf15509594.tar.gz | \
+RUN curl -sSL https://github.com/lvc/abi-dumper/archive/814effec0f20a9613441dfa033aa0a0bc2a96a87.tar.gz | \
     tar -xzf - --strip-components=1 && \
     mv abi-dumper.pl /usr/local/bin/abi-dumper && \
     chmod +x /usr/local/bin/abi-dumper
@@ -179,9 +179,14 @@ ENV CLOUDSDK_PYTHON=python3.10
 RUN /var/tmp/ci/install-cloud-sdk.sh
 ENV CLOUD_SDK_LOCATION=/usr/local/google-cloud-sdk
 ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
-# The Cloud Pub/Sub emulator needs Java :shrug:
-RUN dnf makecache && dnf install -y java-latest-openjdk
+# The Cloud Pub/Sub emulator needs Java, and so does `bazel coverage` :shrug:
+# Bazel needs the '-devel' version with javac.
+RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.
 RUN ldconfig /usr/local/lib*
+
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.15.0/bazelisk-linux-${ARCH}" && \
+    chmod +x /usr/bin/bazelisk && \
+    ln -s /usr/bin/bazelisk /usr/bin/bazel
