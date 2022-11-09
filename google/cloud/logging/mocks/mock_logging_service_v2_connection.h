@@ -72,6 +72,11 @@ class MockLoggingServiceV2Connection
                    google::logging::v2::TailLogEntriesRequest,
                    google::logging::v2::TailLogEntriesResponse>>),
               AsyncTailLogEntries, (ExperimentalTag), (override));
+
+  MOCK_METHOD(future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>,
+              AsyncWriteLogEntries,
+              (google::logging::v2::WriteLogEntriesRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -21,6 +21,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -157,6 +158,20 @@ StreamRange<std::string> LoggingServiceV2ConnectionImpl::ListLogs(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+}
+
+future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+LoggingServiceV2ConnectionImpl::AsyncWriteLogEntries(
+    google::logging::v2::WriteLogEntriesRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->WriteLogEntries(request), background_->cq(),
+      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             google::logging::v2::WriteLogEntriesRequest const& request) {
+        return stub->AsyncWriteLogEntries(cq, std::move(context), request);
+      },
+      request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

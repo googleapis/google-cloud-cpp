@@ -116,6 +116,27 @@ LoggingServiceV2Client::AsyncTailLogEntries(ExperimentalTag tag, Options opts) {
   return connection_->AsyncTailLogEntries(std::move(tag));
 }
 
+future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+LoggingServiceV2Client::AsyncWriteLogEntries(
+    std::string const& log_name, google::api::MonitoredResource const& resource,
+    std::map<std::string, std::string> const& labels,
+    std::vector<google::logging::v2::LogEntry> const& entries, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::logging::v2::WriteLogEntriesRequest request;
+  request.set_log_name(log_name);
+  *request.mutable_resource() = resource;
+  *request.mutable_labels() = {labels.begin(), labels.end()};
+  *request.mutable_entries() = {entries.begin(), entries.end()};
+  return connection_->AsyncWriteLogEntries(request);
+}
+
+future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+LoggingServiceV2Client::AsyncWriteLogEntries(
+    google::logging::v2::WriteLogEntriesRequest const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncWriteLogEntries(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging
 }  // namespace cloud

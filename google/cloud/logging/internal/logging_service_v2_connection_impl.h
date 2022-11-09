@@ -72,6 +72,10 @@ class LoggingServiceV2ConnectionImpl
       google::logging::v2::TailLogEntriesResponse>>
       AsyncTailLogEntries(ExperimentalTag) override;
 
+  future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+  AsyncWriteLogEntries(
+      google::logging::v2::WriteLogEntriesRequest const& request) override;
+
  private:
   std::unique_ptr<logging::LoggingServiceV2RetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
