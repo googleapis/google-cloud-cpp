@@ -579,9 +579,10 @@ TEST_F(PartitionPublisherTest, PublishAfterShutdown) {
   EXPECT_CALL(alarm_token_ref_, Destroy);
   EXPECT_CALL(resumable_stream_ref_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
-  publisher_->Shutdown().get();
+  auto shutdown_future = publisher_->Shutdown();
   read_promise.set_value(absl::optional<PublishResponse>());
   start_promise.set_value(Status());
+  shutdown_future.get();
   EXPECT_EQ(publisher_start_future.get(), Status());
 
   auto publish_future = publisher_->Publish(PubSubMessage::default_instance());
@@ -589,6 +590,44 @@ TEST_F(PartitionPublisherTest, PublishAfterShutdown) {
   EXPECT_FALSE(invalid_publish_response.ok());
   EXPECT_EQ(invalid_publish_response.status(),
             (Status{StatusCode::kAborted, "`Shutdown` called"}));
+}
+
+TEST_F(PartitionPublisherTest, ShutdownWaitsForReadResponse) {
+  InSequence seq;
+
+  promise<Status> start_promise;
+  EXPECT_CALL(resumable_stream_ref_, Start)
+      .WillOnce(Return(ByMove(start_promise.get_future())));
+
+  promise<absl::optional<PublishResponse>> read_promise;
+  // first `Read` response is nullopt because resumable stream in retry loop
+  EXPECT_CALL(resumable_stream_ref_, Read)
+      .WillOnce(
+          Return(ByMove(make_ready_future(absl::optional<PublishResponse>()))))
+      .WillOnce(Return(ByMove(read_promise.get_future())));
+
+  future<Status> publisher_start_future = publisher_->Start();
+
+  auto underlying_stream = absl::make_unique<StrictMock<AsyncReaderWriter>>();
+  EXPECT_CALL(*underlying_stream,
+              Write(IsProtoEqual(GetInitializerPublishRequest()), _))
+      .WillOnce(Return(ByMove(make_ready_future(true))));
+  EXPECT_CALL(*underlying_stream, Read)
+      .WillOnce(Return(ByMove(make_ready_future(
+          absl::make_optional(GetInitializerPublishResponse())))));
+  initializer_(std::move(underlying_stream));
+
+  EXPECT_CALL(alarm_token_ref_, Destroy);
+  EXPECT_CALL(resumable_stream_ref_, Shutdown)
+      .WillOnce(Return(ByMove(make_ready_future())));
+  auto shutdown_future = publisher_->Shutdown();
+  start_promise.set_value(Status());
+  EXPECT_EQ(publisher_start_future.get(), Status());
+
+  // shutdown future does not finish until read response is received.
+  EXPECT_FALSE(shutdown_future.is_ready());
+  read_promise.set_value(absl::optional<PublishResponse>());
+  shutdown_future.get();
 }
 
 TEST_F(PartitionPublisherTest, InitializerWriteFailureThenGood) {
@@ -628,8 +667,10 @@ TEST_F(PartitionPublisherTest, InitializerWriteFailureThenGood) {
   EXPECT_CALL(alarm_token_ref_, Destroy);
   EXPECT_CALL(resumable_stream_ref_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
-  publisher_->Shutdown().get();
+  auto shutdown_future = publisher_->Shutdown();
+  read_promise.set_value(absl::optional<PublishResponse>());
   start_promise.set_value(Status());
+  shutdown_future.get();
   EXPECT_EQ(publisher_start_future.get(), Status());
 }
 
@@ -673,8 +714,10 @@ TEST_F(PartitionPublisherTest, InitializerReadFailureThenGood) {
   EXPECT_CALL(alarm_token_ref_, Destroy);
   EXPECT_CALL(resumable_stream_ref_, Shutdown)
       .WillOnce(Return(ByMove(make_ready_future())));
-  publisher_->Shutdown().get();
+  auto shutdown_future = publisher_->Shutdown();
+  read_promise.set_value(absl::optional<PublishResponse>());
   start_promise.set_value(Status());
+  shutdown_future.get();
   EXPECT_EQ(publisher_start_future.get(), Status());
 }
 
@@ -751,9 +794,10 @@ class InitializedPartitionPublisherTest : public PartitionPublisherTest {
     EXPECT_CALL(alarm_token_ref_, Destroy);
     EXPECT_CALL(resumable_stream_ref_, Shutdown)
         .WillOnce(Return(ByMove(make_ready_future())));
-    publisher_->Shutdown().get();
+    auto shutdown_future = publisher_->Shutdown();
     read_promise_.set_value(absl::optional<PublishResponse>());
     start_promise_.set_value(Status());
+    shutdown_future.get();
     EXPECT_EQ(publisher_start_future_.get(), Status());
   }
 
