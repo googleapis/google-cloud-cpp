@@ -356,8 +356,9 @@ if (BUILD_TESTING)
     foreach (fname ${google_cloud_cpp_common_benchmarks})
         google_cloud_cpp_add_executable(target "common" "${fname}")
         add_test(NAME ${target} COMMAND ${target})
-        target_link_libraries(${target} PRIVATE google-cloud-cpp::common
-                                                benchmark::benchmark_main)
+        target_link_libraries(
+            ${target} PRIVATE google-cloud-cpp::common
+                              benchmark::benchmark_main benchmark::benchmark)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 endif ()
