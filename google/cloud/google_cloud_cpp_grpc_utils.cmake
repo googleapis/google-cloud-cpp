@@ -293,7 +293,7 @@ if (BUILD_TESTING)
         target_link_libraries(
             ${target}
             PRIVATE google-cloud-cpp::grpc_utils google-cloud-cpp::common
-                    benchmark::benchmark_main)
+                    benchmark::benchmark_main benchmark::benchmark)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 endif ()

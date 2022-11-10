@@ -425,7 +425,7 @@ function (spanner_client_define_benchmarks)
         target_link_libraries(
             ${target}
             PRIVATE google-cloud-cpp::spanner google-cloud-cpp::spanner_mocks
-                    benchmark::benchmark_main)
+                    benchmark::benchmark_main benchmark::benchmark)
         google_cloud_cpp_add_common_options(${target})
 
         add_dependencies(spanner-client-benchmarks ${target})

@@ -571,7 +571,7 @@ if (BUILD_TESTING)
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
             ${target} PRIVATE absl::memory google-cloud-cpp::storage
-                              benchmark::benchmark_main)
+                              benchmark::benchmark_main benchmark::benchmark)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 
