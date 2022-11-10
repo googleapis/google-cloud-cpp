@@ -102,6 +102,8 @@ future<void> PartitionPublisher::Shutdown() {
       shutdown = shutdown.then(ChainFuture(reading_->get_future()));
     }
   }
+  // Safe to access `this` in the continuation as the caller must wait on the
+  // shutdown future before destroying the publisher.
   return shutdown.then([this](future<void>) { SatisfyOutstandingMessages(); });
 }
 
@@ -184,9 +186,7 @@ void PartitionPublisher::Read() {
 
 void PartitionPublisher::OnReadStart() {
   std::lock_guard<std::mutex> g{mu_};
-  if (!reading_) {
-    reading_.emplace();
-  }
+  if (!reading_) reading_.emplace();
 }
 
 void PartitionPublisher::OnReadEnd() {
@@ -195,9 +195,7 @@ void PartitionPublisher::OnReadEnd() {
     std::lock_guard<std::mutex> g{mu_};
     read_done.swap(reading_);
   }
-  if (read_done) {
-    read_done->set_value();
-  }
+  if (read_done) read_done->set_value();
 }
 
 std::deque<PartitionPublisher::MessageWithPromise>

@@ -625,8 +625,7 @@ TEST_F(PartitionPublisherTest, ShutdownWaitsForReadResponse) {
   EXPECT_EQ(publisher_start_future.get(), Status());
 
   // shutdown future does not finish until read response is received.
-  EXPECT_EQ(shutdown_future.wait_for(std::chrono::milliseconds(25)),
-            std::future_status::timeout);
+  EXPECT_FALSE(shutdown_future.is_ready());
   read_promise.set_value(absl::optional<PublishResponse>());
   shutdown_future.get();
 }

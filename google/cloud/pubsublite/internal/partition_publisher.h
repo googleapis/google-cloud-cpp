@@ -100,8 +100,8 @@ class PartitionPublisher
   std::deque<std::deque<MessageWithPromise>>
       unsent_batches_;  // ABSL_GUARDED_BY(mu_)
   std::deque<std::deque<MessageWithPromise>>
-      in_flight_batches_;  // ABSL_GUARDED_BY(mu_)
-  bool writing_ = false;   // ABSL_GUARDED_BY(mu_)
+      in_flight_batches_;                  // ABSL_GUARDED_BY(mu_)
+  bool writing_ = false;                   // ABSL_GUARDED_BY(mu_)
   absl::optional<promise<void>> reading_;  // ABSL_GUARDED_BY(mu_)
 
   std::unique_ptr<AlarmRegistry::CancelToken> cancel_token_;
