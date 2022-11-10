@@ -356,6 +356,9 @@
 ./include/google/cloud/speech/internal
 ./include/google/cloud/speech/mocks
 ./include/google/cloud/speech/v1
+./include/google/cloud/speech/v2
+./include/google/cloud/speech/v2/internal
+./include/google/cloud/speech/v2/mocks
 ./include/google/cloud/storage
 ./include/google/cloud/storage/internal
 ./include/google/cloud/storagetransfer
