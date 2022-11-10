@@ -189,7 +189,11 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/spanner/admin/instance/v1:instance_cc_grpc" \
       "@com_google_googleapis//google/spanner/admin/database/v1:database_cc_grpc"
   )"
-  ["speech"]="@com_google_googleapis//google/cloud/speech/v1:speech_cc_grpc"
+  ["speech"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/speech/v1:speech_cc_grpc" \
+      "@com_google_googleapis//google/cloud/speech/v2:speech_cc_grpc"
+  )"
   ["storage"]="@com_google_googleapis//google/storage/v2:storage_cc_grpc"
   ["storagetransfer"]="@com_google_googleapis//google/storagetransfer/v1:storagetransfer_cc_grpc"
   ["talent"]="@com_google_googleapis//google/cloud/talent/v4:talent_cc_grpc"
