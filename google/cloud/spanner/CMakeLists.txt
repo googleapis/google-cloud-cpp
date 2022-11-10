@@ -403,7 +403,7 @@ endfunction ()
 
 # Define the benchmarks in a function so we have a new scope for variable names.
 function (spanner_client_define_benchmarks)
-    find_package(benchmark CONFIG REQUIRED)
+    include(FindBenchmarkWithWorkarounds)
 
     set(spanner_client_benchmarks
         # cmake-format: sort

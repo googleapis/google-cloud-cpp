@@ -272,7 +272,7 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 if (BUILD_TESTING)
-    find_package(benchmark CONFIG REQUIRED)
+    include(FindBenchmarkWithWorkarounds)
 
     set(google_cloud_cpp_common_unit_tests
         # cmake-format: sort
