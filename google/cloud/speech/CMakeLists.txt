@@ -50,10 +50,24 @@ google_cloud_cpp_grpcpp_library(
 external_googleapis_set_version_and_alias(speech_protos)
 target_link_libraries(google_cloud_cpp_speech_protos PUBLIC ${proto_deps})
 
+unset(mocks_globs)
+unset(source_globs)
+set(service_dirs ";v2/")
+set(internal_dirs ";internal/")
+set(extensions "*.h;*.cc")
+foreach (s IN LISTS service_dirs)
+    foreach (i IN LISTS internal_dirs)
+        foreach (e IN LISTS extensions)
+            list(APPEND source_globs "${s}${i}${e}")
+        endforeach ()
+    endforeach ()
+    list(APPEND mocks_globs "${s}mocks/*.h")
+endforeach ()
+
 file(
     GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+    ${source_globs})
 list(SORT source_files)
 add_library(google_cloud_cpp_speech ${source_files})
 target_include_directories(
@@ -83,7 +97,7 @@ add_library(google-cloud-cpp::speech ALIAS google_cloud_cpp_speech)
 file(
     GLOB relative_mock_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "mocks/*.h")
+    ${mocks_globs})
 list(SORT relative_mock_files)
 set(mock_files)
 foreach (file IN LISTS relative_mock_files)
