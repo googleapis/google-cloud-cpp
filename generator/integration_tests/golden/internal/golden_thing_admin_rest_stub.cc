@@ -45,8 +45,8 @@ DefaultGoldenThingAdminRestStub::ListDatabases(
   return rest_internal::Get<google::test::admin::database::v1::ListDatabasesResponse>(
       *rest_client_, rest_context, request,
       absl::StrCat("/v1/",request.parent(),"/databases"),
-{std::make_pair("page_size", std::to_string(request.page_size())),
-std::make_pair("page_token", request.page_token())});
+      {std::make_pair("page_size", std::to_string(request.page_size())),
+       std::make_pair("page_token", request.page_token())});
 }
 
 StatusOr<google::longrunning::Operation>
@@ -64,8 +64,7 @@ DefaultGoldenThingAdminRestStub::GetDatabase(
       google::test::admin::database::v1::GetDatabaseRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::Database>(
       *rest_client_, rest_context, request,
-      absl::StrCat("/v1/",request.name(),""),
-{});
+      absl::StrCat("/v1/",request.name(),""), {});
 }
 
 StatusOr<google::longrunning::Operation>
@@ -91,8 +90,7 @@ DefaultGoldenThingAdminRestStub::GetDatabaseDdl(
       google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::GetDatabaseDdlResponse>(
       *rest_client_, rest_context, request,
-      absl::StrCat("/v1/",request.database(),"/ddl"),
-{});
+      absl::StrCat("/v1/",request.database(),"/ddl"), {});
 }
 
 StatusOr<google::iam::v1::Policy>
@@ -137,8 +135,7 @@ DefaultGoldenThingAdminRestStub::GetBackup(
       google::test::admin::database::v1::GetBackupRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::Backup>(
       *rest_client_, rest_context, request,
-      absl::StrCat("/v1/",request.name(),""),
-{});
+      absl::StrCat("/v1/",request.name(),""), {});
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
@@ -165,9 +162,9 @@ DefaultGoldenThingAdminRestStub::ListBackups(
   return rest_internal::Get<google::test::admin::database::v1::ListBackupsResponse>(
       *rest_client_, rest_context, request,
       absl::StrCat("/v1/",request.parent(),"/backups"),
-{std::make_pair("filter", request.filter()),
-std::make_pair("page_size", std::to_string(request.page_size())),
-std::make_pair("page_token", request.page_token())});
+      {std::make_pair("filter", request.filter()),
+       std::make_pair("page_size", std::to_string(request.page_size())),
+       std::make_pair("page_token", request.page_token())});
 }
 
 StatusOr<google::longrunning::Operation>
@@ -186,9 +183,9 @@ DefaultGoldenThingAdminRestStub::ListDatabaseOperations(
   return rest_internal::Get<google::test::admin::database::v1::ListDatabaseOperationsResponse>(
       *rest_client_, rest_context, request,
       absl::StrCat("/v1/",request.parent(),"/databaseOperations"),
-{std::make_pair("filter", request.filter()),
-std::make_pair("page_size", std::to_string(request.page_size())),
-std::make_pair("page_token", request.page_token())});
+      {std::make_pair("filter", request.filter()),
+       std::make_pair("page_size", std::to_string(request.page_size())),
+       std::make_pair("page_token", request.page_token())});
 }
 
 StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse>
@@ -198,9 +195,9 @@ DefaultGoldenThingAdminRestStub::ListBackupOperations(
   return rest_internal::Get<google::test::admin::database::v1::ListBackupOperationsResponse>(
       *rest_client_, rest_context, request,
       absl::StrCat("/v1/",request.parent(),"/backupOperations"),
-{std::make_pair("filter", request.filter()),
-std::make_pair("page_size", std::to_string(request.page_size())),
-std::make_pair("page_token", request.page_token())});
+      {std::make_pair("filter", request.filter()),
+       std::make_pair("page_size", std::to_string(request.page_size())),
+       std::make_pair("page_token", request.page_token())});
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

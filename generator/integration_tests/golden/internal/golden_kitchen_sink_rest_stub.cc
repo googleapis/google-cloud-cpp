@@ -71,8 +71,8 @@ DefaultGoldenKitchenSinkRestStub::ListLogs(
   return rest_internal::Get<google::test::admin::database::v1::ListLogsResponse>(
       *rest_client_, rest_context, request,
       absl::StrCat("/v2/",request.parent(),"/logs"),
-{std::make_pair("page_size", std::to_string(request.page_size())),
-std::make_pair("page_token", request.page_token())});
+      {std::make_pair("page_size", std::to_string(request.page_size())),
+       std::make_pair("page_token", request.page_token())});
 }
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
@@ -81,8 +81,7 @@ DefaultGoldenKitchenSinkRestStub::ListServiceAccountKeys(
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListServiceAccountKeysResponse>(
       *rest_client_, rest_context, request,
-      absl::StrCat("/v1/",request.name(),"/keys"),
-{});
+      absl::StrCat("/v1/",request.name(),"/keys"), {});
 }
 
 Status DefaultGoldenKitchenSinkRestStub::DoNothing(
