@@ -37,6 +37,7 @@
 #include "generator/internal/sample_generator.h"
 #include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_generator.h"
+#include "generator/internal/stub_rest_generator.h"
 #include <google/api/routing.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
@@ -944,6 +945,8 @@ VarsDictionary CreateServiceVars(
   vars["proto_file_name"] = descriptor.file()->name();
   vars["proto_grpc_header_path"] = absl::StrCat(
       absl::StripSuffix(descriptor.file()->name(), ".proto"), ".grpc.pb.h");
+  vars["proto_header_path"] = absl::StrCat(
+      absl::StripSuffix(descriptor.file()->name(), ".proto"), ".pb.h");
   vars["retry_policy_name"] = absl::StrCat(descriptor.name(), "RetryPolicy");
   vars["retry_traits_name"] = absl::StrCat(descriptor.name(), "RetryTraits");
   vars["retry_traits_header_path"] =
@@ -977,6 +980,13 @@ VarsDictionary CreateServiceVars(
   vars["stub_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_stub.h");
+  vars["stub_rest_class_name"] = absl::StrCat(descriptor.name(), "RestStub");
+  vars["stub_rest_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_rest_stub.cc");
+  vars["stub_rest_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_rest_stub.h");
   vars["stub_factory_cc_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_stub_factory.cc");
@@ -1085,6 +1095,14 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   if (generate_round_robin_generator != service_vars.end() &&
       generate_round_robin_generator->second == "true") {
     code_generators.push_back(absl::make_unique<RoundRobinDecoratorGenerator>(
+        service, service_vars, method_vars, context));
+  }
+
+  auto const generate_rest_transport =
+      service_vars.find("generate_rest_transport");
+  if (generate_rest_transport != service_vars.end() &&
+      generate_rest_transport->second == "true") {
+    code_generators.push_back(absl::make_unique<StubRestGenerator>(
         service, service_vars, method_vars, context));
   }
 
