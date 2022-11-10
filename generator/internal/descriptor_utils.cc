@@ -296,8 +296,8 @@ void SetHttpResourceRoutingMethodVars(
       method_vars["method_request_body"] = info.body;
       method_vars["method_http_verb"] = info.http_verb;
       method_vars["method_rest_path"] =
-          absl::StrCat("absl::StrCat(\"", info.path_prefix, "\",request.",
-                       method_vars["method_request_param_value"], ",\"",
+          absl::StrCat("absl::StrCat(\"", info.path_prefix, "\", request.",
+                       method_vars["method_request_param_value"], ", \"",
                        info.path_suffix, "\")");
     }
 

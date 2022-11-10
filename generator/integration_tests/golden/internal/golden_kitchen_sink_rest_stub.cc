@@ -43,7 +43,7 @@ DefaultGoldenKitchenSinkRestStub::GenerateAccessToken(
       google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return rest_internal::Post<google::test::admin::database::v1::GenerateAccessTokenResponse>(
       *rest_client_, rest_context, request,
-      absl::StrCat("/v1/",request.name(),":generateAccessToken"));
+      absl::StrCat("/v1/", request.name(), ":generateAccessToken"));
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
@@ -70,7 +70,7 @@ DefaultGoldenKitchenSinkRestStub::ListLogs(
       google::test::admin::database::v1::ListLogsRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListLogsResponse>(
       *rest_client_, rest_context, request,
-      absl::StrCat("/v2/",request.parent(),"/logs"),
+      absl::StrCat("/v2/", request.parent(), "/logs"),
       {std::make_pair("page_size", std::to_string(request.page_size())),
        std::make_pair("page_token", request.page_token())});
 }
@@ -81,7 +81,7 @@ DefaultGoldenKitchenSinkRestStub::ListServiceAccountKeys(
       google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
   return rest_internal::Get<google::test::admin::database::v1::ListServiceAccountKeysResponse>(
       *rest_client_, rest_context, request,
-      absl::StrCat("/v1/",request.name(),"/keys"), {});
+      absl::StrCat("/v1/", request.name(), "/keys"), {});
 }
 
 Status DefaultGoldenKitchenSinkRestStub::DoNothing(
@@ -97,7 +97,7 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting1(
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return rest_internal::Post(
       *rest_client_, rest_context, request,
-      absl::StrCat("/v1/",request.table_name(),":explicitRouting1"));
+      absl::StrCat("/v1/", request.table_name(), ":explicitRouting1"));
 }
 
 Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
@@ -105,7 +105,7 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
   return rest_internal::Post(
       *rest_client_, rest_context, request,
-      absl::StrCat("/v1/",request.table_name(),":explicitRouting2"));
+      absl::StrCat("/v1/", request.table_name(), ":explicitRouting2"));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
