@@ -272,7 +272,7 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 if (BUILD_TESTING)
-    find_package(benchmark CONFIG REQUIRED)
+    include(FindBenchmarkWithWorkarounds)
 
     set(google_cloud_cpp_common_unit_tests
         # cmake-format: sort
@@ -356,9 +356,8 @@ if (BUILD_TESTING)
     foreach (fname ${google_cloud_cpp_common_benchmarks})
         google_cloud_cpp_add_executable(target "common" "${fname}")
         add_test(NAME ${target} COMMAND ${target})
-        target_link_libraries(
-            ${target} PRIVATE google-cloud-cpp::common
-                              benchmark::benchmark_main benchmark::benchmark)
+        target_link_libraries(${target} PRIVATE google-cloud-cpp::common
+                                                benchmark::benchmark_main)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 endif ()

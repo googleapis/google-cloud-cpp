@@ -403,7 +403,7 @@ endfunction ()
 
 # Define the benchmarks in a function so we have a new scope for variable names.
 function (spanner_client_define_benchmarks)
-    find_package(benchmark CONFIG REQUIRED)
+    include(FindBenchmarkWithWorkarounds)
 
     set(spanner_client_benchmarks
         # cmake-format: sort
@@ -425,7 +425,7 @@ function (spanner_client_define_benchmarks)
         target_link_libraries(
             ${target}
             PRIVATE google-cloud-cpp::spanner google-cloud-cpp::spanner_mocks
-                    benchmark::benchmark_main benchmark::benchmark)
+                    benchmark::benchmark_main)
         google_cloud_cpp_add_common_options(${target})
 
         add_dependencies(spanner-client-benchmarks ${target})
