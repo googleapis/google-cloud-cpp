@@ -16,7 +16,8 @@
 
 find_package(benchmark CONFIG REQUIRED)
 if (VCPKG_TARGET_TRIPLET MATCHES "-static$")
-    set_target_properties(
-        benchmark::benchmark APPEND INTERFACE_COMPILE_DEFINITIONS
-        "BENCHMARK_STATIC_DEFINE")
+    set_property(
+        TARGET benchmark::benchmark
+        APPEND
+        PROPERTY INTERFACE_COMPILE_DEFINITIONS "BENCHMARK_STATIC_DEFINE")
 endif ()
