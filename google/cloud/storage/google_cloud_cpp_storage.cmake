@@ -554,7 +554,7 @@ if (BUILD_TESTING)
     export_list_to_bazel("storage_client_unit_tests.bzl"
                          "storage_client_unit_tests" YEAR "2018")
 
-    find_package(benchmark CONFIG REQUIRED)
+    include(FindBenchmarkWithWorkarounds)
 
     set(google_cloud_cpp_storage_benchmarks
         # cmake-format: sort
@@ -571,7 +571,7 @@ if (BUILD_TESTING)
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
             ${target} PRIVATE absl::memory google-cloud-cpp::storage
-                              benchmark::benchmark_main benchmark::benchmark)
+                              benchmark::benchmark_main)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 

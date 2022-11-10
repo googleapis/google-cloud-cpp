@@ -212,7 +212,7 @@ function (google_cloud_cpp_grpc_utils_add_test fname labels)
 endfunction ()
 
 if (BUILD_TESTING)
-    find_package(benchmark CONFIG REQUIRED)
+    include(FindBenchmarkWithWorkarounds)
 
     # List the unit tests, then setup the targets and dependencies.
     set(google_cloud_cpp_grpc_utils_unit_tests
@@ -293,7 +293,7 @@ if (BUILD_TESTING)
         target_link_libraries(
             ${target}
             PRIVATE google-cloud-cpp::grpc_utils google-cloud-cpp::common
-                    benchmark::benchmark_main benchmark::benchmark)
+                    benchmark::benchmark_main)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 endif ()
