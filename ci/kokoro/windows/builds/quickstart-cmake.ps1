@@ -57,7 +57,7 @@ function Get-Vcpkg-Features {
         Where-Object { -not ("assuredworkloads",  "dialogflow-cx", "dialogflow-es" -contains $_) } |
         # TODO(#9914) - these depends on the `grafeas`, feature but vcpkg does not install it
         Where-Object { -not ( "binaryauthorization", "containeranalysis" -contains $_) } |
-        # These are convenience features to refactor dependencies, they do not have quickstarts.
+        # These are convenience features to refactor dependencies; they do not have quickstarts.
         Where-Object { -not ("googleapis", "grpc-common", "grafeas" -contains $_) }
 }
 
