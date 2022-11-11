@@ -52,7 +52,7 @@ function dump_abi() {
   local library="$1"
   local prefix="$2"
   local public_headers="${prefix}/include/google/cloud/${library#google_cloud_cpp_}"
-  if [[ "${library}" == "google_cloud_cpp_common" ]] || [[ "${library}" == "google_cloud_cpp_grpc_utils" ]]; then
+  if [[ "${library}" == "google_cloud_cpp_common" || "${library}" == "google_cloud_cpp_grpc_utils" ]]; then
     # These two are special
     public_headers="${prefix}/include/google/cloud"
   fi
