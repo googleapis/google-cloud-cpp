@@ -341,11 +341,17 @@ class Client {
    * returned/ignored, and the column order is known. This enables more
    * efficient and simpler code.
    *
+   * Can also execute a DML statement with a returning clause in a read/write
+   * transaction.
+   *
    * @par Example with explicitly selected columns.
    * @snippet samples.cc spanner-query-data
    *
-   * @par Example using SELECT *
+   * @par Example using `SELECT *`.
    * @snippet samples.cc spanner-query-data-select-star
+   *
+   * @par Example using a DML statement with `THEN RETURN`.
+   * @snippet samples.cc spanner_update_dml_returning
    *
    * @param statement The SQL statement to execute.
    * @param opts (optional) The `Options` to use for this call. If given,

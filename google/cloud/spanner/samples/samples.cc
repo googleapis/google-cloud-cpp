@@ -608,7 +608,9 @@ void CreateDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
           SingerId   INT64 NOT NULL,
           FirstName  STRING(1024),
           LastName   STRING(1024),
-          SingerInfo BYTES(MAX)
+          SingerInfo BYTES(MAX),
+          FullName   STRING(2049)
+              AS (ARRAY_TO_STRING([FirstName, LastName], " ")) STORED
       ) PRIMARY KEY (SingerId))""");
   request.add_extra_statements(R"""(
       CREATE TABLE Albums (
@@ -642,7 +644,9 @@ void CreateDatabaseWithVersionRetentionPeriod(
           SingerId   INT64 NOT NULL,
           FirstName  STRING(1024),
           LastName   STRING(1024),
-          SingerInfo BYTES(MAX)
+          SingerInfo BYTES(MAX),
+          FullName   STRING(2049)
+              AS (ARRAY_TO_STRING([FirstName, LastName], " ")) STORED
       ) PRIMARY KEY (SingerId))""");
   request.add_extra_statements(R"""(
       CREATE TABLE Albums (
@@ -1283,7 +1287,9 @@ void CreateDatabaseWithEncryptionKey(
           SingerId   INT64 NOT NULL,
           FirstName  STRING(1024),
           LastName   STRING(1024),
-          SingerInfo BYTES(MAX)
+          SingerInfo BYTES(MAX),
+          FullName   STRING(2049)
+              AS (ARRAY_TO_STRING([FirstName, LastName], " ")) STORED
       ) PRIMARY KEY (SingerId))""");
   request.add_extra_statements(R"""(
       CREATE TABLE Albums (
@@ -3272,6 +3278,93 @@ void FieldAccessOnNestedStruct(google::cloud::spanner::Client client) {
 }
 //! [END spanner_field_access_on_nested_struct_parameters]
 
+// [START spanner_update_dml_returning]
+void UpdateUsingDmlReturning(google::cloud::spanner::Client client) {
+  // Update MarketingBudget column for records satisfying a particular
+  // condition and return the modified MarketingBudget column of the
+  // updated records using `THEN RETURN MarketingBudget`.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            UPDATE Albums SET MarketingBudget = MarketingBudget * 2
+              WHERE SingerId = 1 AND AlbumId = 1
+              THEN RETURN MarketingBudget
+        )""");
+        using RowType = std::tuple<absl::optional<std::int64_t>>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+          if (!row) return std::move(row).status();
+          std::cout << "MarketingBudget: ";
+          if (std::get<0>(*row).has_value()) {
+            std::cout << *std::get<0>(*row);
+          } else {
+            std::cout << "NULL";
+          }
+          std::cout << "\n";
+        }
+        std::cout << "Updated row(s) count: " << rows.RowsModified() << "\n";
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::move(commit).status();
+}
+// [END spanner_update_dml_returning]
+
+// [START spanner_insert_dml_returning]
+void InsertUsingDmlReturning(google::cloud::spanner::Client client) {
+  // Insert records into SINGERS table and return the generated column
+  // FullName of the inserted records using `THEN RETURN FullName`.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            INSERT INTO Singers (SingerId, FirstName, LastName)
+              VALUES (12, 'Melissa', 'Garcia'),
+                     (13, 'Russell', 'Morales'),
+                     (14, 'Jacqueline', 'Long'),
+                     (15, 'Dylan', 'Shaw')
+              THEN RETURN FullName
+        )""");
+        using RowType = std::tuple<std::string>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+          if (!row) return std::move(row).status();
+          std::cout << "FullName: " << std::get<0>(*row) << "\n";
+        }
+        std::cout << "Inserted row(s) count: " << rows.RowsModified() << "\n";
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::move(commit).status();
+}
+// [END spanner_insert_dml_returning]
+
+// [START spanner_delete_dml_returning]
+void DeleteUsingDmlReturning(google::cloud::spanner::Client client) {
+  // Delete records from SINGERS table satisfying a particular condition
+  // and return the SingerId and FullName column of the deleted records
+  // using `THEN RETURN SingerId, FullName'.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            DELETE FROM Singers
+              WHERE FirstName = 'Alice'
+              THEN RETURN SingerId, FullName
+        )""");
+        using RowType = std::tuple<std::int64_t, std::string>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+          if (!row) return std::move(row).status();
+          std::cout << "SingerId: " << std::get<0>(*row) << " ";
+          std::cout << "FullName: " << std::get<1>(*row) << "\n";
+        }
+        std::cout << "Deleted row(s) count: " << rows.RowsModified() << "\n";
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::move(commit).status();
+}
+// [END spanner_delete_dml_returning]
+
 void ExampleStatusOr(google::cloud::spanner::Client client) {
   //! [example-status-or]
   namespace spanner = ::google::cloud::spanner;
@@ -3858,6 +3951,9 @@ int RunOneCommand(std::vector<std::string> argv) {
                          MakeInsertOrUpdateMutation),
       make_command_entry("replace-mutation-builder", ReplaceMutationBuilder),
       make_command_entry("make-replace-mutation", MakeReplaceMutation),
+      make_command_entry("delete-mutation-builder", UpdateUsingDmlReturning),
+      make_command_entry("delete-mutation-builder", InsertUsingDmlReturning),
+      make_command_entry("delete-mutation-builder", DeleteUsingDmlReturning),
       make_command_entry("delete-mutation-builder", DeleteMutationBuilder),
       make_command_entry("make-delete-mutation", MakeDeleteMutation),
       make_command_entry("query-information-schema-database-options",
@@ -4554,6 +4650,17 @@ void RunAll(bool emulator) {
 
   SampleBanner("make-replace-mutation");
   MakeReplaceMutation(client);
+
+  if (!emulator) {
+    SampleBanner("spanner_update_dml_returning");
+    UpdateUsingDmlReturning(client);
+
+    SampleBanner("spanner_insert_dml_returning");
+    InsertUsingDmlReturning(client);
+
+    SampleBanner("spanner_delete_dml_returning");
+    DeleteUsingDmlReturning(client);
+  }
 
   SampleBanner("delete-mutation-builder");
   DeleteMutationBuilder(client);
