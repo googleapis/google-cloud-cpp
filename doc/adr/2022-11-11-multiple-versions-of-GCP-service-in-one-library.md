@@ -40,8 +40,8 @@ in a flat hierarchy under `google/cloud/<library>`.
 
 Namespaces of services will match the subdirectory structure of the
 `google-cloud-cpp` library, but with `_` instead of `/`s. We cannot just nest
-the namespace, because that may conflict with the gRPC types. For example,
-`google/cloud/bigquery/v2/` -> `google::cloud::bigquery_v2` and
+the namespace, because that may conflict with the types emitted by `protoc`. For
+example, `google/cloud/bigquery/v2/` -> `google::cloud::bigquery_v2` and
 `google/cloud/bigquery/storage/v1` -> `google::cloud::bigquery_storage_v1`.
 
 Libraries will thus contain **all** versions of the nested GCP services
