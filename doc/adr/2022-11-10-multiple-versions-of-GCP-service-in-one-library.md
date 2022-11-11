@@ -1,6 +1,6 @@
 **Title**: clients for multiple versions of a GCP service exist in one library.
 
-**Status**: proposed
+**Status**: accepted
 
 **Context**:
 The current directory and namespace structure does not support the addition of
@@ -19,7 +19,7 @@ previous version's symbols.
 
 vN and vN+1 of a GCP service might exist at the same time. They might share
 names (although not protobuf package names), but have different feature sets.
-Customers must be able to use these different versions of the same GCP service,
+Customers must be able to use these different versions of the same GCP service
 in a single C++ program.
 
 Historically, we have grouped related services into a single library. We have
