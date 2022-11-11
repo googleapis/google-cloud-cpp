@@ -351,7 +351,7 @@ class Client {
    * @snippet samples.cc spanner-query-data-select-star
    *
    * @par Example using a DML statement with `THEN RETURN`.
-   * @snippet samples.cc spanner_update_dml_returning
+   * @snippet samples.cc spanner-update-dml-returning
    *
    * @param statement The SQL statement to execute.
    * @param opts (optional) The `Options` to use for this call. If given,

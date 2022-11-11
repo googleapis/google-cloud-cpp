@@ -3278,7 +3278,7 @@ void FieldAccessOnNestedStruct(google::cloud::spanner::Client client) {
 }
 //! [END spanner_field_access_on_nested_struct_parameters]
 
-// [START spanner_update_dml_returning]
+// [START spanner_update_dml_returning] [spanner-update-dml-returning]
 void UpdateUsingDmlReturning(google::cloud::spanner::Client client) {
   // Update MarketingBudget column for records satisfying a particular
   // condition and return the modified MarketingBudget column of the
@@ -3308,7 +3308,7 @@ void UpdateUsingDmlReturning(google::cloud::spanner::Client client) {
       });
   if (!commit) throw std::move(commit).status();
 }
-// [END spanner_update_dml_returning]
+// [END spanner_update_dml_returning] [spanner-update-dml-returning]
 
 // [START spanner_insert_dml_returning]
 void InsertUsingDmlReturning(google::cloud::spanner::Client client) {
