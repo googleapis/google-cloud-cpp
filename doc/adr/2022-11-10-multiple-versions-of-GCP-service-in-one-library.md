@@ -20,7 +20,7 @@ previous version's symbols.
 vN and vN+1 of a GCP service might exist at the same time. They might share
 names (although not protobuf package names), but have different feature sets.
 Customers must be able to use these different versions of the same GCP service,
-together.
+in a single C++ program.
 
 Historically, we have grouped related services into a single library. We have
 placed the code for such a library, including all the `*Client` classes for
