@@ -22,6 +22,7 @@
 #include "absl/memory/memory.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -33,6 +34,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::AnyOf;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::UnorderedElementsAreArray;
 
@@ -598,6 +600,148 @@ TEST_F(PgDataTypeIntegrationTest, NumericPrimaryKey) {
   EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
                                  AllOf(HasSubstr("has type PG.NUMERIC"),
                                        HasSubstr("part of the primary key"))));
+}
+
+TEST_F(DataTypeIntegrationTest, DmlReturning) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support THEN RETURN";
+
+  auto& client = *client_;
+  using RowType = std::tuple<std::string, std::int64_t>;
+
+  std::vector<RowType> insert_actual;
+  auto insert_result = client.Commit(
+      [&client, &insert_actual](Transaction const& txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(R"""(
+            INSERT INTO DataTypes (Id, Int64Value)
+              VALUES ('Id-Ret-1', 1),
+                     ('Id-Ret-2', 2),
+                     ('Id-Ret-3', 3),
+                     ('Id-Ret-4', 4)
+              THEN RETURN Id, Int64Value
+        )""");
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        EXPECT_EQ(rows.RowsModified(), 4);
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (row) insert_actual.push_back(*std::move(row));
+        }
+        return Mutations{};
+      });
+  ASSERT_THAT(insert_result, IsOk());
+  EXPECT_THAT(insert_actual,
+              ElementsAre(RowType{"Id-Ret-1", 1}, RowType{"Id-Ret-2", 2},
+                          RowType{"Id-Ret-3", 3}, RowType{"Id-Ret-4", 4}));
+
+  std::vector<RowType> update_actual;
+  auto update_result = client.Commit(
+      [&client, &update_actual](Transaction const& txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(R"""(
+            UPDATE DataTypes SET Int64Value = 100
+              WHERE Id LIKE 'Id-Ret-%%'
+              THEN RETURN Id, Int64Value
+        )""");
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        EXPECT_EQ(rows.RowsModified(), 4);
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (row) update_actual.push_back(*std::move(row));
+        }
+        return Mutations{};
+      });
+  ASSERT_THAT(update_result, IsOk());
+  EXPECT_THAT(update_actual,
+              ElementsAre(RowType{"Id-Ret-1", 100}, RowType{"Id-Ret-2", 100},
+                          RowType{"Id-Ret-3", 100}, RowType{"Id-Ret-4", 100}));
+
+  std::vector<RowType> delete_actual;
+  auto delete_result = client.Commit(
+      [&client, &delete_actual](Transaction const& txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(R"""(
+            DELETE FROM DataTypes
+              WHERE Id LIKE 'Id-Ret-%%'
+              THEN RETURN Id, Int64Value
+        )""");
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        EXPECT_EQ(rows.RowsModified(), 4);
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (row) delete_actual.push_back(*std::move(row));
+        }
+        return Mutations{};
+      });
+  ASSERT_THAT(delete_result, IsOk());
+  EXPECT_THAT(delete_actual,
+              ElementsAre(RowType{"Id-Ret-1", 100}, RowType{"Id-Ret-2", 100},
+                          RowType{"Id-Ret-3", 100}, RowType{"Id-Ret-4", 100}));
+}
+
+TEST_F(PgDataTypeIntegrationTest, DmlReturning) {
+  if (UsingEmulator()) {
+    GTEST_SKIP() << "emulator does not support PostgreSQL or RETURNING";
+  }
+
+  auto& client = *client_;
+  using RowType = std::tuple<std::string, std::int64_t>;
+
+  std::vector<RowType> insert_actual;
+  auto insert_result = client.Commit(
+      [&client, &insert_actual](Transaction const& txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(R"""(
+            INSERT INTO DataTypes (Id, Int64Value)
+              VALUES ('Id-Ret-1', 1),
+                     ('Id-Ret-2', 2),
+                     ('Id-Ret-3', 3),
+                     ('Id-Ret-4', 4)
+              RETURNING Id, Int64Value
+        )""");
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        EXPECT_EQ(rows.RowsModified(), 4);
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (row) insert_actual.push_back(*std::move(row));
+        }
+        return Mutations{};
+      });
+  ASSERT_THAT(insert_result, IsOk());
+  EXPECT_THAT(insert_actual,
+              ElementsAre(RowType{"Id-Ret-1", 1}, RowType{"Id-Ret-2", 2},
+                          RowType{"Id-Ret-3", 3}, RowType{"Id-Ret-4", 4}));
+
+  std::vector<RowType> update_actual;
+  auto update_result = client.Commit(
+      [&client, &update_actual](Transaction const& txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(R"""(
+            UPDATE DataTypes SET Int64Value = 100
+              WHERE Id LIKE 'Id-Ret-%%'
+              RETURNING Id, Int64Value
+        )""");
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        EXPECT_EQ(rows.RowsModified(), 4);
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (row) update_actual.push_back(*std::move(row));
+        }
+        return Mutations{};
+      });
+  ASSERT_THAT(update_result, IsOk());
+  EXPECT_THAT(update_actual,
+              ElementsAre(RowType{"Id-Ret-1", 100}, RowType{"Id-Ret-2", 100},
+                          RowType{"Id-Ret-3", 100}, RowType{"Id-Ret-4", 100}));
+
+  std::vector<RowType> delete_actual;
+  auto delete_result = client.Commit(
+      [&client, &delete_actual](Transaction const& txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(R"""(
+            DELETE FROM DataTypes
+              WHERE Id LIKE 'Id-Ret-%%'
+              RETURNING Id, Int64Value
+        )""");
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        EXPECT_EQ(rows.RowsModified(), 4);
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (row) delete_actual.push_back(*std::move(row));
+        }
+        return Mutations{};
+      });
+  ASSERT_THAT(delete_result, IsOk());
+  EXPECT_THAT(delete_actual,
+              ElementsAre(RowType{"Id-Ret-1", 100}, RowType{"Id-Ret-2", 100},
+                          RowType{"Id-Ret-3", 100}, RowType{"Id-Ret-4", 100}));
 }
 
 // This test differs a lot from the other tests since Spanner STRUCT types may
