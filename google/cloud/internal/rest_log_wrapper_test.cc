@@ -12,7 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/rest_log_wrapper.h"
+#include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/internal/rest_context.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
 #include <google/iam/admin/v1/iam.pb.h>
@@ -39,7 +40,7 @@ TEST(RestLogWrapper, StatusValue) {
   rest_internal::RestContext context;
   google::iam::admin::v1::DeleteServiceAccountRequest request;
   auto const r =
-      RestLogWrapper(mock, context, request, "in-test", TracingOptions{});
+      LogWrapper(mock, context, request, "in-test", TracingOptions{});
   EXPECT_TRUE(r.ok());
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
@@ -58,7 +59,7 @@ TEST(RestLogWrapper, StatusValueError) {
   testing_util::ScopedLog log;
   rest_internal::RestContext context;
   google::iam::admin::v1::DeleteServiceAccountRequest request;
-  auto const r = RestLogWrapper(mock, context, request, "in-test", {});
+  auto const r = LogWrapper(mock, context, request, "in-test", {});
   EXPECT_EQ(r.code(), status.code());
   EXPECT_EQ(r.message(), status.message());
   std::ostringstream os;
@@ -84,7 +85,7 @@ TEST(RestLogWrapper, StatusOrValue) {
   rest_internal::RestContext context;
   google::iam::admin::v1::ListServiceAccountsRequest request;
   auto const r =
-      RestLogWrapper(mock, context, request, "in-test", TracingOptions{});
+      LogWrapper(mock, context, request, "in-test", TracingOptions{});
   EXPECT_TRUE(r.ok());
   auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines,
@@ -103,7 +104,7 @@ TEST(RestLogWrapper, StatusOrValueError) {
   testing_util::ScopedLog log;
   rest_internal::RestContext context;
   google::iam::admin::v1::ListServiceAccountsRequest request;
-  auto const r = RestLogWrapper(mock, context, request, "in-test", {});
+  auto const r = LogWrapper(mock, context, request, "in-test", {});
   EXPECT_EQ(r.code(), status.code());
   EXPECT_EQ(r.message(), status.message());
   std::ostringstream os;
