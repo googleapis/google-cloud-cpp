@@ -51,11 +51,37 @@ cmake --install cmake-out
 function dump_abi() {
   local library="$1"
   local prefix="$2"
+  local public_headers="${prefix}/include/google/cloud/${library#google_cloud_cpp_}"
+  if [[ "${library}" == "google_cloud_cpp_common" ]] || [[ "${library}" == "google_cloud_cpp_grpc_utils" ]]; then
+    # These two are special
+    public_headers="${prefix}/include/google/cloud"
+  fi
+
   echo "Dumping ${library} (may be slow)..."
-  abi-dumper "${prefix}/lib64/lib${library}.so" \
-    -public-headers "${prefix}/include" \
-    -lver "actual" \
+  local version
+  version=$(git rev-parse --short HEAD)
+  local -a dump_options=(
+    # The source .so file
+    "${prefix}/lib64/lib${library}.so"
+    # Use the git version as the library version number for reporting purposes
+    -lver "${version}"
+    # The dump destination
     -o "cmake-out/${library}.actual.abi.dump"
+    # Where to find the headers
+    -include-paths "${prefix}/include"
+    -include-paths "/usr/local/include"
+    # Where to find additional libraries
+    -ld-library-path "${prefix}/lib64/:/usr/local/lib:/usr/local/lib64"
+    # Treat all headers as public, we exclude internal symbols later
+    -public-headers "${public_headers}"
+    # Dump information about all symbols and types
+    -all-symbols -all-types
+    # Skip stdc++ and gnu c++ symbols
+    -skip-cxx
+    # Use the system's debuginfo
+    -search-debuginfo /usr
+  )
+  abi-dumper "${dump_options[@]}"
 }
 export -f dump_abi # enables this function to be called from a subshell
 
@@ -76,19 +102,27 @@ for lib in "${libraries[@]}"; do
   expected_dump_path="${PROJECT_ROOT}/ci/abi-dumps/${expected_dump_file}.gz"
   if [[ -r "${expected_dump_path}" ]]; then
     zcat "${expected_dump_path}" >"cmake-out/${expected_dump_file}"
-    # We ignore all symbols in internal namespaces, because these are not part
-    # of our public API. We do this by specifying a regex that matches against
-    # the mangled symbol names. For example, 8 is the number of characters in
-    # the string "internal", and it should again be followed by some other
-    # number indicating the length of the symbol within the "internal"
-    # namespace. See: https://en.wikipedia.org/wiki/Name_mangling
-    report="cmake-out/compat_reports/${lib}/expected_to_actual/src_compat_report.html"
-    if ! abi-compliance-checker \
-      -skip-internal-symbols "(8internal|_internal)\d" \
-      -report-path "${report}" \
-      -src -l "${lib}" \
-      -old "cmake-out/${expected_dump_file}" \
-      -new "cmake-out/${actual_dump_file}"; then
+    report="cmake-out/compat_reports/${lib}/src_compat_report.html"
+    compliance_flags=(
+      # Put the output report in a separate directory for each library
+      -report-path "${report}"
+      # We only want a source-level report. We make no ABI guarantees, such
+      # as data structure sizes or virtual table ordering
+      -src
+      # We ignore all symbols in internal namespaces, because these are not part
+      # of our public API. We do this by specifying a regex that matches against
+      # the mangled symbol names. For example, 8 is the number of characters in
+      # the string "internal", and it should again be followed by some other
+      # number indicating the length of the symbol within the "internal"
+      # namespace. See: https://en.wikipedia.org/wiki/Name_mangling
+      -skip-internal-symbols "(8internal|_internal)\d"
+      # The library to compare
+      -l "${lib}"
+      # Compared the saved baseline vs. the dump for the current version
+      -old "cmake-out/${expected_dump_file}"
+      -new "cmake-out/${actual_dump_file}"
+    )
+    if ! io::run abi-compliance-checker "${compliance_flags[@]}"; then
       io::log_red "ABI Compliance error: ${lib}"
       ((++errors))
       io::log "Report file: ${report}"
