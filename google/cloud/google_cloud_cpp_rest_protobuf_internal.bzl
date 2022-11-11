@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_rest_protobuf_internal - DO NOT EDIT."""
 
 google_cloud_cpp_rest_protobuf_internal_hdrs = [
+    "internal/rest_log_wrapper.h",
     "internal/rest_stub_helpers.h",
 ]
 
