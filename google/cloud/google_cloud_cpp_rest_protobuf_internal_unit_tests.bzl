@@ -17,5 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_rest_protobuf_internal_unit_tests = [
+    "internal/rest_log_wrapper_test.cc",
     "internal/rest_stub_helpers_test.cc",
 ]
