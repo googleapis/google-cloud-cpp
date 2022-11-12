@@ -31,12 +31,9 @@ namespace generator_internal {
  * In `google-cloud-cpp` libraries called `foo` live in the `google/cloud/foo`
  * directory. The names of CMake targets, Bazel rules, pkg-config modules,
  * features, etc. are based on the library name. This function returns the
- * name given a service configuration.
- *
- * This function assumes the service configuration has already been validated.
+ * library name given a service configuration's product path.
  */
-std::string LibraryName(
-    google::cloud::cpp::generator::ServiceConfiguration const& service);
+std::string LibraryName(std::string const& product_path);
 
 std::map<std::string, std::string> ScaffoldVars(
     std::string const& googleapis_path,

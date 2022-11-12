@@ -212,6 +212,7 @@ TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
 INSTANTIATE_TEST_SUITE_P(
     ServiceVars, CreateServiceVarsTest,
     testing::Values(
+        std::make_pair("product_options_page", "google-cloud-frobber-options"),
         std::make_pair("additional_pb_header_paths",
                        "google/cloud/add1.pb.h,google/cloud/add2.pb.h"),
         std::make_pair("class_comment_block",
