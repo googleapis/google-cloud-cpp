@@ -34,7 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
  *
- * @ingroup generator-integration_tests-golden-options
+ * @ingroup google-cloud-golden-options
  */
 struct GoldenKitchenSinkRetryPolicyOption {
   using Type = std::shared_ptr<GoldenKitchenSinkRetryPolicy>;
@@ -43,7 +43,7 @@ struct GoldenKitchenSinkRetryPolicyOption {
 /**
  * Use with `google::cloud::Options` to configure the backoff policy.
  *
- * @ingroup generator-integration_tests-golden-options
+ * @ingroup google-cloud-golden-options
  */
 struct GoldenKitchenSinkBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
@@ -52,7 +52,7 @@ struct GoldenKitchenSinkBackoffPolicyOption {
 /**
  * Use with `google::cloud::Options` to configure which operations are retried.
  *
- * @ingroup generator-integration_tests-golden-options
+ * @ingroup google-cloud-golden-options
  */
 struct GoldenKitchenSinkConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>;
@@ -61,7 +61,7 @@ struct GoldenKitchenSinkConnectionIdempotencyPolicyOption {
 /**
  * The options applicable to GoldenKitchenSink.
  *
- * @ingroup generator-integration_tests-golden-options
+ * @ingroup google-cloud-golden-options
  */
 using GoldenKitchenSinkPolicyOptionList =
     OptionList<GoldenKitchenSinkRetryPolicyOption,
