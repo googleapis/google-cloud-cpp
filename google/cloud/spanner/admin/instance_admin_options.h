@@ -34,7 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
  *
- * @ingroup google-cloud-spanner-admin-options
+ * @ingroup google-cloud-spanner-options
  */
 struct InstanceAdminRetryPolicyOption {
   using Type = std::shared_ptr<InstanceAdminRetryPolicy>;
@@ -43,7 +43,7 @@ struct InstanceAdminRetryPolicyOption {
 /**
  * Use with `google::cloud::Options` to configure the backoff policy.
  *
- * @ingroup google-cloud-spanner-admin-options
+ * @ingroup google-cloud-spanner-options
  */
 struct InstanceAdminBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
@@ -52,7 +52,7 @@ struct InstanceAdminBackoffPolicyOption {
 /**
  * Use with `google::cloud::Options` to configure which operations are retried.
  *
- * @ingroup google-cloud-spanner-admin-options
+ * @ingroup google-cloud-spanner-options
  */
 struct InstanceAdminConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<InstanceAdminConnectionIdempotencyPolicy>;
@@ -62,7 +62,7 @@ struct InstanceAdminConnectionIdempotencyPolicyOption {
  * Use with `google::cloud::Options` to configure the long-running operations
  * polling policy.
  *
- * @ingroup google-cloud-spanner-admin-options
+ * @ingroup google-cloud-spanner-options
  */
 struct InstanceAdminPollingPolicyOption {
   using Type = std::shared_ptr<PollingPolicy>;
@@ -71,7 +71,7 @@ struct InstanceAdminPollingPolicyOption {
 /**
  * The options applicable to InstanceAdmin.
  *
- * @ingroup google-cloud-spanner-admin-options
+ * @ingroup google-cloud-spanner-options
  */
 using InstanceAdminPolicyOptionList =
     OptionList<InstanceAdminRetryPolicyOption, InstanceAdminBackoffPolicyOption,

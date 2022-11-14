@@ -46,17 +46,10 @@ char const* const kHierarchy[] = {
 };
 
 TEST(ScaffoldGeneratorTest, LibraryName) {
-  google::cloud::cpp::generator::ServiceConfiguration service;
-  service.set_product_path("google/cloud/test/");
-  EXPECT_EQ("test", LibraryName(service));
-
-  service.set_product_path("google/cloud/test/v1");
-  EXPECT_EQ("test", LibraryName(service));
-
-  // LibraryName() is only called when we are generating scaffolding, or
-  // updating our CI. We do not care much about the error case.
-  service.set_product_path("bad-directory-structure");
-  EXPECT_EQ("", LibraryName(service));
+  EXPECT_EQ("test", LibraryName("google/cloud/test"));
+  EXPECT_EQ("test", LibraryName("google/cloud/test/"));
+  EXPECT_EQ("test", LibraryName("google/cloud/test/v1"));
+  EXPECT_EQ("golden", LibraryName("blah/golden"));
 }
 
 class ScaffoldGenerator : public ::testing::Test {

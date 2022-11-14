@@ -108,11 +108,12 @@ int WriteInstallDirectories(
          Parents("./include/" + Dirname(service.service_proto_path()))) {
       install_directories.push_back(p);
     }
-    auto const lib = google::cloud::generator_internal::LibraryName(service);
     // Services without a connection do not create mocks.
     if (!service.omit_connection()) {
       install_directories.push_back("./include/" + product_path + "/mocks");
     }
+    auto const lib =
+        google::cloud::generator_internal::LibraryName(product_path);
     install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib);
   }
   std::sort(install_directories.begin(), install_directories.end());
@@ -134,8 +135,8 @@ int WriteFeatureList(
                      << service.DebugString() << "\n";
       return 1;
     }
-    auto feature = google::cloud::generator_internal::LibraryName(service);
-    features.push_back(std::move(feature));
+    features.push_back(
+        google::cloud::generator_internal::LibraryName(service.product_path()));
   }
   std::sort(features.begin(), features.end());
   auto const end = std::unique(features.begin(), features.end());
