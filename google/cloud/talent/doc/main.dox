@@ -109,16 +109,16 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `CompanyServiceClient`:
+For example, this will override the default endpoint for `talent::CompanyServiceClient`:
 
 @snippet company_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [CompanyServiceClient](@ref CompanyServiceClient-endpoint-snippet)
- [CompletionClient](@ref CompletionClient-endpoint-snippet)
- [EventServiceClient](@ref EventServiceClient-endpoint-snippet)
- [JobServiceClient](@ref JobServiceClient-endpoint-snippet)
- [TenantServiceClient](@ref TenantServiceClient-endpoint-snippet)
+ [talent::CompanyServiceClient](@ref talent::CompanyServiceClient-endpoint-snippet)
+ [talent::CompletionClient](@ref talent::CompletionClient-endpoint-snippet)
+ [talent::EventServiceClient](@ref talent::EventServiceClient-endpoint-snippet)
+ [talent::JobServiceClient](@ref talent::JobServiceClient-endpoint-snippet)
+ [talent::TenantServiceClient](@ref talent::TenantServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -133,11 +133,11 @@ to explicitly load a service account key file.
 @snippet company_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [CompanyServiceClient](@ref CompanyServiceClient-service-account-snippet)
- [CompletionClient](@ref CompletionClient-service-account-snippet)
- [EventServiceClient](@ref EventServiceClient-service-account-snippet)
- [JobServiceClient](@ref JobServiceClient-service-account-snippet)
- [TenantServiceClient](@ref TenantServiceClient-service-account-snippet)
+ [talent::CompanyServiceClient](@ref talent::CompanyServiceClient-service-account-snippet)
+ [talent::CompletionClient](@ref talent::CompletionClient-service-account-snippet)
+ [talent::EventServiceClient](@ref talent::EventServiceClient-service-account-snippet)
+ [talent::JobServiceClient](@ref talent::JobServiceClient-service-account-snippet)
+ [talent::TenantServiceClient](@ref talent::TenantServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -168,61 +168,61 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page CompanyServiceClient-endpoint-snippet Override CompanyServiceClient Endpoint Configuration
+/*! @page talent::CompanyServiceClient-endpoint-snippet Override talent::CompanyServiceClient Endpoint Configuration
 
 @snippet google/cloud/talent/samples/company_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page CompanyServiceClient-service-account-snippet Override CompanyServiceClient Authentication Defaults
+/*! @page talent::CompanyServiceClient-service-account-snippet Override talent::CompanyServiceClient Authentication Defaults
 
 @snippet google/cloud/talent/samples/company_client_samples.cc with-service-account
 
 */
 
-/*! @page CompletionClient-endpoint-snippet Override CompletionClient Endpoint Configuration
+/*! @page talent::CompletionClient-endpoint-snippet Override talent::CompletionClient Endpoint Configuration
 
 @snippet google/cloud/talent/samples/completion_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page CompletionClient-service-account-snippet Override CompletionClient Authentication Defaults
+/*! @page talent::CompletionClient-service-account-snippet Override talent::CompletionClient Authentication Defaults
 
 @snippet google/cloud/talent/samples/completion_client_samples.cc with-service-account
 
 */
 
-/*! @page EventServiceClient-endpoint-snippet Override EventServiceClient Endpoint Configuration
+/*! @page talent::EventServiceClient-endpoint-snippet Override talent::EventServiceClient Endpoint Configuration
 
 @snippet google/cloud/talent/samples/event_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page EventServiceClient-service-account-snippet Override EventServiceClient Authentication Defaults
+/*! @page talent::EventServiceClient-service-account-snippet Override talent::EventServiceClient Authentication Defaults
 
 @snippet google/cloud/talent/samples/event_client_samples.cc with-service-account
 
 */
 
-/*! @page JobServiceClient-endpoint-snippet Override JobServiceClient Endpoint Configuration
+/*! @page talent::JobServiceClient-endpoint-snippet Override talent::JobServiceClient Endpoint Configuration
 
 @snippet google/cloud/talent/samples/job_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page JobServiceClient-service-account-snippet Override JobServiceClient Authentication Defaults
+/*! @page talent::JobServiceClient-service-account-snippet Override talent::JobServiceClient Authentication Defaults
 
 @snippet google/cloud/talent/samples/job_client_samples.cc with-service-account
 
 */
 
-/*! @page TenantServiceClient-endpoint-snippet Override TenantServiceClient Endpoint Configuration
+/*! @page talent::TenantServiceClient-endpoint-snippet Override talent::TenantServiceClient Endpoint Configuration
 
 @snippet google/cloud/talent/samples/tenant_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page TenantServiceClient-service-account-snippet Override TenantServiceClient Authentication Defaults
+/*! @page talent::TenantServiceClient-service-account-snippet Override talent::TenantServiceClient Authentication Defaults
 
 @snippet google/cloud/talent/samples/tenant_client_samples.cc with-service-account
 

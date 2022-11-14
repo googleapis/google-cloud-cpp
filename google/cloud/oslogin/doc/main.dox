@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `OsLoginServiceClient`:
+For example, this will override the default endpoint for `oslogin::OsLoginServiceClient`:
 
 @snippet os_login_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page OsLoginServiceClient-endpoint-snippet Override OsLoginServiceClient Endpoint Configuration
+/*! @page oslogin::OsLoginServiceClient-endpoint-snippet Override oslogin::OsLoginServiceClient Endpoint Configuration
 
 @snippet google/cloud/oslogin/samples/os_login_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page OsLoginServiceClient-service-account-snippet Override OsLoginServiceClient Authentication Defaults
+/*! @page oslogin::OsLoginServiceClient-service-account-snippet Override oslogin::OsLoginServiceClient Authentication Defaults
 
 @snippet google/cloud/oslogin/samples/os_login_client_samples.cc with-service-account
 

@@ -94,7 +94,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ManagedIdentitiesServiceClient`:
+For example, this will override the default endpoint for `managedidentities::ManagedIdentitiesServiceClient`:
 
 @snippet managed_identities_client_samples.cc set-client-endpoint
 
@@ -139,13 +139,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ManagedIdentitiesServiceClient-endpoint-snippet Override ManagedIdentitiesServiceClient Endpoint Configuration
+/*! @page managedidentities::ManagedIdentitiesServiceClient-endpoint-snippet Override managedidentities::ManagedIdentitiesServiceClient Endpoint Configuration
 
 @snippet google/cloud/managedidentities/samples/managed_identities_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ManagedIdentitiesServiceClient-service-account-snippet Override ManagedIdentitiesServiceClient Authentication Defaults
+/*! @page managedidentities::ManagedIdentitiesServiceClient-service-account-snippet Override managedidentities::ManagedIdentitiesServiceClient Authentication Defaults
 
 @snippet google/cloud/managedidentities/samples/managed_identities_client_samples.cc with-service-account
 

@@ -155,27 +155,27 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `AgentsClient`:
+For example, this will override the default endpoint for `dialogflow_cx::AgentsClient`:
 
 @snippet agents_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [AgentsClient](@ref AgentsClient-endpoint-snippet)
- [ChangelogsClient](@ref ChangelogsClient-endpoint-snippet)
- [DeploymentsClient](@ref DeploymentsClient-endpoint-snippet)
- [EntityTypesClient](@ref EntityTypesClient-endpoint-snippet)
- [EnvironmentsClient](@ref EnvironmentsClient-endpoint-snippet)
- [ExperimentsClient](@ref ExperimentsClient-endpoint-snippet)
- [FlowsClient](@ref FlowsClient-endpoint-snippet)
- [IntentsClient](@ref IntentsClient-endpoint-snippet)
- [PagesClient](@ref PagesClient-endpoint-snippet)
- [SecuritySettingsServiceClient](@ref SecuritySettingsServiceClient-endpoint-snippet)
- [SessionEntityTypesClient](@ref SessionEntityTypesClient-endpoint-snippet)
- [SessionsClient](@ref SessionsClient-endpoint-snippet)
- [TestCasesClient](@ref TestCasesClient-endpoint-snippet)
- [TransitionRouteGroupsClient](@ref TransitionRouteGroupsClient-endpoint-snippet)
- [VersionsClient](@ref VersionsClient-endpoint-snippet)
- [WebhooksClient](@ref WebhooksClient-endpoint-snippet)
+ [dialogflow_cx::AgentsClient](@ref dialogflow_cx::AgentsClient-endpoint-snippet)
+ [dialogflow_cx::ChangelogsClient](@ref dialogflow_cx::ChangelogsClient-endpoint-snippet)
+ [dialogflow_cx::DeploymentsClient](@ref dialogflow_cx::DeploymentsClient-endpoint-snippet)
+ [dialogflow_cx::EntityTypesClient](@ref dialogflow_cx::EntityTypesClient-endpoint-snippet)
+ [dialogflow_cx::EnvironmentsClient](@ref dialogflow_cx::EnvironmentsClient-endpoint-snippet)
+ [dialogflow_cx::ExperimentsClient](@ref dialogflow_cx::ExperimentsClient-endpoint-snippet)
+ [dialogflow_cx::FlowsClient](@ref dialogflow_cx::FlowsClient-endpoint-snippet)
+ [dialogflow_cx::IntentsClient](@ref dialogflow_cx::IntentsClient-endpoint-snippet)
+ [dialogflow_cx::PagesClient](@ref dialogflow_cx::PagesClient-endpoint-snippet)
+ [dialogflow_cx::SecuritySettingsServiceClient](@ref dialogflow_cx::SecuritySettingsServiceClient-endpoint-snippet)
+ [dialogflow_cx::SessionEntityTypesClient](@ref dialogflow_cx::SessionEntityTypesClient-endpoint-snippet)
+ [dialogflow_cx::SessionsClient](@ref dialogflow_cx::SessionsClient-endpoint-snippet)
+ [dialogflow_cx::TestCasesClient](@ref dialogflow_cx::TestCasesClient-endpoint-snippet)
+ [dialogflow_cx::TransitionRouteGroupsClient](@ref dialogflow_cx::TransitionRouteGroupsClient-endpoint-snippet)
+ [dialogflow_cx::VersionsClient](@ref dialogflow_cx::VersionsClient-endpoint-snippet)
+ [dialogflow_cx::WebhooksClient](@ref dialogflow_cx::WebhooksClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -190,22 +190,22 @@ to explicitly load a service account key file.
 @snippet agents_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [AgentsClient](@ref AgentsClient-service-account-snippet)
- [ChangelogsClient](@ref ChangelogsClient-service-account-snippet)
- [DeploymentsClient](@ref DeploymentsClient-service-account-snippet)
- [EntityTypesClient](@ref EntityTypesClient-service-account-snippet)
- [EnvironmentsClient](@ref EnvironmentsClient-service-account-snippet)
- [ExperimentsClient](@ref ExperimentsClient-service-account-snippet)
- [FlowsClient](@ref FlowsClient-service-account-snippet)
- [IntentsClient](@ref IntentsClient-service-account-snippet)
- [PagesClient](@ref PagesClient-service-account-snippet)
- [SecuritySettingsServiceClient](@ref SecuritySettingsServiceClient-service-account-snippet)
- [SessionEntityTypesClient](@ref SessionEntityTypesClient-service-account-snippet)
- [SessionsClient](@ref SessionsClient-service-account-snippet)
- [TestCasesClient](@ref TestCasesClient-service-account-snippet)
- [TransitionRouteGroupsClient](@ref TransitionRouteGroupsClient-service-account-snippet)
- [VersionsClient](@ref VersionsClient-service-account-snippet)
- [WebhooksClient](@ref WebhooksClient-service-account-snippet)
+ [dialogflow_cx::AgentsClient](@ref dialogflow_cx::AgentsClient-service-account-snippet)
+ [dialogflow_cx::ChangelogsClient](@ref dialogflow_cx::ChangelogsClient-service-account-snippet)
+ [dialogflow_cx::DeploymentsClient](@ref dialogflow_cx::DeploymentsClient-service-account-snippet)
+ [dialogflow_cx::EntityTypesClient](@ref dialogflow_cx::EntityTypesClient-service-account-snippet)
+ [dialogflow_cx::EnvironmentsClient](@ref dialogflow_cx::EnvironmentsClient-service-account-snippet)
+ [dialogflow_cx::ExperimentsClient](@ref dialogflow_cx::ExperimentsClient-service-account-snippet)
+ [dialogflow_cx::FlowsClient](@ref dialogflow_cx::FlowsClient-service-account-snippet)
+ [dialogflow_cx::IntentsClient](@ref dialogflow_cx::IntentsClient-service-account-snippet)
+ [dialogflow_cx::PagesClient](@ref dialogflow_cx::PagesClient-service-account-snippet)
+ [dialogflow_cx::SecuritySettingsServiceClient](@ref dialogflow_cx::SecuritySettingsServiceClient-service-account-snippet)
+ [dialogflow_cx::SessionEntityTypesClient](@ref dialogflow_cx::SessionEntityTypesClient-service-account-snippet)
+ [dialogflow_cx::SessionsClient](@ref dialogflow_cx::SessionsClient-service-account-snippet)
+ [dialogflow_cx::TestCasesClient](@ref dialogflow_cx::TestCasesClient-service-account-snippet)
+ [dialogflow_cx::TransitionRouteGroupsClient](@ref dialogflow_cx::TransitionRouteGroupsClient-service-account-snippet)
+ [dialogflow_cx::VersionsClient](@ref dialogflow_cx::VersionsClient-service-account-snippet)
+ [dialogflow_cx::WebhooksClient](@ref dialogflow_cx::WebhooksClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -236,193 +236,193 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page AgentsClient-endpoint-snippet Override AgentsClient Endpoint Configuration
+/*! @page dialogflow_cx::AgentsClient-endpoint-snippet Override dialogflow_cx::AgentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/agents_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page AgentsClient-service-account-snippet Override AgentsClient Authentication Defaults
+/*! @page dialogflow_cx::AgentsClient-service-account-snippet Override dialogflow_cx::AgentsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/agents_client_samples.cc with-service-account
 
 */
 
-/*! @page ChangelogsClient-endpoint-snippet Override ChangelogsClient Endpoint Configuration
+/*! @page dialogflow_cx::ChangelogsClient-endpoint-snippet Override dialogflow_cx::ChangelogsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/changelogs_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ChangelogsClient-service-account-snippet Override ChangelogsClient Authentication Defaults
+/*! @page dialogflow_cx::ChangelogsClient-service-account-snippet Override dialogflow_cx::ChangelogsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/changelogs_client_samples.cc with-service-account
 
 */
 
-/*! @page DeploymentsClient-endpoint-snippet Override DeploymentsClient Endpoint Configuration
+/*! @page dialogflow_cx::DeploymentsClient-endpoint-snippet Override dialogflow_cx::DeploymentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/deployments_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page DeploymentsClient-service-account-snippet Override DeploymentsClient Authentication Defaults
+/*! @page dialogflow_cx::DeploymentsClient-service-account-snippet Override dialogflow_cx::DeploymentsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/deployments_client_samples.cc with-service-account
 
 */
 
-/*! @page EntityTypesClient-endpoint-snippet Override EntityTypesClient Endpoint Configuration
+/*! @page dialogflow_cx::EntityTypesClient-endpoint-snippet Override dialogflow_cx::EntityTypesClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/entity_types_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page EntityTypesClient-service-account-snippet Override EntityTypesClient Authentication Defaults
+/*! @page dialogflow_cx::EntityTypesClient-service-account-snippet Override dialogflow_cx::EntityTypesClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/entity_types_client_samples.cc with-service-account
 
 */
 
-/*! @page EnvironmentsClient-endpoint-snippet Override EnvironmentsClient Endpoint Configuration
+/*! @page dialogflow_cx::EnvironmentsClient-endpoint-snippet Override dialogflow_cx::EnvironmentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/environments_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page EnvironmentsClient-service-account-snippet Override EnvironmentsClient Authentication Defaults
+/*! @page dialogflow_cx::EnvironmentsClient-service-account-snippet Override dialogflow_cx::EnvironmentsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/environments_client_samples.cc with-service-account
 
 */
 
-/*! @page ExperimentsClient-endpoint-snippet Override ExperimentsClient Endpoint Configuration
+/*! @page dialogflow_cx::ExperimentsClient-endpoint-snippet Override dialogflow_cx::ExperimentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/experiments_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ExperimentsClient-service-account-snippet Override ExperimentsClient Authentication Defaults
+/*! @page dialogflow_cx::ExperimentsClient-service-account-snippet Override dialogflow_cx::ExperimentsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/experiments_client_samples.cc with-service-account
 
 */
 
-/*! @page FlowsClient-endpoint-snippet Override FlowsClient Endpoint Configuration
+/*! @page dialogflow_cx::FlowsClient-endpoint-snippet Override dialogflow_cx::FlowsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/flows_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page FlowsClient-service-account-snippet Override FlowsClient Authentication Defaults
+/*! @page dialogflow_cx::FlowsClient-service-account-snippet Override dialogflow_cx::FlowsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/flows_client_samples.cc with-service-account
 
 */
 
-/*! @page IntentsClient-endpoint-snippet Override IntentsClient Endpoint Configuration
+/*! @page dialogflow_cx::IntentsClient-endpoint-snippet Override dialogflow_cx::IntentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/intents_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page IntentsClient-service-account-snippet Override IntentsClient Authentication Defaults
+/*! @page dialogflow_cx::IntentsClient-service-account-snippet Override dialogflow_cx::IntentsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/intents_client_samples.cc with-service-account
 
 */
 
-/*! @page PagesClient-endpoint-snippet Override PagesClient Endpoint Configuration
+/*! @page dialogflow_cx::PagesClient-endpoint-snippet Override dialogflow_cx::PagesClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/pages_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page PagesClient-service-account-snippet Override PagesClient Authentication Defaults
+/*! @page dialogflow_cx::PagesClient-service-account-snippet Override dialogflow_cx::PagesClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/pages_client_samples.cc with-service-account
 
 */
 
-/*! @page SecuritySettingsServiceClient-endpoint-snippet Override SecuritySettingsServiceClient Endpoint Configuration
+/*! @page dialogflow_cx::SecuritySettingsServiceClient-endpoint-snippet Override dialogflow_cx::SecuritySettingsServiceClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/security_settings_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page SecuritySettingsServiceClient-service-account-snippet Override SecuritySettingsServiceClient Authentication Defaults
+/*! @page dialogflow_cx::SecuritySettingsServiceClient-service-account-snippet Override dialogflow_cx::SecuritySettingsServiceClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/security_settings_client_samples.cc with-service-account
 
 */
 
-/*! @page SessionEntityTypesClient-endpoint-snippet Override SessionEntityTypesClient Endpoint Configuration
+/*! @page dialogflow_cx::SessionEntityTypesClient-endpoint-snippet Override dialogflow_cx::SessionEntityTypesClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/session_entity_types_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page SessionEntityTypesClient-service-account-snippet Override SessionEntityTypesClient Authentication Defaults
+/*! @page dialogflow_cx::SessionEntityTypesClient-service-account-snippet Override dialogflow_cx::SessionEntityTypesClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/session_entity_types_client_samples.cc with-service-account
 
 */
 
-/*! @page SessionsClient-endpoint-snippet Override SessionsClient Endpoint Configuration
+/*! @page dialogflow_cx::SessionsClient-endpoint-snippet Override dialogflow_cx::SessionsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/sessions_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page SessionsClient-service-account-snippet Override SessionsClient Authentication Defaults
+/*! @page dialogflow_cx::SessionsClient-service-account-snippet Override dialogflow_cx::SessionsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/sessions_client_samples.cc with-service-account
 
 */
 
-/*! @page TestCasesClient-endpoint-snippet Override TestCasesClient Endpoint Configuration
+/*! @page dialogflow_cx::TestCasesClient-endpoint-snippet Override dialogflow_cx::TestCasesClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/test_cases_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page TestCasesClient-service-account-snippet Override TestCasesClient Authentication Defaults
+/*! @page dialogflow_cx::TestCasesClient-service-account-snippet Override dialogflow_cx::TestCasesClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/test_cases_client_samples.cc with-service-account
 
 */
 
-/*! @page TransitionRouteGroupsClient-endpoint-snippet Override TransitionRouteGroupsClient Endpoint Configuration
+/*! @page dialogflow_cx::TransitionRouteGroupsClient-endpoint-snippet Override dialogflow_cx::TransitionRouteGroupsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/transition_route_groups_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page TransitionRouteGroupsClient-service-account-snippet Override TransitionRouteGroupsClient Authentication Defaults
+/*! @page dialogflow_cx::TransitionRouteGroupsClient-service-account-snippet Override dialogflow_cx::TransitionRouteGroupsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/transition_route_groups_client_samples.cc with-service-account
 
 */
 
-/*! @page VersionsClient-endpoint-snippet Override VersionsClient Endpoint Configuration
+/*! @page dialogflow_cx::VersionsClient-endpoint-snippet Override dialogflow_cx::VersionsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/versions_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page VersionsClient-service-account-snippet Override VersionsClient Authentication Defaults
+/*! @page dialogflow_cx::VersionsClient-service-account-snippet Override dialogflow_cx::VersionsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/versions_client_samples.cc with-service-account
 
 */
 
-/*! @page WebhooksClient-endpoint-snippet Override WebhooksClient Endpoint Configuration
+/*! @page dialogflow_cx::WebhooksClient-endpoint-snippet Override dialogflow_cx::WebhooksClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_cx/samples/webhooks_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page WebhooksClient-service-account-snippet Override WebhooksClient Authentication Defaults
+/*! @page dialogflow_cx::WebhooksClient-service-account-snippet Override dialogflow_cx::WebhooksClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_cx/samples/webhooks_client_samples.cc with-service-account
 

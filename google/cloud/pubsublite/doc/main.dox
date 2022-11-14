@@ -99,13 +99,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `AdminServiceClient`:
+For example, this will override the default endpoint for `pubsublite::AdminServiceClient`:
 
 @snippet admin_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [AdminServiceClient](@ref AdminServiceClient-endpoint-snippet)
- [TopicStatsServiceClient](@ref TopicStatsServiceClient-endpoint-snippet)
+ [pubsublite::AdminServiceClient](@ref pubsublite::AdminServiceClient-endpoint-snippet)
+ [pubsublite::TopicStatsServiceClient](@ref pubsublite::TopicStatsServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -120,8 +120,8 @@ to explicitly load a service account key file.
 @snippet admin_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [AdminServiceClient](@ref AdminServiceClient-service-account-snippet)
- [TopicStatsServiceClient](@ref TopicStatsServiceClient-service-account-snippet)
+ [pubsublite::AdminServiceClient](@ref pubsublite::AdminServiceClient-service-account-snippet)
+ [pubsublite::TopicStatsServiceClient](@ref pubsublite::TopicStatsServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -151,25 +151,25 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page AdminServiceClient-endpoint-snippet Override AdminServiceClient Endpoint Configuration
+/*! @page pubsublite::AdminServiceClient-endpoint-snippet Override pubsublite::AdminServiceClient Endpoint Configuration
 
 @snippet google/cloud/pubsublite/samples/admin_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page AdminServiceClient-service-account-snippet Override AdminServiceClient Authentication Defaults
+/*! @page pubsublite::AdminServiceClient-service-account-snippet Override pubsublite::AdminServiceClient Authentication Defaults
 
 @snippet google/cloud/pubsublite/samples/admin_client_samples.cc with-service-account
 
 */
 
-/*! @page TopicStatsServiceClient-endpoint-snippet Override TopicStatsServiceClient Endpoint Configuration
+/*! @page pubsublite::TopicStatsServiceClient-endpoint-snippet Override pubsublite::TopicStatsServiceClient Endpoint Configuration
 
 @snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page TopicStatsServiceClient-service-account-snippet Override TopicStatsServiceClient Authentication Defaults
+/*! @page pubsublite::TopicStatsServiceClient-service-account-snippet Override pubsublite::TopicStatsServiceClient Authentication Defaults
 
 @snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc with-service-account
 

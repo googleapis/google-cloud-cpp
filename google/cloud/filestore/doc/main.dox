@@ -92,7 +92,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `CloudFilestoreManagerClient`:
+For example, this will override the default endpoint for `filestore::CloudFilestoreManagerClient`:
 
 @snippet cloud_filestore_manager_client_samples.cc set-client-endpoint
 
@@ -137,13 +137,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page CloudFilestoreManagerClient-endpoint-snippet Override CloudFilestoreManagerClient Endpoint Configuration
+/*! @page filestore::CloudFilestoreManagerClient-endpoint-snippet Override filestore::CloudFilestoreManagerClient Endpoint Configuration
 
 @snippet google/cloud/filestore/samples/cloud_filestore_manager_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page CloudFilestoreManagerClient-service-account-snippet Override CloudFilestoreManagerClient Authentication Defaults
+/*! @page filestore::CloudFilestoreManagerClient-service-account-snippet Override filestore::CloudFilestoreManagerClient Authentication Defaults
 
 @snippet google/cloud/filestore/samples/cloud_filestore_manager_client_samples.cc with-service-account
 

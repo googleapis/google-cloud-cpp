@@ -91,7 +91,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ServiceManagerClient`:
+For example, this will override the default endpoint for `servicemanagement::ServiceManagerClient`:
 
 @snippet service_manager_client_samples.cc set-client-endpoint
 
@@ -136,13 +136,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ServiceManagerClient-endpoint-snippet Override ServiceManagerClient Endpoint Configuration
+/*! @page servicemanagement::ServiceManagerClient-endpoint-snippet Override servicemanagement::ServiceManagerClient Endpoint Configuration
 
 @snippet google/cloud/servicemanagement/samples/service_manager_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ServiceManagerClient-service-account-snippet Override ServiceManagerClient Authentication Defaults
+/*! @page servicemanagement::ServiceManagerClient-service-account-snippet Override servicemanagement::ServiceManagerClient Authentication Defaults
 
 @snippet google/cloud/servicemanagement/samples/service_manager_client_samples.cc with-service-account
 

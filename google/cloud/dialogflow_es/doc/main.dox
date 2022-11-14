@@ -159,28 +159,28 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `AgentsClient`:
+For example, this will override the default endpoint for `dialogflow_es::AgentsClient`:
 
 @snippet agents_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [AgentsClient](@ref AgentsClient-endpoint-snippet)
- [AnswerRecordsClient](@ref AnswerRecordsClient-endpoint-snippet)
- [ContextsClient](@ref ContextsClient-endpoint-snippet)
- [ConversationDatasetsClient](@ref ConversationDatasetsClient-endpoint-snippet)
- [ConversationModelsClient](@ref ConversationModelsClient-endpoint-snippet)
- [ConversationProfilesClient](@ref ConversationProfilesClient-endpoint-snippet)
- [ConversationsClient](@ref ConversationsClient-endpoint-snippet)
- [DocumentsClient](@ref DocumentsClient-endpoint-snippet)
- [EntityTypesClient](@ref EntityTypesClient-endpoint-snippet)
- [EnvironmentsClient](@ref EnvironmentsClient-endpoint-snippet)
- [FulfillmentsClient](@ref FulfillmentsClient-endpoint-snippet)
- [IntentsClient](@ref IntentsClient-endpoint-snippet)
- [KnowledgeBasesClient](@ref KnowledgeBasesClient-endpoint-snippet)
- [ParticipantsClient](@ref ParticipantsClient-endpoint-snippet)
- [SessionEntityTypesClient](@ref SessionEntityTypesClient-endpoint-snippet)
- [SessionsClient](@ref SessionsClient-endpoint-snippet)
- [VersionsClient](@ref VersionsClient-endpoint-snippet)
+ [dialogflow_es::AgentsClient](@ref dialogflow_es::AgentsClient-endpoint-snippet)
+ [dialogflow_es::AnswerRecordsClient](@ref dialogflow_es::AnswerRecordsClient-endpoint-snippet)
+ [dialogflow_es::ContextsClient](@ref dialogflow_es::ContextsClient-endpoint-snippet)
+ [dialogflow_es::ConversationDatasetsClient](@ref dialogflow_es::ConversationDatasetsClient-endpoint-snippet)
+ [dialogflow_es::ConversationModelsClient](@ref dialogflow_es::ConversationModelsClient-endpoint-snippet)
+ [dialogflow_es::ConversationProfilesClient](@ref dialogflow_es::ConversationProfilesClient-endpoint-snippet)
+ [dialogflow_es::ConversationsClient](@ref dialogflow_es::ConversationsClient-endpoint-snippet)
+ [dialogflow_es::DocumentsClient](@ref dialogflow_es::DocumentsClient-endpoint-snippet)
+ [dialogflow_es::EntityTypesClient](@ref dialogflow_es::EntityTypesClient-endpoint-snippet)
+ [dialogflow_es::EnvironmentsClient](@ref dialogflow_es::EnvironmentsClient-endpoint-snippet)
+ [dialogflow_es::FulfillmentsClient](@ref dialogflow_es::FulfillmentsClient-endpoint-snippet)
+ [dialogflow_es::IntentsClient](@ref dialogflow_es::IntentsClient-endpoint-snippet)
+ [dialogflow_es::KnowledgeBasesClient](@ref dialogflow_es::KnowledgeBasesClient-endpoint-snippet)
+ [dialogflow_es::ParticipantsClient](@ref dialogflow_es::ParticipantsClient-endpoint-snippet)
+ [dialogflow_es::SessionEntityTypesClient](@ref dialogflow_es::SessionEntityTypesClient-endpoint-snippet)
+ [dialogflow_es::SessionsClient](@ref dialogflow_es::SessionsClient-endpoint-snippet)
+ [dialogflow_es::VersionsClient](@ref dialogflow_es::VersionsClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -195,23 +195,23 @@ to explicitly load a service account key file.
 @snippet agents_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [AgentsClient](@ref AgentsClient-service-account-snippet)
- [AnswerRecordsClient](@ref AnswerRecordsClient-service-account-snippet)
- [ContextsClient](@ref ContextsClient-service-account-snippet)
- [ConversationDatasetsClient](@ref ConversationDatasetsClient-service-account-snippet)
- [ConversationModelsClient](@ref ConversationModelsClient-service-account-snippet)
- [ConversationProfilesClient](@ref ConversationProfilesClient-service-account-snippet)
- [ConversationsClient](@ref ConversationsClient-service-account-snippet)
- [DocumentsClient](@ref DocumentsClient-service-account-snippet)
- [EntityTypesClient](@ref EntityTypesClient-service-account-snippet)
- [EnvironmentsClient](@ref EnvironmentsClient-service-account-snippet)
- [FulfillmentsClient](@ref FulfillmentsClient-service-account-snippet)
- [IntentsClient](@ref IntentsClient-service-account-snippet)
- [KnowledgeBasesClient](@ref KnowledgeBasesClient-service-account-snippet)
- [ParticipantsClient](@ref ParticipantsClient-service-account-snippet)
- [SessionEntityTypesClient](@ref SessionEntityTypesClient-service-account-snippet)
- [SessionsClient](@ref SessionsClient-service-account-snippet)
- [VersionsClient](@ref VersionsClient-service-account-snippet)
+ [dialogflow_es::AgentsClient](@ref dialogflow_es::AgentsClient-service-account-snippet)
+ [dialogflow_es::AnswerRecordsClient](@ref dialogflow_es::AnswerRecordsClient-service-account-snippet)
+ [dialogflow_es::ContextsClient](@ref dialogflow_es::ContextsClient-service-account-snippet)
+ [dialogflow_es::ConversationDatasetsClient](@ref dialogflow_es::ConversationDatasetsClient-service-account-snippet)
+ [dialogflow_es::ConversationModelsClient](@ref dialogflow_es::ConversationModelsClient-service-account-snippet)
+ [dialogflow_es::ConversationProfilesClient](@ref dialogflow_es::ConversationProfilesClient-service-account-snippet)
+ [dialogflow_es::ConversationsClient](@ref dialogflow_es::ConversationsClient-service-account-snippet)
+ [dialogflow_es::DocumentsClient](@ref dialogflow_es::DocumentsClient-service-account-snippet)
+ [dialogflow_es::EntityTypesClient](@ref dialogflow_es::EntityTypesClient-service-account-snippet)
+ [dialogflow_es::EnvironmentsClient](@ref dialogflow_es::EnvironmentsClient-service-account-snippet)
+ [dialogflow_es::FulfillmentsClient](@ref dialogflow_es::FulfillmentsClient-service-account-snippet)
+ [dialogflow_es::IntentsClient](@ref dialogflow_es::IntentsClient-service-account-snippet)
+ [dialogflow_es::KnowledgeBasesClient](@ref dialogflow_es::KnowledgeBasesClient-service-account-snippet)
+ [dialogflow_es::ParticipantsClient](@ref dialogflow_es::ParticipantsClient-service-account-snippet)
+ [dialogflow_es::SessionEntityTypesClient](@ref dialogflow_es::SessionEntityTypesClient-service-account-snippet)
+ [dialogflow_es::SessionsClient](@ref dialogflow_es::SessionsClient-service-account-snippet)
+ [dialogflow_es::VersionsClient](@ref dialogflow_es::VersionsClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -242,205 +242,205 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page AgentsClient-endpoint-snippet Override AgentsClient Endpoint Configuration
+/*! @page dialogflow_es::AgentsClient-endpoint-snippet Override dialogflow_es::AgentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/agents_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page AgentsClient-service-account-snippet Override AgentsClient Authentication Defaults
+/*! @page dialogflow_es::AgentsClient-service-account-snippet Override dialogflow_es::AgentsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/agents_client_samples.cc with-service-account
 
 */
 
-/*! @page AnswerRecordsClient-endpoint-snippet Override AnswerRecordsClient Endpoint Configuration
+/*! @page dialogflow_es::AnswerRecordsClient-endpoint-snippet Override dialogflow_es::AnswerRecordsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/answer_records_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page AnswerRecordsClient-service-account-snippet Override AnswerRecordsClient Authentication Defaults
+/*! @page dialogflow_es::AnswerRecordsClient-service-account-snippet Override dialogflow_es::AnswerRecordsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/answer_records_client_samples.cc with-service-account
 
 */
 
-/*! @page ContextsClient-endpoint-snippet Override ContextsClient Endpoint Configuration
+/*! @page dialogflow_es::ContextsClient-endpoint-snippet Override dialogflow_es::ContextsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/contexts_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ContextsClient-service-account-snippet Override ContextsClient Authentication Defaults
+/*! @page dialogflow_es::ContextsClient-service-account-snippet Override dialogflow_es::ContextsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/contexts_client_samples.cc with-service-account
 
 */
 
-/*! @page ConversationDatasetsClient-endpoint-snippet Override ConversationDatasetsClient Endpoint Configuration
+/*! @page dialogflow_es::ConversationDatasetsClient-endpoint-snippet Override dialogflow_es::ConversationDatasetsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/conversation_datasets_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ConversationDatasetsClient-service-account-snippet Override ConversationDatasetsClient Authentication Defaults
+/*! @page dialogflow_es::ConversationDatasetsClient-service-account-snippet Override dialogflow_es::ConversationDatasetsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/conversation_datasets_client_samples.cc with-service-account
 
 */
 
-/*! @page ConversationModelsClient-endpoint-snippet Override ConversationModelsClient Endpoint Configuration
+/*! @page dialogflow_es::ConversationModelsClient-endpoint-snippet Override dialogflow_es::ConversationModelsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/conversation_models_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ConversationModelsClient-service-account-snippet Override ConversationModelsClient Authentication Defaults
+/*! @page dialogflow_es::ConversationModelsClient-service-account-snippet Override dialogflow_es::ConversationModelsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/conversation_models_client_samples.cc with-service-account
 
 */
 
-/*! @page ConversationProfilesClient-endpoint-snippet Override ConversationProfilesClient Endpoint Configuration
+/*! @page dialogflow_es::ConversationProfilesClient-endpoint-snippet Override dialogflow_es::ConversationProfilesClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/conversation_profiles_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ConversationProfilesClient-service-account-snippet Override ConversationProfilesClient Authentication Defaults
+/*! @page dialogflow_es::ConversationProfilesClient-service-account-snippet Override dialogflow_es::ConversationProfilesClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/conversation_profiles_client_samples.cc with-service-account
 
 */
 
-/*! @page ConversationsClient-endpoint-snippet Override ConversationsClient Endpoint Configuration
+/*! @page dialogflow_es::ConversationsClient-endpoint-snippet Override dialogflow_es::ConversationsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/conversations_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ConversationsClient-service-account-snippet Override ConversationsClient Authentication Defaults
+/*! @page dialogflow_es::ConversationsClient-service-account-snippet Override dialogflow_es::ConversationsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/conversations_client_samples.cc with-service-account
 
 */
 
-/*! @page DocumentsClient-endpoint-snippet Override DocumentsClient Endpoint Configuration
+/*! @page dialogflow_es::DocumentsClient-endpoint-snippet Override dialogflow_es::DocumentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/documents_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page DocumentsClient-service-account-snippet Override DocumentsClient Authentication Defaults
+/*! @page dialogflow_es::DocumentsClient-service-account-snippet Override dialogflow_es::DocumentsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/documents_client_samples.cc with-service-account
 
 */
 
-/*! @page EntityTypesClient-endpoint-snippet Override EntityTypesClient Endpoint Configuration
+/*! @page dialogflow_es::EntityTypesClient-endpoint-snippet Override dialogflow_es::EntityTypesClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/entity_types_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page EntityTypesClient-service-account-snippet Override EntityTypesClient Authentication Defaults
+/*! @page dialogflow_es::EntityTypesClient-service-account-snippet Override dialogflow_es::EntityTypesClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/entity_types_client_samples.cc with-service-account
 
 */
 
-/*! @page EnvironmentsClient-endpoint-snippet Override EnvironmentsClient Endpoint Configuration
+/*! @page dialogflow_es::EnvironmentsClient-endpoint-snippet Override dialogflow_es::EnvironmentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/environments_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page EnvironmentsClient-service-account-snippet Override EnvironmentsClient Authentication Defaults
+/*! @page dialogflow_es::EnvironmentsClient-service-account-snippet Override dialogflow_es::EnvironmentsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/environments_client_samples.cc with-service-account
 
 */
 
-/*! @page FulfillmentsClient-endpoint-snippet Override FulfillmentsClient Endpoint Configuration
+/*! @page dialogflow_es::FulfillmentsClient-endpoint-snippet Override dialogflow_es::FulfillmentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/fulfillments_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page FulfillmentsClient-service-account-snippet Override FulfillmentsClient Authentication Defaults
+/*! @page dialogflow_es::FulfillmentsClient-service-account-snippet Override dialogflow_es::FulfillmentsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/fulfillments_client_samples.cc with-service-account
 
 */
 
-/*! @page IntentsClient-endpoint-snippet Override IntentsClient Endpoint Configuration
+/*! @page dialogflow_es::IntentsClient-endpoint-snippet Override dialogflow_es::IntentsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/intents_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page IntentsClient-service-account-snippet Override IntentsClient Authentication Defaults
+/*! @page dialogflow_es::IntentsClient-service-account-snippet Override dialogflow_es::IntentsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/intents_client_samples.cc with-service-account
 
 */
 
-/*! @page KnowledgeBasesClient-endpoint-snippet Override KnowledgeBasesClient Endpoint Configuration
+/*! @page dialogflow_es::KnowledgeBasesClient-endpoint-snippet Override dialogflow_es::KnowledgeBasesClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/knowledge_bases_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page KnowledgeBasesClient-service-account-snippet Override KnowledgeBasesClient Authentication Defaults
+/*! @page dialogflow_es::KnowledgeBasesClient-service-account-snippet Override dialogflow_es::KnowledgeBasesClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/knowledge_bases_client_samples.cc with-service-account
 
 */
 
-/*! @page ParticipantsClient-endpoint-snippet Override ParticipantsClient Endpoint Configuration
+/*! @page dialogflow_es::ParticipantsClient-endpoint-snippet Override dialogflow_es::ParticipantsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/participants_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ParticipantsClient-service-account-snippet Override ParticipantsClient Authentication Defaults
+/*! @page dialogflow_es::ParticipantsClient-service-account-snippet Override dialogflow_es::ParticipantsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/participants_client_samples.cc with-service-account
 
 */
 
-/*! @page SessionEntityTypesClient-endpoint-snippet Override SessionEntityTypesClient Endpoint Configuration
+/*! @page dialogflow_es::SessionEntityTypesClient-endpoint-snippet Override dialogflow_es::SessionEntityTypesClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/session_entity_types_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page SessionEntityTypesClient-service-account-snippet Override SessionEntityTypesClient Authentication Defaults
+/*! @page dialogflow_es::SessionEntityTypesClient-service-account-snippet Override dialogflow_es::SessionEntityTypesClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/session_entity_types_client_samples.cc with-service-account
 
 */
 
-/*! @page SessionsClient-endpoint-snippet Override SessionsClient Endpoint Configuration
+/*! @page dialogflow_es::SessionsClient-endpoint-snippet Override dialogflow_es::SessionsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/sessions_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page SessionsClient-service-account-snippet Override SessionsClient Authentication Defaults
+/*! @page dialogflow_es::SessionsClient-service-account-snippet Override dialogflow_es::SessionsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/sessions_client_samples.cc with-service-account
 
 */
 
-/*! @page VersionsClient-endpoint-snippet Override VersionsClient Endpoint Configuration
+/*! @page dialogflow_es::VersionsClient-endpoint-snippet Override dialogflow_es::VersionsClient Endpoint Configuration
 
 @snippet google/cloud/dialogflow_es/samples/versions_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page VersionsClient-service-account-snippet Override VersionsClient Authentication Defaults
+/*! @page dialogflow_es::VersionsClient-service-account-snippet Override dialogflow_es::VersionsClient Authentication Defaults
 
 @snippet google/cloud/dialogflow_es/samples/versions_client_samples.cc with-service-account
 

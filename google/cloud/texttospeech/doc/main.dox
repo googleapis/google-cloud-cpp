@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `TextToSpeechClient`:
+For example, this will override the default endpoint for `texttospeech::TextToSpeechClient`:
 
 @snippet text_to_speech_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page TextToSpeechClient-endpoint-snippet Override TextToSpeechClient Endpoint Configuration
+/*! @page texttospeech::TextToSpeechClient-endpoint-snippet Override texttospeech::TextToSpeechClient Endpoint Configuration
 
 @snippet google/cloud/texttospeech/samples/text_to_speech_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page TextToSpeechClient-service-account-snippet Override TextToSpeechClient Authentication Defaults
+/*! @page texttospeech::TextToSpeechClient-service-account-snippet Override texttospeech::TextToSpeechClient Authentication Defaults
 
 @snippet google/cloud/texttospeech/samples/text_to_speech_client_samples.cc with-service-account
 

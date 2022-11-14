@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `DeviceManagerClient`:
+For example, this will override the default endpoint for `iot::DeviceManagerClient`:
 
 @snippet device_manager_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page DeviceManagerClient-endpoint-snippet Override DeviceManagerClient Endpoint Configuration
+/*! @page iot::DeviceManagerClient-endpoint-snippet Override iot::DeviceManagerClient Endpoint Configuration
 
 @snippet google/cloud/iot/samples/device_manager_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page DeviceManagerClient-service-account-snippet Override DeviceManagerClient Authentication Defaults
+/*! @page iot::DeviceManagerClient-service-account-snippet Override iot::DeviceManagerClient Authentication Defaults
 
 @snippet google/cloud/iot/samples/device_manager_client_samples.cc with-service-account
 

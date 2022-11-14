@@ -92,7 +92,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `SpeechClient`:
+For example, this will override the default endpoint for `speech::SpeechClient`:
 
 @snippet speech_client_samples.cc set-client-endpoint
 
@@ -137,13 +137,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page SpeechClient-endpoint-snippet Override SpeechClient Endpoint Configuration
+/*! @page speech::SpeechClient-endpoint-snippet Override speech::SpeechClient Endpoint Configuration
 
 @snippet google/cloud/speech/samples/speech_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page SpeechClient-service-account-snippet Override SpeechClient Authentication Defaults
+/*! @page speech::SpeechClient-service-account-snippet Override speech::SpeechClient Authentication Defaults
 
 @snippet google/cloud/speech/samples/speech_client_samples.cc with-service-account
 

@@ -105,13 +105,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `RevisionsClient`:
+For example, this will override the default endpoint for `run::RevisionsClient`:
 
 @snippet revisions_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [RevisionsClient](@ref RevisionsClient-endpoint-snippet)
- [ServicesClient](@ref ServicesClient-endpoint-snippet)
+ [run::RevisionsClient](@ref run::RevisionsClient-endpoint-snippet)
+ [run::ServicesClient](@ref run::ServicesClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -126,8 +126,8 @@ to explicitly load a service account key file.
 @snippet revisions_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [RevisionsClient](@ref RevisionsClient-service-account-snippet)
- [ServicesClient](@ref ServicesClient-service-account-snippet)
+ [run::RevisionsClient](@ref run::RevisionsClient-service-account-snippet)
+ [run::ServicesClient](@ref run::ServicesClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -158,25 +158,25 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page RevisionsClient-endpoint-snippet Override RevisionsClient Endpoint Configuration
+/*! @page run::RevisionsClient-endpoint-snippet Override run::RevisionsClient Endpoint Configuration
 
 @snippet google/cloud/run/samples/revisions_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page RevisionsClient-service-account-snippet Override RevisionsClient Authentication Defaults
+/*! @page run::RevisionsClient-service-account-snippet Override run::RevisionsClient Authentication Defaults
 
 @snippet google/cloud/run/samples/revisions_client_samples.cc with-service-account
 
 */
 
-/*! @page ServicesClient-endpoint-snippet Override ServicesClient Endpoint Configuration
+/*! @page run::ServicesClient-endpoint-snippet Override run::ServicesClient Endpoint Configuration
 
 @snippet google/cloud/run/samples/services_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ServicesClient-service-account-snippet Override ServicesClient Authentication Defaults
+/*! @page run::ServicesClient-service-account-snippet Override run::ServicesClient Authentication Defaults
 
 @snippet google/cloud/run/samples/services_client_samples.cc with-service-account
 

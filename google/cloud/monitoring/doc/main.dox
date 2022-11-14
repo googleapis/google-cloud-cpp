@@ -127,20 +127,20 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `AlertPolicyServiceClient`:
+For example, this will override the default endpoint for `monitoring::AlertPolicyServiceClient`:
 
 @snippet alert_policy_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [AlertPolicyServiceClient](@ref AlertPolicyServiceClient-endpoint-snippet)
- [DashboardsServiceClient](@ref DashboardsServiceClient-endpoint-snippet)
- [GroupServiceClient](@ref GroupServiceClient-endpoint-snippet)
- [MetricServiceClient](@ref MetricServiceClient-endpoint-snippet)
- [MetricsScopesClient](@ref MetricsScopesClient-endpoint-snippet)
- [NotificationChannelServiceClient](@ref NotificationChannelServiceClient-endpoint-snippet)
- [QueryServiceClient](@ref QueryServiceClient-endpoint-snippet)
- [ServiceMonitoringServiceClient](@ref ServiceMonitoringServiceClient-endpoint-snippet)
- [UptimeCheckServiceClient](@ref UptimeCheckServiceClient-endpoint-snippet)
+ [monitoring::AlertPolicyServiceClient](@ref monitoring::AlertPolicyServiceClient-endpoint-snippet)
+ [monitoring::DashboardsServiceClient](@ref monitoring::DashboardsServiceClient-endpoint-snippet)
+ [monitoring::GroupServiceClient](@ref monitoring::GroupServiceClient-endpoint-snippet)
+ [monitoring::MetricServiceClient](@ref monitoring::MetricServiceClient-endpoint-snippet)
+ [monitoring::MetricsScopesClient](@ref monitoring::MetricsScopesClient-endpoint-snippet)
+ [monitoring::NotificationChannelServiceClient](@ref monitoring::NotificationChannelServiceClient-endpoint-snippet)
+ [monitoring::QueryServiceClient](@ref monitoring::QueryServiceClient-endpoint-snippet)
+ [monitoring::ServiceMonitoringServiceClient](@ref monitoring::ServiceMonitoringServiceClient-endpoint-snippet)
+ [monitoring::UptimeCheckServiceClient](@ref monitoring::UptimeCheckServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -155,15 +155,15 @@ to explicitly load a service account key file.
 @snippet alert_policy_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [AlertPolicyServiceClient](@ref AlertPolicyServiceClient-service-account-snippet)
- [DashboardsServiceClient](@ref DashboardsServiceClient-service-account-snippet)
- [GroupServiceClient](@ref GroupServiceClient-service-account-snippet)
- [MetricServiceClient](@ref MetricServiceClient-service-account-snippet)
- [MetricsScopesClient](@ref MetricsScopesClient-service-account-snippet)
- [NotificationChannelServiceClient](@ref NotificationChannelServiceClient-service-account-snippet)
- [QueryServiceClient](@ref QueryServiceClient-service-account-snippet)
- [ServiceMonitoringServiceClient](@ref ServiceMonitoringServiceClient-service-account-snippet)
- [UptimeCheckServiceClient](@ref UptimeCheckServiceClient-service-account-snippet)
+ [monitoring::AlertPolicyServiceClient](@ref monitoring::AlertPolicyServiceClient-service-account-snippet)
+ [monitoring::DashboardsServiceClient](@ref monitoring::DashboardsServiceClient-service-account-snippet)
+ [monitoring::GroupServiceClient](@ref monitoring::GroupServiceClient-service-account-snippet)
+ [monitoring::MetricServiceClient](@ref monitoring::MetricServiceClient-service-account-snippet)
+ [monitoring::MetricsScopesClient](@ref monitoring::MetricsScopesClient-service-account-snippet)
+ [monitoring::NotificationChannelServiceClient](@ref monitoring::NotificationChannelServiceClient-service-account-snippet)
+ [monitoring::QueryServiceClient](@ref monitoring::QueryServiceClient-service-account-snippet)
+ [monitoring::ServiceMonitoringServiceClient](@ref monitoring::ServiceMonitoringServiceClient-service-account-snippet)
+ [monitoring::UptimeCheckServiceClient](@ref monitoring::UptimeCheckServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -194,109 +194,109 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page AlertPolicyServiceClient-endpoint-snippet Override AlertPolicyServiceClient Endpoint Configuration
+/*! @page monitoring::AlertPolicyServiceClient-endpoint-snippet Override monitoring::AlertPolicyServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/alert_policy_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page AlertPolicyServiceClient-service-account-snippet Override AlertPolicyServiceClient Authentication Defaults
+/*! @page monitoring::AlertPolicyServiceClient-service-account-snippet Override monitoring::AlertPolicyServiceClient Authentication Defaults
 
 @snippet google/cloud/monitoring/samples/alert_policy_client_samples.cc with-service-account
 
 */
 
-/*! @page DashboardsServiceClient-endpoint-snippet Override DashboardsServiceClient Endpoint Configuration
+/*! @page monitoring::DashboardsServiceClient-endpoint-snippet Override monitoring::DashboardsServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/dashboards_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page DashboardsServiceClient-service-account-snippet Override DashboardsServiceClient Authentication Defaults
+/*! @page monitoring::DashboardsServiceClient-service-account-snippet Override monitoring::DashboardsServiceClient Authentication Defaults
 
 @snippet google/cloud/monitoring/samples/dashboards_client_samples.cc with-service-account
 
 */
 
-/*! @page GroupServiceClient-endpoint-snippet Override GroupServiceClient Endpoint Configuration
+/*! @page monitoring::GroupServiceClient-endpoint-snippet Override monitoring::GroupServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/group_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page GroupServiceClient-service-account-snippet Override GroupServiceClient Authentication Defaults
+/*! @page monitoring::GroupServiceClient-service-account-snippet Override monitoring::GroupServiceClient Authentication Defaults
 
 @snippet google/cloud/monitoring/samples/group_client_samples.cc with-service-account
 
 */
 
-/*! @page MetricServiceClient-endpoint-snippet Override MetricServiceClient Endpoint Configuration
+/*! @page monitoring::MetricServiceClient-endpoint-snippet Override monitoring::MetricServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/metric_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page MetricServiceClient-service-account-snippet Override MetricServiceClient Authentication Defaults
+/*! @page monitoring::MetricServiceClient-service-account-snippet Override monitoring::MetricServiceClient Authentication Defaults
 
 @snippet google/cloud/monitoring/samples/metric_client_samples.cc with-service-account
 
 */
 
-/*! @page MetricsScopesClient-endpoint-snippet Override MetricsScopesClient Endpoint Configuration
+/*! @page monitoring::MetricsScopesClient-endpoint-snippet Override monitoring::MetricsScopesClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/metrics_scopes_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page MetricsScopesClient-service-account-snippet Override MetricsScopesClient Authentication Defaults
+/*! @page monitoring::MetricsScopesClient-service-account-snippet Override monitoring::MetricsScopesClient Authentication Defaults
 
 @snippet google/cloud/monitoring/samples/metrics_scopes_client_samples.cc with-service-account
 
 */
 
-/*! @page NotificationChannelServiceClient-endpoint-snippet Override NotificationChannelServiceClient Endpoint Configuration
+/*! @page monitoring::NotificationChannelServiceClient-endpoint-snippet Override monitoring::NotificationChannelServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/notification_channel_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page NotificationChannelServiceClient-service-account-snippet Override NotificationChannelServiceClient Authentication Defaults
+/*! @page monitoring::NotificationChannelServiceClient-service-account-snippet Override monitoring::NotificationChannelServiceClient Authentication Defaults
 
 @snippet google/cloud/monitoring/samples/notification_channel_client_samples.cc with-service-account
 
 */
 
-/*! @page QueryServiceClient-endpoint-snippet Override QueryServiceClient Endpoint Configuration
+/*! @page monitoring::QueryServiceClient-endpoint-snippet Override monitoring::QueryServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/query_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page QueryServiceClient-service-account-snippet Override QueryServiceClient Authentication Defaults
+/*! @page monitoring::QueryServiceClient-service-account-snippet Override monitoring::QueryServiceClient Authentication Defaults
 
 @snippet google/cloud/monitoring/samples/query_client_samples.cc with-service-account
 
 */
 
-/*! @page ServiceMonitoringServiceClient-endpoint-snippet Override ServiceMonitoringServiceClient Endpoint Configuration
+/*! @page monitoring::ServiceMonitoringServiceClient-endpoint-snippet Override monitoring::ServiceMonitoringServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/service_monitoring_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ServiceMonitoringServiceClient-service-account-snippet Override ServiceMonitoringServiceClient Authentication Defaults
+/*! @page monitoring::ServiceMonitoringServiceClient-service-account-snippet Override monitoring::ServiceMonitoringServiceClient Authentication Defaults
 
 @snippet google/cloud/monitoring/samples/service_monitoring_client_samples.cc with-service-account
 
 */
 
-/*! @page UptimeCheckServiceClient-endpoint-snippet Override UptimeCheckServiceClient Endpoint Configuration
+/*! @page monitoring::UptimeCheckServiceClient-endpoint-snippet Override monitoring::UptimeCheckServiceClient Endpoint Configuration
 
 @snippet google/cloud/monitoring/samples/uptime_check_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page UptimeCheckServiceClient-service-account-snippet Override UptimeCheckServiceClient Authentication Defaults
+/*! @page monitoring::UptimeCheckServiceClient-service-account-snippet Override monitoring::UptimeCheckServiceClient Authentication Defaults
 
 @snippet google/cloud/monitoring/samples/uptime_check_client_samples.cc with-service-account
 

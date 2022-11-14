@@ -101,14 +101,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `FoldersClient`:
+For example, this will override the default endpoint for `resourcemanager::FoldersClient`:
 
 @snippet folders_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [FoldersClient](@ref FoldersClient-endpoint-snippet)
- [OrganizationsClient](@ref OrganizationsClient-endpoint-snippet)
- [ProjectsClient](@ref ProjectsClient-endpoint-snippet)
+ [resourcemanager::FoldersClient](@ref resourcemanager::FoldersClient-endpoint-snippet)
+ [resourcemanager::OrganizationsClient](@ref resourcemanager::OrganizationsClient-endpoint-snippet)
+ [resourcemanager::ProjectsClient](@ref resourcemanager::ProjectsClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -123,9 +123,9 @@ to explicitly load a service account key file.
 @snippet folders_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [FoldersClient](@ref FoldersClient-service-account-snippet)
- [OrganizationsClient](@ref OrganizationsClient-service-account-snippet)
- [ProjectsClient](@ref ProjectsClient-service-account-snippet)
+ [resourcemanager::FoldersClient](@ref resourcemanager::FoldersClient-service-account-snippet)
+ [resourcemanager::OrganizationsClient](@ref resourcemanager::OrganizationsClient-service-account-snippet)
+ [resourcemanager::ProjectsClient](@ref resourcemanager::ProjectsClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -156,37 +156,37 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page FoldersClient-endpoint-snippet Override FoldersClient Endpoint Configuration
+/*! @page resourcemanager::FoldersClient-endpoint-snippet Override resourcemanager::FoldersClient Endpoint Configuration
 
 @snippet google/cloud/resourcemanager/samples/folders_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page FoldersClient-service-account-snippet Override FoldersClient Authentication Defaults
+/*! @page resourcemanager::FoldersClient-service-account-snippet Override resourcemanager::FoldersClient Authentication Defaults
 
 @snippet google/cloud/resourcemanager/samples/folders_client_samples.cc with-service-account
 
 */
 
-/*! @page OrganizationsClient-endpoint-snippet Override OrganizationsClient Endpoint Configuration
+/*! @page resourcemanager::OrganizationsClient-endpoint-snippet Override resourcemanager::OrganizationsClient Endpoint Configuration
 
 @snippet google/cloud/resourcemanager/samples/organizations_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page OrganizationsClient-service-account-snippet Override OrganizationsClient Authentication Defaults
+/*! @page resourcemanager::OrganizationsClient-service-account-snippet Override resourcemanager::OrganizationsClient Authentication Defaults
 
 @snippet google/cloud/resourcemanager/samples/organizations_client_samples.cc with-service-account
 
 */
 
-/*! @page ProjectsClient-endpoint-snippet Override ProjectsClient Endpoint Configuration
+/*! @page resourcemanager::ProjectsClient-endpoint-snippet Override resourcemanager::ProjectsClient Endpoint Configuration
 
 @snippet google/cloud/resourcemanager/samples/projects_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ProjectsClient-service-account-snippet Override ProjectsClient Authentication Defaults
+/*! @page resourcemanager::ProjectsClient-service-account-snippet Override resourcemanager::ProjectsClient Authentication Defaults
 
 @snippet google/cloud/resourcemanager/samples/projects_client_samples.cc with-service-account
 

@@ -92,7 +92,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `CloudBuildClient`:
+For example, this will override the default endpoint for `cloudbuild::CloudBuildClient`:
 
 @snippet cloud_build_client_samples.cc set-client-endpoint
 
@@ -137,13 +137,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page CloudBuildClient-endpoint-snippet Override CloudBuildClient Endpoint Configuration
+/*! @page cloudbuild::CloudBuildClient-endpoint-snippet Override cloudbuild::CloudBuildClient Endpoint Configuration
 
 @snippet google/cloud/cloudbuild/samples/cloud_build_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page CloudBuildClient-service-account-snippet Override CloudBuildClient Authentication Defaults
+/*! @page cloudbuild::CloudBuildClient-service-account-snippet Override cloudbuild::CloudBuildClient Authentication Defaults
 
 @snippet google/cloud/cloudbuild/samples/cloud_build_client_samples.cc with-service-account
 

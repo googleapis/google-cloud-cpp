@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `CloudMemcacheClient`:
+For example, this will override the default endpoint for `memcache::CloudMemcacheClient`:
 
 @snippet cloud_memcache_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page CloudMemcacheClient-endpoint-snippet Override CloudMemcacheClient Endpoint Configuration
+/*! @page memcache::CloudMemcacheClient-endpoint-snippet Override memcache::CloudMemcacheClient Endpoint Configuration
 
 @snippet google/cloud/memcache/samples/cloud_memcache_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page CloudMemcacheClient-service-account-snippet Override CloudMemcacheClient Authentication Defaults
+/*! @page memcache::CloudMemcacheClient-service-account-snippet Override memcache::CloudMemcacheClient Authentication Defaults
 
 @snippet google/cloud/memcache/samples/cloud_memcache_client_samples.cc with-service-account
 

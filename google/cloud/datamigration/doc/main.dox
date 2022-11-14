@@ -92,7 +92,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `DataMigrationServiceClient`:
+For example, this will override the default endpoint for `datamigration::DataMigrationServiceClient`:
 
 @snippet data_migration_client_samples.cc set-client-endpoint
 
@@ -137,13 +137,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page DataMigrationServiceClient-endpoint-snippet Override DataMigrationServiceClient Endpoint Configuration
+/*! @page datamigration::DataMigrationServiceClient-endpoint-snippet Override datamigration::DataMigrationServiceClient Endpoint Configuration
 
 @snippet google/cloud/datamigration/samples/data_migration_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page DataMigrationServiceClient-service-account-snippet Override DataMigrationServiceClient Authentication Defaults
+/*! @page datamigration::DataMigrationServiceClient-service-account-snippet Override datamigration::DataMigrationServiceClient Authentication Defaults
 
 @snippet google/cloud/datamigration/samples/data_migration_client_samples.cc with-service-account
 

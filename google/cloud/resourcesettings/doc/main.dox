@@ -94,7 +94,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ResourceSettingsServiceClient`:
+For example, this will override the default endpoint for `resourcesettings::ResourceSettingsServiceClient`:
 
 @snippet resource_settings_client_samples.cc set-client-endpoint
 
@@ -139,13 +139,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ResourceSettingsServiceClient-endpoint-snippet Override ResourceSettingsServiceClient Endpoint Configuration
+/*! @page resourcesettings::ResourceSettingsServiceClient-endpoint-snippet Override resourcesettings::ResourceSettingsServiceClient Endpoint Configuration
 
 @snippet google/cloud/resourcesettings/samples/resource_settings_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ResourceSettingsServiceClient-service-account-snippet Override ResourceSettingsServiceClient Authentication Defaults
+/*! @page resourcesettings::ResourceSettingsServiceClient-service-account-snippet Override resourcesettings::ResourceSettingsServiceClient Authentication Defaults
 
 @snippet google/cloud/resourcesettings/samples/resource_settings_client_samples.cc with-service-account
 

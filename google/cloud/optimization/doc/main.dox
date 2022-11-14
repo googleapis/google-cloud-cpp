@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `FleetRoutingClient`:
+For example, this will override the default endpoint for `optimization::FleetRoutingClient`:
 
 @snippet fleet_routing_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page FleetRoutingClient-endpoint-snippet Override FleetRoutingClient Endpoint Configuration
+/*! @page optimization::FleetRoutingClient-endpoint-snippet Override optimization::FleetRoutingClient Endpoint Configuration
 
 @snippet google/cloud/optimization/samples/fleet_routing_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page FleetRoutingClient-service-account-snippet Override FleetRoutingClient Authentication Defaults
+/*! @page optimization::FleetRoutingClient-service-account-snippet Override optimization::FleetRoutingClient Authentication Defaults
 
 @snippet google/cloud/optimization/samples/fleet_routing_client_samples.cc with-service-account
 

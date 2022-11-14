@@ -97,13 +97,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `AgentEndpointServiceClient`:
+For example, this will override the default endpoint for `osconfig::AgentEndpointServiceClient`:
 
 @snippet agent_endpoint_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [AgentEndpointServiceClient](@ref AgentEndpointServiceClient-endpoint-snippet)
- [OsConfigServiceClient](@ref OsConfigServiceClient-endpoint-snippet)
+ [osconfig::AgentEndpointServiceClient](@ref osconfig::AgentEndpointServiceClient-endpoint-snippet)
+ [osconfig::OsConfigServiceClient](@ref osconfig::OsConfigServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -118,8 +118,8 @@ to explicitly load a service account key file.
 @snippet agent_endpoint_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [AgentEndpointServiceClient](@ref AgentEndpointServiceClient-service-account-snippet)
- [OsConfigServiceClient](@ref OsConfigServiceClient-service-account-snippet)
+ [osconfig::AgentEndpointServiceClient](@ref osconfig::AgentEndpointServiceClient-service-account-snippet)
+ [osconfig::OsConfigServiceClient](@ref osconfig::OsConfigServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -150,25 +150,25 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page AgentEndpointServiceClient-endpoint-snippet Override AgentEndpointServiceClient Endpoint Configuration
+/*! @page osconfig::AgentEndpointServiceClient-endpoint-snippet Override osconfig::AgentEndpointServiceClient Endpoint Configuration
 
 @snippet google/cloud/osconfig/samples/agent_endpoint_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page AgentEndpointServiceClient-service-account-snippet Override AgentEndpointServiceClient Authentication Defaults
+/*! @page osconfig::AgentEndpointServiceClient-service-account-snippet Override osconfig::AgentEndpointServiceClient Authentication Defaults
 
 @snippet google/cloud/osconfig/samples/agent_endpoint_client_samples.cc with-service-account
 
 */
 
-/*! @page OsConfigServiceClient-endpoint-snippet Override OsConfigServiceClient Endpoint Configuration
+/*! @page osconfig::OsConfigServiceClient-endpoint-snippet Override osconfig::OsConfigServiceClient Endpoint Configuration
 
 @snippet google/cloud/osconfig/samples/os_config_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page OsConfigServiceClient-service-account-snippet Override OsConfigServiceClient Authentication Defaults
+/*! @page osconfig::OsConfigServiceClient-service-account-snippet Override osconfig::OsConfigServiceClient Authentication Defaults
 
 @snippet google/cloud/osconfig/samples/os_config_client_samples.cc with-service-account
 

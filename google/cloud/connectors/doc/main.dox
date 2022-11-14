@@ -94,7 +94,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ConnectorsClient`:
+For example, this will override the default endpoint for `connectors::ConnectorsClient`:
 
 @snippet connectors_client_samples.cc set-client-endpoint
 
@@ -139,13 +139,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ConnectorsClient-endpoint-snippet Override ConnectorsClient Endpoint Configuration
+/*! @page connectors::ConnectorsClient-endpoint-snippet Override connectors::ConnectorsClient Endpoint Configuration
 
 @snippet google/cloud/connectors/samples/connectors_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ConnectorsClient-service-account-snippet Override ConnectorsClient Authentication Defaults
+/*! @page connectors::ConnectorsClient-service-account-snippet Override connectors::ConnectorsClient Authentication Defaults
 
 @snippet google/cloud/connectors/samples/connectors_client_samples.cc with-service-account
 

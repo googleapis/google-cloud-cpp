@@ -114,17 +114,17 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `CatalogServiceClient`:
+For example, this will override the default endpoint for `retail::CatalogServiceClient`:
 
 @snippet catalog_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [CatalogServiceClient](@ref CatalogServiceClient-endpoint-snippet)
- [CompletionServiceClient](@ref CompletionServiceClient-endpoint-snippet)
- [PredictionServiceClient](@ref PredictionServiceClient-endpoint-snippet)
- [ProductServiceClient](@ref ProductServiceClient-endpoint-snippet)
- [SearchServiceClient](@ref SearchServiceClient-endpoint-snippet)
- [UserEventServiceClient](@ref UserEventServiceClient-endpoint-snippet)
+ [retail::CatalogServiceClient](@ref retail::CatalogServiceClient-endpoint-snippet)
+ [retail::CompletionServiceClient](@ref retail::CompletionServiceClient-endpoint-snippet)
+ [retail::PredictionServiceClient](@ref retail::PredictionServiceClient-endpoint-snippet)
+ [retail::ProductServiceClient](@ref retail::ProductServiceClient-endpoint-snippet)
+ [retail::SearchServiceClient](@ref retail::SearchServiceClient-endpoint-snippet)
+ [retail::UserEventServiceClient](@ref retail::UserEventServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -139,12 +139,12 @@ to explicitly load a service account key file.
 @snippet catalog_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [CatalogServiceClient](@ref CatalogServiceClient-service-account-snippet)
- [CompletionServiceClient](@ref CompletionServiceClient-service-account-snippet)
- [PredictionServiceClient](@ref PredictionServiceClient-service-account-snippet)
- [ProductServiceClient](@ref ProductServiceClient-service-account-snippet)
- [SearchServiceClient](@ref SearchServiceClient-service-account-snippet)
- [UserEventServiceClient](@ref UserEventServiceClient-service-account-snippet)
+ [retail::CatalogServiceClient](@ref retail::CatalogServiceClient-service-account-snippet)
+ [retail::CompletionServiceClient](@ref retail::CompletionServiceClient-service-account-snippet)
+ [retail::PredictionServiceClient](@ref retail::PredictionServiceClient-service-account-snippet)
+ [retail::ProductServiceClient](@ref retail::ProductServiceClient-service-account-snippet)
+ [retail::SearchServiceClient](@ref retail::SearchServiceClient-service-account-snippet)
+ [retail::UserEventServiceClient](@ref retail::UserEventServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -175,73 +175,73 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page CatalogServiceClient-endpoint-snippet Override CatalogServiceClient Endpoint Configuration
+/*! @page retail::CatalogServiceClient-endpoint-snippet Override retail::CatalogServiceClient Endpoint Configuration
 
 @snippet google/cloud/retail/samples/catalog_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page CatalogServiceClient-service-account-snippet Override CatalogServiceClient Authentication Defaults
+/*! @page retail::CatalogServiceClient-service-account-snippet Override retail::CatalogServiceClient Authentication Defaults
 
 @snippet google/cloud/retail/samples/catalog_client_samples.cc with-service-account
 
 */
 
-/*! @page CompletionServiceClient-endpoint-snippet Override CompletionServiceClient Endpoint Configuration
+/*! @page retail::CompletionServiceClient-endpoint-snippet Override retail::CompletionServiceClient Endpoint Configuration
 
 @snippet google/cloud/retail/samples/completion_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page CompletionServiceClient-service-account-snippet Override CompletionServiceClient Authentication Defaults
+/*! @page retail::CompletionServiceClient-service-account-snippet Override retail::CompletionServiceClient Authentication Defaults
 
 @snippet google/cloud/retail/samples/completion_client_samples.cc with-service-account
 
 */
 
-/*! @page PredictionServiceClient-endpoint-snippet Override PredictionServiceClient Endpoint Configuration
+/*! @page retail::PredictionServiceClient-endpoint-snippet Override retail::PredictionServiceClient Endpoint Configuration
 
 @snippet google/cloud/retail/samples/prediction_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page PredictionServiceClient-service-account-snippet Override PredictionServiceClient Authentication Defaults
+/*! @page retail::PredictionServiceClient-service-account-snippet Override retail::PredictionServiceClient Authentication Defaults
 
 @snippet google/cloud/retail/samples/prediction_client_samples.cc with-service-account
 
 */
 
-/*! @page ProductServiceClient-endpoint-snippet Override ProductServiceClient Endpoint Configuration
+/*! @page retail::ProductServiceClient-endpoint-snippet Override retail::ProductServiceClient Endpoint Configuration
 
 @snippet google/cloud/retail/samples/product_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ProductServiceClient-service-account-snippet Override ProductServiceClient Authentication Defaults
+/*! @page retail::ProductServiceClient-service-account-snippet Override retail::ProductServiceClient Authentication Defaults
 
 @snippet google/cloud/retail/samples/product_client_samples.cc with-service-account
 
 */
 
-/*! @page SearchServiceClient-endpoint-snippet Override SearchServiceClient Endpoint Configuration
+/*! @page retail::SearchServiceClient-endpoint-snippet Override retail::SearchServiceClient Endpoint Configuration
 
 @snippet google/cloud/retail/samples/search_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page SearchServiceClient-service-account-snippet Override SearchServiceClient Authentication Defaults
+/*! @page retail::SearchServiceClient-service-account-snippet Override retail::SearchServiceClient Authentication Defaults
 
 @snippet google/cloud/retail/samples/search_client_samples.cc with-service-account
 
 */
 
-/*! @page UserEventServiceClient-endpoint-snippet Override UserEventServiceClient Endpoint Configuration
+/*! @page retail::UserEventServiceClient-endpoint-snippet Override retail::UserEventServiceClient Endpoint Configuration
 
 @snippet google/cloud/retail/samples/user_event_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page UserEventServiceClient-service-account-snippet Override UserEventServiceClient Authentication Defaults
+/*! @page retail::UserEventServiceClient-service-account-snippet Override retail::UserEventServiceClient Authentication Defaults
 
 @snippet google/cloud/retail/samples/user_event_client_samples.cc with-service-account
 

@@ -95,7 +95,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `HubServiceClient`:
+For example, this will override the default endpoint for `networkconnectivity::HubServiceClient`:
 
 @snippet hub_client_samples.cc set-client-endpoint
 
@@ -140,13 +140,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page HubServiceClient-endpoint-snippet Override HubServiceClient Endpoint Configuration
+/*! @page networkconnectivity::HubServiceClient-endpoint-snippet Override networkconnectivity::HubServiceClient Endpoint Configuration
 
 @snippet google/cloud/networkconnectivity/samples/hub_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page HubServiceClient-service-account-snippet Override HubServiceClient Authentication Defaults
+/*! @page networkconnectivity::HubServiceClient-service-account-snippet Override networkconnectivity::HubServiceClient Authentication Defaults
 
 @snippet google/cloud/networkconnectivity/samples/hub_client_samples.cc with-service-account
 

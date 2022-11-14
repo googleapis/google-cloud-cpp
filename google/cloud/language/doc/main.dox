@@ -94,7 +94,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `LanguageServiceClient`:
+For example, this will override the default endpoint for `language::LanguageServiceClient`:
 
 @snippet language_client_samples.cc set-client-endpoint
 
@@ -139,13 +139,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page LanguageServiceClient-endpoint-snippet Override LanguageServiceClient Endpoint Configuration
+/*! @page language::LanguageServiceClient-endpoint-snippet Override language::LanguageServiceClient Endpoint Configuration
 
 @snippet google/cloud/language/samples/language_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page LanguageServiceClient-service-account-snippet Override LanguageServiceClient Authentication Defaults
+/*! @page language::LanguageServiceClient-service-account-snippet Override language::LanguageServiceClient Authentication Defaults
 
 @snippet google/cloud/language/samples/language_client_samples.cc with-service-account
 

@@ -95,7 +95,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `AssuredWorkloadsServiceClient`:
+For example, this will override the default endpoint for `assuredworkloads::AssuredWorkloadsServiceClient`:
 
 @snippet assured_workloads_client_samples.cc set-client-endpoint
 
@@ -139,13 +139,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page AssuredWorkloadsServiceClient-endpoint-snippet Override AssuredWorkloadsServiceClient Endpoint Configuration
+/*! @page assuredworkloads::AssuredWorkloadsServiceClient-endpoint-snippet Override assuredworkloads::AssuredWorkloadsServiceClient Endpoint Configuration
 
 @snippet google/cloud/assuredworkloads/samples/assured_workloads_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page AssuredWorkloadsServiceClient-service-account-snippet Override AssuredWorkloadsServiceClient Authentication Defaults
+/*! @page assuredworkloads::AssuredWorkloadsServiceClient-service-account-snippet Override assuredworkloads::AssuredWorkloadsServiceClient Authentication Defaults
 
 @snippet google/cloud/assuredworkloads/samples/assured_workloads_client_samples.cc with-service-account
 

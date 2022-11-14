@@ -92,7 +92,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `TpuClient`:
+For example, this will override the default endpoint for `tpu::TpuClient`:
 
 @snippet tpu_client_samples.cc set-client-endpoint
 
@@ -137,13 +137,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page TpuClient-endpoint-snippet Override TpuClient Endpoint Configuration
+/*! @page tpu::TpuClient-endpoint-snippet Override tpu::TpuClient Endpoint Configuration
 
 @snippet google/cloud/tpu/samples/tpu_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page TpuClient-service-account-snippet Override TpuClient Authentication Defaults
+/*! @page tpu::TpuClient-service-account-snippet Override tpu::TpuClient Authentication Defaults
 
 @snippet google/cloud/tpu/samples/tpu_client_samples.cc with-service-account
 

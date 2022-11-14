@@ -101,14 +101,14 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ContentServiceClient`:
+For example, this will override the default endpoint for `dataplex::ContentServiceClient`:
 
 @snippet content_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [ContentServiceClient](@ref ContentServiceClient-endpoint-snippet)
- [DataplexServiceClient](@ref DataplexServiceClient-endpoint-snippet)
- [MetadataServiceClient](@ref MetadataServiceClient-endpoint-snippet)
+ [dataplex::ContentServiceClient](@ref dataplex::ContentServiceClient-endpoint-snippet)
+ [dataplex::DataplexServiceClient](@ref dataplex::DataplexServiceClient-endpoint-snippet)
+ [dataplex::MetadataServiceClient](@ref dataplex::MetadataServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -123,9 +123,9 @@ to explicitly load a service account key file.
 @snippet content_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [ContentServiceClient](@ref ContentServiceClient-service-account-snippet)
- [DataplexServiceClient](@ref DataplexServiceClient-service-account-snippet)
- [MetadataServiceClient](@ref MetadataServiceClient-service-account-snippet)
+ [dataplex::ContentServiceClient](@ref dataplex::ContentServiceClient-service-account-snippet)
+ [dataplex::DataplexServiceClient](@ref dataplex::DataplexServiceClient-service-account-snippet)
+ [dataplex::MetadataServiceClient](@ref dataplex::MetadataServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -156,37 +156,37 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ContentServiceClient-endpoint-snippet Override ContentServiceClient Endpoint Configuration
+/*! @page dataplex::ContentServiceClient-endpoint-snippet Override dataplex::ContentServiceClient Endpoint Configuration
 
 @snippet google/cloud/dataplex/samples/content_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ContentServiceClient-service-account-snippet Override ContentServiceClient Authentication Defaults
+/*! @page dataplex::ContentServiceClient-service-account-snippet Override dataplex::ContentServiceClient Authentication Defaults
 
 @snippet google/cloud/dataplex/samples/content_client_samples.cc with-service-account
 
 */
 
-/*! @page DataplexServiceClient-endpoint-snippet Override DataplexServiceClient Endpoint Configuration
+/*! @page dataplex::DataplexServiceClient-endpoint-snippet Override dataplex::DataplexServiceClient Endpoint Configuration
 
 @snippet google/cloud/dataplex/samples/dataplex_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page DataplexServiceClient-service-account-snippet Override DataplexServiceClient Authentication Defaults
+/*! @page dataplex::DataplexServiceClient-service-account-snippet Override dataplex::DataplexServiceClient Authentication Defaults
 
 @snippet google/cloud/dataplex/samples/dataplex_client_samples.cc with-service-account
 
 */
 
-/*! @page MetadataServiceClient-endpoint-snippet Override MetadataServiceClient Endpoint Configuration
+/*! @page dataplex::MetadataServiceClient-endpoint-snippet Override dataplex::MetadataServiceClient Endpoint Configuration
 
 @snippet google/cloud/dataplex/samples/metadata_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page MetadataServiceClient-service-account-snippet Override MetadataServiceClient Authentication Defaults
+/*! @page dataplex::MetadataServiceClient-service-account-snippet Override dataplex::MetadataServiceClient Authentication Defaults
 
 @snippet google/cloud/dataplex/samples/metadata_client_samples.cc with-service-account
 

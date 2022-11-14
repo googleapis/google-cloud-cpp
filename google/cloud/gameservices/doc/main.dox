@@ -105,15 +105,15 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `GameServerClustersServiceClient`:
+For example, this will override the default endpoint for `gameservices::GameServerClustersServiceClient`:
 
 @snippet game_server_clusters_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [GameServerClustersServiceClient](@ref GameServerClustersServiceClient-endpoint-snippet)
- [GameServerConfigsServiceClient](@ref GameServerConfigsServiceClient-endpoint-snippet)
- [GameServerDeploymentsServiceClient](@ref GameServerDeploymentsServiceClient-endpoint-snippet)
- [RealmsServiceClient](@ref RealmsServiceClient-endpoint-snippet)
+ [gameservices::GameServerClustersServiceClient](@ref gameservices::GameServerClustersServiceClient-endpoint-snippet)
+ [gameservices::GameServerConfigsServiceClient](@ref gameservices::GameServerConfigsServiceClient-endpoint-snippet)
+ [gameservices::GameServerDeploymentsServiceClient](@ref gameservices::GameServerDeploymentsServiceClient-endpoint-snippet)
+ [gameservices::RealmsServiceClient](@ref gameservices::RealmsServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -128,10 +128,10 @@ to explicitly load a service account key file.
 @snippet game_server_clusters_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [GameServerClustersServiceClient](@ref GameServerClustersServiceClient-service-account-snippet)
- [GameServerConfigsServiceClient](@ref GameServerConfigsServiceClient-service-account-snippet)
- [GameServerDeploymentsServiceClient](@ref GameServerDeploymentsServiceClient-service-account-snippet)
- [RealmsServiceClient](@ref RealmsServiceClient-service-account-snippet)
+ [gameservices::GameServerClustersServiceClient](@ref gameservices::GameServerClustersServiceClient-service-account-snippet)
+ [gameservices::GameServerConfigsServiceClient](@ref gameservices::GameServerConfigsServiceClient-service-account-snippet)
+ [gameservices::GameServerDeploymentsServiceClient](@ref gameservices::GameServerDeploymentsServiceClient-service-account-snippet)
+ [gameservices::RealmsServiceClient](@ref gameservices::RealmsServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -162,49 +162,49 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page GameServerClustersServiceClient-endpoint-snippet Override GameServerClustersServiceClient Endpoint Configuration
+/*! @page gameservices::GameServerClustersServiceClient-endpoint-snippet Override gameservices::GameServerClustersServiceClient Endpoint Configuration
 
 @snippet google/cloud/gameservices/samples/game_server_clusters_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page GameServerClustersServiceClient-service-account-snippet Override GameServerClustersServiceClient Authentication Defaults
+/*! @page gameservices::GameServerClustersServiceClient-service-account-snippet Override gameservices::GameServerClustersServiceClient Authentication Defaults
 
 @snippet google/cloud/gameservices/samples/game_server_clusters_client_samples.cc with-service-account
 
 */
 
-/*! @page GameServerConfigsServiceClient-endpoint-snippet Override GameServerConfigsServiceClient Endpoint Configuration
+/*! @page gameservices::GameServerConfigsServiceClient-endpoint-snippet Override gameservices::GameServerConfigsServiceClient Endpoint Configuration
 
 @snippet google/cloud/gameservices/samples/game_server_configs_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page GameServerConfigsServiceClient-service-account-snippet Override GameServerConfigsServiceClient Authentication Defaults
+/*! @page gameservices::GameServerConfigsServiceClient-service-account-snippet Override gameservices::GameServerConfigsServiceClient Authentication Defaults
 
 @snippet google/cloud/gameservices/samples/game_server_configs_client_samples.cc with-service-account
 
 */
 
-/*! @page GameServerDeploymentsServiceClient-endpoint-snippet Override GameServerDeploymentsServiceClient Endpoint Configuration
+/*! @page gameservices::GameServerDeploymentsServiceClient-endpoint-snippet Override gameservices::GameServerDeploymentsServiceClient Endpoint Configuration
 
 @snippet google/cloud/gameservices/samples/game_server_deployments_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page GameServerDeploymentsServiceClient-service-account-snippet Override GameServerDeploymentsServiceClient Authentication Defaults
+/*! @page gameservices::GameServerDeploymentsServiceClient-service-account-snippet Override gameservices::GameServerDeploymentsServiceClient Authentication Defaults
 
 @snippet google/cloud/gameservices/samples/game_server_deployments_client_samples.cc with-service-account
 
 */
 
-/*! @page RealmsServiceClient-endpoint-snippet Override RealmsServiceClient Endpoint Configuration
+/*! @page gameservices::RealmsServiceClient-endpoint-snippet Override gameservices::RealmsServiceClient Endpoint Configuration
 
 @snippet google/cloud/gameservices/samples/realms_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page RealmsServiceClient-service-account-snippet Override RealmsServiceClient Authentication Defaults
+/*! @page gameservices::RealmsServiceClient-service-account-snippet Override gameservices::RealmsServiceClient Authentication Defaults
 
 @snippet google/cloud/gameservices/samples/realms_client_samples.cc with-service-account
 
