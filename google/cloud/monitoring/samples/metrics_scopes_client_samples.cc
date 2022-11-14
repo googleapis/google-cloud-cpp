@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: MetricsScopesClient
+// main-dox-marker: monitoring::MetricsScopesClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

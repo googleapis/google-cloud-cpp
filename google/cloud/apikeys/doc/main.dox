@@ -92,7 +92,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ApiKeysClient`:
+For example, this will override the default endpoint for `apikeys::ApiKeysClient`:
 
 @snippet api_keys_client_samples.cc set-client-endpoint
 
@@ -137,13 +137,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ApiKeysClient-endpoint-snippet Override ApiKeysClient Endpoint Configuration
+/*! @page apikeys::ApiKeysClient-endpoint-snippet Override apikeys::ApiKeysClient Endpoint Configuration
 
 @snippet google/cloud/apikeys/samples/api_keys_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ApiKeysClient-service-account-snippet Override ApiKeysClient Authentication Defaults
+/*! @page apikeys::ApiKeysClient-service-account-snippet Override apikeys::ApiKeysClient Authentication Defaults
 
 @snippet google/cloud/apikeys/samples/api_keys_client_samples.cc with-service-account
 

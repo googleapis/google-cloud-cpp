@@ -98,13 +98,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ImageAnnotatorClient`:
+For example, this will override the default endpoint for `vision::ImageAnnotatorClient`:
 
 @snippet image_annotator_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [ImageAnnotatorClient](@ref ImageAnnotatorClient-endpoint-snippet)
- [ProductSearchClient](@ref ProductSearchClient-endpoint-snippet)
+ [vision::ImageAnnotatorClient](@ref vision::ImageAnnotatorClient-endpoint-snippet)
+ [vision::ProductSearchClient](@ref vision::ProductSearchClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -119,8 +119,8 @@ to explicitly load a service account key file.
 @snippet image_annotator_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [ImageAnnotatorClient](@ref ImageAnnotatorClient-service-account-snippet)
- [ProductSearchClient](@ref ProductSearchClient-service-account-snippet)
+ [vision::ImageAnnotatorClient](@ref vision::ImageAnnotatorClient-service-account-snippet)
+ [vision::ProductSearchClient](@ref vision::ProductSearchClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -151,25 +151,25 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ImageAnnotatorClient-endpoint-snippet Override ImageAnnotatorClient Endpoint Configuration
+/*! @page vision::ImageAnnotatorClient-endpoint-snippet Override vision::ImageAnnotatorClient Endpoint Configuration
 
 @snippet google/cloud/vision/samples/image_annotator_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ImageAnnotatorClient-service-account-snippet Override ImageAnnotatorClient Authentication Defaults
+/*! @page vision::ImageAnnotatorClient-service-account-snippet Override vision::ImageAnnotatorClient Authentication Defaults
 
 @snippet google/cloud/vision/samples/image_annotator_client_samples.cc with-service-account
 
 */
 
-/*! @page ProductSearchClient-endpoint-snippet Override ProductSearchClient Endpoint Configuration
+/*! @page vision::ProductSearchClient-endpoint-snippet Override vision::ProductSearchClient Endpoint Configuration
 
 @snippet google/cloud/vision/samples/product_search_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ProductSearchClient-service-account-snippet Override ProductSearchClient Authentication Defaults
+/*! @page vision::ProductSearchClient-service-account-snippet Override vision::ProductSearchClient Authentication Defaults
 
 @snippet google/cloud/vision/samples/product_search_client_samples.cc with-service-account
 

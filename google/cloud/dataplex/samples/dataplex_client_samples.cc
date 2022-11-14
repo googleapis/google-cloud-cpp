@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: DataplexServiceClient
+// main-dox-marker: dataplex::DataplexServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

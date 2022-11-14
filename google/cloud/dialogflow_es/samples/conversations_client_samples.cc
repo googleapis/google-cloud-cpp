@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ConversationsClient
+// main-dox-marker: dialogflow_es::ConversationsClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

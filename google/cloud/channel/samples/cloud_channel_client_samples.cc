@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: CloudChannelServiceClient
+// main-dox-marker: channel::CloudChannelServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

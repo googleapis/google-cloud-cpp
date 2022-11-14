@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: HubServiceClient
+// main-dox-marker: networkconnectivity::HubServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

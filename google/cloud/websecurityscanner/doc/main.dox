@@ -95,7 +95,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `WebSecurityScannerClient`:
+For example, this will override the default endpoint for `websecurityscanner::WebSecurityScannerClient`:
 
 @snippet web_security_scanner_client_samples.cc set-client-endpoint
 
@@ -139,13 +139,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page WebSecurityScannerClient-endpoint-snippet Override WebSecurityScannerClient Endpoint Configuration
+/*! @page websecurityscanner::WebSecurityScannerClient-endpoint-snippet Override websecurityscanner::WebSecurityScannerClient Endpoint Configuration
 
 @snippet google/cloud/websecurityscanner/samples/web_security_scanner_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page WebSecurityScannerClient-service-account-snippet Override WebSecurityScannerClient Authentication Defaults
+/*! @page websecurityscanner::WebSecurityScannerClient-service-account-snippet Override websecurityscanner::WebSecurityScannerClient Authentication Defaults
 
 @snippet google/cloud/websecurityscanner/samples/web_security_scanner_client_samples.cc with-service-account
 

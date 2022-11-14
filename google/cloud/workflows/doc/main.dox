@@ -98,13 +98,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ExecutionsClient`:
+For example, this will override the default endpoint for `workflows::ExecutionsClient`:
 
 @snippet executions_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [ExecutionsClient](@ref ExecutionsClient-endpoint-snippet)
- [WorkflowsClient](@ref WorkflowsClient-endpoint-snippet)
+ [workflows::ExecutionsClient](@ref workflows::ExecutionsClient-endpoint-snippet)
+ [workflows::WorkflowsClient](@ref workflows::WorkflowsClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -119,8 +119,8 @@ to explicitly load a service account key file.
 @snippet executions_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [ExecutionsClient](@ref ExecutionsClient-service-account-snippet)
- [WorkflowsClient](@ref WorkflowsClient-service-account-snippet)
+ [workflows::ExecutionsClient](@ref workflows::ExecutionsClient-service-account-snippet)
+ [workflows::WorkflowsClient](@ref workflows::WorkflowsClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -150,25 +150,25 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ExecutionsClient-endpoint-snippet Override ExecutionsClient Endpoint Configuration
+/*! @page workflows::ExecutionsClient-endpoint-snippet Override workflows::ExecutionsClient Endpoint Configuration
 
 @snippet google/cloud/workflows/samples/executions_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ExecutionsClient-service-account-snippet Override ExecutionsClient Authentication Defaults
+/*! @page workflows::ExecutionsClient-service-account-snippet Override workflows::ExecutionsClient Authentication Defaults
 
 @snippet google/cloud/workflows/samples/executions_client_samples.cc with-service-account
 
 */
 
-/*! @page WorkflowsClient-endpoint-snippet Override WorkflowsClient Endpoint Configuration
+/*! @page workflows::WorkflowsClient-endpoint-snippet Override workflows::WorkflowsClient Endpoint Configuration
 
 @snippet google/cloud/workflows/samples/workflows_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page WorkflowsClient-service-account-snippet Override WorkflowsClient Authentication Defaults
+/*! @page workflows::WorkflowsClient-service-account-snippet Override workflows::WorkflowsClient Authentication Defaults
 
 @snippet google/cloud/workflows/samples/workflows_client_samples.cc with-service-account
 

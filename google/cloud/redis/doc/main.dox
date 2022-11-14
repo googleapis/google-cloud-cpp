@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `CloudRedisClient`:
+For example, this will override the default endpoint for `redis::CloudRedisClient`:
 
 @snippet cloud_redis_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page CloudRedisClient-endpoint-snippet Override CloudRedisClient Endpoint Configuration
+/*! @page redis::CloudRedisClient-endpoint-snippet Override redis::CloudRedisClient Endpoint Configuration
 
 @snippet google/cloud/redis/samples/cloud_redis_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page CloudRedisClient-service-account-snippet Override CloudRedisClient Authentication Defaults
+/*! @page redis::CloudRedisClient-service-account-snippet Override redis::CloudRedisClient Authentication Defaults
 
 @snippet google/cloud/redis/samples/cloud_redis_client_samples.cc with-service-account
 

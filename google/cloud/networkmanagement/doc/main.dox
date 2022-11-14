@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ReachabilityServiceClient`:
+For example, this will override the default endpoint for `networkmanagement::ReachabilityServiceClient`:
 
 @snippet reachability_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ReachabilityServiceClient-endpoint-snippet Override ReachabilityServiceClient Endpoint Configuration
+/*! @page networkmanagement::ReachabilityServiceClient-endpoint-snippet Override networkmanagement::ReachabilityServiceClient Endpoint Configuration
 
 @snippet google/cloud/networkmanagement/samples/reachability_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ReachabilityServiceClient-service-account-snippet Override ReachabilityServiceClient Authentication Defaults
+/*! @page networkmanagement::ReachabilityServiceClient-service-account-snippet Override networkmanagement::ReachabilityServiceClient Authentication Defaults
 
 @snippet google/cloud/networkmanagement/samples/reachability_client_samples.cc with-service-account
 

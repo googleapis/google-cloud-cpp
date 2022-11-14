@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: SecretManagerServiceClient
+// main-dox-marker: secretmanager::SecretManagerServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

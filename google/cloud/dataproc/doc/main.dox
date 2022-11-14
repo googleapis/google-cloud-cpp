@@ -111,16 +111,16 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `AutoscalingPolicyServiceClient`:
+For example, this will override the default endpoint for `dataproc::AutoscalingPolicyServiceClient`:
 
 @snippet autoscaling_policy_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [AutoscalingPolicyServiceClient](@ref AutoscalingPolicyServiceClient-endpoint-snippet)
- [BatchControllerClient](@ref BatchControllerClient-endpoint-snippet)
- [ClusterControllerClient](@ref ClusterControllerClient-endpoint-snippet)
- [JobControllerClient](@ref JobControllerClient-endpoint-snippet)
- [WorkflowTemplateServiceClient](@ref WorkflowTemplateServiceClient-endpoint-snippet)
+ [dataproc::AutoscalingPolicyServiceClient](@ref dataproc::AutoscalingPolicyServiceClient-endpoint-snippet)
+ [dataproc::BatchControllerClient](@ref dataproc::BatchControllerClient-endpoint-snippet)
+ [dataproc::ClusterControllerClient](@ref dataproc::ClusterControllerClient-endpoint-snippet)
+ [dataproc::JobControllerClient](@ref dataproc::JobControllerClient-endpoint-snippet)
+ [dataproc::WorkflowTemplateServiceClient](@ref dataproc::WorkflowTemplateServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -135,11 +135,11 @@ to explicitly load a service account key file.
 @snippet autoscaling_policy_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [AutoscalingPolicyServiceClient](@ref AutoscalingPolicyServiceClient-service-account-snippet)
- [BatchControllerClient](@ref BatchControllerClient-service-account-snippet)
- [ClusterControllerClient](@ref ClusterControllerClient-service-account-snippet)
- [JobControllerClient](@ref JobControllerClient-service-account-snippet)
- [WorkflowTemplateServiceClient](@ref WorkflowTemplateServiceClient-service-account-snippet)
+ [dataproc::AutoscalingPolicyServiceClient](@ref dataproc::AutoscalingPolicyServiceClient-service-account-snippet)
+ [dataproc::BatchControllerClient](@ref dataproc::BatchControllerClient-service-account-snippet)
+ [dataproc::ClusterControllerClient](@ref dataproc::ClusterControllerClient-service-account-snippet)
+ [dataproc::JobControllerClient](@ref dataproc::JobControllerClient-service-account-snippet)
+ [dataproc::WorkflowTemplateServiceClient](@ref dataproc::WorkflowTemplateServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -170,61 +170,61 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page AutoscalingPolicyServiceClient-endpoint-snippet Override AutoscalingPolicyServiceClient Endpoint Configuration
+/*! @page dataproc::AutoscalingPolicyServiceClient-endpoint-snippet Override dataproc::AutoscalingPolicyServiceClient Endpoint Configuration
 
 @snippet google/cloud/dataproc/samples/autoscaling_policy_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page AutoscalingPolicyServiceClient-service-account-snippet Override AutoscalingPolicyServiceClient Authentication Defaults
+/*! @page dataproc::AutoscalingPolicyServiceClient-service-account-snippet Override dataproc::AutoscalingPolicyServiceClient Authentication Defaults
 
 @snippet google/cloud/dataproc/samples/autoscaling_policy_client_samples.cc with-service-account
 
 */
 
-/*! @page BatchControllerClient-endpoint-snippet Override BatchControllerClient Endpoint Configuration
+/*! @page dataproc::BatchControllerClient-endpoint-snippet Override dataproc::BatchControllerClient Endpoint Configuration
 
 @snippet google/cloud/dataproc/samples/batch_controller_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page BatchControllerClient-service-account-snippet Override BatchControllerClient Authentication Defaults
+/*! @page dataproc::BatchControllerClient-service-account-snippet Override dataproc::BatchControllerClient Authentication Defaults
 
 @snippet google/cloud/dataproc/samples/batch_controller_client_samples.cc with-service-account
 
 */
 
-/*! @page ClusterControllerClient-endpoint-snippet Override ClusterControllerClient Endpoint Configuration
+/*! @page dataproc::ClusterControllerClient-endpoint-snippet Override dataproc::ClusterControllerClient Endpoint Configuration
 
 @snippet google/cloud/dataproc/samples/cluster_controller_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ClusterControllerClient-service-account-snippet Override ClusterControllerClient Authentication Defaults
+/*! @page dataproc::ClusterControllerClient-service-account-snippet Override dataproc::ClusterControllerClient Authentication Defaults
 
 @snippet google/cloud/dataproc/samples/cluster_controller_client_samples.cc with-service-account
 
 */
 
-/*! @page JobControllerClient-endpoint-snippet Override JobControllerClient Endpoint Configuration
+/*! @page dataproc::JobControllerClient-endpoint-snippet Override dataproc::JobControllerClient Endpoint Configuration
 
 @snippet google/cloud/dataproc/samples/job_controller_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page JobControllerClient-service-account-snippet Override JobControllerClient Authentication Defaults
+/*! @page dataproc::JobControllerClient-service-account-snippet Override dataproc::JobControllerClient Authentication Defaults
 
 @snippet google/cloud/dataproc/samples/job_controller_client_samples.cc with-service-account
 
 */
 
-/*! @page WorkflowTemplateServiceClient-endpoint-snippet Override WorkflowTemplateServiceClient Endpoint Configuration
+/*! @page dataproc::WorkflowTemplateServiceClient-endpoint-snippet Override dataproc::WorkflowTemplateServiceClient Endpoint Configuration
 
 @snippet google/cloud/dataproc/samples/workflow_template_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page WorkflowTemplateServiceClient-service-account-snippet Override WorkflowTemplateServiceClient Authentication Defaults
+/*! @page dataproc::WorkflowTemplateServiceClient-service-account-snippet Override dataproc::WorkflowTemplateServiceClient Authentication Defaults
 
 @snippet google/cloud/dataproc/samples/workflow_template_client_samples.cc with-service-account
 

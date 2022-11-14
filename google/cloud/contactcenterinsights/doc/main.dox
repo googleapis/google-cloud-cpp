@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ContactCenterInsightsClient`:
+For example, this will override the default endpoint for `contactcenterinsights::ContactCenterInsightsClient`:
 
 @snippet contact_center_insights_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ContactCenterInsightsClient-endpoint-snippet Override ContactCenterInsightsClient Endpoint Configuration
+/*! @page contactcenterinsights::ContactCenterInsightsClient-endpoint-snippet Override contactcenterinsights::ContactCenterInsightsClient Endpoint Configuration
 
 @snippet google/cloud/contactcenterinsights/samples/contact_center_insights_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ContactCenterInsightsClient-service-account-snippet Override ContactCenterInsightsClient Authentication Defaults
+/*! @page contactcenterinsights::ContactCenterInsightsClient-service-account-snippet Override contactcenterinsights::ContactCenterInsightsClient Authentication Defaults
 
 @snippet google/cloud/contactcenterinsights/samples/contact_center_insights_client_samples.cc with-service-account
 

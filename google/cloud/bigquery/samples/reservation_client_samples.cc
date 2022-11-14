@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ReservationServiceClient
+// main-dox-marker: bigquery::ReservationServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

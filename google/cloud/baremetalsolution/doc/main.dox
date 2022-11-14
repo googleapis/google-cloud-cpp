@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `BareMetalSolutionClient`:
+For example, this will override the default endpoint for `baremetalsolution::BareMetalSolutionClient`:
 
 @snippet bare_metal_solution_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page BareMetalSolutionClient-endpoint-snippet Override BareMetalSolutionClient Endpoint Configuration
+/*! @page baremetalsolution::BareMetalSolutionClient-endpoint-snippet Override baremetalsolution::BareMetalSolutionClient Endpoint Configuration
 
 @snippet google/cloud/baremetalsolution/samples/bare_metal_solution_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page BareMetalSolutionClient-service-account-snippet Override BareMetalSolutionClient Authentication Defaults
+/*! @page baremetalsolution::BareMetalSolutionClient-service-account-snippet Override baremetalsolution::BareMetalSolutionClient Authentication Defaults
 
 @snippet google/cloud/baremetalsolution/samples/bare_metal_solution_client_samples.cc with-service-account
 

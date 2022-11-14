@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ApiGatewayServiceClient
+// main-dox-marker: apigateway::ApiGatewayServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

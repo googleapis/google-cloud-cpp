@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: OrgPolicyClient
+// main-dox-marker: orgpolicy::OrgPolicyClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

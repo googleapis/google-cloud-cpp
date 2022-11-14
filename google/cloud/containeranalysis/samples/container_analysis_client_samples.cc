@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ContainerAnalysisClient
+// main-dox-marker: containeranalysis::ContainerAnalysisClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

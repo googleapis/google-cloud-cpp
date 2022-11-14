@@ -96,13 +96,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `EnvironmentsClient`:
+For example, this will override the default endpoint for `composer::EnvironmentsClient`:
 
 @snippet environments_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [EnvironmentsClient](@ref EnvironmentsClient-endpoint-snippet)
- [ImageVersionsClient](@ref ImageVersionsClient-endpoint-snippet)
+ [composer::EnvironmentsClient](@ref composer::EnvironmentsClient-endpoint-snippet)
+ [composer::ImageVersionsClient](@ref composer::ImageVersionsClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -117,8 +117,8 @@ to explicitly load a service account key file.
 @snippet environments_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [EnvironmentsClient](@ref EnvironmentsClient-service-account-snippet)
- [ImageVersionsClient](@ref ImageVersionsClient-service-account-snippet)
+ [composer::EnvironmentsClient](@ref composer::EnvironmentsClient-service-account-snippet)
+ [composer::ImageVersionsClient](@ref composer::ImageVersionsClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -149,25 +149,25 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page EnvironmentsClient-endpoint-snippet Override EnvironmentsClient Endpoint Configuration
+/*! @page composer::EnvironmentsClient-endpoint-snippet Override composer::EnvironmentsClient Endpoint Configuration
 
 @snippet google/cloud/composer/samples/environments_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page EnvironmentsClient-service-account-snippet Override EnvironmentsClient Authentication Defaults
+/*! @page composer::EnvironmentsClient-service-account-snippet Override composer::EnvironmentsClient Authentication Defaults
 
 @snippet google/cloud/composer/samples/environments_client_samples.cc with-service-account
 
 */
 
-/*! @page ImageVersionsClient-endpoint-snippet Override ImageVersionsClient Endpoint Configuration
+/*! @page composer::ImageVersionsClient-endpoint-snippet Override composer::ImageVersionsClient Endpoint Configuration
 
 @snippet google/cloud/composer/samples/image_versions_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ImageVersionsClient-service-account-snippet Override ImageVersionsClient Authentication Defaults
+/*! @page composer::ImageVersionsClient-service-account-snippet Override composer::ImageVersionsClient Authentication Defaults
 
 @snippet google/cloud/composer/samples/image_versions_client_samples.cc with-service-account
 

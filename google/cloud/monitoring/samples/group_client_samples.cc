@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: GroupServiceClient
+// main-dox-marker: monitoring::GroupServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

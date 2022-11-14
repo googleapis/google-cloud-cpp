@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: VideoIntelligenceServiceClient
+// main-dox-marker: videointelligence::VideoIntelligenceServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: LivestreamServiceClient
+// main-dox-marker: video::LivestreamServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `CloudShellServiceClient`:
+For example, this will override the default endpoint for `shell::CloudShellServiceClient`:
 
 @snippet cloud_shell_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page CloudShellServiceClient-endpoint-snippet Override CloudShellServiceClient Endpoint Configuration
+/*! @page shell::CloudShellServiceClient-endpoint-snippet Override shell::CloudShellServiceClient Endpoint Configuration
 
 @snippet google/cloud/shell/samples/cloud_shell_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page CloudShellServiceClient-service-account-snippet Override CloudShellServiceClient Authentication Defaults
+/*! @page shell::CloudShellServiceClient-service-account-snippet Override shell::CloudShellServiceClient Authentication Defaults
 
 @snippet google/cloud/shell/samples/cloud_shell_client_samples.cc with-service-account
 

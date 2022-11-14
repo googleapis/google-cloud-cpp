@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: WebSecurityScannerClient
+// main-dox-marker: websecurityscanner::WebSecurityScannerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

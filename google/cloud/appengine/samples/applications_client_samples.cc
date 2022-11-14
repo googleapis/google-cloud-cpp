@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ApplicationsClient
+// main-dox-marker: appengine::ApplicationsClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

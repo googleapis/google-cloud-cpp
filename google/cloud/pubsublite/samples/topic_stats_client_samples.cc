@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: TopicStatsServiceClient
+// main-dox-marker: pubsublite::TopicStatsServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

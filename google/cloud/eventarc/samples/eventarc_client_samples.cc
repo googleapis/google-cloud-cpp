@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: EventarcClient
+// main-dox-marker: eventarc::EventarcClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

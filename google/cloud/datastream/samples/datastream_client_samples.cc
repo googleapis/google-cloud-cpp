@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: DatastreamClient
+// main-dox-marker: datastream::DatastreamClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

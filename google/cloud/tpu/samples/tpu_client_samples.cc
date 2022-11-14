@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: TpuClient
+// main-dox-marker: tpu::TpuClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

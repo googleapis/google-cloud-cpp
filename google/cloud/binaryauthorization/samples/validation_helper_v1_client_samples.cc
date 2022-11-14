@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ValidationHelperV1Client
+// main-dox-marker: binaryauthorization::ValidationHelperV1Client
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

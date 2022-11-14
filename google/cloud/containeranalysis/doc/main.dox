@@ -98,13 +98,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ContainerAnalysisClient`:
+For example, this will override the default endpoint for `containeranalysis::ContainerAnalysisClient`:
 
 @snippet container_analysis_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [ContainerAnalysisClient](@ref ContainerAnalysisClient-endpoint-snippet)
- [GrafeasClient](@ref GrafeasClient-endpoint-snippet)
+ [containeranalysis::ContainerAnalysisClient](@ref containeranalysis::ContainerAnalysisClient-endpoint-snippet)
+ [containeranalysis::GrafeasClient](@ref containeranalysis::GrafeasClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -119,8 +119,8 @@ to explicitly load a service account key file.
 @snippet container_analysis_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [ContainerAnalysisClient](@ref ContainerAnalysisClient-service-account-snippet)
- [GrafeasClient](@ref GrafeasClient-service-account-snippet)
+ [containeranalysis::ContainerAnalysisClient](@ref containeranalysis::ContainerAnalysisClient-service-account-snippet)
+ [containeranalysis::GrafeasClient](@ref containeranalysis::GrafeasClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -151,25 +151,25 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ContainerAnalysisClient-endpoint-snippet Override ContainerAnalysisClient Endpoint Configuration
+/*! @page containeranalysis::ContainerAnalysisClient-endpoint-snippet Override containeranalysis::ContainerAnalysisClient Endpoint Configuration
 
 @snippet google/cloud/containeranalysis/samples/container_analysis_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ContainerAnalysisClient-service-account-snippet Override ContainerAnalysisClient Authentication Defaults
+/*! @page containeranalysis::ContainerAnalysisClient-service-account-snippet Override containeranalysis::ContainerAnalysisClient Authentication Defaults
 
 @snippet google/cloud/containeranalysis/samples/container_analysis_client_samples.cc with-service-account
 
 */
 
-/*! @page GrafeasClient-endpoint-snippet Override GrafeasClient Endpoint Configuration
+/*! @page containeranalysis::GrafeasClient-endpoint-snippet Override containeranalysis::GrafeasClient Endpoint Configuration
 
 @snippet google/cloud/containeranalysis/samples/grafeas_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page GrafeasClient-service-account-snippet Override GrafeasClient Authentication Defaults
+/*! @page containeranalysis::GrafeasClient-service-account-snippet Override containeranalysis::GrafeasClient Authentication Defaults
 
 @snippet google/cloud/containeranalysis/samples/grafeas_client_samples.cc with-service-account
 

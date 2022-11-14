@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: TranscoderServiceClient
+// main-dox-marker: video::TranscoderServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: WebRiskServiceClient
+// main-dox-marker: webrisk::WebRiskServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

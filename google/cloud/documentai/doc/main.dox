@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `DocumentProcessorServiceClient`:
+For example, this will override the default endpoint for `documentai::DocumentProcessorServiceClient`:
 
 @snippet document_processor_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page DocumentProcessorServiceClient-endpoint-snippet Override DocumentProcessorServiceClient Endpoint Configuration
+/*! @page documentai::DocumentProcessorServiceClient-endpoint-snippet Override documentai::DocumentProcessorServiceClient Endpoint Configuration
 
 @snippet google/cloud/documentai/samples/document_processor_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page DocumentProcessorServiceClient-service-account-snippet Override DocumentProcessorServiceClient Authentication Defaults
+/*! @page documentai::DocumentProcessorServiceClient-service-account-snippet Override documentai::DocumentProcessorServiceClient Authentication Defaults
 
 @snippet google/cloud/documentai/samples/document_processor_client_samples.cc with-service-account
 

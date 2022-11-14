@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: FleetRoutingClient
+// main-dox-marker: optimization::FleetRoutingClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

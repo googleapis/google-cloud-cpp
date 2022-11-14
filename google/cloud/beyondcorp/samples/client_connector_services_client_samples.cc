@@ -27,7 +27,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ClientConnectorServicesServiceClient
+// main-dox-marker: beyondcorp::ClientConnectorServicesServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: TextToSpeechClient
+// main-dox-marker: texttospeech::TextToSpeechClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

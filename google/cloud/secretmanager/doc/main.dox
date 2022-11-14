@@ -95,7 +95,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `SecretManagerServiceClient`:
+For example, this will override the default endpoint for `secretmanager::SecretManagerServiceClient`:
 
 @snippet secret_manager_client_samples.cc set-client-endpoint
 
@@ -139,13 +139,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page SecretManagerServiceClient-endpoint-snippet Override SecretManagerServiceClient Endpoint Configuration
+/*! @page secretmanager::SecretManagerServiceClient-endpoint-snippet Override secretmanager::SecretManagerServiceClient Endpoint Configuration
 
 @snippet google/cloud/secretmanager/samples/secret_manager_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page SecretManagerServiceClient-service-account-snippet Override SecretManagerServiceClient Authentication Defaults
+/*! @page secretmanager::SecretManagerServiceClient-service-account-snippet Override secretmanager::SecretManagerServiceClient Authentication Defaults
 
 @snippet google/cloud/secretmanager/samples/secret_manager_client_samples.cc with-service-account
 

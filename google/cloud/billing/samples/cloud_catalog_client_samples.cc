@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: CloudCatalogClient
+// main-dox-marker: billing::CloudCatalogClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

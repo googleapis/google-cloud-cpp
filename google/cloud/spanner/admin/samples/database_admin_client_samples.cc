@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: DatabaseAdminClient
+// main-dox-marker: spanner_admin::DatabaseAdminClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

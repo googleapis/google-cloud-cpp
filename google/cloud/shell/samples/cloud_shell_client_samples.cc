@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: CloudShellServiceClient
+// main-dox-marker: shell::CloudShellServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

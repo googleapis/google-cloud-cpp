@@ -48,7 +48,7 @@ Status SampleGenerator::GenerateHeader() {
   HeaderSystemIncludes({"iostream", "fstream", "string", "vector"});
 
   HeaderPrint(R"""(
-// main-dox-marker: $client_class_name$
+// main-dox-marker: $product_namespace$::$client_class_name$
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

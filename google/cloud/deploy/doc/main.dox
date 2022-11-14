@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `CloudDeployClient`:
+For example, this will override the default endpoint for `deploy::CloudDeployClient`:
 
 @snippet cloud_deploy_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page CloudDeployClient-endpoint-snippet Override CloudDeployClient Endpoint Configuration
+/*! @page deploy::CloudDeployClient-endpoint-snippet Override deploy::CloudDeployClient Endpoint Configuration
 
 @snippet google/cloud/deploy/samples/cloud_deploy_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page CloudDeployClient-service-account-snippet Override CloudDeployClient Authentication Defaults
+/*! @page deploy::CloudDeployClient-service-account-snippet Override deploy::CloudDeployClient Authentication Defaults
 
 @snippet google/cloud/deploy/samples/cloud_deploy_client_samples.cc with-service-account
 

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: CertificateAuthorityServiceClient
+// main-dox-marker: privateca::CertificateAuthorityServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

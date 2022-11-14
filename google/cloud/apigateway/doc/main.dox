@@ -92,7 +92,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ApiGatewayServiceClient`:
+For example, this will override the default endpoint for `apigateway::ApiGatewayServiceClient`:
 
 @snippet api_gateway_client_samples.cc set-client-endpoint
 
@@ -137,13 +137,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ApiGatewayServiceClient-endpoint-snippet Override ApiGatewayServiceClient Endpoint Configuration
+/*! @page apigateway::ApiGatewayServiceClient-endpoint-snippet Override apigateway::ApiGatewayServiceClient Endpoint Configuration
 
 @snippet google/cloud/apigateway/samples/api_gateway_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ApiGatewayServiceClient-service-account-snippet Override ApiGatewayServiceClient Authentication Defaults
+/*! @page apigateway::ApiGatewayServiceClient-service-account-snippet Override apigateway::ApiGatewayServiceClient Authentication Defaults
 
 @snippet google/cloud/apigateway/samples/api_gateway_client_samples.cc with-service-account
 

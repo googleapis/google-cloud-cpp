@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: JobControllerClient
+// main-dox-marker: dataproc::JobControllerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

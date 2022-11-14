@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ClusterManagerClient
+// main-dox-marker: container::ClusterManagerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

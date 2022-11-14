@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: AccessContextManagerClient
+// main-dox-marker: accesscontextmanager::AccessContextManagerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

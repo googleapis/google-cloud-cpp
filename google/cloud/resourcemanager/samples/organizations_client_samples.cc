@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: OrganizationsClient
+// main-dox-marker: resourcemanager::OrganizationsClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

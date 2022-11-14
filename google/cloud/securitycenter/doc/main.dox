@@ -92,7 +92,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `SecurityCenterClient`:
+For example, this will override the default endpoint for `securitycenter::SecurityCenterClient`:
 
 @snippet security_center_client_samples.cc set-client-endpoint
 
@@ -137,13 +137,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page SecurityCenterClient-endpoint-snippet Override SecurityCenterClient Endpoint Configuration
+/*! @page securitycenter::SecurityCenterClient-endpoint-snippet Override securitycenter::SecurityCenterClient Endpoint Configuration
 
 @snippet google/cloud/securitycenter/samples/security_center_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page SecurityCenterClient-service-account-snippet Override SecurityCenterClient Authentication Defaults
+/*! @page securitycenter::SecurityCenterClient-service-account-snippet Override securitycenter::SecurityCenterClient Authentication Defaults
 
 @snippet google/cloud/securitycenter/samples/security_center_client_samples.cc with-service-account
 

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: KeyManagementServiceClient
+// main-dox-marker: kms::KeyManagementServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

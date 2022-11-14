@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `ClusterManagerClient`:
+For example, this will override the default endpoint for `container::ClusterManagerClient`:
 
 @snippet cluster_manager_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page ClusterManagerClient-endpoint-snippet Override ClusterManagerClient Endpoint Configuration
+/*! @page container::ClusterManagerClient-endpoint-snippet Override container::ClusterManagerClient Endpoint Configuration
 
 @snippet google/cloud/container/samples/cluster_manager_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ClusterManagerClient-service-account-snippet Override ClusterManagerClient Authentication Defaults
+/*! @page container::ClusterManagerClient-service-account-snippet Override container::ClusterManagerClient Authentication Defaults
 
 @snippet google/cloud/container/samples/cluster_manager_client_samples.cc with-service-account
 

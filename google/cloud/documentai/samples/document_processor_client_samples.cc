@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: DocumentProcessorServiceClient
+// main-dox-marker: documentai::DocumentProcessorServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: BigtableInstanceAdminClient
+// main-dox-marker: bigtable_admin::BigtableInstanceAdminClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

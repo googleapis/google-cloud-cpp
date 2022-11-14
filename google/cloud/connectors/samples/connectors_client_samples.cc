@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ConnectorsClient
+// main-dox-marker: connectors::ConnectorsClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

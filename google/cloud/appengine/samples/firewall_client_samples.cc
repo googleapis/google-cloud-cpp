@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: FirewallClient
+// main-dox-marker: appengine::FirewallClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

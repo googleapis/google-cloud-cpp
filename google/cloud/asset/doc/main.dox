@@ -93,7 +93,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `AssetServiceClient`:
+For example, this will override the default endpoint for `asset::AssetServiceClient`:
 
 @snippet asset_client_samples.cc set-client-endpoint
 
@@ -138,13 +138,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page AssetServiceClient-endpoint-snippet Override AssetServiceClient Endpoint Configuration
+/*! @page asset::AssetServiceClient-endpoint-snippet Override asset::AssetServiceClient Endpoint Configuration
 
 @snippet google/cloud/asset/samples/asset_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page AssetServiceClient-service-account-snippet Override AssetServiceClient Authentication Defaults
+/*! @page asset::AssetServiceClient-service-account-snippet Override asset::AssetServiceClient Authentication Defaults
 
 @snippet google/cloud/asset/samples/asset_client_samples.cc with-service-account
 

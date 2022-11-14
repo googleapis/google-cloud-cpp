@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: QuotaControllerClient
+// main-dox-marker: servicecontrol::QuotaControllerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

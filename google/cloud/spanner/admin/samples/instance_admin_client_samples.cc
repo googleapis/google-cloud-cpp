@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: InstanceAdminClient
+// main-dox-marker: spanner_admin::InstanceAdminClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

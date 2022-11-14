@@ -97,13 +97,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `Controller2Client`:
+For example, this will override the default endpoint for `debugger::Controller2Client`:
 
 @snippet controller2_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [Controller2Client](@ref Controller2Client-endpoint-snippet)
- [Debugger2Client](@ref Debugger2Client-endpoint-snippet)
+ [debugger::Controller2Client](@ref debugger::Controller2Client-endpoint-snippet)
+ [debugger::Debugger2Client](@ref debugger::Debugger2Client-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -118,8 +118,8 @@ to explicitly load a service account key file.
 @snippet controller2_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [Controller2Client](@ref Controller2Client-service-account-snippet)
- [Debugger2Client](@ref Debugger2Client-service-account-snippet)
+ [debugger::Controller2Client](@ref debugger::Controller2Client-service-account-snippet)
+ [debugger::Debugger2Client](@ref debugger::Debugger2Client-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -150,25 +150,25 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page Controller2Client-endpoint-snippet Override Controller2Client Endpoint Configuration
+/*! @page debugger::Controller2Client-endpoint-snippet Override debugger::Controller2Client Endpoint Configuration
 
 @snippet google/cloud/debugger/samples/controller2_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page Controller2Client-service-account-snippet Override Controller2Client Authentication Defaults
+/*! @page debugger::Controller2Client-service-account-snippet Override debugger::Controller2Client Authentication Defaults
 
 @snippet google/cloud/debugger/samples/controller2_client_samples.cc with-service-account
 
 */
 
-/*! @page Debugger2Client-endpoint-snippet Override Debugger2Client Endpoint Configuration
+/*! @page debugger::Debugger2Client-endpoint-snippet Override debugger::Debugger2Client Endpoint Configuration
 
 @snippet google/cloud/debugger/samples/debugger2_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page Debugger2Client-service-account-snippet Override Debugger2Client Authentication Defaults
+/*! @page debugger::Debugger2Client-service-account-snippet Override debugger::Debugger2Client Authentication Defaults
 
 @snippet google/cloud/debugger/samples/debugger2_client_samples.cc with-service-account
 

@@ -148,19 +148,19 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `AnalyticsHubServiceClient`:
+For example, this will override the default endpoint for `bigquery::AnalyticsHubServiceClient`:
 
 @snippet analytics_hub_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [AnalyticsHubServiceClient](@ref AnalyticsHubServiceClient-endpoint-snippet)
- [BigQueryReadClient](@ref BigQueryReadClient-endpoint-snippet)
- [BigQueryWriteClient](@ref BigQueryWriteClient-endpoint-snippet)
- [ConnectionServiceClient](@ref ConnectionServiceClient-endpoint-snippet)
- [DataTransferServiceClient](@ref DataTransferServiceClient-endpoint-snippet)
- [MigrationServiceClient](@ref MigrationServiceClient-endpoint-snippet)
- [ModelServiceClient](@ref ModelServiceClient-endpoint-snippet)
- [ReservationServiceClient](@ref ReservationServiceClient-endpoint-snippet)
+ [bigquery::AnalyticsHubServiceClient](@ref bigquery::AnalyticsHubServiceClient-endpoint-snippet)
+ [bigquery::BigQueryReadClient](@ref bigquery::BigQueryReadClient-endpoint-snippet)
+ [bigquery::BigQueryWriteClient](@ref bigquery::BigQueryWriteClient-endpoint-snippet)
+ [bigquery::ConnectionServiceClient](@ref bigquery::ConnectionServiceClient-endpoint-snippet)
+ [bigquery::DataTransferServiceClient](@ref bigquery::DataTransferServiceClient-endpoint-snippet)
+ [bigquery::MigrationServiceClient](@ref bigquery::MigrationServiceClient-endpoint-snippet)
+ [bigquery::ModelServiceClient](@ref bigquery::ModelServiceClient-endpoint-snippet)
+ [bigquery::ReservationServiceClient](@ref bigquery::ReservationServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -175,14 +175,14 @@ to explicitly load a service account key file.
 @snippet analytics_hub_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [AnalyticsHubServiceClient](@ref AnalyticsHubServiceClient-service-account-snippet)
- [BigQueryReadClient](@ref BigQueryReadClient-service-account-snippet)
- [BigQueryWriteClient](@ref BigQueryWriteClient-service-account-snippet)
- [ConnectionServiceClient](@ref ConnectionServiceClient-service-account-snippet)
- [DataTransferServiceClient](@ref DataTransferServiceClient-service-account-snippet)
- [MigrationServiceClient](@ref MigrationServiceClient-service-account-snippet)
- [ModelServiceClient](@ref ModelServiceClient-service-account-snippet)
- [ReservationServiceClient](@ref ReservationServiceClient-service-account-snippet)
+ [bigquery::AnalyticsHubServiceClient](@ref bigquery::AnalyticsHubServiceClient-service-account-snippet)
+ [bigquery::BigQueryReadClient](@ref bigquery::BigQueryReadClient-service-account-snippet)
+ [bigquery::BigQueryWriteClient](@ref bigquery::BigQueryWriteClient-service-account-snippet)
+ [bigquery::ConnectionServiceClient](@ref bigquery::ConnectionServiceClient-service-account-snippet)
+ [bigquery::DataTransferServiceClient](@ref bigquery::DataTransferServiceClient-service-account-snippet)
+ [bigquery::MigrationServiceClient](@ref bigquery::MigrationServiceClient-service-account-snippet)
+ [bigquery::ModelServiceClient](@ref bigquery::ModelServiceClient-service-account-snippet)
+ [bigquery::ReservationServiceClient](@ref bigquery::ReservationServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -213,97 +213,97 @@ guide for more details.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page AnalyticsHubServiceClient-endpoint-snippet Override AnalyticsHubServiceClient Endpoint Configuration
+/*! @page bigquery::AnalyticsHubServiceClient-endpoint-snippet Override bigquery::AnalyticsHubServiceClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/samples/analytics_hub_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page AnalyticsHubServiceClient-service-account-snippet Override AnalyticsHubServiceClient Authentication Defaults
+/*! @page bigquery::AnalyticsHubServiceClient-service-account-snippet Override bigquery::AnalyticsHubServiceClient Authentication Defaults
 
 @snippet google/cloud/bigquery/samples/analytics_hub_client_samples.cc with-service-account
 
 */
 
-/*! @page BigQueryReadClient-endpoint-snippet Override BigQueryReadClient Endpoint Configuration
+/*! @page bigquery::BigQueryReadClient-endpoint-snippet Override bigquery::BigQueryReadClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/samples/bigquery_read_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page BigQueryReadClient-service-account-snippet Override BigQueryReadClient Authentication Defaults
+/*! @page bigquery::BigQueryReadClient-service-account-snippet Override bigquery::BigQueryReadClient Authentication Defaults
 
 @snippet google/cloud/bigquery/samples/bigquery_read_client_samples.cc with-service-account
 
 */
 
-/*! @page BigQueryWriteClient-endpoint-snippet Override BigQueryWriteClient Endpoint Configuration
+/*! @page bigquery::BigQueryWriteClient-endpoint-snippet Override bigquery::BigQueryWriteClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/samples/bigquery_write_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page BigQueryWriteClient-service-account-snippet Override BigQueryWriteClient Authentication Defaults
+/*! @page bigquery::BigQueryWriteClient-service-account-snippet Override bigquery::BigQueryWriteClient Authentication Defaults
 
 @snippet google/cloud/bigquery/samples/bigquery_write_client_samples.cc with-service-account
 
 */
 
-/*! @page ConnectionServiceClient-endpoint-snippet Override ConnectionServiceClient Endpoint Configuration
+/*! @page bigquery::ConnectionServiceClient-endpoint-snippet Override bigquery::ConnectionServiceClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/samples/connection_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ConnectionServiceClient-service-account-snippet Override ConnectionServiceClient Authentication Defaults
+/*! @page bigquery::ConnectionServiceClient-service-account-snippet Override bigquery::ConnectionServiceClient Authentication Defaults
 
 @snippet google/cloud/bigquery/samples/connection_client_samples.cc with-service-account
 
 */
 
-/*! @page DataTransferServiceClient-endpoint-snippet Override DataTransferServiceClient Endpoint Configuration
+/*! @page bigquery::DataTransferServiceClient-endpoint-snippet Override bigquery::DataTransferServiceClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/samples/data_transfer_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page DataTransferServiceClient-service-account-snippet Override DataTransferServiceClient Authentication Defaults
+/*! @page bigquery::DataTransferServiceClient-service-account-snippet Override bigquery::DataTransferServiceClient Authentication Defaults
 
 @snippet google/cloud/bigquery/samples/data_transfer_client_samples.cc with-service-account
 
 */
 
-/*! @page MigrationServiceClient-endpoint-snippet Override MigrationServiceClient Endpoint Configuration
+/*! @page bigquery::MigrationServiceClient-endpoint-snippet Override bigquery::MigrationServiceClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/samples/migration_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page MigrationServiceClient-service-account-snippet Override MigrationServiceClient Authentication Defaults
+/*! @page bigquery::MigrationServiceClient-service-account-snippet Override bigquery::MigrationServiceClient Authentication Defaults
 
 @snippet google/cloud/bigquery/samples/migration_client_samples.cc with-service-account
 
 */
 
-/*! @page ModelServiceClient-endpoint-snippet Override ModelServiceClient Endpoint Configuration
+/*! @page bigquery::ModelServiceClient-endpoint-snippet Override bigquery::ModelServiceClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/samples/model_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ModelServiceClient-service-account-snippet Override ModelServiceClient Authentication Defaults
+/*! @page bigquery::ModelServiceClient-service-account-snippet Override bigquery::ModelServiceClient Authentication Defaults
 
 @snippet google/cloud/bigquery/samples/model_client_samples.cc with-service-account
 
 */
 
-/*! @page ReservationServiceClient-endpoint-snippet Override ReservationServiceClient Endpoint Configuration
+/*! @page bigquery::ReservationServiceClient-endpoint-snippet Override bigquery::ReservationServiceClient Endpoint Configuration
 
 @snippet google/cloud/bigquery/samples/reservation_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page ReservationServiceClient-service-account-snippet Override ReservationServiceClient Authentication Defaults
+/*! @page bigquery::ReservationServiceClient-service-account-snippet Override bigquery::ReservationServiceClient Authentication Defaults
 
 @snippet google/cloud/bigquery/samples/reservation_client_samples.cc with-service-account
 

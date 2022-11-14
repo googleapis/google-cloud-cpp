@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: CloudFilestoreManagerClient
+// main-dox-marker: filestore::CloudFilestoreManagerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

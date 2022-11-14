@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: TraceServiceClient
+// main-dox-marker: trace::TraceServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

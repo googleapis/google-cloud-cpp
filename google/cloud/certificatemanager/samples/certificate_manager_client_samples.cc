@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: CertificateManagerClient
+// main-dox-marker: certificatemanager::CertificateManagerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

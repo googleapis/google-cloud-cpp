@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: SystemPolicyV1Client
+// main-dox-marker: binaryauthorization::SystemPolicyV1Client
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: DlpServiceClient
+// main-dox-marker: dlp::DlpServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

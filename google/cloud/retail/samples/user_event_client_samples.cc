@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: UserEventServiceClient
+// main-dox-marker: retail::UserEventServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

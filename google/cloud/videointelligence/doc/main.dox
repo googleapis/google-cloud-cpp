@@ -94,7 +94,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `VideoIntelligenceServiceClient`:
+For example, this will override the default endpoint for `videointelligence::VideoIntelligenceServiceClient`:
 
 @snippet video_intelligence_client_samples.cc set-client-endpoint
 
@@ -139,13 +139,13 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page VideoIntelligenceServiceClient-endpoint-snippet Override VideoIntelligenceServiceClient Endpoint Configuration
+/*! @page videointelligence::VideoIntelligenceServiceClient-endpoint-snippet Override videointelligence::VideoIntelligenceServiceClient Endpoint Configuration
 
 @snippet google/cloud/videointelligence/samples/video_intelligence_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page VideoIntelligenceServiceClient-service-account-snippet Override VideoIntelligenceServiceClient Authentication Defaults
+/*! @page videointelligence::VideoIntelligenceServiceClient-service-account-snippet Override videointelligence::VideoIntelligenceServiceClient Authentication Defaults
 
 @snippet google/cloud/videointelligence/samples/video_intelligence_client_samples.cc with-service-account
 

@@ -97,13 +97,13 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `LookupServiceClient`:
+For example, this will override the default endpoint for `servicedirectory::LookupServiceClient`:
 
 @snippet lookup_client_samples.cc set-client-endpoint
 
 Follow these links to find examples for other \c *Client classes:
- [LookupServiceClient](@ref LookupServiceClient-endpoint-snippet)
- [RegistrationServiceClient](@ref RegistrationServiceClient-endpoint-snippet)
+ [servicedirectory::LookupServiceClient](@ref servicedirectory::LookupServiceClient-endpoint-snippet)
+ [servicedirectory::RegistrationServiceClient](@ref servicedirectory::RegistrationServiceClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -118,8 +118,8 @@ to explicitly load a service account key file.
 @snippet lookup_client_samples.cc with-service-account
 
 Follow these links to find examples for other \c *Client classes:
- [LookupServiceClient](@ref LookupServiceClient-service-account-snippet)
- [RegistrationServiceClient](@ref RegistrationServiceClient-service-account-snippet)
+ [servicedirectory::LookupServiceClient](@ref servicedirectory::LookupServiceClient-service-account-snippet)
+ [servicedirectory::RegistrationServiceClient](@ref servicedirectory::RegistrationServiceClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -150,25 +150,25 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page LookupServiceClient-endpoint-snippet Override LookupServiceClient Endpoint Configuration
+/*! @page servicedirectory::LookupServiceClient-endpoint-snippet Override servicedirectory::LookupServiceClient Endpoint Configuration
 
 @snippet google/cloud/servicedirectory/samples/lookup_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page LookupServiceClient-service-account-snippet Override LookupServiceClient Authentication Defaults
+/*! @page servicedirectory::LookupServiceClient-service-account-snippet Override servicedirectory::LookupServiceClient Authentication Defaults
 
 @snippet google/cloud/servicedirectory/samples/lookup_client_samples.cc with-service-account
 
 */
 
-/*! @page RegistrationServiceClient-endpoint-snippet Override RegistrationServiceClient Endpoint Configuration
+/*! @page servicedirectory::RegistrationServiceClient-endpoint-snippet Override servicedirectory::RegistrationServiceClient Endpoint Configuration
 
 @snippet google/cloud/servicedirectory/samples/registration_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page RegistrationServiceClient-service-account-snippet Override RegistrationServiceClient Authentication Defaults
+/*! @page servicedirectory::RegistrationServiceClient-service-account-snippet Override servicedirectory::RegistrationServiceClient Authentication Defaults
 
 @snippet google/cloud/servicedirectory/samples/registration_client_samples.cc with-service-account
 

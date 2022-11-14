@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: AuthorizedCertificatesClient
+// main-dox-marker: appengine::AuthorizedCertificatesClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

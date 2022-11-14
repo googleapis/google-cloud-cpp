@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: CompletionClient
+// main-dox-marker: talent::CompletionClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

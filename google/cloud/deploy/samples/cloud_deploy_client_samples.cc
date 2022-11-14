@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: CloudDeployClient
+// main-dox-marker: deploy::CloudDeployClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

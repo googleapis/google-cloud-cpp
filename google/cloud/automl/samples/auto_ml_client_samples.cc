@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: AutoMlClient
+// main-dox-marker: automl::AutoMlClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ManagedNotebookServiceClient
+// main-dox-marker: notebooks::ManagedNotebookServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
