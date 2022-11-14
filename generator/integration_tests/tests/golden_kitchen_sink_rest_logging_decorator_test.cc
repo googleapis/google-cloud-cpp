@@ -31,222 +31,243 @@ using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-class LoggingDecoratorRestTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    mock_ = std::make_shared<MockGoldenKitchenSinkRestStub>();
-  }
+Status TransientError() {
+  return Status(StatusCode::kUnavailable, "try-again");
+}
 
-  static Status TransientError() {
-    return Status(StatusCode::kUnavailable, "try-again");
-  }
-
-  std::shared_ptr<MockGoldenKitchenSinkRestStub> mock_;
-  testing_util::ScopedLog log_;
-};
-
-TEST_F(LoggingDecoratorRestTest, GenerateAccessToken) {
+TEST(LoggingDecoratorRestTest, GenerateAccessToken) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   ::google::test::admin::database::v1::GenerateAccessTokenResponse response;
-  EXPECT_CALL(*mock_, GenerateAccessToken).WillOnce(Return(response));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+  EXPECT_CALL(*mock, GenerateAccessToken).WillOnce(Return(response));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.GenerateAccessToken(
       context, google::test::admin::database::v1::GenerateAccessTokenRequest());
   EXPECT_STATUS_OK(status);
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateAccessToken")));
 }
 
-TEST_F(LoggingDecoratorRestTest, GenerateAccessTokenError) {
-  EXPECT_CALL(*mock_, GenerateAccessToken).WillOnce(Return(TransientError()));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+TEST(LoggingDecoratorRestTest, GenerateAccessTokenError) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, GenerateAccessToken).WillOnce(Return(TransientError()));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.GenerateAccessToken(
       context, google::test::admin::database::v1::GenerateAccessTokenRequest());
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateAccessToken")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorRestTest, GenerateIdToken) {
+TEST(LoggingDecoratorRestTest, GenerateIdToken) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   ::google::test::admin::database::v1::GenerateIdTokenResponse response;
-  EXPECT_CALL(*mock_, GenerateIdToken).WillOnce(Return(response));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+  EXPECT_CALL(*mock, GenerateIdToken).WillOnce(Return(response));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.GenerateIdToken(
       context, google::test::admin::database::v1::GenerateIdTokenRequest());
   EXPECT_STATUS_OK(status);
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateIdToken")));
 }
 
-TEST_F(LoggingDecoratorRestTest, GenerateIdTokenError) {
-  EXPECT_CALL(*mock_, GenerateIdToken).WillOnce(Return(TransientError()));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+TEST(LoggingDecoratorRestTest, GenerateIdTokenError) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, GenerateIdToken).WillOnce(Return(TransientError()));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.GenerateIdToken(
       context, google::test::admin::database::v1::GenerateIdTokenRequest());
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("GenerateIdToken")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorRestTest, WriteLogEntries) {
+TEST(LoggingDecoratorRestTest, WriteLogEntries) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   ::google::test::admin::database::v1::WriteLogEntriesResponse response;
-  EXPECT_CALL(*mock_, WriteLogEntries).WillOnce(Return(response));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+  EXPECT_CALL(*mock, WriteLogEntries).WillOnce(Return(response));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.WriteLogEntries(
       context, google::test::admin::database::v1::WriteLogEntriesRequest());
   EXPECT_STATUS_OK(status);
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("WriteLogEntries")));
 }
 
-TEST_F(LoggingDecoratorRestTest, WriteLogEntriesError) {
-  EXPECT_CALL(*mock_, WriteLogEntries).WillOnce(Return(TransientError()));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+TEST(LoggingDecoratorRestTest, WriteLogEntriesError) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, WriteLogEntries).WillOnce(Return(TransientError()));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.WriteLogEntries(
       context, google::test::admin::database::v1::WriteLogEntriesRequest());
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("WriteLogEntries")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorRestTest, ListLogs) {
+TEST(LoggingDecoratorRestTest, ListLogs) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   ::google::test::admin::database::v1::ListLogsResponse response;
-  EXPECT_CALL(*mock_, ListLogs).WillOnce(Return(response));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+  EXPECT_CALL(*mock, ListLogs).WillOnce(Return(response));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.ListLogs(
       context, google::test::admin::database::v1::ListLogsRequest());
   EXPECT_STATUS_OK(status);
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogs")));
 }
 
-TEST_F(LoggingDecoratorRestTest, ListLogsError) {
-  EXPECT_CALL(*mock_, ListLogs).WillOnce(Return(TransientError()));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+TEST(LoggingDecoratorRestTest, ListLogsError) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, ListLogs).WillOnce(Return(TransientError()));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.ListLogs(
       context, google::test::admin::database::v1::ListLogsRequest());
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListLogs")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorRestTest, ListServiceAccountKeys) {
+TEST(LoggingDecoratorRestTest, ListServiceAccountKeys) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   ::google::test::admin::database::v1::ListServiceAccountKeysResponse response;
-  EXPECT_CALL(*mock_, ListServiceAccountKeys).WillOnce(Return(response));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+  EXPECT_CALL(*mock, ListServiceAccountKeys).WillOnce(Return(response));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.ListServiceAccountKeys(
       context,
       google::test::admin::database::v1::ListServiceAccountKeysRequest());
   EXPECT_STATUS_OK(status);
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListServiceAccountKeys")));
 }
 
-TEST_F(LoggingDecoratorRestTest, ListServiceAccountKeysError) {
-  EXPECT_CALL(*mock_, ListServiceAccountKeys)
-      .WillOnce(Return(TransientError()));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+TEST(LoggingDecoratorRestTest, ListServiceAccountKeysError) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, ListServiceAccountKeys).WillOnce(Return(TransientError()));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.ListServiceAccountKeys(
       context,
       google::test::admin::database::v1::ListServiceAccountKeysRequest());
   EXPECT_EQ(TransientError(), status.status());
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListServiceAccountKeys")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorRestTest, DoNothing) {
-  EXPECT_CALL(*mock_, DoNothing).WillOnce(Return(Status{}));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+TEST(LoggingDecoratorRestTest, DoNothing) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, DoNothing).WillOnce(Return(Status{}));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.DoNothing(context, google::protobuf::Empty());
   EXPECT_STATUS_OK(status);
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("DoNothing")));
 }
 
-TEST_F(LoggingDecoratorRestTest, DoNothingError) {
-  EXPECT_CALL(*mock_, DoNothing).WillOnce(Return(TransientError()));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+TEST(LoggingDecoratorRestTest, DoNothingError) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, DoNothing).WillOnce(Return(TransientError()));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.DoNothing(context, google::protobuf::Empty());
   EXPECT_EQ(TransientError(), status);
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("DoNothing")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorRestTest, ExplicitRouting1) {
-  EXPECT_CALL(*mock_, ExplicitRouting1).WillOnce(Return(Status{}));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+TEST(LoggingDecoratorRestTest, ExplicitRouting1) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, ExplicitRouting1).WillOnce(Return(Status{}));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.ExplicitRouting1(
       context, google::test::admin::database::v1::ExplicitRoutingRequest());
   EXPECT_STATUS_OK(status);
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ExplicitRouting1")));
 }
 
-TEST_F(LoggingDecoratorRestTest, ExplicitRouting1Error) {
-  EXPECT_CALL(*mock_, ExplicitRouting1).WillOnce(Return(TransientError()));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+TEST(LoggingDecoratorRestTest, ExplicitRouting1Error) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, ExplicitRouting1).WillOnce(Return(TransientError()));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.ExplicitRouting1(
       context, google::test::admin::database::v1::ExplicitRoutingRequest());
   EXPECT_EQ(TransientError(), status);
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ExplicitRouting1")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingDecoratorRestTest, ExplicitRouting2) {
-  EXPECT_CALL(*mock_, ExplicitRouting2).WillOnce(Return(Status{}));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+TEST(LoggingDecoratorRestTest, ExplicitRouting2) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, ExplicitRouting2).WillOnce(Return(Status{}));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.ExplicitRouting2(
       context, google::test::admin::database::v1::ExplicitRoutingRequest());
   EXPECT_STATUS_OK(status);
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ExplicitRouting2")));
 }
 
-TEST_F(LoggingDecoratorRestTest, ExplicitRouting2Error) {
-  EXPECT_CALL(*mock_, ExplicitRouting2).WillOnce(Return(TransientError()));
-  GoldenKitchenSinkRestLogging stub(mock_, TracingOptions{}, {});
+TEST(LoggingDecoratorRestTest, ExplicitRouting2Error) {
+  testing_util::ScopedLog log;
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, ExplicitRouting2).WillOnce(Return(TransientError()));
+  GoldenKitchenSinkRestLogging stub(mock, TracingOptions{}, {});
   rest_internal::RestContext context;
   auto status = stub.ExplicitRouting2(
       context, google::test::admin::database::v1::ExplicitRoutingRequest());
   EXPECT_EQ(TransientError(), status);
 
-  auto const log_lines = log_.ExtractLines();
+  auto const log_lines = log.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("ExplicitRouting2")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }

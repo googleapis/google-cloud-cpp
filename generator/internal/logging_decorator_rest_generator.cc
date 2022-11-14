@@ -50,7 +50,8 @@ Status LoggingDecoratorRestGenerator::GenerateHeader() {
       {vars("stub_rest_header_path"), "google/cloud/internal/rest_context.h",
        "google/cloud/tracing_options.h", "google/cloud/version.h"});
   HeaderSystemIncludes(
-      {vars("proto_header_path"), HasLongrunningMethod() ? "google/longrunning/operations.pb.h" : "",
+      {vars("proto_header_path"),
+       HasLongrunningMethod() ? "google/longrunning/operations.pb.h" : "",
        "memory", "set", "string"});
 
   auto result = HeaderOpenNamespaces(NamespaceType::kInternal);
