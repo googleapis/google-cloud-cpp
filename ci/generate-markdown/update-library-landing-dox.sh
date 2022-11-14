@@ -38,7 +38,8 @@ inject_end="<!-- inject-endpoint-env-vars-end -->"
 env_vars=("")
 while IFS= read -r -d $'\0' option_defaults_cc; do
   service="$(basename "${option_defaults_cc}" _option_defaults.cc)"
-  connection_h="${LIB}/${service}_connection.h"
+  service_dir="$(dirname "$(dirname "${option_defaults_cc}")")"
+  connection_h="${service_dir}/${service}_connection.h"
   # Should we generate documentation for GOOGLE_CLOUD_CPP_.*_AUTHORITY too?
   variable_re='GOOGLE_CLOUD_CPP_.*_ENDPOINT'
   variable=$(grep -om1 "${variable_re}" "${option_defaults_cc}")
@@ -53,7 +54,7 @@ while IFS= read -r -d $'\0' option_defaults_cc; do
   env_vars+=("  \`EndpointOption\` (which defaults to ${endpoint})")
   env_vars+=("  used by \`${make_connection}()\`.")
   env_vars+=("")
-done < <(git ls-files -z -- "${LIB}/internal/*_option_defaults.cc")
+done < <(git ls-files -z -- "${LIB}/*_option_defaults.cc")
 
 sed -i -f - "${MAIN_DOX}" <<EOT
 /${inject_start}/,/${inject_end}/c \\
@@ -62,7 +63,7 @@ $(printf '%s\\\n' "${env_vars[@]}")
 ${inject_end}
 EOT
 
-IFS= mapfile -d $'\0' -t samples_cc < <(git ls-files -z -- "${LIB}/samples/*_client_samples.cc")
+IFS= mapfile -d $'\0' -t samples_cc < <(git ls-files -z -- "${LIB}/*samples/*_client_samples.cc")
 
 (
   sed '/<!-- inject-endpoint-snippet-start -->/q' "${MAIN_DOX}"
