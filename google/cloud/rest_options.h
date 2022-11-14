@@ -35,7 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * restrictions must be used to identify the quota project. Otherwise, this
  * parameter is ignored.
  */
-struct QuotaUser {
+struct QuotaUserOption {
   using Type = std::string;
 };
 
@@ -55,13 +55,14 @@ struct UserIpOption {
  * system param only applies to REST APIs for which client-side timeout is not
  * applicable.
  */
-struct ServerTimeout {
+struct ServerTimeoutOption {
   using Type = float;
 };
 
 /// The complete list of options accepted by `CurlRestClient`
 using RestOptionList =
-    ::google::cloud::OptionList<QuotaUser, ServerTimeout, UserIpOption>;
+    ::google::cloud::OptionList<QuotaUserOption, ServerTimeoutOption,
+                                UserIpOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
