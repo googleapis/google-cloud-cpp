@@ -34,7 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
  *
- * @ingroup google-cloud-bigtable-admin-options
+ * @ingroup google-cloud-bigtable-options
  */
 struct BigtableInstanceAdminRetryPolicyOption {
   using Type = std::shared_ptr<BigtableInstanceAdminRetryPolicy>;
@@ -43,7 +43,7 @@ struct BigtableInstanceAdminRetryPolicyOption {
 /**
  * Use with `google::cloud::Options` to configure the backoff policy.
  *
- * @ingroup google-cloud-bigtable-admin-options
+ * @ingroup google-cloud-bigtable-options
  */
 struct BigtableInstanceAdminBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
@@ -52,7 +52,7 @@ struct BigtableInstanceAdminBackoffPolicyOption {
 /**
  * Use with `google::cloud::Options` to configure which operations are retried.
  *
- * @ingroup google-cloud-bigtable-admin-options
+ * @ingroup google-cloud-bigtable-options
  */
 struct BigtableInstanceAdminConnectionIdempotencyPolicyOption {
   using Type =
@@ -63,7 +63,7 @@ struct BigtableInstanceAdminConnectionIdempotencyPolicyOption {
  * Use with `google::cloud::Options` to configure the long-running operations
  * polling policy.
  *
- * @ingroup google-cloud-bigtable-admin-options
+ * @ingroup google-cloud-bigtable-options
  */
 struct BigtableInstanceAdminPollingPolicyOption {
   using Type = std::shared_ptr<PollingPolicy>;
@@ -72,7 +72,7 @@ struct BigtableInstanceAdminPollingPolicyOption {
 /**
  * The options applicable to BigtableInstanceAdmin.
  *
- * @ingroup google-cloud-bigtable-admin-options
+ * @ingroup google-cloud-bigtable-options
  */
 using BigtableInstanceAdminPolicyOptionList =
     OptionList<BigtableInstanceAdminRetryPolicyOption,

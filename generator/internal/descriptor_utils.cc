@@ -35,6 +35,7 @@
 #include "generator/internal/retry_traits_generator.h"
 #include "generator/internal/round_robin_decorator_generator.h"
 #include "generator/internal/sample_generator.h"
+#include "generator/internal/scaffold_generator.h"
 #include "generator/internal/stub_factory_generator.h"
 #include "generator/internal/stub_generator.h"
 #include "generator/internal/stub_rest_generator.h"
@@ -848,7 +849,7 @@ VarsDictionary CreateServiceVars(
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
   VarsDictionary vars(initial_values.begin(), initial_values.end());
   vars["product_options_page"] = absl::StrCat(
-      absl::StrReplaceAll(vars["product_path"], {{"/", "-"}}), "options");
+      "google-cloud-", LibraryName(vars["product_path"]), "-options");
   vars["additional_pb_header_paths"] = FormatAdditionalPbHeaderPaths(vars);
   vars["class_comment_block"] =
       FormatClassCommentsFromServiceComments(descriptor);

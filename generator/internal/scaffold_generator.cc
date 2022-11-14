@@ -35,18 +35,17 @@ namespace generator_internal {
 
 auto constexpr kApiIndexFilename = "api-index-v1.json";
 
-std::string LibraryName(
-    google::cloud::cpp::generator::ServiceConfiguration const& service) {
-  std::vector<std::string> v = absl::StrSplit(service.product_path(), '/');
-  if (v.size() < 3) return {};
-  if (v[0] != "google" && v[1] != "cloud") return {};
-  return v[2];
+std::string LibraryName(std::string const& product_path) {
+  std::vector<std::string> v = absl::StrSplit(product_path, '/');
+  if (v.size() > 2 && v[0] == "google" && v[1] == "cloud") return v[2];
+  // This branch is only reached in our golden files.
+  return "golden";
 }
 
 std::string SiteRoot(
     google::cloud::cpp::generator::ServiceConfiguration const& service) {
   // TODO(#7605) - get a configurable source for this
-  return LibraryName(service);
+  return LibraryName(service.product_path());
 }
 
 std::map<std::string, std::string> ScaffoldVars(
@@ -80,11 +79,11 @@ std::map<std::string, std::string> ScaffoldVars(
     vars.emplace("description", api.value("description", ""));
     vars.emplace("directory", api.value("directory", ""));
   }
-  auto const library = LibraryName(service);
+  auto const library = LibraryName(service.product_path());
   vars["copyright_year"] = service.initial_copyright_year();
   vars["library"] = library;
-  vars["product_options_page"] = absl::StrCat(
-      absl::StrReplaceAll(service.product_path(), {{"/", "-"}}), "options");
+  vars["product_options_page"] =
+      absl::StrCat("google-cloud-", library, "-options");
   vars["site_root"] = SiteRoot(service);
   vars["library_prefix"] = experimental ? "experimental-" : "";
   vars["doxygen_version_suffix"] = experimental ? " (Experimental)" : "";
