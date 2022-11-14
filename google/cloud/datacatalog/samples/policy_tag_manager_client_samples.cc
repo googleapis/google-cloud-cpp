@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: PolicyTagManagerClient
+// main-dox-marker: datacatalog::PolicyTagManagerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: TransitionRouteGroupsClient
+// main-dox-marker: dialogflow_cx::TransitionRouteGroupsClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

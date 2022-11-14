@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ManagedIdentitiesServiceClient
+// main-dox-marker: managedidentities::ManagedIdentitiesServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

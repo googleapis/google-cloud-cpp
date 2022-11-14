@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ReachabilityServiceClient
+// main-dox-marker: networkmanagement::ReachabilityServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ArtifactRegistryClient
+// main-dox-marker: artifactregistry::ArtifactRegistryClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

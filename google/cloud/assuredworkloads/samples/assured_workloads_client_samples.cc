@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: AssuredWorkloadsServiceClient
+// main-dox-marker: assuredworkloads::AssuredWorkloadsServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

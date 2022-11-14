@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: CompletionServiceClient
+// main-dox-marker: retail::CompletionServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

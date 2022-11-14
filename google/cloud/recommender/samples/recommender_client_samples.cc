@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: RecommenderClient
+// main-dox-marker: recommender::RecommenderClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

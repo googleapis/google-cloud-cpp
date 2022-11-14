@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: VideoStitcherServiceClient
+// main-dox-marker: video::VideoStitcherServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: IamCheckerClient
+// main-dox-marker: policytroubleshooter::IamCheckerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: BudgetServiceClient
+// main-dox-marker: billing::BudgetServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

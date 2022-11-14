@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: AutoscalingPolicyServiceClient
+// main-dox-marker: dataproc::AutoscalingPolicyServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

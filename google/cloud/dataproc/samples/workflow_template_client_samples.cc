@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: WorkflowTemplateServiceClient
+// main-dox-marker: dataproc::WorkflowTemplateServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

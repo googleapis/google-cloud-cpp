@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: EdgeContainerClient
+// main-dox-marker: edgecontainer::EdgeContainerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: VersionsClient
+// main-dox-marker: dialogflow_cx::VersionsClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

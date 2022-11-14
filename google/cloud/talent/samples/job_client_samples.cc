@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: JobServiceClient
+// main-dox-marker: talent::JobServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

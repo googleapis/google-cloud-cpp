@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ServiceUsageClient
+// main-dox-marker: serviceusage::ServiceUsageClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: GameServerDeploymentsServiceClient
+// main-dox-marker: gameservices::GameServerDeploymentsServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

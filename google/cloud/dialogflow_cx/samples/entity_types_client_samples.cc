@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: EntityTypesClient
+// main-dox-marker: dialogflow_cx::EntityTypesClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

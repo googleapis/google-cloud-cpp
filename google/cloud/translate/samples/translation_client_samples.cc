@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: TranslationServiceClient
+// main-dox-marker: translate::TranslationServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

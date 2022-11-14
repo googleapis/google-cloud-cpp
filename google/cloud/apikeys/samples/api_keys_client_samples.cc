@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ApiKeysClient
+// main-dox-marker: apikeys::ApiKeysClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

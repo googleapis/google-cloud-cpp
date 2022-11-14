@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: AlertPolicyServiceClient
+// main-dox-marker: monitoring::AlertPolicyServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

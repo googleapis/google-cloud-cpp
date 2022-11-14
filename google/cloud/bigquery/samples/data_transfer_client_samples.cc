@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: DataTransferServiceClient
+// main-dox-marker: bigquery::DataTransferServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

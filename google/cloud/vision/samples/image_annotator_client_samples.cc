@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ImageAnnotatorClient
+// main-dox-marker: vision::ImageAnnotatorClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ClusterControllerClient
+// main-dox-marker: dataproc::ClusterControllerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: BigQueryWriteClient
+// main-dox-marker: bigquery::BigQueryWriteClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: EventServiceClient
+// main-dox-marker: talent::EventServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: SearchServiceClient
+// main-dox-marker: retail::SearchServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

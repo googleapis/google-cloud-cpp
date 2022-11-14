@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ServiceManagerClient
+// main-dox-marker: servicemanagement::ServiceManagerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

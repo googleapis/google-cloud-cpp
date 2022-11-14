@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: NotebookServiceClient
+// main-dox-marker: notebooks::NotebookServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: IdentityAwareProxyOAuthServiceClient
+// main-dox-marker: iap::IdentityAwareProxyOAuthServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

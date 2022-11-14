@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: CloudFunctionsServiceClient
+// main-dox-marker: functions::CloudFunctionsServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

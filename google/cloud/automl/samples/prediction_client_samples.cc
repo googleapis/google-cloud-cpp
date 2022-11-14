@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: PredictionServiceClient
+// main-dox-marker: automl::PredictionServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

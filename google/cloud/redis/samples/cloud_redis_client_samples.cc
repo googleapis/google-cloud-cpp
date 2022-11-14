@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: CloudRedisClient
+// main-dox-marker: redis::CloudRedisClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

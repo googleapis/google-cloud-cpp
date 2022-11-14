@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: AnalyticsHubServiceClient
+// main-dox-marker: bigquery::AnalyticsHubServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

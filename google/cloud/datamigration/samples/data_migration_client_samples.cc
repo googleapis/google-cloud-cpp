@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: DataMigrationServiceClient
+// main-dox-marker: datamigration::DataMigrationServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: DataCatalogClient
+// main-dox-marker: datacatalog::DataCatalogClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

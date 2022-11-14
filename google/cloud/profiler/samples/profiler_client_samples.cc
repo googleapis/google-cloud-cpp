@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ProfilerServiceClient
+// main-dox-marker: profiler::ProfilerServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

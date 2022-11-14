@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: MetricServiceClient
+// main-dox-marker: monitoring::MetricServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: IAMPolicyClient
+// main-dox-marker: iam::IAMPolicyClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

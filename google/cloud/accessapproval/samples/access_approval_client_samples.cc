@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: AccessApprovalClient
+// main-dox-marker: accessapproval::AccessApprovalClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

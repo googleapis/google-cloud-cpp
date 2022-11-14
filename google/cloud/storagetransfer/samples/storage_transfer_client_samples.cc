@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: StorageTransferServiceClient
+// main-dox-marker: storagetransfer::StorageTransferServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: WorkflowsClient
+// main-dox-marker: workflows::WorkflowsClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

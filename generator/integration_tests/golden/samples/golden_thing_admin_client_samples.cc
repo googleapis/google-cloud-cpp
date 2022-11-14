@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: GoldenThingAdminClient
+// main-dox-marker: golden::GoldenThingAdminClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

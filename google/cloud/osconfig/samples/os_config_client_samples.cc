@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: OsConfigServiceClient
+// main-dox-marker: osconfig::OsConfigServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

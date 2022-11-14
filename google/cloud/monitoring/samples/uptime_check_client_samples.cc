@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: UptimeCheckServiceClient
+// main-dox-marker: monitoring::UptimeCheckServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

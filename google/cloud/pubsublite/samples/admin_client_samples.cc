@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: AdminServiceClient
+// main-dox-marker: pubsublite::AdminServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: Controller2Client
+// main-dox-marker: debugger::Controller2Client
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

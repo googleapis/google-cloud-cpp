@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: BareMetalSolutionClient
+// main-dox-marker: baremetalsolution::BareMetalSolutionClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

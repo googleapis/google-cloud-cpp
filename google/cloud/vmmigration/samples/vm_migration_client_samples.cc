@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: VmMigrationClient
+// main-dox-marker: vmmigration::VmMigrationClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

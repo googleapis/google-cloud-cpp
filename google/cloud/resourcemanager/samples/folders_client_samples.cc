@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: FoldersClient
+// main-dox-marker: resourcemanager::FoldersClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
