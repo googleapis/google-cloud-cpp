@@ -23,7 +23,6 @@
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/curl_rest_response.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
-#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"

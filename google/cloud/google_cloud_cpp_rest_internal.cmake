@@ -79,7 +79,8 @@ add_library(
     internal/rest_response.cc
     internal/rest_response.h
     internal/unified_rest_credentials.cc
-    internal/unified_rest_credentials.h)
+    internal/unified_rest_credentials.h
+    rest_options.h)
 target_link_libraries(
     google_cloud_cpp_rest_internal
     PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
