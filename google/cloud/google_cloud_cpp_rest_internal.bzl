@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_rest_internal - DO NOT EDIT."""
 
 google_cloud_cpp_rest_internal_hdrs = [
+    "rest_options.h",
     "internal/binary_data_as_debug_string.h",
     "internal/curl_handle.h",
     "internal/curl_handle_factory.h",
