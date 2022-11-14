@@ -182,6 +182,14 @@ ENV PATH=${CLOUD_SDK_LOCATION}/bin:${PATH}
 # The Cloud Pub/Sub emulator needs Java :shrug:
 RUN dnf makecache && dnf install -y java-latest-openjdk
 
+# The check-api build uses bazelisk
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.15.0/bazelisk-linux-${ARCH}" && \
+    chmod +x /usr/bin/bazelisk && \
+    ln -s /usr/bin/bazelisk /usr/bin/bazel
+
+RUN dnf makecache && dnf install -y "dnf-command(debuginfo-install)"
+RUN dnf makecache && dnf debuginfo-install -y libstdc++
+
 # Some of the above libraries may have installed in /usr/local, so make sure
 # those library directories will be found.
 RUN ldconfig /usr/local/lib*

@@ -166,7 +166,7 @@ RUN curl -sSL https://github.com/universal-ctags/ctags/archive/refs/tags/p5.9.20
 # https://github.com/lvc/abi-dumper/pull/29. We can switch back to `dnf install
 # abi-dumper` once it has the fix.
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/lvc/abi-dumper/archive/814effec0f20a9613441dfa033aa0a0bc2a96a87.tar.gz | \
+RUN curl -sSL https://github.com/lvc/abi-dumper/archive/16bb467cd7d343dd3a16782b151b56cf15509594.tar.gz | \
     tar -xzf - --strip-components=1 && \
     mv abi-dumper.pl /usr/local/bin/abi-dumper && \
     chmod +x /usr/local/bin/abi-dumper
@@ -190,3 +190,10 @@ RUN ldconfig /usr/local/lib*
 RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.15.0/bazelisk-linux-${ARCH}" && \
     chmod +x /usr/bin/bazelisk && \
     ln -s /usr/bin/bazelisk /usr/bin/bazel
+
+RUN dnf makecache && dnf install -y "dnf-command(debuginfo-install)"
+RUN dnf makecache && dnf debuginfo-install -y libstdc++
+
+# Some of the above libraries may have installed in /usr/local, so make sure
+# those library directories will be found.
+RUN ldconfig /usr/local/lib*
