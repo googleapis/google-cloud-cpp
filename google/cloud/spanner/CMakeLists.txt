@@ -440,6 +440,7 @@ if (BUILD_TESTING)
     spanner_client_define_benchmarks()
     add_subdirectory(integration_tests)
     add_subdirectory(admin/integration_tests)
+    add_subdirectory(admin/samples)
     add_subdirectory(benchmarks) # macro benchmarks
 endif (BUILD_TESTING)
 

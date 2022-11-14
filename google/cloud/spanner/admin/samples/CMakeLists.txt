@@ -16,4 +16,4 @@ if ((NOT BUILD_TESTING) OR (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS))
     return()
 endif ()
 
-google_cloud_cpp_add_samples(admin)
+google_cloud_cpp_add_samples(spanner)
