@@ -27,6 +27,7 @@
 #include "generator/internal/connection_impl_generator.h"
 #include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
+#include "generator/internal/logging_decorator_rest_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
 #include "generator/internal/mock_connection_generator.h"
 #include "generator/internal/option_defaults_generator.h"
@@ -909,6 +910,14 @@ VarsDictionary CreateServiceVars(
   vars["logging_header_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_logging_decorator.h");
+  vars["logging_rest_class_name"] =
+      absl::StrCat(descriptor.name(), "RestLogging");
+  vars["logging_rest_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_logging_decorator.cc");
+  vars["logging_rest_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_logging_decorator.h");
   vars["metadata_class_name"] = absl::StrCat(descriptor.name(), "Metadata");
   vars["metadata_cc_path"] = absl::StrCat(
       vars["product_path"], "internal/",
@@ -1103,6 +1112,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service_vars.find("generate_rest_transport");
   if (generate_rest_transport != service_vars.end() &&
       generate_rest_transport->second == "true") {
+    code_generators.push_back(absl::make_unique<LoggingDecoratorRestGenerator>(
+        service, service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<StubRestGenerator>(
         service, service_vars, method_vars, context));
   }
