@@ -8,7 +8,7 @@ github:
 name: quickstart-production-pr
 substitutions:
   _BUILD_NAME: quickstart-production
-  _DISTRO: fedora-36
+  _DISTRO: fedora-36-cmake
   _TRIGGER_TYPE: pr
 tags:
 - pr
