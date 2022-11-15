@@ -89,6 +89,6 @@ this option.  Likewise, other services in different libraries (e.g.
 @defgroup rest-options Options only applicable when using REST transport.
 @ingroup options
 
-These Options are used with libraries which either only support REST transport,
-or with libraries that the user has elected to enable gRPC to HTTP transcoding.
+These Options are used with libraries that either only support REST transport,
+or with libraries where the user has elected to enable gRPC to HTTP transcoding.
 */
