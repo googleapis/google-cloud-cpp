@@ -4,9 +4,9 @@ click==8.1.3 \
 pep517==0.13.0 \
     --hash=sha256:4ba4446d80aed5b5eac6509ade100bff3e7943a8489de249654a5ae9b33ee35b \
     --hash=sha256:ae69927c5c172be1add9203726d4b84cf3ebad1edcd5f71fcdc746e66e829f59
-pip-tools==6.9.0 \
-    --hash=sha256:16ea0ced6a1d8a7dfbd5e14d5bf659acffa63f3efd0702233dc685f066c00a6b \
-    --hash=sha256:b4762359978fd81a2b4b666e6dca15266bdc65680d06900c4da34243f35e4b5d
+pip-tools==6.10.0 \
+    --hash=sha256:57ac98392548f5ca96c2831927deec3035efe81ff476e3c744bd474ca9c6a1f2 \
+    --hash=sha256:7f9f7356052db6942b5aaabc8eba29983591ca0ad75affbf2f0a25d9361be624
 tomli==2.0.1 \
     --hash=sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc \
     --hash=sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f
