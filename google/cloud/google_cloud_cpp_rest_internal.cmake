@@ -40,6 +40,8 @@ add_library(
     internal/curl_wrappers.h
     internal/external_account_parsing.cc
     internal/external_account_parsing.h
+    internal/external_account_token_source_file.cc
+    internal/external_account_token_source_file.h
     internal/http_payload.h
     internal/make_jwt_assertion.cc
     internal/make_jwt_assertion.h
@@ -195,6 +197,7 @@ if (BUILD_TESTING)
         internal/curl_wrappers_locking_enabled_test.cc
         internal/curl_wrappers_test.cc
         internal/external_account_parsing_test.cc
+        internal/external_account_token_source_file_test.cc
         internal/make_jwt_assertion_test.cc
         internal/oauth2_access_token_credentials_test.cc
         internal/oauth2_anonymous_credentials_test.cc
