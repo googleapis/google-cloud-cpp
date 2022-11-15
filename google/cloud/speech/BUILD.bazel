@@ -65,3 +65,13 @@ cc_library(
         "@com_google_googletest//:gtest",
     ],
 )
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    tags = ["integration-test"],
+    deps = [
+        "//:speech",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob([s + "samples/*.cc" for s in service_dirs])]
