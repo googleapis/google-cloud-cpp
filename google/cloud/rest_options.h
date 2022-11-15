@@ -60,7 +60,7 @@ struct UserIpOption {
  * @ingroup rest-options
  */
 struct ServerTimeoutOption {
-  using Type = float;
+  using Type = double;
 };
 
 /// The complete list of options accepted by `CurlRestClient`
