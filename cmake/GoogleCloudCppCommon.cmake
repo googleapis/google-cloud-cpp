@@ -246,13 +246,13 @@ function (google_cloud_cpp_add_executable target prefix source)
         PARENT_SCOPE)
 endfunction ()
 
-# google_cloud_cpp_add_samples : adds rules to compile and test generated
-# samples
-function (google_cloud_cpp_add_samples library)
+# google_cloud_cpp_add_samples_relative : adds rules to compile and test
+# generated samples for $library found in the relative $path.
+function (google_cloud_cpp_add_samples_relative library path)
     file(
         GLOB sample_files
         RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-        "*.cc")
+        "${path}*.cc")
     foreach (source IN LISTS sample_files)
         google_cloud_cpp_add_executable(target "${library}" "${source}")
         if (TARGET google-cloud-cpp::${library})
@@ -268,4 +268,10 @@ function (google_cloud_cpp_add_samples library)
         add_test(NAME "${target}" COMMAND "${target}")
         set_tests_properties("${target}" PROPERTIES LABELS "integration-test")
     endforeach ()
+endfunction ()
+
+# google_cloud_cpp_add_samples : adds rules to compile and test generated
+# samples
+function (google_cloud_cpp_add_samples library)
+    google_cloud_cpp_add_samples_relative("${library}" "")
 endfunction ()
