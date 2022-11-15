@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: SpeechClient
+// main-dox-marker: speech_v2::SpeechClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {

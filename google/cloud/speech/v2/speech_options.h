@@ -34,7 +34,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
  *
- * @ingroup google-cloud-speech-v2-options
+ * @ingroup google-cloud-speech-options
  */
 struct SpeechRetryPolicyOption {
   using Type = std::shared_ptr<SpeechRetryPolicy>;
@@ -43,7 +43,7 @@ struct SpeechRetryPolicyOption {
 /**
  * Use with `google::cloud::Options` to configure the backoff policy.
  *
- * @ingroup google-cloud-speech-v2-options
+ * @ingroup google-cloud-speech-options
  */
 struct SpeechBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
@@ -52,7 +52,7 @@ struct SpeechBackoffPolicyOption {
 /**
  * Use with `google::cloud::Options` to configure which operations are retried.
  *
- * @ingroup google-cloud-speech-v2-options
+ * @ingroup google-cloud-speech-options
  */
 struct SpeechConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<SpeechConnectionIdempotencyPolicy>;
@@ -62,7 +62,7 @@ struct SpeechConnectionIdempotencyPolicyOption {
  * Use with `google::cloud::Options` to configure the long-running operations
  * polling policy.
  *
- * @ingroup google-cloud-speech-v2-options
+ * @ingroup google-cloud-speech-options
  */
 struct SpeechPollingPolicyOption {
   using Type = std::shared_ptr<PollingPolicy>;
@@ -71,7 +71,7 @@ struct SpeechPollingPolicyOption {
 /**
  * The options applicable to Speech.
  *
- * @ingroup google-cloud-speech-v2-options
+ * @ingroup google-cloud-speech-options
  */
 using SpeechPolicyOptionList =
     OptionList<SpeechRetryPolicyOption, SpeechBackoffPolicyOption,
