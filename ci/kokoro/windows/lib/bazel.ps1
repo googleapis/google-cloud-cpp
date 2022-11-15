@@ -19,9 +19,12 @@ $Env:USE_BAZEL_VERSION="5.3.2"
 # Create output directory for Bazel. Bazel creates really long paths,
 # sometimes exceeding the Windows limits. Using a short name for the
 # root of the Bazel output directory works around this problem.
-# We do this in C: (the boot disk) because T: (the tmpfs / build disk)
-# is too small for the Bazel directory.
 $bazel_root="C:\b"
+if (Test-Path "T:\") {
+  # Prefer the tmpfs volume on Kokoro builds. It is supposed to be faster, and
+  # it is sized appropriately (250G as I write this)
+  $bazel_root="T:\b"
+}
 if (-not (Test-Path $bazel_root)) {
     Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Create bazel user root (${bazel_root})"
     New-Item -ItemType Directory -Path $bazel_root | Out-Null
