@@ -18,8 +18,6 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <chrono>
-#include <cstdint>
-#include <memory>
 #include <string>
 
 namespace google {
@@ -51,12 +49,11 @@ struct UserIpOption {
 };
 
 /**
- * Timeout (in seconds) for the server to finish processing the request. This
- * system param only applies to REST APIs for which client-side timeout is not
- * applicable.
+ * Timeout for the server to finish processing the request. This system param
+ * only applies to REST APIs for which client-side timeout is not applicable.
  */
 struct ServerTimeoutOption {
-  using Type = double;
+  using Type = std::chrono::milliseconds;
 };
 
 /// The complete list of options accepted by `CurlRestClient`
