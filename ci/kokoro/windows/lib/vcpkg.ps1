@@ -143,14 +143,6 @@ function Build-Vcpkg-Packages {
         "--feature-flags=-manifests"
     )
 
-    # Remove old versions of the packages.
-    Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Cleanup outdated vcpkg packages."
-    &"${vcpkg_root}/vcpkg.exe" remove ${vcpkg_flags} --outdated --recurse
-    if ($LastExitCode) {
-        Write-Host -ForegroundColor Red "vcpkg remove --outdated failed with exit code $LastExitCode"
-        Exit ${LastExitCode}
-    }
-
     # Install the packages one at a time.
     Write-Host "$(Get-Date -Format o) Building vcpkg packages."
     foreach ($pkg in $packages) {
