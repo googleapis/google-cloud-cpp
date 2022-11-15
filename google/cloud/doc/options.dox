@@ -85,4 +85,10 @@ ignored by other libraries). In some cases, the option may be specific to a
 Other services in the same library (e.g., `kms::EkmServiceClient`) will ignore
 this option.  Likewise, other services in different libraries (e.g.
 `pubsub::Publisher`) will also ignore the option.
+
+@defgroup rest-options Options only applicable when using REST transport.
+@ingroup options
+
+These Options are used with libraries that either only support REST transport,
+or with libraries that the user has elected to enable gRPC to HTTP transcoding.
 */

@@ -34,6 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * client IP address will be used. When specified, a valid API key with service
  * restrictions must be used to identify the quota project. Otherwise, this
  * parameter is ignored.
+ *
+ * @ingroup rest-options
  */
 struct QuotaUserOption {
   using Type = std::string;
@@ -45,6 +47,7 @@ struct QuotaUserOption {
  * This can be used to separate quota usage by source IP address.
  *
  * @deprecated prefer using `google::cloud::QuotaUser`.
+ * @ingroup rest-options
  */
 struct UserIpOption {
   using Type = std::string;
@@ -54,6 +57,7 @@ struct UserIpOption {
  * Timeout (in seconds) for the server to finish processing the request. This
  * system param only applies to REST APIs for which client-side timeout is not
  * applicable.
+ * @ingroup rest-options
  */
 struct ServerTimeoutOption {
   using Type = float;
