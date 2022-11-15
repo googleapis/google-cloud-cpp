@@ -56,7 +56,7 @@ struct UserIpOption {
  * applicable.
  */
 struct ServerTimeoutOption {
-  using Type = float;
+  using Type = double;
 };
 
 /// The complete list of options accepted by `CurlRestClient`
