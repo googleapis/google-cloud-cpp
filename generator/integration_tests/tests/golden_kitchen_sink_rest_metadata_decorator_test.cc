@@ -36,6 +36,56 @@ Status TransientError() {
   return Status(StatusCode::kUnavailable, "try-again");
 }
 
+TEST(KitchenSinkRestMetadataDecoratorTest, FormatServerTimeoutMilliseconds) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
+  EXPECT_CALL(*mock, GenerateAccessToken)
+      .WillOnce([](rest_internal::RestContext& context,
+                   google::test::admin::database::v1::
+                       GenerateAccessTokenRequest const&) {
+        EXPECT_THAT(context.GetHeader("x-server-timeout"), Contains("3.141"));
+        return TransientError();
+      })
+      .WillOnce([](rest_internal::RestContext& context,
+                   google::test::admin::database::v1::
+                       GenerateAccessTokenRequest const&) {
+        EXPECT_THAT(context.GetHeader("x-server-timeout"),
+                    Contains("3600.000"));
+        return TransientError();
+      })
+      .WillOnce([](rest_internal::RestContext& context,
+                   google::test::admin::database::v1::
+                       GenerateAccessTokenRequest const&) {
+        EXPECT_THAT(context.GetHeader("x-server-timeout"), Contains("0.123"));
+        return TransientError();
+      });
+
+  GoldenKitchenSinkRestMetadata stub(mock);
+  {
+    internal::OptionsSpan span(
+        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3141)));
+    rest_internal::RestContext context;
+    google::test::admin::database::v1::GenerateAccessTokenRequest request;
+    auto status = stub.GenerateAccessToken(context, request);
+    EXPECT_EQ(TransientError(), status.status());
+  }
+  {
+    internal::OptionsSpan span(
+        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3600000)));
+    rest_internal::RestContext context;
+    google::test::admin::database::v1::GenerateAccessTokenRequest request;
+    auto status = stub.GenerateAccessToken(context, request);
+    EXPECT_EQ(TransientError(), status.status());
+  }
+  {
+    internal::OptionsSpan span(
+        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(123)));
+    rest_internal::RestContext context;
+    google::test::admin::database::v1::GenerateAccessTokenRequest request;
+    auto status = stub.GenerateAccessToken(context, request);
+    EXPECT_EQ(TransientError(), status.status());
+  }
+}
+
 TEST(KitchenSinkRestMetadataDecoratorTest, GenerateAccessToken) {
   auto mock = std::make_shared<MockGoldenKitchenSinkRestStub>();
   EXPECT_CALL(*mock, GenerateAccessToken)
@@ -121,13 +171,11 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ListLogs) {
             Contains(google::cloud::internal::ApiClientHeader("generator")));
         EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
-        EXPECT_THAT(context.GetHeader("x-server-timeout"), Contains("3.000"));
+        EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
         return TransientError();
       });
 
-  internal::OptionsSpan span(
-      Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3000)));
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::ListLogsRequest request;
@@ -148,16 +196,14 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ListServiceAccountKeys) {
                     Contains("test-user-project"));
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"),
                     Contains("test-quota-user"));
-        EXPECT_THAT(context.GetHeader("x-server-timeout"), Contains("3.141"));
+        EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
         return TransientError();
       });
 
-  internal::OptionsSpan span(
-      Options{}
-          .set<ServerTimeoutOption>(std::chrono::milliseconds(3141))
-          .set<QuotaUserOption>("test-quota-user")
-          .set<UserProjectOption>("test-user-project"));
+  internal::OptionsSpan span(Options{}
+                                 .set<QuotaUserOption>("test-quota-user")
+                                 .set<UserProjectOption>("test-user-project"));
   GoldenKitchenSinkRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::ListServiceAccountKeysRequest request;

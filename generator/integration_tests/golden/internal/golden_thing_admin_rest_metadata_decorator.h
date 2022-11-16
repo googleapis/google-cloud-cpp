@@ -107,8 +107,7 @@ class GoldenThingAdminRestMetadata : public GoldenThingAdminRestStub {
 
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
-                   std::string const& request_params);
-  void SetMetadata(rest_internal::RestContext& rest_context);
+                   std::vector<std::string> const& params = {});
 
   std::shared_ptr<GoldenThingAdminRestStub> child_;
   std::string api_client_header_;

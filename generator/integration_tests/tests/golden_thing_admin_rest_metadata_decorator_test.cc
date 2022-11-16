@@ -1,5 +1,4 @@
-// Copyright 2020 Google LLC
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -36,6 +35,58 @@ using ::testing::IsEmpty;
 
 Status TransientError() {
   return Status(StatusCode::kUnavailable, "try-again");
+}
+
+TEST(ThingAdminRestMetadataDecoratorTest, FormatServerTimeoutMilliseconds) {
+  auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
+  EXPECT_CALL(*mock, GetDatabase)
+      .WillOnce(
+          [](rest_internal::RestContext& context,
+             google::test::admin::database::v1::GetDatabaseRequest const&) {
+            EXPECT_THAT(context.GetHeader("x-server-timeout"),
+                        Contains("3.141"));
+            return TransientError();
+          })
+      .WillOnce(
+          [](rest_internal::RestContext& context,
+             google::test::admin::database::v1::GetDatabaseRequest const&) {
+            EXPECT_THAT(context.GetHeader("x-server-timeout"),
+                        Contains("3600.000"));
+            return TransientError();
+          })
+      .WillOnce(
+          [](rest_internal::RestContext& context,
+             google::test::admin::database::v1::GetDatabaseRequest const&) {
+            EXPECT_THAT(context.GetHeader("x-server-timeout"),
+                        Contains("0.123"));
+            return TransientError();
+          });
+
+  GoldenThingAdminRestMetadata stub(mock);
+  {
+    internal::OptionsSpan span(
+        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3141)));
+    rest_internal::RestContext context;
+    google::test::admin::database::v1::GetDatabaseRequest request;
+    auto status = stub.GetDatabase(context, request);
+    EXPECT_EQ(TransientError(), status.status());
+  }
+  {
+    internal::OptionsSpan span(
+        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3600000)));
+    rest_internal::RestContext context;
+    google::test::admin::database::v1::GetDatabaseRequest request;
+    auto status = stub.GetDatabase(context, request);
+    EXPECT_EQ(TransientError(), status.status());
+  }
+  {
+    internal::OptionsSpan span(
+        Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(123)));
+    rest_internal::RestContext context;
+    google::test::admin::database::v1::GetDatabaseRequest request;
+    auto status = stub.GetDatabase(context, request);
+    EXPECT_EQ(TransientError(), status.status());
+  }
 }
 
 TEST(ThingAdminRestMetadataDecoratorTest, GetDatabase) {
@@ -127,13 +178,11 @@ TEST(ThingAdminRestMetadataDecoratorTest, UpdateDatabaseDdl) {
             Contains(google::cloud::internal::ApiClientHeader("generator")));
         EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
-        EXPECT_THAT(context.GetHeader("x-server-timeout"), Contains("3.141"));
+        EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
         EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
         return TransientError();
       });
 
-  internal::OptionsSpan span(
-      Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3141)));
   GoldenThingAdminRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::UpdateDatabaseDdlRequest request;
@@ -210,14 +259,11 @@ TEST(ThingAdminRestMetadataDecoratorTest, GetDatabaseDdl) {
                             "generator")));
             EXPECT_THAT(context.GetHeader("x-goog-user-project"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-quota-user"), IsEmpty());
-            EXPECT_THAT(context.GetHeader("x-server-timeout"),
-                        Contains("3600.000"));
+            EXPECT_THAT(context.GetHeader("x-server-timeout"), IsEmpty());
             EXPECT_THAT(context.GetHeader("x-goog-request-params"), IsEmpty());
             return TransientError();
           });
 
-  internal::OptionsSpan span(
-      Options{}.set<ServerTimeoutOption>(std::chrono::milliseconds(3600000)));
   GoldenThingAdminRestMetadata stub(mock);
   rest_internal::RestContext context;
   google::test::admin::database::v1::GetDatabaseDdlRequest request;

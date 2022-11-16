@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -79,11 +79,8 @@ std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
     text += "  }();\n";
     text += "  " + kv.first + "_matcher->AppendParam(request, params);\n\n";
   }
-  text += "  if (params.empty()) {\n";
-  text += "    SetMetadata(" + context + ");\n";
-  text += "  } else {\n";
-  text += "    SetMetadata(" + context + ", absl::StrJoin(params, \"&\"));\n";
-  text += "  }\n";
+
+    text += "  SetMetadata(" + context + ", params);\n";
   return text;
   // clang-format on
 }
@@ -152,8 +149,7 @@ class $metadata_rest_class_name$ : public $stub_rest_class_name$ {
   HeaderPrint(R"""(
  private:
   void SetMetadata(rest_internal::RestContext& rest_context,
-                   std::string const& request_params);
-  void SetMetadata(rest_internal::RestContext& rest_context);
+                   std::vector<std::string> const& params = {});
 
   std::shared_ptr<$stub_rest_class_name$> child_;
   std::string api_client_header_;
@@ -234,17 +230,16 @@ $metadata_rest_class_name$::$method_name$(
 
   // The metadata options supported come from
   // https://cloud.google.com/apis/docs/system-parameters.
-  // Not all are supported as metadata as some are handled by other layers in
-  // the REST transport stack.
+  // Not all of these system parameters are supported as metadata. Some system
+  // parameters are handled by other layers in the REST transport stack.
   CcPrint(R"""(
-void $metadata_rest_class_name$::SetMetadata(rest_internal::RestContext& rest_context,
-                                        std::string const& request_params) {
-  rest_context.AddHeader("x-goog-request-params", request_params);
-  SetMetadata(rest_context);
-}
-
-void $metadata_rest_class_name$::SetMetadata(rest_internal::RestContext& rest_context) {
+void $metadata_rest_class_name$::SetMetadata(
+      rest_internal::RestContext& rest_context,
+      std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
+  if (!params.empty()) {
+    rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
+  }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader(
@@ -255,8 +250,11 @@ void $metadata_rest_class_name$::SetMetadata(rest_internal::RestContext& rest_co
         "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
-    rest_context.AddHeader("x-server-timeout", absl::StrFormat("%.3f",
-      static_cast<double>(options.get<google::cloud::ServerTimeoutOption>().count()) / 1000.0));
+    auto ms_rep = absl::StrCat(
+        absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
+        absl::kZeroPad4));
+    rest_context.AddHeader("x-server-timeout",
+        ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 )""");

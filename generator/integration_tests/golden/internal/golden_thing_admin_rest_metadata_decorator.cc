@@ -108,11 +108,7 @@ GoldenThingAdminRestMetadata::DropDatabase(
   }();
   database_matcher->AppendParam(request, params);
 
-  if (params.empty()) {
-    SetMetadata(rest_context);
-  } else {
-    SetMetadata(rest_context, absl::StrJoin(params, "&"));
-  }
+  SetMetadata(rest_context, params);
 
   return child_->DropDatabase(rest_context, request);
 }
@@ -213,14 +209,13 @@ GoldenThingAdminRestMetadata::ListBackupOperations(
   return child_->ListBackupOperations(rest_context, request);
 }
 
-void GoldenThingAdminRestMetadata::SetMetadata(rest_internal::RestContext& rest_context,
-                                        std::string const& request_params) {
-  rest_context.AddHeader("x-goog-request-params", request_params);
-  SetMetadata(rest_context);
-}
-
-void GoldenThingAdminRestMetadata::SetMetadata(rest_internal::RestContext& rest_context) {
+void GoldenThingAdminRestMetadata::SetMetadata(
+      rest_internal::RestContext& rest_context,
+      std::vector<std::string> const& params) {
   rest_context.AddHeader("x-goog-api-client", api_client_header_);
+  if (!params.empty()) {
+    rest_context.AddHeader("x-goog-request-params", absl::StrJoin(params, "&"));
+  }
   auto const& options = internal::CurrentOptions();
   if (options.has<UserProjectOption>()) {
     rest_context.AddHeader(
@@ -231,8 +226,11 @@ void GoldenThingAdminRestMetadata::SetMetadata(rest_internal::RestContext& rest_
         "x-goog-quota-user", options.get<google::cloud::QuotaUserOption>());
   }
   if (options.has<google::cloud::ServerTimeoutOption>()) {
-    rest_context.AddHeader("x-server-timeout", absl::StrFormat("%.3f",
-      static_cast<double>(options.get<google::cloud::ServerTimeoutOption>().count()) / 1000.0));
+    auto ms_rep = absl::StrCat(
+        absl::Dec(options.get<google::cloud::ServerTimeoutOption>().count(),
+        absl::kZeroPad4));
+    rest_context.AddHeader("x-server-timeout",
+        ms_rep.insert(ms_rep.size() - 3, "."));
   }
 }
 
