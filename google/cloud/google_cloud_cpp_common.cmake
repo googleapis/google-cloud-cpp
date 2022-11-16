@@ -65,6 +65,8 @@ add_library(
     internal/diagnostics_push.inc
     internal/disable_deprecation_warnings.inc
     internal/disable_msvc_crt_secure_warnings.inc
+    internal/error_metadata.cc
+    internal/error_metadata.h
     internal/filesystem.cc
     internal/filesystem.h
     internal/format_time_point.cc
@@ -297,6 +299,7 @@ if (BUILD_TESTING)
         internal/compiler_info_test.cc
         internal/compute_engine_util_test.cc
         internal/credentials_impl_test.cc
+        internal/error_metadata_test.cc
         internal/filesystem_test.cc
         internal/format_time_point_test.cc
         internal/future_impl_test.cc
