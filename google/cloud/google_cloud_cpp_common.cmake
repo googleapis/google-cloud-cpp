@@ -102,6 +102,8 @@ add_library(
     internal/status_payload_keys.h
     internal/strerror.cc
     internal/strerror.h
+    internal/subject_token.cc
+    internal/subject_token.h
     internal/throw_delegate.cc
     internal/throw_delegate.h
     internal/tuple.h
@@ -308,6 +310,7 @@ if (BUILD_TESTING)
         internal/sha256_hash_test.cc
         internal/status_payload_keys_test.cc
         internal/strerror_test.cc
+        internal/subject_token_test.cc
         internal/throw_delegate_test.cc
         internal/tuple_test.cc
         internal/type_list_test.cc
