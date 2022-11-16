@@ -51,7 +51,7 @@ function Get-Vcpkg-Features {
             "asset",
             # TODO(#8125) - does not compile on Windows.
             "channel",
-            # TODO(#8725) - does not compile on Windows.
+            # TODO(#8785) - does not compile on Windows.
             "storagetransfer" -contains $_) } |
         # TODO(#9913) - these compile, but do not install on Windows.
         Where-Object { -not ("assuredworkloads",  "dialogflow-cx", "dialogflow-es" -contains $_) } |
