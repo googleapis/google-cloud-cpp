@@ -226,8 +226,7 @@ std::vector<std::string> BuildNamespaces(std::string const& product_path,
     absl::StrAppend(&name, "_mocks");
   }
 
-  return std::vector<std::string>{"google", "cloud", name,
-                                  "GOOGLE_CLOUD_CPP_NS"};
+  return {"google", "cloud", "GOOGLE_CLOUD_CPP_NS", name};
 }
 
 StatusOr<std::vector<std::pair<std::string, std::string>>>

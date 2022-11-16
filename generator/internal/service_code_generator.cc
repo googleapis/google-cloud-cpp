@@ -353,15 +353,15 @@ Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type) {
 }
 
 void ServiceCodeGenerator::CloseNamespaces(Printer& p) {
+  // TODO(#7463) - remove backwards compatibility namespaces
+  if (define_backwards_compatibility_namespace_alias_) {
+    p.Print(
+        "namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;"
+        "  // NOLINT(misc-unused-alias-decls)\n");
+  }
   for (auto iter = namespaces_.rbegin(); iter != namespaces_.rend(); ++iter) {
     if (*iter == "GOOGLE_CLOUD_CPP_NS") {
       p.Print("GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END\n");
-      // TODO(#7463) - remove backwards compatibility namespaces
-      if (define_backwards_compatibility_namespace_alias_) {
-        p.Print(
-            "namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;"
-            "  // NOLINT(misc-unused-alias-decls)\n");
-      }
     } else {
       p.Print("}  // namespace $namespace$\n", "namespace", *iter);
     }
