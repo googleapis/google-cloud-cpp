@@ -28,6 +28,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/absl_str_cat_quiet.h",
     "internal/absl_str_join_quiet.h",
     "internal/absl_str_replace_quiet.h",
+    "internal/access_token.h",
     "internal/algorithm.h",
     "internal/api_client_header.h",
     "internal/attributes.h",
@@ -90,6 +91,7 @@ google_cloud_cpp_common_hdrs = [
 
 google_cloud_cpp_common_srcs = [
     "credentials.cc",
+    "internal/access_token.cc",
     "internal/api_client_header.cc",
     "internal/auth_header_error.cc",
     "internal/backoff_policy.cc",

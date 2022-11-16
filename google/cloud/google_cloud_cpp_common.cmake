@@ -41,6 +41,8 @@ add_library(
     internal/absl_str_cat_quiet.h
     internal/absl_str_join_quiet.h
     internal/absl_str_replace_quiet.h
+    internal/access_token.cc
+    internal/access_token.h
     internal/algorithm.h
     internal/api_client_header.cc
     internal/api_client_header.h
@@ -282,6 +284,7 @@ if (BUILD_TESTING)
         future_generic_then_test.cc
         future_void_test.cc
         future_void_then_test.cc
+        internal/access_token_test.cc
         internal/algorithm_test.cc
         internal/api_client_header_test.cc
         internal/backoff_policy_test.cc

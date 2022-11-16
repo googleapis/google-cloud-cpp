@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CREDENTIALS_IMPL_H
 
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/access_token.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -30,12 +31,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
-/// Represents an access token with a known expiration time.
-struct AccessToken {
-  std::string token;
-  std::chrono::system_clock::time_point expiration;
-};
 
 class InsecureCredentialsConfig;
 class GoogleDefaultCredentialsConfig;
