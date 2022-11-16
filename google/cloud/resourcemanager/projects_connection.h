@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager {
 
 using ProjectsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    resourcemanager_internal::ProjectsRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::ProjectsRetryTraits>;
 
 using ProjectsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        resourcemanager_internal::ProjectsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ProjectsRetryTraits>;
 
 using ProjectsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        resourcemanager_internal::ProjectsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ProjectsRetryTraits>;
 
 /**
  * The `ProjectsConnection` object for `ProjectsClient`.
@@ -58,7 +58,7 @@ using ProjectsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeProjectsConnection()`.
  *
- * For mocking, see `resourcemanager_mocks::MockProjectsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockProjectsConnection`.
  */
 class ProjectsConnection {
  public:
@@ -120,7 +120,7 @@ class ProjectsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::resourcemanager::ProjectsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ProjectsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -131,8 +131,8 @@ class ProjectsConnection {
 std::shared_ptr<ProjectsConnection> MakeProjectsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

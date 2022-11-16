@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicemanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicemanagement_internal {
 
 ServiceManagerAuth::ServiceManagerAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -238,7 +238,7 @@ future<Status> ServiceManagerAuth::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace dlp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dlp_internal {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct DlpServiceRetryTraits {
@@ -35,8 +35,8 @@ struct DlpServiceRetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

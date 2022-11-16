@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 LivestreamServiceAuth::LivestreamServiceAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -287,7 +287,7 @@ future<Status> LivestreamServiceAuth::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

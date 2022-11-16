@@ -35,21 +35,21 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_internal {
 
 void GoldenKitchenSinkStreamingReadStreamingUpdater(
     google::test::admin::database::v1::Response const& response,
     google::test::admin::database::v1::Request& request);
 
 class GoldenKitchenSinkConnectionImpl
-    : public golden::GoldenKitchenSinkConnection {
+    : public GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkConnection {
  public:
   ~GoldenKitchenSinkConnectionImpl() override = default;
 
   GoldenKitchenSinkConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkStub> stub,
     Options options);
 
   Options options() override { return options_; }
@@ -87,38 +87,38 @@ class GoldenKitchenSinkConnectionImpl
   ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
  private:
-  std::unique_ptr<golden::GoldenKitchenSinkRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenKitchenSinkRetryPolicyOption>()) {
-      return options.get<golden::GoldenKitchenSinkRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkRetryPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenKitchenSinkRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenKitchenSinkBackoffPolicyOption>()) {
-      return options.get<golden::GoldenKitchenSinkBackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkBackoffPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenKitchenSinkBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<golden::GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkConnectionIdempotencyPolicy> idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
-      return options.get<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->
+    return options_.get<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()->
 clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

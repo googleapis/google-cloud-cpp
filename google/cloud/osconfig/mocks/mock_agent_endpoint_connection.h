@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig_mocks {
 
 /**
  * A class to mock `AgentEndpointServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockAgentEndpointServiceConnection
-    : public osconfig::AgentEndpointServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -93,8 +93,8 @@ class MockAgentEndpointServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

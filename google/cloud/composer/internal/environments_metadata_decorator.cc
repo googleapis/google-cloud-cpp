@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer_internal {
 
 EnvironmentsMetadata::EnvironmentsMetadata(
     std::shared_ptr<EnvironmentsStub> child)
@@ -117,7 +117,7 @@ void EnvironmentsMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

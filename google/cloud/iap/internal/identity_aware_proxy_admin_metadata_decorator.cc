@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap_internal {
 
 IdentityAwareProxyAdminServiceMetadata::IdentityAwareProxyAdminServiceMetadata(
     std::shared_ptr<IdentityAwareProxyAdminServiceStub> child)
@@ -132,7 +132,7 @@ void IdentityAwareProxyAdminServiceMetadata::SetMetadata(
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

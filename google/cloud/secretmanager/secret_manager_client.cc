@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace secretmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace secretmanager {
 
 SecretManagerServiceClient::SecretManagerServiceClient(
     std::shared_ptr<SecretManagerServiceConnection> connection, Options opts)
@@ -261,7 +261,7 @@ SecretManagerServiceClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

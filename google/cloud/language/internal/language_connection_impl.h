@@ -33,17 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace language_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace language_internal {
 
 class LanguageServiceConnectionImpl
-    : public language::LanguageServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::LanguageServiceConnection {
  public:
   ~LanguageServiceConnectionImpl() override = default;
 
   LanguageServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<language_internal::LanguageServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LanguageServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -72,45 +72,56 @@ class LanguageServiceConnectionImpl
       google::cloud::language::v1::AnnotateTextRequest const& request) override;
 
  private:
-  std::unique_ptr<language::LanguageServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::LanguageServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<language::LanguageServiceRetryPolicyOption>()) {
-      return options.get<language::LanguageServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::LanguageServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::LanguageServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<language::LanguageServiceRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::LanguageServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<language::LanguageServiceBackoffPolicyOption>()) {
-      return options.get<language::LanguageServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<language::LanguageServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<language::LanguageServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            language::LanguageServiceConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::LanguageServiceBackoffPolicyOption>()) {
       return options
-          .get<language::LanguageServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::LanguageServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<language::LanguageServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::LanguageServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::LanguageServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        LanguageServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   LanguageServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 LanguageServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<language_internal::LanguageServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LanguageServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,26 +38,28 @@ Options IAMDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_IAM_AUTHORITY", "iam.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<iam::IAMRetryPolicyOption>()) {
-    options.set<iam::IAMRetryPolicyOption>(
-        iam::IAMLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::IAMRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::IAMRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::IAMLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<iam::IAMBackoffPolicyOption>()) {
-    options.set<iam::IAMBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::IAMBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::IAMBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<iam::IAMConnectionIdempotencyPolicyOption>()) {
-    options.set<iam::IAMConnectionIdempotencyPolicyOption>(
-        iam::MakeDefaultIAMConnectionIdempotencyPolicy());
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::IAMConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::IAMConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultIAMConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

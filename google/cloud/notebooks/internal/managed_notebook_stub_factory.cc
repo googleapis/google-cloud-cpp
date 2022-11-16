@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks_internal {
 
 std::shared_ptr<ManagedNotebookServiceStub>
 CreateDefaultManagedNotebookServiceStub(google::cloud::CompletionQueue cq,
@@ -62,7 +62,7 @@ CreateDefaultManagedNotebookServiceStub(google::cloud::CompletionQueue cq,
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

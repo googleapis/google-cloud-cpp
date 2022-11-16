@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigeeconnect_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigeeconnect_internal {
 
 ConnectionServiceAuth::ConnectionServiceAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -39,7 +39,7 @@ ConnectionServiceAuth::ListConnections(
   return child_->ListConnections(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

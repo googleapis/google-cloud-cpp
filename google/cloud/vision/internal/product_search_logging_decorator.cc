@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision_internal {
 
 ProductSearchLogging::ProductSearchLogging(
     std::shared_ptr<ProductSearchStub> child, TracingOptions tracing_options,
@@ -300,7 +300,7 @@ future<Status> ProductSearchLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

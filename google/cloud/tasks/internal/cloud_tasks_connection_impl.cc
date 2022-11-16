@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace tasks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks_internal {
 
 CloudTasksConnectionImpl::CloudTasksConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<tasks_internal::CloudTasksStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudTasksStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -44,7 +44,8 @@ CloudTasksConnectionImpl::ListQueues(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<tasks::CloudTasksRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudTasksRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListQueues(request);
   char const* function_name = __func__;
@@ -194,7 +195,8 @@ StreamRange<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::ListTasks(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<tasks::CloudTasksRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudTasksRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTasks(request);
   char const* function_name = __func__;
@@ -265,7 +267,7 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::RunTask(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

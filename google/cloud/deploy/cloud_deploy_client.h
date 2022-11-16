@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace deploy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace deploy {
 
 ///
 /// CloudDeploy service creates and manages Continuous Delivery operations
@@ -954,8 +954,8 @@ class CloudDeployClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

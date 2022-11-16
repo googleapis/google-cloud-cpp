@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace asset_internal {
 
 std::shared_ptr<AssetServiceStub> CreateDefaultAssetServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -60,7 +60,7 @@ std::shared_ptr<AssetServiceStub> CreateDefaultAssetServiceStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

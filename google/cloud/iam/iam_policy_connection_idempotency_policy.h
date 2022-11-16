@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam {
 
 class IAMPolicyConnectionIdempotencyPolicy {
  public:
@@ -50,8 +50,8 @@ class IAMPolicyConnectionIdempotencyPolicy {
 std::unique_ptr<IAMPolicyConnectionIdempotencyPolicy>
 MakeDefaultIAMPolicyConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

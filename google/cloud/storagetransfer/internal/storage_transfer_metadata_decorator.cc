@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer_internal {
 
 StorageTransferServiceMetadata::StorageTransferServiceMetadata(
     std::shared_ptr<StorageTransferServiceStub> child)
@@ -179,7 +179,7 @@ void StorageTransferServiceMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

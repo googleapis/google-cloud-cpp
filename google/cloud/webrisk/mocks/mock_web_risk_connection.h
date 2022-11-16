@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace webrisk_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace webrisk_mocks {
 
 /**
  * A class to mock `WebRiskServiceConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockWebRiskServiceConnection : public webrisk::WebRiskServiceConnection {
+class MockWebRiskServiceConnection
+    : public GOOGLE_CLOUD_CPP_NS::WebRiskServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -68,8 +69,8 @@ class MockWebRiskServiceConnection : public webrisk::WebRiskServiceConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

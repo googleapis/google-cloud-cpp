@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 GroupServiceAuth::GroupServiceAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -80,7 +80,7 @@ GroupServiceAuth::ListGroupMembers(
   return child_->ListGroupMembers(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

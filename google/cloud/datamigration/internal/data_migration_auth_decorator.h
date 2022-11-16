@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace datamigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datamigration_internal {
 
 class DataMigrationServiceAuth : public DataMigrationServiceStub {
  public:
@@ -152,8 +152,8 @@ class DataMigrationServiceAuth : public DataMigrationServiceStub {
   std::shared_ptr<DataMigrationServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 ConnectionServiceClient::ConnectionServiceClient(
     std::shared_ptr<ConnectionServiceConnection> connection, Options opts)
@@ -175,7 +175,7 @@ ConnectionServiceClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

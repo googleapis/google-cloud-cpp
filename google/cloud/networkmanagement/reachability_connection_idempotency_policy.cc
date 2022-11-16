@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkmanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkmanagement {
 
 using ::google::cloud::Idempotency;
 
@@ -80,7 +80,7 @@ MakeDefaultReachabilityServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<ReachabilityServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

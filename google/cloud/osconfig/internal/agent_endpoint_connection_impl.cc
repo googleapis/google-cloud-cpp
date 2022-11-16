@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig_internal {
 
 AgentEndpointServiceConnectionImpl::AgentEndpointServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<osconfig_internal::AgentEndpointServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -46,7 +46,8 @@ AgentEndpointServiceConnectionImpl::ReceiveTaskNotification(
     google::cloud::osconfig::agentendpoint::v1::
         ReceiveTaskNotificationRequest const& request) {
   auto& stub = stub_;
-  auto retry = std::shared_ptr<osconfig::AgentEndpointServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
 
@@ -143,7 +144,7 @@ AgentEndpointServiceConnectionImpl::ReportInventory(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

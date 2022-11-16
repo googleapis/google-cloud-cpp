@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager_internal {
 
 std::shared_ptr<OrganizationsStub> CreateDefaultOrganizationsStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -59,7 +59,7 @@ std::shared_ptr<OrganizationsStub> CreateDefaultOrganizationsStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

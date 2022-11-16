@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace oslogin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace oslogin {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -68,8 +68,8 @@ using OsLoginServicePolicyOptionList =
                OsLoginServiceBackoffPolicyOption,
                OsLoginServiceConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

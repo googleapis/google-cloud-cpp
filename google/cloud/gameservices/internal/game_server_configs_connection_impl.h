@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices_internal {
 
 class GameServerConfigsServiceConnectionImpl
-    : public gameservices::GameServerConfigsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceConnection {
  public:
   ~GameServerConfigsServiceConnectionImpl() override = default;
 
   GameServerConfigsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<gameservices_internal::GameServerConfigsServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -71,71 +71,73 @@ class GameServerConfigsServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<gameservices::GameServerConfigsServiceRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<gameservices::GameServerConfigsServiceRetryPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceRetryPolicyOption>()) {
       return options
-          .get<gameservices::GameServerConfigsServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<gameservices::GameServerConfigsServiceRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<gameservices::GameServerConfigsServiceBackoffPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        GameServerConfigsServiceBackoffPolicyOption>()) {
       return options
-          .get<gameservices::GameServerConfigsServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   GameServerConfigsServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<gameservices::GameServerConfigsServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      gameservices::GameServerConfigsServiceConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            gameservices::
+            GOOGLE_CLOUD_CPP_NS::
                 GameServerConfigsServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<gameservices::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    GameServerConfigsServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<gameservices::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  GameServerConfigsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<gameservices::GameServerConfigsServicePollingPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        GameServerConfigsServicePollingPolicyOption>()) {
       return options
-          .get<gameservices::GameServerConfigsServicePollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   GameServerConfigsServicePollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<gameservices::GameServerConfigsServicePollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::GameServerConfigsServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<gameservices_internal::GameServerConfigsServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

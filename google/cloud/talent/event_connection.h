@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 using EventServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        talent_internal::EventServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EventServiceRetryTraits>;
 
 using EventServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        talent_internal::EventServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EventServiceRetryTraits>;
 
 using EventServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        talent_internal::EventServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EventServiceRetryTraits>;
 
 /**
  * The `EventServiceConnection` object for `EventServiceClient`.
@@ -55,7 +55,7 @@ using EventServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeEventServiceConnection()`.
  *
- * For mocking, see `talent_mocks::MockEventServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockEventServiceConnection`.
  */
 class EventServiceConnection {
  public:
@@ -80,7 +80,7 @@ class EventServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::talent::EventServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::EventServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -91,8 +91,8 @@ class EventServiceConnection {
 std::shared_ptr<EventServiceConnection> MakeEventServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

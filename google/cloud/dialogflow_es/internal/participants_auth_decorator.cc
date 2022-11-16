@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 ParticipantsAuth::ParticipantsAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -121,7 +121,7 @@ ParticipantsAuth::SuggestSmartReplies(
   return child_->SuggestSmartReplies(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

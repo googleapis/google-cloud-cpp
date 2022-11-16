@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer_mocks {
 
 /**
  * A class to mock `StorageTransferServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockStorageTransferServiceConnection
-    : public storagetransfer::StorageTransferServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::StorageTransferServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -121,8 +121,8 @@ class MockStorageTransferServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

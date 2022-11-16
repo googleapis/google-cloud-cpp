@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows {
 
 ///
 /// Executions is used to start and manage running instances of
@@ -254,8 +254,8 @@ class ExecutionsClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

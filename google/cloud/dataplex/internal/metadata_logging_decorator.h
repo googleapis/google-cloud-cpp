@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex_internal {
 
 class MetadataServiceLogging : public MetadataServiceStub {
  public:
@@ -83,8 +83,8 @@ class MetadataServiceLogging : public MetadataServiceStub {
   std::set<std::string> components_;
 };  // MetadataServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

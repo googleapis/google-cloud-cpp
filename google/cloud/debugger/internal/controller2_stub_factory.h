@@ -28,14 +28,14 @@
 
 namespace google {
 namespace cloud {
-namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger_internal {
 
 std::shared_ptr<Controller2Stub> CreateDefaultController2Stub(
     google::cloud::CompletionQueue cq, Options const& options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

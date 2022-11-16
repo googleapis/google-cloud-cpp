@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai_internal {
 
 std::shared_ptr<DocumentProcessorServiceStub>
 CreateDefaultDocumentProcessorServiceStub(google::cloud::CompletionQueue cq,
@@ -62,7 +62,7 @@ CreateDefaultDocumentProcessorServiceStub(google::cloud::CompletionQueue cq,
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

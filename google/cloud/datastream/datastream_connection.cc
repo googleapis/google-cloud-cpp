@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace datastream {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream {
 
 DatastreamConnection::~DatastreamConnection() = default;
 
@@ -219,15 +219,15 @@ std::shared_ptr<DatastreamConnection> MakeDatastreamConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  DatastreamPolicyOptionList>(options, __func__);
-  options = datastream_internal::DatastreamDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::DatastreamDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = datastream_internal::CreateDefaultDatastreamStub(background->cq(),
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultDatastreamStub(background->cq(),
                                                                options);
-  return std::make_shared<datastream_internal::DatastreamConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::DatastreamConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

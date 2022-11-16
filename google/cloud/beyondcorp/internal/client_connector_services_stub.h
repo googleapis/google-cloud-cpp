@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp_internal {
 
 class ClientConnectorServicesServiceStub {
  public:
@@ -146,8 +146,8 @@ class DefaultClientConnectorServicesServiceStub
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

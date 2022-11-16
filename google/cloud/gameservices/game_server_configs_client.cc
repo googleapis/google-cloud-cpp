@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices {
 
 GameServerConfigsServiceClient::GameServerConfigsServiceClient(
     std::shared_ptr<GameServerConfigsServiceConnection> connection,
@@ -103,7 +103,7 @@ GameServerConfigsServiceClient::DeleteGameServerConfig(
   return connection_->DeleteGameServerConfig(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

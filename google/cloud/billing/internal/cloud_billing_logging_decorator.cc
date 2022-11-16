@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing_internal {
 
 CloudBillingLogging::CloudBillingLogging(
     std::shared_ptr<CloudBillingStub> child, TracingOptions tracing_options,
@@ -160,7 +160,7 @@ CloudBillingLogging::TestIamPermissions(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

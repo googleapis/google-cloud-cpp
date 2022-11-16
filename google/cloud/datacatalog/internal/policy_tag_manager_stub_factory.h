@@ -28,14 +28,14 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_internal {
 
 std::shared_ptr<PolicyTagManagerStub> CreateDefaultPolicyTagManagerStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

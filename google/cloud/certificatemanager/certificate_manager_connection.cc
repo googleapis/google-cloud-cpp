@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace certificatemanager {
 
 CertificateManagerConnection::~CertificateManagerConnection() = default;
 
@@ -234,17 +234,17 @@ std::shared_ptr<CertificateManagerConnection> MakeCertificateManagerConnection(
                                  UnifiedCredentialsOptionList,
                                  CertificateManagerPolicyOptionList>(options,
                                                                      __func__);
-  options = certificatemanager_internal::CertificateManagerDefaultOptions(
-      std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::CertificateManagerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = certificatemanager_internal::CreateDefaultCertificateManagerStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultCertificateManagerStub(
       background->cq(), options);
   return std::make_shared<
-      certificatemanager_internal::CertificateManagerConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::CertificateManagerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accessapproval {
 
 AccessApprovalConnection::~AccessApprovalConnection() = default;
 
@@ -102,16 +102,15 @@ std::shared_ptr<AccessApprovalConnection> MakeAccessApprovalConnection(
                                  AccessApprovalPolicyOptionList>(options,
                                                                  __func__);
   options =
-      accessapproval_internal::AccessApprovalDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::AccessApprovalDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = accessapproval_internal::CreateDefaultAccessApprovalStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultAccessApprovalStub(
       background->cq(), options);
-  return std::make_shared<
-      accessapproval_internal::AccessApprovalConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::AccessApprovalConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

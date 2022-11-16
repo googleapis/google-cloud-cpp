@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision {
 
 using ProductSearchRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        vision_internal::ProductSearchRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ProductSearchRetryTraits>;
 
 using ProductSearchLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        vision_internal::ProductSearchRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ProductSearchRetryTraits>;
 
 using ProductSearchLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        vision_internal::ProductSearchRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ProductSearchRetryTraits>;
 
 /**
  * The `ProductSearchConnection` object for `ProductSearchClient`.
@@ -59,7 +59,7 @@ using ProductSearchLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeProductSearchConnection()`.
  *
- * For mocking, see `vision_mocks::MockProductSearchConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockProductSearchConnection`.
  */
 class ProductSearchConnection {
  public:
@@ -143,7 +143,7 @@ class ProductSearchConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::vision::ProductSearchPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ProductSearchPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -154,8 +154,8 @@ class ProductSearchConnection {
 std::shared_ptr<ProductSearchConnection> MakeProductSearchConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

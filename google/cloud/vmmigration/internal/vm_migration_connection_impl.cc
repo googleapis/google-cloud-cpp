@@ -28,13 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace vmmigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vmmigration_internal {
 
 VmMigrationConnectionImpl::VmMigrationConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<vmmigration_internal::VmMigrationStub> stub,
-    Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -45,8 +44,9 @@ VmMigrationConnectionImpl::ListSources(
     google::cloud::vmmigration::v1::ListSourcesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSources(request);
   char const* function_name = __func__;
@@ -188,8 +188,9 @@ VmMigrationConnectionImpl::ListUtilizationReports(
     google::cloud::vmmigration::v1::ListUtilizationReportsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListUtilizationReports(request);
   char const* function_name = __func__;
@@ -303,8 +304,9 @@ VmMigrationConnectionImpl::ListDatacenterConnectors(
     google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDatacenterConnectors(request);
   char const* function_name = __func__;
@@ -477,8 +479,9 @@ VmMigrationConnectionImpl::ListMigratingVms(
     google::cloud::vmmigration::v1::ListMigratingVmsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListMigratingVms(request);
   char const* function_name = __func__;
@@ -763,8 +766,9 @@ VmMigrationConnectionImpl::ListCloneJobs(
     google::cloud::vmmigration::v1::ListCloneJobsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCloneJobs(request);
   char const* function_name = __func__;
@@ -870,8 +874,9 @@ VmMigrationConnectionImpl::ListCutoverJobs(
     google::cloud::vmmigration::v1::ListCutoverJobsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCutoverJobs(request);
   char const* function_name = __func__;
@@ -917,8 +922,9 @@ VmMigrationConnectionImpl::ListGroups(
     google::cloud::vmmigration::v1::ListGroupsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListGroups(request);
   char const* function_name = __func__;
@@ -1108,8 +1114,9 @@ VmMigrationConnectionImpl::ListTargetProjects(
     google::cloud::vmmigration::v1::ListTargetProjectsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTargetProjects(request);
   char const* function_name = __func__;
@@ -1239,7 +1246,7 @@ VmMigrationConnectionImpl::DeleteTargetProject(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

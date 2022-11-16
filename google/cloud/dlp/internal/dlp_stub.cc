@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace dlp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dlp_internal {
 
 DlpServiceStub::~DlpServiceStub() = default;
 
@@ -452,7 +452,7 @@ Status DefaultDlpServiceStub::FinishDlpJob(
   return google::cloud::Status();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

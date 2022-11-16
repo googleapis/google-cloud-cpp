@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_internal {
 
 class TransitionRouteGroupsLogging : public TransitionRouteGroupsStub {
  public:
@@ -73,8 +73,8 @@ class TransitionRouteGroupsLogging : public TransitionRouteGroupsStub {
   std::set<std::string> components_;
 };  // TransitionRouteGroupsLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

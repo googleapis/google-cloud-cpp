@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks_internal {
 
 class ManagedNotebookServiceAuth : public ManagedNotebookServiceStub {
  public:
@@ -110,8 +110,8 @@ class ManagedNotebookServiceAuth : public ManagedNotebookServiceStub {
   std::shared_ptr<ManagedNotebookServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices {
 
 using GameServerConfigsServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        gameservices_internal::GameServerConfigsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceRetryTraits>;
 
 using GameServerConfigsServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        gameservices_internal::GameServerConfigsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceRetryTraits>;
 
 using GameServerConfigsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        gameservices_internal::GameServerConfigsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceRetryTraits>;
 
 /**
  * The `GameServerConfigsServiceConnection` object for
@@ -62,7 +62,7 @@ using GameServerConfigsServiceLimitedErrorCountRetryPolicy =
  * `MakeGameServerConfigsServiceConnection()`.
  *
  * For mocking, see
- * `gameservices_mocks::MockGameServerConfigsServiceConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockGameServerConfigsServiceConnection`.
  */
 class GameServerConfigsServiceConnection {
  public:
@@ -102,7 +102,8 @@ class GameServerConfigsServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::gameservices::GameServerConfigsServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::GameServerConfigsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -113,8 +114,8 @@ class GameServerConfigsServiceConnection {
 std::shared_ptr<GameServerConfigsServiceConnection>
 MakeGameServerConfigsServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

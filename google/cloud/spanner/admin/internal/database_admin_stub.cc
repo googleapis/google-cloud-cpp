@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace spanner_admin_internal {
 
 DatabaseAdminStub::~DatabaseAdminStub() = default;
 
@@ -312,8 +312,8 @@ future<Status> DefaultDatabaseAdminStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

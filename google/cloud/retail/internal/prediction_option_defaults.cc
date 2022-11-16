@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,28 +39,31 @@ Options PredictionServiceDefaultOptions(Options options) {
       "retail.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<retail::PredictionServiceRetryPolicyOption>()) {
-    options.set<retail::PredictionServiceRetryPolicyOption>(
-        retail::PredictionServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::PredictionServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<retail::PredictionServiceBackoffPolicyOption>()) {
-    options.set<retail::PredictionServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::PredictionServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::PredictionServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<retail::PredictionServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<retail::PredictionServiceConnectionIdempotencyPolicyOption>(
-        retail::MakeDefaultPredictionServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       PredictionServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    PredictionServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultPredictionServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

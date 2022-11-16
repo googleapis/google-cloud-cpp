@@ -24,13 +24,13 @@
 
 namespace google {
 namespace cloud {
-namespace policytroubleshooter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace policytroubleshooter_internal {
 
 Options IamCheckerDefaultOptions(Options options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace video_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_mocks {
 
 /**
  * A class to mock `TranscoderServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockTranscoderServiceConnection
-    : public video::TranscoderServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::TranscoderServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -93,8 +93,8 @@ class MockTranscoderServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

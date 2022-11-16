@@ -27,13 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_internal {
 
 DataCatalogConnectionImpl::DataCatalogConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<datacatalog_internal::DataCatalogStub> stub,
-    Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataCatalogStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -44,8 +43,9 @@ DataCatalogConnectionImpl::SearchCatalog(
     google::cloud::datacatalog::v1::SearchCatalogRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<datacatalog::DataCatalogRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataCatalogRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->SearchCatalog(request);
   char const* function_name = __func__;
@@ -126,8 +126,9 @@ DataCatalogConnectionImpl::ListEntryGroups(
     google::cloud::datacatalog::v1::ListEntryGroupsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<datacatalog::DataCatalogRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataCatalogRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListEntryGroups(request);
   char const* function_name = __func__;
@@ -226,8 +227,9 @@ DataCatalogConnectionImpl::ListEntries(
     google::cloud::datacatalog::v1::ListEntriesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<datacatalog::DataCatalogRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataCatalogRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListEntries(request);
   char const* function_name = __func__;
@@ -454,8 +456,9 @@ DataCatalogConnectionImpl::ListTags(
     google::cloud::datacatalog::v1::ListTagsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<datacatalog::DataCatalogRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataCatalogRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTags(request);
   char const* function_name = __func__;
@@ -544,7 +547,7 @@ DataCatalogConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

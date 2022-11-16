@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 class BatchControllerLogging : public BatchControllerStub {
  public:
@@ -72,8 +72,8 @@ class BatchControllerLogging : public BatchControllerStub {
   std::set<std::string> components_;
 };  // BatchControllerLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

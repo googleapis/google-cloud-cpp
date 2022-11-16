@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,26 +38,30 @@ Options CompletionDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_COMPLETION_AUTHORITY", "jobs.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<talent::CompletionRetryPolicyOption>()) {
-    options.set<talent::CompletionRetryPolicyOption>(
-        talent::CompletionLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CompletionRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CompletionRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::CompletionLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<talent::CompletionBackoffPolicyOption>()) {
-    options.set<talent::CompletionBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CompletionBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CompletionBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<talent::CompletionConnectionIdempotencyPolicyOption>()) {
-    options.set<talent::CompletionConnectionIdempotencyPolicyOption>(
-        talent::MakeDefaultCompletionConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::CompletionConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::CompletionConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultCompletionConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

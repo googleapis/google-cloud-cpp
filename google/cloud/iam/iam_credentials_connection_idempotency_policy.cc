@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam {
 
 using ::google::cloud::Idempotency;
 
@@ -60,8 +60,8 @@ MakeDefaultIAMCredentialsConnectionIdempotencyPolicy() {
   return absl::make_unique<IAMCredentialsConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

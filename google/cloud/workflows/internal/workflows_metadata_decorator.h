@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows_internal {
 
 class WorkflowsMetadata : public WorkflowsStub {
  public:
@@ -81,8 +81,8 @@ class WorkflowsMetadata : public WorkflowsStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 ConversationsConnectionImpl::ConversationsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_es_internal::ConversationsStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConversationsStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -58,8 +58,9 @@ ConversationsConnectionImpl::ListConversations(
     google::cloud::dialogflow::v2::ListConversationsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_es::ConversationsRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConversationsRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListConversations(request);
   char const* function_name = __func__;
@@ -118,8 +119,9 @@ ConversationsConnectionImpl::ListMessages(
     google::cloud::dialogflow::v2::ListMessagesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_es::ConversationsRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConversationsRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListMessages(request);
   char const* function_name = __func__;
@@ -146,7 +148,7 @@ ConversationsConnectionImpl::ListMessages(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

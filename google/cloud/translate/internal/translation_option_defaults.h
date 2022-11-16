@@ -24,13 +24,13 @@
 
 namespace google {
 namespace cloud {
-namespace translate_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace translate_internal {
 
 Options TranslationServiceDefaultOptions(Options options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

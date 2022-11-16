@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_internal {
 
 PolicyTagManagerSerializationMetadata::PolicyTagManagerSerializationMetadata(
     std::shared_ptr<PolicyTagManagerSerializationStub> child)
@@ -76,7 +76,7 @@ void PolicyTagManagerSerializationMetadata::SetMetadata(
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

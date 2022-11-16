@@ -35,20 +35,20 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 using WorkflowTemplateServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dataproc_internal::WorkflowTemplateServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceRetryTraits>;
 
 using WorkflowTemplateServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dataproc_internal::WorkflowTemplateServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceRetryTraits>;
 
 using WorkflowTemplateServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dataproc_internal::WorkflowTemplateServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceRetryTraits>;
 
 /**
  * The `WorkflowTemplateServiceConnection` object for
@@ -61,7 +61,8 @@ using WorkflowTemplateServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeWorkflowTemplateServiceConnection()`.
  *
- * For mocking, see `dataproc_mocks::MockWorkflowTemplateServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockWorkflowTemplateServiceConnection`.
  */
 class WorkflowTemplateServiceConnection {
  public:
@@ -117,7 +118,8 @@ class WorkflowTemplateServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dataproc::WorkflowTemplateServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -140,8 +142,8 @@ MakeWorkflowTemplateServiceConnection(std::string const& location,
 std::shared_ptr<WorkflowTemplateServiceConnection>
 MakeWorkflowTemplateServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace serviceusage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace serviceusage {
 
 ///
 /// Enables services that service consumers want to use on Google Cloud
@@ -235,8 +235,8 @@ class ServiceUsageClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

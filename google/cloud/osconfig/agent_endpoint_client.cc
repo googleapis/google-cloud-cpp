@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig {
 
 AgentEndpointServiceClient::AgentEndpointServiceClient(
     std::shared_ptr<AgentEndpointServiceConnection> connection, Options opts)
@@ -161,7 +161,7 @@ AgentEndpointServiceClient::ReportInventory(
   return connection_->ReportInventory(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

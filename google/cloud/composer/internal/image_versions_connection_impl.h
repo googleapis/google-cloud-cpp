@@ -34,16 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer_internal {
 
-class ImageVersionsConnectionImpl : public composer::ImageVersionsConnection {
+class ImageVersionsConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::ImageVersionsConnection {
  public:
   ~ImageVersionsConnectionImpl() override = default;
 
   ImageVersionsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<composer_internal::ImageVersionsStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ImageVersionsStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -53,43 +54,52 @@ class ImageVersionsConnectionImpl : public composer::ImageVersionsConnection {
                         ListImageVersionsRequest request) override;
 
  private:
-  std::unique_ptr<composer::ImageVersionsRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ImageVersionsRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<composer::ImageVersionsRetryPolicyOption>()) {
-      return options.get<composer::ImageVersionsRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ImageVersionsRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::ImageVersionsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<composer::ImageVersionsRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ImageVersionsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<composer::ImageVersionsBackoffPolicyOption>()) {
-      return options.get<composer::ImageVersionsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<composer::ImageVersionsBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<composer::ImageVersionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<composer::ImageVersionsConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ImageVersionsBackoffPolicyOption>()) {
       return options
-          .get<composer::ImageVersionsConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ImageVersionsBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<composer::ImageVersionsConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ImageVersionsBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ImageVersionsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ImageVersionsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ImageVersionsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ImageVersionsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<composer_internal::ImageVersionsStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ImageVersionsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

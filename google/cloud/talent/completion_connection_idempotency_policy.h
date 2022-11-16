@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 class CompletionConnectionIdempotencyPolicy {
  public:
@@ -44,8 +44,8 @@ class CompletionConnectionIdempotencyPolicy {
 std::unique_ptr<CompletionConnectionIdempotencyPolicy>
 MakeDefaultCompletionConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

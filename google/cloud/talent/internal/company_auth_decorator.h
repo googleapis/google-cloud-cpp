@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
 class CompanyServiceAuth : public CompanyServiceStub {
  public:
@@ -63,8 +63,8 @@ class CompanyServiceAuth : public CompanyServiceStub {
   std::shared_ptr<CompanyServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

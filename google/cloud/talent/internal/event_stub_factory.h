@@ -28,14 +28,14 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
 std::shared_ptr<EventServiceStub> CreateDefaultEventServiceStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

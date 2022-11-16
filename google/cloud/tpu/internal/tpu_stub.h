@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace tpu_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu_internal {
 
 class TpuStub {
  public:
@@ -177,8 +177,8 @@ class DefaultTpuStub : public TpuStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

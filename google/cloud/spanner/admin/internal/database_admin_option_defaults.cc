@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace spanner_admin_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,40 +39,43 @@ Options DatabaseAdminDefaultOptions(Options options) {
       "spanner.googleapis.com");
   options = google::cloud::internal::PopulateGrpcOptions(
       std::move(options), "SPANNER_EMULATOR_HOST");
-  if (!options.has<spanner_admin::DatabaseAdminRetryPolicyOption>()) {
-    options.set<spanner_admin::DatabaseAdminRetryPolicyOption>(
-        spanner_admin::DatabaseAdminLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::DatabaseAdminLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<spanner_admin::DatabaseAdminBackoffPolicyOption>()) {
-    options.set<spanner_admin::DatabaseAdminBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DatabaseAdminBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DatabaseAdminBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<spanner_admin::DatabaseAdminPollingPolicyOption>()) {
-    options.set<spanner_admin::DatabaseAdminPollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DatabaseAdminPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DatabaseAdminPollingPolicyOption>(
         GenericPollingPolicy<
-            spanner_admin::DatabaseAdminRetryPolicyOption::Type,
-            spanner_admin::DatabaseAdminBackoffPolicyOption::Type>(
-            options.get<spanner_admin::DatabaseAdminRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::DatabaseAdminBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicyOption>()
                 ->clone(),
-            options.get<spanner_admin::DatabaseAdminBackoffPolicyOption>()
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::DatabaseAdminBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<
-          spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()) {
-    options.set<spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>(
-        spanner_admin::MakeDefaultDatabaseAdminConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       DatabaseAdminConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::DatabaseAdminConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultDatabaseAdminConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

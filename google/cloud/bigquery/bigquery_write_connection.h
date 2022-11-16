@@ -32,20 +32,20 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 using BigQueryWriteRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::BigQueryWriteRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BigQueryWriteRetryTraits>;
 
 using BigQueryWriteLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::BigQueryWriteRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BigQueryWriteRetryTraits>;
 
 using BigQueryWriteLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::BigQueryWriteRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BigQueryWriteRetryTraits>;
 
 /**
  * The `BigQueryWriteConnection` object for `BigQueryWriteClient`.
@@ -57,7 +57,7 @@ using BigQueryWriteLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeBigQueryWriteConnection()`.
  *
- * For mocking, see `bigquery_mocks::MockBigQueryWriteConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockBigQueryWriteConnection`.
  */
 class BigQueryWriteConnection {
  public:
@@ -109,7 +109,7 @@ class BigQueryWriteConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::BigQueryWritePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::BigQueryWritePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -120,8 +120,8 @@ class BigQueryWriteConnection {
 std::shared_ptr<BigQueryWriteConnection> MakeBigQueryWriteConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

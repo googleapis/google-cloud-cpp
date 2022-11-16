@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace webrisk_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace webrisk_internal {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct WebRiskServiceRetryTraits {
@@ -35,8 +35,8 @@ struct WebRiskServiceRetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

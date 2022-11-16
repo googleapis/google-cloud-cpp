@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 class ReservationServiceStub {
  public:
@@ -297,8 +297,8 @@ class DefaultReservationServiceStub : public ReservationServiceStub {
       grpc_stub_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

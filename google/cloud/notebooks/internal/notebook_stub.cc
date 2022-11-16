@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks_internal {
 
 NotebookServiceStub::~NotebookServiceStub() = default;
 
@@ -526,7 +526,7 @@ future<Status> DefaultNotebookServiceStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

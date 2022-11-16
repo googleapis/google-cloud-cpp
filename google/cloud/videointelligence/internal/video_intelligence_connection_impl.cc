@@ -27,13 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence_internal {
 
 VideoIntelligenceServiceConnectionImpl::VideoIntelligenceServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub>
-        stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -69,7 +68,7 @@ VideoIntelligenceServiceConnectionImpl::AnnotateVideo(
       idempotency_policy()->AnnotateVideo(request), polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

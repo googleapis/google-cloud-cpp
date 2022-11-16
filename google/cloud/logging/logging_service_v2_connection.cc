@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace logging {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace logging {
 
 LoggingServiceV2Connection::~LoggingServiceV2Connection() = default;
 
@@ -95,15 +95,15 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
                                  LoggingServiceV2PolicyOptionList>(options,
                                                                    __func__);
   options =
-      logging_internal::LoggingServiceV2DefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::LoggingServiceV2DefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = logging_internal::CreateDefaultLoggingServiceV2Stub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultLoggingServiceV2Stub(
       background->cq(), options);
-  return std::make_shared<logging_internal::LoggingServiceV2ConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2ConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

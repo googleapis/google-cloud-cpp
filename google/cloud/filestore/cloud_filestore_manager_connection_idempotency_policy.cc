@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace filestore {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore {
 
 using ::google::cloud::Idempotency;
 
@@ -96,7 +96,7 @@ MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy() {
   return absl::make_unique<CloudFilestoreManagerConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

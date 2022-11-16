@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace ids {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace ids {
 
 IDSClient::IDSClient(std::shared_ptr<IDSConnection> connection, Options opts)
     : connection_(std::move(connection)),
@@ -92,7 +92,7 @@ IDSClient::DeleteEndpoint(
   return connection_->DeleteEndpoint(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing {
 
 class BudgetServiceConnectionIdempotencyPolicy {
  public:
@@ -57,8 +57,8 @@ class BudgetServiceConnectionIdempotencyPolicy {
 std::unique_ptr<BudgetServiceConnectionIdempotencyPolicy>
 MakeDefaultBudgetServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

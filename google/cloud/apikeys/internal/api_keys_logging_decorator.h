@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace apikeys_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apikeys_internal {
 
 class ApiKeysLogging : public ApiKeysStub {
  public:
@@ -91,8 +91,8 @@ class ApiKeysLogging : public ApiKeysStub {
   std::set<std::string> components_;
 };  // ApiKeysLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

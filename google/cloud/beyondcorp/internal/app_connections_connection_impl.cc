@@ -29,12 +29,12 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp_internal {
 
 AppConnectionsServiceConnectionImpl::AppConnectionsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<beyondcorp_internal::AppConnectionsServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -47,9 +47,9 @@ AppConnectionsServiceConnectionImpl::ListAppConnections(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<beyondcorp::AppConnectionsServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAppConnections(request);
   char const* function_name = __func__;
@@ -197,9 +197,9 @@ AppConnectionsServiceConnectionImpl::ResolveAppConnections(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<beyondcorp::AppConnectionsServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ResolveAppConnections(request);
   char const* function_name = __func__;
@@ -230,7 +230,7 @@ AppConnectionsServiceConnectionImpl::ResolveAppConnections(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

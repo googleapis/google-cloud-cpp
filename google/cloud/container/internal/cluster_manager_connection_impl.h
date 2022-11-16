@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace container_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace container_internal {
 
 class ClusterManagerConnectionImpl
-    : public container::ClusterManagerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ClusterManagerConnection {
  public:
   ~ClusterManagerConnectionImpl() override = default;
 
   ClusterManagerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<container_internal::ClusterManagerStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ClusterManagerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -155,45 +155,54 @@ class ClusterManagerConnectionImpl
       google::container::v1::ListUsableSubnetworksRequest request) override;
 
  private:
-  std::unique_ptr<container::ClusterManagerRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ClusterManagerRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<container::ClusterManagerRetryPolicyOption>()) {
-      return options.get<container::ClusterManagerRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ClusterManagerRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ClusterManagerRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<container::ClusterManagerRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ClusterManagerRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<container::ClusterManagerBackoffPolicyOption>()) {
-      return options.get<container::ClusterManagerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<container::ClusterManagerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<container::ClusterManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            container::ClusterManagerConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ClusterManagerBackoffPolicyOption>()) {
       return options
-          .get<container::ClusterManagerConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ClusterManagerBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<container::ClusterManagerConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ClusterManagerBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ClusterManagerConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ClusterManagerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ClusterManagerConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ClusterManagerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<container_internal::ClusterManagerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ClusterManagerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

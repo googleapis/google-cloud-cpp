@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace webrisk {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace webrisk {
 
 WebRiskServiceClient::WebRiskServiceClient(
     std::shared_ptr<WebRiskServiceConnection> connection, Options opts)
@@ -113,7 +113,7 @@ WebRiskServiceClient::CreateSubmission(
   return connection_->CreateSubmission(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

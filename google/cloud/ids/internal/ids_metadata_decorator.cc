@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace ids_internal {
 
 IDSMetadata::IDSMetadata(std::shared_ptr<IDSStub> child)
     : child_(std::move(child)),
@@ -99,7 +99,7 @@ void IDSMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

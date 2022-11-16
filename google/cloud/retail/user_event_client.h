@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 ///
 /// Service for ingesting end user actions on the customer website.
@@ -210,8 +210,8 @@ class UserEventServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

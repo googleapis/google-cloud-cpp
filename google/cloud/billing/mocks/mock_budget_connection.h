@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing_mocks {
 
 /**
  * A class to mock `BudgetServiceConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockBudgetServiceConnection : public billing::BudgetServiceConnection {
+class MockBudgetServiceConnection
+    : public GOOGLE_CLOUD_CPP_NS::BudgetServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -72,8 +73,8 @@ class MockBudgetServiceConnection : public billing::BudgetServiceConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

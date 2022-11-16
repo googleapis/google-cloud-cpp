@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing_internal {
 
 CloudCatalogAuth::CloudCatalogAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -48,7 +48,7 @@ CloudCatalogAuth::ListSkus(
   return child_->ListSkus(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
 GrafeasAuth::GrafeasAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -142,7 +142,7 @@ GrafeasAuth::ListNoteOccurrences(
   return child_->ListNoteOccurrences(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms {
 
 using KeyManagementServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        kms_internal::KeyManagementServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryTraits>;
 
 using KeyManagementServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        kms_internal::KeyManagementServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryTraits>;
 
 using KeyManagementServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        kms_internal::KeyManagementServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryTraits>;
 
 /**
  * The `KeyManagementServiceConnection` object for `KeyManagementServiceClient`.
@@ -56,7 +56,8 @@ using KeyManagementServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeKeyManagementServiceConnection()`.
  *
- * For mocking, see `kms_mocks::MockKeyManagementServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockKeyManagementServiceConnection`.
  */
 class KeyManagementServiceConnection {
  public:
@@ -169,7 +170,7 @@ class KeyManagementServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::kms::KeyManagementServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::KeyManagementServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -180,8 +181,8 @@ class KeyManagementServiceConnection {
 std::shared_ptr<KeyManagementServiceConnection>
 MakeKeyManagementServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

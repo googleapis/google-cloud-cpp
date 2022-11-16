@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 EnvironmentsClient::EnvironmentsClient(
     std::shared_ptr<EnvironmentsConnection> connection, Options opts)
@@ -86,7 +86,7 @@ EnvironmentsClient::GetEnvironmentHistory(
   return connection_->GetEnvironmentHistory(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

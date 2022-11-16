@@ -37,16 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream_internal {
 
-class DatastreamConnectionImpl : public datastream::DatastreamConnection {
+class DatastreamConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::DatastreamConnection {
  public:
   ~DatastreamConnectionImpl() override = default;
 
   DatastreamConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<datastream_internal::DatastreamStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatastreamStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -156,51 +157,58 @@ class DatastreamConnectionImpl : public datastream::DatastreamConnection {
       override;
 
  private:
-  std::unique_ptr<datastream::DatastreamRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<datastream::DatastreamRetryPolicyOption>()) {
-      return options.get<datastream::DatastreamRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<datastream::DatastreamRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<datastream::DatastreamBackoffPolicyOption>()) {
-      return options.get<datastream::DatastreamBackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DatastreamBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::DatastreamBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<datastream::DatastreamBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::DatastreamBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<datastream::DatastreamConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DatastreamConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<datastream::DatastreamConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        DatastreamConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<datastream::DatastreamConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   DatastreamConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<datastream::DatastreamConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::DatastreamConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<datastream::DatastreamPollingPolicyOption>()) {
-      return options.get<datastream::DatastreamPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DatastreamPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::DatastreamPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<datastream::DatastreamPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::DatastreamPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<datastream_internal::DatastreamStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatastreamStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

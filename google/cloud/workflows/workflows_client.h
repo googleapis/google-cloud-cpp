@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows {
 
 ///
 /// Workflows is used to deploy and execute workflow programs.
@@ -312,8 +312,8 @@ class WorkflowsClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

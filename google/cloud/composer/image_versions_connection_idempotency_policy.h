@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer {
 
 class ImageVersionsConnectionIdempotencyPolicy {
  public:
@@ -46,8 +46,8 @@ class ImageVersionsConnectionIdempotencyPolicy {
 std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
 MakeDefaultImageVersionsConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

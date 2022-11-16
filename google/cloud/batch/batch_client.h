@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace batch {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace batch {
 
 ///
 /// Google Batch Service.
@@ -322,8 +322,8 @@ class BatchServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

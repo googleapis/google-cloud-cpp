@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub_internal {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct GkeHubRetryTraits {
@@ -35,8 +35,8 @@ struct GkeHubRetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

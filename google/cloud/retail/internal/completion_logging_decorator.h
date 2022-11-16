@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 class CompletionServiceLogging : public CompletionServiceStub {
  public:
@@ -65,8 +65,8 @@ class CompletionServiceLogging : public CompletionServiceStub {
   std::set<std::string> components_;
 };  // CompletionServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

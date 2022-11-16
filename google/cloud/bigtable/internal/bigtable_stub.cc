@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_internal {
 
 BigtableStub::~BigtableStub() = default;
 
@@ -207,7 +207,7 @@ DefaultBigtableStub::AsyncReadModifyWriteRow(
       request, std::move(context));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

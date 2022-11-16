@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -80,8 +80,8 @@ using StorageTransferServicePolicyOptionList =
                StorageTransferServicePollingPolicyOption,
                StorageTransferServiceConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 using DashboardsServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        monitoring_internal::DashboardsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DashboardsServiceRetryTraits>;
 
 using DashboardsServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        monitoring_internal::DashboardsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DashboardsServiceRetryTraits>;
 
 using DashboardsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        monitoring_internal::DashboardsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DashboardsServiceRetryTraits>;
 
 /**
  * The `DashboardsServiceConnection` object for `DashboardsServiceClient`.
@@ -56,7 +56,8 @@ using DashboardsServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeDashboardsServiceConnection()`.
  *
- * For mocking, see `monitoring_mocks::MockDashboardsServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockDashboardsServiceConnection`.
  */
 class DashboardsServiceConnection {
  public:
@@ -98,7 +99,7 @@ class DashboardsServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::monitoring::DashboardsServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::DashboardsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -109,8 +110,8 @@ class DashboardsServiceConnection {
 std::shared_ptr<DashboardsServiceConnection> MakeDashboardsServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

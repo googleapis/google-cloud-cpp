@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex_internal {
 
 DataplexServiceStub::~DataplexServiceStub() = default;
 
@@ -477,7 +477,7 @@ future<Status> DefaultDataplexServiceStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

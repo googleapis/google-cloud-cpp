@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 AgentsClient::AgentsClient(std::shared_ptr<AgentsConnection> connection,
                            Options opts)
@@ -149,7 +149,7 @@ AgentsClient::GetAgentValidationResult(
   return connection_->GetAgentValidationResult(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

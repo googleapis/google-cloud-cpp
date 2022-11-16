@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 using ::google::cloud::Idempotency;
 
@@ -50,7 +50,7 @@ MakeDefaultChangelogsConnectionIdempotencyPolicy() {
   return absl::make_unique<ChangelogsConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

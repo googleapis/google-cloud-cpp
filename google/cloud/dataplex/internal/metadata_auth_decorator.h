@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex_internal {
 
 class MetadataServiceAuth : public MetadataServiceStub {
  public:
@@ -82,8 +82,8 @@ class MetadataServiceAuth : public MetadataServiceStub {
   std::shared_ptr<MetadataServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

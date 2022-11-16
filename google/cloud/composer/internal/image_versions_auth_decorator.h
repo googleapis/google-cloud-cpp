@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer_internal {
 
 class ImageVersionsAuth : public ImageVersionsStub {
  public:
@@ -49,8 +49,8 @@ class ImageVersionsAuth : public ImageVersionsStub {
   std::shared_ptr<ImageVersionsStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

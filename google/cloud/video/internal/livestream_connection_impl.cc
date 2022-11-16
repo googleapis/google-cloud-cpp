@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 LivestreamServiceConnectionImpl::LivestreamServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<video_internal::LivestreamServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LivestreamServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -74,8 +74,9 @@ LivestreamServiceConnectionImpl::ListChannels(
     google::cloud::video::livestream::v1::ListChannelsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<video::LivestreamServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListChannels(request);
   char const* function_name = __func__;
@@ -263,8 +264,9 @@ LivestreamServiceConnectionImpl::ListInputs(
     google::cloud::video::livestream::v1::ListInputsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<video::LivestreamServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListInputs(request);
   char const* function_name = __func__;
@@ -376,8 +378,9 @@ LivestreamServiceConnectionImpl::ListEvents(
     google::cloud::video::livestream::v1::ListEventsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<video::LivestreamServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListEvents(request);
   char const* function_name = __func__;
@@ -425,7 +428,7 @@ Status LivestreamServiceConnectionImpl::DeleteEvent(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

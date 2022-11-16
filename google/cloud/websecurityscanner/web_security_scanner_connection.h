@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace websecurityscanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace websecurityscanner {
 
 using WebSecurityScannerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        websecurityscanner_internal::WebSecurityScannerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryTraits>;
 
 using WebSecurityScannerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        websecurityscanner_internal::WebSecurityScannerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryTraits>;
 
 using WebSecurityScannerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        websecurityscanner_internal::WebSecurityScannerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryTraits>;
 
 /**
  * The `WebSecurityScannerConnection` object for `WebSecurityScannerClient`.
@@ -57,7 +57,7 @@ using WebSecurityScannerLimitedErrorCountRetryPolicy =
  * To create a concrete instance, see `MakeWebSecurityScannerConnection()`.
  *
  * For mocking, see
- * `websecurityscanner_mocks::MockWebSecurityScannerConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockWebSecurityScannerConnection`.
  */
 class WebSecurityScannerConnection {
  public:
@@ -135,7 +135,7 @@ class WebSecurityScannerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::websecurityscanner::WebSecurityScannerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::WebSecurityScannerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -146,8 +146,8 @@ class WebSecurityScannerConnection {
 std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

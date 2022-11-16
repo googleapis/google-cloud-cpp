@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -41,49 +41,52 @@ Options VideoIntelligenceServiceDefaultOptions(Options options) {
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<
-          videointelligence::VideoIntelligenceServiceRetryPolicyOption>()) {
-    options.set<videointelligence::VideoIntelligenceServiceRetryPolicyOption>(
-        videointelligence::VideoIntelligenceServiceLimitedTimeRetryPolicy(
+          GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
   if (!options.has<
-          videointelligence::VideoIntelligenceServiceBackoffPolicyOption>()) {
-    options.set<videointelligence::VideoIntelligenceServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+          GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceBackoffPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
   if (!options.has<
-          videointelligence::VideoIntelligenceServicePollingPolicyOption>()) {
-    options.set<videointelligence::VideoIntelligenceServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            videointelligence::VideoIntelligenceServiceRetryPolicyOption::Type,
-            videointelligence::VideoIntelligenceServiceBackoffPolicyOption::
-                Type>(
-            options
-                .get<videointelligence::
-                         VideoIntelligenceServiceRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<videointelligence::
-                         VideoIntelligenceServiceBackoffPolicyOption>()
-                ->clone())
-            .clone());
+          GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServicePollingPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServicePollingPolicyOption>(
+            GenericPollingPolicy<
+                GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceRetryPolicyOption::
+                    Type,
+                GOOGLE_CLOUD_CPP_NS::
+                    VideoIntelligenceServiceBackoffPolicyOption::Type>(
+                options
+                    .get<GOOGLE_CLOUD_CPP_NS::
+                             VideoIntelligenceServiceRetryPolicyOption>()
+                    ->clone(),
+                options
+                    .get<GOOGLE_CLOUD_CPP_NS::
+                             VideoIntelligenceServiceBackoffPolicyOption>()
+                    ->clone())
+                .clone());
   }
   if (!options.has<
-          videointelligence::
+          GOOGLE_CLOUD_CPP_NS::
               VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<videointelligence::
+    options.set<GOOGLE_CLOUD_CPP_NS::
                     VideoIntelligenceServiceConnectionIdempotencyPolicyOption>(
-        videointelligence::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

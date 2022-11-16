@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms_internal {
 
 class EkmServiceLogging : public EkmServiceStub {
  public:
@@ -63,8 +63,8 @@ class EkmServiceLogging : public EkmServiceStub {
   std::set<std::string> components_;
 };  // EkmServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

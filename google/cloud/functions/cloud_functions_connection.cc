@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace functions {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace functions {
 
 CloudFunctionsServiceConnection::~CloudFunctionsServiceConnection() = default;
 
@@ -113,17 +113,17 @@ MakeCloudFunctionsServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  CloudFunctionsServicePolicyOptionList>(
       options, __func__);
-  options = functions_internal::CloudFunctionsServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::CloudFunctionsServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = functions_internal::CreateDefaultCloudFunctionsServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultCloudFunctionsServiceStub(
       background->cq(), options);
   return std::make_shared<
-      functions_internal::CloudFunctionsServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::CloudFunctionsServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace functions
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

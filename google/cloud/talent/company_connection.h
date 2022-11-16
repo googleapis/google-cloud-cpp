@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 using CompanyServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        talent_internal::CompanyServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CompanyServiceRetryTraits>;
 
 using CompanyServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        talent_internal::CompanyServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CompanyServiceRetryTraits>;
 
 using CompanyServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        talent_internal::CompanyServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CompanyServiceRetryTraits>;
 
 /**
  * The `CompanyServiceConnection` object for `CompanyServiceClient`.
@@ -56,7 +56,7 @@ using CompanyServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeCompanyServiceConnection()`.
  *
- * For mocking, see `talent_mocks::MockCompanyServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockCompanyServiceConnection`.
  */
 class CompanyServiceConnection {
  public:
@@ -93,7 +93,7 @@ class CompanyServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::talent::CompanyServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CompanyServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -104,8 +104,8 @@ class CompanyServiceConnection {
 std::shared_ptr<CompanyServiceConnection> MakeCompanyServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

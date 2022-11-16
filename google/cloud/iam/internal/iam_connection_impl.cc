@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam_internal {
 
 IAMConnectionImpl::IAMConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iam_internal::IAMStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IAMStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -43,7 +43,8 @@ IAMConnectionImpl::ListServiceAccounts(
     google::iam::admin::v1::ListServiceAccountsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IAMRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListServiceAccounts(request);
   char const* function_name = __func__;
@@ -301,7 +302,8 @@ IAMConnectionImpl::QueryGrantableRoles(
     google::iam::admin::v1::QueryGrantableRolesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IAMRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->QueryGrantableRoles(request);
   char const* function_name = __func__;
@@ -331,7 +333,8 @@ StreamRange<google::iam::admin::v1::Role> IAMConnectionImpl::ListRoles(
     google::iam::admin::v1::ListRolesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IAMRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRoles(request);
   char const* function_name = __func__;
@@ -420,7 +423,8 @@ IAMConnectionImpl::QueryTestablePermissions(
     google::iam::admin::v1::QueryTestablePermissionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<iam::IAMRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IAMRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->QueryTestablePermissions(request);
   char const* function_name = __func__;
@@ -475,8 +479,8 @@ IAMConnectionImpl::LintPolicy(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

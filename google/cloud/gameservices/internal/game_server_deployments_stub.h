@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices_internal {
 
 class GameServerDeploymentsServiceStub {
  public:
@@ -193,8 +193,8 @@ class DefaultGameServerDeploymentsServiceStub
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

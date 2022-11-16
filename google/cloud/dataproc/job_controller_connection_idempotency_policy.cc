@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 using ::google::cloud::Idempotency;
 
@@ -75,7 +75,7 @@ MakeDefaultJobControllerConnectionIdempotencyPolicy() {
   return absl::make_unique<JobControllerConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

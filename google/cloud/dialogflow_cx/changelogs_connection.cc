@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 ChangelogsConnection::~ChangelogsConnection() = default;
 
@@ -54,12 +54,12 @@ std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  ChangelogsPolicyOptionList>(options, __func__);
-  options = dialogflow_cx_internal::ChangelogsDefaultOptions(
-      location, std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::ChangelogsDefaultOptions(location,
+                                                          std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_cx_internal::CreateDefaultChangelogsStub(
-      background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::ChangelogsConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultChangelogsStub(background->cq(),
+                                                               options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ChangelogsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -68,7 +68,7 @@ std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(
   return MakeChangelogsConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

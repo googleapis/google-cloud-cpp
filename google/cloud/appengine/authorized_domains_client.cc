@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 AuthorizedDomainsClient::AuthorizedDomainsClient(
     std::shared_ptr<AuthorizedDomainsConnection> connection, Options opts)
@@ -38,7 +38,7 @@ AuthorizedDomainsClient::ListAuthorizedDomains(
   return connection_->ListAuthorizedDomains(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

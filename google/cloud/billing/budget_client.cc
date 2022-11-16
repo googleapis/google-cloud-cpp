@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing {
 
 BudgetServiceClient::BudgetServiceClient(
     std::shared_ptr<BudgetServiceConnection> connection, Options opts)
@@ -116,7 +116,7 @@ Status BudgetServiceClient::DeleteBudget(
   return connection_->DeleteBudget(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

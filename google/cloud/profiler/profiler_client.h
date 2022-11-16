@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace profiler {
 
 ///
 /// Manage the collection of continuous profiling data provided by profiling
@@ -170,8 +170,8 @@ class ProfilerServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

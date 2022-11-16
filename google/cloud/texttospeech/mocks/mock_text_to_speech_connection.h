@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace texttospeech_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace texttospeech_mocks {
 
 /**
  * A class to mock `TextToSpeechConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockTextToSpeechConnection : public texttospeech::TextToSpeechConnection {
+class MockTextToSpeechConnection
+    : public GOOGLE_CLOUD_CPP_NS::TextToSpeechConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -58,8 +59,8 @@ class MockTextToSpeechConnection : public texttospeech::TextToSpeechConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

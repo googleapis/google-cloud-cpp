@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace recommender_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,27 +38,30 @@ Options RecommenderDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_RECOMMENDER_AUTHORITY", "recommender.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<recommender::RecommenderRetryPolicyOption>()) {
-    options.set<recommender::RecommenderRetryPolicyOption>(
-        recommender::RecommenderLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::RecommenderRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::RecommenderRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::RecommenderLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<recommender::RecommenderBackoffPolicyOption>()) {
-    options.set<recommender::RecommenderBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::RecommenderBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::RecommenderBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<recommender::RecommenderConnectionIdempotencyPolicyOption>()) {
-    options.set<recommender::RecommenderConnectionIdempotencyPolicyOption>(
-        recommender::MakeDefaultRecommenderConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       RecommenderConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::RecommenderConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultRecommenderConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

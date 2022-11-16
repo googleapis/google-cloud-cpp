@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace speech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech {
 
 class SpeechConnectionIdempotencyPolicy {
  public:
@@ -47,8 +47,8 @@ class SpeechConnectionIdempotencyPolicy {
 std::unique_ptr<SpeechConnectionIdempotencyPolicy>
 MakeDefaultSpeechConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

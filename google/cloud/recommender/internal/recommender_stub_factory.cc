@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace recommender_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender_internal {
 
 std::shared_ptr<RecommenderStub> CreateDefaultRecommenderStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -58,7 +58,7 @@ std::shared_ptr<RecommenderStub> CreateDefaultRecommenderStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

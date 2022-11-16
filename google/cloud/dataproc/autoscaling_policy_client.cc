@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 AutoscalingPolicyServiceClient::AutoscalingPolicyServiceClient(
     std::shared_ptr<AutoscalingPolicyServiceConnection> connection,
@@ -119,7 +119,7 @@ Status AutoscalingPolicyServiceClient::DeleteAutoscalingPolicy(
   return connection_->DeleteAutoscalingPolicy(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

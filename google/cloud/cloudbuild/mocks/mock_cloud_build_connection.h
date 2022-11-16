@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace cloudbuild_mocks {
 
 /**
  * A class to mock `CloudBuildConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockCloudBuildConnection : public cloudbuild::CloudBuildConnection {
+class MockCloudBuildConnection
+    : public GOOGLE_CLOUD_CPP_NS::CloudBuildConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -151,8 +152,8 @@ class MockCloudBuildConnection : public cloudbuild::CloudBuildConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

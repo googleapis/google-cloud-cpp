@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 AnalyticsHubServiceConnectionImpl::AnalyticsHubServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_internal::AnalyticsHubServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AnalyticsHubServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,7 +45,8 @@ AnalyticsHubServiceConnectionImpl::ListDataExchanges(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::AnalyticsHubServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::AnalyticsHubServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDataExchanges(request);
@@ -81,7 +82,8 @@ AnalyticsHubServiceConnectionImpl::ListOrgDataExchanges(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::AnalyticsHubServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::AnalyticsHubServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListOrgDataExchanges(request);
@@ -175,7 +177,8 @@ AnalyticsHubServiceConnectionImpl::ListListings(
     google::cloud::bigquery::analyticshub::v1::ListListingsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::AnalyticsHubServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::AnalyticsHubServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListListings(request);
@@ -312,7 +315,7 @@ AnalyticsHubServiceConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace optimization_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization_mocks {
 
 /**
  * A class to mock `FleetRoutingConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockFleetRoutingConnection : public optimization::FleetRoutingConnection {
+class MockFleetRoutingConnection
+    : public GOOGLE_CLOUD_CPP_NS::FleetRoutingConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -60,8 +61,8 @@ class MockFleetRoutingConnection : public optimization::FleetRoutingConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

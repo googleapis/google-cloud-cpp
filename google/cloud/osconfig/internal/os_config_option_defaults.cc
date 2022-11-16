@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,28 +39,30 @@ Options OsConfigServiceDefaultOptions(Options options) {
       "osconfig.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<osconfig::OsConfigServiceRetryPolicyOption>()) {
-    options.set<osconfig::OsConfigServiceRetryPolicyOption>(
-        osconfig::OsConfigServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::OsConfigServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::OsConfigServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::OsConfigServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<osconfig::OsConfigServiceBackoffPolicyOption>()) {
-    options.set<osconfig::OsConfigServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::OsConfigServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::OsConfigServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<osconfig::OsConfigServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<osconfig::OsConfigServiceConnectionIdempotencyPolicyOption>(
-        osconfig::MakeDefaultOsConfigServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       OsConfigServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::OsConfigServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultOsConfigServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

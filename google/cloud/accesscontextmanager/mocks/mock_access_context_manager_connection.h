@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accesscontextmanager_mocks {
 
 /**
  * A class to mock `AccessContextManagerConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockAccessContextManagerConnection
-    : public accesscontextmanager::AccessContextManagerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AccessContextManagerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -229,8 +229,8 @@ class MockAccessContextManagerConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

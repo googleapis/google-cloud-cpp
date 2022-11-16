@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -40,31 +40,37 @@ Options IdentityAwareProxyOAuthServiceDefaultOptions(Options options) {
       "iap.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<iap::IdentityAwareProxyOAuthServiceRetryPolicyOption>()) {
-    options.set<iap::IdentityAwareProxyOAuthServiceRetryPolicyOption>(
-        iap::IdentityAwareProxyOAuthServiceLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       IdentityAwareProxyOAuthServiceRetryPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyOAuthServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            IdentityAwareProxyOAuthServiceLimitedTimeRetryPolicy(
+                std::chrono::minutes(30))
+                .clone());
   }
-  if (!options.has<iap::IdentityAwareProxyOAuthServiceBackoffPolicyOption>()) {
-    options.set<iap::IdentityAwareProxyOAuthServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       IdentityAwareProxyOAuthServiceBackoffPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyOAuthServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<
-          iap::
+          GOOGLE_CLOUD_CPP_NS::
               IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption>()) {
     options.set<
-        iap::IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption>(
-        iap::
+        GOOGLE_CLOUD_CPP_NS::
+            IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

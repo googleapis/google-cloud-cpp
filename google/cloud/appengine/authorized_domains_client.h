@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 ///
 /// Manages domains a user is authorized to administer. To authorize use of a
@@ -111,8 +111,8 @@ class AuthorizedDomainsClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

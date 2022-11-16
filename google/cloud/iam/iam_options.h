@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -67,8 +67,8 @@ using IAMPolicyOptionList =
     OptionList<IAMRetryPolicyOption, IAMBackoffPolicyOption,
                IAMConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

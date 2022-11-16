@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization {
 
 using BinauthzManagementServiceV1RetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        binaryauthorization_internal::BinauthzManagementServiceV1RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1RetryTraits>;
 
 using BinauthzManagementServiceV1LimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        binaryauthorization_internal::BinauthzManagementServiceV1RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1RetryTraits>;
 
 using BinauthzManagementServiceV1LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        binaryauthorization_internal::BinauthzManagementServiceV1RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1RetryTraits>;
 
 /**
  * The `BinauthzManagementServiceV1Connection` object for
@@ -59,7 +59,7 @@ using BinauthzManagementServiceV1LimitedErrorCountRetryPolicy =
  * `MakeBinauthzManagementServiceV1Connection()`.
  *
  * For mocking, see
- * `binaryauthorization_mocks::MockBinauthzManagementServiceV1Connection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockBinauthzManagementServiceV1Connection`.
  */
 class BinauthzManagementServiceV1Connection {
  public:
@@ -113,7 +113,7 @@ class BinauthzManagementServiceV1Connection {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
  * -
- * `google::cloud::binaryauthorization::BinauthzManagementServiceV1PolicyOptionList`
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1PolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -124,8 +124,8 @@ class BinauthzManagementServiceV1Connection {
 std::shared_ptr<BinauthzManagementServiceV1Connection>
 MakeBinauthzManagementServiceV1Connection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

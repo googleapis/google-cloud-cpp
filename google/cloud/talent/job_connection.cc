@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 JobServiceConnection::~JobServiceConnection() = default;
 
@@ -103,15 +103,15 @@ std::shared_ptr<JobServiceConnection> MakeJobServiceConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  JobServicePolicyOptionList>(options, __func__);
-  options = talent_internal::JobServiceDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::JobServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      talent_internal::CreateDefaultJobServiceStub(background->cq(), options);
-  return std::make_shared<talent_internal::JobServiceConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultJobServiceStub(background->cq(),
+                                                               options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::JobServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

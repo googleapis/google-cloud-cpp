@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcesettings_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcesettings_internal {
 
 class ResourceSettingsServiceMetadata : public ResourceSettingsServiceStub {
  public:
@@ -59,8 +59,8 @@ class ResourceSettingsServiceMetadata : public ResourceSettingsServiceStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

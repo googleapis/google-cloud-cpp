@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 class VideoStitcherServiceAuth : public VideoStitcherServiceStub {
  public:
@@ -149,8 +149,8 @@ class VideoStitcherServiceAuth : public VideoStitcherServiceStub {
   std::shared_ptr<VideoStitcherServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_internal {
 
 class DeploymentsStub {
  public:
@@ -69,8 +69,8 @@ class DefaultDeploymentsStub : public DeploymentsStub {
       grpc_stub_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

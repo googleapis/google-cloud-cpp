@@ -27,13 +27,14 @@
 
 namespace google {
 namespace cloud {
-namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap_internal {
 
 IdentityAwareProxyAdminServiceConnectionImpl::
     IdentityAwareProxyAdminServiceConnectionImpl(
         std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<iap_internal::IdentityAwareProxyAdminServiceStub> stub,
+        std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyAdminServiceStub>
+            stub,
         Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -111,9 +112,9 @@ IdentityAwareProxyAdminServiceConnectionImpl::ListTunnelDestGroups(
     google::cloud::iap::v1::ListTunnelDestGroupsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<iap::IdentityAwareProxyAdminServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyAdminServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTunnelDestGroups(request);
   char const* function_name = __func__;
@@ -194,7 +195,7 @@ IdentityAwareProxyAdminServiceConnectionImpl::UpdateTunnelDestGroup(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

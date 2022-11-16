@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace vpcaccess_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vpcaccess_internal {
 
 class VpcAccessServiceConnectionImpl
-    : public vpcaccess::VpcAccessServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::VpcAccessServiceConnection {
  public:
   ~VpcAccessServiceConnectionImpl() override = default;
 
   VpcAccessServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -68,57 +68,69 @@ class VpcAccessServiceConnectionImpl
                       request) override;
 
  private:
-  std::unique_ptr<vpcaccess::VpcAccessServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vpcaccess::VpcAccessServiceRetryPolicyOption>()) {
-      return options.get<vpcaccess::VpcAccessServiceRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<vpcaccess::VpcAccessServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vpcaccess::VpcAccessServiceBackoffPolicyOption>()) {
-      return options.get<vpcaccess::VpcAccessServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<vpcaccess::VpcAccessServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceBackoffPolicyOption>()) {
       return options
-          .get<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::VpcAccessServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        VpcAccessServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   VpcAccessServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 VpcAccessServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vpcaccess::VpcAccessServicePollingPolicyOption>()) {
-      return options.get<vpcaccess::VpcAccessServicePollingPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::VpcAccessServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::VpcAccessServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<vpcaccess::VpcAccessServicePollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::VpcAccessServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,30 +39,31 @@ Options ContainerAnalysisDefaultOptions(Options options) {
       "containeranalysis.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<containeranalysis::ContainerAnalysisRetryPolicyOption>()) {
-    options.set<containeranalysis::ContainerAnalysisRetryPolicyOption>(
-        containeranalysis::ContainerAnalysisLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ContainerAnalysisLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<containeranalysis::ContainerAnalysisBackoffPolicyOption>()) {
-    options.set<containeranalysis::ContainerAnalysisBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<containeranalysis::
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
                        ContainerAnalysisConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        containeranalysis::ContainerAnalysisConnectionIdempotencyPolicyOption>(
-        containeranalysis::
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    ContainerAnalysisConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultContainerAnalysisConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

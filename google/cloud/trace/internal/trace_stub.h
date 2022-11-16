@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace trace_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace trace_internal {
 
 class TraceServiceStub {
  public:
@@ -65,8 +65,8 @@ class DefaultTraceServiceStub : public TraceServiceStub {
       grpc_stub_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

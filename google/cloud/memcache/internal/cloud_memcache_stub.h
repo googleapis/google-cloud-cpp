@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace memcache_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache_internal {
 
 class CloudMemcacheStub {
  public:
@@ -146,8 +146,8 @@ class DefaultCloudMemcacheStub : public CloudMemcacheStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

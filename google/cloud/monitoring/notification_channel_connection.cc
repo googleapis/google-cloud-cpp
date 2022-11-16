@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 NotificationChannelServiceConnection::~NotificationChannelServiceConnection() =
     default;
@@ -107,17 +107,17 @@ MakeNotificationChannelServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  NotificationChannelServicePolicyOptionList>(
       options, __func__);
-  options = monitoring_internal::NotificationChannelServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::NotificationChannelServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = monitoring_internal::CreateDefaultNotificationChannelServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultNotificationChannelServiceStub(
       background->cq(), options);
   return std::make_shared<
-      monitoring_internal::NotificationChannelServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::NotificationChannelServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

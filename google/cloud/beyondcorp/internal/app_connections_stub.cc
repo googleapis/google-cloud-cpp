@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp_internal {
 
 AppConnectionsServiceStub::~AppConnectionsServiceStub() = default;
 
@@ -156,7 +156,7 @@ future<Status> DefaultAppConnectionsServiceStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

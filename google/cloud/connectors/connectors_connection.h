@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace connectors {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace connectors {
 
 using ConnectorsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    connectors_internal::ConnectorsRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::ConnectorsRetryTraits>;
 
 using ConnectorsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        connectors_internal::ConnectorsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ConnectorsRetryTraits>;
 
 using ConnectorsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        connectors_internal::ConnectorsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ConnectorsRetryTraits>;
 
 /**
  * The `ConnectorsConnection` object for `ConnectorsClient`.
@@ -58,7 +58,7 @@ using ConnectorsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeConnectorsConnection()`.
  *
- * For mocking, see `connectors_mocks::MockConnectorsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockConnectorsConnection`.
  */
 class ConnectorsConnection {
  public:
@@ -136,7 +136,7 @@ class ConnectorsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::connectors::ConnectorsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ConnectorsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -147,8 +147,8 @@ class ConnectorsConnection {
 std::shared_ptr<ConnectorsConnection> MakeConnectorsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

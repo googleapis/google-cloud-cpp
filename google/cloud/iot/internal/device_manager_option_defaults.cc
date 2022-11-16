@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace iot_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iot_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,26 +38,30 @@ Options DeviceManagerDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_DEVICE_MANAGER_AUTHORITY", "cloudiot.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<iot::DeviceManagerRetryPolicyOption>()) {
-    options.set<iot::DeviceManagerRetryPolicyOption>(
-        iot::DeviceManagerLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DeviceManagerRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DeviceManagerRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::DeviceManagerLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<iot::DeviceManagerBackoffPolicyOption>()) {
-    options.set<iot::DeviceManagerBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DeviceManagerBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DeviceManagerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<iot::DeviceManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<iot::DeviceManagerConnectionIdempotencyPolicyOption>(
-        iot::MakeDefaultDeviceManagerConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       DeviceManagerConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::DeviceManagerConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultDeviceManagerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

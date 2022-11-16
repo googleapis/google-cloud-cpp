@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 class CompletionServiceStub {
  public:
@@ -95,8 +95,8 @@ class DefaultCompletionServiceStub : public CompletionServiceStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

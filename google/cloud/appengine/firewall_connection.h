@@ -31,19 +31,19 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 using FirewallRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    appengine_internal::FirewallRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::FirewallRetryTraits>;
 
 using FirewallLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        appengine_internal::FirewallRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::FirewallRetryTraits>;
 
 using FirewallLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        appengine_internal::FirewallRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::FirewallRetryTraits>;
 
 /**
  * The `FirewallConnection` object for `FirewallClient`.
@@ -55,7 +55,7 @@ using FirewallLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeFirewallConnection()`.
  *
- * For mocking, see `appengine_mocks::MockFirewallConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockFirewallConnection`.
  */
 class FirewallConnection {
  public:
@@ -96,7 +96,7 @@ class FirewallConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::appengine::FirewallPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::FirewallPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -107,8 +107,8 @@ class FirewallConnection {
 std::shared_ptr<FirewallConnection> MakeFirewallConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

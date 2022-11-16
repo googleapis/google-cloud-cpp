@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence {
 
 VideoIntelligenceServiceConnection::~VideoIntelligenceServiceConnection() =
     default;
@@ -49,18 +49,17 @@ MakeVideoIntelligenceServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  VideoIntelligenceServicePolicyOptionList>(
       options, __func__);
-  options = videointelligence_internal::VideoIntelligenceServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      videointelligence_internal::CreateDefaultVideoIntelligenceServiceStub(
-          background->cq(), options);
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultVideoIntelligenceServiceStub(
+      background->cq(), options);
   return std::make_shared<
-      videointelligence_internal::VideoIntelligenceServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

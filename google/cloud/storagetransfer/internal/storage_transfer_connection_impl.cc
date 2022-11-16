@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer_internal {
 
 StorageTransferServiceConnectionImpl::StorageTransferServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<storagetransfer_internal::StorageTransferServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::StorageTransferServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -102,9 +102,9 @@ StorageTransferServiceConnectionImpl::ListTransferJobs(
     google::storagetransfer::v1::ListTransferJobsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<storagetransfer::StorageTransferServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::StorageTransferServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTransferJobs(request);
   char const* function_name = __func__;
@@ -247,9 +247,9 @@ StorageTransferServiceConnectionImpl::ListAgentPools(
     google::storagetransfer::v1::ListAgentPoolsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<storagetransfer::StorageTransferServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::StorageTransferServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAgentPools(request);
   char const* function_name = __func__;
@@ -289,7 +289,7 @@ Status StorageTransferServiceConnectionImpl::DeleteAgentPool(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

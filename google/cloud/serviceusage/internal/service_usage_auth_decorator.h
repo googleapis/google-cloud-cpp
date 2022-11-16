@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace serviceusage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace serviceusage_internal {
 
 class ServiceUsageAuth : public ServiceUsageStub {
  public:
@@ -86,8 +86,8 @@ class ServiceUsageAuth : public ServiceUsageStub {
   std::shared_ptr<ServiceUsageStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

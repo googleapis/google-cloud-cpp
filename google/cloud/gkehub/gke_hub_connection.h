@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub {
 
 using GkeHubRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    gkehub_internal::GkeHubRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::GkeHubRetryTraits>;
 
 using GkeHubLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        gkehub_internal::GkeHubRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::GkeHubRetryTraits>;
 
 using GkeHubLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        gkehub_internal::GkeHubRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::GkeHubRetryTraits>;
 
 /**
  * The `GkeHubConnection` object for `GkeHubClient`.
@@ -58,7 +58,7 @@ using GkeHubLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeGkeHubConnection()`.
  *
- * For mocking, see `gkehub_mocks::MockGkeHubConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockGkeHubConnection`.
  */
 class GkeHubConnection {
  public:
@@ -117,7 +117,7 @@ class GkeHubConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::gkehub::GkeHubPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::GkeHubPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -127,8 +127,8 @@ class GkeHubConnection {
  */
 std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accessapproval {
 
 class AccessApprovalConnectionIdempotencyPolicy {
  public:
@@ -77,8 +77,8 @@ class AccessApprovalConnectionIdempotencyPolicy {
 std::unique_ptr<AccessApprovalConnectionIdempotencyPolicy>
 MakeDefaultAccessApprovalConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

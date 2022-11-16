@@ -35,19 +35,19 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 using AgentsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::AgentsRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::AgentsRetryTraits>;
 
 using AgentsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::AgentsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AgentsRetryTraits>;
 
 using AgentsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::AgentsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AgentsRetryTraits>;
 
 /**
  * The `AgentsConnection` object for `AgentsClient`.
@@ -59,7 +59,7 @@ using AgentsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeAgentsConnection()`.
  *
- * For mocking, see `dialogflow_cx_mocks::MockAgentsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockAgentsConnection`.
  */
 class AgentsConnection {
  public:
@@ -113,7 +113,7 @@ class AgentsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::AgentsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::AgentsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -134,8 +134,8 @@ std::shared_ptr<AgentsConnection> MakeAgentsConnection(
  */
 std::shared_ptr<AgentsConnection> MakeAgentsConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

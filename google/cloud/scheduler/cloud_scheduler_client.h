@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler {
 
 ///
 /// The Cloud Scheduler API allows external entities to reliably
@@ -447,8 +447,8 @@ class CloudSchedulerClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

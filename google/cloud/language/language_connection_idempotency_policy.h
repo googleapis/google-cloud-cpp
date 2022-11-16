@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace language {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace language {
 
 class LanguageServiceConnectionIdempotencyPolicy {
  public:
@@ -61,8 +61,8 @@ class LanguageServiceConnectionIdempotencyPolicy {
 std::unique_ptr<LanguageServiceConnectionIdempotencyPolicy>
 MakeDefaultLanguageServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

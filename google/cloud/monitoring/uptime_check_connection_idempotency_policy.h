@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 class UptimeCheckServiceConnectionIdempotencyPolicy {
  public:
@@ -60,8 +60,8 @@ class UptimeCheckServiceConnectionIdempotencyPolicy {
 std::unique_ptr<UptimeCheckServiceConnectionIdempotencyPolicy>
 MakeDefaultUptimeCheckServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

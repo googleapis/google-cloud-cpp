@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -68,8 +68,8 @@ using ValidationHelperV1PolicyOptionList =
                ValidationHelperV1BackoffPolicyOption,
                ValidationHelperV1ConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

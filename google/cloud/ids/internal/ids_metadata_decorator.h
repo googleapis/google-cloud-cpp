@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace ids_internal {
 
 class IDSMetadata : public IDSStub {
  public:
@@ -72,8 +72,8 @@ class IDSMetadata : public IDSStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

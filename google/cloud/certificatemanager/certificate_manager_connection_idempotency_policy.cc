@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace certificatemanager {
 
 using ::google::cloud::Idempotency;
 
@@ -188,7 +188,7 @@ MakeDefaultCertificateManagerConnectionIdempotencyPolicy() {
   return absl::make_unique<CertificateManagerConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

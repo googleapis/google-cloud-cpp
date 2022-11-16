@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace speech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech {
 
 SpeechConnection::~SpeechConnection() = default;
 
@@ -63,15 +63,15 @@ std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  SpeechPolicyOptionList>(options, __func__);
-  options = speech_internal::SpeechDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::SpeechDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
-      speech_internal::CreateDefaultSpeechStub(background->cq(), options);
-  return std::make_shared<speech_internal::SpeechConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultSpeechStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::SpeechConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

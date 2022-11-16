@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace spanner_admin {
 
 using DatabaseAdminRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        spanner_admin_internal::DatabaseAdminRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryTraits>;
 
 using DatabaseAdminLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        spanner_admin_internal::DatabaseAdminRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryTraits>;
 
 using DatabaseAdminLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        spanner_admin_internal::DatabaseAdminRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryTraits>;
 
 /**
  * The `DatabaseAdminConnection` object for `DatabaseAdminClient`.
@@ -59,7 +59,7 @@ using DatabaseAdminLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeDatabaseAdminConnection()`.
  *
- * For mocking, see `spanner_admin_mocks::MockDatabaseAdminConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockDatabaseAdminConnection`.
  */
 class DatabaseAdminConnection {
  public:
@@ -153,7 +153,7 @@ class DatabaseAdminConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::spanner_admin::DatabaseAdminPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::DatabaseAdminPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -164,9 +164,9 @@ class DatabaseAdminConnection {
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

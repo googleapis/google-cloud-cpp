@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace memcache {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache {
 
 ///
 /// Configures and manages Cloud Memorystore for Memcached instances.
@@ -409,8 +409,8 @@ class CloudMemcacheClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

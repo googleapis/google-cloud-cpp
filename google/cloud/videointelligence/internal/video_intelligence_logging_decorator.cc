@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence_internal {
 
 VideoIntelligenceServiceLogging::VideoIntelligenceServiceLogging(
     std::shared_ptr<VideoIntelligenceServiceStub> child,
@@ -76,7 +76,7 @@ future<Status> VideoIntelligenceServiceLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

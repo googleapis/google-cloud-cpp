@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace redis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace redis {
 
 CloudRedisClient::CloudRedisClient(
     std::shared_ptr<CloudRedisConnection> connection, Options opts)
@@ -230,7 +230,7 @@ CloudRedisClient::RescheduleMaintenance(
   return connection_->RescheduleMaintenance(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

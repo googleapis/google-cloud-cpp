@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace automl_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl_internal {
 
 AutoMlLogging::AutoMlLogging(std::shared_ptr<AutoMlStub> child,
                              TracingOptions tracing_options,
@@ -292,7 +292,7 @@ future<Status> AutoMlLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

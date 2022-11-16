@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace redis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace redis_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,34 +38,41 @@ Options CloudRedisDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_CLOUD_REDIS_AUTHORITY", "redis.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<redis::CloudRedisRetryPolicyOption>()) {
-    options.set<redis::CloudRedisRetryPolicyOption>(
-        redis::CloudRedisLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudRedisRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudRedisRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::CloudRedisLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<redis::CloudRedisBackoffPolicyOption>()) {
-    options.set<redis::CloudRedisBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudRedisBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudRedisBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<redis::CloudRedisPollingPolicyOption>()) {
-    options.set<redis::CloudRedisPollingPolicyOption>(
-        GenericPollingPolicy<redis::CloudRedisRetryPolicyOption::Type,
-                             redis::CloudRedisBackoffPolicyOption::Type>(
-            options.get<redis::CloudRedisRetryPolicyOption>()->clone(),
-            options.get<redis::CloudRedisBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudRedisPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudRedisPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::CloudRedisRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::CloudRedisBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::CloudRedisRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::CloudRedisBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<redis::CloudRedisConnectionIdempotencyPolicyOption>()) {
-    options.set<redis::CloudRedisConnectionIdempotencyPolicyOption>(
-        redis::MakeDefaultCloudRedisConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::CloudRedisConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::CloudRedisConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultCloudRedisConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

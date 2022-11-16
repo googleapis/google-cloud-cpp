@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory {
 
 using ::google::cloud::Idempotency;
 
@@ -132,7 +132,7 @@ MakeDefaultRegistrationServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<RegistrationServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

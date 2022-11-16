@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace language_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace language_internal {
 
 LanguageServiceLogging::LanguageServiceLogging(
     std::shared_ptr<LanguageServiceStub> child, TracingOptions tracing_options,
@@ -109,7 +109,7 @@ LanguageServiceLogging::AnnotateText(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

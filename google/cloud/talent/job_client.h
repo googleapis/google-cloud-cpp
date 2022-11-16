@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 ///
 /// A service handles job management, including job CRUD, enumeration and
@@ -508,8 +508,8 @@ class JobServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

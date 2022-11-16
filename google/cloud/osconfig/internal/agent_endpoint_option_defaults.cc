@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,29 +39,33 @@ Options AgentEndpointServiceDefaultOptions(Options options) {
       "osconfig.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<osconfig::AgentEndpointServiceRetryPolicyOption>()) {
-    options.set<osconfig::AgentEndpointServiceRetryPolicyOption>(
-        osconfig::AgentEndpointServiceLimitedTimeRetryPolicy(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<osconfig::AgentEndpointServiceBackoffPolicyOption>()) {
-    options.set<osconfig::AgentEndpointServiceBackoffPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          osconfig::AgentEndpointServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        osconfig::AgentEndpointServiceConnectionIdempotencyPolicyOption>(
-        osconfig::MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::
+                    AgentEndpointServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    AgentEndpointServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

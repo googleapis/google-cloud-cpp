@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig {
 
 AgentEndpointServiceConnection::~AgentEndpointServiceConnection() = default;
 
@@ -86,17 +86,17 @@ MakeAgentEndpointServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  AgentEndpointServicePolicyOptionList>(
       options, __func__);
-  options =
-      osconfig_internal::AgentEndpointServiceDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = osconfig_internal::CreateDefaultAgentEndpointServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultAgentEndpointServiceStub(
       background->cq(), options);
   return std::make_shared<
-      osconfig_internal::AgentEndpointServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

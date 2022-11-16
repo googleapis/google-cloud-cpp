@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkmanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkmanagement {
 
 ReachabilityServiceClient::ReachabilityServiceClient(
     std::shared_ptr<ReachabilityServiceConnection> connection, Options opts)
@@ -136,7 +136,7 @@ ReachabilityServiceClient::DeleteConnectivityTest(
   return connection_->DeleteConnectivityTest(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

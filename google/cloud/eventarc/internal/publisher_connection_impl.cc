@@ -26,12 +26,12 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc_internal {
 
 PublisherConnectionImpl::PublisherConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<eventarc_internal::PublisherStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::PublisherStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -67,7 +67,7 @@ PublisherConnectionImpl::PublishEvents(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

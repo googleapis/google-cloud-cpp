@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace automl {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl {
 
 AutoMlClient::AutoMlClient(std::shared_ptr<AutoMlConnection> connection,
                            Options opts)
@@ -328,7 +328,7 @@ AutoMlClient::ListModelEvaluations(
   return connection_->ListModelEvaluations(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

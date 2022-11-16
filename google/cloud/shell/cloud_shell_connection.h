@@ -33,20 +33,20 @@
 
 namespace google {
 namespace cloud {
-namespace shell {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace shell {
 
 using CloudShellServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        shell_internal::CloudShellServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudShellServiceRetryTraits>;
 
 using CloudShellServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        shell_internal::CloudShellServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudShellServiceRetryTraits>;
 
 using CloudShellServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        shell_internal::CloudShellServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudShellServiceRetryTraits>;
 
 /**
  * The `CloudShellServiceConnection` object for `CloudShellServiceClient`.
@@ -58,7 +58,8 @@ using CloudShellServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeCloudShellServiceConnection()`.
  *
- * For mocking, see `shell_mocks::MockCloudShellServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockCloudShellServiceConnection`.
  */
 class CloudShellServiceConnection {
  public:
@@ -101,7 +102,7 @@ class CloudShellServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::shell::CloudShellServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CloudShellServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -112,8 +113,8 @@ class CloudShellServiceConnection {
 std::shared_ptr<CloudShellServiceConnection> MakeCloudShellServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace functions {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace functions {
 
 CloudFunctionsServiceClient::CloudFunctionsServiceClient(
     std::shared_ptr<CloudFunctionsServiceConnection> connection, Options opts)
@@ -162,7 +162,7 @@ CloudFunctionsServiceClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace functions
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

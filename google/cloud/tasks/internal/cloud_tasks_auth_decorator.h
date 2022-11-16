@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks_internal {
 
 class CloudTasksAuth : public CloudTasksStub {
  public:
@@ -107,8 +107,8 @@ class CloudTasksAuth : public CloudTasksStub {
   std::shared_ptr<CloudTasksStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

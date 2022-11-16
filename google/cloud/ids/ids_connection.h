@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace ids {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace ids {
 
 using IDSRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    ids_internal::IDSRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::IDSRetryTraits>;
 
 using IDSLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        ids_internal::IDSRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IDSRetryTraits>;
 
 using IDSLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        ids_internal::IDSRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IDSRetryTraits>;
 
 /**
  * The `IDSConnection` object for `IDSClient`.
@@ -58,7 +58,7 @@ using IDSLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeIDSConnection()`.
  *
- * For mocking, see `ids_mocks::MockIDSConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockIDSConnection`.
  */
 class IDSConnection {
  public:
@@ -92,7 +92,7 @@ class IDSConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::ids::IDSPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::IDSPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -102,8 +102,8 @@ class IDSConnection {
  */
 std::shared_ptr<IDSConnection> MakeIDSConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace logging_internal {
 
 LoggingServiceV2Metadata::LoggingServiceV2Metadata(
     std::shared_ptr<LoggingServiceV2Stub> child)
@@ -110,7 +110,7 @@ void LoggingServiceV2Metadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

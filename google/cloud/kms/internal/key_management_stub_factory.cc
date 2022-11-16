@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms_internal {
 
 std::shared_ptr<KeyManagementServiceStub> CreateDefaultKeyManagementServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -60,7 +60,7 @@ std::shared_ptr<KeyManagementServiceStub> CreateDefaultKeyManagementServiceStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

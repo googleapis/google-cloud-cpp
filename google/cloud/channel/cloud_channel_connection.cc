@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace channel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace channel {
 
 CloudChannelServiceConnection::~CloudChannelServiceConnection() = default;
 
@@ -359,16 +359,17 @@ MakeCloudChannelServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  CloudChannelServicePolicyOptionList>(options,
                                                                       __func__);
-  options =
-      channel_internal::CloudChannelServiceDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::CloudChannelServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = channel_internal::CreateDefaultCloudChannelServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultCloudChannelServiceStub(
       background->cq(), options);
-  return std::make_shared<channel_internal::CloudChannelServiceConnectionImpl>(
+  return std::make_shared<
+      GOOGLE_CLOUD_CPP_NS::CloudChannelServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 class BatchControllerConnectionImpl
-    : public dataproc::BatchControllerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::BatchControllerConnection {
  public:
   ~BatchControllerConnectionImpl() override = default;
 
   BatchControllerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dataproc_internal::BatchControllerStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BatchControllerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -65,55 +65,69 @@ class BatchControllerConnectionImpl
       google::cloud::dataproc::v1::DeleteBatchRequest const& request) override;
 
  private:
-  std::unique_ptr<dataproc::BatchControllerRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::BatchControllerRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::BatchControllerRetryPolicyOption>()) {
-      return options.get<dataproc::BatchControllerRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::BatchControllerRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::BatchControllerRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<dataproc::BatchControllerRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::BatchControllerRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::BatchControllerBackoffPolicyOption>()) {
-      return options.get<dataproc::BatchControllerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc::BatchControllerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dataproc::BatchControllerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataproc::BatchControllerConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::BatchControllerBackoffPolicyOption>()) {
       return options
-          .get<dataproc::BatchControllerConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::BatchControllerBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dataproc::BatchControllerConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::BatchControllerBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::BatchControllerConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        BatchControllerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   BatchControllerConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 BatchControllerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::BatchControllerPollingPolicyOption>()) {
-      return options.get<dataproc::BatchControllerPollingPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::BatchControllerPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::BatchControllerPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<dataproc::BatchControllerPollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::BatchControllerPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dataproc_internal::BatchControllerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BatchControllerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

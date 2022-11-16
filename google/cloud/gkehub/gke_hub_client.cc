@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub {
 
 GkeHubClient::GkeHubClient(std::shared_ptr<GkeHubConnection> connection,
                            Options opts)
@@ -212,7 +212,7 @@ GkeHubClient::GenerateConnectManifest(
   return connection_->GenerateConnectManifest(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex_internal {
 
 DataplexServiceConnectionImpl::DataplexServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dataplex_internal::DataplexServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataplexServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -129,8 +129,9 @@ DataplexServiceConnectionImpl::ListLakes(
     google::cloud::dataplex::v1::ListLakesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListLakes(request);
   char const* function_name = __func__;
@@ -173,8 +174,9 @@ DataplexServiceConnectionImpl::ListLakeActions(
     google::cloud::dataplex::v1::ListLakeActionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListLakeActions(request);
   char const* function_name = __func__;
@@ -290,8 +292,9 @@ DataplexServiceConnectionImpl::ListZones(
     google::cloud::dataplex::v1::ListZonesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListZones(request);
   char const* function_name = __func__;
@@ -334,8 +337,9 @@ DataplexServiceConnectionImpl::ListZoneActions(
     google::cloud::dataplex::v1::ListZoneActionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListZoneActions(request);
   char const* function_name = __func__;
@@ -451,8 +455,9 @@ DataplexServiceConnectionImpl::ListAssets(
     google::cloud::dataplex::v1::ListAssetsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAssets(request);
   char const* function_name = __func__;
@@ -496,8 +501,9 @@ DataplexServiceConnectionImpl::ListAssetActions(
     google::cloud::dataplex::v1::ListAssetActionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAssetActions(request);
   char const* function_name = __func__;
@@ -613,8 +619,9 @@ DataplexServiceConnectionImpl::ListTasks(
     google::cloud::dataplex::v1::ListTasksRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTasks(request);
   char const* function_name = __func__;
@@ -657,8 +664,9 @@ DataplexServiceConnectionImpl::ListJobs(
     google::cloud::dataplex::v1::ListJobsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListJobs(request);
   char const* function_name = __func__;
@@ -803,8 +811,9 @@ DataplexServiceConnectionImpl::ListEnvironments(
     google::cloud::dataplex::v1::ListEnvironmentsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListEnvironments(request);
   char const* function_name = __func__;
@@ -850,8 +859,9 @@ DataplexServiceConnectionImpl::ListSessions(
     google::cloud::dataplex::v1::ListSessionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dataplex::DataplexServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSessions(request);
   char const* function_name = __func__;
@@ -878,7 +888,7 @@ DataplexServiceConnectionImpl::ListSessions(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

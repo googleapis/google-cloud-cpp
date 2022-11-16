@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace vpcaccess_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vpcaccess_internal {
 
 std::shared_ptr<VpcAccessServiceStub> CreateDefaultVpcAccessServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -61,7 +61,7 @@ std::shared_ptr<VpcAccessServiceStub> CreateDefaultVpcAccessServiceStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

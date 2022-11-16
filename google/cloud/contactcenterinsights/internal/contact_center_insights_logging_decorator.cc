@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace contactcenterinsights_internal {
 
 ContactCenterInsightsLogging::ContactCenterInsightsLogging(
     std::shared_ptr<ContactCenterInsightsStub> child,
@@ -519,7 +519,7 @@ future<Status> ContactCenterInsightsLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

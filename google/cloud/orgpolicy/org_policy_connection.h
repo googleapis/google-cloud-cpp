@@ -31,19 +31,19 @@
 
 namespace google {
 namespace cloud {
-namespace orgpolicy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace orgpolicy {
 
 using OrgPolicyRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    orgpolicy_internal::OrgPolicyRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::OrgPolicyRetryTraits>;
 
 using OrgPolicyLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        orgpolicy_internal::OrgPolicyRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::OrgPolicyRetryTraits>;
 
 using OrgPolicyLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        orgpolicy_internal::OrgPolicyRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::OrgPolicyRetryTraits>;
 
 /**
  * The `OrgPolicyConnection` object for `OrgPolicyClient`.
@@ -55,7 +55,7 @@ using OrgPolicyLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeOrgPolicyConnection()`.
  *
- * For mocking, see `orgpolicy_mocks::MockOrgPolicyConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockOrgPolicyConnection`.
  */
 class OrgPolicyConnection {
  public:
@@ -98,7 +98,7 @@ class OrgPolicyConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::orgpolicy::OrgPolicyPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::OrgPolicyPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -109,8 +109,8 @@ class OrgPolicyConnection {
 std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

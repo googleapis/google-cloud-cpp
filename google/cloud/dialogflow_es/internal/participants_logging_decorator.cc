@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 ParticipantsLogging::ParticipantsLogging(
     std::shared_ptr<ParticipantsStub> child, TracingOptions tracing_options,
@@ -158,7 +158,7 @@ ParticipantsLogging::SuggestSmartReplies(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

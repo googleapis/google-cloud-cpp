@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace batch_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace batch_internal {
 
 std::shared_ptr<BatchServiceStub> CreateDefaultBatchServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -60,7 +60,7 @@ std::shared_ptr<BatchServiceStub> CreateDefaultBatchServiceStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

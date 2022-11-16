@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 ConnectionServiceConnection::~ConnectionServiceConnection() = default;
 
@@ -89,15 +89,15 @@ std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
                                  ConnectionServicePolicyOptionList>(options,
                                                                     __func__);
   options =
-      bigquery_internal::ConnectionServiceDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::ConnectionServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = bigquery_internal::CreateDefaultConnectionServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultConnectionServiceStub(
       background->cq(), options);
-  return std::make_shared<bigquery_internal::ConnectionServiceConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ConnectionServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

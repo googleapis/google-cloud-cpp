@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol_internal {
 
 QuotaControllerMetadata::QuotaControllerMetadata(
     std::shared_ptr<QuotaControllerStub> child)
@@ -59,7 +59,7 @@ void QuotaControllerMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

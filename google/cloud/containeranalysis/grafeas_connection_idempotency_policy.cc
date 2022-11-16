@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis {
 
 using ::google::cloud::Idempotency;
 
@@ -110,7 +110,7 @@ MakeDefaultGrafeasConnectionIdempotencyPolicy() {
   return absl::make_unique<GrafeasConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

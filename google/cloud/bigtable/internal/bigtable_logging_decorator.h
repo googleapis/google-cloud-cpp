@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_internal {
 
 class BigtableLogging : public BigtableStub {
  public:
@@ -113,8 +113,8 @@ class BigtableLogging : public BigtableStub {
   std::set<std::string> components_;
 };  // BigtableLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

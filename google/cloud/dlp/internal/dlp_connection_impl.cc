@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace dlp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dlp_internal {
 
 DlpServiceConnectionImpl::DlpServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dlp_internal::DlpServiceStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DlpServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -153,7 +153,8 @@ DlpServiceConnectionImpl::ListInspectTemplates(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<dlp::DlpServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DlpServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListInspectTemplates(request);
   char const* function_name = __func__;
@@ -241,7 +242,8 @@ DlpServiceConnectionImpl::ListDeidentifyTemplates(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<dlp::DlpServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DlpServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDeidentifyTemplates(request);
   char const* function_name = __func__;
@@ -341,7 +343,8 @@ DlpServiceConnectionImpl::ListJobTriggers(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<dlp::DlpServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DlpServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListJobTriggers(request);
   char const* function_name = __func__;
@@ -413,7 +416,8 @@ DlpServiceConnectionImpl::ListDlpJobs(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<dlp::DlpServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DlpServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDlpJobs(request);
   char const* function_name = __func__;
@@ -523,7 +527,8 @@ DlpServiceConnectionImpl::ListStoredInfoTypes(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<dlp::DlpServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DlpServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListStoredInfoTypes(request);
   char const* function_name = __func__;
@@ -589,7 +594,7 @@ Status DlpServiceConnectionImpl::FinishDlpJob(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

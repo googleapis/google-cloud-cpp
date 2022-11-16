@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence_internal {
 
 VideoIntelligenceServiceMetadata::VideoIntelligenceServiceMetadata(
     std::shared_ptr<VideoIntelligenceServiceStub> child)
@@ -78,7 +78,7 @@ void VideoIntelligenceServiceMetadata::SetMetadata(
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

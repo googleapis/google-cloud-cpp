@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 DomainMappingsConnection::~DomainMappingsConnection() = default;
 
@@ -80,15 +80,15 @@ std::shared_ptr<DomainMappingsConnection> MakeDomainMappingsConnection(
                                  DomainMappingsPolicyOptionList>(options,
                                                                  __func__);
   options =
-      appengine_internal::DomainMappingsDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::DomainMappingsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = appengine_internal::CreateDefaultDomainMappingsStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultDomainMappingsStub(
       background->cq(), options);
-  return std::make_shared<appengine_internal::DomainMappingsConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::DomainMappingsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

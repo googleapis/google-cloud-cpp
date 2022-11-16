@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream_internal {
 
 DatastreamAuth::DatastreamAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -400,7 +400,7 @@ future<Status> DatastreamAuth::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 ProductServiceConnection::~ProductServiceConnection() = default;
 
@@ -120,15 +120,16 @@ std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(
                                  UnifiedCredentialsOptionList,
                                  ProductServicePolicyOptionList>(options,
                                                                  __func__);
-  options = retail_internal::ProductServiceDefaultOptions(std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::ProductServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = retail_internal::CreateDefaultProductServiceStub(background->cq(),
-                                                               options);
-  return std::make_shared<retail_internal::ProductServiceConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultProductServiceStub(
+      background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ProductServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

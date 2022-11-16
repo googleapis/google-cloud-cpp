@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 std::shared_ptr<AuthorizedCertificatesStub>
 CreateDefaultAuthorizedCertificatesStub(google::cloud::CompletionQueue cq,
@@ -61,7 +61,7 @@ CreateDefaultAuthorizedCertificatesStub(google::cloud::CompletionQueue cq,
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

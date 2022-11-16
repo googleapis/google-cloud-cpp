@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace optimization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,38 +39,41 @@ Options FleetRoutingDefaultOptions(Options options) {
       "cloudoptimization.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<optimization::FleetRoutingRetryPolicyOption>()) {
-    options.set<optimization::FleetRoutingRetryPolicyOption>(
-        optimization::FleetRoutingLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::FleetRoutingRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::FleetRoutingRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::FleetRoutingLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<optimization::FleetRoutingBackoffPolicyOption>()) {
-    options.set<optimization::FleetRoutingBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::FleetRoutingBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::FleetRoutingBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<optimization::FleetRoutingPollingPolicyOption>()) {
-    options.set<optimization::FleetRoutingPollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::FleetRoutingPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::FleetRoutingPollingPolicyOption>(
         GenericPollingPolicy<
-            optimization::FleetRoutingRetryPolicyOption::Type,
-            optimization::FleetRoutingBackoffPolicyOption::Type>(
-            options.get<optimization::FleetRoutingRetryPolicyOption>()->clone(),
-            options.get<optimization::FleetRoutingBackoffPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::FleetRoutingRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::FleetRoutingBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::FleetRoutingRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::FleetRoutingBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<
-          optimization::FleetRoutingConnectionIdempotencyPolicyOption>()) {
-    options.set<optimization::FleetRoutingConnectionIdempotencyPolicyOption>(
-        optimization::MakeDefaultFleetRoutingConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       FleetRoutingConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::FleetRoutingConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultFleetRoutingConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

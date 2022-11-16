@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsub_internal {
 
 class SubscriberRoundRobin : public SubscriberStub {
  public:
@@ -112,8 +112,8 @@ class SubscriberRoundRobin : public SubscriberStub {
   std::size_t current_ = 0;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

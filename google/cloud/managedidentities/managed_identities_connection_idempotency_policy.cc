@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities {
 
 using ::google::cloud::Idempotency;
 
@@ -96,7 +96,7 @@ MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy() {
       ManagedIdentitiesServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

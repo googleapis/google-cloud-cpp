@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms_mocks {
 
 /**
  * A class to mock `KeyManagementServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockKeyManagementServiceConnection
-    : public kms::KeyManagementServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::KeyManagementServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -171,8 +171,8 @@ class MockKeyManagementServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

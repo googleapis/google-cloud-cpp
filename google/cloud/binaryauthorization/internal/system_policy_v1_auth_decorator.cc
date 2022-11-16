@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 SystemPolicyV1Auth::SystemPolicyV1Auth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -40,7 +40,7 @@ SystemPolicyV1Auth::GetSystemPolicy(
   return child_->GetSystemPolicy(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

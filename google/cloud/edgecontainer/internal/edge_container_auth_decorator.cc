@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace edgecontainer_internal {
 
 EdgeContainerAuth::EdgeContainerAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -303,7 +303,7 @@ future<Status> EdgeContainerAuth::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

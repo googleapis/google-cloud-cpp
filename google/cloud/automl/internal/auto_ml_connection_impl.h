@@ -37,16 +37,16 @@
 
 namespace google {
 namespace cloud {
-namespace automl_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl_internal {
 
-class AutoMlConnectionImpl : public automl::AutoMlConnection {
+class AutoMlConnectionImpl : public GOOGLE_CLOUD_CPP_NS::AutoMlConnection {
  public:
   ~AutoMlConnectionImpl() override = default;
 
   AutoMlConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<automl_internal::AutoMlStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AutoMlStub> stub, Options options);
 
   Options options() override { return options_; }
 
@@ -107,48 +107,57 @@ class AutoMlConnectionImpl : public automl::AutoMlConnection {
       google::cloud::automl::v1::ListModelEvaluationsRequest request) override;
 
  private:
-  std::unique_ptr<automl::AutoMlRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AutoMlRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<automl::AutoMlRetryPolicyOption>()) {
-      return options.get<automl::AutoMlRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::AutoMlRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::AutoMlRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<automl::AutoMlRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::AutoMlRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<automl::AutoMlBackoffPolicyOption>()) {
-      return options.get<automl::AutoMlBackoffPolicyOption>()->clone();
-    }
-    return options_.get<automl::AutoMlBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<automl::AutoMlConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<automl::AutoMlConnectionIdempotencyPolicyOption>()) {
-      return options.get<automl::AutoMlConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::AutoMlBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::AutoMlBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<automl::AutoMlConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::AutoMlBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AutoMlConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::AutoMlConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::AutoMlConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::AutoMlConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<automl::AutoMlPollingPolicyOption>()) {
-      return options.get<automl::AutoMlPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::AutoMlPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::AutoMlPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<automl::AutoMlPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::AutoMlPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<automl_internal::AutoMlStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AutoMlStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager_internal {
 
 class ProjectsAuth : public ProjectsStub {
  public:
@@ -112,8 +112,8 @@ class ProjectsAuth : public ProjectsStub {
   std::shared_ptr<ProjectsStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

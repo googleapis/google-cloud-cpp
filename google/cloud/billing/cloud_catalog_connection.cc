@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing {
 
 CloudCatalogConnection::~CloudCatalogConnection() = default;
 
@@ -56,15 +56,15 @@ std::shared_ptr<CloudCatalogConnection> MakeCloudCatalogConnection(
                                  UnifiedCredentialsOptionList,
                                  CloudCatalogPolicyOptionList>(options,
                                                                __func__);
-  options = billing_internal::CloudCatalogDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::CloudCatalogDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = billing_internal::CreateDefaultCloudCatalogStub(background->cq(),
-                                                              options);
-  return std::make_shared<billing_internal::CloudCatalogConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultCloudCatalogStub(
+      background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::CloudCatalogConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

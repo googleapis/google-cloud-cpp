@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace language {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace language {
 
 using LanguageServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        language_internal::LanguageServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::LanguageServiceRetryTraits>;
 
 using LanguageServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        language_internal::LanguageServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::LanguageServiceRetryTraits>;
 
 using LanguageServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        language_internal::LanguageServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::LanguageServiceRetryTraits>;
 
 /**
  * The `LanguageServiceConnection` object for `LanguageServiceClient`.
@@ -55,7 +55,7 @@ using LanguageServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeLanguageServiceConnection()`.
  *
- * For mocking, see `language_mocks::MockLanguageServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockLanguageServiceConnection`.
  */
 class LanguageServiceConnection {
  public:
@@ -101,7 +101,7 @@ class LanguageServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::language::LanguageServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::LanguageServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -112,8 +112,8 @@ class LanguageServiceConnection {
 std::shared_ptr<LanguageServiceConnection> MakeLanguageServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

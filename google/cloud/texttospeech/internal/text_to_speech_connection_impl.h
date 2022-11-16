@@ -33,16 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace texttospeech_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace texttospeech_internal {
 
-class TextToSpeechConnectionImpl : public texttospeech::TextToSpeechConnection {
+class TextToSpeechConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::TextToSpeechConnection {
  public:
   ~TextToSpeechConnectionImpl() override = default;
 
   TextToSpeechConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<texttospeech_internal::TextToSpeechStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TextToSpeechStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -57,46 +58,50 @@ class TextToSpeechConnectionImpl : public texttospeech::TextToSpeechConnection {
       override;
 
  private:
-  std::unique_ptr<texttospeech::TextToSpeechRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::TextToSpeechRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<texttospeech::TextToSpeechRetryPolicyOption>()) {
-      return options.get<texttospeech::TextToSpeechRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::TextToSpeechRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::TextToSpeechRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<texttospeech::TextToSpeechRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::TextToSpeechRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<texttospeech::TextToSpeechBackoffPolicyOption>()) {
-      return options.get<texttospeech::TextToSpeechBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::TextToSpeechBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::TextToSpeechBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<texttospeech::TextToSpeechBackoffPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::TextToSpeechBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<texttospeech::TextToSpeechConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::TextToSpeechConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        TextToSpeechConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   TextToSpeechConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 TextToSpeechConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<texttospeech_internal::TextToSpeechStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TextToSpeechStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

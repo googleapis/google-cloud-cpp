@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam {
 
 ///
 /// API Overview
@@ -179,8 +179,8 @@ class IAMPolicyClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace cloudbuild {
 
 class CloudBuildConnectionIdempotencyPolicy {
  public:
@@ -99,8 +99,8 @@ class CloudBuildConnectionIdempotencyPolicy {
 std::unique_ptr<CloudBuildConnectionIdempotencyPolicy>
 MakeDefaultCloudBuildConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

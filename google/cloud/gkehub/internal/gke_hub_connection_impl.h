@@ -37,16 +37,16 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub_internal {
 
-class GkeHubConnectionImpl : public gkehub::GkeHubConnection {
+class GkeHubConnectionImpl : public GOOGLE_CLOUD_CPP_NS::GkeHubConnection {
  public:
   ~GkeHubConnectionImpl() override = default;
 
   GkeHubConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<gkehub_internal::GkeHubStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GkeHubStub> stub, Options options);
 
   Options options() override { return options_; }
 
@@ -89,48 +89,57 @@ class GkeHubConnectionImpl : public gkehub::GkeHubConnection {
       override;
 
  private:
-  std::unique_ptr<gkehub::GkeHubRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::GkeHubRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<gkehub::GkeHubRetryPolicyOption>()) {
-      return options.get<gkehub::GkeHubRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::GkeHubRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::GkeHubRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<gkehub::GkeHubRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::GkeHubRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<gkehub::GkeHubBackoffPolicyOption>()) {
-      return options.get<gkehub::GkeHubBackoffPolicyOption>()->clone();
-    }
-    return options_.get<gkehub::GkeHubBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<gkehub::GkeHubConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<gkehub::GkeHubConnectionIdempotencyPolicyOption>()) {
-      return options.get<gkehub::GkeHubConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::GkeHubBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::GkeHubBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<gkehub::GkeHubConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::GkeHubBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::GkeHubConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::GkeHubConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::GkeHubConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::GkeHubConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<gkehub::GkeHubPollingPolicyOption>()) {
-      return options.get<gkehub::GkeHubPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::GkeHubPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::GkeHubPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<gkehub::GkeHubPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::GkeHubPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<gkehub_internal::GkeHubStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GkeHubStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

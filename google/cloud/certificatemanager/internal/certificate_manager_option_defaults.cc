@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace certificatemanager_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,46 +39,47 @@ Options CertificateManagerDefaultOptions(Options options) {
       "certificatemanager.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<certificatemanager::CertificateManagerRetryPolicyOption>()) {
-    options.set<certificatemanager::CertificateManagerRetryPolicyOption>(
-        certificatemanager::CertificateManagerLimitedTimeRetryPolicy(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::CertificateManagerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
   if (!options
-           .has<certificatemanager::CertificateManagerBackoffPolicyOption>()) {
-    options.set<certificatemanager::CertificateManagerBackoffPolicyOption>(
+           .has<GOOGLE_CLOUD_CPP_NS::CertificateManagerBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CertificateManagerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options
-           .has<certificatemanager::CertificateManagerPollingPolicyOption>()) {
-    options.set<certificatemanager::CertificateManagerPollingPolicyOption>(
+           .has<GOOGLE_CLOUD_CPP_NS::CertificateManagerPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CertificateManagerPollingPolicyOption>(
         GenericPollingPolicy<
-            certificatemanager::CertificateManagerRetryPolicyOption::Type,
-            certificatemanager::CertificateManagerBackoffPolicyOption::Type>(
+            GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::CertificateManagerBackoffPolicyOption::Type>(
             options
-                .get<certificatemanager::CertificateManagerRetryPolicyOption>()
+                .get<GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicyOption>()
                 ->clone(),
             options
-                .get<
-                    certificatemanager::CertificateManagerBackoffPolicyOption>()
+                .get<GOOGLE_CLOUD_CPP_NS::
+                         CertificateManagerBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<certificatemanager::
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
                        CertificateManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<certificatemanager::
+    options.set<GOOGLE_CLOUD_CPP_NS::
                     CertificateManagerConnectionIdempotencyPolicyOption>(
-        certificatemanager::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultCertificateManagerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

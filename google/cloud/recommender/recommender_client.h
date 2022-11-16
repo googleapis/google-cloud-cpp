@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace recommender {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender {
 
 ///
 /// Provides insights and recommendations for cloud customers for various
@@ -744,8 +744,8 @@ class RecommenderClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

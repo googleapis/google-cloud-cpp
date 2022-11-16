@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video {
 
 ///
 /// Using Live Stream API, you can generate live streams in the various
@@ -735,8 +735,8 @@ class LivestreamServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

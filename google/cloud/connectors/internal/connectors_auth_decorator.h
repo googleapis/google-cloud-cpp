@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace connectors_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace connectors_internal {
 
 class ConnectorsAuth : public ConnectorsStub {
  public:
@@ -136,8 +136,8 @@ class ConnectorsAuth : public ConnectorsStub {
   std::shared_ptr<ConnectorsStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

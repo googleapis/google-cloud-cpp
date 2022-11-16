@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace certificatemanager_internal {
 
 class CertificateManagerMetadata : public CertificateManagerStub {
  public:
@@ -205,8 +205,8 @@ class CertificateManagerMetadata : public CertificateManagerStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

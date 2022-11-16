@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace run {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace run {
 
 RevisionsClient::RevisionsClient(
     std::shared_ptr<RevisionsConnection> connection, Options opts)
@@ -75,7 +75,7 @@ RevisionsClient::DeleteRevision(
   return connection_->DeleteRevision(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

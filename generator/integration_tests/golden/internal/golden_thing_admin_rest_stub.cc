@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_internal {
 
 DefaultGoldenThingAdminRestStub::DefaultGoldenThingAdminRestStub(Options options)
     : rest_client_(rest_internal::MakePooledRestClient(
@@ -200,7 +200,7 @@ DefaultGoldenThingAdminRestStub::ListBackupOperations(
        std::make_pair("page_token", request.page_token())});
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

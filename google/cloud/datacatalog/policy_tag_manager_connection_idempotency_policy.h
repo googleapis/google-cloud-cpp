@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog {
 
 class PolicyTagManagerConnectionIdempotencyPolicy {
  public:
@@ -81,8 +81,8 @@ class PolicyTagManagerConnectionIdempotencyPolicy {
 std::unique_ptr<PolicyTagManagerConnectionIdempotencyPolicy>
 MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

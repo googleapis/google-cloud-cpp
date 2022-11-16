@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol {
 
 class QuotaControllerConnectionIdempotencyPolicy {
  public:
@@ -45,8 +45,8 @@ class QuotaControllerConnectionIdempotencyPolicy {
 std::unique_ptr<QuotaControllerConnectionIdempotencyPolicy>
 MakeDefaultQuotaControllerConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -26,12 +26,12 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol_internal {
 
 ServiceControllerConnectionImpl::ServiceControllerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<servicecontrol_internal::ServiceControllerStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServiceControllerStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -62,7 +62,7 @@ ServiceControllerConnectionImpl::Report(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

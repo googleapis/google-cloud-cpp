@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace connectors {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace connectors {
 
 ConnectorsClient::ConnectorsClient(
     std::shared_ptr<ConnectorsConnection> connection, Options opts)
@@ -282,7 +282,7 @@ ConnectorsClient::GetRuntimeConfig(
   return connection_->GetRuntimeConfig(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 class DataTransferServiceConnectionImpl
-    : public bigquery::DataTransferServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::DataTransferServiceConnection {
  public:
   ~DataTransferServiceConnectionImpl() override = default;
 
   DataTransferServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<bigquery_internal::DataTransferServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataTransferServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -120,47 +120,58 @@ class DataTransferServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<bigquery::DataTransferServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DataTransferServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::DataTransferServiceRetryPolicyOption>()) {
-      return options.get<bigquery::DataTransferServiceRetryPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::DataTransferServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::DataTransferServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<bigquery::DataTransferServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::DataTransferServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::DataTransferServiceBackoffPolicyOption>()) {
-      return options.get<bigquery::DataTransferServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<bigquery::DataTransferServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<bigquery::DataTransferServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
     if (options.has<
-            bigquery::DataTransferServiceConnectionIdempotencyPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::DataTransferServiceBackoffPolicyOption>()) {
       return options
-          .get<bigquery::DataTransferServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::DataTransferServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<bigquery::DataTransferServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::DataTransferServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::DataTransferServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::
+                     DataTransferServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   DataTransferServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 DataTransferServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<bigquery_internal::DataTransferServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataTransferServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

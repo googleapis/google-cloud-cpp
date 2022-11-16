@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory_internal {
 
 RegistrationServiceStub::~RegistrationServiceStub() = default;
 
@@ -247,7 +247,7 @@ DefaultRegistrationServiceStub::TestIamPermissions(
   return response;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

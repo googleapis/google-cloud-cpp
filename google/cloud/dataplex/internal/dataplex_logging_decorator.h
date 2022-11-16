@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex_internal {
 
 class DataplexServiceLogging : public DataplexServiceStub {
  public:
@@ -206,8 +206,8 @@ class DataplexServiceLogging : public DataplexServiceStub {
   std::set<std::string> components_;
 };  // DataplexServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

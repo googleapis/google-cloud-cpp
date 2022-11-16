@@ -34,16 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
-class QueryServiceConnectionImpl : public monitoring::QueryServiceConnection {
+class QueryServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::QueryServiceConnection {
  public:
   ~QueryServiceConnectionImpl() override = default;
 
   QueryServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<monitoring_internal::QueryServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::QueryServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -52,44 +53,50 @@ class QueryServiceConnectionImpl : public monitoring::QueryServiceConnection {
       google::monitoring::v3::QueryTimeSeriesRequest request) override;
 
  private:
-  std::unique_ptr<monitoring::QueryServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::QueryServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::QueryServiceRetryPolicyOption>()) {
-      return options.get<monitoring::QueryServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::QueryServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::QueryServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<monitoring::QueryServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::QueryServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::QueryServiceBackoffPolicyOption>()) {
-      return options.get<monitoring::QueryServiceBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::QueryServiceBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::QueryServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<monitoring::QueryServiceBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::QueryServiceBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<monitoring::QueryServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::QueryServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<monitoring::QueryServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        QueryServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<monitoring::QueryServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   QueryServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<monitoring::QueryServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 QueryServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<monitoring_internal::QueryServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::QueryServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

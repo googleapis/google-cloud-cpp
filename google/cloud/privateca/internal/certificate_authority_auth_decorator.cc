@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace privateca_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca_internal {
 
 CertificateAuthorityServiceAuth::CertificateAuthorityServiceAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -507,7 +507,7 @@ future<Status> CertificateAuthorityServiceAuth::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

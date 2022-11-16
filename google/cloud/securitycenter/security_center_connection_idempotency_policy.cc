@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter {
 
 using ::google::cloud::Idempotency;
 
@@ -224,7 +224,7 @@ MakeDefaultSecurityCenterConnectionIdempotencyPolicy() {
   return absl::make_unique<SecurityCenterConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

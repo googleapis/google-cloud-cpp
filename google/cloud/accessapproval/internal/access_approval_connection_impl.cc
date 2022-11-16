@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accessapproval_internal {
 
 AccessApprovalConnectionImpl::AccessApprovalConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<accessapproval_internal::AccessApprovalStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AccessApprovalStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -44,8 +44,9 @@ AccessApprovalConnectionImpl::ListApprovalRequests(
     google::cloud::accessapproval::v1::ListApprovalRequestsMessage request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<accessapproval::AccessApprovalRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AccessApprovalRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListApprovalRequests(request);
   char const* function_name = __func__;
@@ -192,7 +193,7 @@ AccessApprovalConnectionImpl::GetAccessApprovalServiceAccount(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

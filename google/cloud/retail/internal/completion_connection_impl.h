@@ -36,17 +36,17 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 class CompletionServiceConnectionImpl
-    : public retail::CompletionServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::CompletionServiceConnection {
  public:
   ~CompletionServiceConnectionImpl() override = default;
 
   CompletionServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<retail_internal::CompletionServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CompletionServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -60,55 +60,70 @@ class CompletionServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<retail::CompletionServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CompletionServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::CompletionServiceRetryPolicyOption>()) {
-      return options.get<retail::CompletionServiceRetryPolicyOption>()->clone();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::CompletionServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::CompletionServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<retail::CompletionServiceRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::CompletionServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::CompletionServiceBackoffPolicyOption>()) {
-      return options.get<retail::CompletionServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail::CompletionServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<retail::CompletionServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            retail::CompletionServiceConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::CompletionServiceBackoffPolicyOption>()) {
       return options
-          .get<retail::CompletionServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::CompletionServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<retail::CompletionServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::CompletionServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::CompletionServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CompletionServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CompletionServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 CompletionServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::CompletionServicePollingPolicyOption>()) {
-      return options.get<retail::CompletionServicePollingPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::CompletionServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::CompletionServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<retail::CompletionServicePollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::CompletionServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<retail_internal::CompletionServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CompletionServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

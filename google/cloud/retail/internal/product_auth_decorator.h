@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 class ProductServiceAuth : public ProductServiceStub {
  public:
@@ -108,8 +108,8 @@ class ProductServiceAuth : public ProductServiceStub {
   std::shared_ptr<ProductServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

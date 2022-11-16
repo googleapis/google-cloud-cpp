@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 ExperimentsClient::ExperimentsClient(
     std::shared_ptr<ExperimentsConnection> connection, Options opts)
@@ -149,7 +149,7 @@ ExperimentsClient::StopExperiment(
   return connection_->StopExperiment(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

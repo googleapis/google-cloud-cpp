@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler_internal {
 
 CloudSchedulerConnectionImpl::CloudSchedulerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<scheduler_internal::CloudSchedulerStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudSchedulerStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -44,8 +44,9 @@ CloudSchedulerConnectionImpl::ListJobs(
     google::cloud::scheduler::v1::ListJobsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<scheduler::CloudSchedulerRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudSchedulerRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListJobs(request);
   char const* function_name = __func__;
@@ -158,7 +159,7 @@ CloudSchedulerConnectionImpl::RunJob(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

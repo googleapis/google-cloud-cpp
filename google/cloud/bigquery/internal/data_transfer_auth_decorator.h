@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 class DataTransferServiceAuth : public DataTransferServiceStub {
  public:
@@ -128,8 +128,8 @@ class DataTransferServiceAuth : public DataTransferServiceStub {
   std::shared_ptr<DataTransferServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

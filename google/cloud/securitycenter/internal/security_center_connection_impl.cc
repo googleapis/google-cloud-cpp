@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter_internal {
 
 SecurityCenterConnectionImpl::SecurityCenterConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<securitycenter_internal::SecurityCenterStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecurityCenterStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -235,8 +235,9 @@ SecurityCenterConnectionImpl::GroupAssets(
     google::cloud::securitycenter::v1::GroupAssetsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->GroupAssets(request);
   char const* function_name = __func__;
@@ -266,8 +267,9 @@ SecurityCenterConnectionImpl::GroupFindings(
     google::cloud::securitycenter::v1::GroupFindingsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->GroupFindings(request);
   char const* function_name = __func__;
@@ -299,8 +301,9 @@ SecurityCenterConnectionImpl::ListAssets(
     google::cloud::securitycenter::v1::ListAssetsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAssets(request);
   char const* function_name = __func__;
@@ -332,8 +335,9 @@ SecurityCenterConnectionImpl::ListFindings(
     google::cloud::securitycenter::v1::ListFindingsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListFindings(request);
   char const* function_name = __func__;
@@ -367,8 +371,9 @@ SecurityCenterConnectionImpl::ListMuteConfigs(
     google::cloud::securitycenter::v1::ListMuteConfigsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListMuteConfigs(request);
   char const* function_name = __func__;
@@ -401,8 +406,9 @@ SecurityCenterConnectionImpl::ListNotificationConfigs(
     google::cloud::securitycenter::v1::ListNotificationConfigsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNotificationConfigs(request);
   char const* function_name = __func__;
@@ -435,8 +441,9 @@ SecurityCenterConnectionImpl::ListSources(
     google::cloud::securitycenter::v1::ListSourcesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSources(request);
   char const* function_name = __func__;
@@ -689,8 +696,9 @@ SecurityCenterConnectionImpl::ListBigQueryExports(
     google::cloud::securitycenter::v1::ListBigQueryExportsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<securitycenter::SecurityCenterRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBigQueryExports(request);
   char const* function_name = __func__;
@@ -718,7 +726,7 @@ SecurityCenterConnectionImpl::ListBigQueryExports(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

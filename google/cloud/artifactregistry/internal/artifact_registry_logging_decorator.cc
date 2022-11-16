@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace artifactregistry_internal {
 
 ArtifactRegistryLogging::ArtifactRegistryLogging(
     std::shared_ptr<ArtifactRegistryStub> child, TracingOptions tracing_options,
@@ -407,7 +407,7 @@ future<Status> ArtifactRegistryLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

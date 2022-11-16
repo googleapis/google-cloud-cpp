@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger {
 
 class Debugger2ConnectionIdempotencyPolicy {
  public:
@@ -58,8 +58,8 @@ class Debugger2ConnectionIdempotencyPolicy {
 std::unique_ptr<Debugger2ConnectionIdempotencyPolicy>
 MakeDefaultDebugger2ConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

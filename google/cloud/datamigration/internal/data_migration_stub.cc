@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace datamigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datamigration_internal {
 
 DataMigrationServiceStub::~DataMigrationServiceStub() = default;
 
@@ -309,7 +309,7 @@ future<Status> DefaultDataMigrationServiceStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

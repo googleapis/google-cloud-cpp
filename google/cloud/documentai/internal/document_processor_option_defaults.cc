@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -43,44 +43,53 @@ Options DocumentProcessorServiceDefaultOptions(std::string const& location,
                    "documentai.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<documentai::DocumentProcessorServiceRetryPolicyOption>()) {
-    options.set<documentai::DocumentProcessorServiceRetryPolicyOption>(
-        documentai::DocumentProcessorServiceLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<documentai::DocumentProcessorServiceBackoffPolicyOption>()) {
-    options.set<documentai::DocumentProcessorServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
-  }
-  if (!options.has<documentai::DocumentProcessorServicePollingPolicyOption>()) {
-    options.set<documentai::DocumentProcessorServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            documentai::DocumentProcessorServiceRetryPolicyOption::Type,
-            documentai::DocumentProcessorServiceBackoffPolicyOption::Type>(
-            options
-                .get<documentai::DocumentProcessorServiceRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<documentai::DocumentProcessorServiceBackoffPolicyOption>()
-                ->clone())
-            .clone());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceBackoffPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
   if (!options.has<
-          documentai::
+          GOOGLE_CLOUD_CPP_NS::DocumentProcessorServicePollingPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::DocumentProcessorServicePollingPolicyOption>(
+            GenericPollingPolicy<
+                GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryPolicyOption::
+                    Type,
+                GOOGLE_CLOUD_CPP_NS::
+                    DocumentProcessorServiceBackoffPolicyOption::Type>(
+                options
+                    .get<GOOGLE_CLOUD_CPP_NS::
+                             DocumentProcessorServiceRetryPolicyOption>()
+                    ->clone(),
+                options
+                    .get<GOOGLE_CLOUD_CPP_NS::
+                             DocumentProcessorServiceBackoffPolicyOption>()
+                    ->clone())
+                .clone());
+  }
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::
               DocumentProcessorServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        documentai::DocumentProcessorServiceConnectionIdempotencyPolicyOption>(
-        documentai::
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    DocumentProcessorServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

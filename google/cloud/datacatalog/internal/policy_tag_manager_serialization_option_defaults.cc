@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -40,34 +40,37 @@ Options PolicyTagManagerSerializationDefaultOptions(Options options) {
       "datacatalog.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<
-          datacatalog::PolicyTagManagerSerializationRetryPolicyOption>()) {
-    options.set<datacatalog::PolicyTagManagerSerializationRetryPolicyOption>(
-        datacatalog::PolicyTagManagerSerializationLimitedTimeRetryPolicy(
-            std::chrono::minutes(30))
-            .clone());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       PolicyTagManagerSerializationRetryPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::PolicyTagManagerSerializationRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            PolicyTagManagerSerializationLimitedTimeRetryPolicy(
+                std::chrono::minutes(30))
+                .clone());
   }
-  if (!options.has<
-          datacatalog::PolicyTagManagerSerializationBackoffPolicyOption>()) {
-    options.set<datacatalog::PolicyTagManagerSerializationBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       PolicyTagManagerSerializationBackoffPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::PolicyTagManagerSerializationBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<
-          datacatalog::
+          GOOGLE_CLOUD_CPP_NS::
               PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>()) {
     options.set<
-        datacatalog::
+        GOOGLE_CLOUD_CPP_NS::
             PolicyTagManagerSerializationConnectionIdempotencyPolicyOption>(
-        datacatalog::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultPolicyTagManagerSerializationConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

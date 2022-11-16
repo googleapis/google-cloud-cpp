@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace trace_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace trace_internal {
 
 TraceServiceMetadata::TraceServiceMetadata(
     std::shared_ptr<TraceServiceStub> child)
@@ -66,7 +66,7 @@ void TraceServiceMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory_mocks {
 
 /**
  * A class to mock `LookupServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockLookupServiceConnection
-    : public servicedirectory::LookupServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::LookupServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -55,8 +55,8 @@ class MockLookupServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

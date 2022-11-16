@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 CursorServiceLogging::CursorServiceLogging(
     std::shared_ptr<CursorServiceStub> child, TracingOptions tracing_options,
@@ -82,7 +82,7 @@ CursorServiceLogging::ListPartitionCursors(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

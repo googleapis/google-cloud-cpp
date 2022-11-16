@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 JobControllerConnection::~JobControllerConnection() = default;
 
@@ -81,12 +81,12 @@ std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
                                  UnifiedCredentialsOptionList,
                                  JobControllerPolicyOptionList>(options,
                                                                 __func__);
-  options = dataproc_internal::JobControllerDefaultOptions(location,
-                                                           std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::JobControllerDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dataproc_internal::CreateDefaultJobControllerStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultJobControllerStub(
       background->cq(), options);
-  return std::make_shared<dataproc_internal::JobControllerConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::JobControllerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -95,7 +95,7 @@ std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
   return MakeJobControllerConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

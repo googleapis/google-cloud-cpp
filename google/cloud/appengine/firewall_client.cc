@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 FirewallClient::FirewallClient(std::shared_ptr<FirewallConnection> connection,
                                Options opts)
@@ -73,7 +73,7 @@ Status FirewallClient::DeleteIngressRule(
   return connection_->DeleteIngressRule(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace translate_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace translate_internal {
 
 class TranslationServiceConnectionImpl
-    : public translate::TranslationServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::TranslationServiceConnection {
  public:
   ~TranslationServiceConnectionImpl() override = default;
 
   TranslationServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<translate_internal::TranslationServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TranslationServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -97,57 +97,71 @@ class TranslationServiceConnectionImpl
                      request) override;
 
  private:
-  std::unique_ptr<translate::TranslationServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::TranslationServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<translate::TranslationServiceRetryPolicyOption>()) {
-      return options.get<translate::TranslationServiceRetryPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::TranslationServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::TranslationServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<translate::TranslationServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::TranslationServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<translate::TranslationServiceBackoffPolicyOption>()) {
-      return options.get<translate::TranslationServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<translate::TranslationServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<translate::TranslationServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
     if (options.has<
-            translate::TranslationServiceConnectionIdempotencyPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::TranslationServiceBackoffPolicyOption>()) {
       return options
-          .get<translate::TranslationServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::TranslationServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<translate::TranslationServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::TranslationServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::TranslationServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::
+                     TranslationServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   TranslationServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 TranslationServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<translate::TranslationServicePollingPolicyOption>()) {
-      return options.get<translate::TranslationServicePollingPolicyOption>()
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::TranslationServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::TranslationServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<translate::TranslationServicePollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::TranslationServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<translate_internal::TranslationServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TranslationServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

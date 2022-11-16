@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 DomainMappingsMetadata::DomainMappingsMetadata(
     std::shared_ptr<DomainMappingsStub> child)
@@ -111,7 +111,7 @@ void DomainMappingsMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

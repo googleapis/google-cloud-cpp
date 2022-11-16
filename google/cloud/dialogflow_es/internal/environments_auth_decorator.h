@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 class EnvironmentsAuth : public EnvironmentsStub {
  public:
@@ -74,8 +74,8 @@ class EnvironmentsAuth : public EnvironmentsStub {
   std::shared_ptr<EnvironmentsStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

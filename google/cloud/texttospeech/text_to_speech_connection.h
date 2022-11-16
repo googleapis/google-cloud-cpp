@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace texttospeech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace texttospeech {
 
 using TextToSpeechRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        texttospeech_internal::TextToSpeechRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TextToSpeechRetryTraits>;
 
 using TextToSpeechLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        texttospeech_internal::TextToSpeechRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TextToSpeechRetryTraits>;
 
 using TextToSpeechLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        texttospeech_internal::TextToSpeechRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TextToSpeechRetryTraits>;
 
 /**
  * The `TextToSpeechConnection` object for `TextToSpeechClient`.
@@ -55,7 +55,7 @@ using TextToSpeechLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeTextToSpeechConnection()`.
  *
- * For mocking, see `texttospeech_mocks::MockTextToSpeechConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockTextToSpeechConnection`.
  */
 class TextToSpeechConnection {
  public:
@@ -84,7 +84,7 @@ class TextToSpeechConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::texttospeech::TextToSpeechPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::TextToSpeechPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -95,8 +95,8 @@ class TextToSpeechConnection {
 std::shared_ptr<TextToSpeechConnection> MakeTextToSpeechConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

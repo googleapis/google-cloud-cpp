@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace translate {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace translate {
 
 TranslationServiceClient::TranslationServiceClient(
     std::shared_ptr<TranslationServiceConnection> connection, Options opts)
@@ -226,7 +226,7 @@ TranslationServiceClient::DeleteGlossary(
   return connection_->DeleteGlossary(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

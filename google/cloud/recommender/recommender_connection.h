@@ -31,19 +31,19 @@
 
 namespace google {
 namespace cloud {
-namespace recommender {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender {
 
 using RecommenderRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    recommender_internal::RecommenderRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::RecommenderRetryTraits>;
 
 using RecommenderLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        recommender_internal::RecommenderRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::RecommenderRetryTraits>;
 
 using RecommenderLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        recommender_internal::RecommenderRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::RecommenderRetryTraits>;
 
 /**
  * The `RecommenderConnection` object for `RecommenderClient`.
@@ -55,7 +55,7 @@ using RecommenderLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeRecommenderConnection()`.
  *
- * For mocking, see `recommender_mocks::MockRecommenderConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockRecommenderConnection`.
  */
 class RecommenderConnection {
  public:
@@ -130,7 +130,7 @@ class RecommenderConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::recommender::RecommenderPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::RecommenderPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -141,8 +141,8 @@ class RecommenderConnection {
 std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

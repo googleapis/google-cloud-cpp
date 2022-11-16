@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks {
 
 using NotebookServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        notebooks_internal::NotebookServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::NotebookServiceRetryTraits>;
 
 using NotebookServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        notebooks_internal::NotebookServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::NotebookServiceRetryTraits>;
 
 using NotebookServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        notebooks_internal::NotebookServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::NotebookServiceRetryTraits>;
 
 /**
  * The `NotebookServiceConnection` object for `NotebookServiceClient`.
@@ -59,7 +59,7 @@ using NotebookServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeNotebookServiceConnection()`.
  *
- * For mocking, see `notebooks_mocks::MockNotebookServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockNotebookServiceConnection`.
  */
 class NotebookServiceConnection {
  public:
@@ -213,7 +213,7 @@ class NotebookServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::notebooks::NotebookServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::NotebookServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -224,8 +224,8 @@ class NotebookServiceConnection {
 std::shared_ptr<NotebookServiceConnection> MakeNotebookServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

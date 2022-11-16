@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_admin_internal {
 
 BigtableInstanceAdminLogging::BigtableInstanceAdminLogging(
     std::shared_ptr<BigtableInstanceAdminStub> child,
@@ -331,7 +331,7 @@ future<Status> BigtableInstanceAdminLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

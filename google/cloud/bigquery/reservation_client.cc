@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 ReservationServiceClient::ReservationServiceClient(
     std::shared_ptr<ReservationServiceConnection> connection, Options opts)
@@ -441,7 +441,7 @@ ReservationServiceClient::UpdateBiReservation(
   return connection_->UpdateBiReservation(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkconnectivity {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkconnectivity {
 
 using ::google::cloud::Idempotency;
 
@@ -90,7 +90,7 @@ MakeDefaultHubServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<HubServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

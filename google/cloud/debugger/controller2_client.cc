@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger {
 
 Controller2Client::Controller2Client(
     std::shared_ptr<Controller2Connection> connection, Options opts)
@@ -88,7 +88,7 @@ Controller2Client::UpdateActiveBreakpoint(
   return connection_->UpdateActiveBreakpoint(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

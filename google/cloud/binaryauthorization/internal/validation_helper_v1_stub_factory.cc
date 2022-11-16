@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 std::shared_ptr<ValidationHelperV1Stub> CreateDefaultValidationHelperV1Stub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -61,7 +61,7 @@ std::shared_ptr<ValidationHelperV1Stub> CreateDefaultValidationHelperV1Stub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

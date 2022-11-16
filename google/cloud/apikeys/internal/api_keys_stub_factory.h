@@ -28,14 +28,14 @@
 
 namespace google {
 namespace cloud {
-namespace apikeys_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apikeys_internal {
 
 std::shared_ptr<ApiKeysStub> CreateDefaultApiKeysStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

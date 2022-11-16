@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter_internal {
 
 class SecurityCenterConnectionImpl
-    : public securitycenter::SecurityCenterConnection {
+    : public GOOGLE_CLOUD_CPP_NS::SecurityCenterConnection {
  public:
   ~SecurityCenterConnectionImpl() override = default;
 
   SecurityCenterConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<securitycenter_internal::SecurityCenterStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecurityCenterStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -206,58 +206,66 @@ class SecurityCenterConnectionImpl
       override;
 
  private:
-  std::unique_ptr<securitycenter::SecurityCenterRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<securitycenter::SecurityCenterRetryPolicyOption>()) {
-      return options.get<securitycenter::SecurityCenterRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<securitycenter::SecurityCenterRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<securitycenter::SecurityCenterBackoffPolicyOption>()) {
-      return options.get<securitycenter::SecurityCenterBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<securitycenter::SecurityCenterBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<securitycenter::SecurityCenterConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<securitycenter::
-                        SecurityCenterConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::SecurityCenterBackoffPolicyOption>()) {
       return options
-          .get<
-              securitycenter::SecurityCenterConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::SecurityCenterBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<securitycenter::SecurityCenterConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::SecurityCenterBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::SecurityCenterConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        SecurityCenterConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   SecurityCenterConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 SecurityCenterConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<securitycenter::SecurityCenterPollingPolicyOption>()) {
-      return options.get<securitycenter::SecurityCenterPollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::SecurityCenterPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::SecurityCenterPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<securitycenter::SecurityCenterPollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::SecurityCenterPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<securitycenter_internal::SecurityCenterStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecurityCenterStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

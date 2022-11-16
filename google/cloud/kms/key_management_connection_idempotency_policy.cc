@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms {
 
 using ::google::cloud::Idempotency;
 
@@ -180,7 +180,7 @@ MakeDefaultKeyManagementServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<KeyManagementServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_internal {
 
 class EnvironmentsConnectionImpl
-    : public dialogflow_cx::EnvironmentsConnection {
+    : public GOOGLE_CLOUD_CPP_NS::EnvironmentsConnection {
  public:
   ~EnvironmentsConnectionImpl() override = default;
 
   EnvironmentsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_cx_internal::EnvironmentsStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EnvironmentsStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -94,57 +94,61 @@ class EnvironmentsConnectionImpl
                  request) override;
 
  private:
-  std::unique_ptr<dialogflow_cx::EnvironmentsRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::EnvironmentsRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::EnvironmentsRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::EnvironmentsRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EnvironmentsRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::EnvironmentsRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<dialogflow_cx::EnvironmentsRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::EnvironmentsRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::EnvironmentsBackoffPolicyOption>()) {
-      return options.get<dialogflow_cx::EnvironmentsBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EnvironmentsBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::EnvironmentsBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<dialogflow_cx::EnvironmentsBackoffPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::EnvironmentsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<dialogflow_cx::EnvironmentsConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::EnvironmentsConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_cx::EnvironmentsConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        EnvironmentsConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<dialogflow_cx::EnvironmentsConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   EnvironmentsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dialogflow_cx::EnvironmentsConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 EnvironmentsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::EnvironmentsPollingPolicyOption>()) {
-      return options.get<dialogflow_cx::EnvironmentsPollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EnvironmentsPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::EnvironmentsPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<dialogflow_cx::EnvironmentsPollingPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::EnvironmentsPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dialogflow_cx_internal::EnvironmentsStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EnvironmentsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

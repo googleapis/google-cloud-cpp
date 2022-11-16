@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 class DataTransferServiceConnectionIdempotencyPolicy {
  public:
@@ -102,8 +102,8 @@ class DataTransferServiceConnectionIdempotencyPolicy {
 std::unique_ptr<DataTransferServiceConnectionIdempotencyPolicy>
 MakeDefaultDataTransferServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

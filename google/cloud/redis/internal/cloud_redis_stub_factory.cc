@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace redis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace redis_internal {
 
 std::shared_ptr<CloudRedisStub> CreateDefaultCloudRedisStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -60,7 +60,7 @@ std::shared_ptr<CloudRedisStub> CreateDefaultCloudRedisStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

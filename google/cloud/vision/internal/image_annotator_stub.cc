@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision_internal {
 
 ImageAnnotatorStub::~ImageAnnotatorStub() = default;
 
@@ -117,7 +117,7 @@ future<Status> DefaultImageAnnotatorStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

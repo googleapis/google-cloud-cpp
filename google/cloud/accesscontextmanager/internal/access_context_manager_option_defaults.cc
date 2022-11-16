@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accesscontextmanager_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,49 +39,49 @@ Options AccessContextManagerDefaultOptions(Options options) {
       "accesscontextmanager.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<
-          accesscontextmanager::AccessContextManagerRetryPolicyOption>()) {
-    options.set<accesscontextmanager::AccessContextManagerRetryPolicyOption>(
-        accesscontextmanager::AccessContextManagerLimitedTimeRetryPolicy(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::AccessContextManagerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
   if (!options.has<
-          accesscontextmanager::AccessContextManagerBackoffPolicyOption>()) {
-    options.set<accesscontextmanager::AccessContextManagerBackoffPolicyOption>(
+          GOOGLE_CLOUD_CPP_NS::AccessContextManagerBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AccessContextManagerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<
-          accesscontextmanager::AccessContextManagerPollingPolicyOption>()) {
-    options.set<accesscontextmanager::AccessContextManagerPollingPolicyOption>(
+          GOOGLE_CLOUD_CPP_NS::AccessContextManagerPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AccessContextManagerPollingPolicyOption>(
         GenericPollingPolicy<
-            accesscontextmanager::AccessContextManagerRetryPolicyOption::Type,
-            accesscontextmanager::AccessContextManagerBackoffPolicyOption::
-                Type>(options
-                          .get<accesscontextmanager::
-                                   AccessContextManagerRetryPolicyOption>()
-                          ->clone(),
-                      options
-                          .get<accesscontextmanager::
-                                   AccessContextManagerBackoffPolicyOption>()
-                          ->clone())
+            GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::AccessContextManagerBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::
+                         AccessContextManagerRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::
+                         AccessContextManagerBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
   if (!options
-           .has<accesscontextmanager::
+           .has<GOOGLE_CLOUD_CPP_NS::
                     AccessContextManagerConnectionIdempotencyPolicyOption>()) {
-    options.set<accesscontextmanager::
+    options.set<GOOGLE_CLOUD_CPP_NS::
                     AccessContextManagerConnectionIdempotencyPolicyOption>(
-        accesscontextmanager::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultAccessContextManagerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

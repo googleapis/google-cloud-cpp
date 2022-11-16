@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace certificatemanager {
 
 using CertificateManagerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        certificatemanager_internal::CertificateManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryTraits>;
 
 using CertificateManagerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        certificatemanager_internal::CertificateManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryTraits>;
 
 using CertificateManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        certificatemanager_internal::CertificateManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryTraits>;
 
 /**
  * The `CertificateManagerConnection` object for `CertificateManagerClient`.
@@ -60,7 +60,7 @@ using CertificateManagerLimitedErrorCountRetryPolicy =
  * To create a concrete instance, see `MakeCertificateManagerConnection()`.
  *
  * For mocking, see
- * `certificatemanager_mocks::MockCertificateManagerConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockCertificateManagerConnection`.
  */
 class CertificateManagerConnection {
  public:
@@ -214,7 +214,7 @@ class CertificateManagerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::certificatemanager::CertificateManagerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CertificateManagerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -225,8 +225,8 @@ class CertificateManagerConnection {
 std::shared_ptr<CertificateManagerConnection> MakeCertificateManagerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace cloudbuild {
 
 CloudBuildConnection::~CloudBuildConnection() = default;
 
@@ -168,15 +168,15 @@ std::shared_ptr<CloudBuildConnection> MakeCloudBuildConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  CloudBuildPolicyOptionList>(options, __func__);
-  options = cloudbuild_internal::CloudBuildDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::CloudBuildDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = cloudbuild_internal::CreateDefaultCloudBuildStub(background->cq(),
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultCloudBuildStub(background->cq(),
                                                                options);
-  return std::make_shared<cloudbuild_internal::CloudBuildConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::CloudBuildConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

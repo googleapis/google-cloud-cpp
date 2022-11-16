@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigateway {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigateway {
 
 ///
 /// The API Gateway Service is the interface for managing API Gateways.
@@ -684,8 +684,8 @@ class ApiGatewayServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

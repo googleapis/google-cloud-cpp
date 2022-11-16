@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace channel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace channel_internal {
 
 CloudChannelServiceAuth::CloudChannelServiceAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -595,7 +595,7 @@ future<Status> CloudChannelServiceAuth::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

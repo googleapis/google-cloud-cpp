@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace translate_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace translate_internal {
 
 class TranslationServiceStub {
  public:
@@ -185,8 +185,8 @@ class DefaultTranslationServiceStub : public TranslationServiceStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

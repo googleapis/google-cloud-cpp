@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 class ClusterControllerConnectionIdempotencyPolicy {
  public:
@@ -66,8 +66,8 @@ class ClusterControllerConnectionIdempotencyPolicy {
 std::unique_ptr<ClusterControllerConnectionIdempotencyPolicy>
 MakeDefaultClusterControllerConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

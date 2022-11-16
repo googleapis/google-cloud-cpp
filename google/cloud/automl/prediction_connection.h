@@ -33,20 +33,20 @@
 
 namespace google {
 namespace cloud {
-namespace automl {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl {
 
 using PredictionServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        automl_internal::PredictionServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryTraits>;
 
 using PredictionServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        automl_internal::PredictionServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryTraits>;
 
 using PredictionServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        automl_internal::PredictionServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryTraits>;
 
 /**
  * The `PredictionServiceConnection` object for `PredictionServiceClient`.
@@ -58,7 +58,8 @@ using PredictionServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakePredictionServiceConnection()`.
  *
- * For mocking, see `automl_mocks::MockPredictionServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockPredictionServiceConnection`.
  */
 class PredictionServiceConnection {
  public:
@@ -88,7 +89,7 @@ class PredictionServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::automl::PredictionServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::PredictionServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -99,8 +100,8 @@ class PredictionServiceConnection {
 std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

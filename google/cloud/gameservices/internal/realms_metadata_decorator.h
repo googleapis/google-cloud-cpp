@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices_internal {
 
 class RealmsServiceMetadata : public RealmsServiceStub {
  public:
@@ -82,8 +82,8 @@ class RealmsServiceMetadata : public RealmsServiceStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

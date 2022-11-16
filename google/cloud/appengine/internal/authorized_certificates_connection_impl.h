@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 class AuthorizedCertificatesConnectionImpl
-    : public appengine::AuthorizedCertificatesConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesConnection {
  public:
   ~AuthorizedCertificatesConnectionImpl() override = default;
 
   AuthorizedCertificatesConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_internal::AuthorizedCertificatesStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -74,51 +74,58 @@ class AuthorizedCertificatesConnectionImpl
       override;
 
  private:
-  std::unique_ptr<appengine::AuthorizedCertificatesRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::AuthorizedCertificatesRetryPolicyOption>()) {
-      return options.get<appengine::AuthorizedCertificatesRetryPolicyOption>()
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<appengine::AuthorizedCertificatesRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::AuthorizedCertificatesBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesBackoffPolicyOption>()) {
       return options
-          .get<appengine::AuthorizedCertificatesBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<appengine::AuthorizedCertificatesBackoffPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<appengine::AuthorizedCertificatesConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            appengine::
+            GOOGLE_CLOUD_CPP_NS::
                 AuthorizedCertificatesConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<appengine::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<appengine::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  AuthorizedCertificatesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<appengine_internal::AuthorizedCertificatesStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

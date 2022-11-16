@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_admin_internal {
 
 BigtableInstanceAdminConnectionImpl::BigtableInstanceAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigtable_admin_internal::BigtableInstanceAdminStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -309,9 +309,9 @@ BigtableInstanceAdminConnectionImpl::ListAppProfiles(
     google::bigtable::admin::v2::ListAppProfilesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAppProfiles(request);
   char const* function_name = __func__;
@@ -425,9 +425,9 @@ BigtableInstanceAdminConnectionImpl::ListHotTablets(
     google::bigtable::admin::v2::ListHotTabletsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListHotTablets(request);
   char const* function_name = __func__;
@@ -454,7 +454,7 @@ BigtableInstanceAdminConnectionImpl::ListHotTablets(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

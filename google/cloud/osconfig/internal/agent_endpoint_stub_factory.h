@@ -28,14 +28,14 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig_internal {
 
 std::shared_ptr<AgentEndpointServiceStub> CreateDefaultAgentEndpointServiceStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

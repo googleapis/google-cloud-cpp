@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 ValidationHelperV1Metadata::ValidationHelperV1Metadata(
     std::shared_ptr<ValidationHelperV1Stub> child)
@@ -61,7 +61,7 @@ void ValidationHelperV1Metadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

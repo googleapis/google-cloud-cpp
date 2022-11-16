@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace webrisk {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace webrisk {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -68,8 +68,8 @@ using WebRiskServicePolicyOptionList =
                WebRiskServiceBackoffPolicyOption,
                WebRiskServiceConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

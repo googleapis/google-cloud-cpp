@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace policytroubleshooter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace policytroubleshooter_internal {
 
 class IamCheckerAuth : public IamCheckerStub {
  public:
@@ -50,8 +50,8 @@ class IamCheckerAuth : public IamCheckerStub {
   std::shared_ptr<IamCheckerStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

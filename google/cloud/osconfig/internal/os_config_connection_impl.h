@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig_internal {
 
 class OsConfigServiceConnectionImpl
-    : public osconfig::OsConfigServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::OsConfigServiceConnection {
  public:
   ~OsConfigServiceConnectionImpl() override = default;
 
   OsConfigServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<osconfig_internal::OsConfigServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::OsConfigServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -97,45 +97,56 @@ class OsConfigServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<osconfig::OsConfigServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::OsConfigServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig::OsConfigServiceRetryPolicyOption>()) {
-      return options.get<osconfig::OsConfigServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::OsConfigServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::OsConfigServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<osconfig::OsConfigServiceRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::OsConfigServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig::OsConfigServiceBackoffPolicyOption>()) {
-      return options.get<osconfig::OsConfigServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<osconfig::OsConfigServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<osconfig::OsConfigServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            osconfig::OsConfigServiceConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::OsConfigServiceBackoffPolicyOption>()) {
       return options
-          .get<osconfig::OsConfigServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::OsConfigServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<osconfig::OsConfigServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::OsConfigServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::OsConfigServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        OsConfigServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   OsConfigServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 OsConfigServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<osconfig_internal::OsConfigServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::OsConfigServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

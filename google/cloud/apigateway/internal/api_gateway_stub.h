@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigateway_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigateway_internal {
 
 class ApiGatewayServiceStub {
  public:
@@ -223,8 +223,8 @@ class DefaultApiGatewayServiceStub : public ApiGatewayServiceStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

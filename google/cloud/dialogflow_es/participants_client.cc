@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 ParticipantsClient::ParticipantsClient(
     std::shared_ptr<ParticipantsConnection> connection, Options opts)
@@ -191,7 +191,7 @@ ParticipantsClient::SuggestSmartReplies(
   return connection_->SuggestSmartReplies(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

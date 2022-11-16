@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace networkmanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkmanagement_internal {
 
 class ReachabilityServiceConnectionImpl
-    : public networkmanagement::ReachabilityServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ReachabilityServiceConnection {
  public:
   ~ReachabilityServiceConnectionImpl() override = default;
 
   ReachabilityServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<networkmanagement_internal::ReachabilityServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ReachabilityServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -83,71 +83,71 @@ class ReachabilityServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<networkmanagement::ReachabilityServiceRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ReachabilityServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<networkmanagement::ReachabilityServiceRetryPolicyOption>()) {
+            .has<GOOGLE_CLOUD_CPP_NS::ReachabilityServiceRetryPolicyOption>()) {
       return options
-          .get<networkmanagement::ReachabilityServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ReachabilityServiceRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<networkmanagement::ReachabilityServiceRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ReachabilityServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<networkmanagement::ReachabilityServiceBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::ReachabilityServiceBackoffPolicyOption>()) {
       return options
-          .get<networkmanagement::ReachabilityServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ReachabilityServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<networkmanagement::ReachabilityServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ReachabilityServiceBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      networkmanagement::ReachabilityServiceConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::ReachabilityServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<networkmanagement::
+            .has<GOOGLE_CLOUD_CPP_NS::
                      ReachabilityServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<networkmanagement::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    ReachabilityServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<networkmanagement::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  ReachabilityServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<networkmanagement::ReachabilityServicePollingPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::ReachabilityServicePollingPolicyOption>()) {
       return options
-          .get<networkmanagement::ReachabilityServicePollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ReachabilityServicePollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<networkmanagement::ReachabilityServicePollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ReachabilityServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<networkmanagement_internal::ReachabilityServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ReachabilityServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

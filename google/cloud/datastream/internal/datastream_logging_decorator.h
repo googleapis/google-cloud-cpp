@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream_internal {
 
 class DatastreamLogging : public DatastreamStub {
  public:
@@ -193,8 +193,8 @@ class DatastreamLogging : public DatastreamStub {
   std::set<std::string> components_;
 };  // DatastreamLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

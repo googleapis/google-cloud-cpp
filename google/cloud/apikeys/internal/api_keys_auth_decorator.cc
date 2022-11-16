@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace apikeys_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apikeys_internal {
 
 ApiKeysAuth::ApiKeysAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -168,7 +168,7 @@ future<Status> ApiKeysAuth::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

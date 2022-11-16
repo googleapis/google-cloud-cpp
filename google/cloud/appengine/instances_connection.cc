@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 InstancesConnection::~InstancesConnection() = default;
 
@@ -67,15 +67,15 @@ std::shared_ptr<InstancesConnection> MakeInstancesConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  InstancesPolicyOptionList>(options, __func__);
-  options = appengine_internal::InstancesDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::InstancesDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      appengine_internal::CreateDefaultInstancesStub(background->cq(), options);
-  return std::make_shared<appengine_internal::InstancesConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultInstancesStub(background->cq(),
+                                                              options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::InstancesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 class UserEventServiceAuth : public UserEventServiceStub {
  public:
@@ -81,8 +81,8 @@ class UserEventServiceAuth : public UserEventServiceStub {
   std::shared_ptr<UserEventServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

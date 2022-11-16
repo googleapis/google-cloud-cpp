@@ -37,18 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities_internal {
 
 class ManagedIdentitiesServiceConnectionImpl
-    : public managedidentities::ManagedIdentitiesServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceConnection {
  public:
   ~ManagedIdentitiesServiceConnectionImpl() override = default;
 
   ManagedIdentitiesServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<managedidentities_internal::ManagedIdentitiesServiceStub>
-          stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -97,72 +96,73 @@ class ManagedIdentitiesServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<managedidentities::ManagedIdentitiesServiceRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            managedidentities::ManagedIdentitiesServiceRetryPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceRetryPolicyOption>()) {
       return options
-          .get<managedidentities::ManagedIdentitiesServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<managedidentities::ManagedIdentitiesServiceRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            managedidentities::ManagedIdentitiesServiceBackoffPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ManagedIdentitiesServiceBackoffPolicyOption>()) {
       return options
-          .get<managedidentities::ManagedIdentitiesServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ManagedIdentitiesServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<managedidentities::ManagedIdentitiesServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      managedidentities::ManagedIdentitiesServiceConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            managedidentities::
+            GOOGLE_CLOUD_CPP_NS::
                 ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<managedidentities::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<managedidentities::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            managedidentities::ManagedIdentitiesServicePollingPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ManagedIdentitiesServicePollingPolicyOption>()) {
       return options
-          .get<managedidentities::ManagedIdentitiesServicePollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ManagedIdentitiesServicePollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<managedidentities::ManagedIdentitiesServicePollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<managedidentities_internal::ManagedIdentitiesServiceStub>
-      stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

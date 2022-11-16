@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision {
 
 ProductSearchConnection::~ProductSearchConnection() = default;
 
@@ -162,15 +162,16 @@ std::shared_ptr<ProductSearchConnection> MakeProductSearchConnection(
                                  UnifiedCredentialsOptionList,
                                  ProductSearchPolicyOptionList>(options,
                                                                 __func__);
-  options = vision_internal::ProductSearchDefaultOptions(std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::ProductSearchDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = vision_internal::CreateDefaultProductSearchStub(background->cq(),
-                                                              options);
-  return std::make_shared<vision_internal::ProductSearchConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultProductSearchStub(
+      background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ProductSearchConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

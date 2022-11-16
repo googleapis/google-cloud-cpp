@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision {
 
 using ::google::cloud::Idempotency;
 
@@ -136,7 +136,7 @@ MakeDefaultProductSearchConnectionIdempotencyPolicy() {
   return absl::make_unique<ProductSearchConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace shell_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace shell_internal {
 
 CloudShellServiceStub::~CloudShellServiceStub() = default;
 
@@ -130,7 +130,7 @@ future<Status> DefaultCloudShellServiceStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

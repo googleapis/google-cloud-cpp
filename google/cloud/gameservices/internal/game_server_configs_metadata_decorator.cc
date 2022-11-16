@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices_internal {
 
 GameServerConfigsServiceMetadata::GameServerConfigsServiceMetadata(
     std::shared_ptr<GameServerConfigsServiceStub> child)
@@ -103,7 +103,7 @@ void GameServerConfigsServiceMetadata::SetMetadata(
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

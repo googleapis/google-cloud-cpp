@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 CatalogServiceLogging::CatalogServiceLogging(
     std::shared_ptr<CatalogServiceStub> child, TracingOptions tracing_options,
@@ -174,7 +174,7 @@ CatalogServiceLogging::ReplaceCatalogAttribute(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

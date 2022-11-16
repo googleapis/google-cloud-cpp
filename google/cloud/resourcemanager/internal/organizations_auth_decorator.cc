@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager_internal {
 
 OrganizationsAuth::OrganizationsAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -74,7 +74,7 @@ OrganizationsAuth::TestIamPermissions(
   return child_->TestIamPermissions(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

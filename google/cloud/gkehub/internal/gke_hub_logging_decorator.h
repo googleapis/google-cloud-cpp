@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub_internal {
 
 class GkeHubLogging : public GkeHubStub {
  public:
@@ -111,8 +111,8 @@ class GkeHubLogging : public GkeHubStub {
   std::set<std::string> components_;
 };  // GkeHubLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

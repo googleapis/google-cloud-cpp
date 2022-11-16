@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager {
 
 using OrganizationsRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        resourcemanager_internal::OrganizationsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::OrganizationsRetryTraits>;
 
 using OrganizationsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        resourcemanager_internal::OrganizationsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::OrganizationsRetryTraits>;
 
 using OrganizationsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        resourcemanager_internal::OrganizationsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::OrganizationsRetryTraits>;
 
 /**
  * The `OrganizationsConnection` object for `OrganizationsClient`.
@@ -56,7 +56,7 @@ using OrganizationsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeOrganizationsConnection()`.
  *
- * For mocking, see `resourcemanager_mocks::MockOrganizationsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockOrganizationsConnection`.
  */
 class OrganizationsConnection {
  public:
@@ -96,7 +96,7 @@ class OrganizationsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::resourcemanager::OrganizationsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::OrganizationsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -107,8 +107,8 @@ class OrganizationsConnection {
 std::shared_ptr<OrganizationsConnection> MakeOrganizationsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

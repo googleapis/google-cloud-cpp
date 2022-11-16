@@ -32,20 +32,20 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 using ConversationsRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dialogflow_es_internal::ConversationsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ConversationsRetryTraits>;
 
 using ConversationsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_es_internal::ConversationsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ConversationsRetryTraits>;
 
 using ConversationsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_es_internal::ConversationsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ConversationsRetryTraits>;
 
 /**
  * The `ConversationsConnection` object for `ConversationsClient`.
@@ -57,7 +57,7 @@ using ConversationsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeConversationsConnection()`.
  *
- * For mocking, see `dialogflow_es_mocks::MockConversationsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockConversationsConnection`.
  */
 class ConversationsConnection {
  public:
@@ -98,7 +98,7 @@ class ConversationsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_es::ConversationsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ConversationsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -120,8 +120,8 @@ std::shared_ptr<ConversationsConnection> MakeConversationsConnection(
 std::shared_ptr<ConversationsConnection> MakeConversationsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

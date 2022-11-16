@@ -33,18 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 class ValidationHelperV1ConnectionImpl
-    : public binaryauthorization::ValidationHelperV1Connection {
+    : public GOOGLE_CLOUD_CPP_NS::ValidationHelperV1Connection {
  public:
   ~ValidationHelperV1ConnectionImpl() override = default;
 
   ValidationHelperV1ConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<binaryauthorization_internal::ValidationHelperV1Stub>
-          stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ValidationHelperV1Stub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -56,58 +55,58 @@ class ValidationHelperV1ConnectionImpl
           ValidateAttestationOccurrenceRequest const& request) override;
 
  private:
-  std::unique_ptr<binaryauthorization::ValidationHelperV1RetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ValidationHelperV1RetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<binaryauthorization::ValidationHelperV1RetryPolicyOption>()) {
+            .has<GOOGLE_CLOUD_CPP_NS::ValidationHelperV1RetryPolicyOption>()) {
       return options
-          .get<binaryauthorization::ValidationHelperV1RetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ValidationHelperV1RetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<binaryauthorization::ValidationHelperV1RetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ValidationHelperV1RetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            binaryauthorization::ValidationHelperV1BackoffPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::ValidationHelperV1BackoffPolicyOption>()) {
       return options
-          .get<binaryauthorization::ValidationHelperV1BackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ValidationHelperV1BackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<binaryauthorization::ValidationHelperV1BackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ValidationHelperV1BackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      binaryauthorization::ValidationHelperV1ConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::ValidationHelperV1ConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<binaryauthorization::
+            .has<GOOGLE_CLOUD_CPP_NS::
                      ValidationHelperV1ConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<binaryauthorization::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    ValidationHelperV1ConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<binaryauthorization::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  ValidationHelperV1ConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<binaryauthorization_internal::ValidationHelperV1Stub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ValidationHelperV1Stub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,12 +27,13 @@
 
 namespace google {
 namespace cloud {
-namespace iot_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iot_internal {
 
 DeviceManagerConnectionImpl::DeviceManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<iot_internal::DeviceManagerStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DeviceManagerStub> stub,
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -98,7 +99,8 @@ DeviceManagerConnectionImpl::ListDeviceRegistries(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<iot::DeviceManagerRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DeviceManagerRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDeviceRegistries(request);
   char const* function_name = __func__;
@@ -181,7 +183,8 @@ DeviceManagerConnectionImpl::ListDevices(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<iot::DeviceManagerRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DeviceManagerRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDevices(request);
   char const* function_name = __func__;
@@ -326,7 +329,7 @@ DeviceManagerConnectionImpl::UnbindDeviceFromGateway(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

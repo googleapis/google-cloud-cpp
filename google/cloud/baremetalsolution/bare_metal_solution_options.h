@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace baremetalsolution {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -79,8 +79,8 @@ using BareMetalSolutionPolicyOptionList =
                BareMetalSolutionPollingPolicyOption,
                BareMetalSolutionConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

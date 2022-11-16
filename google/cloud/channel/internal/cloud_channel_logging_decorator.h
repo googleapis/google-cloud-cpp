@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace channel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace channel_internal {
 
 class CloudChannelServiceLogging : public CloudChannelServiceStub {
  public:
@@ -304,8 +304,8 @@ class CloudChannelServiceLogging : public CloudChannelServiceStub {
   std::set<std::string> components_;
 };  // CloudChannelServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -42,39 +42,46 @@ Options ClusterControllerDefaultOptions(std::string const& location,
                    "dataproc.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dataproc::ClusterControllerRetryPolicyOption>()) {
-    options.set<dataproc::ClusterControllerRetryPolicyOption>(
-        dataproc::ClusterControllerLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ClusterControllerRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ClusterControllerRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ClusterControllerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dataproc::ClusterControllerBackoffPolicyOption>()) {
-    options.set<dataproc::ClusterControllerBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::ClusterControllerBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ClusterControllerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<dataproc::ClusterControllerPollingPolicyOption>()) {
-    options.set<dataproc::ClusterControllerPollingPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::ClusterControllerPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ClusterControllerPollingPolicyOption>(
         GenericPollingPolicy<
-            dataproc::ClusterControllerRetryPolicyOption::Type,
-            dataproc::ClusterControllerBackoffPolicyOption::Type>(
-            options.get<dataproc::ClusterControllerRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::ClusterControllerRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::ClusterControllerBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::ClusterControllerRetryPolicyOption>()
                 ->clone(),
-            options.get<dataproc::ClusterControllerBackoffPolicyOption>()
+            options
+                .get<
+                    GOOGLE_CLOUD_CPP_NS::ClusterControllerBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<
-          dataproc::ClusterControllerConnectionIdempotencyPolicyOption>()) {
-    options.set<dataproc::ClusterControllerConnectionIdempotencyPolicyOption>(
-        dataproc::MakeDefaultClusterControllerConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       ClusterControllerConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    ClusterControllerConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultClusterControllerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

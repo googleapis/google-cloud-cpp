@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam {
 
 IAMCredentialsConnection::~IAMCredentialsConnection() = default;
 
@@ -64,16 +64,17 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
                                  UnifiedCredentialsOptionList,
                                  IAMCredentialsPolicyOptionList>(options,
                                                                  __func__);
-  options = iam_internal::IAMCredentialsDefaultOptions(std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::IAMCredentialsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      iam_internal::CreateDefaultIAMCredentialsStub(background->cq(), options);
-  return std::make_shared<iam_internal::IAMCredentialsConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultIAMCredentialsStub(
+      background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::IAMCredentialsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace servicemanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicemanagement_internal {
 
 class ServiceManagerConnectionImpl
-    : public servicemanagement::ServiceManagerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ServiceManagerConnection {
  public:
   ~ServiceManagerConnectionImpl() override = default;
 
   ServiceManagerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<servicemanagement_internal::ServiceManagerStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServiceManagerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -109,61 +109,66 @@ class ServiceManagerConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<servicemanagement::ServiceManagerRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ServiceManagerRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<servicemanagement::ServiceManagerRetryPolicyOption>()) {
-      return options.get<servicemanagement::ServiceManagerRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ServiceManagerRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ServiceManagerRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<servicemanagement::ServiceManagerRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ServiceManagerRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<servicemanagement::ServiceManagerBackoffPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ServiceManagerBackoffPolicyOption>()) {
       return options
-          .get<servicemanagement::ServiceManagerBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ServiceManagerBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<servicemanagement::ServiceManagerBackoffPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ServiceManagerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<servicemanagement::ServiceManagerConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ServiceManagerConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<servicemanagement::
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
                         ServiceManagerConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<servicemanagement::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    ServiceManagerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<servicemanagement::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  ServiceManagerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<servicemanagement::ServiceManagerPollingPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ServiceManagerPollingPolicyOption>()) {
       return options
-          .get<servicemanagement::ServiceManagerPollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ServiceManagerPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<servicemanagement::ServiceManagerPollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ServiceManagerPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<servicemanagement_internal::ServiceManagerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServiceManagerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

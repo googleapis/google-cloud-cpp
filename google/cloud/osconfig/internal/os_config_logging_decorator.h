@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig_internal {
 
 class OsConfigServiceLogging : public OsConfigServiceStub {
  public:
@@ -105,8 +105,8 @@ class OsConfigServiceLogging : public OsConfigServiceStub {
   std::set<std::string> components_;
 };  // OsConfigServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

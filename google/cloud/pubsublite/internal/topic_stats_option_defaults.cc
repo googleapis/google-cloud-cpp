@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,28 +39,31 @@ Options TopicStatsServiceDefaultOptions(Options options) {
       "pubsublite.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<pubsublite::TopicStatsServiceRetryPolicyOption>()) {
-    options.set<pubsublite::TopicStatsServiceRetryPolicyOption>(
-        pubsublite::TopicStatsServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::TopicStatsServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<pubsublite::TopicStatsServiceBackoffPolicyOption>()) {
-    options.set<pubsublite::TopicStatsServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>(
-        pubsublite::MakeDefaultTopicStatsServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       TopicStatsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    TopicStatsServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultTopicStatsServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

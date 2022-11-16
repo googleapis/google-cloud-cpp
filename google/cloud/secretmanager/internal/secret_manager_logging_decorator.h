@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace secretmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace secretmanager_internal {
 
 class SecretManagerServiceLogging : public SecretManagerServiceStub {
  public:
@@ -120,8 +120,8 @@ class SecretManagerServiceLogging : public SecretManagerServiceStub {
   std::set<std::string> components_;
 };  // SecretManagerServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 class AutoscalingPolicyServiceConnectionImpl
-    : public dataproc::AutoscalingPolicyServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceConnection {
  public:
   ~AutoscalingPolicyServiceConnectionImpl() override = default;
 
   AutoscalingPolicyServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dataproc_internal::AutoscalingPolicyServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -73,53 +73,59 @@ class AutoscalingPolicyServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<dataproc::AutoscalingPolicyServiceRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::AutoscalingPolicyServiceRetryPolicyOption>()) {
-      return options.get<dataproc::AutoscalingPolicyServiceRetryPolicyOption>()
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<dataproc::AutoscalingPolicyServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::AutoscalingPolicyServiceBackoffPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        AutoscalingPolicyServiceBackoffPolicyOption>()) {
       return options
-          .get<dataproc::AutoscalingPolicyServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   AutoscalingPolicyServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dataproc::AutoscalingPolicyServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<dataproc::AutoscalingPolicyServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            dataproc::
+            GOOGLE_CLOUD_CPP_NS::
                 AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<dataproc::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dataproc::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dataproc_internal::AutoscalingPolicyServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

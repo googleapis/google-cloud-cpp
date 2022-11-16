@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace documentai {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai {
 
 DocumentProcessorServiceClient::DocumentProcessorServiceClient(
     std::shared_ptr<DocumentProcessorServiceConnection> connection,
@@ -301,7 +301,7 @@ DocumentProcessorServiceClient::ReviewDocument(
   return connection_->ReviewDocument(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

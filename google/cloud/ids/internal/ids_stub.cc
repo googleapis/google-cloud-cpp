@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace ids_internal {
 
 IDSStub::~IDSStub() = default;
 
@@ -112,7 +112,7 @@ future<Status> DefaultIDSStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

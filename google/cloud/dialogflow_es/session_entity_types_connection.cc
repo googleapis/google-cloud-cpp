@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 SessionEntityTypesConnection::~SessionEntityTypesConnection() = default;
 
@@ -72,13 +72,13 @@ std::shared_ptr<SessionEntityTypesConnection> MakeSessionEntityTypesConnection(
                                  UnifiedCredentialsOptionList,
                                  SessionEntityTypesPolicyOptionList>(options,
                                                                      __func__);
-  options = dialogflow_es_internal::SessionEntityTypesDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::SessionEntityTypesDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_es_internal::CreateDefaultSessionEntityTypesStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultSessionEntityTypesStub(
       background->cq(), options);
   return std::make_shared<
-      dialogflow_es_internal::SessionEntityTypesConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::SessionEntityTypesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -87,7 +87,7 @@ std::shared_ptr<SessionEntityTypesConnection> MakeSessionEntityTypesConnection(
   return MakeSessionEntityTypesConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

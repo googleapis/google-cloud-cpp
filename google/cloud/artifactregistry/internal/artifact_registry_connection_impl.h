@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace artifactregistry_internal {
 
 class ArtifactRegistryConnectionImpl
-    : public artifactregistry::ArtifactRegistryConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ArtifactRegistryConnection {
  public:
   ~ArtifactRegistryConnectionImpl() override = default;
 
   ArtifactRegistryConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -169,64 +169,69 @@ class ArtifactRegistryConnectionImpl
           UpdateProjectSettingsRequest const& request) override;
 
  private:
-  std::unique_ptr<artifactregistry::ArtifactRegistryRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::ArtifactRegistryRetryPolicyOption>()) {
-      return options.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::ArtifactRegistryBackoffPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryBackoffPolicyOption>()) {
       return options
-          .get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<artifactregistry::ArtifactRegistryConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ArtifactRegistryConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
                         ArtifactRegistryConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<artifactregistry::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    ArtifactRegistryConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<artifactregistry::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  ArtifactRegistryConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<artifactregistry::ArtifactRegistryPollingPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryPollingPolicyOption>()) {
       return options
-          .get<artifactregistry::ArtifactRegistryPollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryPollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<artifactregistry::ArtifactRegistryPollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<artifactregistry_internal::ArtifactRegistryStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace optimization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization_internal {
 
 FleetRoutingConnectionImpl::FleetRoutingConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<optimization_internal::FleetRoutingStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::FleetRoutingStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -81,7 +81,7 @@ FleetRoutingConnectionImpl::BatchOptimizeTours(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

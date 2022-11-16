@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace oslogin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace oslogin_internal {
 
 OsLoginServiceLogging::OsLoginServiceLogging(
     std::shared_ptr<OsLoginServiceStub> child, TracingOptions tracing_options,
@@ -110,7 +110,7 @@ OsLoginServiceLogging::UpdateSshPublicKey(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

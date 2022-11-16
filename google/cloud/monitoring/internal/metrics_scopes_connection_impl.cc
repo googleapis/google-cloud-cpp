@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 MetricsScopesConnectionImpl::MetricsScopesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<monitoring_internal::MetricsScopesStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::MetricsScopesStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -132,7 +132,7 @@ MetricsScopesConnectionImpl::DeleteMonitoredProject(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

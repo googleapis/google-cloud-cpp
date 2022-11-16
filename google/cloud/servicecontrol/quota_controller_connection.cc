@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol {
 
 QuotaControllerConnection::~QuotaControllerConnection() = default;
 
@@ -46,17 +46,16 @@ std::shared_ptr<QuotaControllerConnection> MakeQuotaControllerConnection(
                                  UnifiedCredentialsOptionList,
                                  QuotaControllerPolicyOptionList>(options,
                                                                   __func__);
-  options = servicecontrol_internal::QuotaControllerDefaultOptions(
-      std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::QuotaControllerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = servicecontrol_internal::CreateDefaultQuotaControllerStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultQuotaControllerStub(
       background->cq(), options);
-  return std::make_shared<
-      servicecontrol_internal::QuotaControllerConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::QuotaControllerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

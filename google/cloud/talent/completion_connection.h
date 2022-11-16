@@ -30,19 +30,19 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 using CompletionRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    talent_internal::CompletionRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::CompletionRetryTraits>;
 
 using CompletionLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        talent_internal::CompletionRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CompletionRetryTraits>;
 
 using CompletionLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        talent_internal::CompletionRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CompletionRetryTraits>;
 
 /**
  * The `CompletionConnection` object for `CompletionClient`.
@@ -54,7 +54,7 @@ using CompletionLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeCompletionConnection()`.
  *
- * For mocking, see `talent_mocks::MockCompletionConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockCompletionConnection`.
  */
 class CompletionConnection {
  public:
@@ -79,7 +79,7 @@ class CompletionConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::talent::CompletionPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CompletionPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -90,8 +90,8 @@ class CompletionConnection {
 std::shared_ptr<CompletionConnection> MakeCompletionConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

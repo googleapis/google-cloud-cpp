@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -79,8 +79,8 @@ using SecurityCenterPolicyOptionList =
                SecurityCenterPollingPolicyOption,
                SecurityCenterConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

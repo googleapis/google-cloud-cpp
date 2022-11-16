@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace language_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace language_internal {
 
 class LanguageServiceAuth : public LanguageServiceStub {
  public:
@@ -72,8 +72,8 @@ class LanguageServiceAuth : public LanguageServiceStub {
   std::shared_ptr<LanguageServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

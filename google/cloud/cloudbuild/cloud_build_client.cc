@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace cloudbuild {
 
 CloudBuildClient::CloudBuildClient(
     std::shared_ptr<CloudBuildConnection> connection, Options opts)
@@ -349,7 +349,7 @@ CloudBuildClient::ListWorkerPools(
   return connection_->ListWorkerPools(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

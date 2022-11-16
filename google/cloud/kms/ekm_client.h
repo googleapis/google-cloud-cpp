@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms {
 
 ///
 /// Google Cloud Key Management EKM Service
@@ -260,8 +260,8 @@ class EkmServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

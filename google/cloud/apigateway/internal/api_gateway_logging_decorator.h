@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigateway_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigateway_internal {
 
 class ApiGatewayServiceLogging : public ApiGatewayServiceStub {
  public:
@@ -133,8 +133,8 @@ class ApiGatewayServiceLogging : public ApiGatewayServiceStub {
   std::set<std::string> components_;
 };  // ApiGatewayServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

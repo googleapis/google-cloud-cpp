@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite {
 
 using AdminServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        pubsublite_internal::AdminServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AdminServiceRetryTraits>;
 
 using AdminServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        pubsublite_internal::AdminServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AdminServiceRetryTraits>;
 
 using AdminServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        pubsublite_internal::AdminServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AdminServiceRetryTraits>;
 
 /**
  * The `AdminServiceConnection` object for `AdminServiceClient`.
@@ -59,7 +59,7 @@ using AdminServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeAdminServiceConnection()`.
  *
- * For mocking, see `pubsublite_mocks::MockAdminServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockAdminServiceConnection`.
  */
 class AdminServiceConnection {
  public:
@@ -151,7 +151,7 @@ class AdminServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::pubsublite::AdminServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::AdminServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -162,8 +162,8 @@ class AdminServiceConnection {
 std::shared_ptr<AdminServiceConnection> MakeAdminServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

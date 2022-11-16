@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 DataTransferServiceStub::~DataTransferServiceStub() = default;
 
@@ -239,7 +239,7 @@ Status DefaultDataTransferServiceStub::EnrollDataSources(
   return google::cloud::Status();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

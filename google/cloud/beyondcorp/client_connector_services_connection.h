@@ -35,20 +35,20 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp {
 
 using ClientConnectorServicesServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        beyondcorp_internal::ClientConnectorServicesServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ClientConnectorServicesServiceRetryTraits>;
 
 using ClientConnectorServicesServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        beyondcorp_internal::ClientConnectorServicesServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ClientConnectorServicesServiceRetryTraits>;
 
 using ClientConnectorServicesServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        beyondcorp_internal::ClientConnectorServicesServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ClientConnectorServicesServiceRetryTraits>;
 
 /**
  * The `ClientConnectorServicesServiceConnection` object for
@@ -63,7 +63,7 @@ using ClientConnectorServicesServiceLimitedErrorCountRetryPolicy =
  * `MakeClientConnectorServicesServiceConnection()`.
  *
  * For mocking, see
- * `beyondcorp_mocks::MockClientConnectorServicesServiceConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockClientConnectorServicesServiceConnection`.
  */
 class ClientConnectorServicesServiceConnection {
  public:
@@ -117,7 +117,8 @@ class ClientConnectorServicesServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::beyondcorp::ClientConnectorServicesServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::ClientConnectorServicesServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -128,8 +129,8 @@ class ClientConnectorServicesServiceConnection {
 std::shared_ptr<ClientConnectorServicesServiceConnection>
 MakeClientConnectorServicesServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

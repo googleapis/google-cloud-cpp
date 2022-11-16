@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 class VersionsLogging : public VersionsStub {
  public:
@@ -78,8 +78,8 @@ class VersionsLogging : public VersionsStub {
   std::set<std::string> components_;
 };  // VersionsLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

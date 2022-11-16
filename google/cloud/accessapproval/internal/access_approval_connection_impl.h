@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accessapproval_internal {
 
 class AccessApprovalConnectionImpl
-    : public accessapproval::AccessApprovalConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AccessApprovalConnection {
  public:
   ~AccessApprovalConnectionImpl() override = default;
 
   AccessApprovalConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<accessapproval_internal::AccessApprovalStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AccessApprovalStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -94,48 +94,54 @@ class AccessApprovalConnectionImpl
           GetAccessApprovalServiceAccountMessage const& request) override;
 
  private:
-  std::unique_ptr<accessapproval::AccessApprovalRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AccessApprovalRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<accessapproval::AccessApprovalRetryPolicyOption>()) {
-      return options.get<accessapproval::AccessApprovalRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::AccessApprovalRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::AccessApprovalRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<accessapproval::AccessApprovalRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::AccessApprovalRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<accessapproval::AccessApprovalBackoffPolicyOption>()) {
-      return options.get<accessapproval::AccessApprovalBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<accessapproval::AccessApprovalBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<accessapproval::AccessApprovalConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<accessapproval::
-                        AccessApprovalConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::AccessApprovalBackoffPolicyOption>()) {
       return options
-          .get<
-              accessapproval::AccessApprovalConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::AccessApprovalBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<accessapproval::AccessApprovalConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::AccessApprovalBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::AccessApprovalConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        AccessApprovalConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   AccessApprovalConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 AccessApprovalConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<accessapproval_internal::AccessApprovalStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AccessApprovalStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

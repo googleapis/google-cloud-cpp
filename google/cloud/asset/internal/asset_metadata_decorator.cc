@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace asset_internal {
 
 AssetServiceMetadata::AssetServiceMetadata(
     std::shared_ptr<AssetServiceStub> child)
@@ -230,7 +230,7 @@ void AssetServiceMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

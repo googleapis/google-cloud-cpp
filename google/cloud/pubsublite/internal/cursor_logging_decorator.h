@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 class CursorServiceLogging : public CursorServiceStub {
  public:
@@ -62,8 +62,8 @@ class CursorServiceLogging : public CursorServiceStub {
   std::set<std::string> components_;
 };  // CursorServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

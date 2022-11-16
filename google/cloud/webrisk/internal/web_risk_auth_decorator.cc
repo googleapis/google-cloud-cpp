@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace webrisk_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace webrisk_internal {
 
 WebRiskServiceAuth::WebRiskServiceAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -66,7 +66,7 @@ WebRiskServiceAuth::CreateSubmission(
   return child_->CreateSubmission(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

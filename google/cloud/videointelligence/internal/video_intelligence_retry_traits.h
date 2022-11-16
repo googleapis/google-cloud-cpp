@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence_internal {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct VideoIntelligenceServiceRetryTraits {
@@ -35,8 +35,8 @@ struct VideoIntelligenceServiceRetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

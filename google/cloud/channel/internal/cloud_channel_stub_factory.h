@@ -28,14 +28,14 @@
 
 namespace google {
 namespace cloud {
-namespace channel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace channel_internal {
 
 std::shared_ptr<CloudChannelServiceStub> CreateDefaultCloudChannelServiceStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

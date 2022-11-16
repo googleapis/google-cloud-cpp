@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video {
 
 using TranscoderServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        video_internal::TranscoderServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TranscoderServiceRetryTraits>;
 
 using TranscoderServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        video_internal::TranscoderServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TranscoderServiceRetryTraits>;
 
 using TranscoderServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        video_internal::TranscoderServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TranscoderServiceRetryTraits>;
 
 /**
  * The `TranscoderServiceConnection` object for `TranscoderServiceClient`.
@@ -56,7 +56,8 @@ using TranscoderServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeTranscoderServiceConnection()`.
  *
- * For mocking, see `video_mocks::MockTranscoderServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockTranscoderServiceConnection`.
  */
 class TranscoderServiceConnection {
  public:
@@ -110,7 +111,7 @@ class TranscoderServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::video::TranscoderServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::TranscoderServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -121,8 +122,8 @@ class TranscoderServiceConnection {
 std::shared_ptr<TranscoderServiceConnection> MakeTranscoderServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

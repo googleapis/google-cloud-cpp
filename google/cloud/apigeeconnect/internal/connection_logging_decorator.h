@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigeeconnect_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigeeconnect_internal {
 
 class ConnectionServiceLogging : public ConnectionServiceStub {
  public:
@@ -50,8 +50,8 @@ class ConnectionServiceLogging : public ConnectionServiceStub {
   std::set<std::string> components_;
 };  // ConnectionServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

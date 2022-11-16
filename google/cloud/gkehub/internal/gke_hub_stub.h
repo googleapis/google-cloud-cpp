@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub_internal {
 
 class GkeHubStub {
  public:
@@ -184,8 +184,8 @@ class DefaultGkeHubStub : public GkeHubStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

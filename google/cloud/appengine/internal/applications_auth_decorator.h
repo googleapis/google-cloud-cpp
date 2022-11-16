@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 class ApplicationsAuth : public ApplicationsStub {
  public:
@@ -73,8 +73,8 @@ class ApplicationsAuth : public ApplicationsStub {
   std::shared_ptr<ApplicationsStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

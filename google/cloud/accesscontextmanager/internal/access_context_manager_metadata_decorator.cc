@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accesscontextmanager_internal {
 
 AccessContextManagerMetadata::AccessContextManagerMetadata(
     std::shared_ptr<AccessContextManagerStub> child)
@@ -318,7 +318,7 @@ void AccessContextManagerMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

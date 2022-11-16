@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices_internal {
 
 class GameServerClustersServiceLogging : public GameServerClustersServiceStub {
  public:
@@ -102,8 +102,8 @@ class GameServerClustersServiceLogging : public GameServerClustersServiceStub {
   std::set<std::string> components_;
 };  // GameServerClustersServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

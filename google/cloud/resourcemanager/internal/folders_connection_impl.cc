@@ -28,13 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager_internal {
 
 FoldersConnectionImpl::FoldersConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<resourcemanager_internal::FoldersStub> stub,
-    Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::FoldersStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -59,7 +58,7 @@ FoldersConnectionImpl::ListFolders(
     google::cloud::resourcemanager::v3::ListFoldersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<resourcemanager::FoldersRetryPolicy const>(
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::FoldersRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListFolders(request);
@@ -90,7 +89,7 @@ FoldersConnectionImpl::SearchFolders(
     google::cloud::resourcemanager::v3::SearchFoldersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<resourcemanager::FoldersRetryPolicy const>(
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::FoldersRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->SearchFolders(request);
@@ -300,7 +299,7 @@ FoldersConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

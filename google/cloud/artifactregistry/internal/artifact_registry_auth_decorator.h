@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace artifactregistry_internal {
 
 class ArtifactRegistryAuth : public ArtifactRegistryStub {
  public:
@@ -198,8 +198,8 @@ class ArtifactRegistryAuth : public ArtifactRegistryStub {
   std::shared_ptr<ArtifactRegistryStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

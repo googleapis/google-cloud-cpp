@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace serviceusage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace serviceusage_internal {
 
 ServiceUsageConnectionImpl::ServiceUsageConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<serviceusage_internal::ServiceUsageStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServiceUsageStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -117,8 +117,9 @@ ServiceUsageConnectionImpl::ListServices(
     google::api::serviceusage::v1::ListServicesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<serviceusage::ServiceUsageRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServiceUsageRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListServices(request);
   char const* function_name = __func__;
@@ -187,7 +188,7 @@ ServiceUsageConnectionImpl::BatchGetServices(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

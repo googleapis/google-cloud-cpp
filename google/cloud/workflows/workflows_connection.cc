@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows {
 
 WorkflowsConnection::~WorkflowsConnection() = default;
 
@@ -77,15 +77,15 @@ std::shared_ptr<WorkflowsConnection> MakeWorkflowsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  WorkflowsPolicyOptionList>(options, __func__);
-  options = workflows_internal::WorkflowsDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::WorkflowsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      workflows_internal::CreateDefaultWorkflowsStub(background->cq(), options);
-  return std::make_shared<workflows_internal::WorkflowsConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultWorkflowsStub(background->cq(),
+                                                              options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::WorkflowsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

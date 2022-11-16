@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc {
 
 EventarcClient::EventarcClient(std::shared_ptr<EventarcConnection> connection,
                                Options opts)
@@ -342,7 +342,7 @@ EventarcClient::UpdateGoogleChannelConfig(
   return connection_->UpdateGoogleChannelConfig(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

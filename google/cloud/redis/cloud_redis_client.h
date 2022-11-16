@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace redis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace redis {
 
 ///
 /// Configures and manages Cloud Memorystore for Redis instances
@@ -650,8 +650,8 @@ class CloudRedisClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

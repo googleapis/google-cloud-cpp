@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace spanner_admin_internal {
 
 InstanceAdminConnectionImpl::InstanceAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::InstanceAdminStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,8 +45,9 @@ InstanceAdminConnectionImpl::ListInstanceConfigs(
     google::spanner::admin::instance::v1::ListInstanceConfigsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::InstanceAdminRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListInstanceConfigs(request);
   char const* function_name = __func__;
@@ -170,8 +171,9 @@ InstanceAdminConnectionImpl::ListInstanceConfigOperations(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::InstanceAdminRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency =
       idempotency_policy()->ListInstanceConfigOperations(request);
@@ -206,8 +208,9 @@ InstanceAdminConnectionImpl::ListInstances(
     google::spanner::admin::instance::v1::ListInstancesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<spanner_admin::InstanceAdminRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::InstanceAdminRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListInstances(request);
   char const* function_name = __func__;
@@ -357,8 +360,8 @@ InstanceAdminConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

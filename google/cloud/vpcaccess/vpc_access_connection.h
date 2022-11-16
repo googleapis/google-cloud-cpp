@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace vpcaccess {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vpcaccess {
 
 using VpcAccessServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        vpcaccess_internal::VpcAccessServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VpcAccessServiceRetryTraits>;
 
 using VpcAccessServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        vpcaccess_internal::VpcAccessServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VpcAccessServiceRetryTraits>;
 
 using VpcAccessServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        vpcaccess_internal::VpcAccessServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VpcAccessServiceRetryTraits>;
 
 /**
  * The `VpcAccessServiceConnection` object for `VpcAccessServiceClient`.
@@ -59,7 +59,7 @@ using VpcAccessServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeVpcAccessServiceConnection()`.
  *
- * For mocking, see `vpcaccess_mocks::MockVpcAccessServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockVpcAccessServiceConnection`.
  */
 class VpcAccessServiceConnection {
  public:
@@ -96,7 +96,7 @@ class VpcAccessServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::vpcaccess::VpcAccessServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::VpcAccessServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -107,8 +107,8 @@ class VpcAccessServiceConnection {
 std::shared_ptr<VpcAccessServiceConnection> MakeVpcAccessServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

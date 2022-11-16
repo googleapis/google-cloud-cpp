@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory {
 
 RegistrationServiceConnection::~RegistrationServiceConnection() = default;
 
@@ -150,17 +150,17 @@ MakeRegistrationServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  RegistrationServicePolicyOptionList>(options,
                                                                       __func__);
-  options = servicedirectory_internal::RegistrationServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::RegistrationServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = servicedirectory_internal::CreateDefaultRegistrationServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultRegistrationServiceStub(
       background->cq(), options);
   return std::make_shared<
-      servicedirectory_internal::RegistrationServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::RegistrationServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

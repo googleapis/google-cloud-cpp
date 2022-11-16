@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace vpcaccess {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vpcaccess {
 
 ///
 /// Serverless VPC Access API allows users to create and manage connectors for
@@ -250,8 +250,8 @@ class VpcAccessServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

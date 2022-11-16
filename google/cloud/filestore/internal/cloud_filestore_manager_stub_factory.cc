@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore_internal {
 
 std::shared_ptr<CloudFilestoreManagerStub>
 CreateDefaultCloudFilestoreManagerStub(google::cloud::CompletionQueue cq,
@@ -62,7 +62,7 @@ CreateDefaultCloudFilestoreManagerStub(google::cloud::CompletionQueue cq,
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

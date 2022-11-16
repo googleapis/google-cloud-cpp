@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace privateca_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca_internal {
 
 class CertificateAuthorityServiceLogging
     : public CertificateAuthorityServiceStub {
@@ -242,8 +242,8 @@ class CertificateAuthorityServiceLogging
   std::set<std::string> components_;
 };  // CertificateAuthorityServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

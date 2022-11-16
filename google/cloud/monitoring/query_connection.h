@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 using QueryServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        monitoring_internal::QueryServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::QueryServiceRetryTraits>;
 
 using QueryServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        monitoring_internal::QueryServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::QueryServiceRetryTraits>;
 
 using QueryServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        monitoring_internal::QueryServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::QueryServiceRetryTraits>;
 
 /**
  * The `QueryServiceConnection` object for `QueryServiceClient`.
@@ -56,7 +56,7 @@ using QueryServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeQueryServiceConnection()`.
  *
- * For mocking, see `monitoring_mocks::MockQueryServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockQueryServiceConnection`.
  */
 class QueryServiceConnection {
  public:
@@ -81,7 +81,7 @@ class QueryServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::monitoring::QueryServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::QueryServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -92,8 +92,8 @@ class QueryServiceConnection {
 std::shared_ptr<QueryServiceConnection> MakeQueryServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

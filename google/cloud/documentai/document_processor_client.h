@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace documentai {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai {
 
 ///
 /// Service to call Cloud DocumentAI to process documents according to the
@@ -728,8 +728,8 @@ class DocumentProcessorServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

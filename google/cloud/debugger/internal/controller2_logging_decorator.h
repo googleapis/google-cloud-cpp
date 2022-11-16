@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger_internal {
 
 class Controller2Logging : public Controller2Stub {
  public:
@@ -62,8 +62,8 @@ class Controller2Logging : public Controller2Stub {
   std::set<std::string> components_;
 };  // Controller2Logging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace recommender_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender_internal {
 
 RecommenderLogging::RecommenderLogging(std::shared_ptr<RecommenderStub> child,
                                        TracingOptions tracing_options,
@@ -199,7 +199,7 @@ RecommenderLogging::UpdateInsightTypeConfig(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace cloudbuild_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,34 +38,41 @@ Options CloudBuildDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_CLOUD_BUILD_AUTHORITY", "cloudbuild.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<cloudbuild::CloudBuildRetryPolicyOption>()) {
-    options.set<cloudbuild::CloudBuildRetryPolicyOption>(
-        cloudbuild::CloudBuildLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudBuildRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudBuildRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::CloudBuildLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<cloudbuild::CloudBuildBackoffPolicyOption>()) {
-    options.set<cloudbuild::CloudBuildBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudBuildBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudBuildBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<cloudbuild::CloudBuildPollingPolicyOption>()) {
-    options.set<cloudbuild::CloudBuildPollingPolicyOption>(
-        GenericPollingPolicy<cloudbuild::CloudBuildRetryPolicyOption::Type,
-                             cloudbuild::CloudBuildBackoffPolicyOption::Type>(
-            options.get<cloudbuild::CloudBuildRetryPolicyOption>()->clone(),
-            options.get<cloudbuild::CloudBuildBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudBuildPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudBuildPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::CloudBuildRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::CloudBuildBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::CloudBuildRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::CloudBuildBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()) {
-    options.set<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>(
-        cloudbuild::MakeDefaultCloudBuildConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::CloudBuildConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::CloudBuildConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultCloudBuildConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace webrisk_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace webrisk_internal {
 
 WebRiskServiceLogging::WebRiskServiceLogging(
     std::shared_ptr<WebRiskServiceStub> child, TracingOptions tracing_options,
@@ -84,7 +84,7 @@ WebRiskServiceLogging::CreateSubmission(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

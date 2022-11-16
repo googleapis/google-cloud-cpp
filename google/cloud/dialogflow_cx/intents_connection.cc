@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 IntentsConnection::~IntentsConnection() = default;
 
@@ -71,12 +71,12 @@ std::shared_ptr<IntentsConnection> MakeIntentsConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  IntentsPolicyOptionList>(options, __func__);
-  options = dialogflow_cx_internal::IntentsDefaultOptions(location,
-                                                          std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::IntentsDefaultOptions(location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_cx_internal::CreateDefaultIntentsStub(background->cq(),
-                                                               options);
-  return std::make_shared<dialogflow_cx_internal::IntentsConnectionImpl>(
+  auto stub =
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultIntentsStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::IntentsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -84,7 +84,7 @@ std::shared_ptr<IntentsConnection> MakeIntentsConnection(Options options) {
   return MakeIntentsConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsub_internal {
 
 class SchemaServiceStub {
  public:
@@ -93,8 +93,8 @@ class DefaultSchemaServiceStub : public SchemaServiceStub {
   std::unique_ptr<google::pubsub::v1::SchemaService::StubInterface> grpc_stub_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

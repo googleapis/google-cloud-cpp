@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,28 +38,28 @@ Options GrafeasDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_GRAFEAS_AUTHORITY", "containeranalysis.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<containeranalysis::GrafeasRetryPolicyOption>()) {
-    options.set<containeranalysis::GrafeasRetryPolicyOption>(
-        containeranalysis::GrafeasLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::GrafeasRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GrafeasRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::GrafeasLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<containeranalysis::GrafeasBackoffPolicyOption>()) {
-    options.set<containeranalysis::GrafeasBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::GrafeasBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GrafeasBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<
-          containeranalysis::GrafeasConnectionIdempotencyPolicyOption>()) {
-    options.set<containeranalysis::GrafeasConnectionIdempotencyPolicyOption>(
-        containeranalysis::MakeDefaultGrafeasConnectionIdempotencyPolicy());
+          GOOGLE_CLOUD_CPP_NS::GrafeasConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GrafeasConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultGrafeasConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

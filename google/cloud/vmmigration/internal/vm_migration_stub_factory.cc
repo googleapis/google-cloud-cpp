@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace vmmigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vmmigration_internal {
 
 std::shared_ptr<VmMigrationStub> CreateDefaultVmMigrationStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -60,7 +60,7 @@ std::shared_ptr<VmMigrationStub> CreateDefaultVmMigrationStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

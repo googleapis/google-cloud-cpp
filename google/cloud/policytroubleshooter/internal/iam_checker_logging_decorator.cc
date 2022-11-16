@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace policytroubleshooter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace policytroubleshooter_internal {
 
 IamCheckerLogging::IamCheckerLogging(std::shared_ptr<IamCheckerStub> child,
                                      TracingOptions tracing_options,
@@ -48,7 +48,7 @@ IamCheckerLogging::TroubleshootIamPolicy(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

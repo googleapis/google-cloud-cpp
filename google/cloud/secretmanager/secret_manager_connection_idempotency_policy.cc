@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace secretmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace secretmanager {
 
 using ::google::cloud::Idempotency;
 
@@ -121,7 +121,7 @@ MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<SecretManagerServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

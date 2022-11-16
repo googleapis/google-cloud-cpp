@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,28 +39,31 @@ Options MigrationServiceDefaultOptions(Options options) {
       "bigquerymigration.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<bigquery::MigrationServiceRetryPolicyOption>()) {
-    options.set<bigquery::MigrationServiceRetryPolicyOption>(
-        bigquery::MigrationServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::MigrationServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::MigrationServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MigrationServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<bigquery::MigrationServiceBackoffPolicyOption>()) {
-    options.set<bigquery::MigrationServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::MigrationServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::MigrationServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          bigquery::MigrationServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<bigquery::MigrationServiceConnectionIdempotencyPolicyOption>(
-        bigquery::MakeDefaultMigrationServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       MigrationServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::MigrationServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultMigrationServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

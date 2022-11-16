@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex {
 
 MetadataServiceConnection::~MetadataServiceConnection() = default;
 
@@ -98,15 +98,15 @@ std::shared_ptr<MetadataServiceConnection> MakeMetadataServiceConnection(
                                  MetadataServicePolicyOptionList>(options,
                                                                   __func__);
   options =
-      dataplex_internal::MetadataServiceDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::MetadataServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dataplex_internal::CreateDefaultMetadataServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultMetadataServiceStub(
       background->cq(), options);
-  return std::make_shared<dataplex_internal::MetadataServiceConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::MetadataServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream_internal {
 
 DatastreamLogging::DatastreamLogging(std::shared_ptr<DatastreamStub> child,
                                      TracingOptions tracing_options,
@@ -413,7 +413,7 @@ future<Status> DatastreamLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

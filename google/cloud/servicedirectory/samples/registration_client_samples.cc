@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: servicedirectory::RegistrationServiceClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::RegistrationServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::servicedirectory::RegistrationServiceClient(
-      google::cloud::servicedirectory::MakeRegistrationServiceConnection(
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::RegistrationServiceClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeRegistrationServiceConnection(
           options));
   //! [set-client-endpoint]
 }
@@ -56,8 +56,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::servicedirectory::RegistrationServiceClient(
-        google::cloud::servicedirectory::MakeRegistrationServiceConnection(
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::RegistrationServiceClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeRegistrationServiceConnection(
             options));
   }
   //! [with-service-account]

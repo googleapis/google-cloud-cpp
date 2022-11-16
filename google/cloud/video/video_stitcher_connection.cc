@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video {
 
 VideoStitcherServiceConnection::~VideoStitcherServiceConnection() = default;
 
@@ -169,16 +169,17 @@ MakeVideoStitcherServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  VideoStitcherServicePolicyOptionList>(
       options, __func__);
-  options =
-      video_internal::VideoStitcherServiceDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = video_internal::CreateDefaultVideoStitcherServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultVideoStitcherServiceStub(
       background->cq(), options);
-  return std::make_shared<video_internal::VideoStitcherServiceConnectionImpl>(
+  return std::make_shared<
+      GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

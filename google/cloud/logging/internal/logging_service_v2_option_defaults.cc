@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace logging_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,28 +39,31 @@ Options LoggingServiceV2DefaultOptions(Options options) {
       "logging.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<logging::LoggingServiceV2RetryPolicyOption>()) {
-    options.set<logging::LoggingServiceV2RetryPolicyOption>(
-        logging::LoggingServiceV2LimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2RetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2RetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::LoggingServiceV2LimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<logging::LoggingServiceV2BackoffPolicyOption>()) {
-    options.set<logging::LoggingServiceV2BackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2BackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2BackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()) {
-    options.set<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>(
-        logging::MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       LoggingServiceV2ConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::LoggingServiceV2ConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultLoggingServiceV2ConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

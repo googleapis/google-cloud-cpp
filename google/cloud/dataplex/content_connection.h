@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex {
 
 using ContentServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dataplex_internal::ContentServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ContentServiceRetryTraits>;
 
 using ContentServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dataplex_internal::ContentServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ContentServiceRetryTraits>;
 
 using ContentServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dataplex_internal::ContentServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ContentServiceRetryTraits>;
 
 /**
  * The `ContentServiceConnection` object for `ContentServiceClient`.
@@ -56,7 +56,7 @@ using ContentServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeContentServiceConnection()`.
  *
- * For mocking, see `dataplex_mocks::MockContentServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockContentServiceConnection`.
  */
 class ContentServiceConnection {
  public:
@@ -102,7 +102,7 @@ class ContentServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dataplex::ContentServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ContentServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -113,8 +113,8 @@ class ContentServiceConnection {
 std::shared_ptr<ContentServiceConnection> MakeContentServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

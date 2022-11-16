@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -67,8 +67,8 @@ using GroupServicePolicyOptionList =
     OptionList<GroupServiceRetryPolicyOption, GroupServiceBackoffPolicyOption,
                GroupServiceConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace batch_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace batch_internal {
 
 BatchServiceMetadata::BatchServiceMetadata(
     std::shared_ptr<BatchServiceStub> child)
@@ -114,7 +114,7 @@ void BatchServiceMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

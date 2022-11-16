@@ -33,16 +33,18 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
-class EventServiceConnectionImpl : public talent::EventServiceConnection {
+class EventServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::EventServiceConnection {
  public:
   ~EventServiceConnectionImpl() override = default;
 
   EventServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<talent_internal::EventServiceStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EventServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -51,42 +53,50 @@ class EventServiceConnectionImpl : public talent::EventServiceConnection {
       override;
 
  private:
-  std::unique_ptr<talent::EventServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::EventServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<talent::EventServiceRetryPolicyOption>()) {
-      return options.get<talent::EventServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EventServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::EventServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<talent::EventServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::EventServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<talent::EventServiceBackoffPolicyOption>()) {
-      return options.get<talent::EventServiceBackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EventServiceBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::EventServiceBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<talent::EventServiceBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::EventServiceBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<talent::EventServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::EventServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<talent::EventServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        EventServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<talent::EventServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   EventServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<talent::EventServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 EventServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<talent_internal::EventServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EventServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace recommender {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender {
 
 RecommenderClient::RecommenderClient(
     std::shared_ptr<RecommenderConnection> connection, Options opts)
@@ -269,7 +269,7 @@ RecommenderClient::UpdateInsightTypeConfig(
   return connection_->UpdateInsightTypeConfig(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

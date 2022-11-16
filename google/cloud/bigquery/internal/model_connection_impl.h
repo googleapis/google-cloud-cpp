@@ -33,16 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
-class ModelServiceConnectionImpl : public bigquery::ModelServiceConnection {
+class ModelServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::ModelServiceConnection {
  public:
   ~ModelServiceConnectionImpl() override = default;
 
   ModelServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<bigquery_internal::ModelServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ModelServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -60,43 +61,50 @@ class ModelServiceConnectionImpl : public bigquery::ModelServiceConnection {
       google::cloud::bigquery::v2::DeleteModelRequest const& request) override;
 
  private:
-  std::unique_ptr<bigquery::ModelServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ModelServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::ModelServiceRetryPolicyOption>()) {
-      return options.get<bigquery::ModelServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ModelServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::ModelServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<bigquery::ModelServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ModelServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::ModelServiceBackoffPolicyOption>()) {
-      return options.get<bigquery::ModelServiceBackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ModelServiceBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ModelServiceBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<bigquery::ModelServiceBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ModelServiceBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<bigquery::ModelServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ModelServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigquery::ModelServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ModelServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<bigquery::ModelServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ModelServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<bigquery::ModelServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ModelServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<bigquery_internal::ModelServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ModelServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

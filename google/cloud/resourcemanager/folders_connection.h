@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager {
 
 using FoldersRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    resourcemanager_internal::FoldersRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::FoldersRetryTraits>;
 
 using FoldersLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        resourcemanager_internal::FoldersRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::FoldersRetryTraits>;
 
 using FoldersLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        resourcemanager_internal::FoldersRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::FoldersRetryTraits>;
 
 /**
  * The `FoldersConnection` object for `FoldersClient`.
@@ -58,7 +58,7 @@ using FoldersLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeFoldersConnection()`.
  *
- * For mocking, see `resourcemanager_mocks::MockFoldersConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockFoldersConnection`.
  */
 class FoldersConnection {
  public:
@@ -118,7 +118,7 @@ class FoldersConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::resourcemanager::FoldersPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::FoldersPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -128,8 +128,8 @@ class FoldersConnection {
  */
 std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

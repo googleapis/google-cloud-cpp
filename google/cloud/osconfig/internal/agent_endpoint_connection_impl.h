@@ -34,8 +34,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig_internal {
 
 void AgentEndpointServiceReceiveTaskNotificationStreamingUpdater(
     google::cloud::osconfig::agentendpoint::v1::
@@ -44,13 +44,13 @@ void AgentEndpointServiceReceiveTaskNotificationStreamingUpdater(
         request);
 
 class AgentEndpointServiceConnectionImpl
-    : public osconfig::AgentEndpointServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceConnection {
  public:
   ~AgentEndpointServiceConnectionImpl() override = default;
 
   AgentEndpointServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<osconfig_internal::AgentEndpointServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -87,49 +87,58 @@ class AgentEndpointServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<osconfig::AgentEndpointServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig::AgentEndpointServiceRetryPolicyOption>()) {
-      return options.get<osconfig::AgentEndpointServiceRetryPolicyOption>()
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<osconfig::AgentEndpointServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<osconfig::AgentEndpointServiceBackoffPolicyOption>()) {
-      return options.get<osconfig::AgentEndpointServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<osconfig::AgentEndpointServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<osconfig::AgentEndpointServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<osconfig::
-                     AgentEndpointServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceBackoffPolicyOption>()) {
       return options
-          .get<
-              osconfig::AgentEndpointServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<osconfig::AgentEndpointServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::
+                     AgentEndpointServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   AgentEndpointServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 AgentEndpointServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<osconfig_internal::AgentEndpointServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

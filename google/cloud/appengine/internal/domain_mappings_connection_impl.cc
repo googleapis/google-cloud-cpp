@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 DomainMappingsConnectionImpl::DomainMappingsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::DomainMappingsStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DomainMappingsStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,8 +45,9 @@ DomainMappingsConnectionImpl::ListDomainMappings(
     google::appengine::v1::ListDomainMappingsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<appengine::DomainMappingsRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DomainMappingsRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDomainMappings(request);
   char const* function_name = __func__;
@@ -173,7 +174,7 @@ DomainMappingsConnectionImpl::DeleteDomainMapping(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

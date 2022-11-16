@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 ServicesConnectionImpl::ServicesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::ServicesStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServicesStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -44,8 +44,8 @@ ServicesConnectionImpl::ListServices(
     google::appengine::v1::ListServicesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<appengine::ServicesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServicesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListServices(request);
   char const* function_name = __func__;
@@ -138,7 +138,7 @@ ServicesConnectionImpl::DeleteService(
       idempotency_policy()->DeleteService(request), polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

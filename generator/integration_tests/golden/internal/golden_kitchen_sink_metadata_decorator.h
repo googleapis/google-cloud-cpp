@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_internal {
 
 class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
  public:
@@ -106,8 +106,8 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

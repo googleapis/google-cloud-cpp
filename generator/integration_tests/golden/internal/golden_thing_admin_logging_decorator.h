@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_internal {
 
 class GoldenThingAdminLogging : public GoldenThingAdminStub {
  public:
@@ -142,8 +142,8 @@ class GoldenThingAdminLogging : public GoldenThingAdminStub {
   std::set<std::string> components_;
 };  // GoldenThingAdminLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,13 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
 GrafeasConnectionImpl::GrafeasConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<containeranalysis_internal::GrafeasStub> stub,
-    Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GrafeasStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -55,7 +54,7 @@ StreamRange<grafeas::v1::Occurrence> GrafeasConnectionImpl::ListOccurrences(
     grafeas::v1::ListOccurrencesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<containeranalysis::GrafeasRetryPolicy const>(
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GrafeasRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListOccurrences(request);
@@ -157,7 +156,7 @@ StreamRange<grafeas::v1::Note> GrafeasConnectionImpl::ListNotes(
     grafeas::v1::ListNotesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<containeranalysis::GrafeasRetryPolicy const>(
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GrafeasRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNotes(request);
@@ -236,7 +235,7 @@ StreamRange<grafeas::v1::Occurrence> GrafeasConnectionImpl::ListNoteOccurrences(
     grafeas::v1::ListNoteOccurrencesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<containeranalysis::GrafeasRetryPolicy const>(
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GrafeasRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNoteOccurrences(request);
@@ -262,7 +261,7 @@ StreamRange<grafeas::v1::Occurrence> GrafeasConnectionImpl::ListNoteOccurrences(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

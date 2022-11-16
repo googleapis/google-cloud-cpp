@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace connectors {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace connectors {
 
 ConnectorsConnection::~ConnectorsConnection() = default;
 
@@ -148,15 +148,15 @@ std::shared_ptr<ConnectorsConnection> MakeConnectorsConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  ConnectorsPolicyOptionList>(options, __func__);
-  options = connectors_internal::ConnectorsDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::ConnectorsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = connectors_internal::CreateDefaultConnectorsStub(background->cq(),
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultConnectorsStub(background->cq(),
                                                                options);
-  return std::make_shared<connectors_internal::ConnectorsConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ConnectorsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

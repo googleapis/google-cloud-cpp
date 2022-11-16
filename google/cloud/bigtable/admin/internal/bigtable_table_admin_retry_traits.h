@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_admin_internal {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct BigtableTableAdminRetryTraits {
@@ -36,8 +36,8 @@ struct BigtableTableAdminRetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

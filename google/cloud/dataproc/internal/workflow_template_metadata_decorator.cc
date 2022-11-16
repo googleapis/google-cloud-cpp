@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 WorkflowTemplateServiceMetadata::WorkflowTemplateServiceMetadata(
     std::shared_ptr<WorkflowTemplateServiceStub> child)
@@ -130,7 +130,7 @@ void WorkflowTemplateServiceMetadata::SetMetadata(
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

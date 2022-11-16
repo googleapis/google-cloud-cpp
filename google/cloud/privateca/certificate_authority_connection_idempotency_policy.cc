@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace privateca {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca {
 
 using ::google::cloud::Idempotency;
 
@@ -224,7 +224,7 @@ MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy() {
       CertificateAuthorityServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

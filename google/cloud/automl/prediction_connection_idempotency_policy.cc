@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace automl {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl {
 
 using ::google::cloud::Idempotency;
 
@@ -50,7 +50,7 @@ MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<PredictionServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

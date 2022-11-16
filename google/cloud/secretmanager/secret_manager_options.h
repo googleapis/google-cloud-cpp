@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace secretmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace secretmanager {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -68,8 +68,8 @@ using SecretManagerServicePolicyOptionList =
                SecretManagerServiceBackoffPolicyOption,
                SecretManagerServiceConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

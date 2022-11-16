@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 AutoscalingPolicyServiceConnection::~AutoscalingPolicyServiceConnection() =
     default;
@@ -74,13 +74,13 @@ MakeAutoscalingPolicyServiceConnection(std::string const& location,
                                  UnifiedCredentialsOptionList,
                                  AutoscalingPolicyServicePolicyOptionList>(
       options, __func__);
-  options = dataproc_internal::AutoscalingPolicyServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dataproc_internal::CreateDefaultAutoscalingPolicyServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultAutoscalingPolicyServiceStub(
       background->cq(), options);
   return std::make_shared<
-      dataproc_internal::AutoscalingPolicyServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -90,7 +90,7 @@ MakeAutoscalingPolicyServiceConnection(Options options) {
                                                 std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

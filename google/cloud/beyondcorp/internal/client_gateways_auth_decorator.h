@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp_internal {
 
 class ClientGatewaysServiceAuth : public ClientGatewaysServiceStub {
  public:
@@ -78,8 +78,8 @@ class ClientGatewaysServiceAuth : public ClientGatewaysServiceStub {
   std::shared_ptr<ClientGatewaysServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

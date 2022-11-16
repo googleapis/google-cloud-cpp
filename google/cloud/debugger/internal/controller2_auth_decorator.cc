@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger_internal {
 
 Controller2Auth::Controller2Auth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -60,7 +60,7 @@ Controller2Auth::UpdateActiveBreakpoint(
   return child_->UpdateActiveBreakpoint(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 class ConversationModelsConnectionImpl
-    : public dialogflow_es::ConversationModelsConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ConversationModelsConnection {
  public:
   ~ConversationModelsConnectionImpl() override = default;
 
   ConversationModelsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_es_internal::ConversationModelsStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConversationModelsStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -101,62 +101,71 @@ class ConversationModelsConnectionImpl
           CreateConversationModelEvaluationRequest const& request) override;
 
  private:
-  std::unique_ptr<dialogflow_es::ConversationModelsRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ConversationModelsRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationModelsRetryPolicyOption>()) {
-      return options.get<dialogflow_es::ConversationModelsRetryPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ConversationModelsRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ConversationModelsRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<dialogflow_es::ConversationModelsRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ConversationModelsRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationModelsBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::ConversationModelsBackoffPolicyOption>()) {
       return options
-          .get<dialogflow_es::ConversationModelsBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ConversationModelsBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<dialogflow_es::ConversationModelsBackoffPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ConversationModelsBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<dialogflow_es::ConversationModelsConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ConversationModelsConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<dialogflow_es::
+            .has<GOOGLE_CLOUD_CPP_NS::
                      ConversationModelsConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<dialogflow_es::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    ConversationModelsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dialogflow_es::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  ConversationModelsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationModelsPollingPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::ConversationModelsPollingPolicyOption>()) {
       return options
-          .get<dialogflow_es::ConversationModelsPollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ConversationModelsPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<dialogflow_es::ConversationModelsPollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ConversationModelsPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dialogflow_es_internal::ConversationModelsStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConversationModelsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

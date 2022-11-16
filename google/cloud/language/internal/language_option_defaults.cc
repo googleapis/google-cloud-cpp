@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace language_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace language_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,28 +38,30 @@ Options LanguageServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_LANGUAGE_SERVICE_AUTHORITY", "language.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<language::LanguageServiceRetryPolicyOption>()) {
-    options.set<language::LanguageServiceRetryPolicyOption>(
-        language::LanguageServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::LanguageServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::LanguageServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::LanguageServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<language::LanguageServiceBackoffPolicyOption>()) {
-    options.set<language::LanguageServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::LanguageServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::LanguageServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<language::LanguageServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<language::LanguageServiceConnectionIdempotencyPolicyOption>(
-        language::MakeDefaultLanguageServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       LanguageServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::LanguageServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultLanguageServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

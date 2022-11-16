@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -67,8 +67,8 @@ using BigQueryWritePolicyOptionList =
     OptionList<BigQueryWriteRetryPolicyOption, BigQueryWriteBackoffPolicyOption,
                BigQueryWriteConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

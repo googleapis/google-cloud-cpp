@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory_internal {
 
 class RegistrationServiceAuth : public RegistrationServiceStub {
  public:
@@ -131,8 +131,8 @@ class RegistrationServiceAuth : public RegistrationServiceStub {
   std::shared_ptr<RegistrationServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

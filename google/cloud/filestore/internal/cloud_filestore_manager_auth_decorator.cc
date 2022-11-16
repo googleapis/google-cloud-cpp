@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore_internal {
 
 CloudFilestoreManagerAuth::CloudFilestoreManagerAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -233,7 +233,7 @@ future<Status> CloudFilestoreManagerAuth::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

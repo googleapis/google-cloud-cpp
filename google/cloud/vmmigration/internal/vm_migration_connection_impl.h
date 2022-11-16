@@ -37,16 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace vmmigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vmmigration_internal {
 
-class VmMigrationConnectionImpl : public vmmigration::VmMigrationConnection {
+class VmMigrationConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::VmMigrationConnection {
  public:
   ~VmMigrationConnectionImpl() override = default;
 
   VmMigrationConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<vmmigration_internal::VmMigrationStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -240,53 +241,59 @@ class VmMigrationConnectionImpl : public vmmigration::VmMigrationConnection {
       override;
 
  private:
-  std::unique_ptr<vmmigration::VmMigrationRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vmmigration::VmMigrationRetryPolicyOption>()) {
-      return options.get<vmmigration::VmMigrationRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::VmMigrationRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::VmMigrationRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<vmmigration::VmMigrationRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::VmMigrationRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vmmigration::VmMigrationBackoffPolicyOption>()) {
-      return options.get<vmmigration::VmMigrationBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::VmMigrationBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::VmMigrationBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<vmmigration::VmMigrationBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::VmMigrationBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<vmmigration::VmMigrationConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<vmmigration::VmMigrationConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        VmMigrationConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<vmmigration::VmMigrationConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   VmMigrationConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<vmmigration::VmMigrationConnectionIdempotencyPolicyOption>()
+        .get<
+            GOOGLE_CLOUD_CPP_NS::VmMigrationConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vmmigration::VmMigrationPollingPolicyOption>()) {
-      return options.get<vmmigration::VmMigrationPollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::VmMigrationPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::VmMigrationPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<vmmigration::VmMigrationPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::VmMigrationPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<vmmigration_internal::VmMigrationStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VmMigrationStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

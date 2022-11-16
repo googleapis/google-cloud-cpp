@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream_internal {
 
 class DatastreamAuth : public DatastreamStub {
  public:
@@ -192,8 +192,8 @@ class DatastreamAuth : public DatastreamStub {
   std::shared_ptr<DatastreamStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

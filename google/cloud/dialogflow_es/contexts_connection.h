@@ -32,19 +32,19 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 using ContextsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_es_internal::ContextsRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::ContextsRetryTraits>;
 
 using ContextsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_es_internal::ContextsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ContextsRetryTraits>;
 
 using ContextsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_es_internal::ContextsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ContextsRetryTraits>;
 
 /**
  * The `ContextsConnection` object for `ContextsClient`.
@@ -56,7 +56,7 @@ using ContextsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeContextsConnection()`.
  *
- * For mocking, see `dialogflow_es_mocks::MockContextsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockContextsConnection`.
  */
 class ContextsConnection {
  public:
@@ -96,7 +96,7 @@ class ContextsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_es::ContextsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ContextsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -118,8 +118,8 @@ std::shared_ptr<ContextsConnection> MakeContextsConnection(
 std::shared_ptr<ContextsConnection> MakeContextsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

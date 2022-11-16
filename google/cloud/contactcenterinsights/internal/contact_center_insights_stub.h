@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace contactcenterinsights_internal {
 
 class ContactCenterInsightsStub {
  public:
@@ -464,8 +464,8 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

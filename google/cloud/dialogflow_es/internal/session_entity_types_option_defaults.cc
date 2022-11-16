@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -42,30 +42,32 @@ Options SessionEntityTypesDefaultOptions(std::string const& location,
                    "dialogflow.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dialogflow_es::SessionEntityTypesRetryPolicyOption>()) {
-    options.set<dialogflow_es::SessionEntityTypesRetryPolicyOption>(
-        dialogflow_es::SessionEntityTypesLimitedTimeRetryPolicy(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::SessionEntityTypesLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dialogflow_es::SessionEntityTypesBackoffPolicyOption>()) {
-    options.set<dialogflow_es::SessionEntityTypesBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<dialogflow_es::
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
                        SessionEntityTypesConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        dialogflow_es::SessionEntityTypesConnectionIdempotencyPolicyOption>(
-        dialogflow_es::
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    SessionEntityTypesConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultSessionEntityTypesConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

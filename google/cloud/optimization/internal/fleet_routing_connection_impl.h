@@ -36,16 +36,17 @@
 
 namespace google {
 namespace cloud {
-namespace optimization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization_internal {
 
-class FleetRoutingConnectionImpl : public optimization::FleetRoutingConnection {
+class FleetRoutingConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::FleetRoutingConnection {
  public:
   ~FleetRoutingConnectionImpl() override = default;
 
   FleetRoutingConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<optimization_internal::FleetRoutingStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::FleetRoutingStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -60,56 +61,61 @@ class FleetRoutingConnectionImpl : public optimization::FleetRoutingConnection {
       override;
 
  private:
-  std::unique_ptr<optimization::FleetRoutingRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::FleetRoutingRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<optimization::FleetRoutingRetryPolicyOption>()) {
-      return options.get<optimization::FleetRoutingRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::FleetRoutingRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::FleetRoutingRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<optimization::FleetRoutingRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::FleetRoutingRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<optimization::FleetRoutingBackoffPolicyOption>()) {
-      return options.get<optimization::FleetRoutingBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::FleetRoutingBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::FleetRoutingBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<optimization::FleetRoutingBackoffPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::FleetRoutingBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<optimization::FleetRoutingConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::FleetRoutingConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            optimization::FleetRoutingConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        FleetRoutingConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<optimization::FleetRoutingConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   FleetRoutingConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<optimization::FleetRoutingConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 FleetRoutingConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<optimization::FleetRoutingPollingPolicyOption>()) {
-      return options.get<optimization::FleetRoutingPollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::FleetRoutingPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::FleetRoutingPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<optimization::FleetRoutingPollingPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::FleetRoutingPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<optimization_internal::FleetRoutingStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::FleetRoutingStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

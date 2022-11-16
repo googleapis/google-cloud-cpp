@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 SessionEntityTypesConnectionImpl::SessionEntityTypesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_es_internal::SessionEntityTypesStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,7 +45,7 @@ SessionEntityTypesConnectionImpl::ListSessionEntityTypes(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<dialogflow_es::SessionEntityTypesRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSessionEntityTypes(request);
@@ -135,7 +135,7 @@ Status SessionEntityTypesConnectionImpl::DeleteSessionEntityType(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

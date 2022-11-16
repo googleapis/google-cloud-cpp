@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace vmmigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vmmigration {
 
 VmMigrationClient::VmMigrationClient(
     std::shared_ptr<VmMigrationConnection> connection, Options opts)
@@ -773,7 +773,7 @@ VmMigrationClient::DeleteTargetProject(
   return connection_->DeleteTargetProject(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

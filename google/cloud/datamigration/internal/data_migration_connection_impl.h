@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace datamigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datamigration_internal {
 
 class DataMigrationServiceConnectionImpl
-    : public datamigration::DataMigrationServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::DataMigrationServiceConnection {
  public:
   ~DataMigrationServiceConnectionImpl() override = default;
 
   DataMigrationServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<datamigration_internal::DataMigrationServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataMigrationServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -131,67 +131,71 @@ class DataMigrationServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<datamigration::DataMigrationServiceRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DataMigrationServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<datamigration::DataMigrationServiceRetryPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::DataMigrationServiceRetryPolicyOption>()) {
       return options
-          .get<datamigration::DataMigrationServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::DataMigrationServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<datamigration::DataMigrationServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::DataMigrationServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<datamigration::DataMigrationServiceBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::DataMigrationServiceBackoffPolicyOption>()) {
       return options
-          .get<datamigration::DataMigrationServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::DataMigrationServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<datamigration::DataMigrationServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::DataMigrationServiceBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      datamigration::DataMigrationServiceConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::DataMigrationServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<datamigration::
+            .has<GOOGLE_CLOUD_CPP_NS::
                      DataMigrationServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<datamigration::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    DataMigrationServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<datamigration::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  DataMigrationServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<datamigration::DataMigrationServicePollingPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::DataMigrationServicePollingPolicyOption>()) {
       return options
-          .get<datamigration::DataMigrationServicePollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::DataMigrationServicePollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<datamigration::DataMigrationServicePollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::DataMigrationServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<datamigration_internal::DataMigrationServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataMigrationServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory_internal {
 
 LookupServiceMetadata::LookupServiceMetadata(
     std::shared_ptr<LookupServiceStub> child)
@@ -59,7 +59,7 @@ void LookupServiceMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

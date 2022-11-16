@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence {
 
 VideoIntelligenceServiceClient::VideoIntelligenceServiceClient(
     std::shared_ptr<VideoIntelligenceServiceConnection> connection,
@@ -52,7 +52,7 @@ VideoIntelligenceServiceClient::AnnotateVideo(
   return connection_->AnnotateVideo(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

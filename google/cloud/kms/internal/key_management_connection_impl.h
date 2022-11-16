@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms_internal {
 
 class KeyManagementServiceConnectionImpl
-    : public kms::KeyManagementServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::KeyManagementServiceConnection {
  public:
   ~KeyManagementServiceConnectionImpl() override = default;
 
   KeyManagementServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<kms_internal::KeyManagementServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::KeyManagementServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -136,45 +136,58 @@ class KeyManagementServiceConnectionImpl
                           request) override;
 
  private:
-  std::unique_ptr<kms::KeyManagementServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<kms::KeyManagementServiceRetryPolicyOption>()) {
-      return options.get<kms::KeyManagementServiceRetryPolicyOption>()->clone();
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<kms::KeyManagementServiceRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<kms::KeyManagementServiceBackoffPolicyOption>()) {
-      return options.get<kms::KeyManagementServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<kms::KeyManagementServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<kms::KeyManagementServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
     if (options.has<
-            kms::KeyManagementServiceConnectionIdempotencyPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::KeyManagementServiceBackoffPolicyOption>()) {
       return options
-          .get<kms::KeyManagementServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::KeyManagementServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<kms::KeyManagementServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::KeyManagementServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::KeyManagementServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::
+                     KeyManagementServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   KeyManagementServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 KeyManagementServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<kms_internal::KeyManagementServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::KeyManagementServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

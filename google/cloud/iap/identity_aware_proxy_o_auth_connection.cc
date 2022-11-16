@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap {
 
 IdentityAwareProxyOAuthServiceConnection::
     ~IdentityAwareProxyOAuthServiceConnection() = default;
@@ -90,17 +90,18 @@ MakeIdentityAwareProxyOAuthServiceConnection(Options options) {
   internal::CheckExpectedOptions<
       CommonOptionList, GrpcOptionList, UnifiedCredentialsOptionList,
       IdentityAwareProxyOAuthServicePolicyOptionList>(options, __func__);
-  options = iap_internal::IdentityAwareProxyOAuthServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyOAuthServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = iap_internal::CreateDefaultIdentityAwareProxyOAuthServiceStub(
-      background->cq(), options);
+  auto stub =
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultIdentityAwareProxyOAuthServiceStub(
+          background->cq(), options);
   return std::make_shared<
-      iap_internal::IdentityAwareProxyOAuthServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyOAuthServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

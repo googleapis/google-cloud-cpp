@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 BinauthzManagementServiceV1Metadata::BinauthzManagementServiceV1Metadata(
     std::shared_ptr<BinauthzManagementServiceV1Stub> child)
@@ -112,7 +112,7 @@ void BinauthzManagementServiceV1Metadata::SetMetadata(
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

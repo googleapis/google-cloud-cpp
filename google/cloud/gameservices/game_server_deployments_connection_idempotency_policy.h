@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices {
 
 class GameServerDeploymentsServiceConnectionIdempotencyPolicy {
  public:
@@ -76,8 +76,8 @@ class GameServerDeploymentsServiceConnectionIdempotencyPolicy {
 std::unique_ptr<GameServerDeploymentsServiceConnectionIdempotencyPolicy>
 MakeDefaultGameServerDeploymentsServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

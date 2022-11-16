@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace automl_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl_internal {
 
 AutoMlConnectionImpl::AutoMlConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<automl_internal::AutoMlStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AutoMlStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -84,7 +84,8 @@ AutoMlConnectionImpl::ListDatasets(
     google::cloud::automl::v1::ListDatasetsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<automl::AutoMlRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AutoMlRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDatasets(request);
   char const* function_name = __func__;
@@ -265,7 +266,8 @@ StreamRange<google::cloud::automl::v1::Model> AutoMlConnectionImpl::ListModels(
     google::cloud::automl::v1::ListModelsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<automl::AutoMlRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AutoMlRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListModels(request);
   char const* function_name = __func__;
@@ -434,7 +436,8 @@ AutoMlConnectionImpl::ListModelEvaluations(
     google::cloud::automl::v1::ListModelEvaluationsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<automl::AutoMlRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AutoMlRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListModelEvaluations(request);
   char const* function_name = __func__;
@@ -461,7 +464,7 @@ AutoMlConnectionImpl::ListModelEvaluations(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

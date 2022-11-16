@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 class VideoStitcherServiceConnectionImpl
-    : public video::VideoStitcherServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceConnection {
  public:
   ~VideoStitcherServiceConnectionImpl() override = default;
 
   VideoStitcherServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<video_internal::VideoStitcherServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -134,47 +134,58 @@ class VideoStitcherServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<video::VideoStitcherServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<video::VideoStitcherServiceRetryPolicyOption>()) {
-      return options.get<video::VideoStitcherServiceRetryPolicyOption>()
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<video::VideoStitcherServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<video::VideoStitcherServiceBackoffPolicyOption>()) {
-      return options.get<video::VideoStitcherServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<video::VideoStitcherServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<video::VideoStitcherServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
     if (options.has<
-            video::VideoStitcherServiceConnectionIdempotencyPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceBackoffPolicyOption>()) {
       return options
-          .get<video::VideoStitcherServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<video::VideoStitcherServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::
+                     VideoStitcherServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   VideoStitcherServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 VideoStitcherServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<video_internal::VideoStitcherServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

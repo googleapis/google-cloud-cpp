@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace profiler_internal {
 
 class ProfilerServiceLogging : public ProfilerServiceStub {
  public:
@@ -59,8 +59,8 @@ class ProfilerServiceLogging : public ProfilerServiceStub {
   std::set<std::string> components_;
 };  // ProfilerServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

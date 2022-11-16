@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace optimization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization {
 
 FleetRoutingConnection::~FleetRoutingConnection() = default;
 
@@ -54,16 +54,15 @@ std::shared_ptr<FleetRoutingConnection> MakeFleetRoutingConnection(
                                  UnifiedCredentialsOptionList,
                                  FleetRoutingPolicyOptionList>(options,
                                                                __func__);
-  options =
-      optimization_internal::FleetRoutingDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::FleetRoutingDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = optimization_internal::CreateDefaultFleetRoutingStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultFleetRoutingStub(
       background->cq(), options);
-  return std::make_shared<optimization_internal::FleetRoutingConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::FleetRoutingConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

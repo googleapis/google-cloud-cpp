@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai_internal {
 
 DocumentProcessorServiceLogging::DocumentProcessorServiceLogging(
     std::shared_ptr<DocumentProcessorServiceStub> child,
@@ -308,7 +308,7 @@ future<Status> DocumentProcessorServiceLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

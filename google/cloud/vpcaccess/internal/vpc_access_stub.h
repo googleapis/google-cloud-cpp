@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace vpcaccess_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vpcaccess_internal {
 
 class VpcAccessServiceStub {
  public:
@@ -114,8 +114,8 @@ class DefaultVpcAccessServiceStub : public VpcAccessServiceStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

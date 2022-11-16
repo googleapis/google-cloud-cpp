@@ -29,13 +29,13 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp_internal {
 
 ClientConnectorServicesServiceConnectionImpl::
     ClientConnectorServicesServiceConnectionImpl(
         std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<beyondcorp_internal::ClientConnectorServicesServiceStub>
+        std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ClientConnectorServicesServiceStub>
             stub,
         Options options)
     : background_(std::move(background)),
@@ -52,7 +52,7 @@ ClientConnectorServicesServiceConnectionImpl::ListClientConnectorServices(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      beyondcorp::ClientConnectorServicesServiceRetryPolicy const>(
+      GOOGLE_CLOUD_CPP_NS::ClientConnectorServicesServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListClientConnectorServices(request);
@@ -205,7 +205,7 @@ ClientConnectorServicesServiceConnectionImpl::DeleteClientConnectorService(
       polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

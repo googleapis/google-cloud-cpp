@@ -38,17 +38,17 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp_internal {
 
 class AppConnectionsServiceConnectionImpl
-    : public beyondcorp::AppConnectionsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceConnection {
  public:
   ~AppConnectionsServiceConnectionImpl() override = default;
 
   AppConnectionsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<beyondcorp_internal::AppConnectionsServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -81,62 +81,71 @@ class AppConnectionsServiceConnectionImpl
                             ResolveAppConnectionsRequest request) override;
 
  private:
-  std::unique_ptr<beyondcorp::AppConnectionsServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp::AppConnectionsServiceRetryPolicyOption>()) {
-      return options.get<beyondcorp::AppConnectionsServiceRetryPolicyOption>()
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<beyondcorp::AppConnectionsServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp::AppConnectionsServiceBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceBackoffPolicyOption>()) {
       return options
-          .get<beyondcorp::AppConnectionsServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<beyondcorp::AppConnectionsServiceBackoffPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<beyondcorp::AppConnectionsServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            beyondcorp::
+            GOOGLE_CLOUD_CPP_NS::
                 AppConnectionsServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<beyondcorp::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    AppConnectionsServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<beyondcorp::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  AppConnectionsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<beyondcorp::AppConnectionsServicePollingPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::AppConnectionsServicePollingPolicyOption>()) {
       return options
-          .get<beyondcorp::AppConnectionsServicePollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::AppConnectionsServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<beyondcorp::AppConnectionsServicePollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::AppConnectionsServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<beyondcorp_internal::AppConnectionsServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

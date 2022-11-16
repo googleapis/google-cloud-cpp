@@ -27,7 +27,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: beyondcorp::ClientGatewaysServiceClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::ClientGatewaysServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -39,8 +39,9 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::beyondcorp::ClientGatewaysServiceClient(
-      google::cloud::beyondcorp::MakeClientGatewaysServiceConnection(options));
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::ClientGatewaysServiceClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeClientGatewaysServiceConnection(
+          options));
   //! [set-client-endpoint]
 }
 
@@ -56,8 +57,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::beyondcorp::ClientGatewaysServiceClient(
-        google::cloud::beyondcorp::MakeClientGatewaysServiceConnection(
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::ClientGatewaysServiceClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeClientGatewaysServiceConnection(
             options));
   }
   //! [with-service-account]

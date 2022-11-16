@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 PublisherServiceLogging::PublisherServiceLogging(
     std::shared_ptr<PublisherServiceStub> child, TracingOptions tracing_options,
@@ -56,7 +56,7 @@ PublisherServiceLogging::AsyncPublish(
   return stream;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

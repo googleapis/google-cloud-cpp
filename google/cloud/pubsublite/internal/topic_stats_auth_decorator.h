@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 class TopicStatsServiceAuth : public TopicStatsServiceStub {
  public:
@@ -61,8 +61,8 @@ class TopicStatsServiceAuth : public TopicStatsServiceStub {
   std::shared_ptr<TopicStatsServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

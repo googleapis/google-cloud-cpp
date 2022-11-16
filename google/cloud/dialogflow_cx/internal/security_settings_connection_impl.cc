@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_internal {
 
 SecuritySettingsServiceConnectionImpl::SecuritySettingsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_cx_internal::SecuritySettingsServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -88,9 +88,9 @@ SecuritySettingsServiceConnectionImpl::ListSecuritySettings(
     google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dialogflow_cx::SecuritySettingsServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSecuritySettings(request);
   char const* function_name = __func__;
@@ -132,7 +132,7 @@ Status SecuritySettingsServiceConnectionImpl::DeleteSecuritySettings(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

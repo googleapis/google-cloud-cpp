@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace tpu {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu {
 
 using ::google::cloud::Idempotency;
 
@@ -94,7 +94,7 @@ MakeDefaultTpuConnectionIdempotencyPolicy() {
   return absl::make_unique<TpuConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

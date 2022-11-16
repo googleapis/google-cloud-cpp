@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 class UptimeCheckServiceConnectionImpl
-    : public monitoring::UptimeCheckServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceConnection {
  public:
   ~UptimeCheckServiceConnectionImpl() override = default;
 
   UptimeCheckServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<monitoring_internal::UptimeCheckServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -72,49 +72,58 @@ class UptimeCheckServiceConnectionImpl
       google::monitoring::v3::ListUptimeCheckIpsRequest request) override;
 
  private:
-  std::unique_ptr<monitoring::UptimeCheckServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::UptimeCheckServiceRetryPolicyOption>()) {
-      return options.get<monitoring::UptimeCheckServiceRetryPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<monitoring::UptimeCheckServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::UptimeCheckServiceBackoffPolicyOption>()) {
-      return options.get<monitoring::UptimeCheckServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring::UptimeCheckServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<monitoring::UptimeCheckServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<monitoring::
-                     UptimeCheckServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceBackoffPolicyOption>()) {
       return options
-          .get<
-              monitoring::UptimeCheckServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<monitoring::UptimeCheckServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::
+                     UptimeCheckServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   UptimeCheckServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 UptimeCheckServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<monitoring_internal::UptimeCheckServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

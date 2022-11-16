@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub_internal {
 
 class GkeHubAuth : public GkeHubStub {
  public:
@@ -110,8 +110,8 @@ class GkeHubAuth : public GkeHubStub {
   std::shared_ptr<GkeHubStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -35,20 +35,20 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 using ClusterControllerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dataproc_internal::ClusterControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ClusterControllerRetryTraits>;
 
 using ClusterControllerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dataproc_internal::ClusterControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ClusterControllerRetryTraits>;
 
 using ClusterControllerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dataproc_internal::ClusterControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ClusterControllerRetryTraits>;
 
 /**
  * The `ClusterControllerConnection` object for `ClusterControllerClient`.
@@ -60,7 +60,8 @@ using ClusterControllerLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeClusterControllerConnection()`.
  *
- * For mocking, see `dataproc_mocks::MockClusterControllerConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockClusterControllerConnection`.
  */
 class ClusterControllerConnection {
  public:
@@ -111,7 +112,7 @@ class ClusterControllerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dataproc::ClusterControllerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ClusterControllerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -133,8 +134,8 @@ std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
 std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

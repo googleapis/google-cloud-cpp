@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_internal {
 
 class TransitionRouteGroupsConnectionImpl
-    : public dialogflow_cx::TransitionRouteGroupsConnection {
+    : public GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsConnection {
  public:
   ~TransitionRouteGroupsConnectionImpl() override = default;
 
   TransitionRouteGroupsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_cx_internal::TransitionRouteGroupsStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -74,57 +74,58 @@ class TransitionRouteGroupsConnectionImpl
           DeleteTransitionRouteGroupRequest const& request) override;
 
  private:
-  std::unique_ptr<dialogflow_cx::TransitionRouteGroupsRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsRetryPolicyOption>()) {
       return options
-          .get<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dialogflow_cx::TransitionRouteGroupsRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsBackoffPolicyOption>()) {
       return options
-          .get<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dialogflow_cx::TransitionRouteGroupsBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      dialogflow_cx::TransitionRouteGroupsConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            dialogflow_cx::
+            GOOGLE_CLOUD_CPP_NS::
                 TransitionRouteGroupsConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<dialogflow_cx::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    TransitionRouteGroupsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dialogflow_cx::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  TransitionRouteGroupsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dialogflow_cx_internal::TransitionRouteGroupsStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

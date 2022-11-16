@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory_internal {
 
 class RegistrationServiceConnectionImpl
-    : public servicedirectory::RegistrationServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::RegistrationServiceConnection {
  public:
   ~RegistrationServiceConnectionImpl() override = default;
 
   RegistrationServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<servicedirectory_internal::RegistrationServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::RegistrationServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -119,57 +119,58 @@ class RegistrationServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<servicedirectory::RegistrationServiceRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::RegistrationServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<servicedirectory::RegistrationServiceRetryPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::RegistrationServiceRetryPolicyOption>()) {
       return options
-          .get<servicedirectory::RegistrationServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::RegistrationServiceRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<servicedirectory::RegistrationServiceRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::RegistrationServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<servicedirectory::RegistrationServiceBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::RegistrationServiceBackoffPolicyOption>()) {
       return options
-          .get<servicedirectory::RegistrationServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::RegistrationServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<servicedirectory::RegistrationServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::RegistrationServiceBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      servicedirectory::RegistrationServiceConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::RegistrationServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<servicedirectory::
+            .has<GOOGLE_CLOUD_CPP_NS::
                      RegistrationServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<servicedirectory::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    RegistrationServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<servicedirectory::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  RegistrationServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<servicedirectory_internal::RegistrationServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::RegistrationServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

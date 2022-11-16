@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 PartitionAssignmentServiceMetadata::PartitionAssignmentServiceMetadata(
     std::shared_ptr<PartitionAssignmentServiceStub> child)
@@ -62,7 +62,7 @@ void PartitionAssignmentServiceMetadata::SetMetadata(
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

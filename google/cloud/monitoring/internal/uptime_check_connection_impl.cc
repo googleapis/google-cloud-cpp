@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 UptimeCheckServiceConnectionImpl::UptimeCheckServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<monitoring_internal::UptimeCheckServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -44,8 +44,9 @@ UptimeCheckServiceConnectionImpl::ListUptimeCheckConfigs(
     google::monitoring::v3::ListUptimeCheckConfigsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<monitoring::UptimeCheckServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListUptimeCheckConfigs(request);
   char const* function_name = __func__;
@@ -132,8 +133,9 @@ UptimeCheckServiceConnectionImpl::ListUptimeCheckIps(
     google::monitoring::v3::ListUptimeCheckIpsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<monitoring::UptimeCheckServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListUptimeCheckIps(request);
   char const* function_name = __func__;
@@ -160,7 +162,7 @@ UptimeCheckServiceConnectionImpl::ListUptimeCheckIps(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

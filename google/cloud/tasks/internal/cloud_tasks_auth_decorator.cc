@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks_internal {
 
 CloudTasksAuth::CloudTasksAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -160,7 +160,7 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksAuth::RunTask(
   return child_->RunTask(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

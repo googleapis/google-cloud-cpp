@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace recommender {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender {
 
 RecommenderConnection::~RecommenderConnection() = default;
 
@@ -117,15 +117,15 @@ std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
                                  UnifiedCredentialsOptionList,
                                  RecommenderPolicyOptionList>(options,
                                                               __func__);
-  options = recommender_internal::RecommenderDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::RecommenderDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = recommender_internal::CreateDefaultRecommenderStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultRecommenderStub(
       background->cq(), options);
-  return std::make_shared<recommender_internal::RecommenderConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::RecommenderConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

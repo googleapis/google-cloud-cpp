@@ -37,16 +37,18 @@
 
 namespace google {
 namespace cloud {
-namespace run_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace run_internal {
 
-class RevisionsConnectionImpl : public run::RevisionsConnection {
+class RevisionsConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::RevisionsConnection {
  public:
   ~RevisionsConnectionImpl() override = default;
 
   RevisionsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<run_internal::RevisionsStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::RevisionsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -60,48 +62,58 @@ class RevisionsConnectionImpl : public run::RevisionsConnection {
       google::cloud::run::v2::DeleteRevisionRequest const& request) override;
 
  private:
-  std::unique_ptr<run::RevisionsRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::RevisionsRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<run::RevisionsRetryPolicyOption>()) {
-      return options.get<run::RevisionsRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::RevisionsRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::RevisionsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<run::RevisionsRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::RevisionsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<run::RevisionsBackoffPolicyOption>()) {
-      return options.get<run::RevisionsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<run::RevisionsBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<run::RevisionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run::RevisionsConnectionIdempotencyPolicyOption>()) {
-      return options.get<run::RevisionsConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::RevisionsBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::RevisionsBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<run::RevisionsConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::RevisionsBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::RevisionsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        RevisionsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<
+              GOOGLE_CLOUD_CPP_NS::RevisionsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::RevisionsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<run::RevisionsPollingPolicyOption>()) {
-      return options.get<run::RevisionsPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::RevisionsPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::RevisionsPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<run::RevisionsPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::RevisionsPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<run_internal::RevisionsStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::RevisionsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

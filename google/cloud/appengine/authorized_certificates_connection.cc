@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 AuthorizedCertificatesConnection::~AuthorizedCertificatesConnection() = default;
 
@@ -72,17 +72,17 @@ MakeAuthorizedCertificatesConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  AuthorizedCertificatesPolicyOptionList>(
       options, __func__);
-  options = appengine_internal::AuthorizedCertificatesDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = appengine_internal::CreateDefaultAuthorizedCertificatesStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultAuthorizedCertificatesStub(
       background->cq(), options);
   return std::make_shared<
-      appengine_internal::AuthorizedCertificatesConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::AuthorizedCertificatesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

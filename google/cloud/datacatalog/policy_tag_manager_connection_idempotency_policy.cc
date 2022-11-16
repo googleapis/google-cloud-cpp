@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog {
 
 using ::google::cloud::Idempotency;
 
@@ -106,7 +106,7 @@ MakeDefaultPolicyTagManagerConnectionIdempotencyPolicy() {
   return absl::make_unique<PolicyTagManagerConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

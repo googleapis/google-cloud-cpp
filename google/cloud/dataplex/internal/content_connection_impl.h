@@ -34,16 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex_internal {
 
-class ContentServiceConnectionImpl : public dataplex::ContentServiceConnection {
+class ContentServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::ContentServiceConnection {
  public:
   ~ContentServiceConnectionImpl() override = default;
 
   ContentServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dataplex_internal::ContentServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ContentServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -75,44 +76,54 @@ class ContentServiceConnectionImpl : public dataplex::ContentServiceConnection {
       google::cloud::dataplex::v1::ListContentRequest request) override;
 
  private:
-  std::unique_ptr<dataplex::ContentServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ContentServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex::ContentServiceRetryPolicyOption>()) {
-      return options.get<dataplex::ContentServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ContentServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ContentServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<dataplex::ContentServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ContentServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex::ContentServiceBackoffPolicyOption>()) {
-      return options.get<dataplex::ContentServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataplex::ContentServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<dataplex::ContentServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dataplex::ContentServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ContentServiceBackoffPolicyOption>()) {
       return options
-          .get<dataplex::ContentServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ContentServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dataplex::ContentServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ContentServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ContentServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ContentServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ContentServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ContentServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dataplex_internal::ContentServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ContentServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

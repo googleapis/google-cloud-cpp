@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks_internal {
 
 NotebookServiceConnectionImpl::NotebookServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<notebooks_internal::NotebookServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::NotebookServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,8 +45,9 @@ NotebookServiceConnectionImpl::ListInstances(
     google::cloud::notebooks::v1::ListInstancesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<notebooks::NotebookServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::NotebookServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListInstances(request);
   char const* function_name = __func__;
@@ -588,8 +589,9 @@ NotebookServiceConnectionImpl::ListEnvironments(
     google::cloud::notebooks::v1::ListEnvironmentsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<notebooks::NotebookServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::NotebookServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListEnvironments(request);
   char const* function_name = __func__;
@@ -695,8 +697,9 @@ NotebookServiceConnectionImpl::ListSchedules(
     google::cloud::notebooks::v1::ListSchedulesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<notebooks::NotebookServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::NotebookServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSchedules(request);
   char const* function_name = __func__;
@@ -831,8 +834,9 @@ NotebookServiceConnectionImpl::ListExecutions(
     google::cloud::notebooks::v1::ListExecutionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<notebooks::NotebookServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::NotebookServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListExecutions(request);
   char const* function_name = __func__;
@@ -932,7 +936,7 @@ NotebookServiceConnectionImpl::CreateExecution(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

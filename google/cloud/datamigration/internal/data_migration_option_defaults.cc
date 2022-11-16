@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace datamigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datamigration_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,43 +39,49 @@ Options DataMigrationServiceDefaultOptions(Options options) {
       "datamigration.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<datamigration::DataMigrationServiceRetryPolicyOption>()) {
-    options.set<datamigration::DataMigrationServiceRetryPolicyOption>(
-        datamigration::DataMigrationServiceLimitedTimeRetryPolicy(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::DataMigrationServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DataMigrationServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::DataMigrationServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<datamigration::DataMigrationServiceBackoffPolicyOption>()) {
-    options.set<datamigration::DataMigrationServiceBackoffPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::DataMigrationServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DataMigrationServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<datamigration::DataMigrationServicePollingPolicyOption>()) {
-    options.set<datamigration::DataMigrationServicePollingPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::DataMigrationServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DataMigrationServicePollingPolicyOption>(
         GenericPollingPolicy<
-            datamigration::DataMigrationServiceRetryPolicyOption::Type,
-            datamigration::DataMigrationServiceBackoffPolicyOption::Type>(
-            options.get<datamigration::DataMigrationServiceRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::DataMigrationServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::DataMigrationServiceBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::
+                         DataMigrationServiceRetryPolicyOption>()
                 ->clone(),
             options
-                .get<datamigration::DataMigrationServiceBackoffPolicyOption>()
+                .get<GOOGLE_CLOUD_CPP_NS::
+                         DataMigrationServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
   if (!options
-           .has<datamigration::
+           .has<GOOGLE_CLOUD_CPP_NS::
                     DataMigrationServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        datamigration::DataMigrationServiceConnectionIdempotencyPolicyOption>(
-        datamigration::
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    DataMigrationServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultDataMigrationServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

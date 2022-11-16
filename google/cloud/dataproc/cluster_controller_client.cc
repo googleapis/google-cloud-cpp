@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 ClusterControllerClient::ClusterControllerClient(
     std::shared_ptr<ClusterControllerConnection> connection, Options opts)
@@ -183,7 +183,7 @@ ClusterControllerClient::DiagnoseCluster(
   return connection_->DiagnoseCluster(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

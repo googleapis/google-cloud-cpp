@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp {
 
 using AppConnectorsServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        beyondcorp_internal::AppConnectorsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AppConnectorsServiceRetryTraits>;
 
 using AppConnectorsServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        beyondcorp_internal::AppConnectorsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AppConnectorsServiceRetryTraits>;
 
 using AppConnectorsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        beyondcorp_internal::AppConnectorsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AppConnectorsServiceRetryTraits>;
 
 /**
  * The `AppConnectorsServiceConnection` object for `AppConnectorsServiceClient`.
@@ -59,7 +59,8 @@ using AppConnectorsServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeAppConnectorsServiceConnection()`.
  *
- * For mocking, see `beyondcorp_mocks::MockAppConnectorsServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockAppConnectorsServiceConnection`.
  */
 class AppConnectorsServiceConnection {
  public:
@@ -114,7 +115,7 @@ class AppConnectorsServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::beyondcorp::AppConnectorsServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::AppConnectorsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -125,8 +126,8 @@ class AppConnectorsServiceConnection {
 std::shared_ptr<AppConnectorsServiceConnection>
 MakeAppConnectorsServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace speech_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech_v2_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,34 +38,39 @@ Options SpeechDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_SPEECH_AUTHORITY", "speech.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<speech_v2::SpeechRetryPolicyOption>()) {
-    options.set<speech_v2::SpeechRetryPolicyOption>(
-        speech_v2::SpeechLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::SpeechRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::SpeechRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::SpeechLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<speech_v2::SpeechBackoffPolicyOption>()) {
-    options.set<speech_v2::SpeechBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::SpeechBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::SpeechBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<speech_v2::SpeechPollingPolicyOption>()) {
-    options.set<speech_v2::SpeechPollingPolicyOption>(
-        GenericPollingPolicy<speech_v2::SpeechRetryPolicyOption::Type,
-                             speech_v2::SpeechBackoffPolicyOption::Type>(
-            options.get<speech_v2::SpeechRetryPolicyOption>()->clone(),
-            options.get<speech_v2::SpeechBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::SpeechPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::SpeechPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::SpeechRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::SpeechBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::SpeechRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::SpeechBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<speech_v2::SpeechConnectionIdempotencyPolicyOption>()) {
-    options.set<speech_v2::SpeechConnectionIdempotencyPolicyOption>(
-        speech_v2::MakeDefaultSpeechConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::SpeechConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::SpeechConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultSpeechConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

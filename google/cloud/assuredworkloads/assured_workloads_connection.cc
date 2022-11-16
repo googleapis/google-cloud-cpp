@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace assuredworkloads {
 
 AssuredWorkloadsServiceConnection::~AssuredWorkloadsServiceConnection() =
     default;
@@ -102,18 +102,17 @@ MakeAssuredWorkloadsServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  AssuredWorkloadsServicePolicyOptionList>(
       options, __func__);
-  options = assuredworkloads_internal::AssuredWorkloadsServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      assuredworkloads_internal::CreateDefaultAssuredWorkloadsServiceStub(
-          background->cq(), options);
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultAssuredWorkloadsServiceStub(
+      background->cq(), options);
   return std::make_shared<
-      assuredworkloads_internal::AssuredWorkloadsServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

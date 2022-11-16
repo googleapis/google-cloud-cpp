@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 using ModelServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::ModelServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ModelServiceRetryTraits>;
 
 using ModelServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::ModelServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ModelServiceRetryTraits>;
 
 using ModelServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::ModelServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ModelServiceRetryTraits>;
 
 /**
  * The `ModelServiceConnection` object for `ModelServiceClient`.
@@ -55,7 +55,7 @@ using ModelServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeModelServiceConnection()`.
  *
- * For mocking, see `bigquery_mocks::MockModelServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockModelServiceConnection`.
  */
 class ModelServiceConnection {
  public:
@@ -89,7 +89,7 @@ class ModelServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::ModelServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ModelServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -100,8 +100,8 @@ class ModelServiceConnection {
 std::shared_ptr<ModelServiceConnection> MakeModelServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

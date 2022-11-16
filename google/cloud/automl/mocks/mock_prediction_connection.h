@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace automl_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl_mocks {
 
 /**
  * A class to mock `PredictionServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockPredictionServiceConnection
-    : public automl::PredictionServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::PredictionServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -57,8 +57,8 @@ class MockPredictionServiceConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

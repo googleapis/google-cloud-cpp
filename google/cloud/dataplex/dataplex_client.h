@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex {
 
 ///
 /// Dataplex service provides data lakes as a service. The primary resources
@@ -1332,8 +1332,8 @@ class DataplexServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkconnectivity_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkconnectivity_internal {
 
 class HubServiceMetadata : public HubServiceStub {
  public:
@@ -110,8 +110,8 @@ class HubServiceMetadata : public HubServiceStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

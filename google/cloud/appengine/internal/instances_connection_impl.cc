@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 InstancesConnectionImpl::InstancesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::InstancesStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::InstancesStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -44,8 +44,8 @@ InstancesConnectionImpl::ListInstances(
     google::appengine::v1::ListInstancesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<appengine::InstancesRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::InstancesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListInstances(request);
   char const* function_name = __func__;
@@ -140,7 +140,7 @@ InstancesConnectionImpl::DebugInstance(
       idempotency_policy()->DebugInstance(request), polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

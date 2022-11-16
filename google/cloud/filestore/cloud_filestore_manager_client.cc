@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace filestore {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore {
 
 CloudFilestoreManagerClient::CloudFilestoreManagerClient(
     std::shared_ptr<CloudFilestoreManagerConnection> connection, Options opts)
@@ -218,7 +218,7 @@ CloudFilestoreManagerClient::UpdateBackup(
   return connection_->UpdateBackup(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

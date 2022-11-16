@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision {
 
 ///
 /// Manages Products and ProductSets of reference images for use in product
@@ -1125,8 +1125,8 @@ class ProductSearchClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

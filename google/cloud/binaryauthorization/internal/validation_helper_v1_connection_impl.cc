@@ -26,12 +26,12 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 ValidationHelperV1ConnectionImpl::ValidationHelperV1ConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<binaryauthorization_internal::ValidationHelperV1Stub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ValidationHelperV1Stub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -54,7 +54,7 @@ ValidationHelperV1ConnectionImpl::ValidateAttestationOccurrence(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

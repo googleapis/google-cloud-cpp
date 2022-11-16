@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer_internal {
 
 StorageTransferServiceStub::~StorageTransferServiceStub() = default;
 
@@ -239,7 +239,7 @@ future<Status> DefaultStorageTransferServiceStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

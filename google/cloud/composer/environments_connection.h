@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer {
 
 using EnvironmentsRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        composer_internal::EnvironmentsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EnvironmentsRetryTraits>;
 
 using EnvironmentsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        composer_internal::EnvironmentsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EnvironmentsRetryTraits>;
 
 using EnvironmentsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        composer_internal::EnvironmentsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EnvironmentsRetryTraits>;
 
 /**
  * The `EnvironmentsConnection` object for `EnvironmentsClient`.
@@ -59,7 +59,7 @@ using EnvironmentsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeEnvironmentsConnection()`.
  *
- * For mocking, see `composer_mocks::MockEnvironmentsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockEnvironmentsConnection`.
  */
 class EnvironmentsConnection {
  public:
@@ -106,7 +106,7 @@ class EnvironmentsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::composer::EnvironmentsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::EnvironmentsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -117,8 +117,8 @@ class EnvironmentsConnection {
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

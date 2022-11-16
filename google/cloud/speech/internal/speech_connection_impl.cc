@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace speech_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech_internal {
 
 SpeechConnectionImpl::SpeechConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<speech_internal::SpeechStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SpeechStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -81,7 +81,7 @@ SpeechConnectionImpl::LongRunningRecognize(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

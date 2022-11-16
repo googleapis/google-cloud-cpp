@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 CompletionServiceClient::CompletionServiceClient(
     std::shared_ptr<CompletionServiceConnection> connection, Options opts)
@@ -47,7 +47,7 @@ CompletionServiceClient::ImportCompletionData(
   return connection_->ImportCompletionData(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

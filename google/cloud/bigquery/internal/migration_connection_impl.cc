@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 MigrationServiceConnectionImpl::MigrationServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_internal::MigrationServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::MigrationServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -75,8 +75,9 @@ MigrationServiceConnectionImpl::ListMigrationWorkflows(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::MigrationServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::MigrationServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListMigrationWorkflows(request);
   char const* function_name = __func__;
@@ -154,8 +155,9 @@ MigrationServiceConnectionImpl::ListMigrationSubtasks(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::MigrationServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::MigrationServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListMigrationSubtasks(request);
   char const* function_name = __func__;
@@ -184,7 +186,7 @@ MigrationServiceConnectionImpl::ListMigrationSubtasks(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

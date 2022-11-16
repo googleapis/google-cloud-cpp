@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace websecurityscanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace websecurityscanner_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,31 +39,32 @@ Options WebSecurityScannerDefaultOptions(Options options) {
       "websecurityscanner.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<websecurityscanner::WebSecurityScannerRetryPolicyOption>()) {
-    options.set<websecurityscanner::WebSecurityScannerRetryPolicyOption>(
-        websecurityscanner::WebSecurityScannerLimitedTimeRetryPolicy(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::WebSecurityScannerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
   if (!options
-           .has<websecurityscanner::WebSecurityScannerBackoffPolicyOption>()) {
-    options.set<websecurityscanner::WebSecurityScannerBackoffPolicyOption>(
+           .has<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<websecurityscanner::
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
                        WebSecurityScannerConnectionIdempotencyPolicyOption>()) {
-    options.set<websecurityscanner::
+    options.set<GOOGLE_CLOUD_CPP_NS::
                     WebSecurityScannerConnectionIdempotencyPolicyOption>(
-        websecurityscanner::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultWebSecurityScannerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

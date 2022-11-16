@@ -27,13 +27,13 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 NotificationChannelServiceConnectionImpl::
     NotificationChannelServiceConnectionImpl(
         std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<monitoring_internal::NotificationChannelServiceStub>
+        std::shared_ptr<GOOGLE_CLOUD_CPP_NS::NotificationChannelServiceStub>
             stub,
         Options options)
     : background_(std::move(background)),
@@ -47,9 +47,9 @@ NotificationChannelServiceConnectionImpl::ListNotificationChannelDescriptors(
     google::monitoring::v3::ListNotificationChannelDescriptorsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<monitoring::NotificationChannelServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::NotificationChannelServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency =
       idempotency_policy()->ListNotificationChannelDescriptors(request);
@@ -100,9 +100,9 @@ NotificationChannelServiceConnectionImpl::ListNotificationChannels(
     google::monitoring::v3::ListNotificationChannelsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<monitoring::NotificationChannelServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::NotificationChannelServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNotificationChannels(request);
   char const* function_name = __func__;
@@ -231,7 +231,7 @@ NotificationChannelServiceConnectionImpl::VerifyNotificationChannel(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace dlp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dlp_internal {
 
 DlpServiceMetadata::DlpServiceMetadata(std::shared_ptr<DlpServiceStub> child)
     : child_(std::move(child)),
@@ -313,7 +313,7 @@ void DlpServiceMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

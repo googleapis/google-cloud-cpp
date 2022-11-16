@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex {
 
 using ::google::cloud::Idempotency;
 
@@ -85,7 +85,7 @@ MakeDefaultMetadataServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<MetadataServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

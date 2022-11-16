@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -41,49 +41,52 @@ Options ManagedIdentitiesServiceDefaultOptions(Options options) {
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<
-          managedidentities::ManagedIdentitiesServiceRetryPolicyOption>()) {
-    options.set<managedidentities::ManagedIdentitiesServiceRetryPolicyOption>(
-        managedidentities::ManagedIdentitiesServiceLimitedTimeRetryPolicy(
+          GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
   if (!options.has<
-          managedidentities::ManagedIdentitiesServiceBackoffPolicyOption>()) {
-    options.set<managedidentities::ManagedIdentitiesServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+          GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceBackoffPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
   if (!options.has<
-          managedidentities::ManagedIdentitiesServicePollingPolicyOption>()) {
-    options.set<managedidentities::ManagedIdentitiesServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            managedidentities::ManagedIdentitiesServiceRetryPolicyOption::Type,
-            managedidentities::ManagedIdentitiesServiceBackoffPolicyOption::
-                Type>(
-            options
-                .get<managedidentities::
-                         ManagedIdentitiesServiceRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<managedidentities::
-                         ManagedIdentitiesServiceBackoffPolicyOption>()
-                ->clone())
-            .clone());
+          GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServicePollingPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServicePollingPolicyOption>(
+            GenericPollingPolicy<
+                GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceRetryPolicyOption::
+                    Type,
+                GOOGLE_CLOUD_CPP_NS::
+                    ManagedIdentitiesServiceBackoffPolicyOption::Type>(
+                options
+                    .get<GOOGLE_CLOUD_CPP_NS::
+                             ManagedIdentitiesServiceRetryPolicyOption>()
+                    ->clone(),
+                options
+                    .get<GOOGLE_CLOUD_CPP_NS::
+                             ManagedIdentitiesServiceBackoffPolicyOption>()
+                    ->clone())
+                .clone());
   }
   if (!options.has<
-          managedidentities::
+          GOOGLE_CLOUD_CPP_NS::
               ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<managedidentities::
+    options.set<GOOGLE_CLOUD_CPP_NS::
                     ManagedIdentitiesServiceConnectionIdempotencyPolicyOption>(
-        managedidentities::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultManagedIdentitiesServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

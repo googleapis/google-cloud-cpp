@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace apigeeconnect_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigeeconnect_internal {
 
 class ConnectionServiceConnectionImpl
-    : public apigeeconnect::ConnectionServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ConnectionServiceConnection {
  public:
   ~ConnectionServiceConnectionImpl() override = default;
 
   ConnectionServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<apigeeconnect_internal::ConnectionServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConnectionServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -54,49 +54,57 @@ class ConnectionServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<apigeeconnect::ConnectionServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ConnectionServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<apigeeconnect::ConnectionServiceRetryPolicyOption>()) {
-      return options.get<apigeeconnect::ConnectionServiceRetryPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ConnectionServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ConnectionServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<apigeeconnect::ConnectionServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ConnectionServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<apigeeconnect::ConnectionServiceBackoffPolicyOption>()) {
-      return options.get<apigeeconnect::ConnectionServiceBackoffPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ConnectionServiceBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ConnectionServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<apigeeconnect::ConnectionServiceBackoffPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ConnectionServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<apigeeconnect::ConnectionServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ConnectionServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<apigeeconnect::
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
                         ConnectionServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<apigeeconnect::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    ConnectionServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<
-            apigeeconnect::ConnectionServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ConnectionServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<apigeeconnect_internal::ConnectionServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConnectionServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

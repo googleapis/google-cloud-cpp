@@ -34,16 +34,18 @@
 
 namespace google {
 namespace cloud {
-namespace tasks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks_internal {
 
-class CloudTasksConnectionImpl : public tasks::CloudTasksConnection {
+class CloudTasksConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::CloudTasksConnection {
  public:
   ~CloudTasksConnectionImpl() override = default;
 
   CloudTasksConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<tasks_internal::CloudTasksStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudTasksStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -96,40 +98,48 @@ class CloudTasksConnectionImpl : public tasks::CloudTasksConnection {
       google::cloud::tasks::v2::RunTaskRequest const& request) override;
 
  private:
-  std::unique_ptr<tasks::CloudTasksRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudTasksRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<tasks::CloudTasksRetryPolicyOption>()) {
-      return options.get<tasks::CloudTasksRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudTasksRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudTasksRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<tasks::CloudTasksRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudTasksRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<tasks::CloudTasksBackoffPolicyOption>()) {
-      return options.get<tasks::CloudTasksBackoffPolicyOption>()->clone();
-    }
-    return options_.get<tasks::CloudTasksBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<tasks::CloudTasksConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<tasks::CloudTasksConnectionIdempotencyPolicyOption>()) {
-      return options.get<tasks::CloudTasksConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudTasksBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudTasksBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<tasks::CloudTasksConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudTasksBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudTasksConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CloudTasksConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CloudTasksConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::CloudTasksConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<tasks_internal::CloudTasksStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudTasksStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

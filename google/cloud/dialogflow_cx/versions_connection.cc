@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 VersionsConnection::~VersionsConnection() = default;
 
@@ -85,12 +85,12 @@ std::shared_ptr<VersionsConnection> MakeVersionsConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  VersionsPolicyOptionList>(options, __func__);
-  options = dialogflow_cx_internal::VersionsDefaultOptions(location,
-                                                           std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::VersionsDefaultOptions(location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_cx_internal::CreateDefaultVersionsStub(
-      background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::VersionsConnectionImpl>(
+  auto stub =
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultVersionsStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::VersionsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -98,7 +98,7 @@ std::shared_ptr<VersionsConnection> MakeVersionsConnection(Options options) {
   return MakeVersionsConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

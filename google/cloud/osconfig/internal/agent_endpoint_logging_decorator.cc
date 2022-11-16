@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig_internal {
 
 AgentEndpointServiceLogging::AgentEndpointServiceLogging(
     std::shared_ptr<AgentEndpointServiceStub> child,
@@ -134,7 +134,7 @@ AgentEndpointServiceLogging::ReportInventory(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

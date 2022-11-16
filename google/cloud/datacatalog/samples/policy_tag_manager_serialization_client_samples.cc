@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: datacatalog::PolicyTagManagerSerializationClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::PolicyTagManagerSerializationClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,9 +38,10 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::datacatalog::PolicyTagManagerSerializationClient(
-      google::cloud::datacatalog::MakePolicyTagManagerSerializationConnection(
-          options));
+  auto client =
+      google::cloud::GOOGLE_CLOUD_CPP_NS::PolicyTagManagerSerializationClient(
+          google::cloud::GOOGLE_CLOUD_CPP_NS::
+              MakePolicyTagManagerSerializationConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -56,9 +57,10 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::datacatalog::PolicyTagManagerSerializationClient(
-        google::cloud::datacatalog::MakePolicyTagManagerSerializationConnection(
-            options));
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::
+        PolicyTagManagerSerializationClient(
+            google::cloud::GOOGLE_CLOUD_CPP_NS::
+                MakePolicyTagManagerSerializationConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));

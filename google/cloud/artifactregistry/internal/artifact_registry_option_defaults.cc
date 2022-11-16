@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace artifactregistry_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,42 +39,45 @@ Options ArtifactRegistryDefaultOptions(Options options) {
       "artifactregistry.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<artifactregistry::ArtifactRegistryRetryPolicyOption>()) {
-    options.set<artifactregistry::ArtifactRegistryRetryPolicyOption>(
-        artifactregistry::ArtifactRegistryLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ArtifactRegistryLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<artifactregistry::ArtifactRegistryBackoffPolicyOption>()) {
-    options.set<artifactregistry::ArtifactRegistryBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<artifactregistry::ArtifactRegistryPollingPolicyOption>()) {
-    options.set<artifactregistry::ArtifactRegistryPollingPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryPollingPolicyOption>(
         GenericPollingPolicy<
-            artifactregistry::ArtifactRegistryRetryPolicyOption::Type,
-            artifactregistry::ArtifactRegistryBackoffPolicyOption::Type>(
-            options.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::ArtifactRegistryRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::ArtifactRegistryBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryRetryPolicyOption>()
                 ->clone(),
             options
-                .get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
+                .get<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<artifactregistry::
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
                        ArtifactRegistryConnectionIdempotencyPolicyOption>()) {
     options.set<
-        artifactregistry::ArtifactRegistryConnectionIdempotencyPolicyOption>(
-        artifactregistry::
+        GOOGLE_CLOUD_CPP_NS::ArtifactRegistryConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultArtifactRegistryConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

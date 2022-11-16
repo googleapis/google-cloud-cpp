@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices_internal {
 
 class RealmsServiceConnectionImpl
-    : public gameservices::RealmsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::RealmsServiceConnection {
  public:
   ~RealmsServiceConnectionImpl() override = default;
 
   RealmsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<gameservices_internal::RealmsServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::RealmsServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -72,57 +72,64 @@ class RealmsServiceConnectionImpl
                          request) override;
 
  private:
-  std::unique_ptr<gameservices::RealmsServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::RealmsServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<gameservices::RealmsServiceRetryPolicyOption>()) {
-      return options.get<gameservices::RealmsServiceRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::RealmsServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::RealmsServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<gameservices::RealmsServiceRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::RealmsServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<gameservices::RealmsServiceBackoffPolicyOption>()) {
-      return options.get<gameservices::RealmsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<gameservices::RealmsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<gameservices::RealmsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::RealmsServiceBackoffPolicyOption>()) {
       return options
-          .get<gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::RealmsServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::RealmsServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::RealmsServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        RealmsServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   RealmsServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 RealmsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<gameservices::RealmsServicePollingPolicyOption>()) {
-      return options.get<gameservices::RealmsServicePollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::RealmsServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::RealmsServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<gameservices::RealmsServicePollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::RealmsServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<gameservices_internal::RealmsServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::RealmsServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

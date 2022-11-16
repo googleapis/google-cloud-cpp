@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities_internal {
 
 ManagedIdentitiesServiceMetadata::ManagedIdentitiesServiceMetadata(
     std::shared_ptr<ManagedIdentitiesServiceStub> child)
@@ -159,7 +159,7 @@ void ManagedIdentitiesServiceMetadata::SetMetadata(
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

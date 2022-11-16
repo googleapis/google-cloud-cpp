@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace oslogin_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace oslogin_mocks {
 
 /**
  * A class to mock `OsLoginServiceConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockOsLoginServiceConnection : public oslogin::OsLoginServiceConnection {
+class MockOsLoginServiceConnection
+    : public GOOGLE_CLOUD_CPP_NS::OsLoginServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -79,8 +80,8 @@ class MockOsLoginServiceConnection : public oslogin::OsLoginServiceConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -30,19 +30,19 @@
 
 namespace google {
 namespace cloud {
-namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger {
 
 using Debugger2RetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    debugger_internal::Debugger2RetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::Debugger2RetryTraits>;
 
 using Debugger2LimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        debugger_internal::Debugger2RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::Debugger2RetryTraits>;
 
 using Debugger2LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        debugger_internal::Debugger2RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::Debugger2RetryTraits>;
 
 /**
  * The `Debugger2Connection` object for `Debugger2Client`.
@@ -54,7 +54,7 @@ using Debugger2LimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeDebugger2Connection()`.
  *
- * For mocking, see `debugger_mocks::MockDebugger2Connection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockDebugger2Connection`.
  */
 class Debugger2Connection {
  public:
@@ -97,7 +97,7 @@ class Debugger2Connection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::debugger::Debugger2PolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::Debugger2PolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -108,8 +108,8 @@ class Debugger2Connection {
 std::shared_ptr<Debugger2Connection> MakeDebugger2Connection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

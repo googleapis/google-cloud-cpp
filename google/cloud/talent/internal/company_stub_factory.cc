@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
 std::shared_ptr<CompanyServiceStub> CreateDefaultCompanyServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -59,7 +59,7 @@ std::shared_ptr<CompanyServiceStub> CreateDefaultCompanyServiceStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

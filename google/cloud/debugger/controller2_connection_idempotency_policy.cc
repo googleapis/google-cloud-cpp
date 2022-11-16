@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger {
 
 using ::google::cloud::Idempotency;
 
@@ -55,7 +55,7 @@ MakeDefaultController2ConnectionIdempotencyPolicy() {
   return absl::make_unique<Controller2ConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

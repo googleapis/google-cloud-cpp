@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -67,8 +67,8 @@ using CloudTasksPolicyOptionList =
     OptionList<CloudTasksRetryPolicyOption, CloudTasksBackoffPolicyOption,
                CloudTasksConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

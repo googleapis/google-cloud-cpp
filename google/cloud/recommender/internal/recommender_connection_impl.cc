@@ -27,13 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace recommender_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender_internal {
 
 RecommenderConnectionImpl::RecommenderConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<recommender_internal::RecommenderStub> stub,
-    Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::RecommenderStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -44,8 +43,9 @@ RecommenderConnectionImpl::ListInsights(
     google::cloud::recommender::v1::ListInsightsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<recommender::RecommenderRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::RecommenderRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListInsights(request);
   char const* function_name = __func__;
@@ -104,8 +104,9 @@ RecommenderConnectionImpl::ListRecommendations(
     google::cloud::recommender::v1::ListRecommendationsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<recommender::RecommenderRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::RecommenderRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRecommendations(request);
   char const* function_name = __func__;
@@ -254,7 +255,7 @@ RecommenderConnectionImpl::UpdateInsightTypeConfig(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

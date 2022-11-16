@@ -33,17 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 class PredictionServiceConnectionImpl
-    : public retail::PredictionServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::PredictionServiceConnection {
  public:
   ~PredictionServiceConnectionImpl() override = default;
 
   PredictionServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<retail_internal::PredictionServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::PredictionServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -52,45 +52,57 @@ class PredictionServiceConnectionImpl
       google::cloud::retail::v2::PredictRequest const& request) override;
 
  private:
-  std::unique_ptr<retail::PredictionServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::PredictionServiceRetryPolicyOption>()) {
-      return options.get<retail::PredictionServiceRetryPolicyOption>()->clone();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<retail::PredictionServiceRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::PredictionServiceBackoffPolicyOption>()) {
-      return options.get<retail::PredictionServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail::PredictionServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<retail::PredictionServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            retail::PredictionServiceConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::PredictionServiceBackoffPolicyOption>()) {
       return options
-          .get<retail::PredictionServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::PredictionServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<retail::PredictionServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::PredictionServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::PredictionServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        PredictionServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   PredictionServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 PredictionServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<retail_internal::PredictionServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::PredictionServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

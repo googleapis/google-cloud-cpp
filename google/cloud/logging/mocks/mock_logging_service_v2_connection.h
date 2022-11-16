@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace logging_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace logging_mocks {
 
 /**
  * A class to mock `LoggingServiceV2Connection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockLoggingServiceV2Connection
-    : public logging::LoggingServiceV2Connection {
+    : public GOOGLE_CLOUD_CPP_NS::LoggingServiceV2Connection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -79,8 +79,8 @@ class MockLoggingServiceV2Connection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

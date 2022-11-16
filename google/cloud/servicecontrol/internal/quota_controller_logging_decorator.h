@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol_internal {
 
 class QuotaControllerLogging : public QuotaControllerStub {
  public:
@@ -49,8 +49,8 @@ class QuotaControllerLogging : public QuotaControllerStub {
   std::set<std::string> components_;
 };  // QuotaControllerLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

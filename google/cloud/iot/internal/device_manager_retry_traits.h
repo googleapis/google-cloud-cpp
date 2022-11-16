@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace iot_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iot_internal {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct DeviceManagerRetryTraits {
@@ -35,8 +35,8 @@ struct DeviceManagerRetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

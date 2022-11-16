@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace vmmigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vmmigration {
 
 using ::google::cloud::Idempotency;
 
@@ -261,7 +261,7 @@ MakeDefaultVmMigrationConnectionIdempotencyPolicy() {
   return absl::make_unique<VmMigrationConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

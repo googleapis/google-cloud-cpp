@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp {
 
 AppConnectorsServiceClient::AppConnectorsServiceClient(
     std::shared_ptr<AppConnectorsServiceConnection> connection, Options opts)
@@ -157,7 +157,7 @@ AppConnectorsServiceClient::ReportStatus(
   return connection_->ReportStatus(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

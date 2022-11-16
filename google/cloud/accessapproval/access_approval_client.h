@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accessapproval {
 
 ///
 /// This API allows a customer to manage accesses to cloud resources by
@@ -455,8 +455,8 @@ class AccessApprovalClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

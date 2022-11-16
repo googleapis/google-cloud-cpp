@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub {
 
 ///
 /// The GKE Hub service handles the registration of many Kubernetes clusters to
@@ -552,8 +552,8 @@ class GkeHubClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

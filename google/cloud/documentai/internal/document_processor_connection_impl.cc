@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai_internal {
 
 DocumentProcessorServiceConnectionImpl::DocumentProcessorServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<documentai_internal::DocumentProcessorServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -103,9 +103,9 @@ DocumentProcessorServiceConnectionImpl::ListProcessorTypes(
     google::cloud::documentai::v1::ListProcessorTypesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<documentai::DocumentProcessorServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProcessorTypes(request);
   char const* function_name = __func__;
@@ -138,9 +138,9 @@ DocumentProcessorServiceConnectionImpl::ListProcessors(
     google::cloud::documentai::v1::ListProcessorsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<documentai::DocumentProcessorServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProcessors(request);
   char const* function_name = __func__;
@@ -200,9 +200,9 @@ DocumentProcessorServiceConnectionImpl::ListProcessorVersions(
     google::cloud::documentai::v1::ListProcessorVersionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<documentai::DocumentProcessorServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProcessorVersions(request);
   char const* function_name = __func__;
@@ -493,7 +493,7 @@ DocumentProcessorServiceConnectionImpl::ReviewDocument(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

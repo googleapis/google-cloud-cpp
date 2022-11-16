@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace apikeys {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apikeys {
 
 ApiKeysClient::ApiKeysClient(std::shared_ptr<ApiKeysConnection> connection,
                              Options opts)
@@ -134,7 +134,7 @@ StatusOr<google::api::apikeys::v2::LookupKeyResponse> ApiKeysClient::LookupKey(
   return connection_->LookupKey(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

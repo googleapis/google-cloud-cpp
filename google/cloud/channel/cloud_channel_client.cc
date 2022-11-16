@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace channel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace channel {
 
 CloudChannelServiceClient::CloudChannelServiceClient(
     std::shared_ptr<CloudChannelServiceConnection> connection, Options opts)
@@ -513,7 +513,7 @@ StreamRange<std::string> CloudChannelServiceClient::ListSubscribers(
   return connection_->ListSubscribers(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

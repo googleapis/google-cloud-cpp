@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace automl_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,33 +38,39 @@ Options AutoMlDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_AUTO_ML_AUTHORITY", "automl.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<automl::AutoMlRetryPolicyOption>()) {
-    options.set<automl::AutoMlRetryPolicyOption>(
-        automl::AutoMlLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::AutoMlRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AutoMlRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::AutoMlLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<automl::AutoMlBackoffPolicyOption>()) {
-    options.set<automl::AutoMlBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::AutoMlBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AutoMlBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<automl::AutoMlPollingPolicyOption>()) {
-    options.set<automl::AutoMlPollingPolicyOption>(
-        GenericPollingPolicy<automl::AutoMlRetryPolicyOption::Type,
-                             automl::AutoMlBackoffPolicyOption::Type>(
-            options.get<automl::AutoMlRetryPolicyOption>()->clone(),
-            options.get<automl::AutoMlBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::AutoMlPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AutoMlPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::AutoMlRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::AutoMlBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::AutoMlRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::AutoMlBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<automl::AutoMlConnectionIdempotencyPolicyOption>()) {
-    options.set<automl::AutoMlConnectionIdempotencyPolicyOption>(
-        automl::MakeDefaultAutoMlConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::AutoMlConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AutoMlConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultAutoMlConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

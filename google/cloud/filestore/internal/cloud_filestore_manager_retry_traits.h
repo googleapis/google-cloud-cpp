@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore_internal {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct CloudFilestoreManagerRetryTraits {
@@ -35,8 +35,8 @@ struct CloudFilestoreManagerRetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

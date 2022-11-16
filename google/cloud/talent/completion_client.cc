@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 CompletionClient::CompletionClient(
     std::shared_ptr<CompletionConnection> connection, Options opts)
@@ -39,7 +39,7 @@ CompletionClient::CompleteQuery(
   return connection_->CompleteQuery(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

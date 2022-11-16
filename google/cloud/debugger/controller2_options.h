@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -67,8 +67,8 @@ using Controller2PolicyOptionList =
     OptionList<Controller2RetryPolicyOption, Controller2BackoffPolicyOption,
                Controller2ConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

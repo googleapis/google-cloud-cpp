@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer_internal {
 
 class StorageTransferServiceMetadata : public StorageTransferServiceStub {
  public:
@@ -126,8 +126,8 @@ class StorageTransferServiceMetadata : public StorageTransferServiceStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

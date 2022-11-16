@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 PredictionServiceClient::PredictionServiceClient(
     std::shared_ptr<PredictionServiceConnection> connection, Options opts)
@@ -38,7 +38,7 @@ PredictionServiceClient::Predict(
   return connection_->Predict(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

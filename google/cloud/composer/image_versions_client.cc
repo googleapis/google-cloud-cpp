@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer {
 
 ImageVersionsClient::ImageVersionsClient(
     std::shared_ptr<ImageVersionsConnection> connection, Options opts)
@@ -50,7 +50,7 @@ ImageVersionsClient::ListImageVersions(
   return connection_->ListImageVersions(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

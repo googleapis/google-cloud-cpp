@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms_internal {
 
 class EkmServiceStub {
  public:
@@ -81,8 +81,8 @@ class DefaultEkmServiceStub : public EkmServiceStub {
   std::unique_ptr<google::cloud::kms::v1::EkmService::StubInterface> grpc_stub_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -42,35 +42,42 @@ Options JobControllerDefaultOptions(std::string const& location,
                    "dataproc.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dataproc::JobControllerRetryPolicyOption>()) {
-    options.set<dataproc::JobControllerRetryPolicyOption>(
-        dataproc::JobControllerLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::JobControllerRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::JobControllerRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::JobControllerLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dataproc::JobControllerBackoffPolicyOption>()) {
-    options.set<dataproc::JobControllerBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::JobControllerBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::JobControllerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<dataproc::JobControllerPollingPolicyOption>()) {
-    options.set<dataproc::JobControllerPollingPolicyOption>(
-        GenericPollingPolicy<dataproc::JobControllerRetryPolicyOption::Type,
-                             dataproc::JobControllerBackoffPolicyOption::Type>(
-            options.get<dataproc::JobControllerRetryPolicyOption>()->clone(),
-            options.get<dataproc::JobControllerBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::JobControllerPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::JobControllerPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::JobControllerRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::JobControllerBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::JobControllerRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::JobControllerBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options
-           .has<dataproc::JobControllerConnectionIdempotencyPolicyOption>()) {
-    options.set<dataproc::JobControllerConnectionIdempotencyPolicyOption>(
-        dataproc::MakeDefaultJobControllerConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       JobControllerConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::JobControllerConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultJobControllerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

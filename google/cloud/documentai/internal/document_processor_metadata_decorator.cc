@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai_internal {
 
 DocumentProcessorServiceMetadata::DocumentProcessorServiceMetadata(
     std::shared_ptr<DocumentProcessorServiceStub> child)
@@ -220,7 +220,7 @@ void DocumentProcessorServiceMetadata::SetMetadata(
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

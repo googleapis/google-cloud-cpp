@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 using DataTransferServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::DataTransferServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DataTransferServiceRetryTraits>;
 
 using DataTransferServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::DataTransferServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DataTransferServiceRetryTraits>;
 
 using DataTransferServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::DataTransferServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DataTransferServiceRetryTraits>;
 
 /**
  * The `DataTransferServiceConnection` object for `DataTransferServiceClient`.
@@ -56,7 +56,8 @@ using DataTransferServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeDataTransferServiceConnection()`.
  *
- * For mocking, see `bigquery_mocks::MockDataTransferServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockDataTransferServiceConnection`.
  */
 class DataTransferServiceConnection {
  public:
@@ -152,7 +153,7 @@ class DataTransferServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::DataTransferServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::DataTransferServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -163,8 +164,8 @@ class DataTransferServiceConnection {
 std::shared_ptr<DataTransferServiceConnection>
 MakeDataTransferServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: videointelligence::VideoIntelligenceServiceClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -39,8 +39,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto client =
-      google::cloud::videointelligence::VideoIntelligenceServiceClient(
-          google::cloud::videointelligence::
+      google::cloud::GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceClient(
+          google::cloud::GOOGLE_CLOUD_CPP_NS::
               MakeVideoIntelligenceServiceConnection(options));
   //! [set-client-endpoint]
 }
@@ -57,8 +57,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::videointelligence::VideoIntelligenceServiceClient(
-        google::cloud::videointelligence::
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::
             MakeVideoIntelligenceServiceConnection(options));
   }
   //! [with-service-account]

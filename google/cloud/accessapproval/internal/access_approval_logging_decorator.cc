@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accessapproval_internal {
 
 AccessApprovalLogging::AccessApprovalLogging(
     std::shared_ptr<AccessApprovalStub> child, TracingOptions tracing_options,
@@ -160,7 +160,7 @@ AccessApprovalLogging::GetAccessApprovalServiceAccount(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

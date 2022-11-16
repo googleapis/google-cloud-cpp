@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms {
 
 EkmServiceClient::EkmServiceClient(
     std::shared_ptr<EkmServiceConnection> connection, Options opts)
@@ -101,7 +101,7 @@ EkmServiceClient::UpdateEkmConnection(
   return connection_->UpdateEkmConnection(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

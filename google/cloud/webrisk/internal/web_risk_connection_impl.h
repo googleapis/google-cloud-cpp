@@ -33,16 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace webrisk_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace webrisk_internal {
 
-class WebRiskServiceConnectionImpl : public webrisk::WebRiskServiceConnection {
+class WebRiskServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::WebRiskServiceConnection {
  public:
   ~WebRiskServiceConnectionImpl() override = default;
 
   WebRiskServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WebRiskServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -63,43 +64,54 @@ class WebRiskServiceConnectionImpl : public webrisk::WebRiskServiceConnection {
       override;
 
  private:
-  std::unique_ptr<webrisk::WebRiskServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::WebRiskServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<webrisk::WebRiskServiceRetryPolicyOption>()) {
-      return options.get<webrisk::WebRiskServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::WebRiskServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::WebRiskServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<webrisk::WebRiskServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::WebRiskServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<webrisk::WebRiskServiceBackoffPolicyOption>()) {
-      return options.get<webrisk::WebRiskServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<webrisk::WebRiskServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<webrisk::WebRiskServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::WebRiskServiceBackoffPolicyOption>()) {
       return options
-          .get<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::WebRiskServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::WebRiskServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::WebRiskServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        WebRiskServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   WebRiskServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 WebRiskServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<webrisk_internal::WebRiskServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WebRiskServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

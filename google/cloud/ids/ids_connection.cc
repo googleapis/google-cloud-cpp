@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace ids {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace ids {
 
 IDSConnection::~IDSConnection() = default;
 
@@ -67,14 +67,15 @@ std::shared_ptr<IDSConnection> MakeIDSConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  IDSPolicyOptionList>(options, __func__);
-  options = ids_internal::IDSDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::IDSDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = ids_internal::CreateDefaultIDSStub(background->cq(), options);
-  return std::make_shared<ids_internal::IDSConnectionImpl>(
+  auto stub =
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultIDSStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::IDSConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

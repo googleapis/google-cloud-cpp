@@ -36,16 +36,17 @@
 
 namespace google {
 namespace cloud {
-namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision_internal {
 
-class ImageAnnotatorConnectionImpl : public vision::ImageAnnotatorConnection {
+class ImageAnnotatorConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::ImageAnnotatorConnection {
  public:
   ~ImageAnnotatorConnectionImpl() override = default;
 
   ImageAnnotatorConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<vision_internal::ImageAnnotatorStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -70,51 +71,66 @@ class ImageAnnotatorConnectionImpl : public vision::ImageAnnotatorConnection {
       override;
 
  private:
-  std::unique_ptr<vision::ImageAnnotatorRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vision::ImageAnnotatorRetryPolicyOption>()) {
-      return options.get<vision::ImageAnnotatorRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<vision::ImageAnnotatorRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vision::ImageAnnotatorBackoffPolicyOption>()) {
-      return options.get<vision::ImageAnnotatorBackoffPolicyOption>()->clone();
-    }
-    return options_.get<vision::ImageAnnotatorBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<vision::ImageAnnotatorConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<vision::ImageAnnotatorConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorBackoffPolicyOption>()) {
       return options
-          .get<vision::ImageAnnotatorConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<vision::ImageAnnotatorConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ImageAnnotatorConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ImageAnnotatorConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ImageAnnotatorConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ImageAnnotatorConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vision::ImageAnnotatorPollingPolicyOption>()) {
-      return options.get<vision::ImageAnnotatorPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<vision::ImageAnnotatorPollingPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<vision_internal::ImageAnnotatorStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

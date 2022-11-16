@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace baremetalsolution {
 
 BareMetalSolutionClient::BareMetalSolutionClient(
     std::shared_ptr<BareMetalSolutionConnection> connection, Options opts)
@@ -371,7 +371,7 @@ BareMetalSolutionClient::UpdateNfsShare(
   return connection_->UpdateNfsShare(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

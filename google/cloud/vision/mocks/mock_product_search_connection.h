@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision_mocks {
 
 /**
  * A class to mock `ProductSearchConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockProductSearchConnection : public vision::ProductSearchConnection {
+class MockProductSearchConnection
+    : public GOOGLE_CLOUD_CPP_NS::ProductSearchConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -139,8 +140,8 @@ class MockProductSearchConnection : public vision::ProductSearchConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

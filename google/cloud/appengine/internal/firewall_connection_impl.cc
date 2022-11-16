@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 FirewallConnectionImpl::FirewallConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<appengine_internal::FirewallStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::FirewallStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -43,8 +43,8 @@ FirewallConnectionImpl::ListIngressRules(
     google::appengine::v1::ListIngressRulesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<appengine::FirewallRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::FirewallRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListIngressRules(request);
   char const* function_name = __func__;
@@ -136,7 +136,7 @@ Status FirewallConnectionImpl::DeleteIngressRule(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace connectors_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace connectors_internal {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct ConnectorsRetryTraits {
@@ -35,8 +35,8 @@ struct ConnectorsRetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

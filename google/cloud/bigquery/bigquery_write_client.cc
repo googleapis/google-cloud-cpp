@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 BigQueryWriteClient::BigQueryWriteClient(
     std::shared_ptr<BigQueryWriteConnection> connection, Options opts)
@@ -128,7 +128,7 @@ BigQueryWriteClient::FlushRows(
   return connection_->FlushRows(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

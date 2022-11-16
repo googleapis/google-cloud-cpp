@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkmanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkmanagement_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,47 +39,49 @@ Options ReachabilityServiceDefaultOptions(Options options) {
       "networkmanagement.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<networkmanagement::ReachabilityServiceRetryPolicyOption>()) {
-    options.set<networkmanagement::ReachabilityServiceRetryPolicyOption>(
-        networkmanagement::ReachabilityServiceLimitedTimeRetryPolicy(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::ReachabilityServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ReachabilityServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ReachabilityServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options
-           .has<networkmanagement::ReachabilityServiceBackoffPolicyOption>()) {
-    options.set<networkmanagement::ReachabilityServiceBackoffPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ReachabilityServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ReachabilityServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<networkmanagement::ReachabilityServicePollingPolicyOption>()) {
-    options.set<networkmanagement::ReachabilityServicePollingPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ReachabilityServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ReachabilityServicePollingPolicyOption>(
         GenericPollingPolicy<
-            networkmanagement::ReachabilityServiceRetryPolicyOption::Type,
-            networkmanagement::ReachabilityServiceBackoffPolicyOption::Type>(
-            options
-                .get<networkmanagement::ReachabilityServiceRetryPolicyOption>()
-                ->clone(),
+            GOOGLE_CLOUD_CPP_NS::ReachabilityServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::ReachabilityServiceBackoffPolicyOption::Type>(
             options
                 .get<
-                    networkmanagement::ReachabilityServiceBackoffPolicyOption>()
+                    GOOGLE_CLOUD_CPP_NS::ReachabilityServiceRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::
+                         ReachabilityServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
   if (!options
-           .has<networkmanagement::
+           .has<GOOGLE_CLOUD_CPP_NS::
                     ReachabilityServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<networkmanagement::
+    options.set<GOOGLE_CLOUD_CPP_NS::
                     ReachabilityServiceConnectionIdempotencyPolicyOption>(
-        networkmanagement::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultReachabilityServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

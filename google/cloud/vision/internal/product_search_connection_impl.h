@@ -37,16 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision_internal {
 
-class ProductSearchConnectionImpl : public vision::ProductSearchConnection {
+class ProductSearchConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::ProductSearchConnection {
  public:
   ~ProductSearchConnectionImpl() override = default;
 
   ProductSearchConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<vision_internal::ProductSearchStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProductSearchStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -120,50 +121,64 @@ class ProductSearchConnectionImpl : public vision::ProductSearchConnection {
       google::cloud::vision::v1::PurgeProductsRequest const& request) override;
 
  private:
-  std::unique_ptr<vision::ProductSearchRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ProductSearchRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vision::ProductSearchRetryPolicyOption>()) {
-      return options.get<vision::ProductSearchRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ProductSearchRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::ProductSearchRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<vision::ProductSearchRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ProductSearchRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vision::ProductSearchBackoffPolicyOption>()) {
-      return options.get<vision::ProductSearchBackoffPolicyOption>()->clone();
-    }
-    return options_.get<vision::ProductSearchBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<vision::ProductSearchConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<vision::ProductSearchConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ProductSearchBackoffPolicyOption>()) {
       return options
-          .get<vision::ProductSearchConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ProductSearchBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<vision::ProductSearchConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ProductSearchBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ProductSearchConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ProductSearchConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ProductSearchConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ProductSearchConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<vision::ProductSearchPollingPolicyOption>()) {
-      return options.get<vision::ProductSearchPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ProductSearchPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ProductSearchPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<vision::ProductSearchPollingPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ProductSearchPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<vision_internal::ProductSearchStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProductSearchStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

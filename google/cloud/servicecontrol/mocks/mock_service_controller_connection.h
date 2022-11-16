@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol_mocks {
 
 /**
  * A class to mock `ServiceControllerConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockServiceControllerConnection
-    : public servicecontrol::ServiceControllerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ServiceControllerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -56,8 +56,8 @@ class MockServiceControllerConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

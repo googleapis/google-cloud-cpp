@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace contactcenterinsights_mocks {
 
 /**
  * A class to mock `ContactCenterInsightsConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockContactCenterInsightsConnection
-    : public contactcenterinsights::ContactCenterInsightsConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -269,8 +269,8 @@ class MockContactCenterInsightsConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

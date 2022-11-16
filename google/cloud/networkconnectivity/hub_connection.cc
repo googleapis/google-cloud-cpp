@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkconnectivity {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkconnectivity {
 
 HubServiceConnection::~HubServiceConnection() = default;
 
@@ -116,17 +116,15 @@ std::shared_ptr<HubServiceConnection> MakeHubServiceConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  HubServicePolicyOptionList>(options, __func__);
-  options = networkconnectivity_internal::HubServiceDefaultOptions(
-      std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::HubServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = networkconnectivity_internal::CreateDefaultHubServiceStub(
-      background->cq(), options);
-  return std::make_shared<
-      networkconnectivity_internal::HubServiceConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultHubServiceStub(background->cq(),
+                                                               options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::HubServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace optimization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization_internal {
 
 FleetRoutingLogging::FleetRoutingLogging(
     std::shared_ptr<FleetRoutingStub> child, TracingOptions tracing_options,
@@ -87,7 +87,7 @@ future<Status> FleetRoutingLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

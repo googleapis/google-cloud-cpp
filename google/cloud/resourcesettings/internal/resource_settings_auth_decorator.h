@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcesettings_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcesettings_internal {
 
 class ResourceSettingsServiceAuth : public ResourceSettingsServiceStub {
  public:
@@ -58,8 +58,8 @@ class ResourceSettingsServiceAuth : public ResourceSettingsServiceStub {
   std::shared_ptr<ResourceSettingsServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

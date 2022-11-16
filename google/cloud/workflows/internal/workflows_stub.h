@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows_internal {
 
 class WorkflowsStub {
  public:
@@ -123,8 +123,8 @@ class DefaultWorkflowsStub : public WorkflowsStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace apikeys_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apikeys_internal {
 
 ApiKeysConnectionImpl::ApiKeysConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<apikeys_internal::ApiKeysStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ApiKeysStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -71,8 +71,8 @@ StreamRange<google::api::apikeys::v2::Key> ApiKeysConnectionImpl::ListKeys(
     google::api::apikeys::v2::ListKeysRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<apikeys::ApiKeysRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ApiKeysRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListKeys(request);
   char const* function_name = __func__;
@@ -218,7 +218,7 @@ ApiKeysConnectionImpl::LookupKey(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

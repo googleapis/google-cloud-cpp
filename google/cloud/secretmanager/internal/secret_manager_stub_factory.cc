@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace secretmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace secretmanager_internal {
 
 std::shared_ptr<SecretManagerServiceStub> CreateDefaultSecretManagerServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -60,7 +60,7 @@ std::shared_ptr<SecretManagerServiceStub> CreateDefaultSecretManagerServiceStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

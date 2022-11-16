@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace privateca_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -40,48 +40,55 @@ Options CertificateAuthorityServiceDefaultOptions(Options options) {
       "privateca.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<privateca::CertificateAuthorityServiceRetryPolicyOption>()) {
-    options.set<privateca::CertificateAuthorityServiceRetryPolicyOption>(
-        privateca::CertificateAuthorityServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       CertificateAuthorityServiceRetryPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options
-           .has<privateca::CertificateAuthorityServiceBackoffPolicyOption>()) {
-    options.set<privateca::CertificateAuthorityServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       CertificateAuthorityServiceBackoffPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<privateca::CertificateAuthorityServicePollingPolicyOption>()) {
-    options.set<privateca::CertificateAuthorityServicePollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       CertificateAuthorityServicePollingPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServicePollingPolicyOption>(
         GenericPollingPolicy<
-            privateca::CertificateAuthorityServiceRetryPolicyOption::Type,
-            privateca::CertificateAuthorityServiceBackoffPolicyOption::Type>(
+            GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceRetryPolicyOption::
+                Type,
+            GOOGLE_CLOUD_CPP_NS::
+                CertificateAuthorityServiceBackoffPolicyOption::Type>(
             options
-                .get<privateca::CertificateAuthorityServiceRetryPolicyOption>()
+                .get<GOOGLE_CLOUD_CPP_NS::
+                         CertificateAuthorityServiceRetryPolicyOption>()
                 ->clone(),
             options
-                .get<
-                    privateca::CertificateAuthorityServiceBackoffPolicyOption>()
+                .get<GOOGLE_CLOUD_CPP_NS::
+                         CertificateAuthorityServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
   if (!options.has<
-          privateca::
+          GOOGLE_CLOUD_CPP_NS::
               CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()) {
     options.set<
-        privateca::
+        GOOGLE_CLOUD_CPP_NS::
             CertificateAuthorityServiceConnectionIdempotencyPolicyOption>(
-        privateca::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultCertificateAuthorityServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

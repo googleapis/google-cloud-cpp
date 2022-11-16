@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkmanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkmanagement {
 
 class ReachabilityServiceConnectionIdempotencyPolicy {
  public:
@@ -66,8 +66,8 @@ class ReachabilityServiceConnectionIdempotencyPolicy {
 std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
 MakeDefaultReachabilityServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

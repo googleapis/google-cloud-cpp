@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore_internal {
 
 CloudFilestoreManagerLogging::CloudFilestoreManagerLogging(
     std::shared_ptr<CloudFilestoreManagerStub> child,
@@ -212,7 +212,7 @@ future<Status> CloudFilestoreManagerLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization {
 
 using ::google::cloud::Idempotency;
 
@@ -82,7 +82,7 @@ MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy() {
       BinauthzManagementServiceV1ConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

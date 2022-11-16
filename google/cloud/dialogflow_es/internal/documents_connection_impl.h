@@ -37,16 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
-class DocumentsConnectionImpl : public dialogflow_es::DocumentsConnection {
+class DocumentsConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::DocumentsConnection {
  public:
   ~DocumentsConnectionImpl() override = default;
 
   DocumentsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_es_internal::DocumentsStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DocumentsStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -83,53 +84,58 @@ class DocumentsConnectionImpl : public dialogflow_es::DocumentsConnection {
       override;
 
  private:
-  std::unique_ptr<dialogflow_es::DocumentsRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DocumentsRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::DocumentsRetryPolicyOption>()) {
-      return options.get<dialogflow_es::DocumentsRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DocumentsRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::DocumentsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<dialogflow_es::DocumentsRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::DocumentsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::DocumentsBackoffPolicyOption>()) {
-      return options.get<dialogflow_es::DocumentsBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DocumentsBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::DocumentsBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<dialogflow_es::DocumentsBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::DocumentsBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<dialogflow_es::DocumentsConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DocumentsConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dialogflow_es::DocumentsConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        DocumentsConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<dialogflow_es::DocumentsConnectionIdempotencyPolicyOption>()
+          .get<
+              GOOGLE_CLOUD_CPP_NS::DocumentsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dialogflow_es::DocumentsConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::DocumentsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::DocumentsPollingPolicyOption>()) {
-      return options.get<dialogflow_es::DocumentsPollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DocumentsPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::DocumentsPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<dialogflow_es::DocumentsPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::DocumentsPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dialogflow_es_internal::DocumentsStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DocumentsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

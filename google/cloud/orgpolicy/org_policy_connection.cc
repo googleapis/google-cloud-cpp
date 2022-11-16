@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace orgpolicy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace orgpolicy {
 
 OrgPolicyConnection::~OrgPolicyConnection() = default;
 
@@ -83,15 +83,15 @@ std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  OrgPolicyPolicyOptionList>(options, __func__);
-  options = orgpolicy_internal::OrgPolicyDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::OrgPolicyDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      orgpolicy_internal::CreateDefaultOrgPolicyStub(background->cq(), options);
-  return std::make_shared<orgpolicy_internal::OrgPolicyConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultOrgPolicyStub(background->cq(),
+                                                              options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::OrgPolicyConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

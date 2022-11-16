@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex {
 
 MetadataServiceClient::MetadataServiceClient(
     std::shared_ptr<MetadataServiceConnection> connection, Options opts)
@@ -168,7 +168,7 @@ MetadataServiceClient::ListPartitions(
   return connection_->ListPartitions(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

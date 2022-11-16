@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap_internal {
 
 class IdentityAwareProxyAdminServiceAuth
     : public IdentityAwareProxyAdminServiceStub {
@@ -90,8 +90,8 @@ class IdentityAwareProxyAdminServiceAuth
   std::shared_ptr<IdentityAwareProxyAdminServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

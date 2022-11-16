@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcesettings {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcesettings {
 
 ResourceSettingsServiceConnection::~ResourceSettingsServiceConnection() =
     default;
@@ -62,18 +62,17 @@ MakeResourceSettingsServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  ResourceSettingsServicePolicyOptionList>(
       options, __func__);
-  options = resourcesettings_internal::ResourceSettingsServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::ResourceSettingsServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      resourcesettings_internal::CreateDefaultResourceSettingsServiceStub(
-          background->cq(), options);
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultResourceSettingsServiceStub(
+      background->cq(), options);
   return std::make_shared<
-      resourcesettings_internal::ResourceSettingsServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::ResourceSettingsServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp {
 
 AppGatewaysServiceClient::AppGatewaysServiceClient(
     std::shared_ptr<AppGatewaysServiceConnection> connection, Options opts)
@@ -107,7 +107,7 @@ AppGatewaysServiceClient::DeleteAppGateway(
   return connection_->DeleteAppGateway(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

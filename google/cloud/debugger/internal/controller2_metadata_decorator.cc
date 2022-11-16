@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger_internal {
 
 Controller2Metadata::Controller2Metadata(std::shared_ptr<Controller2Stub> child)
     : child_(std::move(child)),
@@ -77,7 +77,7 @@ void Controller2Metadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

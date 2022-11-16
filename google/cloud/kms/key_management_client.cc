@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms {
 
 KeyManagementServiceClient::KeyManagementServiceClient(
     std::shared_ptr<KeyManagementServiceConnection> connection, Options opts)
@@ -484,7 +484,7 @@ KeyManagementServiceClient::GenerateRandomBytes(
   return connection_->GenerateRandomBytes(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

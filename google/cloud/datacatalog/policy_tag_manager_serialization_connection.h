@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog {
 
 using PolicyTagManagerSerializationRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        datacatalog_internal::PolicyTagManagerSerializationRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PolicyTagManagerSerializationRetryTraits>;
 
 using PolicyTagManagerSerializationLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        datacatalog_internal::PolicyTagManagerSerializationRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PolicyTagManagerSerializationRetryTraits>;
 
 using PolicyTagManagerSerializationLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        datacatalog_internal::PolicyTagManagerSerializationRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PolicyTagManagerSerializationRetryTraits>;
 
 /**
  * The `PolicyTagManagerSerializationConnection` object for
@@ -58,7 +58,7 @@ using PolicyTagManagerSerializationLimitedErrorCountRetryPolicy =
  * `MakePolicyTagManagerSerializationConnection()`.
  *
  * For mocking, see
- * `datacatalog_mocks::MockPolicyTagManagerSerializationConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockPolicyTagManagerSerializationConnection`.
  */
 class PolicyTagManagerSerializationConnection {
  public:
@@ -93,7 +93,8 @@ class PolicyTagManagerSerializationConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::datacatalog::PolicyTagManagerSerializationPolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::PolicyTagManagerSerializationPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -104,8 +105,8 @@ class PolicyTagManagerSerializationConnection {
 std::shared_ptr<PolicyTagManagerSerializationConnection>
 MakePolicyTagManagerSerializationConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

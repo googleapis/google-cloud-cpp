@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap {
 
 ///
 /// APIs for Identity-Aware Proxy Admin configurations.
@@ -395,8 +395,8 @@ class IdentityAwareProxyAdminServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex_internal {
 
 std::shared_ptr<DataplexServiceStub> CreateDefaultDataplexServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -61,7 +61,7 @@ std::shared_ptr<DataplexServiceStub> CreateDefaultDataplexServiceStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

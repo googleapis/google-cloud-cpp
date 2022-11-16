@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace memcache {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache {
 
 using ::google::cloud::Idempotency;
 
@@ -75,7 +75,7 @@ MakeDefaultCloudMemcacheConnectionIdempotencyPolicy() {
   return absl::make_unique<CloudMemcacheConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigeeconnect_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigeeconnect_internal {
 
 ConnectionServiceLogging::ConnectionServiceLogging(
     std::shared_ptr<ConnectionServiceStub> child,
@@ -45,7 +45,7 @@ ConnectionServiceLogging::ListConnections(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

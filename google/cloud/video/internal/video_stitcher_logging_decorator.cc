@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 VideoStitcherServiceLogging::VideoStitcherServiceLogging(
     std::shared_ptr<VideoStitcherServiceStub> child,
@@ -281,7 +281,7 @@ VideoStitcherServiceLogging::GetLiveSession(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

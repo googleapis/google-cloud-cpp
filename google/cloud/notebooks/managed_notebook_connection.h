@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks {
 
 using ManagedNotebookServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        notebooks_internal::ManagedNotebookServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceRetryTraits>;
 
 using ManagedNotebookServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        notebooks_internal::ManagedNotebookServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceRetryTraits>;
 
 using ManagedNotebookServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        notebooks_internal::ManagedNotebookServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceRetryTraits>;
 
 /**
  * The `ManagedNotebookServiceConnection` object for
@@ -60,7 +60,8 @@ using ManagedNotebookServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeManagedNotebookServiceConnection()`.
  *
- * For mocking, see `notebooks_mocks::MockManagedNotebookServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockManagedNotebookServiceConnection`.
  */
 class ManagedNotebookServiceConnection {
  public:
@@ -119,7 +120,8 @@ class ManagedNotebookServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::notebooks::ManagedNotebookServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::ManagedNotebookServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -130,8 +132,8 @@ class ManagedNotebookServiceConnection {
 std::shared_ptr<ManagedNotebookServiceConnection>
 MakeManagedNotebookServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

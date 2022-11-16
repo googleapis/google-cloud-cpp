@@ -28,14 +28,14 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_internal {
 
 std::shared_ptr<GoldenKitchenSinkStub> CreateDefaultGoldenKitchenSinkStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

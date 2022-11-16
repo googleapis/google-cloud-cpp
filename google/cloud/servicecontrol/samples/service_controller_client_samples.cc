@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: servicecontrol::ServiceControllerClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::ServiceControllerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,9 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::servicecontrol::ServiceControllerClient(
-      google::cloud::servicecontrol::MakeServiceControllerConnection(options));
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::ServiceControllerClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeServiceControllerConnection(
+          options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +56,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::servicecontrol::ServiceControllerClient(
-        google::cloud::servicecontrol::MakeServiceControllerConnection(
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::ServiceControllerClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeServiceControllerConnection(
             options));
   }
   //! [with-service-account]

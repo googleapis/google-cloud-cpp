@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace serviceusage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace serviceusage_internal {
 
 class ServiceUsageStub {
  public:
@@ -136,8 +136,8 @@ class DefaultServiceUsageStub : public ServiceUsageStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace optimization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization_internal {
 
 class FleetRoutingStub {
  public:
@@ -96,8 +96,8 @@ class DefaultFleetRoutingStub : public FleetRoutingStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace certificatemanager {
 
 CertificateManagerClient::CertificateManagerClient(
     std::shared_ptr<CertificateManagerConnection> connection, Options opts)
@@ -504,7 +504,7 @@ CertificateManagerClient::DeleteCertificateIssuanceConfig(
   return connection_->DeleteCertificateIssuanceConfig(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

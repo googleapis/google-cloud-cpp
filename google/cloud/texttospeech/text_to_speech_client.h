@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace texttospeech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace texttospeech {
 
 ///
 /// Service that implements Google Cloud Text-to-Speech API.
@@ -179,8 +179,8 @@ class TextToSpeechClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

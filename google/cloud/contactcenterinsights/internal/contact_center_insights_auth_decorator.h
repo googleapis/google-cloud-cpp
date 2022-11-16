@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace contactcenterinsights_internal {
 
 class ContactCenterInsightsAuth : public ContactCenterInsightsStub {
  public:
@@ -242,8 +242,8 @@ class ContactCenterInsightsAuth : public ContactCenterInsightsStub {
   std::shared_ptr<ContactCenterInsightsStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

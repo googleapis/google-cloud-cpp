@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks {
 
 ManagedNotebookServiceClient::ManagedNotebookServiceClient(
     std::shared_ptr<ManagedNotebookServiceConnection> connection, Options opts)
@@ -205,7 +205,7 @@ ManagedNotebookServiceClient::RefreshRuntimeTokenInternal(
   return connection_->RefreshRuntimeTokenInternal(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

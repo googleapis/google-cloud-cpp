@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing_internal {
 
 BudgetServiceAuth::BudgetServiceAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -74,7 +74,7 @@ Status BudgetServiceAuth::DeleteBudget(
   return child_->DeleteBudget(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

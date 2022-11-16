@@ -27,12 +27,13 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
 TenantServiceConnectionImpl::TenantServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<talent_internal::TenantServiceStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TenantServiceStub> stub,
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -95,7 +96,8 @@ TenantServiceConnectionImpl::ListTenants(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<talent::TenantServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TenantServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTenants(request);
   char const* function_name = __func__;
@@ -122,7 +124,7 @@ TenantServiceConnectionImpl::ListTenants(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

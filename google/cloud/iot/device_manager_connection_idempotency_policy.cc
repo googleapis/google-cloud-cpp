@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace iot {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iot {
 
 using ::google::cloud::Idempotency;
 
@@ -136,7 +136,7 @@ MakeDefaultDeviceManagerConnectionIdempotencyPolicy() {
   return absl::make_unique<DeviceManagerConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

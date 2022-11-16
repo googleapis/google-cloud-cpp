@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex_internal {
 
 class MetadataServiceConnectionImpl
-    : public dataplex::MetadataServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::MetadataServiceConnection {
  public:
   ~MetadataServiceConnectionImpl() override = default;
 
   MetadataServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dataplex_internal::MetadataServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::MetadataServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -79,45 +79,56 @@ class MetadataServiceConnectionImpl
       google::cloud::dataplex::v1::ListPartitionsRequest request) override;
 
  private:
-  std::unique_ptr<dataplex::MetadataServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::MetadataServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex::MetadataServiceRetryPolicyOption>()) {
-      return options.get<dataplex::MetadataServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::MetadataServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::MetadataServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<dataplex::MetadataServiceRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::MetadataServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataplex::MetadataServiceBackoffPolicyOption>()) {
-      return options.get<dataplex::MetadataServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataplex::MetadataServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dataplex::MetadataServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataplex::MetadataServiceConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::MetadataServiceBackoffPolicyOption>()) {
       return options
-          .get<dataplex::MetadataServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::MetadataServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dataplex::MetadataServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::MetadataServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::MetadataServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        MetadataServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   MetadataServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 MetadataServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dataplex_internal::MetadataServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::MetadataServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace dlp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dlp_internal {
 
 class DlpServiceLogging : public DlpServiceStub {
  public:
@@ -209,8 +209,8 @@ class DlpServiceLogging : public DlpServiceStub {
   std::set<std::string> components_;
 };  // DlpServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

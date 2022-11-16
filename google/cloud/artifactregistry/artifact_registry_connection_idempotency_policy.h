@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace artifactregistry {
 
 class ArtifactRegistryConnectionIdempotencyPolicy {
  public:
@@ -134,8 +134,8 @@ class ArtifactRegistryConnectionIdempotencyPolicy {
 std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>
 MakeDefaultArtifactRegistryConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

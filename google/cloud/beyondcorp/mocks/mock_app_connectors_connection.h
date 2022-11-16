@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp_mocks {
 
 /**
  * A class to mock `AppConnectorsServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockAppConnectorsServiceConnection
-    : public beyondcorp::AppConnectorsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AppConnectorsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -93,8 +93,8 @@ class MockAppConnectorsServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

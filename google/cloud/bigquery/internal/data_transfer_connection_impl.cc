@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 DataTransferServiceConnectionImpl::DataTransferServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_internal::DataTransferServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataTransferServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -58,7 +58,8 @@ DataTransferServiceConnectionImpl::ListDataSources(
     google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::DataTransferServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::DataTransferServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDataSources(request);
@@ -152,7 +153,8 @@ DataTransferServiceConnectionImpl::ListTransferConfigs(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::DataTransferServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::DataTransferServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTransferConfigs(request);
@@ -249,7 +251,8 @@ DataTransferServiceConnectionImpl::ListTransferRuns(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::DataTransferServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::DataTransferServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTransferRuns(request);
@@ -285,7 +288,8 @@ DataTransferServiceConnectionImpl::ListTransferLogs(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::DataTransferServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::DataTransferServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTransferLogs(request);
@@ -344,7 +348,7 @@ Status DataTransferServiceConnectionImpl::EnrollDataSources(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

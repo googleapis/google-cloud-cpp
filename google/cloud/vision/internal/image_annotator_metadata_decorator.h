@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision_internal {
 
 class ImageAnnotatorMetadata : public ImageAnnotatorStub {
  public:
@@ -78,8 +78,8 @@ class ImageAnnotatorMetadata : public ImageAnnotatorStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

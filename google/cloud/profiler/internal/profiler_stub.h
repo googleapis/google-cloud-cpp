@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace profiler_internal {
 
 class ProfilerServiceStub {
  public:
@@ -79,8 +79,8 @@ class DefaultProfilerServiceStub : public ProfilerServiceStub {
       grpc_stub_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

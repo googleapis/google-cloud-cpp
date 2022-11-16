@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger_mocks {
 
 /**
  * A class to mock `Controller2Connection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockController2Connection : public debugger::Controller2Connection {
+class MockController2Connection
+    : public GOOGLE_CLOUD_CPP_NS::Controller2Connection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -70,8 +71,8 @@ class MockController2Connection : public debugger::Controller2Connection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

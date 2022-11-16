@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis {
 
 ///
 /// [Grafeas](https://grafeas.io) API.
@@ -614,8 +614,8 @@ class GrafeasClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 DataTransferServiceClient::DataTransferServiceClient(
     std::shared_ptr<DataTransferServiceConnection> connection, Options opts)
@@ -292,7 +292,7 @@ Status DataTransferServiceClient::EnrollDataSources(
   return connection_->EnrollDataSources(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

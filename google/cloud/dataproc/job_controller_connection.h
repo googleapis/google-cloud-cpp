@@ -35,20 +35,20 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 using JobControllerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dataproc_internal::JobControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::JobControllerRetryTraits>;
 
 using JobControllerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dataproc_internal::JobControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::JobControllerRetryTraits>;
 
 using JobControllerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dataproc_internal::JobControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::JobControllerRetryTraits>;
 
 /**
  * The `JobControllerConnection` object for `JobControllerClient`.
@@ -60,7 +60,7 @@ using JobControllerLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeJobControllerConnection()`.
  *
- * For mocking, see `dataproc_mocks::MockJobControllerConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockJobControllerConnection`.
  */
 class JobControllerConnection {
  public:
@@ -104,7 +104,7 @@ class JobControllerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dataproc::JobControllerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::JobControllerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -126,8 +126,8 @@ std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
 std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -35,19 +35,19 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 using TestCasesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::TestCasesRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::TestCasesRetryTraits>;
 
 using TestCasesLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::TestCasesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TestCasesRetryTraits>;
 
 using TestCasesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::TestCasesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TestCasesRetryTraits>;
 
 /**
  * The `TestCasesConnection` object for `TestCasesClient`.
@@ -59,7 +59,7 @@ using TestCasesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeTestCasesConnection()`.
  *
- * For mocking, see `dialogflow_cx_mocks::MockTestCasesConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockTestCasesConnection`.
  */
 class TestCasesConnection {
  public:
@@ -133,7 +133,7 @@ class TestCasesConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::TestCasesPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::TestCasesPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -155,8 +155,8 @@ std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(
 std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

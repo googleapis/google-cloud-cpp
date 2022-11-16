@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,34 +38,41 @@ Options JobServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_JOB_SERVICE_AUTHORITY", "jobs.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<talent::JobServiceRetryPolicyOption>()) {
-    options.set<talent::JobServiceRetryPolicyOption>(
-        talent::JobServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::JobServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::JobServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::JobServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<talent::JobServiceBackoffPolicyOption>()) {
-    options.set<talent::JobServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::JobServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::JobServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<talent::JobServicePollingPolicyOption>()) {
-    options.set<talent::JobServicePollingPolicyOption>(
-        GenericPollingPolicy<talent::JobServiceRetryPolicyOption::Type,
-                             talent::JobServiceBackoffPolicyOption::Type>(
-            options.get<talent::JobServiceRetryPolicyOption>()->clone(),
-            options.get<talent::JobServiceBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::JobServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::JobServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::JobServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::JobServiceBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::JobServiceRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::JobServiceBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<talent::JobServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<talent::JobServiceConnectionIdempotencyPolicyOption>(
-        talent::MakeDefaultJobServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::JobServiceConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::JobServiceConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultJobServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

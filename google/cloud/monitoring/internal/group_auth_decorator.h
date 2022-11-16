@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 class GroupServiceAuth : public GroupServiceStub {
  public:
@@ -67,8 +67,8 @@ class GroupServiceAuth : public GroupServiceStub {
   std::shared_ptr<GroupServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace translate {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace translate {
 
 TranslationServiceConnection::~TranslationServiceConnection() = default;
 
@@ -112,15 +112,16 @@ std::shared_ptr<TranslationServiceConnection> MakeTranslationServiceConnection(
                                  TranslationServicePolicyOptionList>(options,
                                                                      __func__);
   options =
-      translate_internal::TranslationServiceDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::TranslationServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = translate_internal::CreateDefaultTranslationServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultTranslationServiceStub(
       background->cq(), options);
-  return std::make_shared<translate_internal::TranslationServiceConnectionImpl>(
+  return std::make_shared<
+      GOOGLE_CLOUD_CPP_NS::TranslationServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -40,42 +40,49 @@ Options ClientGatewaysServiceDefaultOptions(Options options) {
       "beyondcorp.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<beyondcorp::ClientGatewaysServiceRetryPolicyOption>()) {
-    options.set<beyondcorp::ClientGatewaysServiceRetryPolicyOption>(
-        beyondcorp::ClientGatewaysServiceLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ClientGatewaysServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ClientGatewaysServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ClientGatewaysServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<beyondcorp::ClientGatewaysServiceBackoffPolicyOption>()) {
-    options.set<beyondcorp::ClientGatewaysServiceBackoffPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ClientGatewaysServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ClientGatewaysServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<beyondcorp::ClientGatewaysServicePollingPolicyOption>()) {
-    options.set<beyondcorp::ClientGatewaysServicePollingPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ClientGatewaysServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ClientGatewaysServicePollingPolicyOption>(
         GenericPollingPolicy<
-            beyondcorp::ClientGatewaysServiceRetryPolicyOption::Type,
-            beyondcorp::ClientGatewaysServiceBackoffPolicyOption::Type>(
-            options.get<beyondcorp::ClientGatewaysServiceRetryPolicyOption>()
-                ->clone(),
-            options.get<beyondcorp::ClientGatewaysServiceBackoffPolicyOption>()
-                ->clone())
+            GOOGLE_CLOUD_CPP_NS::ClientGatewaysServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::ClientGatewaysServiceBackoffPolicyOption::
+                Type>(options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   ClientGatewaysServiceRetryPolicyOption>()
+                          ->clone(),
+                      options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   ClientGatewaysServiceBackoffPolicyOption>()
+                          ->clone())
             .clone());
   }
   if (!options
-           .has<beyondcorp::
+           .has<GOOGLE_CLOUD_CPP_NS::
                     ClientGatewaysServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        beyondcorp::ClientGatewaysServiceConnectionIdempotencyPolicyOption>(
-        beyondcorp::
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    ClientGatewaysServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultClientGatewaysServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

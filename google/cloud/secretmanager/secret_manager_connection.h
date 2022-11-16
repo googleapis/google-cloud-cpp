@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace secretmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace secretmanager {
 
 using SecretManagerServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        secretmanager_internal::SecretManagerServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SecretManagerServiceRetryTraits>;
 
 using SecretManagerServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        secretmanager_internal::SecretManagerServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SecretManagerServiceRetryTraits>;
 
 using SecretManagerServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        secretmanager_internal::SecretManagerServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SecretManagerServiceRetryTraits>;
 
 /**
  * The `SecretManagerServiceConnection` object for `SecretManagerServiceClient`.
@@ -56,7 +56,8 @@ using SecretManagerServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeSecretManagerServiceConnection()`.
  *
- * For mocking, see `secretmanager_mocks::MockSecretManagerServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockSecretManagerServiceConnection`.
  */
 class SecretManagerServiceConnection {
  public:
@@ -137,7 +138,7 @@ class SecretManagerServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::secretmanager::SecretManagerServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::SecretManagerServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -148,8 +149,8 @@ class SecretManagerServiceConnection {
 std::shared_ptr<SecretManagerServiceConnection>
 MakeSecretManagerServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

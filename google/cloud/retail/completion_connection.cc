@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 CompletionServiceConnection::~CompletionServiceConnection() = default;
 
@@ -55,15 +55,15 @@ std::shared_ptr<CompletionServiceConnection> MakeCompletionServiceConnection(
                                  CompletionServicePolicyOptionList>(options,
                                                                     __func__);
   options =
-      retail_internal::CompletionServiceDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::CompletionServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = retail_internal::CreateDefaultCompletionServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultCompletionServiceStub(
       background->cq(), options);
-  return std::make_shared<retail_internal::CompletionServiceConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::CompletionServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

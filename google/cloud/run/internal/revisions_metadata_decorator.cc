@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace run_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace run_internal {
 
 RevisionsMetadata::RevisionsMetadata(std::shared_ptr<RevisionsStub> child)
     : child_(std::move(child)),
@@ -153,7 +153,7 @@ void RevisionsMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

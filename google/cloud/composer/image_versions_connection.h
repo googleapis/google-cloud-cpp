@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer {
 
 using ImageVersionsRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        composer_internal::ImageVersionsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ImageVersionsRetryTraits>;
 
 using ImageVersionsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        composer_internal::ImageVersionsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ImageVersionsRetryTraits>;
 
 using ImageVersionsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        composer_internal::ImageVersionsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ImageVersionsRetryTraits>;
 
 /**
  * The `ImageVersionsConnection` object for `ImageVersionsClient`.
@@ -56,7 +56,7 @@ using ImageVersionsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeImageVersionsConnection()`.
  *
- * For mocking, see `composer_mocks::MockImageVersionsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockImageVersionsConnection`.
  */
 class ImageVersionsConnection {
  public:
@@ -83,7 +83,7 @@ class ImageVersionsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::composer::ImageVersionsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ImageVersionsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -94,8 +94,8 @@ class ImageVersionsConnection {
 std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

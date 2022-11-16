@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp {
 
 ClientConnectorServicesServiceClient::ClientConnectorServicesServiceClient(
     std::shared_ptr<ClientConnectorServicesServiceConnection> connection,
@@ -147,7 +147,7 @@ ClientConnectorServicesServiceClient::DeleteClientConnectorService(
   return connection_->DeleteClientConnectorService(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc {
 
 EventarcConnection::~EventarcConnection() = default;
 
@@ -168,15 +168,15 @@ std::shared_ptr<EventarcConnection> MakeEventarcConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  EventarcPolicyOptionList>(options, __func__);
-  options = eventarc_internal::EventarcDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::EventarcDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
-      eventarc_internal::CreateDefaultEventarcStub(background->cq(), options);
-  return std::make_shared<eventarc_internal::EventarcConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultEventarcStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::EventarcConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

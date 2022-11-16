@@ -36,17 +36,17 @@
 
 namespace google {
 namespace cloud {
-namespace automl_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl_internal {
 
 class PredictionServiceConnectionImpl
-    : public automl::PredictionServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::PredictionServiceConnection {
  public:
   ~PredictionServiceConnectionImpl() override = default;
 
   PredictionServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<automl_internal::PredictionServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::PredictionServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -58,55 +58,70 @@ class PredictionServiceConnectionImpl
       google::cloud::automl::v1::BatchPredictRequest const& request) override;
 
  private:
-  std::unique_ptr<automl::PredictionServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<automl::PredictionServiceRetryPolicyOption>()) {
-      return options.get<automl::PredictionServiceRetryPolicyOption>()->clone();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<automl::PredictionServiceRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<automl::PredictionServiceBackoffPolicyOption>()) {
-      return options.get<automl::PredictionServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<automl::PredictionServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<automl::PredictionServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            automl::PredictionServiceConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::PredictionServiceBackoffPolicyOption>()) {
       return options
-          .get<automl::PredictionServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::PredictionServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<automl::PredictionServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::PredictionServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::PredictionServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        PredictionServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   PredictionServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 PredictionServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<automl::PredictionServicePollingPolicyOption>()) {
-      return options.get<automl::PredictionServicePollingPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::PredictionServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::PredictionServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<automl::PredictionServicePollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::PredictionServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<automl_internal::PredictionServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::PredictionServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

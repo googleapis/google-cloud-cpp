@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace oslogin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace oslogin_internal {
 
 class OsLoginServiceLogging : public OsLoginServiceStub {
  public:
@@ -75,8 +75,8 @@ class OsLoginServiceLogging : public OsLoginServiceStub {
   std::set<std::string> components_;
 };  // OsLoginServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

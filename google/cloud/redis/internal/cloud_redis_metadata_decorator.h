@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace redis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace redis_internal {
 
 class CloudRedisMetadata : public CloudRedisStub {
  public:
@@ -109,8 +109,8 @@ class CloudRedisMetadata : public CloudRedisStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

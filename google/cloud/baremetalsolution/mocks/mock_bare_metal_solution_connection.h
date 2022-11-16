@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace baremetalsolution_mocks {
 
 /**
  * A class to mock `BareMetalSolutionConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockBareMetalSolutionConnection
-    : public baremetalsolution::BareMetalSolutionConnection {
+    : public GOOGLE_CLOUD_CPP_NS::BareMetalSolutionConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -166,8 +166,8 @@ class MockBareMetalSolutionConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

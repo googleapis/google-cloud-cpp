@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace speech_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech_v2_internal {
 
 class SpeechStub {
  public:
@@ -313,8 +313,8 @@ class DefaultSpeechStub : public SpeechStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

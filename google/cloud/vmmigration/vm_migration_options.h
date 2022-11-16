@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace vmmigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vmmigration {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -78,8 +78,8 @@ using VmMigrationPolicyOptionList =
                VmMigrationPollingPolicyOption,
                VmMigrationConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

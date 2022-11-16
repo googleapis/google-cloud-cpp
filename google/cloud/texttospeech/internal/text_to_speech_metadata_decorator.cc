@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace texttospeech_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace texttospeech_internal {
 
 TextToSpeechMetadata::TextToSpeechMetadata(
     std::shared_ptr<TextToSpeechStub> child)
@@ -67,7 +67,7 @@ void TextToSpeechMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

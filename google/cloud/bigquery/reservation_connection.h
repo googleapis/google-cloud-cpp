@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 using ReservationServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::ReservationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ReservationServiceRetryTraits>;
 
 using ReservationServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::ReservationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ReservationServiceRetryTraits>;
 
 using ReservationServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::ReservationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ReservationServiceRetryTraits>;
 
 /**
  * The `ReservationServiceConnection` object for `ReservationServiceClient`.
@@ -56,7 +56,8 @@ using ReservationServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeReservationServiceConnection()`.
  *
- * For mocking, see `bigquery_mocks::MockReservationServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockReservationServiceConnection`.
  */
 class ReservationServiceConnection {
  public:
@@ -177,7 +178,7 @@ class ReservationServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::ReservationServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ReservationServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -188,8 +189,8 @@ class ReservationServiceConnection {
 std::shared_ptr<ReservationServiceConnection> MakeReservationServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

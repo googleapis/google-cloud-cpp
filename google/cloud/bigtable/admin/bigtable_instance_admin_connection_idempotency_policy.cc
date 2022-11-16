@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_admin {
 
 using ::google::cloud::Idempotency;
 
@@ -150,7 +150,7 @@ MakeDefaultBigtableInstanceAdminConnectionIdempotencyPolicy() {
   return absl::make_unique<BigtableInstanceAdminConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

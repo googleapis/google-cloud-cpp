@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video {
 
 LivestreamServiceClient::LivestreamServiceClient(
     std::shared_ptr<LivestreamServiceConnection> connection, Options opts)
@@ -307,7 +307,7 @@ Status LivestreamServiceClient::DeleteEvent(
   return connection_->DeleteEvent(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
 class ContainerAnalysisAuth : public ContainerAnalysisStub {
  public:
@@ -62,8 +62,8 @@ class ContainerAnalysisAuth : public ContainerAnalysisStub {
   std::shared_ptr<ContainerAnalysisStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

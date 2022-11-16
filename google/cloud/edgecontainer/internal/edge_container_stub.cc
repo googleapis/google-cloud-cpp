@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace edgecontainer_internal {
 
 EdgeContainerStub::~EdgeContainerStub() = default;
 
@@ -296,7 +296,7 @@ future<Status> DefaultEdgeContainerStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

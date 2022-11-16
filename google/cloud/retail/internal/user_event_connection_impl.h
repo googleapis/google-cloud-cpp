@@ -36,17 +36,17 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 class UserEventServiceConnectionImpl
-    : public retail::UserEventServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::UserEventServiceConnection {
  public:
   ~UserEventServiceConnectionImpl() override = default;
 
   UserEventServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<retail_internal::UserEventServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::UserEventServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -71,53 +71,69 @@ class UserEventServiceConnectionImpl
                        request) override;
 
  private:
-  std::unique_ptr<retail::UserEventServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::UserEventServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::UserEventServiceRetryPolicyOption>()) {
-      return options.get<retail::UserEventServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::UserEventServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::UserEventServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<retail::UserEventServiceRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::UserEventServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::UserEventServiceBackoffPolicyOption>()) {
-      return options.get<retail::UserEventServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<retail::UserEventServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<retail::UserEventServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
     if (options
-            .has<retail::UserEventServiceConnectionIdempotencyPolicyOption>()) {
+            .has<GOOGLE_CLOUD_CPP_NS::UserEventServiceBackoffPolicyOption>()) {
       return options
-          .get<retail::UserEventServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::UserEventServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<retail::UserEventServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::UserEventServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::UserEventServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        UserEventServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   UserEventServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 UserEventServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::UserEventServicePollingPolicyOption>()) {
-      return options.get<retail::UserEventServicePollingPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::UserEventServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::UserEventServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<retail::UserEventServicePollingPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::UserEventServicePollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<retail_internal::UserEventServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::UserEventServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

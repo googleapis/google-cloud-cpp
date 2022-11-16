@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkmanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkmanagement_internal {
 
 class ReachabilityServiceLogging : public ReachabilityServiceStub {
  public:
@@ -91,8 +91,8 @@ class ReachabilityServiceLogging : public ReachabilityServiceStub {
   std::set<std::string> components_;
 };  // ReachabilityServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

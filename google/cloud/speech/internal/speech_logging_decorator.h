@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace speech_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech_internal {
 
 class SpeechLogging : public SpeechStub {
  public:
@@ -72,8 +72,8 @@ class SpeechLogging : public SpeechStub {
   std::set<std::string> components_;
 };  // SpeechLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

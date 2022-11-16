@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
 class GrafeasLogging : public GrafeasStub {
  public:
@@ -99,8 +99,8 @@ class GrafeasLogging : public GrafeasStub {
   std::set<std::string> components_;
 };  // GrafeasLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

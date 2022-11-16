@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows_internal {
 
 ExecutionsAuth::ExecutionsAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -70,7 +70,7 @@ ExecutionsAuth::CancelExecution(
   return child_->CancelExecution(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

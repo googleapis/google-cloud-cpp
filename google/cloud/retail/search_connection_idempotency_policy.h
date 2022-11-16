@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 class SearchServiceConnectionIdempotencyPolicy {
  public:
@@ -45,8 +45,8 @@ class SearchServiceConnectionIdempotencyPolicy {
 std::unique_ptr<SearchServiceConnectionIdempotencyPolicy>
 MakeDefaultSearchServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

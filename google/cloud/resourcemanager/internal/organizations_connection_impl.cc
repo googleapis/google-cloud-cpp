@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager_internal {
 
 OrganizationsConnectionImpl::OrganizationsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<resourcemanager_internal::OrganizationsStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::OrganizationsStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -56,8 +56,9 @@ OrganizationsConnectionImpl::SearchOrganizations(
     google::cloud::resourcemanager::v3::SearchOrganizationsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<resourcemanager::OrganizationsRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::OrganizationsRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->SearchOrganizations(request);
   char const* function_name = __func__;
@@ -122,7 +123,7 @@ OrganizationsConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

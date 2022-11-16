@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger_internal {
 
 class Debugger2Metadata : public Debugger2Stub {
  public:
@@ -69,8 +69,8 @@ class Debugger2Metadata : public Debugger2Stub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

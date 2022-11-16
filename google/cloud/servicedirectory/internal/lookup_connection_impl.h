@@ -33,17 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory_internal {
 
 class LookupServiceConnectionImpl
-    : public servicedirectory::LookupServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::LookupServiceConnection {
  public:
   ~LookupServiceConnectionImpl() override = default;
 
   LookupServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<servicedirectory_internal::LookupServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LookupServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -54,48 +54,52 @@ class LookupServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<servicedirectory::LookupServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::LookupServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<servicedirectory::LookupServiceRetryPolicyOption>()) {
-      return options.get<servicedirectory::LookupServiceRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::LookupServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::LookupServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<servicedirectory::LookupServiceRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::LookupServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<servicedirectory::LookupServiceBackoffPolicyOption>()) {
-      return options.get<servicedirectory::LookupServiceBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::LookupServiceBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::LookupServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<servicedirectory::LookupServiceBackoffPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::LookupServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<servicedirectory::LookupServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::LookupServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<servicedirectory::
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
                         LookupServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<servicedirectory::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    LookupServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<servicedirectory::LookupServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 LookupServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<servicedirectory_internal::LookupServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LookupServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

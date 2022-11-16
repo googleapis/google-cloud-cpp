@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_admin_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -40,46 +40,49 @@ Options BigtableInstanceAdminDefaultOptions(Options options) {
       "bigtableadmin.googleapis.com");
   options = google::cloud::internal::PopulateGrpcOptions(
       std::move(options), "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
-  if (!options.has<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()) {
-    options.set<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>(
-        bigtable_admin::BigtableInstanceAdminLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options
-           .has<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>()) {
-    options.set<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<bigtable_admin::BigtableInstanceAdminPollingPolicyOption>()) {
-    options.set<bigtable_admin::BigtableInstanceAdminPollingPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminPollingPolicyOption>(
         GenericPollingPolicy<
-            bigtable_admin::BigtableInstanceAdminRetryPolicyOption::Type,
-            bigtable_admin::BigtableInstanceAdminBackoffPolicyOption::Type>(
-            options
-                .get<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>()
-                ->clone())
+            GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminBackoffPolicyOption::
+                Type>(options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   BigtableInstanceAdminRetryPolicyOption>()
+                          ->clone(),
+                      options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   BigtableInstanceAdminBackoffPolicyOption>()
+                          ->clone())
             .clone());
   }
   if (!options
-           .has<bigtable_admin::
+           .has<GOOGLE_CLOUD_CPP_NS::
                     BigtableInstanceAdminConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        bigtable_admin::BigtableInstanceAdminConnectionIdempotencyPolicyOption>(
-        bigtable_admin::
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    BigtableInstanceAdminConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultBigtableInstanceAdminConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

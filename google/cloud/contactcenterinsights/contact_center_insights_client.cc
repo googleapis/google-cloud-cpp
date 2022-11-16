@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace contactcenterinsights {
 
 ContactCenterInsightsClient::ContactCenterInsightsClient(
     std::shared_ptr<ContactCenterInsightsConnection> connection, Options opts)
@@ -660,7 +660,7 @@ Status ContactCenterInsightsClient::DeleteView(
   return connection_->DeleteView(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

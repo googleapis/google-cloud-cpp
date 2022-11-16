@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace serviceusage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace serviceusage {
 
 ServiceUsageConnection::~ServiceUsageConnection() = default;
 
@@ -85,16 +85,15 @@ std::shared_ptr<ServiceUsageConnection> MakeServiceUsageConnection(
                                  UnifiedCredentialsOptionList,
                                  ServiceUsagePolicyOptionList>(options,
                                                                __func__);
-  options =
-      serviceusage_internal::ServiceUsageDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::ServiceUsageDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = serviceusage_internal::CreateDefaultServiceUsageStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultServiceUsageStub(
       background->cq(), options);
-  return std::make_shared<serviceusage_internal::ServiceUsageConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ServiceUsageConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -42,38 +42,43 @@ Options BatchControllerDefaultOptions(std::string const& location,
                    "dataproc.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dataproc::BatchControllerRetryPolicyOption>()) {
-    options.set<dataproc::BatchControllerRetryPolicyOption>(
-        dataproc::BatchControllerLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::BatchControllerRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::BatchControllerRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::BatchControllerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dataproc::BatchControllerBackoffPolicyOption>()) {
-    options.set<dataproc::BatchControllerBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::BatchControllerBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::BatchControllerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<dataproc::BatchControllerPollingPolicyOption>()) {
-    options.set<dataproc::BatchControllerPollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::BatchControllerPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::BatchControllerPollingPolicyOption>(
         GenericPollingPolicy<
-            dataproc::BatchControllerRetryPolicyOption::Type,
-            dataproc::BatchControllerBackoffPolicyOption::Type>(
-            options.get<dataproc::BatchControllerRetryPolicyOption>()->clone(),
-            options.get<dataproc::BatchControllerBackoffPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::BatchControllerRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::BatchControllerBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::BatchControllerRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::BatchControllerBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options
-           .has<dataproc::BatchControllerConnectionIdempotencyPolicyOption>()) {
-    options.set<dataproc::BatchControllerConnectionIdempotencyPolicyOption>(
-        dataproc::MakeDefaultBatchControllerConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       BatchControllerConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::BatchControllerConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultBatchControllerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

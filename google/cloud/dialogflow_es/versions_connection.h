@@ -32,19 +32,19 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 using VersionsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_es_internal::VersionsRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::VersionsRetryTraits>;
 
 using VersionsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_es_internal::VersionsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VersionsRetryTraits>;
 
 using VersionsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_es_internal::VersionsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VersionsRetryTraits>;
 
 /**
  * The `VersionsConnection` object for `VersionsClient`.
@@ -56,7 +56,7 @@ using VersionsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeVersionsConnection()`.
  *
- * For mocking, see `dialogflow_es_mocks::MockVersionsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockVersionsConnection`.
  */
 class VersionsConnection {
  public:
@@ -93,7 +93,7 @@ class VersionsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_es::VersionsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::VersionsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -115,8 +115,8 @@ std::shared_ptr<VersionsConnection> MakeVersionsConnection(
 std::shared_ptr<VersionsConnection> MakeVersionsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

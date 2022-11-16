@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace redis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace redis_internal {
 
 class CloudRedisStub {
  public:
@@ -185,8 +185,8 @@ class DefaultCloudRedisStub : public CloudRedisStub {
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace datamigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datamigration_internal {
 
 class DataMigrationServiceLogging : public DataMigrationServiceStub {
  public:
@@ -153,8 +153,8 @@ class DataMigrationServiceLogging : public DataMigrationServiceStub {
   std::set<std::string> components_;
 };  // DataMigrationServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

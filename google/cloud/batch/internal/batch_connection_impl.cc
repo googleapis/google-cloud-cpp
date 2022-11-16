@@ -28,12 +28,13 @@
 
 namespace google {
 namespace cloud {
-namespace batch_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace batch_internal {
 
 BatchServiceConnectionImpl::BatchServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<batch_internal::BatchServiceStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BatchServiceStub> stub,
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -95,7 +96,8 @@ StreamRange<google::cloud::batch::v1::Job> BatchServiceConnectionImpl::ListJobs(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<batch::BatchServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BatchServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListJobs(request);
   char const* function_name = __func__;
@@ -137,7 +139,8 @@ BatchServiceConnectionImpl::ListTasks(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<batch::BatchServiceRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BatchServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTasks(request);
   char const* function_name = __func__;
@@ -162,7 +165,7 @@ BatchServiceConnectionImpl::ListTasks(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

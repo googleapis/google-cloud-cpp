@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 ConversationProfilesClient::ConversationProfilesClient(
     std::shared_ptr<ConversationProfilesConnection> connection, Options opts)
@@ -160,7 +160,7 @@ ConversationProfilesClient::ClearSuggestionFeatureConfig(
   return connection_->ClearSuggestionFeatureConfig(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace container_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace container_internal {
 
 class ClusterManagerLogging : public ClusterManagerStub {
  public:
@@ -184,8 +184,8 @@ class ClusterManagerLogging : public ClusterManagerStub {
   std::set<std::string> components_;
 };  // ClusterManagerLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

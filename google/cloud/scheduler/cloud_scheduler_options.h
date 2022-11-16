@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -68,8 +68,8 @@ using CloudSchedulerPolicyOptionList =
                CloudSchedulerBackoffPolicyOption,
                CloudSchedulerConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

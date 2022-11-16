@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter {
 
 SecurityCenterConnection::~SecurityCenterConnection() = default;
 
@@ -278,16 +278,15 @@ std::shared_ptr<SecurityCenterConnection> MakeSecurityCenterConnection(
                                  SecurityCenterPolicyOptionList>(options,
                                                                  __func__);
   options =
-      securitycenter_internal::SecurityCenterDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::SecurityCenterDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = securitycenter_internal::CreateDefaultSecurityCenterStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultSecurityCenterStub(
       background->cq(), options);
-  return std::make_shared<
-      securitycenter_internal::SecurityCenterConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::SecurityCenterConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

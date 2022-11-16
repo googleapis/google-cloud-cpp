@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace shell {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace shell {
 
 CloudShellServiceClient::CloudShellServiceClient(
     std::shared_ptr<CloudShellServiceConnection> connection, Options opts)
@@ -79,7 +79,7 @@ CloudShellServiceClient::RemovePublicKey(
   return connection_->RemovePublicKey(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

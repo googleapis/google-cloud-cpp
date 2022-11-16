@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace run {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace run {
 
 using ServicesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    run_internal::ServicesRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::ServicesRetryTraits>;
 
 using ServicesLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        run_internal::ServicesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ServicesRetryTraits>;
 
 using ServicesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        run_internal::ServicesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ServicesRetryTraits>;
 
 /**
  * The `ServicesConnection` object for `ServicesClient`.
@@ -58,7 +58,7 @@ using ServicesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeServicesConnection()`.
  *
- * For mocking, see `run_mocks::MockServicesConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockServicesConnection`.
  */
 class ServicesConnection {
  public:
@@ -104,7 +104,7 @@ class ServicesConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::run::ServicesPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ServicesPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -115,8 +115,8 @@ class ServicesConnection {
 std::shared_ptr<ServicesConnection> MakeServicesConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

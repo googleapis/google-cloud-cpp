@@ -31,19 +31,19 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis {
 
 using GrafeasRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    containeranalysis_internal::GrafeasRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::GrafeasRetryTraits>;
 
 using GrafeasLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        containeranalysis_internal::GrafeasRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::GrafeasRetryTraits>;
 
 using GrafeasLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        containeranalysis_internal::GrafeasRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::GrafeasRetryTraits>;
 
 /**
  * The `GrafeasConnection` object for `GrafeasClient`.
@@ -55,7 +55,7 @@ using GrafeasLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeGrafeasConnection()`.
  *
- * For mocking, see `containeranalysis_mocks::MockGrafeasConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockGrafeasConnection`.
  */
 class GrafeasConnection {
  public:
@@ -119,7 +119,7 @@ class GrafeasConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::containeranalysis::GrafeasPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::GrafeasPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -129,8 +129,8 @@ class GrafeasConnection {
  */
 std::shared_ptr<GrafeasConnection> MakeGrafeasConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

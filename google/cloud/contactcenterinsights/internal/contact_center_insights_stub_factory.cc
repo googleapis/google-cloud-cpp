@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace contactcenterinsights_internal {
 
 std::shared_ptr<ContactCenterInsightsStub>
 CreateDefaultContactCenterInsightsStub(google::cloud::CompletionQueue cq,
@@ -63,7 +63,7 @@ CreateDefaultContactCenterInsightsStub(google::cloud::CompletionQueue cq,
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

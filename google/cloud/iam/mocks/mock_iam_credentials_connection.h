@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam_mocks {
 
 /**
  * A class to mock `IAMCredentialsConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockIAMCredentialsConnection : public iam::IAMCredentialsConnection {
+class MockIAMCredentialsConnection
+    : public GOOGLE_CLOUD_CPP_NS::IAMCredentialsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -68,8 +69,8 @@ class MockIAMCredentialsConnection : public iam::IAMCredentialsConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer_mocks {
 
 /**
  * A class to mock `EnvironmentsConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockEnvironmentsConnection : public composer::EnvironmentsConnection {
+class MockEnvironmentsConnection
+    : public GOOGLE_CLOUD_CPP_NS::EnvironmentsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -85,8 +86,8 @@ class MockEnvironmentsConnection : public composer::EnvironmentsConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

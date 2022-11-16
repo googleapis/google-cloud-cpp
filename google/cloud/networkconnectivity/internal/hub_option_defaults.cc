@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkconnectivity_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkconnectivity_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,41 +39,41 @@ Options HubServiceDefaultOptions(Options options) {
       "networkconnectivity.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<networkconnectivity::HubServiceRetryPolicyOption>()) {
-    options.set<networkconnectivity::HubServiceRetryPolicyOption>(
-        networkconnectivity::HubServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::HubServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::HubServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::HubServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<networkconnectivity::HubServiceBackoffPolicyOption>()) {
-    options.set<networkconnectivity::HubServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::HubServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::HubServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<networkconnectivity::HubServicePollingPolicyOption>()) {
-    options.set<networkconnectivity::HubServicePollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::HubServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::HubServicePollingPolicyOption>(
         GenericPollingPolicy<
-            networkconnectivity::HubServiceRetryPolicyOption::Type,
-            networkconnectivity::HubServiceBackoffPolicyOption::Type>(
-            options.get<networkconnectivity::HubServiceRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::HubServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::HubServiceBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::HubServiceRetryPolicyOption>()
                 ->clone(),
-            options.get<networkconnectivity::HubServiceBackoffPolicyOption>()
+            options.get<GOOGLE_CLOUD_CPP_NS::HubServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
   if (!options.has<
-          networkconnectivity::HubServiceConnectionIdempotencyPolicyOption>()) {
+          GOOGLE_CLOUD_CPP_NS::HubServiceConnectionIdempotencyPolicyOption>()) {
     options
-        .set<networkconnectivity::HubServiceConnectionIdempotencyPolicyOption>(
-            networkconnectivity::
+        .set<GOOGLE_CLOUD_CPP_NS::HubServiceConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
                 MakeDefaultHubServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

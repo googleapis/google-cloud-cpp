@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigeeconnect_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigeeconnect_internal {
 
 class ConnectionServiceStub {
  public:
@@ -60,8 +60,8 @@ class DefaultConnectionServiceStub : public ConnectionServiceStub {
       grpc_stub_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

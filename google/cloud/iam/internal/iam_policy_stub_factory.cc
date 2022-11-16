@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam_internal {
 
 std::shared_ptr<IAMPolicyStub> CreateDefaultIAMPolicyStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -57,7 +57,7 @@ std::shared_ptr<IAMPolicyStub> CreateDefaultIAMPolicyStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

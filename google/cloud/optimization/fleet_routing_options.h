@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace optimization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -78,8 +78,8 @@ using FleetRoutingPolicyOptionList =
                FleetRoutingPollingPolicyOption,
                FleetRoutingConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

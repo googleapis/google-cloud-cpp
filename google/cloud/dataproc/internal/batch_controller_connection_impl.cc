@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 BatchControllerConnectionImpl::BatchControllerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dataproc_internal::BatchControllerStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BatchControllerStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -85,8 +85,9 @@ BatchControllerConnectionImpl::ListBatches(
     google::cloud::dataproc::v1::ListBatchesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dataproc::BatchControllerRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BatchControllerRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBatches(request);
   char const* function_name = __func__;
@@ -123,7 +124,7 @@ Status BatchControllerConnectionImpl::DeleteBatch(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

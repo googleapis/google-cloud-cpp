@@ -35,20 +35,20 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 using BatchControllerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dataproc_internal::BatchControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BatchControllerRetryTraits>;
 
 using BatchControllerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dataproc_internal::BatchControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BatchControllerRetryTraits>;
 
 using BatchControllerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dataproc_internal::BatchControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BatchControllerRetryTraits>;
 
 /**
  * The `BatchControllerConnection` object for `BatchControllerClient`.
@@ -60,7 +60,7 @@ using BatchControllerLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeBatchControllerConnection()`.
  *
- * For mocking, see `dataproc_mocks::MockBatchControllerConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockBatchControllerConnection`.
  */
 class BatchControllerConnection {
  public:
@@ -95,7 +95,7 @@ class BatchControllerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dataproc::BatchControllerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::BatchControllerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -117,8 +117,8 @@ std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
 std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

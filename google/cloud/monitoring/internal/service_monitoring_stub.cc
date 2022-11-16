@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 ServiceMonitoringServiceStub::~ServiceMonitoringServiceStub() = default;
 
@@ -152,7 +152,7 @@ Status DefaultServiceMonitoringServiceStub::DeleteServiceLevelObjective(
   return google::cloud::Status();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

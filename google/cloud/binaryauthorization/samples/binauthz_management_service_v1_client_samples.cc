@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: binaryauthorization::BinauthzManagementServiceV1Client
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1Client
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -39,8 +39,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto client =
-      google::cloud::binaryauthorization::BinauthzManagementServiceV1Client(
-          google::cloud::binaryauthorization::
+      google::cloud::GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1Client(
+          google::cloud::GOOGLE_CLOUD_CPP_NS::
               MakeBinauthzManagementServiceV1Connection(options));
   //! [set-client-endpoint]
 }
@@ -57,9 +57,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::binaryauthorization::
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::
         BinauthzManagementServiceV1Client(
-            google::cloud::binaryauthorization::
+            google::cloud::GOOGLE_CLOUD_CPP_NS::
                 MakeBinauthzManagementServiceV1Connection(options));
   }
   //! [with-service-account]

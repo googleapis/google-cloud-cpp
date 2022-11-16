@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap_internal {
 
 IdentityAwareProxyOAuthServiceStub::~IdentityAwareProxyOAuthServiceStub() =
     default;
@@ -135,7 +135,7 @@ DefaultIdentityAwareProxyOAuthServiceStub::DeleteIdentityAwareProxyClient(
   return google::cloud::Status();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace batch {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace batch {
 
 using ::google::cloud::Idempotency;
 
@@ -70,7 +70,7 @@ MakeDefaultBatchServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<BatchServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

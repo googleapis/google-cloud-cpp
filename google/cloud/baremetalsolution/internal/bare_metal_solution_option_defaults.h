@@ -24,13 +24,13 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace baremetalsolution_internal {
 
 Options BareMetalSolutionDefaultOptions(Options options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

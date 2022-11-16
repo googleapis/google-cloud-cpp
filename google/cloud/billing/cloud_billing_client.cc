@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing {
 
 CloudBillingClient::CloudBillingClient(
     std::shared_ptr<CloudBillingConnection> connection, Options opts)
@@ -236,7 +236,7 @@ CloudBillingClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

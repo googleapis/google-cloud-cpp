@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 class DomainMappingsConnectionImpl
-    : public appengine::DomainMappingsConnection {
+    : public GOOGLE_CLOUD_CPP_NS::DomainMappingsConnection {
  public:
   ~DomainMappingsConnectionImpl() override = default;
 
   DomainMappingsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_internal::DomainMappingsStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DomainMappingsStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -71,55 +71,66 @@ class DomainMappingsConnectionImpl
                           request) override;
 
  private:
-  std::unique_ptr<appengine::DomainMappingsRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DomainMappingsRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::DomainMappingsRetryPolicyOption>()) {
-      return options.get<appengine::DomainMappingsRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DomainMappingsRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::DomainMappingsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<appengine::DomainMappingsRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::DomainMappingsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::DomainMappingsBackoffPolicyOption>()) {
-      return options.get<appengine::DomainMappingsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<appengine::DomainMappingsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<appengine::DomainMappingsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            appengine::DomainMappingsConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DomainMappingsBackoffPolicyOption>()) {
       return options
-          .get<appengine::DomainMappingsConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::DomainMappingsBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<appengine::DomainMappingsConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::DomainMappingsBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::DomainMappingsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        DomainMappingsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   DomainMappingsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 DomainMappingsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::DomainMappingsPollingPolicyOption>()) {
-      return options.get<appengine::DomainMappingsPollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DomainMappingsPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::DomainMappingsPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<appengine::DomainMappingsPollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::DomainMappingsPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<appengine_internal::DomainMappingsStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DomainMappingsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

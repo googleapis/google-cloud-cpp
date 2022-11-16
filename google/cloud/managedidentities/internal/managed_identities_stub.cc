@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities_internal {
 
 ManagedIdentitiesServiceStub::~ManagedIdentitiesServiceStub() = default;
 
@@ -207,7 +207,7 @@ future<Status> DefaultManagedIdentitiesServiceStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

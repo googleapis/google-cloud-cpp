@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter_internal {
 
 SecurityCenterMetadata::SecurityCenterMetadata(
     std::shared_ptr<SecurityCenterStub> child)
@@ -373,7 +373,7 @@ void SecurityCenterMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

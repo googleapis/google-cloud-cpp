@@ -33,20 +33,20 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 using ApplicationsRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        appengine_internal::ApplicationsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ApplicationsRetryTraits>;
 
 using ApplicationsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        appengine_internal::ApplicationsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ApplicationsRetryTraits>;
 
 using ApplicationsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        appengine_internal::ApplicationsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ApplicationsRetryTraits>;
 
 /**
  * The `ApplicationsConnection` object for `ApplicationsClient`.
@@ -58,7 +58,7 @@ using ApplicationsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeApplicationsConnection()`.
  *
- * For mocking, see `appengine_mocks::MockApplicationsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockApplicationsConnection`.
  */
 class ApplicationsConnection {
  public:
@@ -95,7 +95,7 @@ class ApplicationsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::appengine::ApplicationsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ApplicationsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -106,8 +106,8 @@ class ApplicationsConnection {
 std::shared_ptr<ApplicationsConnection> MakeApplicationsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

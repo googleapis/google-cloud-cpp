@@ -34,16 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
-class CatalogServiceConnectionImpl : public retail::CatalogServiceConnection {
+class CatalogServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::CatalogServiceConnection {
  public:
   ~CatalogServiceConnectionImpl() override = default;
 
   CatalogServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<retail_internal::CatalogServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CatalogServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -91,43 +92,54 @@ class CatalogServiceConnectionImpl : public retail::CatalogServiceConnection {
       override;
 
  private:
-  std::unique_ptr<retail::CatalogServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CatalogServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::CatalogServiceRetryPolicyOption>()) {
-      return options.get<retail::CatalogServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CatalogServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::CatalogServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<retail::CatalogServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CatalogServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::CatalogServiceBackoffPolicyOption>()) {
-      return options.get<retail::CatalogServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<retail::CatalogServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<retail::CatalogServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<retail::CatalogServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CatalogServiceBackoffPolicyOption>()) {
       return options
-          .get<retail::CatalogServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::CatalogServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<retail::CatalogServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::CatalogServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::CatalogServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CatalogServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CatalogServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 CatalogServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<retail_internal::CatalogServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CatalogServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

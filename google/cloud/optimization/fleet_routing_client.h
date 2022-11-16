@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace optimization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization {
 
 ///
 /// A service for optimizing vehicle tours.
@@ -168,8 +168,8 @@ class FleetRoutingClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

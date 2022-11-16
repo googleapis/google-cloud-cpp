@@ -32,20 +32,20 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 using SessionEntityTypesRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dialogflow_cx_internal::SessionEntityTypesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SessionEntityTypesRetryTraits>;
 
 using SessionEntityTypesLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::SessionEntityTypesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SessionEntityTypesRetryTraits>;
 
 using SessionEntityTypesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::SessionEntityTypesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SessionEntityTypesRetryTraits>;
 
 /**
  * The `SessionEntityTypesConnection` object for `SessionEntityTypesClient`.
@@ -57,7 +57,8 @@ using SessionEntityTypesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeSessionEntityTypesConnection()`.
  *
- * For mocking, see `dialogflow_cx_mocks::MockSessionEntityTypesConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockSessionEntityTypesConnection`.
  */
 class SessionEntityTypesConnection {
  public:
@@ -104,7 +105,7 @@ class SessionEntityTypesConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::SessionEntityTypesPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::SessionEntityTypesPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -126,8 +127,8 @@ std::shared_ptr<SessionEntityTypesConnection> MakeSessionEntityTypesConnection(
 std::shared_ptr<SessionEntityTypesConnection> MakeSessionEntityTypesConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

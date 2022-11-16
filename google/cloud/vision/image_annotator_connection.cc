@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision {
 
 ImageAnnotatorConnection::~ImageAnnotatorConnection() = default;
 
@@ -68,15 +68,16 @@ std::shared_ptr<ImageAnnotatorConnection> MakeImageAnnotatorConnection(
                                  UnifiedCredentialsOptionList,
                                  ImageAnnotatorPolicyOptionList>(options,
                                                                  __func__);
-  options = vision_internal::ImageAnnotatorDefaultOptions(std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::ImageAnnotatorDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = vision_internal::CreateDefaultImageAnnotatorStub(background->cq(),
-                                                               options);
-  return std::make_shared<vision_internal::ImageAnnotatorConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultImageAnnotatorStub(
+      background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

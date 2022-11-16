@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace filestore {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore {
 
 CloudFilestoreManagerConnection::~CloudFilestoreManagerConnection() = default;
 
@@ -125,17 +125,17 @@ MakeCloudFilestoreManagerConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  CloudFilestoreManagerPolicyOptionList>(
       options, __func__);
-  options = filestore_internal::CloudFilestoreManagerDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = filestore_internal::CreateDefaultCloudFilestoreManagerStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultCloudFilestoreManagerStub(
       background->cq(), options);
   return std::make_shared<
-      filestore_internal::CloudFilestoreManagerConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

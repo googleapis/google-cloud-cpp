@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap_internal {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct IdentityAwareProxyAdminServiceRetryTraits {
@@ -35,8 +35,8 @@ struct IdentityAwareProxyAdminServiceRetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace translate {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace translate {
 
 using TranslationServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        translate_internal::TranslationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TranslationServiceRetryTraits>;
 
 using TranslationServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        translate_internal::TranslationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TranslationServiceRetryTraits>;
 
 using TranslationServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        translate_internal::TranslationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TranslationServiceRetryTraits>;
 
 /**
  * The `TranslationServiceConnection` object for `TranslationServiceClient`.
@@ -59,7 +59,8 @@ using TranslationServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeTranslationServiceConnection()`.
  *
- * For mocking, see `translate_mocks::MockTranslationServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockTranslationServiceConnection`.
  */
 class TranslationServiceConnection {
  public:
@@ -126,7 +127,7 @@ class TranslationServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::translate::TranslationServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::TranslationServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -137,8 +138,8 @@ class TranslationServiceConnection {
 std::shared_ptr<TranslationServiceConnection> MakeTranslationServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

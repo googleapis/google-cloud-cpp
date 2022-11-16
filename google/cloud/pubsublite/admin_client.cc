@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite {
 
 AdminServiceClient::AdminServiceClient(
     std::shared_ptr<AdminServiceConnection> connection, Options opts)
@@ -356,7 +356,7 @@ AdminServiceClient::AsyncGetTopicPartitions(
   return connection_->AsyncGetTopicPartitions(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

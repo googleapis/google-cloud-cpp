@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite {
 
 using TopicStatsServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        pubsublite_internal::TopicStatsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TopicStatsServiceRetryTraits>;
 
 using TopicStatsServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        pubsublite_internal::TopicStatsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TopicStatsServiceRetryTraits>;
 
 using TopicStatsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        pubsublite_internal::TopicStatsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TopicStatsServiceRetryTraits>;
 
 /**
  * The `TopicStatsServiceConnection` object for `TopicStatsServiceClient`.
@@ -55,7 +55,8 @@ using TopicStatsServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeTopicStatsServiceConnection()`.
  *
- * For mocking, see `pubsublite_mocks::MockTopicStatsServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockTopicStatsServiceConnection`.
  */
 class TopicStatsServiceConnection {
  public:
@@ -91,7 +92,7 @@ class TopicStatsServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::pubsublite::TopicStatsServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::TopicStatsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -102,8 +103,8 @@ class TopicStatsServiceConnection {
 std::shared_ptr<TopicStatsServiceConnection> MakeTopicStatsServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

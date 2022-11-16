@@ -34,16 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_internal {
 
-class DataCatalogConnectionImpl : public datacatalog::DataCatalogConnection {
+class DataCatalogConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::DataCatalogConnection {
  public:
   ~DataCatalogConnectionImpl() override = default;
 
   DataCatalogConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<datacatalog_internal::DataCatalogStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataCatalogStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -169,44 +170,49 @@ class DataCatalogConnectionImpl : public datacatalog::DataCatalogConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<datacatalog::DataCatalogRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DataCatalogRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog::DataCatalogRetryPolicyOption>()) {
-      return options.get<datacatalog::DataCatalogRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DataCatalogRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::DataCatalogRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<datacatalog::DataCatalogRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::DataCatalogRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<datacatalog::DataCatalogBackoffPolicyOption>()) {
-      return options.get<datacatalog::DataCatalogBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DataCatalogBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::DataCatalogBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<datacatalog::DataCatalogBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::DataCatalogBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<datacatalog::DataCatalogConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DataCatalogConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<datacatalog::DataCatalogConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        DataCatalogConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<datacatalog::DataCatalogConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   DataCatalogConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<datacatalog::DataCatalogConnectionIdempotencyPolicyOption>()
+        .get<
+            GOOGLE_CLOUD_CPP_NS::DataCatalogConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<datacatalog_internal::DataCatalogStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DataCatalogStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

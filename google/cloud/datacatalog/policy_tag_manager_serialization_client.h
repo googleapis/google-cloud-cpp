@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog {
 
 ///
 /// Policy Tag Manager Serialization API service allows you to manipulate
@@ -180,8 +180,8 @@ class PolicyTagManagerSerializationClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

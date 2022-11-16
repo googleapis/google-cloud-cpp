@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 using ServiceMonitoringServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        monitoring_internal::ServiceMonitoringServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ServiceMonitoringServiceRetryTraits>;
 
 using ServiceMonitoringServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        monitoring_internal::ServiceMonitoringServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ServiceMonitoringServiceRetryTraits>;
 
 using ServiceMonitoringServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        monitoring_internal::ServiceMonitoringServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ServiceMonitoringServiceRetryTraits>;
 
 /**
  * The `ServiceMonitoringServiceConnection` object for
@@ -58,7 +58,8 @@ using ServiceMonitoringServiceLimitedErrorCountRetryPolicy =
  * To create a concrete instance, see
  * `MakeServiceMonitoringServiceConnection()`.
  *
- * For mocking, see `monitoring_mocks::MockServiceMonitoringServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockServiceMonitoringServiceConnection`.
  */
 class ServiceMonitoringServiceConnection {
  public:
@@ -119,7 +120,8 @@ class ServiceMonitoringServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::monitoring::ServiceMonitoringServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::ServiceMonitoringServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -130,8 +132,8 @@ class ServiceMonitoringServiceConnection {
 std::shared_ptr<ServiceMonitoringServiceConnection>
 MakeServiceMonitoringServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden {
 
 GoldenKitchenSinkClient::GoldenKitchenSinkClient(std::shared_ptr<GoldenKitchenSinkConnection> connection, Options opts) : connection_(std::move(connection)), options_(internal::MergeOptions(std::move(opts), connection_->options())) {}
 GoldenKitchenSinkClient::~GoldenKitchenSinkClient() = default;
@@ -153,7 +153,7 @@ GoldenKitchenSinkClient::ExplicitRouting2(google::test::admin::database::v1::Exp
   return connection_->ExplicitRouting2(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

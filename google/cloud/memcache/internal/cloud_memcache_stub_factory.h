@@ -28,14 +28,14 @@
 
 namespace google {
 namespace cloud {
-namespace memcache_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache_internal {
 
 std::shared_ptr<CloudMemcacheStub> CreateDefaultCloudMemcacheStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

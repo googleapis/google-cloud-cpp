@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace logging_internal {
 
 LoggingServiceV2Auth::LoggingServiceV2Auth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -112,7 +112,7 @@ LoggingServiceV2Auth::AsyncWriteLogEntries(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

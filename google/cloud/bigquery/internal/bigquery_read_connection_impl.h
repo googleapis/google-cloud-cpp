@@ -34,20 +34,21 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 void BigQueryReadReadRowsStreamingUpdater(
     google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
     google::cloud::bigquery::storage::v1::ReadRowsRequest& request);
 
-class BigQueryReadConnectionImpl : public bigquery::BigQueryReadConnection {
+class BigQueryReadConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::BigQueryReadConnection {
  public:
   ~BigQueryReadConnectionImpl() override = default;
 
   BigQueryReadConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<bigquery_internal::BigQueryReadStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BigQueryReadStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -66,44 +67,51 @@ class BigQueryReadConnectionImpl : public bigquery::BigQueryReadConnection {
           request) override;
 
  private:
-  std::unique_ptr<bigquery::BigQueryReadRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::BigQueryReadRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::BigQueryReadRetryPolicyOption>()) {
-      return options.get<bigquery::BigQueryReadRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::BigQueryReadRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::BigQueryReadRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<bigquery::BigQueryReadRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::BigQueryReadRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::BigQueryReadBackoffPolicyOption>()) {
-      return options.get<bigquery::BigQueryReadBackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::BigQueryReadBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::BigQueryReadBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<bigquery::BigQueryReadBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::BigQueryReadBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<bigquery::BigQueryReadConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::BigQueryReadConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        BigQueryReadConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   BigQueryReadConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<bigquery::BigQueryReadConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 BigQueryReadConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<bigquery_internal::BigQueryReadStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BigQueryReadStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

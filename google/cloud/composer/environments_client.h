@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer {
 
 ///
 /// Managed Apache Airflow Environments.
@@ -407,8 +407,8 @@ class EnvironmentsClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

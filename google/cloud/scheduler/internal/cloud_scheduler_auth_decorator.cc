@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler_internal {
 
 CloudSchedulerAuth::CloudSchedulerAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -95,7 +95,7 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerAuth::RunJob(
   return child_->RunJob(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

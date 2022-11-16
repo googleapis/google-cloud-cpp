@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 AuthorizedCertificatesLogging::AuthorizedCertificatesLogging(
     std::shared_ptr<AuthorizedCertificatesStub> child,
@@ -98,7 +98,7 @@ Status AuthorizedCertificatesLogging::DeleteAuthorizedCertificate(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

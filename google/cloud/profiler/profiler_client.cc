@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace profiler {
 
 ProfilerServiceClient::ProfilerServiceClient(
     std::shared_ptr<ProfilerServiceConnection> connection, Options opts)
@@ -56,7 +56,7 @@ ProfilerServiceClient::UpdateProfile(
   return connection_->UpdateProfile(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

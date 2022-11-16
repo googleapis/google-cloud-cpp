@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer_internal {
 
 EnvironmentsStub::~EnvironmentsStub() = default;
 
@@ -138,7 +138,7 @@ future<Status> DefaultEnvironmentsStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

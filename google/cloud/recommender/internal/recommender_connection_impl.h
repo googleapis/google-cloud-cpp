@@ -34,16 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace recommender_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender_internal {
 
-class RecommenderConnectionImpl : public recommender::RecommenderConnection {
+class RecommenderConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::RecommenderConnection {
  public:
   ~RecommenderConnectionImpl() override = default;
 
   RecommenderConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<recommender_internal::RecommenderStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::RecommenderStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -103,44 +104,49 @@ class RecommenderConnectionImpl : public recommender::RecommenderConnection {
           request) override;
 
  private:
-  std::unique_ptr<recommender::RecommenderRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::RecommenderRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<recommender::RecommenderRetryPolicyOption>()) {
-      return options.get<recommender::RecommenderRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::RecommenderRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::RecommenderRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<recommender::RecommenderRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::RecommenderRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<recommender::RecommenderBackoffPolicyOption>()) {
-      return options.get<recommender::RecommenderBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::RecommenderBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::RecommenderBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<recommender::RecommenderBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::RecommenderBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<recommender::RecommenderConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::RecommenderConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<recommender::RecommenderConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        RecommenderConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<recommender::RecommenderConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   RecommenderConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<recommender::RecommenderConnectionIdempotencyPolicyOption>()
+        .get<
+            GOOGLE_CLOUD_CPP_NS::RecommenderConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<recommender_internal::RecommenderStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::RecommenderStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

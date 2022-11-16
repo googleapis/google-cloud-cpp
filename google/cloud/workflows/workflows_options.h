@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -78,8 +78,8 @@ using WorkflowsPolicyOptionList =
                WorkflowsPollingPolicyOption,
                WorkflowsConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

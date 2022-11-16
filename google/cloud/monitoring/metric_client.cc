@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 MetricServiceClient::MetricServiceClient(
     std::shared_ptr<MetricServiceConnection> connection, Options opts)
@@ -210,7 +210,7 @@ future<Status> MetricServiceClient::AsyncCreateTimeSeries(
   return connection_->AsyncCreateTimeSeries(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

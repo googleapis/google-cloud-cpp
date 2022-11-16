@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_internal {
 
 DefaultGoldenKitchenSinkRestStub::DefaultGoldenKitchenSinkRestStub(Options options)
     : rest_client_(rest_internal::MakePooledRestClient(
@@ -108,7 +108,7 @@ Status DefaultGoldenKitchenSinkRestStub::ExplicitRouting2(
       absl::StrCat("/v1/", request.table_name(), ":explicitRouting2"));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

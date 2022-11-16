@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace vmmigration_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vmmigration_internal {
 
 VmMigrationLogging::VmMigrationLogging(std::shared_ptr<VmMigrationStub> child,
                                        TracingOptions tracing_options,
@@ -698,7 +698,7 @@ future<Status> VmMigrationLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsub_internal {
 
 class PublisherLogging : public PublisherStub {
  public:
@@ -87,8 +87,8 @@ class PublisherLogging : public PublisherStub {
   std::set<std::string> components_;
 };  // PublisherLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

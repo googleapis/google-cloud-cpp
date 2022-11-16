@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace profiler {
 
 class ProfilerServiceConnectionIdempotencyPolicy {
  public:
@@ -52,8 +52,8 @@ class ProfilerServiceConnectionIdempotencyPolicy {
 std::unique_ptr<ProfilerServiceConnectionIdempotencyPolicy>
 MakeDefaultProfilerServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

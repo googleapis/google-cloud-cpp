@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger_internal {
 
 std::shared_ptr<Debugger2Stub> CreateDefaultDebugger2Stub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -58,7 +58,7 @@ std::shared_ptr<Debugger2Stub> CreateDefaultDebugger2Stub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

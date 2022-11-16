@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks_mocks {
 
 /**
  * A class to mock `CloudTasksConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockCloudTasksConnection : public tasks::CloudTasksConnection {
+class MockCloudTasksConnection
+    : public GOOGLE_CLOUD_CPP_NS::CloudTasksConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -111,8 +112,8 @@ class MockCloudTasksConnection : public tasks::CloudTasksConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

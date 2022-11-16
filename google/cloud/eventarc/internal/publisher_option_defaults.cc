@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,26 +39,29 @@ Options PublisherDefaultOptions(Options options) {
       "eventarcpublishing.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<eventarc::PublisherRetryPolicyOption>()) {
-    options.set<eventarc::PublisherRetryPolicyOption>(
-        eventarc::PublisherLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::PublisherRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::PublisherRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::PublisherLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<eventarc::PublisherBackoffPolicyOption>()) {
-    options.set<eventarc::PublisherBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::PublisherBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::PublisherBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<eventarc::PublisherConnectionIdempotencyPolicyOption>()) {
-    options.set<eventarc::PublisherConnectionIdempotencyPolicyOption>(
-        eventarc::MakeDefaultPublisherConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::PublisherConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::PublisherConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultPublisherConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

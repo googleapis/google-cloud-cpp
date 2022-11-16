@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc {
 
 class PublisherConnectionIdempotencyPolicy {
  public:
@@ -49,8 +49,8 @@ class PublisherConnectionIdempotencyPolicy {
 std::unique_ptr<PublisherConnectionIdempotencyPolicy>
 MakeDefaultPublisherConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

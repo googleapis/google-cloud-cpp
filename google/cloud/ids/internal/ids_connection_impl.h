@@ -37,16 +37,16 @@
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace ids_internal {
 
-class IDSConnectionImpl : public ids::IDSConnection {
+class IDSConnectionImpl : public GOOGLE_CLOUD_CPP_NS::IDSConnection {
  public:
   ~IDSConnectionImpl() override = default;
 
   IDSConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<ids_internal::IDSStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IDSStub> stub, Options options);
 
   Options options() override { return options_; }
 
@@ -63,45 +63,53 @@ class IDSConnectionImpl : public ids::IDSConnection {
       google::cloud::ids::v1::DeleteEndpointRequest const& request) override;
 
  private:
-  std::unique_ptr<ids::IDSRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::IDSRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<ids::IDSRetryPolicyOption>()) {
-      return options.get<ids::IDSRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::IDSRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::IDSRetryPolicyOption>()->clone();
     }
-    return options_.get<ids::IDSRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::IDSRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<ids::IDSBackoffPolicyOption>()) {
-      return options.get<ids::IDSBackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::IDSBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::IDSBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<ids::IDSBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::IDSBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<ids::IDSConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::IDSConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<ids::IDSConnectionIdempotencyPolicyOption>()) {
-      return options.get<ids::IDSConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::IDSConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::IDSConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<ids::IDSConnectionIdempotencyPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::IDSConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<ids::IDSPollingPolicyOption>()) {
-      return options.get<ids::IDSPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::IDSPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::IDSPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<ids::IDSPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::IDSPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<ids_internal::IDSStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IDSStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

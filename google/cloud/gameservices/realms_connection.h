@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices {
 
 using RealmsServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        gameservices_internal::RealmsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::RealmsServiceRetryTraits>;
 
 using RealmsServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        gameservices_internal::RealmsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::RealmsServiceRetryTraits>;
 
 using RealmsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        gameservices_internal::RealmsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::RealmsServiceRetryTraits>;
 
 /**
  * The `RealmsServiceConnection` object for `RealmsServiceClient`.
@@ -59,7 +59,7 @@ using RealmsServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeRealmsServiceConnection()`.
  *
- * For mocking, see `gameservices_mocks::MockRealmsServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockRealmsServiceConnection`.
  */
 class RealmsServiceConnection {
  public:
@@ -100,7 +100,7 @@ class RealmsServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::gameservices::RealmsServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::RealmsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -111,8 +111,8 @@ class RealmsServiceConnection {
 std::shared_ptr<RealmsServiceConnection> MakeRealmsServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

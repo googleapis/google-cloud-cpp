@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 PagesConnection::~PagesConnection() = default;
 
@@ -68,11 +68,11 @@ std::shared_ptr<PagesConnection> MakePagesConnection(
                                  UnifiedCredentialsOptionList,
                                  PagesPolicyOptionList>(options, __func__);
   options =
-      dialogflow_cx_internal::PagesDefaultOptions(location, std::move(options));
+      GOOGLE_CLOUD_CPP_NS::PagesDefaultOptions(location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
-      dialogflow_cx_internal::CreateDefaultPagesStub(background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::PagesConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultPagesStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::PagesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -80,7 +80,7 @@ std::shared_ptr<PagesConnection> MakePagesConnection(Options options) {
   return MakePagesConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

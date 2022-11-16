@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
 GrafeasLogging::GrafeasLogging(std::shared_ptr<GrafeasStub> child,
                                TracingOptions tracing_options,
@@ -190,7 +190,7 @@ GrafeasLogging::ListNoteOccurrences(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

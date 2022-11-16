@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video {
 
 using ::google::cloud::Idempotency;
 
@@ -120,7 +120,7 @@ MakeDefaultLivestreamServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<LivestreamServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

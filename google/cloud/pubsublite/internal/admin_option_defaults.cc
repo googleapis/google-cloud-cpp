@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,35 +38,41 @@ Options AdminServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_ADMIN_SERVICE_AUTHORITY", "pubsublite.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<pubsublite::AdminServiceRetryPolicyOption>()) {
-    options.set<pubsublite::AdminServiceRetryPolicyOption>(
-        pubsublite::AdminServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::AdminServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<pubsublite::AdminServiceBackoffPolicyOption>()) {
-    options.set<pubsublite::AdminServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::AdminServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AdminServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<pubsublite::AdminServicePollingPolicyOption>()) {
-    options.set<pubsublite::AdminServicePollingPolicyOption>(
-        GenericPollingPolicy<pubsublite::AdminServiceRetryPolicyOption::Type,
-                             pubsublite::AdminServiceBackoffPolicyOption::Type>(
-            options.get<pubsublite::AdminServiceRetryPolicyOption>()->clone(),
-            options.get<pubsublite::AdminServiceBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::AdminServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AdminServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::AdminServiceBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::AdminServiceBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options
-           .has<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>(
-        pubsublite::MakeDefaultAdminServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       AdminServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::AdminServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultAdminServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

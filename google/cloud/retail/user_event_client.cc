@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 UserEventServiceClient::UserEventServiceClient(
     std::shared_ptr<UserEventServiceConnection> connection, Options opts)
@@ -70,7 +70,7 @@ UserEventServiceClient::RejoinUserEvents(
   return connection_->RejoinUserEvents(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

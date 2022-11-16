@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 TransitionRouteGroupsConnection::~TransitionRouteGroupsConnection() = default;
 
@@ -76,13 +76,13 @@ MakeTransitionRouteGroupsConnection(std::string const& location,
                                  UnifiedCredentialsOptionList,
                                  TransitionRouteGroupsPolicyOptionList>(
       options, __func__);
-  options = dialogflow_cx_internal::TransitionRouteGroupsDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_cx_internal::CreateDefaultTransitionRouteGroupsStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultTransitionRouteGroupsStub(
       background->cq(), options);
   return std::make_shared<
-      dialogflow_cx_internal::TransitionRouteGroupsConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::TransitionRouteGroupsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -91,7 +91,7 @@ MakeTransitionRouteGroupsConnection(Options options) {
   return MakeTransitionRouteGroupsConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

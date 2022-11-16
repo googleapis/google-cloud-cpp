@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace privateca_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca_internal {
 
 CertificateAuthorityServiceStub::~CertificateAuthorityServiceStub() = default;
 
@@ -505,7 +505,7 @@ future<Status> DefaultCertificateAuthorityServiceStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

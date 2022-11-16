@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig {
 
 OsConfigServiceConnection::~OsConfigServiceConnection() = default;
 
@@ -119,15 +119,15 @@ std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(
                                  OsConfigServicePolicyOptionList>(options,
                                                                   __func__);
   options =
-      osconfig_internal::OsConfigServiceDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::OsConfigServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = osconfig_internal::CreateDefaultOsConfigServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultOsConfigServiceStub(
       background->cq(), options);
-  return std::make_shared<osconfig_internal::OsConfigServiceConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::OsConfigServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

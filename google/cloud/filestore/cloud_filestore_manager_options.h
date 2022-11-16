@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace filestore {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -80,8 +80,8 @@ using CloudFilestoreManagerPolicyOptionList =
                CloudFilestoreManagerPollingPolicyOption,
                CloudFilestoreManagerConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

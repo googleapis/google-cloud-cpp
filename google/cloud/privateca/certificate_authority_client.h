@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace privateca {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca {
 
 ///
 /// [Certificate Authority
@@ -1427,8 +1427,8 @@ class CertificateAuthorityServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

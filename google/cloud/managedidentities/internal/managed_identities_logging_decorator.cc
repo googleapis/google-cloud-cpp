@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities_internal {
 
 ManagedIdentitiesServiceLogging::ManagedIdentitiesServiceLogging(
     std::shared_ptr<ManagedIdentitiesServiceStub> child,
@@ -205,7 +205,7 @@ future<Status> ManagedIdentitiesServiceLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

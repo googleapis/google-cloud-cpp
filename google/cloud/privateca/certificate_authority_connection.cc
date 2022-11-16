@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace privateca {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca {
 
 CertificateAuthorityServiceConnection::
     ~CertificateAuthorityServiceConnection() = default;
@@ -271,17 +271,17 @@ MakeCertificateAuthorityServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  CertificateAuthorityServicePolicyOptionList>(
       options, __func__);
-  options = privateca_internal::CertificateAuthorityServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = privateca_internal::CreateDefaultCertificateAuthorityServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultCertificateAuthorityServiceStub(
       background->cq(), options);
   return std::make_shared<
-      privateca_internal::CertificateAuthorityServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

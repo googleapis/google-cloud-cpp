@@ -28,14 +28,14 @@
 
 namespace google {
 namespace cloud {
-namespace websecurityscanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace websecurityscanner_internal {
 
 std::shared_ptr<WebSecurityScannerStub> CreateDefaultWebSecurityScannerStub(
     google::cloud::CompletionQueue cq, Options const& options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization {
 
 ValidationHelperV1Client::ValidationHelperV1Client(
     std::shared_ptr<ValidationHelperV1Connection> connection, Options opts)
@@ -41,7 +41,7 @@ ValidationHelperV1Client::ValidateAttestationOccurrence(
   return connection_->ValidateAttestationOccurrence(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks_mocks {
 
 /**
  * A class to mock `ManagedNotebookServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockManagedNotebookServiceConnection
-    : public notebooks::ManagedNotebookServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -101,8 +101,8 @@ class MockManagedNotebookServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

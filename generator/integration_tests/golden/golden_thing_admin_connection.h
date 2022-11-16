@@ -34,18 +34,18 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden {
 
 using GoldenThingAdminRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    golden_internal::GoldenThingAdminRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::GoldenThingAdminRetryTraits>;
 
 using GoldenThingAdminLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    golden_internal::GoldenThingAdminRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::GoldenThingAdminRetryTraits>;
 
 using GoldenThingAdminLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        golden_internal::GoldenThingAdminRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::GoldenThingAdminRetryTraits>;
 
 /**
  * The `GoldenThingAdminConnection` object for `GoldenThingAdminClient`.
@@ -57,7 +57,7 @@ using GoldenThingAdminLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeGoldenThingAdminConnection()`.
  *
- * For mocking, see `golden_mocks::MockGoldenThingAdminConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockGoldenThingAdminConnection`.
  */
 class GoldenThingAdminConnection {
  public:
@@ -139,7 +139,7 @@ class GoldenThingAdminConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::golden::GoldenThingAdminPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::GoldenThingAdminPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -150,8 +150,8 @@ class GoldenThingAdminConnection {
 std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

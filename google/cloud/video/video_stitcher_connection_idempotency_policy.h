@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video {
 
 class VideoStitcherServiceConnectionIdempotencyPolicy {
  public:
@@ -107,8 +107,8 @@ class VideoStitcherServiceConnectionIdempotencyPolicy {
 std::unique_ptr<VideoStitcherServiceConnectionIdempotencyPolicy>
 MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

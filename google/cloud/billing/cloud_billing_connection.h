@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing {
 
 using CloudBillingRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        billing_internal::CloudBillingRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudBillingRetryTraits>;
 
 using CloudBillingLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        billing_internal::CloudBillingRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudBillingRetryTraits>;
 
 using CloudBillingLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        billing_internal::CloudBillingRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudBillingRetryTraits>;
 
 /**
  * The `CloudBillingConnection` object for `CloudBillingClient`.
@@ -56,7 +56,7 @@ using CloudBillingLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeCloudBillingConnection()`.
  *
- * For mocking, see `billing_mocks::MockCloudBillingConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockCloudBillingConnection`.
  */
 class CloudBillingConnection {
  public:
@@ -116,7 +116,7 @@ class CloudBillingConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::billing::CloudBillingPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CloudBillingPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -127,8 +127,8 @@ class CloudBillingConnection {
 std::shared_ptr<CloudBillingConnection> MakeCloudBillingConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,34 +38,40 @@ Options WorkflowsDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_WORKFLOWS_AUTHORITY", "workflows.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<workflows::WorkflowsRetryPolicyOption>()) {
-    options.set<workflows::WorkflowsRetryPolicyOption>(
-        workflows::WorkflowsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::WorkflowsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::WorkflowsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::WorkflowsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<workflows::WorkflowsBackoffPolicyOption>()) {
-    options.set<workflows::WorkflowsBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::WorkflowsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::WorkflowsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<workflows::WorkflowsPollingPolicyOption>()) {
-    options.set<workflows::WorkflowsPollingPolicyOption>(
-        GenericPollingPolicy<workflows::WorkflowsRetryPolicyOption::Type,
-                             workflows::WorkflowsBackoffPolicyOption::Type>(
-            options.get<workflows::WorkflowsRetryPolicyOption>()->clone(),
-            options.get<workflows::WorkflowsBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::WorkflowsPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::WorkflowsPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::WorkflowsRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::WorkflowsBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::WorkflowsRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::WorkflowsBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<workflows::WorkflowsConnectionIdempotencyPolicyOption>()) {
-    options.set<workflows::WorkflowsConnectionIdempotencyPolicyOption>(
-        workflows::MakeDefaultWorkflowsConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::WorkflowsConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::WorkflowsConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultWorkflowsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

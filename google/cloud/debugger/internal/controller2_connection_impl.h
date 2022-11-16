@@ -33,16 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger_internal {
 
-class Controller2ConnectionImpl : public debugger::Controller2Connection {
+class Controller2ConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::Controller2Connection {
  public:
   ~Controller2ConnectionImpl() override = default;
 
   Controller2ConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<debugger_internal::Controller2Stub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::Controller2Stub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -63,42 +64,49 @@ class Controller2ConnectionImpl : public debugger::Controller2Connection {
           request) override;
 
  private:
-  std::unique_ptr<debugger::Controller2RetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::Controller2RetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<debugger::Controller2RetryPolicyOption>()) {
-      return options.get<debugger::Controller2RetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::Controller2RetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::Controller2RetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<debugger::Controller2RetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::Controller2RetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<debugger::Controller2BackoffPolicyOption>()) {
-      return options.get<debugger::Controller2BackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::Controller2BackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::Controller2BackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<debugger::Controller2BackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::Controller2BackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<debugger::Controller2ConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::Controller2ConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<debugger::Controller2ConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        Controller2ConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<debugger::Controller2ConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   Controller2ConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<debugger::Controller2ConnectionIdempotencyPolicyOption>()
+        .get<
+            GOOGLE_CLOUD_CPP_NS::Controller2ConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<debugger_internal::Controller2Stub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::Controller2Stub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

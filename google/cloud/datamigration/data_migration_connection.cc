@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace datamigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datamigration {
 
 DataMigrationServiceConnection::~DataMigrationServiceConnection() = default;
 
@@ -171,17 +171,17 @@ MakeDataMigrationServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  DataMigrationServicePolicyOptionList>(
       options, __func__);
-  options = datamigration_internal::DataMigrationServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::DataMigrationServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = datamigration_internal::CreateDefaultDataMigrationServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultDataMigrationServiceStub(
       background->cq(), options);
   return std::make_shared<
-      datamigration_internal::DataMigrationServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::DataMigrationServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

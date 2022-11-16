@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace tpu {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu {
 
 ///
 /// Manages TPU nodes and other resources
@@ -437,8 +437,8 @@ class TpuClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

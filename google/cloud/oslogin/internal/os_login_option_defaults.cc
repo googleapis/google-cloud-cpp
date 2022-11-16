@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace oslogin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace oslogin_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,27 +38,30 @@ Options OsLoginServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_OS_LOGIN_SERVICE_AUTHORITY", "oslogin.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<oslogin::OsLoginServiceRetryPolicyOption>()) {
-    options.set<oslogin::OsLoginServiceRetryPolicyOption>(
-        oslogin::OsLoginServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::OsLoginServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::OsLoginServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::OsLoginServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<oslogin::OsLoginServiceBackoffPolicyOption>()) {
-    options.set<oslogin::OsLoginServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::OsLoginServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::OsLoginServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<oslogin::OsLoginServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<oslogin::OsLoginServiceConnectionIdempotencyPolicyOption>(
-        oslogin::MakeDefaultOsLoginServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       OsLoginServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::OsLoginServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultOsLoginServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

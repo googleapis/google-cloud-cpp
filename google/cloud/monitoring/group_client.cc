@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 GroupServiceClient::GroupServiceClient(
     std::shared_ptr<GroupServiceConnection> connection, Options opts)
@@ -117,7 +117,7 @@ GroupServiceClient::ListGroupMembers(
   return connection_->ListGroupMembers(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

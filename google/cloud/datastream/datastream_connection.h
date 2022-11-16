@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace datastream {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream {
 
 using DatastreamRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    datastream_internal::DatastreamRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::DatastreamRetryTraits>;
 
 using DatastreamLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        datastream_internal::DatastreamRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DatastreamRetryTraits>;
 
 using DatastreamLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        datastream_internal::DatastreamRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DatastreamRetryTraits>;
 
 /**
  * The `DatastreamConnection` object for `DatastreamClient`.
@@ -58,7 +58,7 @@ using DatastreamLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeDatastreamConnection()`.
  *
- * For mocking, see `datastream_mocks::MockDatastreamConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockDatastreamConnection`.
  */
 class DatastreamConnection {
  public:
@@ -179,7 +179,7 @@ class DatastreamConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::datastream::DatastreamPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::DatastreamPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -190,8 +190,8 @@ class DatastreamConnection {
 std::shared_ptr<DatastreamConnection> MakeDatastreamConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

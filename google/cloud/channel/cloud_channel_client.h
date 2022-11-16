@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace channel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace channel {
 
 ///
 /// CloudChannelService lets Google cloud resellers and distributors manage
@@ -2331,8 +2331,8 @@ class CloudChannelServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

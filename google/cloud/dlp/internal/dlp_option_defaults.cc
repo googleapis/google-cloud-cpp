@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace dlp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dlp_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,26 +38,30 @@ Options DlpServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_DLP_SERVICE_AUTHORITY", "dlp.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dlp::DlpServiceRetryPolicyOption>()) {
-    options.set<dlp::DlpServiceRetryPolicyOption>(
-        dlp::DlpServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DlpServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DlpServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::DlpServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dlp::DlpServiceBackoffPolicyOption>()) {
-    options.set<dlp::DlpServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DlpServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DlpServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<dlp::DlpServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<dlp::DlpServiceConnectionIdempotencyPolicyOption>(
-        dlp::MakeDefaultDlpServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::DlpServiceConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::DlpServiceConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultDlpServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

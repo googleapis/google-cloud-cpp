@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 SessionEntityTypesStub::~SessionEntityTypesStub() = default;
 
@@ -97,7 +97,7 @@ Status DefaultSessionEntityTypesStub::DeleteSessionEntityType(
   return google::cloud::Status();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

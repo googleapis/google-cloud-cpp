@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp_internal {
 
 AppConnectorsServiceConnectionImpl::AppConnectorsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<beyondcorp_internal::AppConnectorsServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AppConnectorsServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -46,9 +46,9 @@ AppConnectorsServiceConnectionImpl::ListAppConnectors(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<beyondcorp::AppConnectorsServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::AppConnectorsServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAppConnectors(request);
   char const* function_name = __func__;
@@ -218,7 +218,7 @@ AppConnectorsServiceConnectionImpl::ReportStatus(
       idempotency_policy()->ReportStatus(request), polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

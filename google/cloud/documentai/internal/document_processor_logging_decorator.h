@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai_internal {
 
 class DocumentProcessorServiceLogging : public DocumentProcessorServiceStub {
  public:
@@ -153,8 +153,8 @@ class DocumentProcessorServiceLogging : public DocumentProcessorServiceStub {
   std::set<std::string> components_;
 };  // DocumentProcessorServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

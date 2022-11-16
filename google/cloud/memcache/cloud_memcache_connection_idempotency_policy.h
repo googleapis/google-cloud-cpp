@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace memcache {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache {
 
 class CloudMemcacheConnectionIdempotencyPolicy {
  public:
@@ -63,8 +63,8 @@ class CloudMemcacheConnectionIdempotencyPolicy {
 std::unique_ptr<CloudMemcacheConnectionIdempotencyPolicy>
 MakeDefaultCloudMemcacheConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

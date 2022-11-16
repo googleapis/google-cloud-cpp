@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace webrisk {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace webrisk {
 
 using WebRiskServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        webrisk_internal::WebRiskServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::WebRiskServiceRetryTraits>;
 
 using WebRiskServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        webrisk_internal::WebRiskServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::WebRiskServiceRetryTraits>;
 
 using WebRiskServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        webrisk_internal::WebRiskServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::WebRiskServiceRetryTraits>;
 
 /**
  * The `WebRiskServiceConnection` object for `WebRiskServiceClient`.
@@ -55,7 +55,7 @@ using WebRiskServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeWebRiskServiceConnection()`.
  *
- * For mocking, see `webrisk_mocks::MockWebRiskServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockWebRiskServiceConnection`.
  */
 class WebRiskServiceConnection {
  public:
@@ -90,7 +90,7 @@ class WebRiskServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::webrisk::WebRiskServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::WebRiskServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -101,8 +101,8 @@ class WebRiskServiceConnection {
 std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

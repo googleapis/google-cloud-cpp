@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap_internal {
 
 IdentityAwareProxyAdminServiceAuth::IdentityAwareProxyAdminServiceAuth(
     std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
@@ -119,7 +119,7 @@ IdentityAwareProxyAdminServiceAuth::UpdateTunnelDestGroup(
   return child_->UpdateTunnelDestGroup(context, request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

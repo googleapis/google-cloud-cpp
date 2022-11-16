@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accessapproval {
 
 AccessApprovalClient::AccessApprovalClient(
     std::shared_ptr<AccessApprovalConnection> connection, Options opts)
@@ -167,7 +167,7 @@ AccessApprovalClient::GetAccessApprovalServiceAccount(
   return connection_->GetAccessApprovalServiceAccount(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

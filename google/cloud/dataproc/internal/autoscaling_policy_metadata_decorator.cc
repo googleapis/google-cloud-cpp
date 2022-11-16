@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 AutoscalingPolicyServiceMetadata::AutoscalingPolicyServiceMetadata(
     std::shared_ptr<AutoscalingPolicyServiceStub> child)
@@ -95,7 +95,7 @@ void AutoscalingPolicyServiceMetadata::SetMetadata(
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

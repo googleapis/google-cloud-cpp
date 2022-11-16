@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace privateca {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca {
 
 CertificateAuthorityServiceClient::CertificateAuthorityServiceClient(
     std::shared_ptr<CertificateAuthorityServiceConnection> connection,
@@ -600,7 +600,7 @@ CertificateAuthorityServiceClient::UpdateCertificateTemplate(
   return connection_->UpdateCertificateTemplate(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace video_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_mocks {
 
 /**
  * A class to mock `LivestreamServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockLivestreamServiceConnection
-    : public video::LivestreamServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::LivestreamServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -140,8 +140,8 @@ class MockLivestreamServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

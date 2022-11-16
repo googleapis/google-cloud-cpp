@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization {
 
 using ValidationHelperV1RetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        binaryauthorization_internal::ValidationHelperV1RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ValidationHelperV1RetryTraits>;
 
 using ValidationHelperV1LimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        binaryauthorization_internal::ValidationHelperV1RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ValidationHelperV1RetryTraits>;
 
 using ValidationHelperV1LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        binaryauthorization_internal::ValidationHelperV1RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ValidationHelperV1RetryTraits>;
 
 /**
  * The `ValidationHelperV1Connection` object for `ValidationHelperV1Client`.
@@ -56,7 +56,7 @@ using ValidationHelperV1LimitedErrorCountRetryPolicy =
  * To create a concrete instance, see `MakeValidationHelperV1Connection()`.
  *
  * For mocking, see
- * `binaryauthorization_mocks::MockValidationHelperV1Connection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockValidationHelperV1Connection`.
  */
 class ValidationHelperV1Connection {
  public:
@@ -86,7 +86,7 @@ class ValidationHelperV1Connection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::binaryauthorization::ValidationHelperV1PolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ValidationHelperV1PolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -97,8 +97,8 @@ class ValidationHelperV1Connection {
 std::shared_ptr<ValidationHelperV1Connection> MakeValidationHelperV1Connection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

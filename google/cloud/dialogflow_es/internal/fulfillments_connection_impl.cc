@@ -26,12 +26,12 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 FulfillmentsConnectionImpl::FulfillmentsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_es_internal::FulfillmentsStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::FulfillmentsStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -66,7 +66,7 @@ FulfillmentsConnectionImpl::UpdateFulfillment(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace deploy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace deploy_internal {
 
 CloudDeployMetadata::CloudDeployMetadata(std::shared_ptr<CloudDeployStub> child)
     : child_(std::move(child)),
@@ -247,7 +247,7 @@ void CloudDeployMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

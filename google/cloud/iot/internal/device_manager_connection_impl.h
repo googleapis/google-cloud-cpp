@@ -34,16 +34,18 @@
 
 namespace google {
 namespace cloud {
-namespace iot_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iot_internal {
 
-class DeviceManagerConnectionImpl : public iot::DeviceManagerConnection {
+class DeviceManagerConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::DeviceManagerConnection {
  public:
   ~DeviceManagerConnectionImpl() override = default;
 
   DeviceManagerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<iot_internal::DeviceManagerStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DeviceManagerStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -115,40 +117,52 @@ class DeviceManagerConnectionImpl : public iot::DeviceManagerConnection {
       override;
 
  private:
-  std::unique_ptr<iot::DeviceManagerRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DeviceManagerRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<iot::DeviceManagerRetryPolicyOption>()) {
-      return options.get<iot::DeviceManagerRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DeviceManagerRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::DeviceManagerRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<iot::DeviceManagerRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::DeviceManagerRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<iot::DeviceManagerBackoffPolicyOption>()) {
-      return options.get<iot::DeviceManagerBackoffPolicyOption>()->clone();
-    }
-    return options_.get<iot::DeviceManagerBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<iot::DeviceManagerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<iot::DeviceManagerConnectionIdempotencyPolicyOption>()) {
-      return options.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DeviceManagerBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::DeviceManagerBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<iot::DeviceManagerConnectionIdempotencyPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::DeviceManagerBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DeviceManagerConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        DeviceManagerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   DeviceManagerConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 DeviceManagerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<iot_internal::DeviceManagerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DeviceManagerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

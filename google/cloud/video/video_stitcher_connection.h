@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video {
 
 using VideoStitcherServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        video_internal::VideoStitcherServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryTraits>;
 
 using VideoStitcherServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        video_internal::VideoStitcherServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryTraits>;
 
 using VideoStitcherServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        video_internal::VideoStitcherServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryTraits>;
 
 /**
  * The `VideoStitcherServiceConnection` object for `VideoStitcherServiceClient`.
@@ -56,7 +56,8 @@ using VideoStitcherServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeVideoStitcherServiceConnection()`.
  *
- * For mocking, see `video_mocks::MockVideoStitcherServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockVideoStitcherServiceConnection`.
  */
 class VideoStitcherServiceConnection {
  public:
@@ -155,7 +156,7 @@ class VideoStitcherServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::video::VideoStitcherServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::VideoStitcherServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -166,8 +167,8 @@ class VideoStitcherServiceConnection {
 std::shared_ptr<VideoStitcherServiceConnection>
 MakeVideoStitcherServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace apikeys {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apikeys {
 
 ///
 /// Manages the API keys associated with projects.
@@ -417,8 +417,8 @@ class ApiKeysClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

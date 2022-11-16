@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -40,36 +40,36 @@ Options BinauthzManagementServiceV1DefaultOptions(Options options) {
       "binaryauthorization.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<binaryauthorization::
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
                        BinauthzManagementServiceV1RetryPolicyOption>()) {
     options.set<
-        binaryauthorization::BinauthzManagementServiceV1RetryPolicyOption>(
-        binaryauthorization::BinauthzManagementServiceV1LimitedTimeRetryPolicy(
+        GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1RetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1LimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<binaryauthorization::
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
                        BinauthzManagementServiceV1BackoffPolicyOption>()) {
     options.set<
-        binaryauthorization::BinauthzManagementServiceV1BackoffPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1BackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options.has<
-          binaryauthorization::
+          GOOGLE_CLOUD_CPP_NS::
               BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>()) {
     options.set<
-        binaryauthorization::
+        GOOGLE_CLOUD_CPP_NS::
             BinauthzManagementServiceV1ConnectionIdempotencyPolicyOption>(
-        binaryauthorization::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

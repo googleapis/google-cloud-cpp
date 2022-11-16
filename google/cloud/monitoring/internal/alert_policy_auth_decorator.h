@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 class AlertPolicyServiceAuth : public AlertPolicyServiceStub {
  public:
@@ -63,8 +63,8 @@ class AlertPolicyServiceAuth : public AlertPolicyServiceStub {
   std::shared_ptr<AlertPolicyServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

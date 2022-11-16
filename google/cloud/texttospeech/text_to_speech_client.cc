@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace texttospeech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace texttospeech {
 
 TextToSpeechClient::TextToSpeechClient(
     std::shared_ptr<TextToSpeechConnection> connection, Options opts)
@@ -69,7 +69,7 @@ TextToSpeechClient::SynthesizeSpeech(
   return connection_->SynthesizeSpeech(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

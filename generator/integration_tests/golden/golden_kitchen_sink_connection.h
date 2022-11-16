@@ -33,18 +33,18 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden {
 
 using GoldenKitchenSinkRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    golden_internal::GoldenKitchenSinkRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkRetryTraits>;
 
 using GoldenKitchenSinkLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    golden_internal::GoldenKitchenSinkRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkRetryTraits>;
 
 using GoldenKitchenSinkLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        golden_internal::GoldenKitchenSinkRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkRetryTraits>;
 
 /**
  * The `GoldenKitchenSinkConnection` object for `GoldenKitchenSinkClient`.
@@ -56,7 +56,7 @@ using GoldenKitchenSinkLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeGoldenKitchenSinkConnection()`.
  *
- * For mocking, see `golden_mocks::MockGoldenKitchenSinkConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockGoldenKitchenSinkConnection`.
  */
 class GoldenKitchenSinkConnection {
  public:
@@ -110,7 +110,7 @@ class GoldenKitchenSinkConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::golden::GoldenKitchenSinkPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -121,8 +121,8 @@ class GoldenKitchenSinkConnection {
 std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

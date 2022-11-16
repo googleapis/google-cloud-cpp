@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol {
 
 ///
 /// [Google Quota Control API](/service-control/overview)
@@ -122,8 +122,8 @@ class QuotaControllerClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_internal {
 
 class DataCatalogLogging : public DataCatalogStub {
  public:
@@ -198,8 +198,8 @@ class DataCatalogLogging : public DataCatalogStub {
   std::set<std::string> components_;
 };  // DataCatalogLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

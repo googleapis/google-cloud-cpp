@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,38 +39,39 @@ Options ProjectsDefaultOptions(Options options) {
       "cloudresourcemanager.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<resourcemanager::ProjectsRetryPolicyOption>()) {
-    options.set<resourcemanager::ProjectsRetryPolicyOption>(
-        resourcemanager::ProjectsLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ProjectsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ProjectsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ProjectsLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<resourcemanager::ProjectsBackoffPolicyOption>()) {
-    options.set<resourcemanager::ProjectsBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ProjectsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ProjectsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<resourcemanager::ProjectsPollingPolicyOption>()) {
-    options.set<resourcemanager::ProjectsPollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ProjectsPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ProjectsPollingPolicyOption>(
         GenericPollingPolicy<
-            resourcemanager::ProjectsRetryPolicyOption::Type,
-            resourcemanager::ProjectsBackoffPolicyOption::Type>(
-            options.get<resourcemanager::ProjectsRetryPolicyOption>()->clone(),
-            options.get<resourcemanager::ProjectsBackoffPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::ProjectsRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::ProjectsBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::ProjectsRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::ProjectsBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options
-           .has<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>()) {
-    options.set<resourcemanager::ProjectsConnectionIdempotencyPolicyOption>(
-        resourcemanager::MakeDefaultProjectsConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ProjectsConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ProjectsConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultProjectsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms {
 
 KeyManagementServiceConnection::~KeyManagementServiceConnection() = default;
 
@@ -205,16 +205,17 @@ MakeKeyManagementServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  KeyManagementServicePolicyOptionList>(
       options, __func__);
-  options =
-      kms_internal::KeyManagementServiceDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::KeyManagementServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = kms_internal::CreateDefaultKeyManagementServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultKeyManagementServiceStub(
       background->cq(), options);
-  return std::make_shared<kms_internal::KeyManagementServiceConnectionImpl>(
+  return std::make_shared<
+      GOOGLE_CLOUD_CPP_NS::KeyManagementServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

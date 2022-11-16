@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace run {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace run {
 
 RevisionsConnection::~RevisionsConnection() = default;
 
@@ -60,15 +60,15 @@ std::shared_ptr<RevisionsConnection> MakeRevisionsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  RevisionsPolicyOptionList>(options, __func__);
-  options = run_internal::RevisionsDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::RevisionsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      run_internal::CreateDefaultRevisionsStub(background->cq(), options);
-  return std::make_shared<run_internal::RevisionsConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultRevisionsStub(background->cq(),
+                                                              options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::RevisionsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

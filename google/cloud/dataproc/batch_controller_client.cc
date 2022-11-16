@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 BatchControllerClient::BatchControllerClient(
     std::shared_ptr<BatchControllerConnection> connection, Options opts)
@@ -95,7 +95,7 @@ Status BatchControllerClient::DeleteBatch(
   return connection_->DeleteBatch(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace contactcenterinsights {
 
 using ContactCenterInsightsRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        contactcenterinsights_internal::ContactCenterInsightsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsRetryTraits>;
 
 using ContactCenterInsightsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        contactcenterinsights_internal::ContactCenterInsightsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsRetryTraits>;
 
 using ContactCenterInsightsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        contactcenterinsights_internal::ContactCenterInsightsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsRetryTraits>;
 
 /**
  * The `ContactCenterInsightsConnection` object for
@@ -61,7 +61,7 @@ using ContactCenterInsightsLimitedErrorCountRetryPolicy =
  * To create a concrete instance, see `MakeContactCenterInsightsConnection()`.
  *
  * For mocking, see
- * `contactcenterinsights_mocks::MockContactCenterInsightsConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockContactCenterInsightsConnection`.
  */
 class ContactCenterInsightsConnection {
  public:
@@ -244,8 +244,7 @@ class ContactCenterInsightsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * -
- * `google::cloud::contactcenterinsights::ContactCenterInsightsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -256,8 +255,8 @@ class ContactCenterInsightsConnection {
 std::shared_ptr<ContactCenterInsightsConnection>
 MakeContactCenterInsightsConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

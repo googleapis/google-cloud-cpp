@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms_internal {
 
 EkmServiceLogging::EkmServiceLogging(std::shared_ptr<EkmServiceStub> child,
                                      TracingOptions tracing_options,
@@ -84,7 +84,7 @@ EkmServiceLogging::UpdateEkmConnection(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

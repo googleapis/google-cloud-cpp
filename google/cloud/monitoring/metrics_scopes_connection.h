@@ -33,20 +33,20 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 using MetricsScopesRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        monitoring_internal::MetricsScopesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::MetricsScopesRetryTraits>;
 
 using MetricsScopesLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        monitoring_internal::MetricsScopesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::MetricsScopesRetryTraits>;
 
 using MetricsScopesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        monitoring_internal::MetricsScopesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::MetricsScopesRetryTraits>;
 
 /**
  * The `MetricsScopesConnection` object for `MetricsScopesClient`.
@@ -58,7 +58,7 @@ using MetricsScopesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeMetricsScopesConnection()`.
  *
- * For mocking, see `monitoring_mocks::MockMetricsScopesConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockMetricsScopesConnection`.
  */
 class MetricsScopesConnection {
  public:
@@ -103,7 +103,7 @@ class MetricsScopesConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::monitoring::MetricsScopesPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::MetricsScopesPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -114,8 +114,8 @@ class MetricsScopesConnection {
 std::shared_ptr<MetricsScopesConnection> MakeMetricsScopesConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

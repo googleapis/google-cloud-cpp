@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace secretmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace secretmanager_internal {
 
 class SecretManagerServiceConnectionImpl
-    : public secretmanager::SecretManagerServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::SecretManagerServiceConnection {
  public:
   ~SecretManagerServiceConnectionImpl() override = default;
 
   SecretManagerServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<secretmanager_internal::SecretManagerServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecretManagerServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -109,55 +109,58 @@ class SecretManagerServiceConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<secretmanager::SecretManagerServiceRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::SecretManagerServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<secretmanager::SecretManagerServiceRetryPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::SecretManagerServiceRetryPolicyOption>()) {
       return options
-          .get<secretmanager::SecretManagerServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::SecretManagerServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<secretmanager::SecretManagerServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::SecretManagerServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<secretmanager::SecretManagerServiceBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::SecretManagerServiceBackoffPolicyOption>()) {
       return options
-          .get<secretmanager::SecretManagerServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::SecretManagerServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<secretmanager::SecretManagerServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::SecretManagerServiceBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      secretmanager::SecretManagerServiceConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::SecretManagerServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<secretmanager::
+            .has<GOOGLE_CLOUD_CPP_NS::
                      SecretManagerServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<secretmanager::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    SecretManagerServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<secretmanager::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  SecretManagerServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<secretmanager_internal::SecretManagerServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SecretManagerServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices {
 
 RealmsServiceClient::RealmsServiceClient(
     std::shared_ptr<RealmsServiceConnection> connection, Options opts)
@@ -122,7 +122,7 @@ RealmsServiceClient::PreviewRealmUpdate(
   return connection_->PreviewRealmUpdate(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

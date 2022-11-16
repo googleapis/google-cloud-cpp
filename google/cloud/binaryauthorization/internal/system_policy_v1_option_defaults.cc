@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,30 +39,30 @@ Options SystemPolicyV1DefaultOptions(Options options) {
       "binaryauthorization.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<binaryauthorization::SystemPolicyV1RetryPolicyOption>()) {
-    options.set<binaryauthorization::SystemPolicyV1RetryPolicyOption>(
-        binaryauthorization::SystemPolicyV1LimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1RetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1RetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::SystemPolicyV1LimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<binaryauthorization::SystemPolicyV1BackoffPolicyOption>()) {
-    options.set<binaryauthorization::SystemPolicyV1BackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1BackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1BackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<binaryauthorization::
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
                        SystemPolicyV1ConnectionIdempotencyPolicyOption>()) {
     options.set<
-        binaryauthorization::SystemPolicyV1ConnectionIdempotencyPolicyOption>(
-        binaryauthorization::
+        GOOGLE_CLOUD_CPP_NS::SystemPolicyV1ConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultSystemPolicyV1ConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_internal {
 
 class BigtableRoundRobin : public BigtableStub {
  public:
@@ -113,8 +113,8 @@ class BigtableRoundRobin : public BigtableStub {
   std::size_t current_ = 0;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

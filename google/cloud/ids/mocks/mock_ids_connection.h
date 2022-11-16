@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace ids_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace ids_mocks {
 
 /**
  * A class to mock `IDSConnection`.
@@ -42,7 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockIDSConnection : public ids::IDSConnection {
+class MockIDSConnection : public GOOGLE_CLOUD_CPP_NS::IDSConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -65,8 +65,8 @@ class MockIDSConnection : public ids::IDSConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

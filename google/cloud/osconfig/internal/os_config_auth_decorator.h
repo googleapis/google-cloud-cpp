@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig_internal {
 
 class OsConfigServiceAuth : public OsConfigServiceStub {
  public:
@@ -104,8 +104,8 @@ class OsConfigServiceAuth : public OsConfigServiceStub {
   std::shared_ptr<OsConfigServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer {
 
 using StorageTransferServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        storagetransfer_internal::StorageTransferServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::StorageTransferServiceRetryTraits>;
 
 using StorageTransferServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        storagetransfer_internal::StorageTransferServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::StorageTransferServiceRetryTraits>;
 
 using StorageTransferServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        storagetransfer_internal::StorageTransferServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::StorageTransferServiceRetryTraits>;
 
 /**
  * The `StorageTransferServiceConnection` object for
@@ -61,7 +61,7 @@ using StorageTransferServiceLimitedErrorCountRetryPolicy =
  * To create a concrete instance, see `MakeStorageTransferServiceConnection()`.
  *
  * For mocking, see
- * `storagetransfer_mocks::MockStorageTransferServiceConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockStorageTransferServiceConnection`.
  */
 class StorageTransferServiceConnection {
  public:
@@ -133,7 +133,8 @@ class StorageTransferServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::storagetransfer::StorageTransferServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::StorageTransferServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -144,8 +145,8 @@ class StorageTransferServiceConnection {
 std::shared_ptr<StorageTransferServiceConnection>
 MakeStorageTransferServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

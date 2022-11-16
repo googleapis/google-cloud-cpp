@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace oslogin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace oslogin {
 
 ///
 /// Cloud OS Login API
@@ -372,8 +372,8 @@ class OsLoginServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

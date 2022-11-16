@@ -26,12 +26,12 @@
 
 namespace google {
 namespace cloud {
-namespace texttospeech_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace texttospeech_internal {
 
 TextToSpeechConnectionImpl::TextToSpeechConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<texttospeech_internal::TextToSpeechStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TextToSpeechStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -64,7 +64,7 @@ TextToSpeechConnectionImpl::SynthesizeSpeech(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accessapproval_internal {
 
 class AccessApprovalStub {
  public:
@@ -156,8 +156,8 @@ class DefaultAccessApprovalStub : public AccessApprovalStub {
       grpc_stub_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

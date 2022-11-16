@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace assuredworkloads {
 
 AssuredWorkloadsServiceClient::AssuredWorkloadsServiceClient(
     std::shared_ptr<AssuredWorkloadsServiceConnection> connection, Options opts)
@@ -171,7 +171,7 @@ AssuredWorkloadsServiceClient::AcknowledgeViolation(
   return connection_->AcknowledgeViolation(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

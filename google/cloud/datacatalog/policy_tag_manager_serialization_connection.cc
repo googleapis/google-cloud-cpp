@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog {
 
 PolicyTagManagerSerializationConnection::
     ~PolicyTagManagerSerializationConnection() = default;
@@ -59,18 +59,18 @@ MakePolicyTagManagerSerializationConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  PolicyTagManagerSerializationPolicyOptionList>(
       options, __func__);
-  options = datacatalog_internal::PolicyTagManagerSerializationDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::PolicyTagManagerSerializationDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
-      datacatalog_internal::CreateDefaultPolicyTagManagerSerializationStub(
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultPolicyTagManagerSerializationStub(
           background->cq(), options);
   return std::make_shared<
-      datacatalog_internal::PolicyTagManagerSerializationConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::PolicyTagManagerSerializationConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

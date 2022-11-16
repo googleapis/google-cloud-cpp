@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkmanagement_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkmanagement_mocks {
 
 /**
  * A class to mock `ReachabilityServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockReachabilityServiceConnection
-    : public networkmanagement::ReachabilityServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ReachabilityServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -90,8 +90,8 @@ class MockReachabilityServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

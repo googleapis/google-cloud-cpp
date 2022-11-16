@@ -27,13 +27,14 @@
 
 namespace google {
 namespace cloud {
-namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap_internal {
 
 IdentityAwareProxyOAuthServiceConnectionImpl::
     IdentityAwareProxyOAuthServiceConnectionImpl(
         std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<iap_internal::IdentityAwareProxyOAuthServiceStub> stub,
+        std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyOAuthServiceStub>
+            stub,
         Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -100,9 +101,9 @@ IdentityAwareProxyOAuthServiceConnectionImpl::ListIdentityAwareProxyClients(
     google::cloud::iap::v1::ListIdentityAwareProxyClientsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<iap::IdentityAwareProxyOAuthServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyOAuthServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency =
       idempotency_policy()->ListIdentityAwareProxyClients(request);
@@ -177,7 +178,7 @@ IdentityAwareProxyOAuthServiceConnectionImpl::DeleteIdentityAwareProxyClient(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

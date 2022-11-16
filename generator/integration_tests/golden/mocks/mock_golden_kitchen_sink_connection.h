@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_mocks {
 
 /**
  * A class to mock `GoldenKitchenSinkConnection`.
@@ -42,7 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnection {
+class MockGoldenKitchenSinkConnection : public GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -88,8 +88,8 @@ class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnecti
   (google::test::admin::database::v1::ExplicitRoutingRequest const& request), (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -31,19 +31,19 @@
 
 namespace google {
 namespace cloud {
-namespace tasks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks {
 
 using CloudTasksRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    tasks_internal::CloudTasksRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::CloudTasksRetryTraits>;
 
 using CloudTasksLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        tasks_internal::CloudTasksRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudTasksRetryTraits>;
 
 using CloudTasksLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        tasks_internal::CloudTasksRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudTasksRetryTraits>;
 
 /**
  * The `CloudTasksConnection` object for `CloudTasksClient`.
@@ -55,7 +55,7 @@ using CloudTasksLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeCloudTasksConnection()`.
  *
- * For mocking, see `tasks_mocks::MockCloudTasksConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockCloudTasksConnection`.
  */
 class CloudTasksConnection {
  public:
@@ -125,7 +125,7 @@ class CloudTasksConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::tasks::CloudTasksPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CloudTasksPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -136,8 +136,8 @@ class CloudTasksConnection {
 std::shared_ptr<CloudTasksConnection> MakeCloudTasksConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

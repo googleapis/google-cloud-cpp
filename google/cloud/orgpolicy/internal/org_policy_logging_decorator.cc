@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace orgpolicy_internal {
 
 OrgPolicyLogging::OrgPolicyLogging(std::shared_ptr<OrgPolicyStub> child,
                                    TracingOptions tracing_options,
@@ -116,7 +116,7 @@ Status OrgPolicyLogging::DeletePolicy(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

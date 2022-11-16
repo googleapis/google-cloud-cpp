@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace dlp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dlp {
 
 ///
 /// The Cloud Data Loss Prevention (DLP) API is a service that allows clients
@@ -1534,8 +1534,8 @@ class DlpServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

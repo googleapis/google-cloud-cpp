@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace secretmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace secretmanager_internal {
 
 SecretManagerServiceLogging::SecretManagerServiceLogging(
     std::shared_ptr<SecretManagerServiceStub> child,
@@ -224,7 +224,7 @@ SecretManagerServiceLogging::TestIamPermissions(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

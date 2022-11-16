@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 SessionEntityTypesClient::SessionEntityTypesClient(
     std::shared_ptr<SessionEntityTypesConnection> connection, Options opts)
@@ -132,7 +132,7 @@ Status SessionEntityTypesClient::DeleteSessionEntityType(
   return connection_->DeleteSessionEntityType(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

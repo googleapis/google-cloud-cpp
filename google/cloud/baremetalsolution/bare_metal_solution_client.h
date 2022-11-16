@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace baremetalsolution {
 
 ///
 /// Performs management operations on Bare Metal Solution servers.
@@ -866,8 +866,8 @@ class BareMetalSolutionClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

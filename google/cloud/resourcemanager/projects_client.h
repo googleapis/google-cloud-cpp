@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager {
 
 ///
 /// Manages Google Cloud Projects.
@@ -801,8 +801,8 @@ class ProjectsClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

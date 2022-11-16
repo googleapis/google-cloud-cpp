@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,27 +38,30 @@ Options ImageVersionsDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_IMAGE_VERSIONS_AUTHORITY", "composer.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<composer::ImageVersionsRetryPolicyOption>()) {
-    options.set<composer::ImageVersionsRetryPolicyOption>(
-        composer::ImageVersionsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ImageVersionsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ImageVersionsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ImageVersionsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<composer::ImageVersionsBackoffPolicyOption>()) {
-    options.set<composer::ImageVersionsBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ImageVersionsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ImageVersionsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<composer::ImageVersionsConnectionIdempotencyPolicyOption>()) {
-    options.set<composer::ImageVersionsConnectionIdempotencyPolicyOption>(
-        composer::MakeDefaultImageVersionsConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       ImageVersionsConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::ImageVersionsConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultImageVersionsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

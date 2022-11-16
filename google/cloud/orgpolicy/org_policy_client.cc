@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace orgpolicy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace orgpolicy {
 
 OrgPolicyClient::OrgPolicyClient(
     std::shared_ptr<OrgPolicyConnection> connection, Options opts)
@@ -138,7 +138,7 @@ Status OrgPolicyClient::DeletePolicy(
   return connection_->DeletePolicy(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

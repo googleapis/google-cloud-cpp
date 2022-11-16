@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace trace {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace trace {
 
 using ::google::cloud::Idempotency;
 
@@ -50,7 +50,7 @@ MakeDefaultTraceServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<TraceServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

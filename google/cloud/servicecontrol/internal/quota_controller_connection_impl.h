@@ -33,17 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol_internal {
 
 class QuotaControllerConnectionImpl
-    : public servicecontrol::QuotaControllerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::QuotaControllerConnection {
  public:
   ~QuotaControllerConnectionImpl() override = default;
 
   QuotaControllerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<servicecontrol_internal::QuotaControllerStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::QuotaControllerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -53,48 +53,56 @@ class QuotaControllerConnectionImpl
                     request) override;
 
  private:
-  std::unique_ptr<servicecontrol::QuotaControllerRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::QuotaControllerRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<servicecontrol::QuotaControllerRetryPolicyOption>()) {
-      return options.get<servicecontrol::QuotaControllerRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::QuotaControllerRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::QuotaControllerRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<servicecontrol::QuotaControllerRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::QuotaControllerRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<servicecontrol::QuotaControllerBackoffPolicyOption>()) {
-      return options.get<servicecontrol::QuotaControllerBackoffPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::QuotaControllerBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::QuotaControllerBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<servicecontrol::QuotaControllerBackoffPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::QuotaControllerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<servicecontrol::QuotaControllerConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::QuotaControllerConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<servicecontrol::
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
                         QuotaControllerConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<servicecontrol::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    QuotaControllerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<servicecontrol::QuotaControllerConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 QuotaControllerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<servicecontrol_internal::QuotaControllerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::QuotaControllerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

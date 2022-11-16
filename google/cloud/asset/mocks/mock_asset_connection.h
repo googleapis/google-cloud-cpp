@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace asset_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace asset_mocks {
 
 /**
  * A class to mock `AssetServiceConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockAssetServiceConnection : public asset::AssetServiceConnection {
+class MockAssetServiceConnection
+    : public GOOGLE_CLOUD_CPP_NS::AssetServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -147,8 +148,8 @@ class MockAssetServiceConnection : public asset::AssetServiceConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks_internal {
 
 class ManagedNotebookServiceConnectionImpl
-    : public notebooks::ManagedNotebookServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceConnection {
  public:
   ~ManagedNotebookServiceConnectionImpl() override = default;
 
   ManagedNotebookServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<notebooks_internal::ManagedNotebookServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -91,62 +91,71 @@ class ManagedNotebookServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<notebooks::ManagedNotebookServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<notebooks::ManagedNotebookServiceRetryPolicyOption>()) {
-      return options.get<notebooks::ManagedNotebookServiceRetryPolicyOption>()
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<notebooks::ManagedNotebookServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<notebooks::ManagedNotebookServiceBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceBackoffPolicyOption>()) {
       return options
-          .get<notebooks::ManagedNotebookServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<notebooks::ManagedNotebookServiceBackoffPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<notebooks::ManagedNotebookServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            notebooks::
+            GOOGLE_CLOUD_CPP_NS::
                 ManagedNotebookServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<notebooks::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    ManagedNotebookServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<notebooks::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  ManagedNotebookServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<notebooks::ManagedNotebookServicePollingPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::ManagedNotebookServicePollingPolicyOption>()) {
       return options
-          .get<notebooks::ManagedNotebookServicePollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<notebooks::ManagedNotebookServicePollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<notebooks_internal::ManagedNotebookServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

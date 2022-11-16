@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks_internal {
 
 ManagedNotebookServiceConnectionImpl::ManagedNotebookServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<notebooks_internal::ManagedNotebookServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,9 +45,9 @@ ManagedNotebookServiceConnectionImpl::ListRuntimes(
     google::cloud::notebooks::v1::ListRuntimesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<notebooks::ManagedNotebookServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRuntimes(request);
   char const* function_name = __func__;
@@ -303,7 +303,7 @@ ManagedNotebookServiceConnectionImpl::RefreshRuntimeTokenInternal(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

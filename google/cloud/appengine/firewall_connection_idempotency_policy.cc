@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 using ::google::cloud::Idempotency;
 
@@ -70,7 +70,7 @@ MakeDefaultFirewallConnectionIdempotencyPolicy() {
   return absl::make_unique<FirewallConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

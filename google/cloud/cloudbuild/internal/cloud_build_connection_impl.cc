@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace cloudbuild_internal {
 
 CloudBuildConnectionImpl::CloudBuildConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<cloudbuild_internal::CloudBuildStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudBuildStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -86,7 +86,8 @@ CloudBuildConnectionImpl::ListBuilds(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<cloudbuild::CloudBuildRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudBuildRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBuilds(request);
   char const* function_name = __func__;
@@ -216,7 +217,8 @@ CloudBuildConnectionImpl::ListBuildTriggers(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<cloudbuild::CloudBuildRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudBuildRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBuildTriggers(request);
   char const* function_name = __func__;
@@ -427,7 +429,8 @@ CloudBuildConnectionImpl::ListWorkerPools(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<cloudbuild::CloudBuildRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudBuildRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListWorkerPools(request);
   char const* function_name = __func__;
@@ -455,7 +458,7 @@ CloudBuildConnectionImpl::ListWorkerPools(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace certificatemanager_internal {
 
 CertificateManagerConnectionImpl::CertificateManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<certificatemanager_internal::CertificateManagerStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CertificateManagerStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -46,7 +46,7 @@ CertificateManagerConnectionImpl::ListCertificates(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<certificatemanager::CertificateManagerRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCertificates(request);
@@ -190,7 +190,7 @@ CertificateManagerConnectionImpl::ListCertificateMaps(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<certificatemanager::CertificateManagerRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCertificateMaps(request);
@@ -333,7 +333,7 @@ CertificateManagerConnectionImpl::ListCertificateMapEntries(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<certificatemanager::CertificateManagerRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCertificateMapEntries(request);
@@ -481,7 +481,7 @@ CertificateManagerConnectionImpl::ListDnsAuthorizations(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<certificatemanager::CertificateManagerRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDnsAuthorizations(request);
@@ -629,7 +629,7 @@ CertificateManagerConnectionImpl::ListCertificateIssuanceConfigs(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<certificatemanager::CertificateManagerRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency =
@@ -741,7 +741,7 @@ CertificateManagerConnectionImpl::DeleteCertificateIssuanceConfig(
       polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

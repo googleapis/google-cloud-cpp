@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter_internal {
 
 SecurityCenterStub::~SecurityCenterStub() = default;
 
@@ -529,7 +529,7 @@ future<Status> DefaultSecurityCenterStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

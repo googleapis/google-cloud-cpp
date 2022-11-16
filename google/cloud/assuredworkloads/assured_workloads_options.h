@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace assuredworkloads {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -80,8 +80,8 @@ using AssuredWorkloadsServicePolicyOptionList =
                AssuredWorkloadsServicePollingPolicyOption,
                AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

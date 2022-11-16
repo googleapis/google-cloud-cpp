@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory {
 
 ///
 /// Service Directory API for looking up service data at runtime.
@@ -111,8 +111,8 @@ class LookupServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

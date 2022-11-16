@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace optimization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization_internal {
 
 class FleetRoutingAuth : public FleetRoutingStub {
  public:
@@ -65,8 +65,8 @@ class FleetRoutingAuth : public FleetRoutingStub {
   std::shared_ptr<FleetRoutingStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

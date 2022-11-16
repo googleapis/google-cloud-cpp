@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter {
 
 SecurityCenterClient::SecurityCenterClient(
     std::shared_ptr<SecurityCenterConnection> connection, Options opts)
@@ -723,7 +723,7 @@ SecurityCenterClient::ListBigQueryExports(
   return connection_->ListBigQueryExports(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

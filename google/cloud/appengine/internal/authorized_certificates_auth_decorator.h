@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 class AuthorizedCertificatesAuth : public AuthorizedCertificatesStub {
  public:
@@ -72,8 +72,8 @@ class AuthorizedCertificatesAuth : public AuthorizedCertificatesStub {
   std::shared_ptr<AuthorizedCertificatesStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager {
 
 FoldersConnection::~FoldersConnection() = default;
 
@@ -117,15 +117,15 @@ std::shared_ptr<FoldersConnection> MakeFoldersConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  FoldersPolicyOptionList>(options, __func__);
-  options = resourcemanager_internal::FoldersDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::FoldersDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = resourcemanager_internal::CreateDefaultFoldersStub(
-      background->cq(), options);
-  return std::make_shared<resourcemanager_internal::FoldersConnectionImpl>(
+  auto stub =
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultFoldersStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::FoldersConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

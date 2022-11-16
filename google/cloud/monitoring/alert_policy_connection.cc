@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 AlertPolicyServiceConnection::~AlertPolicyServiceConnection() = default;
 
@@ -73,16 +73,16 @@ std::shared_ptr<AlertPolicyServiceConnection> MakeAlertPolicyServiceConnection(
                                  AlertPolicyServicePolicyOptionList>(options,
                                                                      __func__);
   options =
-      monitoring_internal::AlertPolicyServiceDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::AlertPolicyServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = monitoring_internal::CreateDefaultAlertPolicyServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultAlertPolicyServiceStub(
       background->cq(), options);
   return std::make_shared<
-      monitoring_internal::AlertPolicyServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::AlertPolicyServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

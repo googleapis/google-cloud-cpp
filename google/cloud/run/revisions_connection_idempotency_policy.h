@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace run {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace run {
 
 class RevisionsConnectionIdempotencyPolicy {
  public:
@@ -50,8 +50,8 @@ class RevisionsConnectionIdempotencyPolicy {
 std::unique_ptr<RevisionsConnectionIdempotencyPolicy>
 MakeDefaultRevisionsConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

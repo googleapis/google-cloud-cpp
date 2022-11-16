@@ -33,17 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace profiler_internal {
 
 class ProfilerServiceConnectionImpl
-    : public profiler::ProfilerServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ProfilerServiceConnection {
  public:
   ~ProfilerServiceConnectionImpl() override = default;
 
   ProfilerServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<profiler_internal::ProfilerServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProfilerServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -61,45 +61,56 @@ class ProfilerServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<profiler::ProfilerServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ProfilerServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<profiler::ProfilerServiceRetryPolicyOption>()) {
-      return options.get<profiler::ProfilerServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ProfilerServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ProfilerServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<profiler::ProfilerServiceRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ProfilerServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<profiler::ProfilerServiceBackoffPolicyOption>()) {
-      return options.get<profiler::ProfilerServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<profiler::ProfilerServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<profiler::ProfilerServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            profiler::ProfilerServiceConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ProfilerServiceBackoffPolicyOption>()) {
       return options
-          .get<profiler::ProfilerServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ProfilerServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<profiler::ProfilerServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ProfilerServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ProfilerServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ProfilerServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ProfilerServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ProfilerServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<profiler_internal::ProfilerServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProfilerServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

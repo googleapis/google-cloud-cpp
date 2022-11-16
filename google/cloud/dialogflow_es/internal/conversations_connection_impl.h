@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 class ConversationsConnectionImpl
-    : public dialogflow_es::ConversationsConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ConversationsConnection {
  public:
   ~ConversationsConnectionImpl() override = default;
 
   ConversationsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_es_internal::ConversationsStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConversationsStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -68,47 +68,52 @@ class ConversationsConnectionImpl
       google::cloud::dialogflow::v2::ListMessagesRequest request) override;
 
  private:
-  std::unique_ptr<dialogflow_es::ConversationsRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ConversationsRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationsRetryPolicyOption>()) {
-      return options.get<dialogflow_es::ConversationsRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ConversationsRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::ConversationsRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<dialogflow_es::ConversationsRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ConversationsRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_es::ConversationsBackoffPolicyOption>()) {
-      return options.get<dialogflow_es::ConversationsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dialogflow_es::ConversationsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dialogflow_es::ConversationsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dialogflow_es::ConversationsConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ConversationsBackoffPolicyOption>()) {
       return options
-          .get<dialogflow_es::ConversationsConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ConversationsBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dialogflow_es::ConversationsConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ConversationsBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ConversationsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ConversationsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ConversationsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ConversationsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dialogflow_es_internal::ConversationsStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConversationsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

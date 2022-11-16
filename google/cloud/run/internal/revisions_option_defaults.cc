@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace run_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace run_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,33 +38,40 @@ Options RevisionsDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_REVISIONS_AUTHORITY", "run.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<run::RevisionsRetryPolicyOption>()) {
-    options.set<run::RevisionsRetryPolicyOption>(
-        run::RevisionsLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::RevisionsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::RevisionsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::RevisionsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<run::RevisionsBackoffPolicyOption>()) {
-    options.set<run::RevisionsBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::RevisionsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::RevisionsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<run::RevisionsPollingPolicyOption>()) {
-    options.set<run::RevisionsPollingPolicyOption>(
-        GenericPollingPolicy<run::RevisionsRetryPolicyOption::Type,
-                             run::RevisionsBackoffPolicyOption::Type>(
-            options.get<run::RevisionsRetryPolicyOption>()->clone(),
-            options.get<run::RevisionsBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::RevisionsPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::RevisionsPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::RevisionsRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::RevisionsBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::RevisionsRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::RevisionsBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<run::RevisionsConnectionIdempotencyPolicyOption>()) {
-    options.set<run::RevisionsConnectionIdempotencyPolicyOption>(
-        run::MakeDefaultRevisionsConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::RevisionsConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::RevisionsConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultRevisionsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

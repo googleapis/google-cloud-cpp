@@ -29,12 +29,12 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_admin_internal {
 
 BigtableTableAdminConnectionImpl::BigtableTableAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigtable_admin_internal::BigtableTableAdminStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BigtableTableAdminStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -60,7 +60,7 @@ BigtableTableAdminConnectionImpl::ListTables(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<bigtable_admin::BigtableTableAdminRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BigtableTableAdminRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTables(request);
@@ -295,7 +295,7 @@ BigtableTableAdminConnectionImpl::ListBackups(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<bigtable_admin::BigtableTableAdminRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BigtableTableAdminRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBackups(request);
@@ -403,7 +403,7 @@ BigtableTableAdminConnectionImpl::AsyncCheckConsistency(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

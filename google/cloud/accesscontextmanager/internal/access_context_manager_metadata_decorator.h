@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accesscontextmanager_internal {
 
 class AccessContextManagerMetadata : public AccessContextManagerStub {
  public:
@@ -210,8 +210,8 @@ class AccessContextManagerMetadata : public AccessContextManagerStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

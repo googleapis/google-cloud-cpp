@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_internal {
 
 std::shared_ptr<PolicyTagManagerSerializationStub>
 CreateDefaultPolicyTagManagerSerializationStub(
@@ -63,7 +63,7 @@ CreateDefaultPolicyTagManagerSerializationStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

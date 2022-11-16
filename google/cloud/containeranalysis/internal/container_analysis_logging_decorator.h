@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
 class ContainerAnalysisLogging : public ContainerAnalysisStub {
  public:
@@ -63,8 +63,8 @@ class ContainerAnalysisLogging : public ContainerAnalysisStub {
   std::set<std::string> components_;
 };  // ContainerAnalysisLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

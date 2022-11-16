@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video {
 
 VideoStitcherServiceClient::VideoStitcherServiceClient(
     std::shared_ptr<VideoStitcherServiceConnection> connection, Options opts)
@@ -385,7 +385,7 @@ VideoStitcherServiceClient::GetLiveSession(
   return connection_->GetLiveSession(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

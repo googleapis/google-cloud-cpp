@@ -37,18 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accesscontextmanager_internal {
 
 class AccessContextManagerConnectionImpl
-    : public accesscontextmanager::AccessContextManagerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AccessContextManagerConnection {
  public:
   ~AccessContextManagerConnectionImpl() override = default;
 
   AccessContextManagerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
-          stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AccessContextManagerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -180,47 +179,47 @@ class AccessContextManagerConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<accesscontextmanager::AccessContextManagerRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            accesscontextmanager::AccessContextManagerRetryPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryPolicyOption>()) {
       return options
-          .get<accesscontextmanager::AccessContextManagerRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<accesscontextmanager::AccessContextManagerRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            accesscontextmanager::AccessContextManagerBackoffPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::AccessContextManagerBackoffPolicyOption>()) {
       return options
-          .get<accesscontextmanager::AccessContextManagerBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::AccessContextManagerBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<accesscontextmanager::AccessContextManagerBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::AccessContextManagerBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      accesscontextmanager::AccessContextManagerConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::AccessContextManagerConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<accesscontextmanager::
+            .has<GOOGLE_CLOUD_CPP_NS::
                      AccessContextManagerConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<accesscontextmanager::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    AccessContextManagerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<accesscontextmanager::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  AccessContextManagerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
@@ -228,24 +227,23 @@ class AccessContextManagerConnectionImpl
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            accesscontextmanager::AccessContextManagerPollingPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::AccessContextManagerPollingPolicyOption>()) {
       return options
-          .get<accesscontextmanager::AccessContextManagerPollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::AccessContextManagerPollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<accesscontextmanager::AccessContextManagerPollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::AccessContextManagerPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
-      stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AccessContextManagerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

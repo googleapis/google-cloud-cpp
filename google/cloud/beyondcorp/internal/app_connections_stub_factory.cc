@@ -32,8 +32,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp_internal {
 
 std::shared_ptr<AppConnectionsServiceStub>
 CreateDefaultAppConnectionsServiceStub(google::cloud::CompletionQueue cq,
@@ -63,7 +63,7 @@ CreateDefaultAppConnectionsServiceStub(google::cloud::CompletionQueue cq,
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

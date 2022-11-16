@@ -32,19 +32,19 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 using ChangelogsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::ChangelogsRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::ChangelogsRetryTraits>;
 
 using ChangelogsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::ChangelogsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ChangelogsRetryTraits>;
 
 using ChangelogsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::ChangelogsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ChangelogsRetryTraits>;
 
 /**
  * The `ChangelogsConnection` object for `ChangelogsClient`.
@@ -56,7 +56,7 @@ using ChangelogsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeChangelogsConnection()`.
  *
- * For mocking, see `dialogflow_cx_mocks::MockChangelogsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockChangelogsConnection`.
  */
 class ChangelogsConnection {
  public:
@@ -85,7 +85,7 @@ class ChangelogsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::ChangelogsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ChangelogsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -107,8 +107,8 @@ std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(
 std::shared_ptr<ChangelogsConnection> MakeChangelogsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

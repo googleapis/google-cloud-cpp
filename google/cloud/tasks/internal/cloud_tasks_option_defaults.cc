@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,26 +38,30 @@ Options CloudTasksDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_CLOUD_TASKS_AUTHORITY", "cloudtasks.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<tasks::CloudTasksRetryPolicyOption>()) {
-    options.set<tasks::CloudTasksRetryPolicyOption>(
-        tasks::CloudTasksLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudTasksRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudTasksRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::CloudTasksLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<tasks::CloudTasksBackoffPolicyOption>()) {
-    options.set<tasks::CloudTasksBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudTasksBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudTasksBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<tasks::CloudTasksConnectionIdempotencyPolicyOption>()) {
-    options.set<tasks::CloudTasksConnectionIdempotencyPolicyOption>(
-        tasks::MakeDefaultCloudTasksConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::CloudTasksConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::CloudTasksConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultCloudTasksConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

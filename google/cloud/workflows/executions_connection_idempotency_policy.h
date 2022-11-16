@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows {
 
 class ExecutionsConnectionIdempotencyPolicy {
  public:
@@ -56,8 +56,8 @@ class ExecutionsConnectionIdempotencyPolicy {
 std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>
 MakeDefaultExecutionsConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

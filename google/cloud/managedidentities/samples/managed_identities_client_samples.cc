@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: managedidentities::ManagedIdentitiesServiceClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -39,8 +39,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto client =
-      google::cloud::managedidentities::ManagedIdentitiesServiceClient(
-          google::cloud::managedidentities::
+      google::cloud::GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceClient(
+          google::cloud::GOOGLE_CLOUD_CPP_NS::
               MakeManagedIdentitiesServiceConnection(options));
   //! [set-client-endpoint]
 }
@@ -57,8 +57,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::managedidentities::ManagedIdentitiesServiceClient(
-        google::cloud::managedidentities::
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::
             MakeManagedIdentitiesServiceConnection(options));
   }
   //! [with-service-account]

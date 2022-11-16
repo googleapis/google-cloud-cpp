@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 AutoscalingPolicyServiceConnectionImpl::AutoscalingPolicyServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dataproc_internal::AutoscalingPolicyServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -88,9 +88,9 @@ AutoscalingPolicyServiceConnectionImpl::ListAutoscalingPolicies(
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dataproc::AutoscalingPolicyServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAutoscalingPolicies(request);
   char const* function_name = __func__;
@@ -132,7 +132,7 @@ Status AutoscalingPolicyServiceConnectionImpl::DeleteAutoscalingPolicy(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

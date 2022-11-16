@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace container_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace container_internal {
 
 class ClusterManagerAuth : public ClusterManagerStub {
  public:
@@ -183,8 +183,8 @@ class ClusterManagerAuth : public ClusterManagerStub {
   std::shared_ptr<ClusterManagerStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

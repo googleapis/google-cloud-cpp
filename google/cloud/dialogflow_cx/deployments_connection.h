@@ -32,19 +32,19 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 using DeploymentsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::DeploymentsRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::DeploymentsRetryTraits>;
 
 using DeploymentsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::DeploymentsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DeploymentsRetryTraits>;
 
 using DeploymentsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::DeploymentsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DeploymentsRetryTraits>;
 
 /**
  * The `DeploymentsConnection` object for `DeploymentsClient`.
@@ -56,7 +56,7 @@ using DeploymentsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeDeploymentsConnection()`.
  *
- * For mocking, see `dialogflow_cx_mocks::MockDeploymentsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockDeploymentsConnection`.
  */
 class DeploymentsConnection {
  public:
@@ -85,7 +85,7 @@ class DeploymentsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::DeploymentsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::DeploymentsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -107,8 +107,8 @@ std::shared_ptr<DeploymentsConnection> MakeDeploymentsConnection(
 std::shared_ptr<DeploymentsConnection> MakeDeploymentsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

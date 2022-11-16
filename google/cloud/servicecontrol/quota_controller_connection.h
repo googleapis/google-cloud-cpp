@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol {
 
 using QuotaControllerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        servicecontrol_internal::QuotaControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::QuotaControllerRetryTraits>;
 
 using QuotaControllerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        servicecontrol_internal::QuotaControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::QuotaControllerRetryTraits>;
 
 using QuotaControllerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        servicecontrol_internal::QuotaControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::QuotaControllerRetryTraits>;
 
 /**
  * The `QuotaControllerConnection` object for `QuotaControllerClient`.
@@ -55,7 +55,7 @@ using QuotaControllerLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeQuotaControllerConnection()`.
  *
- * For mocking, see `servicecontrol_mocks::MockQuotaControllerConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockQuotaControllerConnection`.
  */
 class QuotaControllerConnection {
  public:
@@ -82,7 +82,7 @@ class QuotaControllerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::servicecontrol::QuotaControllerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::QuotaControllerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -93,8 +93,8 @@ class QuotaControllerConnection {
 std::shared_ptr<QuotaControllerConnection> MakeQuotaControllerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

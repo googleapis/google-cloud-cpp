@@ -36,16 +36,17 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
-class MetricsScopesConnectionImpl : public monitoring::MetricsScopesConnection {
+class MetricsScopesConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::MetricsScopesConnection {
  public:
   ~MetricsScopesConnectionImpl() override = default;
 
   MetricsScopesConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<monitoring_internal::MetricsScopesStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::MetricsScopesStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -71,55 +72,64 @@ class MetricsScopesConnectionImpl : public monitoring::MetricsScopesConnection {
           request) override;
 
  private:
-  std::unique_ptr<monitoring::MetricsScopesRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::MetricsScopesRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::MetricsScopesRetryPolicyOption>()) {
-      return options.get<monitoring::MetricsScopesRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::MetricsScopesRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::MetricsScopesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<monitoring::MetricsScopesRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::MetricsScopesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::MetricsScopesBackoffPolicyOption>()) {
-      return options.get<monitoring::MetricsScopesBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring::MetricsScopesBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<monitoring::MetricsScopesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring::MetricsScopesConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::MetricsScopesBackoffPolicyOption>()) {
       return options
-          .get<monitoring::MetricsScopesConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::MetricsScopesBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<monitoring::MetricsScopesConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::MetricsScopesBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::MetricsScopesConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        MetricsScopesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   MetricsScopesConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 MetricsScopesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::MetricsScopesPollingPolicyOption>()) {
-      return options.get<monitoring::MetricsScopesPollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::MetricsScopesPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::MetricsScopesPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<monitoring::MetricsScopesPollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::MetricsScopesPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<monitoring_internal::MetricsScopesStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::MetricsScopesStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

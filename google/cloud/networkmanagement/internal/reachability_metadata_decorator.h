@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkmanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkmanagement_internal {
 
 class ReachabilityServiceMetadata : public ReachabilityServiceStub {
  public:
@@ -91,8 +91,8 @@ class ReachabilityServiceMetadata : public ReachabilityServiceStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

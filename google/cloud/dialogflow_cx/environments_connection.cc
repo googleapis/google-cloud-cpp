@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 EnvironmentsConnection::~EnvironmentsConnection() = default;
 
@@ -108,12 +108,12 @@ std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
                                  UnifiedCredentialsOptionList,
                                  EnvironmentsPolicyOptionList>(options,
                                                                __func__);
-  options = dialogflow_cx_internal::EnvironmentsDefaultOptions(
-      location, std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::EnvironmentsDefaultOptions(location,
+                                                            std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_cx_internal::CreateDefaultEnvironmentsStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultEnvironmentsStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::EnvironmentsConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::EnvironmentsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -122,7 +122,7 @@ std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
   return MakeEnvironmentsConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

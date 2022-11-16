@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_admin_internal {
 
 class BigtableInstanceAdminConnectionImpl
-    : public bigtable_admin::BigtableInstanceAdminConnection {
+    : public GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminConnection {
  public:
   ~BigtableInstanceAdminConnectionImpl() override = default;
 
   BigtableInstanceAdminConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<bigtable_admin_internal::BigtableInstanceAdminStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -126,70 +126,71 @@ class BigtableInstanceAdminConnectionImpl
       google::bigtable::admin::v2::ListHotTabletsRequest request) override;
 
  private:
-  std::unique_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminRetryPolicyOption>()) {
       return options
-          .get<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminBackoffPolicyOption>()) {
       return options
-          .get<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<bigtable_admin::BigtableInstanceAdminBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      bigtable_admin::BigtableInstanceAdminConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            bigtable_admin::
+            GOOGLE_CLOUD_CPP_NS::
                 BigtableInstanceAdminConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<bigtable_admin::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    BigtableInstanceAdminConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<bigtable_admin::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  BigtableInstanceAdminConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigtable_admin::BigtableInstanceAdminPollingPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminPollingPolicyOption>()) {
       return options
-          .get<bigtable_admin::BigtableInstanceAdminPollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminPollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<bigtable_admin::BigtableInstanceAdminPollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<bigtable_admin_internal::BigtableInstanceAdminStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsub_internal {
 
 class SchemaServiceLogging : public SchemaServiceStub {
  public:
@@ -68,8 +68,8 @@ class SchemaServiceLogging : public SchemaServiceStub {
   std::set<std::string> components_;
 };  // SchemaServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

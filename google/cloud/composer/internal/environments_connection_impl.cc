@@ -28,12 +28,13 @@
 
 namespace google {
 namespace cloud {
-namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer_internal {
 
 EnvironmentsConnectionImpl::EnvironmentsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<composer_internal::EnvironmentsStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EnvironmentsStub> stub,
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -93,7 +94,8 @@ EnvironmentsConnectionImpl::ListEnvironments(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<composer::EnvironmentsRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EnvironmentsRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListEnvironments(request);
   char const* function_name = __func__;
@@ -188,7 +190,7 @@ EnvironmentsConnectionImpl::DeleteEnvironment(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -37,16 +37,16 @@
 
 namespace google {
 namespace cloud {
-namespace run_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace run_internal {
 
-class ServicesConnectionImpl : public run::ServicesConnection {
+class ServicesConnectionImpl : public GOOGLE_CLOUD_CPP_NS::ServicesConnection {
  public:
   ~ServicesConnectionImpl() override = default;
 
   ServicesConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<run_internal::ServicesStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServicesStub> stub, Options options);
 
   Options options() override { return options_; }
 
@@ -75,48 +75,57 @@ class ServicesConnectionImpl : public run::ServicesConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<run::ServicesRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ServicesRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<run::ServicesRetryPolicyOption>()) {
-      return options.get<run::ServicesRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ServicesRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::ServicesRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<run::ServicesRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ServicesRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<run::ServicesBackoffPolicyOption>()) {
-      return options.get<run::ServicesBackoffPolicyOption>()->clone();
-    }
-    return options_.get<run::ServicesBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<run::ServicesConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<run::ServicesConnectionIdempotencyPolicyOption>()) {
-      return options.get<run::ServicesConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ServicesBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::ServicesBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<run::ServicesConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ServicesBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ServicesConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::ServicesConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ServicesConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ServicesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<run::ServicesPollingPolicyOption>()) {
-      return options.get<run::ServicesPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ServicesPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::ServicesPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<run::ServicesPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ServicesPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<run_internal::ServicesStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServicesStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

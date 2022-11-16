@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter_internal {
 
 class SecurityCenterMetadata : public SecurityCenterStub {
  public:
@@ -245,8 +245,8 @@ class SecurityCenterMetadata : public SecurityCenterStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

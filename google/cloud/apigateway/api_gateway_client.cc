@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigateway {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigateway {
 
 ApiGatewayServiceClient::ApiGatewayServiceClient(
     std::shared_ptr<ApiGatewayServiceConnection> connection, Options opts)
@@ -292,7 +292,7 @@ ApiGatewayServiceClient::DeleteApiConfig(
   return connection_->DeleteApiConfig(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace memcache_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache_internal {
 
 CloudMemcacheStub::~CloudMemcacheStub() = default;
 
@@ -156,7 +156,7 @@ future<Status> DefaultCloudMemcacheStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

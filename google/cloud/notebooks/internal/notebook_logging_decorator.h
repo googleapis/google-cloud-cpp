@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks_internal {
 
 class NotebookServiceLogging : public NotebookServiceStub {
  public:
@@ -244,8 +244,8 @@ class NotebookServiceLogging : public NotebookServiceStub {
   std::set<std::string> components_;
 };  // NotebookServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

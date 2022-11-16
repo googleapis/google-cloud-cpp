@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization {
 
 class BinauthzManagementServiceV1ConnectionIdempotencyPolicy {
  public:
@@ -69,8 +69,8 @@ class BinauthzManagementServiceV1ConnectionIdempotencyPolicy {
 std::unique_ptr<BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
 MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

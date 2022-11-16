@@ -33,20 +33,20 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 using UserEventServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        retail_internal::UserEventServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::UserEventServiceRetryTraits>;
 
 using UserEventServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        retail_internal::UserEventServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::UserEventServiceRetryTraits>;
 
 using UserEventServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        retail_internal::UserEventServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::UserEventServiceRetryTraits>;
 
 /**
  * The `UserEventServiceConnection` object for `UserEventServiceClient`.
@@ -58,7 +58,7 @@ using UserEventServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeUserEventServiceConnection()`.
  *
- * For mocking, see `retail_mocks::MockUserEventServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockUserEventServiceConnection`.
  */
 class UserEventServiceConnection {
  public:
@@ -99,7 +99,7 @@ class UserEventServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::retail::UserEventServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::UserEventServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -110,8 +110,8 @@ class UserEventServiceConnection {
 std::shared_ptr<UserEventServiceConnection> MakeUserEventServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

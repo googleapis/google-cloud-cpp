@@ -31,19 +31,19 @@
 
 namespace google {
 namespace cloud {
-namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam {
 
 using IAMRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    iam_internal::IAMRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::IAMRetryTraits>;
 
 using IAMLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        iam_internal::IAMRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IAMRetryTraits>;
 
 using IAMLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        iam_internal::IAMRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IAMRetryTraits>;
 
 /**
  * The `IAMConnection` object for `IAMClient`.
@@ -55,7 +55,7 @@ using IAMLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeIAMConnection()`.
  *
- * For mocking, see `iam_mocks::MockIAMConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockIAMConnection`.
  */
 class IAMConnection {
  public:
@@ -169,7 +169,7 @@ class IAMConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::iam::IAMPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::IAMPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -179,9 +179,9 @@ class IAMConnection {
  */
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

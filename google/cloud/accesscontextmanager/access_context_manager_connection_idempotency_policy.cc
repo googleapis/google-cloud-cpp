@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accesscontextmanager {
 
 using ::google::cloud::Idempotency;
 
@@ -205,7 +205,7 @@ MakeDefaultAccessContextManagerConnectionIdempotencyPolicy() {
   return absl::make_unique<AccessContextManagerConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

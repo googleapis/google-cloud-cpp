@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler {
 
 CloudSchedulerClient::CloudSchedulerClient(
     std::shared_ptr<CloudSchedulerConnection> connection, Options opts)
@@ -151,7 +151,7 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerClient::RunJob(
   return connection_->RunJob(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

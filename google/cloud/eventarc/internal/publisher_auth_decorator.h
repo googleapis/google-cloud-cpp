@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc_internal {
 
 class PublisherAuth : public PublisherStub {
  public:
@@ -56,8 +56,8 @@ class PublisherAuth : public PublisherStub {
   std::shared_ptr<PublisherStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

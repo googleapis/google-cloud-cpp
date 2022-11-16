@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 DocumentsConnection::~DocumentsConnection() = default;
 
@@ -102,12 +102,12 @@ std::shared_ptr<DocumentsConnection> MakeDocumentsConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  DocumentsPolicyOptionList>(options, __func__);
-  options = dialogflow_es_internal::DocumentsDefaultOptions(location,
-                                                            std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::DocumentsDefaultOptions(location,
+                                                         std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_es_internal::CreateDefaultDocumentsStub(
-      background->cq(), options);
-  return std::make_shared<dialogflow_es_internal::DocumentsConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultDocumentsStub(background->cq(),
+                                                              options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::DocumentsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -115,7 +115,7 @@ std::shared_ptr<DocumentsConnection> MakeDocumentsConnection(Options options) {
   return MakeDocumentsConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

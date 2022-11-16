@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace privateca {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -80,8 +80,8 @@ using CertificateAuthorityServicePolicyOptionList =
                CertificateAuthorityServicePollingPolicyOption,
                CertificateAuthorityServiceConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

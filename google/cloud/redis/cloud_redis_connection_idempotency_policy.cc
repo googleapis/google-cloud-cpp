@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace redis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace redis {
 
 using ::google::cloud::Idempotency;
 
@@ -95,7 +95,7 @@ MakeDefaultCloudRedisConnectionIdempotencyPolicy() {
   return absl::make_unique<CloudRedisConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

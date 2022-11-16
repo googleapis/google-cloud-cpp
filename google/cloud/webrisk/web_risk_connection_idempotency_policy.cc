@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace webrisk {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace webrisk {
 
 using ::google::cloud::Idempotency;
 
@@ -60,7 +60,7 @@ MakeDefaultWebRiskServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<WebRiskServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

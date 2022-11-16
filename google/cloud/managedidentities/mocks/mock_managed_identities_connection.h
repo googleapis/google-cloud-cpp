@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities_mocks {
 
 /**
  * A class to mock `ManagedIdentitiesServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockManagedIdentitiesServiceConnection
-    : public managedidentities::ManagedIdentitiesServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -110,8 +110,8 @@ class MockManagedIdentitiesServiceConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

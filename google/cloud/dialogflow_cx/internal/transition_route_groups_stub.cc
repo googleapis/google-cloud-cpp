@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_internal {
 
 TransitionRouteGroupsStub::~TransitionRouteGroupsStub() = default;
 
@@ -98,7 +98,7 @@ Status DefaultTransitionRouteGroupsStub::DeleteTransitionRouteGroup(
   return google::cloud::Status();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

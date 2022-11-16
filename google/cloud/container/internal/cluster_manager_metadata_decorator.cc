@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace container_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace container_internal {
 
 ClusterManagerMetadata::ClusterManagerMetadata(
     std::shared_ptr<ClusterManagerStub> child)
@@ -307,7 +307,7 @@ void ClusterManagerMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

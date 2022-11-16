@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace texttospeech_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace texttospeech_internal {
 
 TextToSpeechLogging::TextToSpeechLogging(
     std::shared_ptr<TextToSpeechStub> child, TracingOptions tracing_options,
@@ -60,7 +60,7 @@ TextToSpeechLogging::SynthesizeSpeech(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

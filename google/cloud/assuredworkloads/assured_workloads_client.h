@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace assuredworkloads {
 
 ///
 /// Service to manage AssuredWorkloads.
@@ -428,8 +428,8 @@ class AssuredWorkloadsServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

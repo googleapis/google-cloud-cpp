@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace policytroubleshooter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace policytroubleshooter {
 
 ///
 /// IAM Policy Troubleshooter service.
@@ -112,8 +112,8 @@ class IamCheckerClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

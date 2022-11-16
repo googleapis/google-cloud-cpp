@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,40 +39,42 @@ Options SecurityCenterDefaultOptions(Options options) {
       "securitycenter.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<securitycenter::SecurityCenterRetryPolicyOption>()) {
-    options.set<securitycenter::SecurityCenterRetryPolicyOption>(
-        securitycenter::SecurityCenterLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::SecurityCenterLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<securitycenter::SecurityCenterBackoffPolicyOption>()) {
-    options.set<securitycenter::SecurityCenterBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::SecurityCenterBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::SecurityCenterBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<securitycenter::SecurityCenterPollingPolicyOption>()) {
-    options.set<securitycenter::SecurityCenterPollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::SecurityCenterPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::SecurityCenterPollingPolicyOption>(
         GenericPollingPolicy<
-            securitycenter::SecurityCenterRetryPolicyOption::Type,
-            securitycenter::SecurityCenterBackoffPolicyOption::Type>(
-            options.get<securitycenter::SecurityCenterRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::SecurityCenterBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryPolicyOption>()
                 ->clone(),
-            options.get<securitycenter::SecurityCenterBackoffPolicyOption>()
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::SecurityCenterBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<
-          securitycenter::SecurityCenterConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       SecurityCenterConnectionIdempotencyPolicyOption>()) {
     options.set<
-        securitycenter::SecurityCenterConnectionIdempotencyPolicyOption>(
-        securitycenter::MakeDefaultSecurityCenterConnectionIdempotencyPolicy());
+        GOOGLE_CLOUD_CPP_NS::SecurityCenterConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultSecurityCenterConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -37,18 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer_internal {
 
 class StorageTransferServiceConnectionImpl
-    : public storagetransfer::StorageTransferServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::StorageTransferServiceConnection {
  public:
   ~StorageTransferServiceConnectionImpl() override = default;
 
   StorageTransferServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<storagetransfer_internal::StorageTransferServiceStub>
-          stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::StorageTransferServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -108,47 +107,47 @@ class StorageTransferServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<storagetransfer::StorageTransferServiceRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::StorageTransferServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<storagetransfer::StorageTransferServiceRetryPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::StorageTransferServiceRetryPolicyOption>()) {
       return options
-          .get<storagetransfer::StorageTransferServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::StorageTransferServiceRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<storagetransfer::StorageTransferServiceRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::StorageTransferServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            storagetransfer::StorageTransferServiceBackoffPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::StorageTransferServiceBackoffPolicyOption>()) {
       return options
-          .get<storagetransfer::StorageTransferServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::StorageTransferServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<storagetransfer::StorageTransferServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::StorageTransferServiceBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      storagetransfer::StorageTransferServiceConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::StorageTransferServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            storagetransfer::
+            GOOGLE_CLOUD_CPP_NS::
                 StorageTransferServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<storagetransfer::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    StorageTransferServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<storagetransfer::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  StorageTransferServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
@@ -156,23 +155,23 @@ class StorageTransferServiceConnectionImpl
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            storagetransfer::StorageTransferServicePollingPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::StorageTransferServicePollingPolicyOption>()) {
       return options
-          .get<storagetransfer::StorageTransferServicePollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::StorageTransferServicePollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<storagetransfer::StorageTransferServicePollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::StorageTransferServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<storagetransfer_internal::StorageTransferServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::StorageTransferServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

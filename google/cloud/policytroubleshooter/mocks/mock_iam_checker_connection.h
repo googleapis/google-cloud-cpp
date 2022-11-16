@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace policytroubleshooter_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace policytroubleshooter_mocks {
 
 /**
  * A class to mock `IamCheckerConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockIamCheckerConnection
-    : public policytroubleshooter::IamCheckerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::IamCheckerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -55,8 +55,8 @@ class MockIamCheckerConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -30,19 +30,19 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc {
 
 using PublisherRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    eventarc_internal::PublisherRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::PublisherRetryTraits>;
 
 using PublisherLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        eventarc_internal::PublisherRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PublisherRetryTraits>;
 
 using PublisherLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        eventarc_internal::PublisherRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PublisherRetryTraits>;
 
 /**
  * The `PublisherConnection` object for `PublisherClient`.
@@ -54,7 +54,7 @@ using PublisherLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakePublisherConnection()`.
  *
- * For mocking, see `eventarc_mocks::MockPublisherConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockPublisherConnection`.
  */
 class PublisherConnection {
  public:
@@ -88,7 +88,7 @@ class PublisherConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::eventarc::PublisherPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::PublisherPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -99,8 +99,8 @@ class PublisherConnection {
 std::shared_ptr<PublisherConnection> MakePublisherConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

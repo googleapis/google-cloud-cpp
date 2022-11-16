@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks {
 
 class ManagedNotebookServiceConnectionIdempotencyPolicy {
  public:
@@ -73,8 +73,8 @@ class ManagedNotebookServiceConnectionIdempotencyPolicy {
 std::unique_ptr<ManagedNotebookServiceConnectionIdempotencyPolicy>
 MakeDefaultManagedNotebookServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace functions {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace functions {
 
 class CloudFunctionsServiceConnectionIdempotencyPolicy {
  public:
@@ -75,8 +75,8 @@ class CloudFunctionsServiceConnectionIdempotencyPolicy {
 std::unique_ptr<CloudFunctionsServiceConnectionIdempotencyPolicy>
 MakeDefaultCloudFunctionsServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace functions
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace asset {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace asset {
 
 using AssetServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        asset_internal::AssetServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AssetServiceRetryTraits>;
 
 using AssetServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        asset_internal::AssetServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AssetServiceRetryTraits>;
 
 using AssetServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        asset_internal::AssetServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AssetServiceRetryTraits>;
 
 /**
  * The `AssetServiceConnection` object for `AssetServiceClient`.
@@ -59,7 +59,7 @@ using AssetServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeAssetServiceConnection()`.
  *
- * For mocking, see `asset_mocks::MockAssetServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockAssetServiceConnection`.
  */
 class AssetServiceConnection {
  public:
@@ -151,7 +151,7 @@ class AssetServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::asset::AssetServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::AssetServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -162,8 +162,8 @@ class AssetServiceConnection {
 std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

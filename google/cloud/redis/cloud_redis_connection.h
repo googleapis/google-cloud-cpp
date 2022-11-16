@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace redis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace redis {
 
 using CloudRedisRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    redis_internal::CloudRedisRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::CloudRedisRetryTraits>;
 
 using CloudRedisLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        redis_internal::CloudRedisRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudRedisRetryTraits>;
 
 using CloudRedisLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        redis_internal::CloudRedisRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudRedisRetryTraits>;
 
 /**
  * The `CloudRedisConnection` object for `CloudRedisClient`.
@@ -58,7 +58,7 @@ using CloudRedisLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeCloudRedisConnection()`.
  *
- * For mocking, see `redis_mocks::MockCloudRedisConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockCloudRedisConnection`.
  */
 class CloudRedisConnection {
  public:
@@ -116,7 +116,7 @@ class CloudRedisConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::redis::CloudRedisPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CloudRedisPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -127,8 +127,8 @@ class CloudRedisConnection {
 std::shared_ptr<CloudRedisConnection> MakeCloudRedisConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

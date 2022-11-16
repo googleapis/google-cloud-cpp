@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accesscontextmanager {
 
 AccessContextManagerClient::AccessContextManagerClient(
     std::shared_ptr<AccessContextManagerConnection> connection, Options opts)
@@ -463,7 +463,7 @@ AccessContextManagerClient::TestIamPermissions(
   return connection_->TestIamPermissions(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

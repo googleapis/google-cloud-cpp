@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace websecurityscanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace websecurityscanner_internal {
 
 WebSecurityScannerMetadata::WebSecurityScannerMetadata(
     std::shared_ptr<WebSecurityScannerStub> child)
@@ -161,7 +161,7 @@ void WebSecurityScannerMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

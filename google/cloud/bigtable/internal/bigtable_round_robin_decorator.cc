@@ -20,8 +20,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_internal {
 
 BigtableRoundRobin::BigtableRoundRobin(
     std::vector<std::shared_ptr<BigtableStub>> children)
@@ -137,7 +137,7 @@ std::shared_ptr<BigtableStub> BigtableRoundRobin::Child() {
   return children_[current];
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

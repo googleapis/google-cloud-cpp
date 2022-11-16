@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace run_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace run_internal {
 
 class RevisionsLogging : public RevisionsStub {
  public:
@@ -68,8 +68,8 @@ class RevisionsLogging : public RevisionsStub {
   std::set<std::string> components_;
 };  // RevisionsLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

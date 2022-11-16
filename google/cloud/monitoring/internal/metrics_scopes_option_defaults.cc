@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,38 +38,42 @@ Options MetricsScopesDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_METRICS_SCOPES_AUTHORITY", "monitoring.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<monitoring::MetricsScopesRetryPolicyOption>()) {
-    options.set<monitoring::MetricsScopesRetryPolicyOption>(
-        monitoring::MetricsScopesLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::MetricsScopesRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::MetricsScopesRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MetricsScopesLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<monitoring::MetricsScopesBackoffPolicyOption>()) {
-    options.set<monitoring::MetricsScopesBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::MetricsScopesBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::MetricsScopesBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<monitoring::MetricsScopesPollingPolicyOption>()) {
-    options.set<monitoring::MetricsScopesPollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::MetricsScopesPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::MetricsScopesPollingPolicyOption>(
         GenericPollingPolicy<
-            monitoring::MetricsScopesRetryPolicyOption::Type,
-            monitoring::MetricsScopesBackoffPolicyOption::Type>(
-            options.get<monitoring::MetricsScopesRetryPolicyOption>()->clone(),
-            options.get<monitoring::MetricsScopesBackoffPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::MetricsScopesRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::MetricsScopesBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::MetricsScopesRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::MetricsScopesBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options
-           .has<monitoring::MetricsScopesConnectionIdempotencyPolicyOption>()) {
-    options.set<monitoring::MetricsScopesConnectionIdempotencyPolicyOption>(
-        monitoring::MakeDefaultMetricsScopesConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       MetricsScopesConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::MetricsScopesConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultMetricsScopesConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

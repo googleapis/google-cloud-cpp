@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp {
 
 ClientGatewaysServiceConnection::~ClientGatewaysServiceConnection() = default;
 
@@ -77,17 +77,17 @@ MakeClientGatewaysServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  ClientGatewaysServicePolicyOptionList>(
       options, __func__);
-  options = beyondcorp_internal::ClientGatewaysServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::ClientGatewaysServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = beyondcorp_internal::CreateDefaultClientGatewaysServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultClientGatewaysServiceStub(
       background->cq(), options);
   return std::make_shared<
-      beyondcorp_internal::ClientGatewaysServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::ClientGatewaysServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

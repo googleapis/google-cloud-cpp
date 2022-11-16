@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace cloudbuild_internal {
 
 class CloudBuildLogging : public CloudBuildStub {
  public:
@@ -155,8 +155,8 @@ class CloudBuildLogging : public CloudBuildStub {
   std::set<std::string> components_;
 };  // CloudBuildLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

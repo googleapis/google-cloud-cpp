@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp {
 
 using ::google::cloud::Idempotency;
 
@@ -64,7 +64,7 @@ MakeDefaultAppGatewaysServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<AppGatewaysServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

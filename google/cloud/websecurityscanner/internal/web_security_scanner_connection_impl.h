@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace websecurityscanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace websecurityscanner_internal {
 
 class WebSecurityScannerConnectionImpl
-    : public websecurityscanner::WebSecurityScannerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::WebSecurityScannerConnection {
  public:
   ~WebSecurityScannerConnectionImpl() override = default;
 
   WebSecurityScannerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<websecurityscanner_internal::WebSecurityScannerStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -103,58 +103,58 @@ class WebSecurityScannerConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<websecurityscanner::WebSecurityScannerRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<websecurityscanner::WebSecurityScannerRetryPolicyOption>()) {
+            .has<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryPolicyOption>()) {
       return options
-          .get<websecurityscanner::WebSecurityScannerRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<websecurityscanner::WebSecurityScannerRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<websecurityscanner::WebSecurityScannerBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::WebSecurityScannerBackoffPolicyOption>()) {
       return options
-          .get<websecurityscanner::WebSecurityScannerBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<websecurityscanner::WebSecurityScannerBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      websecurityscanner::WebSecurityScannerConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::WebSecurityScannerConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<websecurityscanner::
+            .has<GOOGLE_CLOUD_CPP_NS::
                      WebSecurityScannerConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<websecurityscanner::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    WebSecurityScannerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<websecurityscanner::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  WebSecurityScannerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<websecurityscanner_internal::WebSecurityScannerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

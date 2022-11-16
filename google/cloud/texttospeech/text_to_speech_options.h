@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace texttospeech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace texttospeech {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -67,8 +67,8 @@ using TextToSpeechPolicyOptionList =
     OptionList<TextToSpeechRetryPolicyOption, TextToSpeechBackoffPolicyOption,
                TextToSpeechConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

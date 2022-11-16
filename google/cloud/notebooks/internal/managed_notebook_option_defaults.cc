@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,42 +39,49 @@ Options ManagedNotebookServiceDefaultOptions(Options options) {
       "notebooks.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<notebooks::ManagedNotebookServiceRetryPolicyOption>()) {
-    options.set<notebooks::ManagedNotebookServiceRetryPolicyOption>(
-        notebooks::ManagedNotebookServiceLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<notebooks::ManagedNotebookServiceBackoffPolicyOption>()) {
-    options.set<notebooks::ManagedNotebookServiceBackoffPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<notebooks::ManagedNotebookServicePollingPolicyOption>()) {
-    options.set<notebooks::ManagedNotebookServicePollingPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ManagedNotebookServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ManagedNotebookServicePollingPolicyOption>(
         GenericPollingPolicy<
-            notebooks::ManagedNotebookServiceRetryPolicyOption::Type,
-            notebooks::ManagedNotebookServiceBackoffPolicyOption::Type>(
-            options.get<notebooks::ManagedNotebookServiceRetryPolicyOption>()
-                ->clone(),
-            options.get<notebooks::ManagedNotebookServiceBackoffPolicyOption>()
-                ->clone())
+            GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceBackoffPolicyOption::
+                Type>(options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   ManagedNotebookServiceRetryPolicyOption>()
+                          ->clone(),
+                      options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   ManagedNotebookServiceBackoffPolicyOption>()
+                          ->clone())
             .clone());
   }
   if (!options.has<
-          notebooks::
+          GOOGLE_CLOUD_CPP_NS::
               ManagedNotebookServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        notebooks::ManagedNotebookServiceConnectionIdempotencyPolicyOption>(
-        notebooks::
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    ManagedNotebookServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultManagedNotebookServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

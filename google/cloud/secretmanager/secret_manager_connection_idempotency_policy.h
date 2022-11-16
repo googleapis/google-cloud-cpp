@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace secretmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace secretmanager {
 
 class SecretManagerServiceConnectionIdempotencyPolicy {
  public:
@@ -91,8 +91,8 @@ class SecretManagerServiceConnectionIdempotencyPolicy {
 std::unique_ptr<SecretManagerServiceConnectionIdempotencyPolicy>
 MakeDefaultSecretManagerServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

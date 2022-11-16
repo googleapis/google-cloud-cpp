@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace baremetalsolution_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,43 +39,46 @@ Options BareMetalSolutionDefaultOptions(Options options) {
       "baremetalsolution.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<baremetalsolution::BareMetalSolutionRetryPolicyOption>()) {
-    options.set<baremetalsolution::BareMetalSolutionRetryPolicyOption>(
-        baremetalsolution::BareMetalSolutionLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::BareMetalSolutionLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<baremetalsolution::BareMetalSolutionBackoffPolicyOption>()) {
-    options.set<baremetalsolution::BareMetalSolutionBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<baremetalsolution::BareMetalSolutionPollingPolicyOption>()) {
-    options.set<baremetalsolution::BareMetalSolutionPollingPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionPollingPolicyOption>(
         GenericPollingPolicy<
-            baremetalsolution::BareMetalSolutionRetryPolicyOption::Type,
-            baremetalsolution::BareMetalSolutionBackoffPolicyOption::Type>(
+            GOOGLE_CLOUD_CPP_NS::BareMetalSolutionRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::BareMetalSolutionBackoffPolicyOption::Type>(
             options
-                .get<baremetalsolution::BareMetalSolutionRetryPolicyOption>()
+                .get<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionRetryPolicyOption>()
                 ->clone(),
             options
-                .get<baremetalsolution::BareMetalSolutionBackoffPolicyOption>()
+                .get<
+                    GOOGLE_CLOUD_CPP_NS::BareMetalSolutionBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<baremetalsolution::
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
                        BareMetalSolutionConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        baremetalsolution::BareMetalSolutionConnectionIdempotencyPolicyOption>(
-        baremetalsolution::
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    BareMetalSolutionConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultBareMetalSolutionConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

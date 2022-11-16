@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 class TransitionRouteGroupsConnectionIdempotencyPolicy {
  public:
@@ -62,8 +62,8 @@ class TransitionRouteGroupsConnectionIdempotencyPolicy {
 std::unique_ptr<TransitionRouteGroupsConnectionIdempotencyPolicy>
 MakeDefaultTransitionRouteGroupsConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 WebhooksClient::WebhooksClient(std::shared_ptr<WebhooksConnection> connection,
                                Options opts)
@@ -114,7 +114,7 @@ Status WebhooksClient::DeleteWebhook(
   return connection_->DeleteWebhook(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

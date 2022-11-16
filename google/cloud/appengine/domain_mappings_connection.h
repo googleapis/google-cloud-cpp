@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 using DomainMappingsRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        appengine_internal::DomainMappingsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DomainMappingsRetryTraits>;
 
 using DomainMappingsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        appengine_internal::DomainMappingsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DomainMappingsRetryTraits>;
 
 using DomainMappingsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        appengine_internal::DomainMappingsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DomainMappingsRetryTraits>;
 
 /**
  * The `DomainMappingsConnection` object for `DomainMappingsClient`.
@@ -59,7 +59,7 @@ using DomainMappingsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeDomainMappingsConnection()`.
  *
- * For mocking, see `appengine_mocks::MockDomainMappingsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockDomainMappingsConnection`.
  */
 class DomainMappingsConnection {
  public:
@@ -99,7 +99,7 @@ class DomainMappingsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::appengine::DomainMappingsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::DomainMappingsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -110,8 +110,8 @@ class DomainMappingsConnection {
 std::shared_ptr<DomainMappingsConnection> MakeDomainMappingsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

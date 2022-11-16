@@ -31,19 +31,19 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog {
 
 using DataCatalogRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    datacatalog_internal::DataCatalogRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::DataCatalogRetryTraits>;
 
 using DataCatalogLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        datacatalog_internal::DataCatalogRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DataCatalogRetryTraits>;
 
 using DataCatalogLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        datacatalog_internal::DataCatalogRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DataCatalogRetryTraits>;
 
 /**
  * The `DataCatalogConnection` object for `DataCatalogClient`.
@@ -55,7 +55,7 @@ using DataCatalogLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeDataCatalogConnection()`.
  *
- * For mocking, see `datacatalog_mocks::MockDataCatalogConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockDataCatalogConnection`.
  */
 class DataCatalogConnection {
  public:
@@ -190,7 +190,7 @@ class DataCatalogConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::datacatalog::DataCatalogPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::DataCatalogPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -201,8 +201,8 @@ class DataCatalogConnection {
 std::shared_ptr<DataCatalogConnection> MakeDataCatalogConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

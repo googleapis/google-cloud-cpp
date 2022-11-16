@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace deploy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace deploy_internal {
 
 CloudDeployStub::~CloudDeployStub() = default;
 
@@ -341,7 +341,7 @@ future<Status> DefaultCloudDeployStub::AsyncCancelOperation(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

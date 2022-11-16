@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 class DocumentsConnectionIdempotencyPolicy {
  public:
@@ -65,8 +65,8 @@ class DocumentsConnectionIdempotencyPolicy {
 std::unique_ptr<DocumentsConnectionIdempotencyPolicy>
 MakeDefaultDocumentsConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

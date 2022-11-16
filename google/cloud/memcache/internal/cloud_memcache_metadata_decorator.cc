@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace memcache_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache_internal {
 
 CloudMemcacheMetadata::CloudMemcacheMetadata(
     std::shared_ptr<CloudMemcacheStub> child)
@@ -129,7 +129,7 @@ void CloudMemcacheMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

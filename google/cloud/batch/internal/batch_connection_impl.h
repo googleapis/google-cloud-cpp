@@ -37,16 +37,18 @@
 
 namespace google {
 namespace cloud {
-namespace batch_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace batch_internal {
 
-class BatchServiceConnectionImpl : public batch::BatchServiceConnection {
+class BatchServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::BatchServiceConnection {
  public:
   ~BatchServiceConnectionImpl() override = default;
 
   BatchServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<batch_internal::BatchServiceStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BatchServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -69,49 +71,61 @@ class BatchServiceConnectionImpl : public batch::BatchServiceConnection {
       google::cloud::batch::v1::ListTasksRequest request) override;
 
  private:
-  std::unique_ptr<batch::BatchServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::BatchServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<batch::BatchServiceRetryPolicyOption>()) {
-      return options.get<batch::BatchServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::BatchServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::BatchServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<batch::BatchServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::BatchServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<batch::BatchServiceBackoffPolicyOption>()) {
-      return options.get<batch::BatchServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<batch::BatchServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<batch::BatchServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<batch::BatchServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::BatchServiceBackoffPolicyOption>()) {
       return options
-          .get<batch::BatchServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::BatchServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<batch::BatchServiceConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::BatchServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::BatchServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        BatchServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   BatchServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 BatchServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<batch::BatchServicePollingPolicyOption>()) {
-      return options.get<batch::BatchServicePollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::BatchServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::BatchServicePollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<batch::BatchServicePollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::BatchServicePollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<batch_internal::BatchServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BatchServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

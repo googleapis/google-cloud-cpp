@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 AgentsConnection::~AgentsConnection() = default;
 
@@ -95,12 +95,12 @@ std::shared_ptr<AgentsConnection> MakeAgentsConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  AgentsPolicyOptionList>(options, __func__);
-  options = dialogflow_es_internal::AgentsDefaultOptions(location,
-                                                         std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::AgentsDefaultOptions(location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_es_internal::CreateDefaultAgentsStub(background->cq(),
-                                                              options);
-  return std::make_shared<dialogflow_es_internal::AgentsConnectionImpl>(
+  auto stub =
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultAgentsStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::AgentsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -108,7 +108,7 @@ std::shared_ptr<AgentsConnection> MakeAgentsConnection(Options options) {
   return MakeAgentsConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

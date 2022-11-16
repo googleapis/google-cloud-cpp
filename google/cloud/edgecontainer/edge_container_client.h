@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace edgecontainer {
 
 ///
 /// EdgeContainer API provides management of Kubernetes Clusters on Google Edge
@@ -749,8 +749,8 @@ class EdgeContainerClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

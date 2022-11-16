@@ -32,19 +32,19 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 using PagesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::PagesRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::PagesRetryTraits>;
 
 using PagesLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::PagesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PagesRetryTraits>;
 
 using PagesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::PagesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PagesRetryTraits>;
 
 /**
  * The `PagesConnection` object for `PagesClient`.
@@ -56,7 +56,7 @@ using PagesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakePagesConnection()`.
  *
- * For mocking, see `dialogflow_cx_mocks::MockPagesConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockPagesConnection`.
  */
 class PagesConnection {
  public:
@@ -93,7 +93,7 @@ class PagesConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::PagesPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::PagesPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -114,8 +114,8 @@ std::shared_ptr<PagesConnection> MakePagesConnection(
  */
 std::shared_ptr<PagesConnection> MakePagesConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

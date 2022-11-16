@@ -26,12 +26,12 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
 ContainerAnalysisConnectionImpl::ContainerAnalysisConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<containeranalysis_internal::ContainerAnalysisStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -91,7 +91,7 @@ ContainerAnalysisConnectionImpl::GetVulnerabilityOccurrencesSummary(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

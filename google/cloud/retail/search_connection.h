@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 using SearchServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        retail_internal::SearchServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SearchServiceRetryTraits>;
 
 using SearchServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        retail_internal::SearchServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SearchServiceRetryTraits>;
 
 using SearchServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        retail_internal::SearchServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SearchServiceRetryTraits>;
 
 /**
  * The `SearchServiceConnection` object for `SearchServiceClient`.
@@ -56,7 +56,7 @@ using SearchServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeSearchServiceConnection()`.
  *
- * For mocking, see `retail_mocks::MockSearchServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockSearchServiceConnection`.
  */
 class SearchServiceConnection {
  public:
@@ -81,7 +81,7 @@ class SearchServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::retail::SearchServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::SearchServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -92,8 +92,8 @@ class SearchServiceConnection {
 std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

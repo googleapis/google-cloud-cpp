@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger {
 
 Debugger2Client::Debugger2Client(
     std::shared_ptr<Debugger2Connection> connection, Options opts)
@@ -130,7 +130,7 @@ Debugger2Client::ListDebuggees(
   return connection_->ListDebuggees(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

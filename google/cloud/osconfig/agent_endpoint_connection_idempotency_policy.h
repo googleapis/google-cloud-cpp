@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig {
 
 class AgentEndpointServiceConnectionIdempotencyPolicy {
  public:
@@ -62,8 +62,8 @@ class AgentEndpointServiceConnectionIdempotencyPolicy {
 std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>
 MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

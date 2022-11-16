@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 ConversationProfilesConnectionImpl::ConversationProfilesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_es_internal::ConversationProfilesStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConversationProfilesStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,9 +45,9 @@ ConversationProfilesConnectionImpl::ListConversationProfiles(
     google::cloud::dialogflow::v2::ListConversationProfilesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<dialogflow_es::ConversationProfilesRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::ConversationProfilesRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListConversationProfiles(request);
   char const* function_name = __func__;
@@ -201,7 +201,7 @@ ConversationProfilesConnectionImpl::ClearSuggestionFeatureConfig(
       polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

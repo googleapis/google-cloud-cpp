@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing_internal {
 
 class BudgetServiceAuth : public BudgetServiceStub {
  public:
@@ -68,8 +68,8 @@ class BudgetServiceAuth : public BudgetServiceStub {
   std::shared_ptr<BudgetServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

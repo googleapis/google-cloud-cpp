@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol {
 
 ServiceControllerConnection::~ServiceControllerConnection() = default;
 
@@ -52,17 +52,16 @@ std::shared_ptr<ServiceControllerConnection> MakeServiceControllerConnection(
                                  UnifiedCredentialsOptionList,
                                  ServiceControllerPolicyOptionList>(options,
                                                                     __func__);
-  options = servicecontrol_internal::ServiceControllerDefaultOptions(
-      std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::ServiceControllerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = servicecontrol_internal::CreateDefaultServiceControllerStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultServiceControllerStub(
       background->cq(), options);
-  return std::make_shared<
-      servicecontrol_internal::ServiceControllerConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ServiceControllerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

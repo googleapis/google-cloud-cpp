@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace channel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace channel {
 
 using ::google::cloud::Idempotency;
 
@@ -295,7 +295,7 @@ MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<CloudChannelServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

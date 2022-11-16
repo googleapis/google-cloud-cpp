@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap_internal {
 
 class IdentityAwareProxyOAuthServiceMetadata
     : public IdentityAwareProxyOAuthServiceStub {
@@ -86,8 +86,8 @@ class IdentityAwareProxyOAuthServiceMetadata
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

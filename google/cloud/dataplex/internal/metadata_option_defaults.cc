@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,28 +38,30 @@ Options MetadataServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_METADATA_SERVICE_AUTHORITY", "dataplex.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dataplex::MetadataServiceRetryPolicyOption>()) {
-    options.set<dataplex::MetadataServiceRetryPolicyOption>(
-        dataplex::MetadataServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::MetadataServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::MetadataServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MetadataServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dataplex::MetadataServiceBackoffPolicyOption>()) {
-    options.set<dataplex::MetadataServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::MetadataServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::MetadataServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<dataplex::MetadataServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<dataplex::MetadataServiceConnectionIdempotencyPolicyOption>(
-        dataplex::MakeDefaultMetadataServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       MetadataServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::MetadataServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultMetadataServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

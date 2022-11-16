@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite {
 
 using ::google::cloud::Idempotency;
 
@@ -55,7 +55,7 @@ MakeDefaultTopicStatsServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<TopicStatsServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

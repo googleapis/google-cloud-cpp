@@ -33,20 +33,20 @@
 
 namespace google {
 namespace cloud {
-namespace optimization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization {
 
 using FleetRoutingRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        optimization_internal::FleetRoutingRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::FleetRoutingRetryTraits>;
 
 using FleetRoutingLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        optimization_internal::FleetRoutingRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::FleetRoutingRetryTraits>;
 
 using FleetRoutingLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        optimization_internal::FleetRoutingRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::FleetRoutingRetryTraits>;
 
 /**
  * The `FleetRoutingConnection` object for `FleetRoutingClient`.
@@ -58,7 +58,7 @@ using FleetRoutingLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeFleetRoutingConnection()`.
  *
- * For mocking, see `optimization_mocks::MockFleetRoutingConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockFleetRoutingConnection`.
  */
 class FleetRoutingConnection {
  public:
@@ -90,7 +90,7 @@ class FleetRoutingConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::optimization::FleetRoutingPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::FleetRoutingPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -101,8 +101,8 @@ class FleetRoutingConnection {
 std::shared_ptr<FleetRoutingConnection> MakeFleetRoutingConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

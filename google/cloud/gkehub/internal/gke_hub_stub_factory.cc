@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub_internal {
 
 std::shared_ptr<GkeHubStub> CreateDefaultGkeHubStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -58,7 +58,7 @@ std::shared_ptr<GkeHubStub> CreateDefaultGkeHubStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

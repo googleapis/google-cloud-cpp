@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace edgecontainer {
 
 EdgeContainerClient::EdgeContainerClient(
     std::shared_ptr<EdgeContainerConnection> connection, Options opts)
@@ -327,7 +327,7 @@ EdgeContainerClient::DeleteVpnConnection(
   return connection_->DeleteVpnConnection(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

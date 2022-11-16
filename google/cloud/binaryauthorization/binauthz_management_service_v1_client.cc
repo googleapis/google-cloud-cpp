@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization {
 
 BinauthzManagementServiceV1Client::BinauthzManagementServiceV1Client(
     std::shared_ptr<BinauthzManagementServiceV1Connection> connection,
@@ -159,7 +159,7 @@ Status BinauthzManagementServiceV1Client::DeleteAttestor(
   return connection_->DeleteAttestor(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

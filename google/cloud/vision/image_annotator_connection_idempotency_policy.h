@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision {
 
 class ImageAnnotatorConnectionIdempotencyPolicy {
  public:
@@ -55,8 +55,8 @@ class ImageAnnotatorConnectionIdempotencyPolicy {
 std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>
 MakeDefaultImageAnnotatorConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace redis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace redis_internal {
 
 CloudRedisMetadata::CloudRedisMetadata(std::shared_ptr<CloudRedisStub> child)
     : child_(std::move(child)),
@@ -162,7 +162,7 @@ void CloudRedisMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 ClusterControllerConnection::~ClusterControllerConnection() = default;
 
@@ -103,12 +103,12 @@ std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
                                  UnifiedCredentialsOptionList,
                                  ClusterControllerPolicyOptionList>(options,
                                                                     __func__);
-  options = dataproc_internal::ClusterControllerDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::ClusterControllerDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dataproc_internal::CreateDefaultClusterControllerStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultClusterControllerStub(
       background->cq(), options);
-  return std::make_shared<dataproc_internal::ClusterControllerConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ClusterControllerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -117,7 +117,7 @@ std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
   return MakeClusterControllerConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

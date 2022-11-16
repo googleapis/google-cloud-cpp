@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace memcache_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache_internal {
 
 class CloudMemcacheLogging : public CloudMemcacheStub {
  public:
@@ -94,8 +94,8 @@ class CloudMemcacheLogging : public CloudMemcacheStub {
   std::set<std::string> components_;
 };  // CloudMemcacheLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,25 +39,25 @@ Options GoldenKitchenSinkDefaultOptions(Options options) {
       "goldenkitchensink.googleapis.com");
   options = google::cloud::internal::PopulateGrpcOptions(
       std::move(options), "GOLDEN_KITCHEN_SINK_EMULATOR_HOST");
-  if (!options.has<golden::GoldenKitchenSinkRetryPolicyOption>()) {
-    options.set<golden::GoldenKitchenSinkRetryPolicyOption>(
-        golden::GoldenKitchenSinkLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkLimitedTimeRetryPolicy(
             std::chrono::minutes(30)).clone());
   }
-  if (!options.has<golden::GoldenKitchenSinkBackoffPolicyOption>()) {
-    options.set<golden::GoldenKitchenSinkBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
             std::chrono::minutes(5), kBackoffScaling).clone());
   }
-  if (!options.has<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
-    options.set<golden::GoldenKitchenSinkConnectionIdempotencyPolicyOption>(
-        golden::MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

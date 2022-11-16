@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 ConversationModelsClient::ConversationModelsClient(
     std::shared_ptr<ConversationModelsConnection> connection, Options opts)
@@ -187,7 +187,7 @@ ConversationModelsClient::CreateConversationModelEvaluation(
   return connection_->CreateConversationModelEvaluation(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

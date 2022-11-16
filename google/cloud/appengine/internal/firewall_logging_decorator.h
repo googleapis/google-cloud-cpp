@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 class FirewallLogging : public FirewallStub {
  public:
@@ -70,8 +70,8 @@ class FirewallLogging : public FirewallStub {
   std::set<std::string> components_;
 };  // FirewallLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

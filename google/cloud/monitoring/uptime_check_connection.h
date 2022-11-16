@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 using UptimeCheckServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        monitoring_internal::UptimeCheckServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceRetryTraits>;
 
 using UptimeCheckServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        monitoring_internal::UptimeCheckServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceRetryTraits>;
 
 using UptimeCheckServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        monitoring_internal::UptimeCheckServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::UptimeCheckServiceRetryTraits>;
 
 /**
  * The `UptimeCheckServiceConnection` object for `UptimeCheckServiceClient`.
@@ -56,7 +56,8 @@ using UptimeCheckServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeUptimeCheckServiceConnection()`.
  *
- * For mocking, see `monitoring_mocks::MockUptimeCheckServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockUptimeCheckServiceConnection`.
  */
 class UptimeCheckServiceConnection {
  public:
@@ -102,7 +103,7 @@ class UptimeCheckServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::monitoring::UptimeCheckServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::UptimeCheckServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -113,8 +114,8 @@ class UptimeCheckServiceConnection {
 std::shared_ptr<UptimeCheckServiceConnection> MakeUptimeCheckServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

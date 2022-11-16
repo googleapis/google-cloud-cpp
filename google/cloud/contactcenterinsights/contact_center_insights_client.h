@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace contactcenterinsights {
 
 ///
 /// An API that lets users analyze and explore their business conversation data.
@@ -1395,8 +1395,8 @@ class ContactCenterInsightsClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

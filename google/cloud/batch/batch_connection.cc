@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace batch {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace batch {
 
 BatchServiceConnection::~BatchServiceConnection() = default;
 
@@ -78,15 +78,15 @@ std::shared_ptr<BatchServiceConnection> MakeBatchServiceConnection(
                                  UnifiedCredentialsOptionList,
                                  BatchServicePolicyOptionList>(options,
                                                                __func__);
-  options = batch_internal::BatchServiceDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::BatchServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      batch_internal::CreateDefaultBatchServiceStub(background->cq(), options);
-  return std::make_shared<batch_internal::BatchServiceConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultBatchServiceStub(
+      background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::BatchServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

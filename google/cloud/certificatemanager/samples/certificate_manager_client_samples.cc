@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: certificatemanager::CertificateManagerClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::CertificateManagerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::certificatemanager::CertificateManagerClient(
-      google::cloud::certificatemanager::MakeCertificateManagerConnection(
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::CertificateManagerClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeCertificateManagerConnection(
           options));
   //! [set-client-endpoint]
 }
@@ -56,8 +56,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::certificatemanager::CertificateManagerClient(
-        google::cloud::certificatemanager::MakeCertificateManagerConnection(
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::CertificateManagerClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeCertificateManagerConnection(
             options));
   }
   //! [with-service-account]

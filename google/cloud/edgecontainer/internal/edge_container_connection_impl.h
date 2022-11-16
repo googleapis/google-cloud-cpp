@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace edgecontainer_internal {
 
 class EdgeContainerConnectionImpl
-    : public edgecontainer::EdgeContainerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::EdgeContainerConnection {
  public:
   ~EdgeContainerConnectionImpl() override = default;
 
   EdgeContainerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<edgecontainer_internal::EdgeContainerStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EdgeContainerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -121,57 +121,64 @@ class EdgeContainerConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<edgecontainer::EdgeContainerRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::EdgeContainerRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<edgecontainer::EdgeContainerRetryPolicyOption>()) {
-      return options.get<edgecontainer::EdgeContainerRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EdgeContainerRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::EdgeContainerRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<edgecontainer::EdgeContainerRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::EdgeContainerRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<edgecontainer::EdgeContainerBackoffPolicyOption>()) {
-      return options.get<edgecontainer::EdgeContainerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<edgecontainer::EdgeContainerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<edgecontainer::EdgeContainerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            edgecontainer::EdgeContainerConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EdgeContainerBackoffPolicyOption>()) {
       return options
-          .get<edgecontainer::EdgeContainerConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::EdgeContainerBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<edgecontainer::EdgeContainerConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::EdgeContainerBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::EdgeContainerConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        EdgeContainerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   EdgeContainerConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 EdgeContainerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<edgecontainer::EdgeContainerPollingPolicyOption>()) {
-      return options.get<edgecontainer::EdgeContainerPollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EdgeContainerPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::EdgeContainerPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<edgecontainer::EdgeContainerPollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::EdgeContainerPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<edgecontainer_internal::EdgeContainerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EdgeContainerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

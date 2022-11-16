@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace artifactregistry_internal {
 
 class ArtifactRegistryLogging : public ArtifactRegistryStub {
  public:
@@ -199,8 +199,8 @@ class ArtifactRegistryLogging : public ArtifactRegistryStub {
   std::set<std::string> components_;
 };  // ArtifactRegistryLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

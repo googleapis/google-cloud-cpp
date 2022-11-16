@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_internal {
 
 DataCatalogLogging::DataCatalogLogging(std::shared_ptr<DataCatalogStub> child,
                                        TracingOptions tracing_options,
@@ -433,7 +433,7 @@ DataCatalogLogging::TestIamPermissions(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

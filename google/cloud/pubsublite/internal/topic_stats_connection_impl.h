@@ -33,17 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 class TopicStatsServiceConnectionImpl
-    : public pubsublite::TopicStatsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::TopicStatsServiceConnection {
  public:
   ~TopicStatsServiceConnectionImpl() override = default;
 
   TopicStatsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<pubsublite_internal::TopicStatsServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -64,47 +64,57 @@ class TopicStatsServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<pubsublite::TopicStatsServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<pubsublite::TopicStatsServiceRetryPolicyOption>()) {
-      return options.get<pubsublite::TopicStatsServiceRetryPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<pubsublite::TopicStatsServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<pubsublite::TopicStatsServiceBackoffPolicyOption>()) {
-      return options.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<pubsublite::TopicStatsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<pubsublite::TopicStatsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceBackoffPolicyOption>()) {
       return options
-          .get<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<pubsublite::TopicStatsServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::TopicStatsServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        TopicStatsServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   TopicStatsServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 TopicStatsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<pubsublite_internal::TopicStatsServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TopicStatsServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

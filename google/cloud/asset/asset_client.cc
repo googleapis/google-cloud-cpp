@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace asset {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace asset {
 
 AssetServiceClient::AssetServiceClient(
     std::shared_ptr<AssetServiceConnection> connection, Options opts)
@@ -294,7 +294,7 @@ AssetServiceClient::BatchGetEffectiveIamPolicies(
   return connection_->BatchGetEffectiveIamPolicies(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

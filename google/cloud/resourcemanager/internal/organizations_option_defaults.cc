@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,29 +39,30 @@ Options OrganizationsDefaultOptions(Options options) {
       "cloudresourcemanager.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<resourcemanager::OrganizationsRetryPolicyOption>()) {
-    options.set<resourcemanager::OrganizationsRetryPolicyOption>(
-        resourcemanager::OrganizationsLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::OrganizationsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::OrganizationsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::OrganizationsLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<resourcemanager::OrganizationsBackoffPolicyOption>()) {
-    options.set<resourcemanager::OrganizationsBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::OrganizationsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::OrganizationsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       OrganizationsConnectionIdempotencyPolicyOption>()) {
     options.set<
-        resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>(
-        resourcemanager::MakeDefaultOrganizationsConnectionIdempotencyPolicy());
+        GOOGLE_CLOUD_CPP_NS::OrganizationsConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultOrganizationsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

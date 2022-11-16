@@ -33,20 +33,20 @@
 
 namespace google {
 namespace cloud {
-namespace logging {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace logging {
 
 using LoggingServiceV2RetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        logging_internal::LoggingServiceV2RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::LoggingServiceV2RetryTraits>;
 
 using LoggingServiceV2LimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        logging_internal::LoggingServiceV2RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::LoggingServiceV2RetryTraits>;
 
 using LoggingServiceV2LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        logging_internal::LoggingServiceV2RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::LoggingServiceV2RetryTraits>;
 
 /**
  * The `LoggingServiceV2Connection` object for `LoggingServiceV2Client`.
@@ -58,7 +58,7 @@ using LoggingServiceV2LimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeLoggingServiceV2Connection()`.
  *
- * For mocking, see `logging_mocks::MockLoggingServiceV2Connection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockLoggingServiceV2Connection`.
  */
 class LoggingServiceV2Connection {
  public:
@@ -106,7 +106,7 @@ class LoggingServiceV2Connection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::logging::LoggingServiceV2PolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::LoggingServiceV2PolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -117,8 +117,8 @@ class LoggingServiceV2Connection {
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

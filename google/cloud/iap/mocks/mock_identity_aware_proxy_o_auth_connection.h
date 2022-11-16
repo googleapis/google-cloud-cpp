@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap_mocks {
 
 /**
  * A class to mock `IdentityAwareProxyOAuthServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockIdentityAwareProxyOAuthServiceConnection
-    : public iap::IdentityAwareProxyOAuthServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyOAuthServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -92,8 +92,8 @@ class MockIdentityAwareProxyOAuthServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

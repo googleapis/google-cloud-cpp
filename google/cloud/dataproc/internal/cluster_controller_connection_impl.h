@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 class ClusterControllerConnectionImpl
-    : public dataproc::ClusterControllerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ClusterControllerConnection {
  public:
   ~ClusterControllerConnectionImpl() override = default;
 
   ClusterControllerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dataproc_internal::ClusterControllerStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ClusterControllerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -81,57 +81,70 @@ class ClusterControllerConnectionImpl
                       request) override;
 
  private:
-  std::unique_ptr<dataproc::ClusterControllerRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ClusterControllerRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::ClusterControllerRetryPolicyOption>()) {
-      return options.get<dataproc::ClusterControllerRetryPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ClusterControllerRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ClusterControllerRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<dataproc::ClusterControllerRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ClusterControllerRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::ClusterControllerBackoffPolicyOption>()) {
-      return options.get<dataproc::ClusterControllerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<dataproc::ClusterControllerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<dataproc::ClusterControllerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            dataproc::ClusterControllerConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ClusterControllerBackoffPolicyOption>()) {
       return options
-          .get<dataproc::ClusterControllerConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ClusterControllerBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dataproc::ClusterControllerConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ClusterControllerBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ClusterControllerConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ClusterControllerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ClusterControllerConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ClusterControllerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::ClusterControllerPollingPolicyOption>()) {
-      return options.get<dataproc::ClusterControllerPollingPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ClusterControllerPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ClusterControllerPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<dataproc::ClusterControllerPollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ClusterControllerPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dataproc_internal::ClusterControllerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ClusterControllerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

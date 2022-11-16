@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,34 +38,39 @@ Options EventarcDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_EVENTARC_AUTHORITY", "eventarc.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<eventarc::EventarcRetryPolicyOption>()) {
-    options.set<eventarc::EventarcRetryPolicyOption>(
-        eventarc::EventarcLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::EventarcRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::EventarcRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::EventarcLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<eventarc::EventarcBackoffPolicyOption>()) {
-    options.set<eventarc::EventarcBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::EventarcBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::EventarcBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<eventarc::EventarcPollingPolicyOption>()) {
-    options.set<eventarc::EventarcPollingPolicyOption>(
-        GenericPollingPolicy<eventarc::EventarcRetryPolicyOption::Type,
-                             eventarc::EventarcBackoffPolicyOption::Type>(
-            options.get<eventarc::EventarcRetryPolicyOption>()->clone(),
-            options.get<eventarc::EventarcBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::EventarcPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::EventarcPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::EventarcRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::EventarcBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::EventarcRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::EventarcBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<eventarc::EventarcConnectionIdempotencyPolicyOption>()) {
-    options.set<eventarc::EventarcConnectionIdempotencyPolicyOption>(
-        eventarc::MakeDefaultEventarcConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::EventarcConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::EventarcConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultEventarcConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

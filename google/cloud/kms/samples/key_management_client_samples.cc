@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: kms::KeyManagementServiceClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::KeyManagementServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,9 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::kms::KeyManagementServiceClient(
-      google::cloud::kms::MakeKeyManagementServiceConnection(options));
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::KeyManagementServiceClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeKeyManagementServiceConnection(
+          options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +56,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::kms::KeyManagementServiceClient(
-        google::cloud::kms::MakeKeyManagementServiceConnection(options));
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::KeyManagementServiceClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeKeyManagementServiceConnection(
+            options));
   }
   //! [with-service-account]
   (argv.at(0));

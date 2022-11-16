@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace tpu {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu {
 
 TpuConnection::~TpuConnection() = default;
 
@@ -114,14 +114,15 @@ std::shared_ptr<TpuConnection> MakeTpuConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  TpuPolicyOptionList>(options, __func__);
-  options = tpu_internal::TpuDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::TpuDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = tpu_internal::CreateDefaultTpuStub(background->cq(), options);
-  return std::make_shared<tpu_internal::TpuConnectionImpl>(
+  auto stub =
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultTpuStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::TpuConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

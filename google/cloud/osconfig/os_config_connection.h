@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig {
 
 using OsConfigServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        osconfig_internal::OsConfigServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::OsConfigServiceRetryTraits>;
 
 using OsConfigServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        osconfig_internal::OsConfigServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::OsConfigServiceRetryTraits>;
 
 using OsConfigServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        osconfig_internal::OsConfigServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::OsConfigServiceRetryTraits>;
 
 /**
  * The `OsConfigServiceConnection` object for `OsConfigServiceClient`.
@@ -56,7 +56,7 @@ using OsConfigServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeOsConfigServiceConnection()`.
  *
- * For mocking, see `osconfig_mocks::MockOsConfigServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockOsConfigServiceConnection`.
  */
 class OsConfigServiceConnection {
  public:
@@ -122,7 +122,7 @@ class OsConfigServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::osconfig::OsConfigServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::OsConfigServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -133,8 +133,8 @@ class OsConfigServiceConnection {
 std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

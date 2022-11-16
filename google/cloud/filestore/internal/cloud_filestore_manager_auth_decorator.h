@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore_internal {
 
 class CloudFilestoreManagerAuth : public CloudFilestoreManagerStub {
  public:
@@ -113,8 +113,8 @@ class CloudFilestoreManagerAuth : public CloudFilestoreManagerStub {
   std::shared_ptr<CloudFilestoreManagerStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 TenantServiceClient::TenantServiceClient(
     std::shared_ptr<TenantServiceConnection> connection, Options opts)
@@ -108,7 +108,7 @@ StreamRange<google::cloud::talent::v4::Tenant> TenantServiceClient::ListTenants(
   return connection_->ListTenants(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

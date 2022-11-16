@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace artifactregistry {
 
 ArtifactRegistryClient::ArtifactRegistryClient(
     std::shared_ptr<ArtifactRegistryConnection> connection, Options opts)
@@ -451,7 +451,7 @@ ArtifactRegistryClient::UpdateProjectSettings(
   return connection_->UpdateProjectSettings(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

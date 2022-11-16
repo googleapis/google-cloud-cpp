@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 using ParticipantsRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dialogflow_es_internal::ParticipantsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ParticipantsRetryTraits>;
 
 using ParticipantsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_es_internal::ParticipantsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ParticipantsRetryTraits>;
 
 using ParticipantsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_es_internal::ParticipantsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ParticipantsRetryTraits>;
 
 /**
  * The `ParticipantsConnection` object for `ParticipantsClient`.
@@ -59,7 +59,7 @@ using ParticipantsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeParticipantsConnection()`.
  *
- * For mocking, see `dialogflow_es_mocks::MockParticipantsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockParticipantsConnection`.
  */
 class ParticipantsConnection {
  public:
@@ -117,7 +117,7 @@ class ParticipantsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_es::ParticipantsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ParticipantsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -139,8 +139,8 @@ std::shared_ptr<ParticipantsConnection> MakeParticipantsConnection(
 std::shared_ptr<ParticipantsConnection> MakeParticipantsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

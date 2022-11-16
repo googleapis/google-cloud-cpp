@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace artifactregistry {
 
 ///
 /// The Artifact Registry API service.
@@ -1050,8 +1050,8 @@ class ArtifactRegistryClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

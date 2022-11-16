@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities {
 
 ///
 /// API Overview
@@ -553,8 +553,8 @@ class ManagedIdentitiesServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

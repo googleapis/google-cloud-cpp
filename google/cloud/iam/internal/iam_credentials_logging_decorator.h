@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam_internal {
 
 class IAMCredentialsLogging : public IAMCredentialsStub {
  public:
@@ -63,9 +63,9 @@ class IAMCredentialsLogging : public IAMCredentialsStub {
   std::set<std::string> components_;
 };  // IAMCredentialsLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

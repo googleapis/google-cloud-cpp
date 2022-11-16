@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accesscontextmanager {
 
 using AccessContextManagerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        accesscontextmanager_internal::AccessContextManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryTraits>;
 
 using AccessContextManagerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        accesscontextmanager_internal::AccessContextManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryTraits>;
 
 using AccessContextManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        accesscontextmanager_internal::AccessContextManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryTraits>;
 
 /**
  * The `AccessContextManagerConnection` object for `AccessContextManagerClient`.
@@ -60,7 +60,7 @@ using AccessContextManagerLimitedErrorCountRetryPolicy =
  * To create a concrete instance, see `MakeAccessContextManagerConnection()`.
  *
  * For mocking, see
- * `accesscontextmanager_mocks::MockAccessContextManagerConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockAccessContextManagerConnection`.
  */
 class AccessContextManagerConnection {
  public:
@@ -211,7 +211,7 @@ class AccessContextManagerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::accesscontextmanager::AccessContextManagerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::AccessContextManagerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -222,8 +222,8 @@ class AccessContextManagerConnection {
 std::shared_ptr<AccessContextManagerConnection>
 MakeAccessContextManagerConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

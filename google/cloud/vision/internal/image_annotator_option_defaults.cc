@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,34 +38,42 @@ Options ImageAnnotatorDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_IMAGE_ANNOTATOR_AUTHORITY", "vision.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<vision::ImageAnnotatorRetryPolicyOption>()) {
-    options.set<vision::ImageAnnotatorRetryPolicyOption>(
-        vision::ImageAnnotatorLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ImageAnnotatorLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<vision::ImageAnnotatorBackoffPolicyOption>()) {
-    options.set<vision::ImageAnnotatorBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<vision::ImageAnnotatorPollingPolicyOption>()) {
-    options.set<vision::ImageAnnotatorPollingPolicyOption>(
-        GenericPollingPolicy<vision::ImageAnnotatorRetryPolicyOption::Type,
-                             vision::ImageAnnotatorBackoffPolicyOption::Type>(
-            options.get<vision::ImageAnnotatorRetryPolicyOption>()->clone(),
-            options.get<vision::ImageAnnotatorBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::ImageAnnotatorRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::ImageAnnotatorBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::ImageAnnotatorBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<vision::ImageAnnotatorConnectionIdempotencyPolicyOption>()) {
-    options.set<vision::ImageAnnotatorConnectionIdempotencyPolicyOption>(
-        vision::MakeDefaultImageAnnotatorConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       ImageAnnotatorConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::ImageAnnotatorConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultImageAnnotatorConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

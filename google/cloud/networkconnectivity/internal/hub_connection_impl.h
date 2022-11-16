@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace networkconnectivity_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkconnectivity_internal {
 
 class HubServiceConnectionImpl
-    : public networkconnectivity::HubServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::HubServiceConnection {
  public:
   ~HubServiceConnectionImpl() override = default;
 
   HubServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<networkconnectivity_internal::HubServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::HubServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -92,58 +92,58 @@ class HubServiceConnectionImpl
                   request) override;
 
  private:
-  std::unique_ptr<networkconnectivity::HubServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::HubServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<networkconnectivity::HubServiceRetryPolicyOption>()) {
-      return options.get<networkconnectivity::HubServiceRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::HubServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::HubServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<networkconnectivity::HubServiceRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::HubServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<networkconnectivity::HubServiceBackoffPolicyOption>()) {
-      return options.get<networkconnectivity::HubServiceBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::HubServiceBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::HubServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<networkconnectivity::HubServiceBackoffPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::HubServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<networkconnectivity::HubServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::HubServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<networkconnectivity::
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
                         HubServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<networkconnectivity::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    HubServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<networkconnectivity::HubServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::HubServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<networkconnectivity::HubServicePollingPolicyOption>()) {
-      return options.get<networkconnectivity::HubServicePollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::HubServicePollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::HubServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<networkconnectivity::HubServicePollingPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::HubServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<networkconnectivity_internal::HubServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::HubServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

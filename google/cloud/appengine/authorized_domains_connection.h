@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 using AuthorizedDomainsRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        appengine_internal::AuthorizedDomainsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AuthorizedDomainsRetryTraits>;
 
 using AuthorizedDomainsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        appengine_internal::AuthorizedDomainsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AuthorizedDomainsRetryTraits>;
 
 using AuthorizedDomainsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        appengine_internal::AuthorizedDomainsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AuthorizedDomainsRetryTraits>;
 
 /**
  * The `AuthorizedDomainsConnection` object for `AuthorizedDomainsClient`.
@@ -56,7 +56,8 @@ using AuthorizedDomainsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeAuthorizedDomainsConnection()`.
  *
- * For mocking, see `appengine_mocks::MockAuthorizedDomainsConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockAuthorizedDomainsConnection`.
  */
 class AuthorizedDomainsConnection {
  public:
@@ -84,7 +85,7 @@ class AuthorizedDomainsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::appengine::AuthorizedDomainsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::AuthorizedDomainsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -95,8 +96,8 @@ class AuthorizedDomainsConnection {
 std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

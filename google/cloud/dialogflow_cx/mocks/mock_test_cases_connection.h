@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_mocks {
 
 /**
  * A class to mock `TestCasesConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
+class MockTestCasesConnection
+    : public GOOGLE_CLOUD_CPP_NS::TestCasesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -123,8 +124,8 @@ class MockTestCasesConnection : public dialogflow_cx::TestCasesConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

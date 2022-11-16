@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows_internal {
 
 ExecutionsLogging::ExecutionsLogging(std::shared_ptr<ExecutionsStub> child,
                                      TracingOptions tracing_options,
@@ -88,7 +88,7 @@ ExecutionsLogging::CancelExecution(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

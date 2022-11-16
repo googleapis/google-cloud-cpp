@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -41,35 +41,39 @@ Options VersionsDefaultOptions(std::string const& location, Options options) {
                    "dialogflow.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dialogflow_cx::VersionsRetryPolicyOption>()) {
-    options.set<dialogflow_cx::VersionsRetryPolicyOption>(
-        dialogflow_cx::VersionsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::VersionsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VersionsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::VersionsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dialogflow_cx::VersionsBackoffPolicyOption>()) {
-    options.set<dialogflow_cx::VersionsBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::VersionsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VersionsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<dialogflow_cx::VersionsPollingPolicyOption>()) {
-    options.set<dialogflow_cx::VersionsPollingPolicyOption>(
-        GenericPollingPolicy<dialogflow_cx::VersionsRetryPolicyOption::Type,
-                             dialogflow_cx::VersionsBackoffPolicyOption::Type>(
-            options.get<dialogflow_cx::VersionsRetryPolicyOption>()->clone(),
-            options.get<dialogflow_cx::VersionsBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::VersionsPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VersionsPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::VersionsRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::VersionsBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::VersionsRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::VersionsBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options
-           .has<dialogflow_cx::VersionsConnectionIdempotencyPolicyOption>()) {
-    options.set<dialogflow_cx::VersionsConnectionIdempotencyPolicyOption>(
-        dialogflow_cx::MakeDefaultVersionsConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::VersionsConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VersionsConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultVersionsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

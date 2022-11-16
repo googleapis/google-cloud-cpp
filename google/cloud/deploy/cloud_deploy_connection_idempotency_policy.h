@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace deploy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace deploy {
 
 class CloudDeployConnectionIdempotencyPolicy {
  public:
@@ -107,8 +107,8 @@ class CloudDeployConnectionIdempotencyPolicy {
 std::unique_ptr<CloudDeployConnectionIdempotencyPolicy>
 MakeDefaultCloudDeployConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace profiler {
 
 using ::google::cloud::Idempotency;
 
@@ -55,7 +55,7 @@ MakeDefaultProfilerServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<ProfilerServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

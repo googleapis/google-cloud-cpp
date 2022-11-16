@@ -28,13 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace networkconnectivity_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkconnectivity_internal {
 
 HubServiceConnectionImpl::HubServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<networkconnectivity_internal::HubServiceStub> stub,
-    Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::HubServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -46,7 +45,7 @@ HubServiceConnectionImpl::ListHubs(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<networkconnectivity::HubServiceRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::HubServiceRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListHubs(request);
@@ -177,7 +176,7 @@ HubServiceConnectionImpl::ListSpokes(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<networkconnectivity::HubServiceRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::HubServiceRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSpokes(request);
@@ -302,7 +301,7 @@ HubServiceConnectionImpl::DeleteSpoke(
       idempotency_policy()->DeleteSpoke(request), polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

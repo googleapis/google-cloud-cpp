@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace tpu_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu_internal {
 
 class TpuMetadata : public TpuStub {
  public:
@@ -109,8 +109,8 @@ class TpuMetadata : public TpuStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

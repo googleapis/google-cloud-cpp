@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigateway_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigateway_internal {
 
 ApiGatewayServiceLogging::ApiGatewayServiceLogging(
     std::shared_ptr<ApiGatewayServiceStub> child,
@@ -267,7 +267,7 @@ future<Status> ApiGatewayServiceLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

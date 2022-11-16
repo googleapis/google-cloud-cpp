@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore_internal {
 
 class CloudFilestoreManagerConnectionImpl
-    : public filestore::CloudFilestoreManagerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerConnection {
  public:
   ~CloudFilestoreManagerConnectionImpl() override = default;
 
   CloudFilestoreManagerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<filestore_internal::CloudFilestoreManagerStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -93,60 +93,71 @@ class CloudFilestoreManagerConnectionImpl
       override;
 
  private:
-  std::unique_ptr<filestore::CloudFilestoreManagerRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<filestore::CloudFilestoreManagerRetryPolicyOption>()) {
-      return options.get<filestore::CloudFilestoreManagerRetryPolicyOption>()
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<filestore::CloudFilestoreManagerRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<filestore::CloudFilestoreManagerBackoffPolicyOption>()) {
-      return options.get<filestore::CloudFilestoreManagerBackoffPolicyOption>()
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<filestore::CloudFilestoreManagerBackoffPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<filestore::CloudFilestoreManagerConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            filestore::
+            GOOGLE_CLOUD_CPP_NS::
                 CloudFilestoreManagerConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<filestore::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    CloudFilestoreManagerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<
-            filestore::CloudFilestoreManagerConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 CloudFilestoreManagerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<filestore::CloudFilestoreManagerPollingPolicyOption>()) {
-      return options.get<filestore::CloudFilestoreManagerPollingPolicyOption>()
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<filestore::CloudFilestoreManagerPollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<filestore_internal::CloudFilestoreManagerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

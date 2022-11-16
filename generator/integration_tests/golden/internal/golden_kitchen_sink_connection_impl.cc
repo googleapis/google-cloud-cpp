@@ -30,12 +30,12 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_internal {
 
 GoldenKitchenSinkConnectionImpl::GoldenKitchenSinkConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<golden_internal::GoldenKitchenSinkStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkStub> stub,
     Options options)
   : background_(std::move(background)), stub_(std::move(stub)),
     options_(internal::MergeOptions(
@@ -82,7 +82,7 @@ StreamRange<std::string>
 GoldenKitchenSinkConnectionImpl::ListLogs(google::test::admin::database::v1::ListLogsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<golden::GoldenKitchenSinkRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListLogs(request);
   char const* function_name = __func__;
@@ -132,7 +132,7 @@ GoldenKitchenSinkConnectionImpl::DoNothing(google::protobuf::Empty const& reques
 StreamRange<google::test::admin::database::v1::Response>
 GoldenKitchenSinkConnectionImpl::StreamingRead(google::test::admin::database::v1::Request const& request) {
   auto& stub = stub_;
-  auto retry = std::shared_ptr<golden::GoldenKitchenSinkRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
 
   auto factory = [stub](google::test::admin::database::v1::Request const& request) {
@@ -171,7 +171,7 @@ GoldenKitchenSinkConnectionImpl::ExplicitRouting2(google::test::admin::database:
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -27,12 +27,13 @@
 
 namespace google {
 namespace cloud {
-namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing_internal {
 
 CloudBillingConnectionImpl::CloudBillingConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<billing_internal::CloudBillingStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudBillingStub> stub,
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -58,7 +59,8 @@ CloudBillingConnectionImpl::ListBillingAccounts(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<billing::CloudBillingRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudBillingRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBillingAccounts(request);
   char const* function_name = __func__;
@@ -119,7 +121,8 @@ CloudBillingConnectionImpl::ListProjectBillingInfo(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<billing::CloudBillingRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudBillingRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProjectBillingInfo(request);
   char const* function_name = __func__;
@@ -213,7 +216,7 @@ CloudBillingConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

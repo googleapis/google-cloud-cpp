@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace spanner_admin_internal {
 
 class InstanceAdminMetadata : public InstanceAdminStub {
  public:
@@ -130,9 +130,9 @@ class InstanceAdminMetadata : public InstanceAdminStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

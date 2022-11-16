@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace iot_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iot_internal {
 
 class DeviceManagerAuth : public DeviceManagerStub {
  public:
@@ -131,8 +131,8 @@ class DeviceManagerAuth : public DeviceManagerStub {
   std::shared_ptr<DeviceManagerStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,28 +39,33 @@ Options KeyManagementServiceDefaultOptions(Options options) {
       "cloudkms.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<kms::KeyManagementServiceRetryPolicyOption>()) {
-    options.set<kms::KeyManagementServiceRetryPolicyOption>(
-        kms::KeyManagementServiceLimitedTimeRetryPolicy(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::KeyManagementServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<kms::KeyManagementServiceBackoffPolicyOption>()) {
-    options.set<kms::KeyManagementServiceBackoffPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::KeyManagementServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::KeyManagementServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options
-           .has<kms::KeyManagementServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<kms::KeyManagementServiceConnectionIdempotencyPolicyOption>(
-        kms::MakeDefaultKeyManagementServiceConnectionIdempotencyPolicy());
+           .has<GOOGLE_CLOUD_CPP_NS::
+                    KeyManagementServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    KeyManagementServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultKeyManagementServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

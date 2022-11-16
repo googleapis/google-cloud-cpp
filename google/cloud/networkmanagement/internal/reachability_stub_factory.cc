@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkmanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkmanagement_internal {
 
 std::shared_ptr<ReachabilityServiceStub> CreateDefaultReachabilityServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -62,7 +62,7 @@ std::shared_ptr<ReachabilityServiceStub> CreateDefaultReachabilityServiceStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

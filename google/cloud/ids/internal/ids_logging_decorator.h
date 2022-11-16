@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace ids_internal {
 
 class IDSLogging : public IDSStub {
  public:
@@ -72,8 +72,8 @@ class IDSLogging : public IDSStub {
   std::set<std::string> components_;
 };  // IDSLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

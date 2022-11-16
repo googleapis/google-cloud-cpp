@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace run {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace run {
 
 using ::google::cloud::Idempotency;
 
@@ -55,7 +55,7 @@ MakeDefaultRevisionsConnectionIdempotencyPolicy() {
   return absl::make_unique<RevisionsConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows {
 
 using ::google::cloud::Idempotency;
 
@@ -65,7 +65,7 @@ MakeDefaultWorkflowsConnectionIdempotencyPolicy() {
   return absl::make_unique<WorkflowsConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace logging_internal {
 
 LoggingServiceV2ConnectionImpl::LoggingServiceV2ConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2Stub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -70,8 +70,9 @@ LoggingServiceV2ConnectionImpl::ListLogEntries(
     google::logging::v2::ListLogEntriesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<logging::LoggingServiceV2RetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2RetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListLogEntries(request);
   char const* function_name = __func__;
@@ -101,8 +102,9 @@ LoggingServiceV2ConnectionImpl::ListMonitoredResourceDescriptors(
     google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<logging::LoggingServiceV2RetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2RetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency =
       idempotency_policy()->ListMonitoredResourceDescriptors(request);
@@ -135,8 +137,9 @@ StreamRange<std::string> LoggingServiceV2ConnectionImpl::ListLogs(
     google::logging::v2::ListLogsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<logging::LoggingServiceV2RetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2RetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListLogs(request);
   char const* function_name = __func__;
@@ -174,7 +177,7 @@ LoggingServiceV2ConnectionImpl::AsyncWriteLogEntries(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

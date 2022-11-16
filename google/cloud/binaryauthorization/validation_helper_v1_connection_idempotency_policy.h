@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization {
 
 class ValidationHelperV1ConnectionIdempotencyPolicy {
  public:
@@ -46,8 +46,8 @@ class ValidationHelperV1ConnectionIdempotencyPolicy {
 std::unique_ptr<ValidationHelperV1ConnectionIdempotencyPolicy>
 MakeDefaultValidationHelperV1ConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

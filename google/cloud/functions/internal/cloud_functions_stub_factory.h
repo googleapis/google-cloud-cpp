@@ -28,15 +28,15 @@
 
 namespace google {
 namespace cloud {
-namespace functions_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace functions_internal {
 
 std::shared_ptr<CloudFunctionsServiceStub>
 CreateDefaultCloudFunctionsServiceStub(google::cloud::CompletionQueue cq,
                                        Options const& options);
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace functions_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

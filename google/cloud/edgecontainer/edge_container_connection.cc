@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace edgecontainer {
 
 EdgeContainerConnection::~EdgeContainerConnection() = default;
 
@@ -168,15 +168,15 @@ std::shared_ptr<EdgeContainerConnection> MakeEdgeContainerConnection(
                                  EdgeContainerPolicyOptionList>(options,
                                                                 __func__);
   options =
-      edgecontainer_internal::EdgeContainerDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::EdgeContainerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = edgecontainer_internal::CreateDefaultEdgeContainerStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultEdgeContainerStub(
       background->cq(), options);
-  return std::make_shared<edgecontainer_internal::EdgeContainerConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::EdgeContainerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

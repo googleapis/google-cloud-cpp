@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: pubsublite::TopicStatsServiceClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::TopicStatsServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,9 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::pubsublite::TopicStatsServiceClient(
-      google::cloud::pubsublite::MakeTopicStatsServiceConnection(options));
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::TopicStatsServiceClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeTopicStatsServiceConnection(
+          options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +56,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::pubsublite::TopicStatsServiceClient(
-        google::cloud::pubsublite::MakeTopicStatsServiceConnection(options));
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::TopicStatsServiceClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeTopicStatsServiceConnection(
+            options));
   }
   //! [with-service-account]
   (argv.at(0));

@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace recommender {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender {
 
 using ::google::cloud::Idempotency;
 
@@ -100,7 +100,7 @@ MakeDefaultRecommenderConnectionIdempotencyPolicy() {
   return absl::make_unique<RecommenderConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -30,19 +30,19 @@
 
 namespace google {
 namespace cloud {
-namespace policytroubleshooter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace policytroubleshooter {
 
 using IamCheckerRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    policytroubleshooter_internal::IamCheckerRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::IamCheckerRetryTraits>;
 
 using IamCheckerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        policytroubleshooter_internal::IamCheckerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IamCheckerRetryTraits>;
 
 using IamCheckerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        policytroubleshooter_internal::IamCheckerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IamCheckerRetryTraits>;
 
 /**
  * The `IamCheckerConnection` object for `IamCheckerClient`.
@@ -54,7 +54,7 @@ using IamCheckerLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeIamCheckerConnection()`.
  *
- * For mocking, see `policytroubleshooter_mocks::MockIamCheckerConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockIamCheckerConnection`.
  */
 class IamCheckerConnection {
  public:
@@ -81,7 +81,7 @@ class IamCheckerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::policytroubleshooter::IamCheckerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::IamCheckerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -92,8 +92,8 @@ class IamCheckerConnection {
 std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

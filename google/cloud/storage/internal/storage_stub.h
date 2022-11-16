@@ -32,8 +32,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storage_internal {
 
 class StorageStub {
  public:
@@ -361,8 +361,8 @@ class DefaultStorageStub : public StorageStub {
   std::unique_ptr<google::storage::v2::Storage::StubInterface> grpc_stub_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 std::shared_ptr<AutoscalingPolicyServiceStub>
 CreateDefaultAutoscalingPolicyServiceStub(google::cloud::CompletionQueue cq,
@@ -61,7 +61,7 @@ CreateDefaultAutoscalingPolicyServiceStub(google::cloud::CompletionQueue cq,
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

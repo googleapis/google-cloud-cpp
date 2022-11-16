@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace speech_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech_v2_internal {
 
 SpeechConnectionImpl::SpeechConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<speech_v2_internal::SpeechStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SpeechStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -74,8 +74,8 @@ SpeechConnectionImpl::ListRecognizers(
     google::cloud::speech::v2::ListRecognizersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<speech_v2::SpeechRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SpeechRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRecognizers(request);
   char const* function_name = __func__;
@@ -306,8 +306,8 @@ SpeechConnectionImpl::ListCustomClasses(
     google::cloud::speech::v2::ListCustomClassesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<speech_v2::SpeechRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SpeechRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCustomClasses(request);
   char const* function_name = __func__;
@@ -471,8 +471,8 @@ SpeechConnectionImpl::ListPhraseSets(
     google::cloud::speech::v2::ListPhraseSetsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<speech_v2::SpeechRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SpeechRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListPhraseSets(request);
   char const* function_name = __func__;
@@ -600,7 +600,7 @@ SpeechConnectionImpl::UndeletePhraseSet(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

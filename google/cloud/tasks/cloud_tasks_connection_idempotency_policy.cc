@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks {
 
 using ::google::cloud::Idempotency;
 
@@ -121,7 +121,7 @@ MakeDefaultCloudTasksConnectionIdempotencyPolicy() {
   return absl::make_unique<CloudTasksConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

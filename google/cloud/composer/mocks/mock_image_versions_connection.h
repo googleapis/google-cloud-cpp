@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer_mocks {
 
 /**
  * A class to mock `ImageVersionsConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockImageVersionsConnection : public composer::ImageVersionsConnection {
+class MockImageVersionsConnection
+    : public GOOGLE_CLOUD_CPP_NS::ImageVersionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -55,8 +56,8 @@ class MockImageVersionsConnection : public composer::ImageVersionsConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

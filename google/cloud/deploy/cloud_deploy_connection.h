@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace deploy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace deploy {
 
 using CloudDeployRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    deploy_internal::CloudDeployRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::CloudDeployRetryTraits>;
 
 using CloudDeployLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        deploy_internal::CloudDeployRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudDeployRetryTraits>;
 
 using CloudDeployLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        deploy_internal::CloudDeployRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudDeployRetryTraits>;
 
 /**
  * The `CloudDeployConnection` object for `CloudDeployClient`.
@@ -58,7 +58,7 @@ using CloudDeployLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeCloudDeployConnection()`.
  *
- * For mocking, see `deploy_mocks::MockCloudDeployConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockCloudDeployConnection`.
  */
 class CloudDeployConnection {
  public:
@@ -153,7 +153,7 @@ class CloudDeployConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::deploy::CloudDeployPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CloudDeployPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -164,8 +164,8 @@ class CloudDeployConnection {
 std::shared_ptr<CloudDeployConnection> MakeCloudDeployConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

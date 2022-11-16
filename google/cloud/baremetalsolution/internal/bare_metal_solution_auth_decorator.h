@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace baremetalsolution_internal {
 
 class BareMetalSolutionAuth : public BareMetalSolutionStub {
  public:
@@ -166,8 +166,8 @@ class BareMetalSolutionAuth : public BareMetalSolutionStub {
   std::shared_ptr<BareMetalSolutionStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

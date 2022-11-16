@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,42 +39,49 @@ Options CloudFilestoreManagerDefaultOptions(Options options) {
       "file.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<filestore::CloudFilestoreManagerRetryPolicyOption>()) {
-    options.set<filestore::CloudFilestoreManagerRetryPolicyOption>(
-        filestore::CloudFilestoreManagerLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<filestore::CloudFilestoreManagerBackoffPolicyOption>()) {
-    options.set<filestore::CloudFilestoreManagerBackoffPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<filestore::CloudFilestoreManagerPollingPolicyOption>()) {
-    options.set<filestore::CloudFilestoreManagerPollingPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerPollingPolicyOption>(
         GenericPollingPolicy<
-            filestore::CloudFilestoreManagerRetryPolicyOption::Type,
-            filestore::CloudFilestoreManagerBackoffPolicyOption::Type>(
-            options.get<filestore::CloudFilestoreManagerRetryPolicyOption>()
-                ->clone(),
-            options.get<filestore::CloudFilestoreManagerBackoffPolicyOption>()
-                ->clone())
+            GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerBackoffPolicyOption::
+                Type>(options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   CloudFilestoreManagerRetryPolicyOption>()
+                          ->clone(),
+                      options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   CloudFilestoreManagerBackoffPolicyOption>()
+                          ->clone())
             .clone());
   }
   if (!options
-           .has<filestore::
+           .has<GOOGLE_CLOUD_CPP_NS::
                     CloudFilestoreManagerConnectionIdempotencyPolicyOption>()) {
-    options
-        .set<filestore::CloudFilestoreManagerConnectionIdempotencyPolicyOption>(
-            filestore::
-                MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy());
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    CloudFilestoreManagerConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultCloudFilestoreManagerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

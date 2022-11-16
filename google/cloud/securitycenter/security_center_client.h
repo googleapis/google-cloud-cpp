@@ -32,8 +32,8 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter {
 
 ///
 /// V1 APIs for Security Center service.
@@ -1656,8 +1656,8 @@ class SecurityCenterClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

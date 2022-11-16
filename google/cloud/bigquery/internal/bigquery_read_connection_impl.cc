@@ -28,12 +28,13 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 BigQueryReadConnectionImpl::BigQueryReadConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_internal::BigQueryReadStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BigQueryReadStub> stub,
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -58,7 +59,8 @@ BigQueryReadConnectionImpl::ReadRows(
     google::cloud::bigquery::storage::v1::ReadRowsRequest const& request) {
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<bigquery::BigQueryReadRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BigQueryReadRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
 
   auto factory =
@@ -90,8 +92,8 @@ BigQueryReadConnectionImpl::SplitReadStream(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

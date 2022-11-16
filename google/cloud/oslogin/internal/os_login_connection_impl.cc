@@ -26,12 +26,13 @@
 
 namespace google {
 namespace cloud {
-namespace oslogin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace oslogin_internal {
 
 OsLoginServiceConnectionImpl::OsLoginServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<oslogin_internal::OsLoginServiceStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::OsLoginServiceStub> stub,
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -119,7 +120,7 @@ OsLoginServiceConnectionImpl::UpdateSshPublicKey(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

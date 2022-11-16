@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler_internal {
 
 class CloudSchedulerLogging : public CloudSchedulerStub {
  public:
@@ -76,8 +76,8 @@ class CloudSchedulerLogging : public CloudSchedulerStub {
   std::set<std::string> components_;
 };  // CloudSchedulerLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

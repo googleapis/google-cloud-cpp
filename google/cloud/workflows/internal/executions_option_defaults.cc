@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,26 +39,30 @@ Options ExecutionsDefaultOptions(Options options) {
       "workflowexecutions.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<workflows::ExecutionsRetryPolicyOption>()) {
-    options.set<workflows::ExecutionsRetryPolicyOption>(
-        workflows::ExecutionsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ExecutionsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ExecutionsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ExecutionsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<workflows::ExecutionsBackoffPolicyOption>()) {
-    options.set<workflows::ExecutionsBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ExecutionsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ExecutionsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<workflows::ExecutionsConnectionIdempotencyPolicyOption>()) {
-    options.set<workflows::ExecutionsConnectionIdempotencyPolicyOption>(
-        workflows::MakeDefaultExecutionsConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ExecutionsConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::ExecutionsConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultExecutionsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

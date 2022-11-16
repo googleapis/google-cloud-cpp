@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter {
 
 using SecurityCenterRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        securitycenter_internal::SecurityCenterRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryTraits>;
 
 using SecurityCenterLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        securitycenter_internal::SecurityCenterRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryTraits>;
 
 using SecurityCenterLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        securitycenter_internal::SecurityCenterRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SecurityCenterRetryTraits>;
 
 /**
  * The `SecurityCenterConnection` object for `SecurityCenterClient`.
@@ -59,7 +59,7 @@ using SecurityCenterLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeSecurityCenterConnection()`.
  *
- * For mocking, see `securitycenter_mocks::MockSecurityCenterConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockSecurityCenterConnection`.
  */
 class SecurityCenterConnection {
  public:
@@ -229,7 +229,7 @@ class SecurityCenterConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::securitycenter::SecurityCenterPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::SecurityCenterPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -240,8 +240,8 @@ class SecurityCenterConnection {
 std::shared_ptr<SecurityCenterConnection> MakeSecurityCenterConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

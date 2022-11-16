@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision {
 
 ImageAnnotatorClient::ImageAnnotatorClient(
     std::shared_ptr<ImageAnnotatorConnection> connection, Options opts)
@@ -108,7 +108,7 @@ ImageAnnotatorClient::AsyncBatchAnnotateFiles(
   return connection_->AsyncBatchAnnotateFiles(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

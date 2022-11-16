@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization {
 
 SystemPolicyV1Client::SystemPolicyV1Client(
     std::shared_ptr<SystemPolicyV1Connection> connection, Options opts)
@@ -48,7 +48,7 @@ SystemPolicyV1Client::GetSystemPolicy(
   return connection_->GetSystemPolicy(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

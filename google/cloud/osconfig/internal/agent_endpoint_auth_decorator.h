@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig_internal {
 
 class AgentEndpointServiceAuth : public AgentEndpointServiceStub {
  public:
@@ -81,8 +81,8 @@ class AgentEndpointServiceAuth : public AgentEndpointServiceStub {
   std::shared_ptr<AgentEndpointServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace dlp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dlp {
 
 class DlpServiceConnectionIdempotencyPolicy {
  public:
@@ -143,8 +143,8 @@ class DlpServiceConnectionIdempotencyPolicy {
 std::unique_ptr<DlpServiceConnectionIdempotencyPolicy>
 MakeDefaultDlpServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

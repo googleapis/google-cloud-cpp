@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -40,47 +40,53 @@ Options GameServerConfigsServiceDefaultOptions(Options options) {
       "gameservices.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<gameservices::GameServerConfigsServiceRetryPolicyOption>()) {
-    options.set<gameservices::GameServerConfigsServiceRetryPolicyOption>(
-        gameservices::GameServerConfigsServiceLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options
-           .has<gameservices::GameServerConfigsServiceBackoffPolicyOption>()) {
-    options.set<gameservices::GameServerConfigsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
-  }
-  if (!options
-           .has<gameservices::GameServerConfigsServicePollingPolicyOption>()) {
-    options.set<gameservices::GameServerConfigsServicePollingPolicyOption>(
-        GenericPollingPolicy<
-            gameservices::GameServerConfigsServiceRetryPolicyOption::Type,
-            gameservices::GameServerConfigsServiceBackoffPolicyOption::Type>(
-            options
-                .get<gameservices::GameServerConfigsServiceRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<
-                    gameservices::GameServerConfigsServiceBackoffPolicyOption>()
-                ->clone())
-            .clone());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceBackoffPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
   if (!options.has<
-          gameservices::
+          GOOGLE_CLOUD_CPP_NS::GameServerConfigsServicePollingPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::GameServerConfigsServicePollingPolicyOption>(
+            GenericPollingPolicy<
+                GOOGLE_CLOUD_CPP_NS::GameServerConfigsServiceRetryPolicyOption::
+                    Type,
+                GOOGLE_CLOUD_CPP_NS::
+                    GameServerConfigsServiceBackoffPolicyOption::Type>(
+                options
+                    .get<GOOGLE_CLOUD_CPP_NS::
+                             GameServerConfigsServiceRetryPolicyOption>()
+                    ->clone(),
+                options
+                    .get<GOOGLE_CLOUD_CPP_NS::
+                             GameServerConfigsServiceBackoffPolicyOption>()
+                    ->clone())
+                .clone());
+  }
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::
               GameServerConfigsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<gameservices::
+    options.set<GOOGLE_CLOUD_CPP_NS::
                     GameServerConfigsServiceConnectionIdempotencyPolicyOption>(
-        gameservices::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultGameServerConfigsServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

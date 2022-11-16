@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace container_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace container_internal {
 
 ClusterManagerLogging::ClusterManagerLogging(
     std::shared_ptr<ClusterManagerStub> child, TracingOptions tracing_options,
@@ -424,7 +424,7 @@ ClusterManagerLogging::ListUsableSubnetworks(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

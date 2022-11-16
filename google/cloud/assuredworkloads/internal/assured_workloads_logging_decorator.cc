@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace assuredworkloads_internal {
 
 AssuredWorkloadsServiceLogging::AssuredWorkloadsServiceLogging(
     std::shared_ptr<AssuredWorkloadsServiceStub> child,
@@ -169,7 +169,7 @@ future<Status> AssuredWorkloadsServiceLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

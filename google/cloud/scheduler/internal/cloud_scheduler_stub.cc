@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler_internal {
 
 CloudSchedulerStub::~CloudSchedulerStub() = default;
 
@@ -121,7 +121,7 @@ StatusOr<google::cloud::scheduler::v1::Job> DefaultCloudSchedulerStub::RunJob(
   return response;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

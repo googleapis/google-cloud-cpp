@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace policytroubleshooter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace policytroubleshooter {
 
 IamCheckerClient::IamCheckerClient(
     std::shared_ptr<IamCheckerConnection> connection, Options opts)
@@ -40,7 +40,7 @@ IamCheckerClient::TroubleshootIamPolicy(
   return connection_->TroubleshootIamPolicy(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

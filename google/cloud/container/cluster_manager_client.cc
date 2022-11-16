@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace container {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace container {
 
 ClusterManagerClient::ClusterManagerClient(
     std::shared_ptr<ClusterManagerConnection> connection, Options opts)
@@ -487,7 +487,7 @@ ClusterManagerClient::ListUsableSubnetworks(
   return connection_->ListUsableSubnetworks(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden {
 
 class GoldenThingAdminConnectionIdempotencyPolicy {
  public:
@@ -95,8 +95,8 @@ class GoldenThingAdminConnectionIdempotencyPolicy {
 std::unique_ptr<GoldenThingAdminConnectionIdempotencyPolicy>
     MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

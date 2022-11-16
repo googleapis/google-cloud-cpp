@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis {
 
 GrafeasClient::GrafeasClient(std::shared_ptr<GrafeasConnection> connection,
                              Options opts)
@@ -245,7 +245,7 @@ StreamRange<grafeas::v1::Occurrence> GrafeasClient::ListNoteOccurrences(
   return connection_->ListNoteOccurrences(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

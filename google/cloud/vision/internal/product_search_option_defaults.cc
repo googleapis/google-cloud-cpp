@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,34 +38,42 @@ Options ProductSearchDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_PRODUCT_SEARCH_AUTHORITY", "vision.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<vision::ProductSearchRetryPolicyOption>()) {
-    options.set<vision::ProductSearchRetryPolicyOption>(
-        vision::ProductSearchLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ProductSearchRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ProductSearchRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ProductSearchLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<vision::ProductSearchBackoffPolicyOption>()) {
-    options.set<vision::ProductSearchBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ProductSearchBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ProductSearchBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<vision::ProductSearchPollingPolicyOption>()) {
-    options.set<vision::ProductSearchPollingPolicyOption>(
-        GenericPollingPolicy<vision::ProductSearchRetryPolicyOption::Type,
-                             vision::ProductSearchBackoffPolicyOption::Type>(
-            options.get<vision::ProductSearchRetryPolicyOption>()->clone(),
-            options.get<vision::ProductSearchBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ProductSearchPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ProductSearchPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::ProductSearchRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::ProductSearchBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::ProductSearchRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::ProductSearchBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<vision::ProductSearchConnectionIdempotencyPolicyOption>()) {
-    options.set<vision::ProductSearchConnectionIdempotencyPolicyOption>(
-        vision::MakeDefaultProductSearchConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       ProductSearchConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::ProductSearchConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultProductSearchConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -26,13 +26,13 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_internal {
 
 PolicyTagManagerSerializationConnectionImpl::
     PolicyTagManagerSerializationConnectionImpl(
         std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<datacatalog_internal::PolicyTagManagerSerializationStub>
+        std::shared_ptr<GOOGLE_CLOUD_CPP_NS::PolicyTagManagerSerializationStub>
             stub,
         Options options)
     : background_(std::move(background)),
@@ -77,7 +77,7 @@ PolicyTagManagerSerializationConnectionImpl::ExportTaxonomies(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

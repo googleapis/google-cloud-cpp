@@ -31,19 +31,19 @@
 
 namespace google {
 namespace cloud {
-namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows {
 
 using ExecutionsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    workflows_internal::ExecutionsRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::ExecutionsRetryTraits>;
 
 using ExecutionsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        workflows_internal::ExecutionsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ExecutionsRetryTraits>;
 
 using ExecutionsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        workflows_internal::ExecutionsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ExecutionsRetryTraits>;
 
 /**
  * The `ExecutionsConnection` object for `ExecutionsClient`.
@@ -55,7 +55,7 @@ using ExecutionsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeExecutionsConnection()`.
  *
- * For mocking, see `workflows_mocks::MockExecutionsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockExecutionsConnection`.
  */
 class ExecutionsConnection {
  public:
@@ -96,7 +96,7 @@ class ExecutionsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::workflows::ExecutionsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ExecutionsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -107,8 +107,8 @@ class ExecutionsConnection {
 std::shared_ptr<ExecutionsConnection> MakeExecutionsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

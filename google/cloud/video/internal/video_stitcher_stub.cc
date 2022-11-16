@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 VideoStitcherServiceStub::~VideoStitcherServiceStub() = default;
 
@@ -283,7 +283,7 @@ DefaultVideoStitcherServiceStub::GetLiveSession(
   return response;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

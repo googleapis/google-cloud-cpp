@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows_internal {
 
 class ExecutionsLogging : public ExecutionsStub {
  public:
@@ -65,8 +65,8 @@ class ExecutionsLogging : public ExecutionsStub {
   std::set<std::string> components_;
 };  // ExecutionsLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

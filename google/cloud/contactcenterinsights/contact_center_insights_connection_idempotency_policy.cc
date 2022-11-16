@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace contactcenterinsights {
 
 using ::google::cloud::Idempotency;
 
@@ -232,7 +232,7 @@ MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy() {
   return absl::make_unique<ContactCenterInsightsConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

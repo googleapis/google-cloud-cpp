@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace resourcesettings {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcesettings {
 
 using ResourceSettingsServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        resourcesettings_internal::ResourceSettingsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ResourceSettingsServiceRetryTraits>;
 
 using ResourceSettingsServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        resourcesettings_internal::ResourceSettingsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ResourceSettingsServiceRetryTraits>;
 
 using ResourceSettingsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        resourcesettings_internal::ResourceSettingsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ResourceSettingsServiceRetryTraits>;
 
 /**
  * The `ResourceSettingsServiceConnection` object for
@@ -58,7 +58,7 @@ using ResourceSettingsServiceLimitedErrorCountRetryPolicy =
  * To create a concrete instance, see `MakeResourceSettingsServiceConnection()`.
  *
  * For mocking, see
- * `resourcesettings_mocks::MockResourceSettingsServiceConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockResourceSettingsServiceConnection`.
  */
 class ResourceSettingsServiceConnection {
  public:
@@ -92,7 +92,8 @@ class ResourceSettingsServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::resourcesettings::ResourceSettingsServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::ResourceSettingsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -103,8 +104,8 @@ class ResourceSettingsServiceConnection {
 std::shared_ptr<ResourceSettingsServiceConnection>
 MakeResourceSettingsServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

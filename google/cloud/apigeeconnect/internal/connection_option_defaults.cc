@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigeeconnect_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigeeconnect_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,30 +39,31 @@ Options ConnectionServiceDefaultOptions(Options options) {
       "apigeeconnect.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<apigeeconnect::ConnectionServiceRetryPolicyOption>()) {
-    options.set<apigeeconnect::ConnectionServiceRetryPolicyOption>(
-        apigeeconnect::ConnectionServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ConnectionServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ConnectionServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ConnectionServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<apigeeconnect::ConnectionServiceBackoffPolicyOption>()) {
-    options.set<apigeeconnect::ConnectionServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::ConnectionServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ConnectionServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<apigeeconnect::
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
                        ConnectionServiceConnectionIdempotencyPolicyOption>()) {
-    options
-        .set<apigeeconnect::ConnectionServiceConnectionIdempotencyPolicyOption>(
-            apigeeconnect::
-                MakeDefaultConnectionServiceConnectionIdempotencyPolicy());
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    ConnectionServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultConnectionServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

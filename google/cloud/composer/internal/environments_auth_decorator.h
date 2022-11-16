@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer_internal {
 
 class EnvironmentsAuth : public EnvironmentsStub {
  public:
@@ -83,8 +83,8 @@ class EnvironmentsAuth : public EnvironmentsStub {
   std::shared_ptr<EnvironmentsStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

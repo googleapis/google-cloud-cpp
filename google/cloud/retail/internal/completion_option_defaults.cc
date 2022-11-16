@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,38 +38,46 @@ Options CompletionServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_COMPLETION_SERVICE_AUTHORITY", "retail.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<retail::CompletionServiceRetryPolicyOption>()) {
-    options.set<retail::CompletionServiceRetryPolicyOption>(
-        retail::CompletionServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CompletionServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CompletionServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::CompletionServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<retail::CompletionServiceBackoffPolicyOption>()) {
-    options.set<retail::CompletionServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::CompletionServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CompletionServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<retail::CompletionServicePollingPolicyOption>()) {
-    options.set<retail::CompletionServicePollingPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::CompletionServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CompletionServicePollingPolicyOption>(
         GenericPollingPolicy<
-            retail::CompletionServiceRetryPolicyOption::Type,
-            retail::CompletionServiceBackoffPolicyOption::Type>(
-            options.get<retail::CompletionServiceRetryPolicyOption>()->clone(),
-            options.get<retail::CompletionServiceBackoffPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::CompletionServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::CompletionServiceBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::CompletionServiceRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<
+                    GOOGLE_CLOUD_CPP_NS::CompletionServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options
-           .has<retail::CompletionServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<retail::CompletionServiceConnectionIdempotencyPolicyOption>(
-        retail::MakeDefaultCompletionServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       CompletionServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    CompletionServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultCompletionServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

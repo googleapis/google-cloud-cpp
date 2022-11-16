@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 WorkflowTemplateServiceClient::WorkflowTemplateServiceClient(
     std::shared_ptr<WorkflowTemplateServiceConnection> connection, Options opts)
@@ -168,7 +168,7 @@ Status WorkflowTemplateServiceClient::DeleteWorkflowTemplate(
   return connection_->DeleteWorkflowTemplate(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

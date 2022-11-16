@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace contactcenterinsights {
 
 class ContactCenterInsightsConnectionIdempotencyPolicy {
  public:
@@ -174,8 +174,8 @@ class ContactCenterInsightsConnectionIdempotencyPolicy {
 std::unique_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>
 MakeDefaultContactCenterInsightsConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

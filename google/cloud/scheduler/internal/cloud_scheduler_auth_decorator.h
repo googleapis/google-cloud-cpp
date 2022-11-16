@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler_internal {
 
 class CloudSchedulerAuth : public CloudSchedulerStub {
  public:
@@ -75,8 +75,8 @@ class CloudSchedulerAuth : public CloudSchedulerStub {
   std::shared_ptr<CloudSchedulerStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -40,31 +40,34 @@ Options ServiceMonitoringServiceDefaultOptions(Options options) {
       "monitoring.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<monitoring::ServiceMonitoringServiceRetryPolicyOption>()) {
-    options.set<monitoring::ServiceMonitoringServiceRetryPolicyOption>(
-        monitoring::ServiceMonitoringServiceLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ServiceMonitoringServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ServiceMonitoringServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ServiceMonitoringServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<monitoring::ServiceMonitoringServiceBackoffPolicyOption>()) {
-    options.set<monitoring::ServiceMonitoringServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ServiceMonitoringServiceBackoffPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::ServiceMonitoringServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
   if (!options.has<
-          monitoring::
+          GOOGLE_CLOUD_CPP_NS::
               ServiceMonitoringServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        monitoring::ServiceMonitoringServiceConnectionIdempotencyPolicyOption>(
-        monitoring::
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    ServiceMonitoringServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultServiceMonitoringServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

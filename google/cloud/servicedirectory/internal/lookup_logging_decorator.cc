@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory_internal {
 
 LookupServiceLogging::LookupServiceLogging(
     std::shared_ptr<LookupServiceStub> child, TracingOptions tracing_options,
@@ -45,7 +45,7 @@ LookupServiceLogging::ResolveService(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

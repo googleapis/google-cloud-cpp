@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig {
 
 using ::google::cloud::Idempotency;
 
@@ -102,7 +102,7 @@ MakeDefaultOsConfigServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<OsConfigServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization {
 
 using SystemPolicyV1RetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        binaryauthorization_internal::SystemPolicyV1RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SystemPolicyV1RetryTraits>;
 
 using SystemPolicyV1LimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        binaryauthorization_internal::SystemPolicyV1RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SystemPolicyV1RetryTraits>;
 
 using SystemPolicyV1LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        binaryauthorization_internal::SystemPolicyV1RetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SystemPolicyV1RetryTraits>;
 
 /**
  * The `SystemPolicyV1Connection` object for `SystemPolicyV1Client`.
@@ -55,7 +55,7 @@ using SystemPolicyV1LimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeSystemPolicyV1Connection()`.
  *
- * For mocking, see `binaryauthorization_mocks::MockSystemPolicyV1Connection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockSystemPolicyV1Connection`.
  */
 class SystemPolicyV1Connection {
  public:
@@ -82,7 +82,7 @@ class SystemPolicyV1Connection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::binaryauthorization::SystemPolicyV1PolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::SystemPolicyV1PolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -93,8 +93,8 @@ class SystemPolicyV1Connection {
 std::shared_ptr<SystemPolicyV1Connection> MakeSystemPolicyV1Connection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

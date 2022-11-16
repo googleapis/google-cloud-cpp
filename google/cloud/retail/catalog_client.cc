@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 CatalogServiceClient::CatalogServiceClient(
     std::shared_ptr<CatalogServiceConnection> connection, Options opts)
@@ -193,7 +193,7 @@ CatalogServiceClient::ReplaceCatalogAttribute(
   return connection_->ReplaceCatalogAttribute(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

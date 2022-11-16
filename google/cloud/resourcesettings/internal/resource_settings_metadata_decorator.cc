@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcesettings_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcesettings_internal {
 
 ResourceSettingsServiceMetadata::ResourceSettingsServiceMetadata(
     std::shared_ptr<ResourceSettingsServiceStub> child)
@@ -76,7 +76,7 @@ void ResourceSettingsServiceMetadata::SetMetadata(
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

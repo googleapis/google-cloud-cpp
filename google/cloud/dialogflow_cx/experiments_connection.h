@@ -32,19 +32,19 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 using ExperimentsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::ExperimentsRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::ExperimentsRetryTraits>;
 
 using ExperimentsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::ExperimentsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ExperimentsRetryTraits>;
 
 using ExperimentsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::ExperimentsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ExperimentsRetryTraits>;
 
 /**
  * The `ExperimentsConnection` object for `ExperimentsClient`.
@@ -56,7 +56,7 @@ using ExperimentsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeExperimentsConnection()`.
  *
- * For mocking, see `dialogflow_cx_mocks::MockExperimentsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockExperimentsConnection`.
  */
 class ExperimentsConnection {
  public:
@@ -107,7 +107,7 @@ class ExperimentsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::ExperimentsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ExperimentsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -129,8 +129,8 @@ std::shared_ptr<ExperimentsConnection> MakeExperimentsConnection(
 std::shared_ptr<ExperimentsConnection> MakeExperimentsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

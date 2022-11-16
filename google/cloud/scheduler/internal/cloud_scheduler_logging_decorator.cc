@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler_internal {
 
 CloudSchedulerLogging::CloudSchedulerLogging(
     std::shared_ptr<CloudSchedulerStub> child, TracingOptions tracing_options,
@@ -123,7 +123,7 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerLogging::RunJob(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

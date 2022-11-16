@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace artifactregistry {
 
 ArtifactRegistryConnection::~ArtifactRegistryConnection() = default;
 
@@ -227,17 +227,16 @@ std::shared_ptr<ArtifactRegistryConnection> MakeArtifactRegistryConnection(
                                  UnifiedCredentialsOptionList,
                                  ArtifactRegistryPolicyOptionList>(options,
                                                                    __func__);
-  options = artifactregistry_internal::ArtifactRegistryDefaultOptions(
-      std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::ArtifactRegistryDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = artifactregistry_internal::CreateDefaultArtifactRegistryStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultArtifactRegistryStub(
       background->cq(), options);
-  return std::make_shared<
-      artifactregistry_internal::ArtifactRegistryConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ArtifactRegistryConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

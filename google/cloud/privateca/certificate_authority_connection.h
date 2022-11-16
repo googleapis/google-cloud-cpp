@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace privateca {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca {
 
 using CertificateAuthorityServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        privateca_internal::CertificateAuthorityServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceRetryTraits>;
 
 using CertificateAuthorityServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        privateca_internal::CertificateAuthorityServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceRetryTraits>;
 
 using CertificateAuthorityServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        privateca_internal::CertificateAuthorityServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceRetryTraits>;
 
 /**
  * The `CertificateAuthorityServiceConnection` object for
@@ -62,7 +62,7 @@ using CertificateAuthorityServiceLimitedErrorCountRetryPolicy =
  * `MakeCertificateAuthorityServiceConnection()`.
  *
  * For mocking, see
- * `privateca_mocks::MockCertificateAuthorityServiceConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockCertificateAuthorityServiceConnection`.
  */
 class CertificateAuthorityServiceConnection {
  public:
@@ -242,7 +242,8 @@ class CertificateAuthorityServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::privateca::CertificateAuthorityServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -253,8 +254,8 @@ class CertificateAuthorityServiceConnection {
 std::shared_ptr<CertificateAuthorityServiceConnection>
 MakeCertificateAuthorityServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

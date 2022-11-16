@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol_internal {
 
 class QuotaControllerAuth : public QuotaControllerStub {
  public:
@@ -48,8 +48,8 @@ class QuotaControllerAuth : public QuotaControllerStub {
   std::shared_ptr<QuotaControllerStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

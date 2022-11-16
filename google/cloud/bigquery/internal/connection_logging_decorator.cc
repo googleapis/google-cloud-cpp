@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 ConnectionServiceLogging::ConnectionServiceLogging(
     std::shared_ptr<ConnectionServiceStub> child,
@@ -135,7 +135,7 @@ ConnectionServiceLogging::TestIamPermissions(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

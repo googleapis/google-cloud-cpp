@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol {
 
 class ServiceControllerConnectionIdempotencyPolicy {
  public:
@@ -48,8 +48,8 @@ class ServiceControllerConnectionIdempotencyPolicy {
 std::unique_ptr<ServiceControllerConnectionIdempotencyPolicy>
 MakeDefaultServiceControllerConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub_mocks {
 
 /**
  * A class to mock `GkeHubConnection`.
@@ -42,7 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockGkeHubConnection : public gkehub::GkeHubConnection {
+class MockGkeHubConnection : public GOOGLE_CLOUD_CPP_NS::GkeHubConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -102,8 +102,8 @@ class MockGkeHubConnection : public gkehub::GkeHubConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

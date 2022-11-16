@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace iot {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iot {
 
 DeviceManagerConnection::~DeviceManagerConnection() = default;
 
@@ -152,15 +152,16 @@ std::shared_ptr<DeviceManagerConnection> MakeDeviceManagerConnection(
                                  UnifiedCredentialsOptionList,
                                  DeviceManagerPolicyOptionList>(options,
                                                                 __func__);
-  options = iot_internal::DeviceManagerDefaultOptions(std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::DeviceManagerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      iot_internal::CreateDefaultDeviceManagerStub(background->cq(), options);
-  return std::make_shared<iot_internal::DeviceManagerConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultDeviceManagerStub(
+      background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::DeviceManagerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

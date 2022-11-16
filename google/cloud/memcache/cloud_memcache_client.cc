@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace memcache {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache {
 
 CloudMemcacheClient::CloudMemcacheClient(
     std::shared_ptr<CloudMemcacheConnection> connection, Options opts)
@@ -159,7 +159,7 @@ CloudMemcacheClient::ApplyParameters(
   return connection_->ApplyParameters(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

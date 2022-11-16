@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_mocks {
 
 /**
  * A class to mock `BatchControllerConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockBatchControllerConnection
-    : public dataproc::BatchControllerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::BatchControllerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -64,8 +64,8 @@ class MockBatchControllerConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

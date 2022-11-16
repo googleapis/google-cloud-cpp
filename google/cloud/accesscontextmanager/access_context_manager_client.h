@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accesscontextmanager {
 
 ///
 /// API for setting [access levels]
@@ -1241,8 +1241,8 @@ class AccessContextManagerClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

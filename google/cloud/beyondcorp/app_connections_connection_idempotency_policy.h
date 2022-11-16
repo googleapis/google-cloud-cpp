@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp {
 
 class AppConnectionsServiceConnectionIdempotencyPolicy {
  public:
@@ -67,8 +67,8 @@ class AppConnectionsServiceConnectionIdempotencyPolicy {
 std::unique_ptr<AppConnectionsServiceConnectionIdempotencyPolicy>
 MakeDefaultAppConnectionsServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace assuredworkloads_internal {
 
 class AssuredWorkloadsServiceAuth : public AssuredWorkloadsServiceStub {
  public:
@@ -104,8 +104,8 @@ class AssuredWorkloadsServiceAuth : public AssuredWorkloadsServiceStub {
   std::shared_ptr<AssuredWorkloadsServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

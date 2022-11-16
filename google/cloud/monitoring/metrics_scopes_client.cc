@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 MetricsScopesClient::MetricsScopesClient(
     std::shared_ptr<MetricsScopesConnection> connection, Options opts)
@@ -97,7 +97,7 @@ MetricsScopesClient::DeleteMonitoredProject(
   return connection_->DeleteMonitoredProject(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

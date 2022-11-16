@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace policytroubleshooter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace policytroubleshooter {
 
 IamCheckerConnection::~IamCheckerConnection() = default;
 
@@ -46,17 +46,15 @@ std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  IamCheckerPolicyOptionList>(options, __func__);
-  options = policytroubleshooter_internal::IamCheckerDefaultOptions(
-      std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::IamCheckerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = policytroubleshooter_internal::CreateDefaultIamCheckerStub(
-      background->cq(), options);
-  return std::make_shared<
-      policytroubleshooter_internal::IamCheckerConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultIamCheckerStub(background->cq(),
+                                                               options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::IamCheckerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

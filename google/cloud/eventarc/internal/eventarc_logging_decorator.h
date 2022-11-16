@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc_internal {
 
 class EventarcLogging : public EventarcStub {
  public:
@@ -151,8 +151,8 @@ class EventarcLogging : public EventarcStub {
   std::set<std::string> components_;
 };  // EventarcLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

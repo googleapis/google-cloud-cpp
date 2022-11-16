@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace trace {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace trace {
 
 class TraceServiceConnectionIdempotencyPolicy {
  public:
@@ -48,8 +48,8 @@ class TraceServiceConnectionIdempotencyPolicy {
 std::unique_ptr<TraceServiceConnectionIdempotencyPolicy>
 MakeDefaultTraceServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

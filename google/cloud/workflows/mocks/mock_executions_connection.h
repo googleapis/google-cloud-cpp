@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows_mocks {
 
 /**
  * A class to mock `ExecutionsConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockExecutionsConnection : public workflows::ExecutionsConnection {
+class MockExecutionsConnection
+    : public GOOGLE_CLOUD_CPP_NS::ExecutionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -74,8 +75,8 @@ class MockExecutionsConnection : public workflows::ExecutionsConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

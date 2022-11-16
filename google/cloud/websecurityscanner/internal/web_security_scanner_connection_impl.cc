@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace websecurityscanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace websecurityscanner_internal {
 
 WebSecurityScannerConnectionImpl::WebSecurityScannerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<websecurityscanner_internal::WebSecurityScannerStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -85,7 +85,7 @@ WebSecurityScannerConnectionImpl::ListScanConfigs(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<websecurityscanner::WebSecurityScannerRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListScanConfigs(request);
@@ -158,7 +158,7 @@ WebSecurityScannerConnectionImpl::ListScanRuns(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<websecurityscanner::WebSecurityScannerRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListScanRuns(request);
@@ -204,7 +204,7 @@ WebSecurityScannerConnectionImpl::ListCrawledUrls(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<websecurityscanner::WebSecurityScannerRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCrawledUrls(request);
@@ -251,7 +251,7 @@ WebSecurityScannerConnectionImpl::ListFindings(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<websecurityscanner::WebSecurityScannerRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WebSecurityScannerRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListFindings(request);
@@ -294,7 +294,7 @@ WebSecurityScannerConnectionImpl::ListFindingTypeStats(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

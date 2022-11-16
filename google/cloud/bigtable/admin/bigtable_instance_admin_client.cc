@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_admin {
 
 BigtableInstanceAdminClient::BigtableInstanceAdminClient(
     std::shared_ptr<BigtableInstanceAdminConnection> connection, Options opts)
@@ -409,7 +409,7 @@ BigtableInstanceAdminClient::ListHotTablets(
   return connection_->ListHotTablets(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

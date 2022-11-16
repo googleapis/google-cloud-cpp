@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace shell_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace shell_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,35 +39,46 @@ Options CloudShellServiceDefaultOptions(Options options) {
       "cloudshell.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<shell::CloudShellServiceRetryPolicyOption>()) {
-    options.set<shell::CloudShellServiceRetryPolicyOption>(
-        shell::CloudShellServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudShellServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudShellServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::CloudShellServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<shell::CloudShellServiceBackoffPolicyOption>()) {
-    options.set<shell::CloudShellServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::CloudShellServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudShellServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<shell::CloudShellServicePollingPolicyOption>()) {
-    options.set<shell::CloudShellServicePollingPolicyOption>(
-        GenericPollingPolicy<shell::CloudShellServiceRetryPolicyOption::Type,
-                             shell::CloudShellServiceBackoffPolicyOption::Type>(
-            options.get<shell::CloudShellServiceRetryPolicyOption>()->clone(),
-            options.get<shell::CloudShellServiceBackoffPolicyOption>()->clone())
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::CloudShellServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudShellServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::CloudShellServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::CloudShellServiceBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::CloudShellServiceRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<
+                    GOOGLE_CLOUD_CPP_NS::CloudShellServiceBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options
-           .has<shell::CloudShellServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<shell::CloudShellServiceConnectionIdempotencyPolicyOption>(
-        shell::MakeDefaultCloudShellServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       CloudShellServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    CloudShellServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultCloudShellServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

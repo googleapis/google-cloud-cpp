@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 using FulfillmentsRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dialogflow_es_internal::FulfillmentsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::FulfillmentsRetryTraits>;
 
 using FulfillmentsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_es_internal::FulfillmentsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::FulfillmentsRetryTraits>;
 
 using FulfillmentsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_es_internal::FulfillmentsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::FulfillmentsRetryTraits>;
 
 /**
  * The `FulfillmentsConnection` object for `FulfillmentsClient`.
@@ -56,7 +56,7 @@ using FulfillmentsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeFulfillmentsConnection()`.
  *
- * For mocking, see `dialogflow_es_mocks::MockFulfillmentsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockFulfillmentsConnection`.
  */
 class FulfillmentsConnection {
  public:
@@ -85,7 +85,7 @@ class FulfillmentsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_es::FulfillmentsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::FulfillmentsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -107,8 +107,8 @@ std::shared_ptr<FulfillmentsConnection> MakeFulfillmentsConnection(
 std::shared_ptr<FulfillmentsConnection> MakeFulfillmentsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

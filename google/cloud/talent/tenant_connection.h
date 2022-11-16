@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 using TenantServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        talent_internal::TenantServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TenantServiceRetryTraits>;
 
 using TenantServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        talent_internal::TenantServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TenantServiceRetryTraits>;
 
 using TenantServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        talent_internal::TenantServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TenantServiceRetryTraits>;
 
 /**
  * The `TenantServiceConnection` object for `TenantServiceClient`.
@@ -56,7 +56,7 @@ using TenantServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeTenantServiceConnection()`.
  *
- * For mocking, see `talent_mocks::MockTenantServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockTenantServiceConnection`.
  */
 class TenantServiceConnection {
  public:
@@ -93,7 +93,7 @@ class TenantServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::talent::TenantServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::TenantServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -104,8 +104,8 @@ class TenantServiceConnection {
 std::shared_ptr<TenantServiceConnection> MakeTenantServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

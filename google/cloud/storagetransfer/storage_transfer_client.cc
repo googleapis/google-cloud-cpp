@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer {
 
 StorageTransferServiceClient::StorageTransferServiceClient(
     std::shared_ptr<StorageTransferServiceConnection> connection, Options opts)
@@ -188,7 +188,7 @@ Status StorageTransferServiceClient::DeleteAgentPool(
   return connection_->DeleteAgentPool(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

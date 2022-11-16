@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam {
 
 using IAMCredentialsRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        iam_internal::IAMCredentialsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IAMCredentialsRetryTraits>;
 
 using IAMCredentialsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        iam_internal::IAMCredentialsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IAMCredentialsRetryTraits>;
 
 using IAMCredentialsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        iam_internal::IAMCredentialsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IAMCredentialsRetryTraits>;
 
 /**
  * The `IAMCredentialsConnection` object for `IAMCredentialsClient`.
@@ -55,7 +55,7 @@ using IAMCredentialsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeIAMCredentialsConnection()`.
  *
- * For mocking, see `iam_mocks::MockIAMCredentialsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockIAMCredentialsConnection`.
  */
 class IAMCredentialsConnection {
  public:
@@ -91,7 +91,7 @@ class IAMCredentialsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::iam::IAMCredentialsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::IAMCredentialsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -102,9 +102,9 @@ class IAMCredentialsConnection {
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

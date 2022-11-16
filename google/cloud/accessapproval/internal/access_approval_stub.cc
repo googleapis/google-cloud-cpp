@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accessapproval_internal {
 
 AccessApprovalStub::~AccessApprovalStub() = default;
 
@@ -154,7 +154,7 @@ DefaultAccessApprovalStub::GetAccessApprovalServiceAccount(
   return response;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

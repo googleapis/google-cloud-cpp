@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol_internal {
 
 class ServiceControllerAuth : public ServiceControllerStub {
  public:
@@ -51,8 +51,8 @@ class ServiceControllerAuth : public ServiceControllerStub {
   std::shared_ptr<ServiceControllerStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

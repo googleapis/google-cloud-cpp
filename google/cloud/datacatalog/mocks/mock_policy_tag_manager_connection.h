@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_mocks {
 
 /**
  * A class to mock `PolicyTagManagerConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockPolicyTagManagerConnection
-    : public datacatalog::PolicyTagManagerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::PolicyTagManagerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -111,8 +111,8 @@ class MockPolicyTagManagerConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

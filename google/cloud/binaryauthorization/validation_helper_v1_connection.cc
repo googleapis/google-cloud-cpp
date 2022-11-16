@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization {
 
 ValidationHelperV1Connection::~ValidationHelperV1Connection() = default;
 
@@ -48,17 +48,17 @@ std::shared_ptr<ValidationHelperV1Connection> MakeValidationHelperV1Connection(
                                  UnifiedCredentialsOptionList,
                                  ValidationHelperV1PolicyOptionList>(options,
                                                                      __func__);
-  options = binaryauthorization_internal::ValidationHelperV1DefaultOptions(
-      std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::ValidationHelperV1DefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = binaryauthorization_internal::CreateDefaultValidationHelperV1Stub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultValidationHelperV1Stub(
       background->cq(), options);
   return std::make_shared<
-      binaryauthorization_internal::ValidationHelperV1ConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::ValidationHelperV1ConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

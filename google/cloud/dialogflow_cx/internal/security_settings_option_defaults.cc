@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -42,32 +42,34 @@ Options SecuritySettingsServiceDefaultOptions(std::string const& location,
                    "dialogflow.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dialogflow_cx::SecuritySettingsServiceRetryPolicyOption>()) {
-    options.set<dialogflow_cx::SecuritySettingsServiceRetryPolicyOption>(
-        dialogflow_cx::SecuritySettingsServiceLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options
-           .has<dialogflow_cx::SecuritySettingsServiceBackoffPolicyOption>()) {
-    options.set<dialogflow_cx::SecuritySettingsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceBackoffPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
   if (!options.has<
-          dialogflow_cx::
+          GOOGLE_CLOUD_CPP_NS::
               SecuritySettingsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<dialogflow_cx::
+    options.set<GOOGLE_CLOUD_CPP_NS::
                     SecuritySettingsServiceConnectionIdempotencyPolicyOption>(
-        dialogflow_cx::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultSecuritySettingsServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

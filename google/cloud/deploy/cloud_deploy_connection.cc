@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace deploy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace deploy {
 
 CloudDeployConnection::~CloudDeployConnection() = default;
 
@@ -194,15 +194,15 @@ std::shared_ptr<CloudDeployConnection> MakeCloudDeployConnection(
                                  UnifiedCredentialsOptionList,
                                  CloudDeployPolicyOptionList>(options,
                                                               __func__);
-  options = deploy_internal::CloudDeployDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::CloudDeployDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      deploy_internal::CreateDefaultCloudDeployStub(background->cq(), options);
-  return std::make_shared<deploy_internal::CloudDeployConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultCloudDeployStub(
+      background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::CloudDeployConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

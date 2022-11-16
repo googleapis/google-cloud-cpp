@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler_internal {
 
 class CloudSchedulerConnectionImpl
-    : public scheduler::CloudSchedulerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::CloudSchedulerConnection {
  public:
   ~CloudSchedulerConnectionImpl() override = default;
 
   CloudSchedulerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<scheduler_internal::CloudSchedulerStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudSchedulerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -74,45 +74,54 @@ class CloudSchedulerConnectionImpl
       google::cloud::scheduler::v1::RunJobRequest const& request) override;
 
  private:
-  std::unique_ptr<scheduler::CloudSchedulerRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudSchedulerRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<scheduler::CloudSchedulerRetryPolicyOption>()) {
-      return options.get<scheduler::CloudSchedulerRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudSchedulerRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::CloudSchedulerRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<scheduler::CloudSchedulerRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudSchedulerRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<scheduler::CloudSchedulerBackoffPolicyOption>()) {
-      return options.get<scheduler::CloudSchedulerBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<scheduler::CloudSchedulerBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<scheduler::CloudSchedulerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            scheduler::CloudSchedulerConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudSchedulerBackoffPolicyOption>()) {
       return options
-          .get<scheduler::CloudSchedulerConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::CloudSchedulerBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<scheduler::CloudSchedulerConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::CloudSchedulerBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::CloudSchedulerConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CloudSchedulerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CloudSchedulerConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 CloudSchedulerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<scheduler_internal::CloudSchedulerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudSchedulerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

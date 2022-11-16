@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 std::shared_ptr<ClusterControllerStub> CreateDefaultClusterControllerStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -61,7 +61,7 @@ std::shared_ptr<ClusterControllerStub> CreateDefaultClusterControllerStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

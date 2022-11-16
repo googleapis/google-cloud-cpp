@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace spanner_admin {
 
 DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 
@@ -173,16 +173,16 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
                                  DatabaseAdminPolicyOptionList>(options,
                                                                 __func__);
   options =
-      spanner_admin_internal::DatabaseAdminDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::DatabaseAdminDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = spanner_admin_internal::CreateDefaultDatabaseAdminStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultDatabaseAdminStub(
       background->cq(), options);
-  return std::make_shared<spanner_admin_internal::DatabaseAdminConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::DatabaseAdminConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

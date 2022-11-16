@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_internal {
 
 class GoldenKitchenSinkRoundRobin : public GoldenKitchenSinkStub {
  public:
@@ -108,8 +108,8 @@ class GoldenKitchenSinkRoundRobin : public GoldenKitchenSinkStub {
   std::size_t current_ = 0;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_mocks {
 
 /**
  * A class to mock `TopicStatsServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockTopicStatsServiceConnection
-    : public pubsublite::TopicStatsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::TopicStatsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -67,8 +67,8 @@ class MockTopicStatsServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

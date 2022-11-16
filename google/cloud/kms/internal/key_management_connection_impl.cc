@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms_internal {
 
 KeyManagementServiceConnectionImpl::KeyManagementServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<kms_internal::KeyManagementServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::KeyManagementServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -44,7 +44,8 @@ KeyManagementServiceConnectionImpl::ListKeyRings(
     google::cloud::kms::v1::ListKeyRingsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<kms::KeyManagementServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListKeyRings(request);
@@ -76,7 +77,8 @@ KeyManagementServiceConnectionImpl::ListCryptoKeys(
     google::cloud::kms::v1::ListCryptoKeysRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<kms::KeyManagementServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCryptoKeys(request);
@@ -109,7 +111,8 @@ KeyManagementServiceConnectionImpl::ListCryptoKeyVersions(
     google::cloud::kms::v1::ListCryptoKeyVersionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<kms::KeyManagementServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCryptoKeyVersions(request);
@@ -142,7 +145,8 @@ KeyManagementServiceConnectionImpl::ListImportJobs(
     google::cloud::kms::v1::ListImportJobsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<kms::KeyManagementServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::KeyManagementServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListImportJobs(request);
@@ -462,7 +466,7 @@ KeyManagementServiceConnectionImpl::GenerateRandomBytes(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

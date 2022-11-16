@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory {
 
 LookupServiceClient::LookupServiceClient(
     std::shared_ptr<LookupServiceConnection> connection, Options opts)
@@ -39,7 +39,7 @@ LookupServiceClient::ResolveService(
   return connection_->ResolveService(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

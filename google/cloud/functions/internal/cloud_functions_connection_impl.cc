@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace functions_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace functions_internal {
 
 CloudFunctionsServiceConnectionImpl::CloudFunctionsServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<functions_internal::CloudFunctionsServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudFunctionsServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,9 +45,9 @@ CloudFunctionsServiceConnectionImpl::ListFunctions(
     google::cloud::functions::v1::ListFunctionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<functions::CloudFunctionsServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::CloudFunctionsServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListFunctions(request);
   char const* function_name = __func__;
@@ -257,7 +257,7 @@ CloudFunctionsServiceConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace functions_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace connectors {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace connectors {
 
 using ::google::cloud::Idempotency;
 
@@ -115,7 +115,7 @@ MakeDefaultConnectorsConnectionIdempotencyPolicy() {
   return absl::make_unique<ConnectorsConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

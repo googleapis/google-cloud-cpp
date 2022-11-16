@@ -37,16 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer_internal {
 
-class EnvironmentsConnectionImpl : public composer::EnvironmentsConnection {
+class EnvironmentsConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::EnvironmentsConnection {
  public:
   ~EnvironmentsConnectionImpl() override = default;
 
   EnvironmentsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<composer_internal::EnvironmentsStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EnvironmentsStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -75,51 +76,61 @@ class EnvironmentsConnectionImpl : public composer::EnvironmentsConnection {
                         DeleteEnvironmentRequest const& request) override;
 
  private:
-  std::unique_ptr<composer::EnvironmentsRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::EnvironmentsRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<composer::EnvironmentsRetryPolicyOption>()) {
-      return options.get<composer::EnvironmentsRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EnvironmentsRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::EnvironmentsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<composer::EnvironmentsRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::EnvironmentsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<composer::EnvironmentsBackoffPolicyOption>()) {
-      return options.get<composer::EnvironmentsBackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EnvironmentsBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::EnvironmentsBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<composer::EnvironmentsBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::EnvironmentsBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<composer::EnvironmentsConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::EnvironmentsConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<composer::EnvironmentsConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        EnvironmentsConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<composer::EnvironmentsConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   EnvironmentsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<composer::EnvironmentsConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 EnvironmentsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<composer::EnvironmentsPollingPolicyOption>()) {
-      return options.get<composer::EnvironmentsPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EnvironmentsPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::EnvironmentsPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<composer::EnvironmentsPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::EnvironmentsPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<composer_internal::EnvironmentsStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EnvironmentsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

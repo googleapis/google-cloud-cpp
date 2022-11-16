@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace memcache_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache_internal {
 
 CloudMemcacheLogging::CloudMemcacheLogging(
     std::shared_ptr<CloudMemcacheStub> child, TracingOptions tracing_options,
@@ -160,7 +160,7 @@ future<Status> CloudMemcacheLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory {
 
 using LookupServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        servicedirectory_internal::LookupServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::LookupServiceRetryTraits>;
 
 using LookupServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        servicedirectory_internal::LookupServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::LookupServiceRetryTraits>;
 
 using LookupServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        servicedirectory_internal::LookupServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::LookupServiceRetryTraits>;
 
 /**
  * The `LookupServiceConnection` object for `LookupServiceClient`.
@@ -55,7 +55,7 @@ using LookupServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeLookupServiceConnection()`.
  *
- * For mocking, see `servicedirectory_mocks::MockLookupServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockLookupServiceConnection`.
  */
 class LookupServiceConnection {
  public:
@@ -82,7 +82,7 @@ class LookupServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::servicedirectory::LookupServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::LookupServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -93,8 +93,8 @@ class LookupServiceConnection {
 std::shared_ptr<LookupServiceConnection> MakeLookupServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

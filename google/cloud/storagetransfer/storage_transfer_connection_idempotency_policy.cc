@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer {
 
 using ::google::cloud::Idempotency;
 
@@ -117,7 +117,7 @@ MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<StorageTransferServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

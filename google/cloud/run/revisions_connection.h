@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace run {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace run {
 
 using RevisionsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    run_internal::RevisionsRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::RevisionsRetryTraits>;
 
 using RevisionsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        run_internal::RevisionsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::RevisionsRetryTraits>;
 
 using RevisionsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        run_internal::RevisionsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::RevisionsRetryTraits>;
 
 /**
  * The `RevisionsConnection` object for `RevisionsClient`.
@@ -58,7 +58,7 @@ using RevisionsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeRevisionsConnection()`.
  *
- * For mocking, see `run_mocks::MockRevisionsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockRevisionsConnection`.
  */
 class RevisionsConnection {
  public:
@@ -89,7 +89,7 @@ class RevisionsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::run::RevisionsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::RevisionsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -100,8 +100,8 @@ class RevisionsConnection {
 std::shared_ptr<RevisionsConnection> MakeRevisionsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

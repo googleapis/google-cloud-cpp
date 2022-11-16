@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler {
 
 class CloudSchedulerConnectionIdempotencyPolicy {
  public:
@@ -66,8 +66,8 @@ class CloudSchedulerConnectionIdempotencyPolicy {
 std::unique_ptr<CloudSchedulerConnectionIdempotencyPolicy>
 MakeDefaultCloudSchedulerConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

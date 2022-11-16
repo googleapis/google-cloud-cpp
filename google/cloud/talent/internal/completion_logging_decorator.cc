@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
 CompletionLogging::CompletionLogging(std::shared_ptr<CompletionStub> child,
                                      TracingOptions tracing_options,
@@ -46,7 +46,7 @@ CompletionLogging::CompleteQuery(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

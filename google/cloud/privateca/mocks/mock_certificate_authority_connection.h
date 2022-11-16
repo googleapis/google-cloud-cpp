@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace privateca_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca_mocks {
 
 /**
  * A class to mock `CertificateAuthorityServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockCertificateAuthorityServiceConnection
-    : public privateca::CertificateAuthorityServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -258,8 +258,8 @@ class MockCertificateAuthorityServiceConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

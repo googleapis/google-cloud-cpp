@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 IntentsClient::IntentsClient(std::shared_ptr<IntentsConnection> connection,
                              Options opts)
@@ -199,7 +199,7 @@ future<StatusOr<google::protobuf::Struct>> IntentsClient::BatchDeleteIntents(
   return connection_->BatchDeleteIntents(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

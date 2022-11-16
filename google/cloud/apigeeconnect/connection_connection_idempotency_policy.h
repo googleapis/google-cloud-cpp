@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigeeconnect {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigeeconnect {
 
 class ConnectionServiceConnectionIdempotencyPolicy {
  public:
@@ -45,8 +45,8 @@ class ConnectionServiceConnectionIdempotencyPolicy {
 std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>
 MakeDefaultConnectionServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,26 +38,29 @@ Options Debugger2DefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_DEBUGGER2_AUTHORITY", "clouddebugger.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<debugger::Debugger2RetryPolicyOption>()) {
-    options.set<debugger::Debugger2RetryPolicyOption>(
-        debugger::Debugger2LimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::Debugger2RetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::Debugger2RetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::Debugger2LimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<debugger::Debugger2BackoffPolicyOption>()) {
-    options.set<debugger::Debugger2BackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::Debugger2BackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::Debugger2BackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<debugger::Debugger2ConnectionIdempotencyPolicyOption>()) {
-    options.set<debugger::Debugger2ConnectionIdempotencyPolicyOption>(
-        debugger::MakeDefaultDebugger2ConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::Debugger2ConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::Debugger2ConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultDebugger2ConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

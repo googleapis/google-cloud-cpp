@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision {
 
 ProductSearchClient::ProductSearchClient(
     std::shared_ptr<ProductSearchConnection> connection, Options opts)
@@ -353,7 +353,7 @@ ProductSearchClient::PurgeProducts(
   return connection_->PurgeProducts(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

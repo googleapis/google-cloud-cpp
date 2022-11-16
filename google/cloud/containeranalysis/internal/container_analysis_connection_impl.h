@@ -33,17 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
 class ContainerAnalysisConnectionImpl
-    : public containeranalysis::ContainerAnalysisConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ContainerAnalysisConnection {
  public:
   ~ContainerAnalysisConnectionImpl() override = default;
 
   ContainerAnalysisConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<containeranalysis_internal::ContainerAnalysisStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -64,56 +64,57 @@ class ContainerAnalysisConnectionImpl
           GetVulnerabilityOccurrencesSummaryRequest const& request) override;
 
  private:
-  std::unique_ptr<containeranalysis::ContainerAnalysisRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<containeranalysis::ContainerAnalysisRetryPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisRetryPolicyOption>()) {
       return options
-          .get<containeranalysis::ContainerAnalysisRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<containeranalysis::ContainerAnalysisRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<containeranalysis::ContainerAnalysisBackoffPolicyOption>()) {
+            .has<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisBackoffPolicyOption>()) {
       return options
-          .get<containeranalysis::ContainerAnalysisBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<containeranalysis::ContainerAnalysisBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      containeranalysis::ContainerAnalysisConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::ContainerAnalysisConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<containeranalysis::
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
                         ContainerAnalysisConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<containeranalysis::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    ContainerAnalysisConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<containeranalysis::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  ContainerAnalysisConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<containeranalysis_internal::ContainerAnalysisStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

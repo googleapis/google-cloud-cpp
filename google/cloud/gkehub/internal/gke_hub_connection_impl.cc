@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub_internal {
 
 GkeHubConnectionImpl::GkeHubConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<gkehub_internal::GkeHubStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GkeHubStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -44,7 +44,8 @@ GkeHubConnectionImpl::ListMemberships(
     google::cloud::gkehub::v1::ListMembershipsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<gkehub::GkeHubRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GkeHubRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListMemberships(request);
   char const* function_name = __func__;
@@ -76,7 +77,8 @@ GkeHubConnectionImpl::ListFeatures(
     google::cloud::gkehub::v1::ListFeaturesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<gkehub::GkeHubRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GkeHubRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListFeatures(request);
   char const* function_name = __func__;
@@ -316,7 +318,7 @@ GkeHubConnectionImpl::GenerateConnectManifest(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

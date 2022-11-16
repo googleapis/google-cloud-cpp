@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace texttospeech_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace texttospeech_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,28 +39,30 @@ Options TextToSpeechDefaultOptions(Options options) {
       "texttospeech.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<texttospeech::TextToSpeechRetryPolicyOption>()) {
-    options.set<texttospeech::TextToSpeechRetryPolicyOption>(
-        texttospeech::TextToSpeechLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::TextToSpeechRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::TextToSpeechRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::TextToSpeechLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<texttospeech::TextToSpeechBackoffPolicyOption>()) {
-    options.set<texttospeech::TextToSpeechBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::TextToSpeechBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::TextToSpeechBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>()) {
-    options.set<texttospeech::TextToSpeechConnectionIdempotencyPolicyOption>(
-        texttospeech::MakeDefaultTextToSpeechConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       TextToSpeechConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::TextToSpeechConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultTextToSpeechConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace texttospeech_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

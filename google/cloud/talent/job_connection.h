@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 using JobServiceRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    talent_internal::JobServiceRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::JobServiceRetryTraits>;
 
 using JobServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        talent_internal::JobServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::JobServiceRetryTraits>;
 
 using JobServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        talent_internal::JobServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::JobServiceRetryTraits>;
 
 /**
  * The `JobServiceConnection` object for `JobServiceClient`.
@@ -58,7 +58,7 @@ using JobServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeJobServiceConnection()`.
  *
- * For mocking, see `talent_mocks::MockJobServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockJobServiceConnection`.
  */
 class JobServiceConnection {
  public:
@@ -114,7 +114,7 @@ class JobServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::talent::JobServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::JobServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -125,8 +125,8 @@ class JobServiceConnection {
 std::shared_ptr<JobServiceConnection> MakeJobServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

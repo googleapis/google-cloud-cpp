@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace deploy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace deploy_internal {
 
 CloudDeployLogging::CloudDeployLogging(std::shared_ptr<CloudDeployStub> child,
                                        TracingOptions tracing_options,
@@ -344,7 +344,7 @@ future<Status> CloudDeployLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

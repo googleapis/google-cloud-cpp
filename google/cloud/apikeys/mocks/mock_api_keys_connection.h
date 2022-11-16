@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace apikeys_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apikeys_mocks {
 
 /**
  * A class to mock `ApiKeysConnection`.
@@ -42,7 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockApiKeysConnection : public apikeys::ApiKeysConnection {
+class MockApiKeysConnection : public GOOGLE_CLOUD_CPP_NS::ApiKeysConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -79,8 +79,8 @@ class MockApiKeysConnection : public apikeys::ApiKeysConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

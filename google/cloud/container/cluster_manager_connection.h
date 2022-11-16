@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace container {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace container {
 
 using ClusterManagerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        container_internal::ClusterManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ClusterManagerRetryTraits>;
 
 using ClusterManagerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        container_internal::ClusterManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ClusterManagerRetryTraits>;
 
 using ClusterManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        container_internal::ClusterManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ClusterManagerRetryTraits>;
 
 /**
  * The `ClusterManagerConnection` object for `ClusterManagerClient`.
@@ -56,7 +56,7 @@ using ClusterManagerLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeClusterManagerConnection()`.
  *
- * For mocking, see `container_mocks::MockClusterManagerConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockClusterManagerConnection`.
  */
 class ClusterManagerConnection {
  public:
@@ -178,7 +178,7 @@ class ClusterManagerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::container::ClusterManagerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ClusterManagerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -189,8 +189,8 @@ class ClusterManagerConnection {
 std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

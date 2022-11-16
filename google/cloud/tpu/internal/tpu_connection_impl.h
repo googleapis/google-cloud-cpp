@@ -37,16 +37,16 @@
 
 namespace google {
 namespace cloud {
-namespace tpu_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu_internal {
 
-class TpuConnectionImpl : public tpu::TpuConnection {
+class TpuConnectionImpl : public GOOGLE_CLOUD_CPP_NS::TpuConnection {
  public:
   ~TpuConnectionImpl() override = default;
 
   TpuConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<tpu_internal::TpuStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TpuStub> stub, Options options);
 
   Options options() override { return options_; }
 
@@ -86,45 +86,53 @@ class TpuConnectionImpl : public tpu::TpuConnection {
       override;
 
  private:
-  std::unique_ptr<tpu::TpuRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::TpuRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<tpu::TpuRetryPolicyOption>()) {
-      return options.get<tpu::TpuRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::TpuRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::TpuRetryPolicyOption>()->clone();
     }
-    return options_.get<tpu::TpuRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::TpuRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<tpu::TpuBackoffPolicyOption>()) {
-      return options.get<tpu::TpuBackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::TpuBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::TpuBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<tpu::TpuBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::TpuBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<tpu::TpuConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::TpuConnectionIdempotencyPolicy>
+  idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<tpu::TpuConnectionIdempotencyPolicyOption>()) {
-      return options.get<tpu::TpuConnectionIdempotencyPolicyOption>()->clone();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::TpuConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::TpuConnectionIdempotencyPolicyOption>()
+          ->clone();
     }
-    return options_.get<tpu::TpuConnectionIdempotencyPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::TpuConnectionIdempotencyPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<tpu::TpuPollingPolicyOption>()) {
-      return options.get<tpu::TpuPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::TpuPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::TpuPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<tpu::TpuPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::TpuPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<tpu_internal::TpuStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TpuStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

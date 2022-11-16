@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkmanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkmanagement {
 
 ReachabilityServiceConnection::~ReachabilityServiceConnection() = default;
 
@@ -90,17 +90,17 @@ MakeReachabilityServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  ReachabilityServicePolicyOptionList>(options,
                                                                       __func__);
-  options = networkmanagement_internal::ReachabilityServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::ReachabilityServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = networkmanagement_internal::CreateDefaultReachabilityServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultReachabilityServiceStub(
       background->cq(), options);
   return std::make_shared<
-      networkmanagement_internal::ReachabilityServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::ReachabilityServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkmanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkmanagement_internal {
 
 class ReachabilityServiceAuth : public ReachabilityServiceStub {
  public:
@@ -90,8 +90,8 @@ class ReachabilityServiceAuth : public ReachabilityServiceStub {
   std::shared_ptr<ReachabilityServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

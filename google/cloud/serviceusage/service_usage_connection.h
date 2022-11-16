@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace serviceusage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace serviceusage {
 
 using ServiceUsageRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        serviceusage_internal::ServiceUsageRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ServiceUsageRetryTraits>;
 
 using ServiceUsageLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        serviceusage_internal::ServiceUsageRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ServiceUsageRetryTraits>;
 
 using ServiceUsageLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        serviceusage_internal::ServiceUsageRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ServiceUsageRetryTraits>;
 
 /**
  * The `ServiceUsageConnection` object for `ServiceUsageClient`.
@@ -59,7 +59,7 @@ using ServiceUsageLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeServiceUsageConnection()`.
  *
- * For mocking, see `serviceusage_mocks::MockServiceUsageConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockServiceUsageConnection`.
  */
 class ServiceUsageConnection {
  public:
@@ -105,7 +105,7 @@ class ServiceUsageConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::serviceusage::ServiceUsagePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ServiceUsagePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -116,8 +116,8 @@ class ServiceUsageConnection {
 std::shared_ptr<ServiceUsageConnection> MakeServiceUsageConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

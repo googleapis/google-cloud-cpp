@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 ApplicationsClient::ApplicationsClient(
     std::shared_ptr<ApplicationsConnection> connection, Options opts)
@@ -69,7 +69,7 @@ ApplicationsClient::RepairApplication(
   return connection_->RepairApplication(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

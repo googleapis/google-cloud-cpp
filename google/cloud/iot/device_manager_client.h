@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace iot {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iot {
 
 ///
 /// Internet of Things (IoT) service. Securely connect and manage IoT devices.
@@ -967,8 +967,8 @@ class DeviceManagerClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

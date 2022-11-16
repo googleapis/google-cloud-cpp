@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace websecurityscanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace websecurityscanner {
 
 WebSecurityScannerClient::WebSecurityScannerClient(
     std::shared_ptr<WebSecurityScannerConnection> connection, Options opts)
@@ -138,7 +138,7 @@ WebSecurityScannerClient::ListFindingTypeStats(
   return connection_->ListFindingTypeStats(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace websecurityscanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace websecurityscanner_internal {
 
 class WebSecurityScannerAuth : public WebSecurityScannerStub {
  public:
@@ -111,8 +111,8 @@ class WebSecurityScannerAuth : public WebSecurityScannerStub {
   std::shared_ptr<WebSecurityScannerStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

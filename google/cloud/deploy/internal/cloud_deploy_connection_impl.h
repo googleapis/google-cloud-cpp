@@ -37,16 +37,18 @@
 
 namespace google {
 namespace cloud {
-namespace deploy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace deploy_internal {
 
-class CloudDeployConnectionImpl : public deploy::CloudDeployConnection {
+class CloudDeployConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::CloudDeployConnection {
  public:
   ~CloudDeployConnectionImpl() override = default;
 
   CloudDeployConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<deploy_internal::CloudDeployStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudDeployStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -125,49 +127,59 @@ class CloudDeployConnectionImpl : public deploy::CloudDeployConnection {
       google::cloud::deploy::v1::GetConfigRequest const& request) override;
 
  private:
-  std::unique_ptr<deploy::CloudDeployRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudDeployRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<deploy::CloudDeployRetryPolicyOption>()) {
-      return options.get<deploy::CloudDeployRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudDeployRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudDeployRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<deploy::CloudDeployRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudDeployRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<deploy::CloudDeployBackoffPolicyOption>()) {
-      return options.get<deploy::CloudDeployBackoffPolicyOption>()->clone();
-    }
-    return options_.get<deploy::CloudDeployBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<deploy::CloudDeployConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<deploy::CloudDeployConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<deploy::CloudDeployConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudDeployBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudDeployBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<deploy::CloudDeployConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudDeployBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudDeployConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CloudDeployConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CloudDeployConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<
+            GOOGLE_CLOUD_CPP_NS::CloudDeployConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<deploy::CloudDeployPollingPolicyOption>()) {
-      return options.get<deploy::CloudDeployPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudDeployPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudDeployPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<deploy::CloudDeployPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudDeployPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<deploy_internal::CloudDeployStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudDeployStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite {
 
 AdminServiceConnection::~AdminServiceConnection() = default;
 
@@ -169,15 +169,15 @@ std::shared_ptr<AdminServiceConnection> MakeAdminServiceConnection(
                                  UnifiedCredentialsOptionList,
                                  AdminServicePolicyOptionList>(options,
                                                                __func__);
-  options = pubsublite_internal::AdminServiceDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::AdminServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = pubsublite_internal::CreateDefaultAdminServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultAdminServiceStub(
       background->cq(), options);
-  return std::make_shared<pubsublite_internal::AdminServiceConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::AdminServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

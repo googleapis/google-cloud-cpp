@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing {
 
 using ::google::cloud::Idempotency;
 
@@ -65,7 +65,7 @@ MakeDefaultBudgetServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<BudgetServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

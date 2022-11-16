@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 BinauthzManagementServiceV1Stub::~BinauthzManagementServiceV1Stub() = default;
 
@@ -117,7 +117,7 @@ Status DefaultBinauthzManagementServiceV1Stub::DeleteAttestor(
   return google::cloud::Status();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

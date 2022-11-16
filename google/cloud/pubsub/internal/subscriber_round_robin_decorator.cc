@@ -20,8 +20,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsub_internal {
 
 SubscriberRoundRobin::SubscriberRoundRobin(
     std::vector<std::shared_ptr<SubscriberStub>> children)
@@ -141,7 +141,7 @@ std::shared_ptr<SubscriberStub> SubscriberRoundRobin::Child() {
   return children_[current];
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

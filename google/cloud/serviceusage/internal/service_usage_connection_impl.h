@@ -37,16 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace serviceusage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace serviceusage_internal {
 
-class ServiceUsageConnectionImpl : public serviceusage::ServiceUsageConnection {
+class ServiceUsageConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::ServiceUsageConnection {
  public:
   ~ServiceUsageConnectionImpl() override = default;
 
   ServiceUsageConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<serviceusage_internal::ServiceUsageStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServiceUsageStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -75,56 +76,61 @@ class ServiceUsageConnectionImpl : public serviceusage::ServiceUsageConnection {
                        request) override;
 
  private:
-  std::unique_ptr<serviceusage::ServiceUsageRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ServiceUsageRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<serviceusage::ServiceUsageRetryPolicyOption>()) {
-      return options.get<serviceusage::ServiceUsageRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ServiceUsageRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::ServiceUsageRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<serviceusage::ServiceUsageRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ServiceUsageRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<serviceusage::ServiceUsageBackoffPolicyOption>()) {
-      return options.get<serviceusage::ServiceUsageBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ServiceUsageBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ServiceUsageBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<serviceusage::ServiceUsageBackoffPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ServiceUsageBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<serviceusage::ServiceUsageConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ServiceUsageConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ServiceUsageConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ServiceUsageConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<serviceusage::ServiceUsageConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ServiceUsageConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<serviceusage::ServiceUsagePollingPolicyOption>()) {
-      return options.get<serviceusage::ServiceUsagePollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ServiceUsagePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ServiceUsagePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<serviceusage::ServiceUsagePollingPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ServiceUsagePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<serviceusage_internal::ServiceUsageStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServiceUsageStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

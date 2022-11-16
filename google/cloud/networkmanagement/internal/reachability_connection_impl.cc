@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace networkmanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkmanagement_internal {
 
 ReachabilityServiceConnectionImpl::ReachabilityServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<networkmanagement_internal::ReachabilityServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ReachabilityServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -46,9 +46,9 @@ ReachabilityServiceConnectionImpl::ListConnectivityTests(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<networkmanagement::ReachabilityServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::ReachabilityServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListConnectivityTests(request);
   char const* function_name = __func__;
@@ -220,7 +220,7 @@ ReachabilityServiceConnectionImpl::DeleteConnectivityTest(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

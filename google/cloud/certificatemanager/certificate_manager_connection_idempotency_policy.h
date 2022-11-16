@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace certificatemanager {
 
 class CertificateManagerConnectionIdempotencyPolicy {
  public:
@@ -137,8 +137,8 @@ class CertificateManagerConnectionIdempotencyPolicy {
 std::unique_ptr<CertificateManagerConnectionIdempotencyPolicy>
 MakeDefaultCertificateManagerConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

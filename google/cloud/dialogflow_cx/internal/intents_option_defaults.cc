@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -41,26 +41,28 @@ Options IntentsDefaultOptions(std::string const& location, Options options) {
                    "dialogflow.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dialogflow_cx::IntentsRetryPolicyOption>()) {
-    options.set<dialogflow_cx::IntentsRetryPolicyOption>(
-        dialogflow_cx::IntentsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::IntentsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::IntentsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::IntentsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dialogflow_cx::IntentsBackoffPolicyOption>()) {
-    options.set<dialogflow_cx::IntentsBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::IntentsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::IntentsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<dialogflow_cx::IntentsConnectionIdempotencyPolicyOption>()) {
-    options.set<dialogflow_cx::IntentsConnectionIdempotencyPolicyOption>(
-        dialogflow_cx::MakeDefaultIntentsConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::IntentsConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::IntentsConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultIntentsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

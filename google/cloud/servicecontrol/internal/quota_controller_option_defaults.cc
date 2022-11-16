@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,30 +39,30 @@ Options QuotaControllerDefaultOptions(Options options) {
       "servicecontrol.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<servicecontrol::QuotaControllerRetryPolicyOption>()) {
-    options.set<servicecontrol::QuotaControllerRetryPolicyOption>(
-        servicecontrol::QuotaControllerLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::QuotaControllerRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::QuotaControllerRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::QuotaControllerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<servicecontrol::QuotaControllerBackoffPolicyOption>()) {
-    options.set<servicecontrol::QuotaControllerBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::QuotaControllerBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::QuotaControllerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          servicecontrol::QuotaControllerConnectionIdempotencyPolicyOption>()) {
-    options
-        .set<servicecontrol::QuotaControllerConnectionIdempotencyPolicyOption>(
-            servicecontrol::
-                MakeDefaultQuotaControllerConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       QuotaControllerConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::QuotaControllerConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultQuotaControllerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

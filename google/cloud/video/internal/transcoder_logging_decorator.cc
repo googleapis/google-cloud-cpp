@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 TranscoderServiceLogging::TranscoderServiceLogging(
     std::shared_ptr<TranscoderServiceStub> child,
@@ -129,7 +129,7 @@ Status TranscoderServiceLogging::DeleteJobTemplate(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

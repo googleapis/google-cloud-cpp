@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis {
 
 ///
 /// Retrieves analysis results of Cloud components such as Docker container
@@ -336,8 +336,8 @@ class ContainerAnalysisClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -33,17 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace policytroubleshooter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace policytroubleshooter_internal {
 
 class IamCheckerConnectionImpl
-    : public policytroubleshooter::IamCheckerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::IamCheckerConnection {
  public:
   ~IamCheckerConnectionImpl() override = default;
 
   IamCheckerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<policytroubleshooter_internal::IamCheckerStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IamCheckerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -55,49 +55,48 @@ class IamCheckerConnectionImpl
           TroubleshootIamPolicyRequest const& request) override;
 
  private:
-  std::unique_ptr<policytroubleshooter::IamCheckerRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::IamCheckerRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<policytroubleshooter::IamCheckerRetryPolicyOption>()) {
-      return options.get<policytroubleshooter::IamCheckerRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::IamCheckerRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::IamCheckerRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<policytroubleshooter::IamCheckerRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::IamCheckerRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<policytroubleshooter::IamCheckerBackoffPolicyOption>()) {
-      return options.get<policytroubleshooter::IamCheckerBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::IamCheckerBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::IamCheckerBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<policytroubleshooter::IamCheckerBackoffPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::IamCheckerBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<policytroubleshooter::IamCheckerConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::IamCheckerConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<policytroubleshooter::
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
                         IamCheckerConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<policytroubleshooter::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    IamCheckerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<
-            policytroubleshooter::IamCheckerConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::IamCheckerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<policytroubleshooter_internal::IamCheckerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IamCheckerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

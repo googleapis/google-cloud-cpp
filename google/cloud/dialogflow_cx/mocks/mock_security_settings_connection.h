@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_mocks {
 
 /**
  * A class to mock `SecuritySettingsServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockSecuritySettingsServiceConnection
-    : public dialogflow_cx::SecuritySettingsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -81,8 +81,8 @@ class MockSecuritySettingsServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

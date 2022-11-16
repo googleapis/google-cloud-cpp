@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace contactcenterinsights {
 
 ContactCenterInsightsConnection::~ContactCenterInsightsConnection() = default;
 
@@ -275,18 +275,17 @@ MakeContactCenterInsightsConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  ContactCenterInsightsPolicyOptionList>(
       options, __func__);
-  options = contactcenterinsights_internal::ContactCenterInsightsDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      contactcenterinsights_internal::CreateDefaultContactCenterInsightsStub(
-          background->cq(), options);
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultContactCenterInsightsStub(
+      background->cq(), options);
   return std::make_shared<
-      contactcenterinsights_internal::ContactCenterInsightsConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

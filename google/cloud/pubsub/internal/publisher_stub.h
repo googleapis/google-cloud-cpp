@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsub_internal {
 
 class PublisherStub {
  public:
@@ -133,8 +133,8 @@ class DefaultPublisherStub : public PublisherStub {
   std::unique_ptr<google::pubsub::v1::Publisher::StubInterface> grpc_stub_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

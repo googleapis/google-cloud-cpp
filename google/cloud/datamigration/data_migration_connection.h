@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace datamigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datamigration {
 
 using DataMigrationServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        datamigration_internal::DataMigrationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DataMigrationServiceRetryTraits>;
 
 using DataMigrationServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        datamigration_internal::DataMigrationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DataMigrationServiceRetryTraits>;
 
 using DataMigrationServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        datamigration_internal::DataMigrationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DataMigrationServiceRetryTraits>;
 
 /**
  * The `DataMigrationServiceConnection` object for `DataMigrationServiceClient`.
@@ -59,7 +59,8 @@ using DataMigrationServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeDataMigrationServiceConnection()`.
  *
- * For mocking, see `datamigration_mocks::MockDataMigrationServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockDataMigrationServiceConnection`.
  */
 class DataMigrationServiceConnection {
  public:
@@ -152,7 +153,7 @@ class DataMigrationServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::datamigration::DataMigrationServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::DataMigrationServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -163,8 +164,8 @@ class DataMigrationServiceConnection {
 std::shared_ptr<DataMigrationServiceConnection>
 MakeDataMigrationServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accesscontextmanager_internal {
 
 AccessContextManagerLogging::AccessContextManagerLogging(
     std::shared_ptr<AccessContextManagerStub> child,
@@ -457,7 +457,7 @@ future<Status> AccessContextManagerLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -26,12 +26,12 @@
 
 namespace google {
 namespace cloud {
-namespace language_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace language_internal {
 
 LanguageServiceConnectionImpl::LanguageServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<language_internal::LanguageServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LanguageServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -119,7 +119,7 @@ LanguageServiceConnectionImpl::AnnotateText(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

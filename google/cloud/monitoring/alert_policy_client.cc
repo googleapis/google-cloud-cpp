@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 AlertPolicyServiceClient::AlertPolicyServiceClient(
     std::shared_ptr<AlertPolicyServiceConnection> connection, Options opts)
@@ -117,7 +117,7 @@ AlertPolicyServiceClient::UpdateAlertPolicy(
   return connection_->UpdateAlertPolicy(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 ParticipantsConnectionImpl::ParticipantsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_es_internal::ParticipantsStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ParticipantsStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -72,8 +72,9 @@ ParticipantsConnectionImpl::ListParticipants(
     google::cloud::dialogflow::v2::ListParticipantsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_es::ParticipantsRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ParticipantsRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListParticipants(request);
   char const* function_name = __func__;
@@ -168,7 +169,7 @@ ParticipantsConnectionImpl::SuggestSmartReplies(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

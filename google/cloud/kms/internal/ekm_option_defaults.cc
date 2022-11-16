@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,26 +38,30 @@ Options EkmServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_EKM_SERVICE_AUTHORITY", "cloudkms.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<kms::EkmServiceRetryPolicyOption>()) {
-    options.set<kms::EkmServiceRetryPolicyOption>(
-        kms::EkmServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::EkmServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::EkmServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::EkmServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<kms::EkmServiceBackoffPolicyOption>()) {
-    options.set<kms::EkmServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::EkmServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::EkmServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<kms::EkmServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<kms::EkmServiceConnectionIdempotencyPolicyOption>(
-        kms::MakeDefaultEkmServiceConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::EkmServiceConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::EkmServiceConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultEkmServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

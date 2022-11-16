@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,26 +38,30 @@ Options EventServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_EVENT_SERVICE_AUTHORITY", "jobs.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<talent::EventServiceRetryPolicyOption>()) {
-    options.set<talent::EventServiceRetryPolicyOption>(
-        talent::EventServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::EventServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::EventServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::EventServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<talent::EventServiceBackoffPolicyOption>()) {
-    options.set<talent::EventServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::EventServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::EventServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<talent::EventServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<talent::EventServiceConnectionIdempotencyPolicyOption>(
-        talent::MakeDefaultEventServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       EventServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::EventServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultEventServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

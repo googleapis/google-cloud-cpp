@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace vmmigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vmmigration {
 
 ///
 /// VM Migration Service
@@ -1793,8 +1793,8 @@ class VmMigrationClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -33,16 +33,18 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
-class CompletionConnectionImpl : public talent::CompletionConnection {
+class CompletionConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::CompletionConnection {
  public:
   ~CompletionConnectionImpl() override = default;
 
   CompletionConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<talent_internal::CompletionStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CompletionStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -50,40 +52,48 @@ class CompletionConnectionImpl : public talent::CompletionConnection {
       google::cloud::talent::v4::CompleteQueryRequest const& request) override;
 
  private:
-  std::unique_ptr<talent::CompletionRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CompletionRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<talent::CompletionRetryPolicyOption>()) {
-      return options.get<talent::CompletionRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CompletionRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CompletionRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<talent::CompletionRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CompletionRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<talent::CompletionBackoffPolicyOption>()) {
-      return options.get<talent::CompletionBackoffPolicyOption>()->clone();
-    }
-    return options_.get<talent::CompletionBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<talent::CompletionConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent::CompletionConnectionIdempotencyPolicyOption>()) {
-      return options.get<talent::CompletionConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CompletionBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CompletionBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<talent::CompletionConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CompletionBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CompletionConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CompletionConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CompletionConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::CompletionConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<talent_internal::CompletionStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CompletionStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

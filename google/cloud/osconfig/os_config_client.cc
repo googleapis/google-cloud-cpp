@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig {
 
 OsConfigServiceClient::OsConfigServiceClient(
     std::shared_ptr<OsConfigServiceConnection> connection, Options opts)
@@ -218,7 +218,7 @@ OsConfigServiceClient::ResumePatchDeployment(
   return connection_->ResumePatchDeployment(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

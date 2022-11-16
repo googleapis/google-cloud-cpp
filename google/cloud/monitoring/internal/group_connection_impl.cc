@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 GroupServiceConnectionImpl::GroupServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<monitoring_internal::GroupServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GroupServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -44,8 +44,9 @@ GroupServiceConnectionImpl::ListGroups(
     google::monitoring::v3::ListGroupsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<monitoring::GroupServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GroupServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListGroups(request);
   char const* function_name = __func__;
@@ -122,8 +123,9 @@ GroupServiceConnectionImpl::ListGroupMembers(
     google::monitoring::v3::ListGroupMembersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<monitoring::GroupServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GroupServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListGroupMembers(request);
   char const* function_name = __func__;
@@ -149,7 +151,7 @@ GroupServiceConnectionImpl::ListGroupMembers(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

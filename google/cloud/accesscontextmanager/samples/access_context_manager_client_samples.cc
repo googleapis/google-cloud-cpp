@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: accesscontextmanager::AccessContextManagerClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::AccessContextManagerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::accesscontextmanager::AccessContextManagerClient(
-      google::cloud::accesscontextmanager::MakeAccessContextManagerConnection(
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::AccessContextManagerClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeAccessContextManagerConnection(
           options));
   //! [set-client-endpoint]
 }
@@ -56,8 +56,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::accesscontextmanager::AccessContextManagerClient(
-        google::cloud::accesscontextmanager::MakeAccessContextManagerConnection(
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::AccessContextManagerClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeAccessContextManagerConnection(
             options));
   }
   //! [with-service-account]

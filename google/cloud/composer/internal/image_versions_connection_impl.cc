@@ -27,12 +27,13 @@
 
 namespace google {
 namespace cloud {
-namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer_internal {
 
 ImageVersionsConnectionImpl::ImageVersionsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<composer_internal::ImageVersionsStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ImageVersionsStub> stub,
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -45,7 +46,8 @@ ImageVersionsConnectionImpl::ListImageVersions(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<composer::ImageVersionsRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ImageVersionsRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListImageVersions(request);
   char const* function_name = __func__;
@@ -75,7 +77,7 @@ ImageVersionsConnectionImpl::ListImageVersions(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

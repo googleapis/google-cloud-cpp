@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace orgpolicy_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace orgpolicy_mocks {
 
 /**
  * A class to mock `OrgPolicyConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockOrgPolicyConnection : public orgpolicy::OrgPolicyConnection {
+class MockOrgPolicyConnection
+    : public GOOGLE_CLOUD_CPP_NS::OrgPolicyConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -80,8 +81,8 @@ class MockOrgPolicyConnection : public orgpolicy::OrgPolicyConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

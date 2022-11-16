@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigateway {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigateway {
 
 using ::google::cloud::Idempotency;
 
@@ -115,7 +115,7 @@ MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<ApiGatewayServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

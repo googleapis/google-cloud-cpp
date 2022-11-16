@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 using ConnectionServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::ConnectionServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ConnectionServiceRetryTraits>;
 
 using ConnectionServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::ConnectionServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ConnectionServiceRetryTraits>;
 
 using ConnectionServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::ConnectionServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ConnectionServiceRetryTraits>;
 
 /**
  * The `ConnectionServiceConnection` object for `ConnectionServiceClient`.
@@ -56,7 +56,8 @@ using ConnectionServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeConnectionServiceConnection()`.
  *
- * For mocking, see `bigquery_mocks::MockConnectionServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockConnectionServiceConnection`.
  */
 class ConnectionServiceConnection {
  public:
@@ -112,7 +113,7 @@ class ConnectionServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::ConnectionServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ConnectionServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -123,8 +124,8 @@ class ConnectionServiceConnection {
 std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

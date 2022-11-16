@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex {
 
 using MetadataServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dataplex_internal::MetadataServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::MetadataServiceRetryTraits>;
 
 using MetadataServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dataplex_internal::MetadataServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::MetadataServiceRetryTraits>;
 
 using MetadataServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dataplex_internal::MetadataServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::MetadataServiceRetryTraits>;
 
 /**
  * The `MetadataServiceConnection` object for `MetadataServiceClient`.
@@ -56,7 +56,7 @@ using MetadataServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeMetadataServiceConnection()`.
  *
- * For mocking, see `dataplex_mocks::MockMetadataServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockMetadataServiceConnection`.
  */
 class MetadataServiceConnection {
  public:
@@ -106,7 +106,7 @@ class MetadataServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dataplex::MetadataServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::MetadataServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -117,8 +117,8 @@ class MetadataServiceConnection {
 std::shared_ptr<MetadataServiceConnection> MakeMetadataServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

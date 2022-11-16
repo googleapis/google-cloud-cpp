@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_admin {
 
 using BigtableInstanceAdminRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigtable_admin_internal::BigtableInstanceAdminRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminRetryTraits>;
 
 using BigtableInstanceAdminLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigtable_admin_internal::BigtableInstanceAdminRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminRetryTraits>;
 
 using BigtableInstanceAdminLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigtable_admin_internal::BigtableInstanceAdminRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminRetryTraits>;
 
 /**
  * The `BigtableInstanceAdminConnection` object for
@@ -60,7 +60,8 @@ using BigtableInstanceAdminLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeBigtableInstanceAdminConnection()`.
  *
- * For mocking, see `bigtable_admin_mocks::MockBigtableInstanceAdminConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockBigtableInstanceAdminConnection`.
  */
 class BigtableInstanceAdminConnection {
  public:
@@ -152,7 +153,7 @@ class BigtableInstanceAdminConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigtable_admin::BigtableInstanceAdminPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -163,8 +164,8 @@ class BigtableInstanceAdminConnection {
 std::shared_ptr<BigtableInstanceAdminConnection>
 MakeBigtableInstanceAdminConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 class TranscoderServiceLogging : public TranscoderServiceStub {
  public:
@@ -84,8 +84,8 @@ class TranscoderServiceLogging : public TranscoderServiceStub {
   std::set<std::string> components_;
 };  // TranscoderServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

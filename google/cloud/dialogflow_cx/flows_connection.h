@@ -35,19 +35,19 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 using FlowsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::FlowsRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::FlowsRetryTraits>;
 
 using FlowsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::FlowsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::FlowsRetryTraits>;
 
 using FlowsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::FlowsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::FlowsRetryTraits>;
 
 /**
  * The `FlowsConnection` object for `FlowsClient`.
@@ -59,7 +59,7 @@ using FlowsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeFlowsConnection()`.
  *
- * For mocking, see `dialogflow_cx_mocks::MockFlowsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockFlowsConnection`.
  */
 class FlowsConnection {
  public:
@@ -118,7 +118,7 @@ class FlowsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::FlowsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::FlowsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -139,8 +139,8 @@ std::shared_ptr<FlowsConnection> MakeFlowsConnection(
  */
 std::shared_ptr<FlowsConnection> MakeFlowsConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

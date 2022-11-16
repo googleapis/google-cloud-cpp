@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 class UptimeCheckServiceAuth : public UptimeCheckServiceStub {
  public:
@@ -74,8 +74,8 @@ class UptimeCheckServiceAuth : public UptimeCheckServiceStub {
   std::shared_ptr<UptimeCheckServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer {
 
 using ::google::cloud::Idempotency;
 
@@ -46,7 +46,7 @@ MakeDefaultImageVersionsConnectionIdempotencyPolicy() {
   return absl::make_unique<ImageVersionsConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

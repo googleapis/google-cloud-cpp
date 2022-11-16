@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace vpcaccess_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vpcaccess_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,39 +39,45 @@ Options VpcAccessServiceDefaultOptions(Options options) {
       "vpcaccess.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<vpcaccess::VpcAccessServiceRetryPolicyOption>()) {
-    options.set<vpcaccess::VpcAccessServiceRetryPolicyOption>(
-        vpcaccess::VpcAccessServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::VpcAccessServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<vpcaccess::VpcAccessServiceBackoffPolicyOption>()) {
-    options.set<vpcaccess::VpcAccessServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<vpcaccess::VpcAccessServicePollingPolicyOption>()) {
-    options.set<vpcaccess::VpcAccessServicePollingPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::VpcAccessServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VpcAccessServicePollingPolicyOption>(
         GenericPollingPolicy<
-            vpcaccess::VpcAccessServiceRetryPolicyOption::Type,
-            vpcaccess::VpcAccessServiceBackoffPolicyOption::Type>(
-            options.get<vpcaccess::VpcAccessServiceRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::VpcAccessServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::VpcAccessServiceBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceRetryPolicyOption>()
                 ->clone(),
-            options.get<vpcaccess::VpcAccessServiceBackoffPolicyOption>()
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<
-          vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<vpcaccess::VpcAccessServiceConnectionIdempotencyPolicyOption>(
-        vpcaccess::MakeDefaultVpcAccessServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       VpcAccessServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::VpcAccessServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultVpcAccessServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

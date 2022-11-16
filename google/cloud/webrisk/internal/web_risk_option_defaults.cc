@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace webrisk_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace webrisk_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,27 +38,30 @@ Options WebRiskServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_WEB_RISK_SERVICE_AUTHORITY", "webrisk.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<webrisk::WebRiskServiceRetryPolicyOption>()) {
-    options.set<webrisk::WebRiskServiceRetryPolicyOption>(
-        webrisk::WebRiskServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::WebRiskServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::WebRiskServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::WebRiskServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<webrisk::WebRiskServiceBackoffPolicyOption>()) {
-    options.set<webrisk::WebRiskServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::WebRiskServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::WebRiskServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<webrisk::WebRiskServiceConnectionIdempotencyPolicyOption>(
-        webrisk::MakeDefaultWebRiskServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       WebRiskServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::WebRiskServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultWebRiskServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

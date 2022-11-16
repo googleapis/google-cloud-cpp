@@ -28,13 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities_internal {
 
 ManagedIdentitiesServiceConnectionImpl::ManagedIdentitiesServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<managedidentities_internal::ManagedIdentitiesServiceStub>
-        stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -93,7 +92,7 @@ ManagedIdentitiesServiceConnectionImpl::ListDomains(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      managedidentities::ManagedIdentitiesServiceRetryPolicy const>(
+      GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDomains(request);
@@ -309,7 +308,7 @@ ManagedIdentitiesServiceConnectionImpl::ValidateTrust(
       idempotency_policy()->ValidateTrust(request), polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

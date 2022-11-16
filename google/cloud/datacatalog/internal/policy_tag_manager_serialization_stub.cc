@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_internal {
 
 PolicyTagManagerSerializationStub::~PolicyTagManagerSerializationStub() =
     default;
@@ -69,7 +69,7 @@ DefaultPolicyTagManagerSerializationStub::ExportTaxonomies(
   return response;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

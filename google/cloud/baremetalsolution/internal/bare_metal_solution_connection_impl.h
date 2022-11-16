@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace baremetalsolution_internal {
 
 class BareMetalSolutionConnectionImpl
-    : public baremetalsolution::BareMetalSolutionConnection {
+    : public GOOGLE_CLOUD_CPP_NS::BareMetalSolutionConnection {
  public:
   ~BareMetalSolutionConnectionImpl() override = default;
 
   BareMetalSolutionConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<baremetalsolution_internal::BareMetalSolutionStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -137,45 +137,46 @@ class BareMetalSolutionConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<baremetalsolution::BareMetalSolutionRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<baremetalsolution::BareMetalSolutionRetryPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionRetryPolicyOption>()) {
       return options
-          .get<baremetalsolution::BareMetalSolutionRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<baremetalsolution::BareMetalSolutionRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<baremetalsolution::BareMetalSolutionBackoffPolicyOption>()) {
+            .has<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionBackoffPolicyOption>()) {
       return options
-          .get<baremetalsolution::BareMetalSolutionBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<baremetalsolution::BareMetalSolutionBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      baremetalsolution::BareMetalSolutionConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::BareMetalSolutionConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<baremetalsolution::
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
                         BareMetalSolutionConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<baremetalsolution::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    BareMetalSolutionConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<baremetalsolution::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  BareMetalSolutionConnectionIdempotencyPolicyOption>()
         ->clone();
   }
@@ -183,23 +184,23 @@ class BareMetalSolutionConnectionImpl
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<baremetalsolution::BareMetalSolutionPollingPolicyOption>()) {
+            .has<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionPollingPolicyOption>()) {
       return options
-          .get<baremetalsolution::BareMetalSolutionPollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionPollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<baremetalsolution::BareMetalSolutionPollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<baremetalsolution_internal::BareMetalSolutionStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 std::shared_ptr<ProductServiceStub> CreateDefaultProductServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -61,7 +61,7 @@ std::shared_ptr<ProductServiceStub> CreateDefaultProductServiceStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

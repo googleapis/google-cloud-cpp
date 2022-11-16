@@ -33,17 +33,17 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 class SystemPolicyV1ConnectionImpl
-    : public binaryauthorization::SystemPolicyV1Connection {
+    : public GOOGLE_CLOUD_CPP_NS::SystemPolicyV1Connection {
  public:
   ~SystemPolicyV1ConnectionImpl() override = default;
 
   SystemPolicyV1ConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<binaryauthorization_internal::SystemPolicyV1Stub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1Stub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -53,54 +53,54 @@ class SystemPolicyV1ConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<binaryauthorization::SystemPolicyV1RetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1RetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<binaryauthorization::SystemPolicyV1RetryPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1RetryPolicyOption>()) {
       return options
-          .get<binaryauthorization::SystemPolicyV1RetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1RetryPolicyOption>()
           ->clone();
     }
-    return options_.get<binaryauthorization::SystemPolicyV1RetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1RetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<binaryauthorization::SystemPolicyV1BackoffPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1BackoffPolicyOption>()) {
       return options
-          .get<binaryauthorization::SystemPolicyV1BackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1BackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<binaryauthorization::SystemPolicyV1BackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1BackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      binaryauthorization::SystemPolicyV1ConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::SystemPolicyV1ConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<binaryauthorization::
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
                         SystemPolicyV1ConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<binaryauthorization::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    SystemPolicyV1ConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<binaryauthorization::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  SystemPolicyV1ConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<binaryauthorization_internal::SystemPolicyV1Stub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SystemPolicyV1Stub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

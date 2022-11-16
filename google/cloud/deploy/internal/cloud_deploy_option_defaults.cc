@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace deploy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace deploy_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,34 +38,41 @@ Options CloudDeployDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_CLOUD_DEPLOY_AUTHORITY", "clouddeploy.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<deploy::CloudDeployRetryPolicyOption>()) {
-    options.set<deploy::CloudDeployRetryPolicyOption>(
-        deploy::CloudDeployLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudDeployRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudDeployRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::CloudDeployLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<deploy::CloudDeployBackoffPolicyOption>()) {
-    options.set<deploy::CloudDeployBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudDeployBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudDeployBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<deploy::CloudDeployPollingPolicyOption>()) {
-    options.set<deploy::CloudDeployPollingPolicyOption>(
-        GenericPollingPolicy<deploy::CloudDeployRetryPolicyOption::Type,
-                             deploy::CloudDeployBackoffPolicyOption::Type>(
-            options.get<deploy::CloudDeployRetryPolicyOption>()->clone(),
-            options.get<deploy::CloudDeployBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudDeployPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudDeployPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::CloudDeployRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::CloudDeployBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::CloudDeployRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::CloudDeployBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<deploy::CloudDeployConnectionIdempotencyPolicyOption>()) {
-    options.set<deploy::CloudDeployConnectionIdempotencyPolicyOption>(
-        deploy::MakeDefaultCloudDeployConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       CloudDeployConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::CloudDeployConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultCloudDeployConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

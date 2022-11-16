@@ -30,19 +30,19 @@
 
 namespace google {
 namespace cloud {
-namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam {
 
 using IAMPolicyRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    iam_internal::IAMPolicyRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::IAMPolicyRetryTraits>;
 
 using IAMPolicyLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        iam_internal::IAMPolicyRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IAMPolicyRetryTraits>;
 
 using IAMPolicyLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        iam_internal::IAMPolicyRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IAMPolicyRetryTraits>;
 
 /**
  * The `IAMPolicyConnection` object for `IAMPolicyClient`.
@@ -54,7 +54,7 @@ using IAMPolicyLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeIAMPolicyConnection()`.
  *
- * For mocking, see `iam_mocks::MockIAMPolicyConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockIAMPolicyConnection`.
  */
 class IAMPolicyConnection {
  public:
@@ -85,7 +85,7 @@ class IAMPolicyConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::iam::IAMPolicyPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::IAMPolicyPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -96,8 +96,8 @@ class IAMPolicyConnection {
 std::shared_ptr<IAMPolicyConnection> MakeIAMPolicyConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

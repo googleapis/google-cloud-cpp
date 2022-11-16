@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace optimization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization {
 
 using ::google::cloud::Idempotency;
 
@@ -50,7 +50,7 @@ MakeDefaultFleetRoutingConnectionIdempotencyPolicy() {
   return absl::make_unique<FleetRoutingConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis {
 
 ContainerAnalysisClient::ContainerAnalysisClient(
     std::shared_ptr<ContainerAnalysisConnection> connection, Options opts)
@@ -136,7 +136,7 @@ ContainerAnalysisClient::GetVulnerabilityOccurrencesSummary(
   return connection_->GetVulnerabilityOccurrencesSummary(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

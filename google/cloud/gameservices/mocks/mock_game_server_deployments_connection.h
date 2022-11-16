@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices_mocks {
 
 /**
  * A class to mock `GameServerDeploymentsServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockGameServerDeploymentsServiceConnection
-    : public gameservices::GameServerDeploymentsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::GameServerDeploymentsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -107,8 +107,8 @@ class MockGameServerDeploymentsServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

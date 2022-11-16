@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -69,8 +69,8 @@ using IdentityAwareProxyAdminServicePolicyOptionList =
                IdentityAwareProxyAdminServiceBackoffPolicyOption,
                IdentityAwareProxyAdminServiceConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

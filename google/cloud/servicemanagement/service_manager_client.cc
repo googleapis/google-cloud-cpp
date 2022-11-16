@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicemanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicemanagement {
 
 ServiceManagerClient::ServiceManagerClient(
     std::shared_ptr<ServiceManagerConnection> connection, Options opts)
@@ -261,7 +261,7 @@ ServiceManagerClient::GenerateConfigReport(
   return connection_->GenerateConfigReport(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

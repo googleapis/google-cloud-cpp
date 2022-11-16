@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace recommender_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender_internal {
 
 class RecommenderAuth : public RecommenderStub {
  public:
@@ -111,8 +111,8 @@ class RecommenderAuth : public RecommenderStub {
   std::shared_ptr<RecommenderStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

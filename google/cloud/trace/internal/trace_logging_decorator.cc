@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace trace_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace trace_internal {
 
 TraceServiceLogging::TraceServiceLogging(
     std::shared_ptr<TraceServiceStub> child, TracingOptions tracing_options,
@@ -56,7 +56,7 @@ TraceServiceLogging::CreateSpan(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

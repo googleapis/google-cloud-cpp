@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace artifactregistry {
 
 using ::google::cloud::Idempotency;
 
@@ -179,7 +179,7 @@ MakeDefaultArtifactRegistryConnectionIdempotencyPolicy() {
   return absl::make_unique<ArtifactRegistryConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 class AutoscalingPolicyServiceAuth : public AutoscalingPolicyServiceStub {
  public:
@@ -71,8 +71,8 @@ class AutoscalingPolicyServiceAuth : public AutoscalingPolicyServiceStub {
   std::shared_ptr<AutoscalingPolicyServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 using MigrationServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::MigrationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::MigrationServiceRetryTraits>;
 
 using MigrationServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::MigrationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::MigrationServiceRetryTraits>;
 
 using MigrationServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::MigrationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::MigrationServiceRetryTraits>;
 
 /**
  * The `MigrationServiceConnection` object for `MigrationServiceClient`.
@@ -56,7 +56,7 @@ using MigrationServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeMigrationServiceConnection()`.
  *
- * For mocking, see `bigquery_mocks::MockMigrationServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockMigrationServiceConnection`.
  */
 class MigrationServiceConnection {
  public:
@@ -111,7 +111,7 @@ class MigrationServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::MigrationServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::MigrationServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -122,8 +122,8 @@ class MigrationServiceConnection {
 std::shared_ptr<MigrationServiceConnection> MakeMigrationServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 using GroupServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        monitoring_internal::GroupServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::GroupServiceRetryTraits>;
 
 using GroupServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        monitoring_internal::GroupServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::GroupServiceRetryTraits>;
 
 using GroupServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        monitoring_internal::GroupServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::GroupServiceRetryTraits>;
 
 /**
  * The `GroupServiceConnection` object for `GroupServiceClient`.
@@ -56,7 +56,7 @@ using GroupServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeGroupServiceConnection()`.
  *
- * For mocking, see `monitoring_mocks::MockGroupServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockGroupServiceConnection`.
  */
 class GroupServiceConnection {
  public:
@@ -96,7 +96,7 @@ class GroupServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::monitoring::GroupServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::GroupServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -107,8 +107,8 @@ class GroupServiceConnection {
 std::shared_ptr<GroupServiceConnection> MakeGroupServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

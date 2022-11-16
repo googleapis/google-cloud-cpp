@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace tpu_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu_internal {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct TpuRetryTraits {
@@ -35,8 +35,8 @@ struct TpuRetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

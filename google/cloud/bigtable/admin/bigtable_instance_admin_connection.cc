@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_admin {
 
 BigtableInstanceAdminConnection::~BigtableInstanceAdminConnection() = default;
 
@@ -178,17 +178,17 @@ MakeBigtableInstanceAdminConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  BigtableInstanceAdminPolicyOptionList>(
       options, __func__);
-  options = bigtable_admin_internal::BigtableInstanceAdminDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = bigtable_admin_internal::CreateDefaultBigtableInstanceAdminStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultBigtableInstanceAdminStub(
       background->cq(), options);
   return std::make_shared<
-      bigtable_admin_internal::BigtableInstanceAdminConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::BigtableInstanceAdminConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

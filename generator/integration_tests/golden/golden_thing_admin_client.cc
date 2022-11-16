@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden {
 
 GoldenThingAdminClient::GoldenThingAdminClient(std::shared_ptr<GoldenThingAdminConnection> connection, Options opts) : connection_(std::move(connection)), options_(internal::MergeOptions(std::move(opts), connection_->options())) {}
 GoldenThingAdminClient::~GoldenThingAdminClient() = default;
@@ -342,7 +342,7 @@ GoldenThingAdminClient::AsyncDropDatabase(google::test::admin::database::v1::Dro
   return connection_->AsyncDropDatabase(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

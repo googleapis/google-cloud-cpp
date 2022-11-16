@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 class DashboardsServiceConnectionImpl
-    : public monitoring::DashboardsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::DashboardsServiceConnection {
  public:
   ~DashboardsServiceConnectionImpl() override = default;
 
   DashboardsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<monitoring_internal::DashboardsServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DashboardsServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -70,47 +70,57 @@ class DashboardsServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<monitoring::DashboardsServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DashboardsServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::DashboardsServiceRetryPolicyOption>()) {
-      return options.get<monitoring::DashboardsServiceRetryPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::DashboardsServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::DashboardsServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<monitoring::DashboardsServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::DashboardsServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::DashboardsServiceBackoffPolicyOption>()) {
-      return options.get<monitoring::DashboardsServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring::DashboardsServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<monitoring::DashboardsServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring::DashboardsServiceConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::DashboardsServiceBackoffPolicyOption>()) {
       return options
-          .get<monitoring::DashboardsServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::DashboardsServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<monitoring::DashboardsServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::DashboardsServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::DashboardsServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        DashboardsServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   DashboardsServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 DashboardsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<monitoring_internal::DashboardsServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DashboardsServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

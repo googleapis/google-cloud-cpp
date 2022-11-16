@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace shell {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace shell {
 
 ///
 /// API for interacting with Google Cloud Shell. Each user of Cloud Shell has at
@@ -227,8 +227,8 @@ class CloudShellServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

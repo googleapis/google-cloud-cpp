@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 ReservationServiceConnectionImpl::ReservationServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<bigquery_internal::ReservationServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ReservationServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -59,8 +59,9 @@ ReservationServiceConnectionImpl::ListReservations(
     google::cloud::bigquery::reservation::v1::ListReservationsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ReservationServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListReservations(request);
   char const* function_name = __func__;
@@ -152,8 +153,9 @@ ReservationServiceConnectionImpl::ListCapacityCommitments(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ReservationServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCapacityCommitments(request);
   char const* function_name = __func__;
@@ -278,8 +280,9 @@ ReservationServiceConnectionImpl::ListAssignments(
     google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ReservationServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAssignments(request);
   char const* function_name = __func__;
@@ -327,8 +330,9 @@ ReservationServiceConnectionImpl::SearchAssignments(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ReservationServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->SearchAssignments(request);
   char const* function_name = __func__;
@@ -363,8 +367,9 @@ ReservationServiceConnectionImpl::SearchAllAssignments(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ReservationServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->SearchAllAssignments(request);
   char const* function_name = __func__;
@@ -452,7 +457,7 @@ ReservationServiceConnectionImpl::UpdateBiReservation(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

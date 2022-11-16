@@ -33,16 +33,18 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc_internal {
 
-class PublisherConnectionImpl : public eventarc::PublisherConnection {
+class PublisherConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::PublisherConnection {
  public:
   ~PublisherConnectionImpl() override = default;
 
   PublisherConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<eventarc_internal::PublisherStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::PublisherStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -58,41 +60,48 @@ class PublisherConnectionImpl : public eventarc::PublisherConnection {
           request) override;
 
  private:
-  std::unique_ptr<eventarc::PublisherRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::PublisherRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc::PublisherRetryPolicyOption>()) {
-      return options.get<eventarc::PublisherRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::PublisherRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::PublisherRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<eventarc::PublisherRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::PublisherRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc::PublisherBackoffPolicyOption>()) {
-      return options.get<eventarc::PublisherBackoffPolicyOption>()->clone();
-    }
-    return options_.get<eventarc::PublisherBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<eventarc::PublisherConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<eventarc::PublisherConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<eventarc::PublisherConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::PublisherBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::PublisherBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<eventarc::PublisherConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::PublisherBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::PublisherConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        PublisherConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<
+              GOOGLE_CLOUD_CPP_NS::PublisherConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::PublisherConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<eventarc_internal::PublisherStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::PublisherStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -34,16 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing_internal {
 
-class BudgetServiceConnectionImpl : public billing::BudgetServiceConnection {
+class BudgetServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::BudgetServiceConnection {
  public:
   ~BudgetServiceConnectionImpl() override = default;
 
   BudgetServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<billing_internal::BudgetServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BudgetServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -68,43 +69,52 @@ class BudgetServiceConnectionImpl : public billing::BudgetServiceConnection {
       override;
 
  private:
-  std::unique_ptr<billing::BudgetServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::BudgetServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<billing::BudgetServiceRetryPolicyOption>()) {
-      return options.get<billing::BudgetServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::BudgetServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::BudgetServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<billing::BudgetServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::BudgetServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<billing::BudgetServiceBackoffPolicyOption>()) {
-      return options.get<billing::BudgetServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<billing::BudgetServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<billing::BudgetServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<billing::BudgetServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::BudgetServiceBackoffPolicyOption>()) {
       return options
-          .get<billing::BudgetServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::BudgetServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<billing::BudgetServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::BudgetServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::BudgetServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        BudgetServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   BudgetServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 BudgetServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<billing_internal::BudgetServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BudgetServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

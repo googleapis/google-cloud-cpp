@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis {
 
 using ContainerAnalysisRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        containeranalysis_internal::ContainerAnalysisRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ContainerAnalysisRetryTraits>;
 
 using ContainerAnalysisLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        containeranalysis_internal::ContainerAnalysisRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ContainerAnalysisRetryTraits>;
 
 using ContainerAnalysisLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        containeranalysis_internal::ContainerAnalysisRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ContainerAnalysisRetryTraits>;
 
 /**
  * The `ContainerAnalysisConnection` object for `ContainerAnalysisClient`.
@@ -55,7 +55,8 @@ using ContainerAnalysisLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeContainerAnalysisConnection()`.
  *
- * For mocking, see `containeranalysis_mocks::MockContainerAnalysisConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockContainerAnalysisConnection`.
  */
 class ContainerAnalysisConnection {
  public:
@@ -94,7 +95,7 @@ class ContainerAnalysisConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::containeranalysis::ContainerAnalysisPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ContainerAnalysisPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -105,8 +106,8 @@ class ContainerAnalysisConnection {
 std::shared_ptr<ContainerAnalysisConnection> MakeContainerAnalysisConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

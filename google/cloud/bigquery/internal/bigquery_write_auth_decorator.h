@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 class BigQueryWriteAuth : public BigQueryWriteStub {
  public:
@@ -77,8 +77,8 @@ class BigQueryWriteAuth : public BigQueryWriteStub {
   std::shared_ptr<BigQueryWriteStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

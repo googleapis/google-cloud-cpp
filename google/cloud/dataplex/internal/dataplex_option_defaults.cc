@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,38 +38,43 @@ Options DataplexServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_DATAPLEX_SERVICE_AUTHORITY", "dataplex.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dataplex::DataplexServiceRetryPolicyOption>()) {
-    options.set<dataplex::DataplexServiceRetryPolicyOption>(
-        dataplex::DataplexServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::DataplexServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dataplex::DataplexServiceBackoffPolicyOption>()) {
-    options.set<dataplex::DataplexServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DataplexServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DataplexServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<dataplex::DataplexServicePollingPolicyOption>()) {
-    options.set<dataplex::DataplexServicePollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DataplexServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DataplexServicePollingPolicyOption>(
         GenericPollingPolicy<
-            dataplex::DataplexServiceRetryPolicyOption::Type,
-            dataplex::DataplexServiceBackoffPolicyOption::Type>(
-            options.get<dataplex::DataplexServiceRetryPolicyOption>()->clone(),
-            options.get<dataplex::DataplexServiceBackoffPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::DataplexServiceBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::DataplexServiceRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::DataplexServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options
-           .has<dataplex::DataplexServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<dataplex::DataplexServiceConnectionIdempotencyPolicyOption>(
-        dataplex::MakeDefaultDataplexServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       DataplexServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::DataplexServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultDataplexServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

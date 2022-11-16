@@ -31,19 +31,19 @@
 
 namespace google {
 namespace cloud {
-namespace dlp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dlp {
 
 using DlpServiceRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dlp_internal::DlpServiceRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::DlpServiceRetryTraits>;
 
 using DlpServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dlp_internal::DlpServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DlpServiceRetryTraits>;
 
 using DlpServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dlp_internal::DlpServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DlpServiceRetryTraits>;
 
 /**
  * The `DlpServiceConnection` object for `DlpServiceClient`.
@@ -55,7 +55,7 @@ using DlpServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeDlpServiceConnection()`.
  *
- * For mocking, see `dlp_mocks::MockDlpServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockDlpServiceConnection`.
  */
 class DlpServiceConnection {
  public:
@@ -195,7 +195,7 @@ class DlpServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dlp::DlpServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::DlpServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -206,8 +206,8 @@ class DlpServiceConnection {
 std::shared_ptr<DlpServiceConnection> MakeDlpServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

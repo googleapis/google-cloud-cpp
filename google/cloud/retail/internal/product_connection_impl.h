@@ -37,16 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
-class ProductServiceConnectionImpl : public retail::ProductServiceConnection {
+class ProductServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::ProductServiceConnection {
  public:
   ~ProductServiceConnectionImpl() override = default;
 
   ProductServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<retail_internal::ProductServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProductServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -95,51 +96,66 @@ class ProductServiceConnectionImpl : public retail::ProductServiceConnection {
       override;
 
  private:
-  std::unique_ptr<retail::ProductServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ProductServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::ProductServiceRetryPolicyOption>()) {
-      return options.get<retail::ProductServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ProductServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ProductServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<retail::ProductServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::ProductServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::ProductServiceBackoffPolicyOption>()) {
-      return options.get<retail::ProductServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<retail::ProductServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<retail::ProductServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<retail::ProductServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ProductServiceBackoffPolicyOption>()) {
       return options
-          .get<retail::ProductServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ProductServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<retail::ProductServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ProductServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ProductServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ProductServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ProductServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ProductServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::ProductServicePollingPolicyOption>()) {
-      return options.get<retail::ProductServicePollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::ProductServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ProductServicePollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<retail::ProductServicePollingPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ProductServicePollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<retail_internal::ProductServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProductServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace functions_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace functions_internal {
 
 class CloudFunctionsServiceLogging : public CloudFunctionsServiceStub {
  public:
@@ -111,8 +111,8 @@ class CloudFunctionsServiceLogging : public CloudFunctionsServiceStub {
   std::set<std::string> components_;
 };  // CloudFunctionsServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace functions_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace logging {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace logging {
 
 LoggingServiceV2Client::LoggingServiceV2Client(
     std::shared_ptr<LoggingServiceV2Connection> connection, Options opts)
@@ -137,7 +137,7 @@ LoggingServiceV2Client::AsyncWriteLogEntries(
   return connection_->AsyncWriteLogEntries(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

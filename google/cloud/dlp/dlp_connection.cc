@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dlp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dlp {
 
 DlpServiceConnection::~DlpServiceConnection() = default;
 
@@ -244,15 +244,15 @@ std::shared_ptr<DlpServiceConnection> MakeDlpServiceConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  DlpServicePolicyOptionList>(options, __func__);
-  options = dlp_internal::DlpServiceDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::DlpServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      dlp_internal::CreateDefaultDlpServiceStub(background->cq(), options);
-  return std::make_shared<dlp_internal::DlpServiceConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultDlpServiceStub(background->cq(),
+                                                               options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::DlpServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

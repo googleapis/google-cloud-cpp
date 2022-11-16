@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 ServiceMonitoringServiceLogging::ServiceMonitoringServiceLogging(
     std::shared_ptr<ServiceMonitoringServiceStub> child,
@@ -157,7 +157,7 @@ Status ServiceMonitoringServiceLogging::DeleteServiceLevelObjective(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

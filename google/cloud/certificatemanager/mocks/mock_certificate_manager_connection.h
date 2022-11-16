@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace certificatemanager_mocks {
 
 /**
  * A class to mock `CertificateManagerConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockCertificateManagerConnection
-    : public certificatemanager::CertificateManagerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::CertificateManagerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -225,8 +225,8 @@ class MockCertificateManagerConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

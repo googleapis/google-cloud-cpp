@@ -26,12 +26,12 @@
 
 namespace google {
 namespace cloud {
-namespace profiler_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace profiler_internal {
 
 ProfilerServiceConnectionImpl::ProfilerServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<profiler_internal::ProfilerServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProfilerServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -77,7 +77,7 @@ ProfilerServiceConnectionImpl::UpdateProfile(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

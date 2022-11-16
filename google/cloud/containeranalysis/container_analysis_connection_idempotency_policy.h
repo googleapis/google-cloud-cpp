@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis {
 
 class ContainerAnalysisConnectionIdempotencyPolicy {
  public:
@@ -55,8 +55,8 @@ class ContainerAnalysisConnectionIdempotencyPolicy {
 std::unique_ptr<ContainerAnalysisConnectionIdempotencyPolicy>
 MakeDefaultContainerAnalysisConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

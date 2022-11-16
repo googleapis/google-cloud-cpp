@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 class EntityTypesLogging : public EntityTypesStub {
  public:
@@ -110,8 +110,8 @@ class EntityTypesLogging : public EntityTypesStub {
   std::set<std::string> components_;
 };  // EntityTypesLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

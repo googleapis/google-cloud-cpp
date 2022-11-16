@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
 ContainerAnalysisStub::~ContainerAnalysisStub() = default;
 
@@ -80,7 +80,7 @@ DefaultContainerAnalysisStub::GetVulnerabilityOccurrencesSummary(
   return response;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

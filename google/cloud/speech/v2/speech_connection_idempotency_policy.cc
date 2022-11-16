@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace speech_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech_v2 {
 
 using ::google::cloud::Idempotency;
 
@@ -150,7 +150,7 @@ MakeDefaultSpeechConnectionIdempotencyPolicy() {
   return absl::make_unique<SpeechConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

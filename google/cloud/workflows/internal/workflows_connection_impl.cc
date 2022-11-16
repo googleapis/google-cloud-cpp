@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace workflows_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows_internal {
 
 WorkflowsConnectionImpl::WorkflowsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<workflows_internal::WorkflowsStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WorkflowsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -44,8 +44,8 @@ WorkflowsConnectionImpl::ListWorkflows(
     google::cloud::workflows::v1::ListWorkflowsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<workflows::WorkflowsRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WorkflowsRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListWorkflows(request);
   char const* function_name = __func__;
@@ -175,7 +175,7 @@ WorkflowsConnectionImpl::UpdateWorkflow(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

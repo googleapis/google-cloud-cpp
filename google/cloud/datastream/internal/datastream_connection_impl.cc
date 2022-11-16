@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream_internal {
 
 DatastreamConnectionImpl::DatastreamConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<datastream_internal::DatastreamStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatastreamStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -45,7 +45,8 @@ DatastreamConnectionImpl::ListConnectionProfiles(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<datastream::DatastreamRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListConnectionProfiles(request);
   char const* function_name = __func__;
@@ -208,7 +209,8 @@ DatastreamConnectionImpl::ListStreams(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<datastream::DatastreamRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListStreams(request);
   char const* function_name = __func__;
@@ -365,7 +367,8 @@ DatastreamConnectionImpl::ListStreamObjects(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<datastream::DatastreamRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListStreamObjects(request);
   char const* function_name = __func__;
@@ -422,7 +425,8 @@ StreamRange<std::string> DatastreamConnectionImpl::FetchStaticIps(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<datastream::DatastreamRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->FetchStaticIps(request);
   char const* function_name = __func__;
@@ -500,7 +504,8 @@ DatastreamConnectionImpl::ListPrivateConnections(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<datastream::DatastreamRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListPrivateConnections(request);
   char const* function_name = __func__;
@@ -607,7 +612,8 @@ DatastreamConnectionImpl::ListRoutes(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<datastream::DatastreamRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListRoutes(request);
   char const* function_name = __func__;
@@ -660,7 +666,7 @@ DatastreamConnectionImpl::DeleteRoute(
       idempotency_policy()->DeleteRoute(request), polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

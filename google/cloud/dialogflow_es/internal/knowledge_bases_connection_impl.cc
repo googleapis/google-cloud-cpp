@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 KnowledgeBasesConnectionImpl::KnowledgeBasesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_es_internal::KnowledgeBasesStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::KnowledgeBasesStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -44,8 +44,9 @@ KnowledgeBasesConnectionImpl::ListKnowledgeBases(
     google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_es::KnowledgeBasesRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::KnowledgeBasesRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListKnowledgeBases(request);
   char const* function_name = __func__;
@@ -126,7 +127,7 @@ KnowledgeBasesConnectionImpl::UpdateKnowledgeBase(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

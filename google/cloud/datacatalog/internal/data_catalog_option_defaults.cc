@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,27 +38,30 @@ Options DataCatalogDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_DATA_CATALOG_AUTHORITY", "datacatalog.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<datacatalog::DataCatalogRetryPolicyOption>()) {
-    options.set<datacatalog::DataCatalogRetryPolicyOption>(
-        datacatalog::DataCatalogLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DataCatalogRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DataCatalogRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::DataCatalogLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<datacatalog::DataCatalogBackoffPolicyOption>()) {
-    options.set<datacatalog::DataCatalogBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DataCatalogBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DataCatalogBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<datacatalog::DataCatalogConnectionIdempotencyPolicyOption>()) {
-    options.set<datacatalog::DataCatalogConnectionIdempotencyPolicyOption>(
-        datacatalog::MakeDefaultDataCatalogConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       DataCatalogConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::DataCatalogConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultDataCatalogConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

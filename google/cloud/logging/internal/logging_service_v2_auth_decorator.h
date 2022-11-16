@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace logging_internal {
 
 class LoggingServiceV2Auth : public LoggingServiceV2Stub {
  public:
@@ -77,8 +77,8 @@ class LoggingServiceV2Auth : public LoggingServiceV2Stub {
   std::shared_ptr<LoggingServiceV2Stub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

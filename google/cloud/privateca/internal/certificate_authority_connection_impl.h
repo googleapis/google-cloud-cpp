@@ -37,17 +37,18 @@
 
 namespace google {
 namespace cloud {
-namespace privateca_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca_internal {
 
 class CertificateAuthorityServiceConnectionImpl
-    : public privateca::CertificateAuthorityServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceConnection {
  public:
   ~CertificateAuthorityServiceConnectionImpl() override = default;
 
   CertificateAuthorityServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<privateca_internal::CertificateAuthorityServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceStub>
+          stub,
       Options options);
 
   Options options() override { return options_; }
@@ -195,72 +196,78 @@ class CertificateAuthorityServiceConnectionImpl
           UpdateCertificateTemplateRequest const& request) override;
 
  private:
-  std::unique_ptr<privateca::CertificateAuthorityServiceRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<privateca::CertificateAuthorityServiceRetryPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CertificateAuthorityServiceRetryPolicyOption>()) {
       return options
-          .get<privateca::CertificateAuthorityServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CertificateAuthorityServiceRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<privateca::CertificateAuthorityServiceRetryPolicyOption>()
+        .get<
+            GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<privateca::CertificateAuthorityServiceBackoffPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CertificateAuthorityServiceBackoffPolicyOption>()) {
       return options
-          .get<privateca::CertificateAuthorityServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CertificateAuthorityServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<privateca::CertificateAuthorityServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 CertificateAuthorityServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
-      privateca::CertificateAuthorityServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::
+                      CertificateAuthorityServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            privateca::
+            GOOGLE_CLOUD_CPP_NS::
                 CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()) {
       return options
           .get<
-              privateca::
+              GOOGLE_CLOUD_CPP_NS::
                   CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<privateca::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  CertificateAuthorityServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<privateca::CertificateAuthorityServicePollingPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CertificateAuthorityServicePollingPolicyOption>()) {
       return options
-          .get<privateca::CertificateAuthorityServicePollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CertificateAuthorityServicePollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<privateca::CertificateAuthorityServicePollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 CertificateAuthorityServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<privateca_internal::CertificateAuthorityServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

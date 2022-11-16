@@ -37,16 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace cloudbuild_internal {
 
-class CloudBuildConnectionImpl : public cloudbuild::CloudBuildConnection {
+class CloudBuildConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::CloudBuildConnection {
  public:
   ~CloudBuildConnectionImpl() override = default;
 
   CloudBuildConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<cloudbuild_internal::CloudBuildStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudBuildStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -128,51 +129,58 @@ class CloudBuildConnectionImpl : public cloudbuild::CloudBuildConnection {
       override;
 
  private:
-  std::unique_ptr<cloudbuild::CloudBuildRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudBuildRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<cloudbuild::CloudBuildRetryPolicyOption>()) {
-      return options.get<cloudbuild::CloudBuildRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudBuildRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudBuildRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<cloudbuild::CloudBuildRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudBuildRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<cloudbuild::CloudBuildBackoffPolicyOption>()) {
-      return options.get<cloudbuild::CloudBuildBackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudBuildBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudBuildBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<cloudbuild::CloudBuildBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudBuildBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<cloudbuild::CloudBuildConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudBuildConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CloudBuildConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CloudBuildConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<cloudbuild::CloudBuildConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::CloudBuildConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<cloudbuild::CloudBuildPollingPolicyOption>()) {
-      return options.get<cloudbuild::CloudBuildPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudBuildPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudBuildPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<cloudbuild::CloudBuildPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudBuildPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<cloudbuild_internal::CloudBuildStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudBuildStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

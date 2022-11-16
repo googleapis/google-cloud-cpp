@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace baremetalsolution {
 
 BareMetalSolutionConnection::~BareMetalSolutionConnection() = default;
 
@@ -189,17 +189,16 @@ std::shared_ptr<BareMetalSolutionConnection> MakeBareMetalSolutionConnection(
                                  UnifiedCredentialsOptionList,
                                  BareMetalSolutionPolicyOptionList>(options,
                                                                     __func__);
-  options = baremetalsolution_internal::BareMetalSolutionDefaultOptions(
-      std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::BareMetalSolutionDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = baremetalsolution_internal::CreateDefaultBareMetalSolutionStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultBareMetalSolutionStub(
       background->cq(), options);
-  return std::make_shared<
-      baremetalsolution_internal::BareMetalSolutionConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::BareMetalSolutionConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

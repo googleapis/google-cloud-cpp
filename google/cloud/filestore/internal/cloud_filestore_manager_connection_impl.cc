@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace filestore_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore_internal {
 
 CloudFilestoreManagerConnectionImpl::CloudFilestoreManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<filestore_internal::CloudFilestoreManagerStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,9 +45,9 @@ CloudFilestoreManagerConnectionImpl::ListInstances(
     google::cloud::filestore::v1::ListInstancesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<filestore::CloudFilestoreManagerRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListInstances(request);
   char const* function_name = __func__;
@@ -212,9 +212,9 @@ CloudFilestoreManagerConnectionImpl::ListBackups(
     google::cloud::filestore::v1::ListBackupsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<filestore::CloudFilestoreManagerRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBackups(request);
   char const* function_name = __func__;
@@ -336,7 +336,7 @@ CloudFilestoreManagerConnectionImpl::UpdateBackup(
       idempotency_policy()->UpdateBackup(request), polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

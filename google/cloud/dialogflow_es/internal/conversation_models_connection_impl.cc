@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 ConversationModelsConnectionImpl::ConversationModelsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_es_internal::ConversationModelsStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConversationModelsStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -93,7 +93,7 @@ ConversationModelsConnectionImpl::ListConversationModels(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<dialogflow_es::ConversationModelsRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConversationModelsRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListConversationModels(request);
@@ -250,7 +250,7 @@ ConversationModelsConnectionImpl::ListConversationModelEvaluations(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<dialogflow_es::ConversationModelsRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ConversationModelsRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency =
@@ -313,7 +313,7 @@ ConversationModelsConnectionImpl::CreateConversationModelEvaluation(
       polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

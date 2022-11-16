@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 KnowledgeBasesConnection::~KnowledgeBasesConnection() = default;
 
@@ -72,12 +72,12 @@ std::shared_ptr<KnowledgeBasesConnection> MakeKnowledgeBasesConnection(
                                  UnifiedCredentialsOptionList,
                                  KnowledgeBasesPolicyOptionList>(options,
                                                                  __func__);
-  options = dialogflow_es_internal::KnowledgeBasesDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::KnowledgeBasesDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_es_internal::CreateDefaultKnowledgeBasesStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultKnowledgeBasesStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_es_internal::KnowledgeBasesConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::KnowledgeBasesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -86,7 +86,7 @@ std::shared_ptr<KnowledgeBasesConnection> MakeKnowledgeBasesConnection(
   return MakeKnowledgeBasesConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

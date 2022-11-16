@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 SessionsConnection::~SessionsConnection() = default;
 
@@ -56,12 +56,12 @@ std::shared_ptr<SessionsConnection> MakeSessionsConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  SessionsPolicyOptionList>(options, __func__);
-  options = dialogflow_es_internal::SessionsDefaultOptions(location,
-                                                           std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::SessionsDefaultOptions(location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_es_internal::CreateDefaultSessionsStub(
-      background->cq(), options);
-  return std::make_shared<dialogflow_es_internal::SessionsConnectionImpl>(
+  auto stub =
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultSessionsStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::SessionsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -69,7 +69,7 @@ std::shared_ptr<SessionsConnection> MakeSessionsConnection(Options options) {
   return MakeSessionsConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

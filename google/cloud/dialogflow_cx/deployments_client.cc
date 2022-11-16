@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 DeploymentsClient::DeploymentsClient(
     std::shared_ptr<DeploymentsConnection> connection, Options opts)
@@ -63,7 +63,7 @@ DeploymentsClient::GetDeployment(
   return connection_->GetDeployment(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

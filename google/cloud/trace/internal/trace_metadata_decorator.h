@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace trace_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace trace_internal {
 
 class TraceServiceMetadata : public TraceServiceStub {
  public:
@@ -52,8 +52,8 @@ class TraceServiceMetadata : public TraceServiceStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

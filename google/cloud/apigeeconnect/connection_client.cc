@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigeeconnect {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigeeconnect {
 
 ConnectionServiceClient::ConnectionServiceClient(
     std::shared_ptr<ConnectionServiceConnection> connection, Options opts)
@@ -48,7 +48,7 @@ ConnectionServiceClient::ListConnections(
   return connection_->ListConnections(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

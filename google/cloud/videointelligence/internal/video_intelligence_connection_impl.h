@@ -36,18 +36,17 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence_internal {
 
 class VideoIntelligenceServiceConnectionImpl
-    : public videointelligence::VideoIntelligenceServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceConnection {
  public:
   ~VideoIntelligenceServiceConnectionImpl() override = default;
 
   VideoIntelligenceServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub>
-          stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -58,72 +57,73 @@ class VideoIntelligenceServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<videointelligence::VideoIntelligenceServiceRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            videointelligence::VideoIntelligenceServiceRetryPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceRetryPolicyOption>()) {
       return options
-          .get<videointelligence::VideoIntelligenceServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<videointelligence::VideoIntelligenceServiceRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            videointelligence::VideoIntelligenceServiceBackoffPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        VideoIntelligenceServiceBackoffPolicyOption>()) {
       return options
-          .get<videointelligence::VideoIntelligenceServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   VideoIntelligenceServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<videointelligence::VideoIntelligenceServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      videointelligence::VideoIntelligenceServiceConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            videointelligence::
+            GOOGLE_CLOUD_CPP_NS::
                 VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<videointelligence::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<videointelligence::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  VideoIntelligenceServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            videointelligence::VideoIntelligenceServicePollingPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        VideoIntelligenceServicePollingPolicyOption>()) {
       return options
-          .get<videointelligence::VideoIntelligenceServicePollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   VideoIntelligenceServicePollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<videointelligence::VideoIntelligenceServicePollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<videointelligence_internal::VideoIntelligenceServiceStub>
-      stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

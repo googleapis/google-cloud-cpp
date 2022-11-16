@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,28 +39,31 @@ Options AuthorizedDomainsDefaultOptions(Options options) {
       "appengine.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<appengine::AuthorizedDomainsRetryPolicyOption>()) {
-    options.set<appengine::AuthorizedDomainsRetryPolicyOption>(
-        appengine::AuthorizedDomainsLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::AuthorizedDomainsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AuthorizedDomainsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::AuthorizedDomainsLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<appengine::AuthorizedDomainsBackoffPolicyOption>()) {
-    options.set<appengine::AuthorizedDomainsBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::AuthorizedDomainsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AuthorizedDomainsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          appengine::AuthorizedDomainsConnectionIdempotencyPolicyOption>()) {
-    options.set<appengine::AuthorizedDomainsConnectionIdempotencyPolicyOption>(
-        appengine::MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       AuthorizedDomainsConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    AuthorizedDomainsConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

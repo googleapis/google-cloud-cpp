@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace trace {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace trace {
 
 using TraceServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        trace_internal::TraceServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TraceServiceRetryTraits>;
 
 using TraceServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        trace_internal::TraceServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TraceServiceRetryTraits>;
 
 using TraceServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        trace_internal::TraceServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TraceServiceRetryTraits>;
 
 /**
  * The `TraceServiceConnection` object for `TraceServiceClient`.
@@ -55,7 +55,7 @@ using TraceServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeTraceServiceConnection()`.
  *
- * For mocking, see `trace_mocks::MockTraceServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockTraceServiceConnection`.
  */
 class TraceServiceConnection {
  public:
@@ -83,7 +83,7 @@ class TraceServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::trace::TraceServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::TraceServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -94,8 +94,8 @@ class TraceServiceConnection {
 std::shared_ptr<TraceServiceConnection> MakeTraceServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

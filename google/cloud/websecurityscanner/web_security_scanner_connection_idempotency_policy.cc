@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace websecurityscanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace websecurityscanner {
 
 using ::google::cloud::Idempotency;
 
@@ -106,7 +106,7 @@ MakeDefaultWebSecurityScannerConnectionIdempotencyPolicy() {
   return absl::make_unique<WebSecurityScannerConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

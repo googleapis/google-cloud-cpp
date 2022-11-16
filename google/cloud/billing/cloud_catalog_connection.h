@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing {
 
 using CloudCatalogRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        billing_internal::CloudCatalogRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudCatalogRetryTraits>;
 
 using CloudCatalogLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        billing_internal::CloudCatalogRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudCatalogRetryTraits>;
 
 using CloudCatalogLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        billing_internal::CloudCatalogRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudCatalogRetryTraits>;
 
 /**
  * The `CloudCatalogConnection` object for `CloudCatalogClient`.
@@ -56,7 +56,7 @@ using CloudCatalogLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeCloudCatalogConnection()`.
  *
- * For mocking, see `billing_mocks::MockCloudCatalogConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockCloudCatalogConnection`.
  */
 class CloudCatalogConnection {
  public:
@@ -84,7 +84,7 @@ class CloudCatalogConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::billing::CloudCatalogPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CloudCatalogPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -95,8 +95,8 @@ class CloudCatalogConnection {
 std::shared_ptr<CloudCatalogConnection> MakeCloudCatalogConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

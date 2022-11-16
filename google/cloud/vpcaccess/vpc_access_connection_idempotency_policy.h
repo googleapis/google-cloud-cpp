@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace vpcaccess {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vpcaccess {
 
 class VpcAccessServiceConnectionIdempotencyPolicy {
  public:
@@ -54,8 +54,8 @@ class VpcAccessServiceConnectionIdempotencyPolicy {
 std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy>
 MakeDefaultVpcAccessServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

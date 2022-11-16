@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex_mocks {
 
 /**
  * A class to mock `MetadataServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockMetadataServiceConnection
-    : public dataplex::MetadataServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::MetadataServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -87,8 +87,8 @@ class MockMetadataServiceConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

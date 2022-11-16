@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace asset_internal {
 
 AssetServiceLogging::AssetServiceLogging(
     std::shared_ptr<AssetServiceStub> child, TracingOptions tracing_options,
@@ -309,7 +309,7 @@ future<Status> AssetServiceLogging::AsyncCancelOperation(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

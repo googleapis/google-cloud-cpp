@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks {
 
 using ::google::cloud::Idempotency;
 
@@ -93,7 +93,7 @@ MakeDefaultManagedNotebookServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<ManagedNotebookServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

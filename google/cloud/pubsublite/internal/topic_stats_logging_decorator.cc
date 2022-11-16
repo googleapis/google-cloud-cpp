@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 TopicStatsServiceLogging::TopicStatsServiceLogging(
     std::shared_ptr<TopicStatsServiceStub> child,
@@ -73,7 +73,7 @@ TopicStatsServiceLogging::ComputeTimeCursor(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

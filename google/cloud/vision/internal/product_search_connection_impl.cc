@@ -28,12 +28,13 @@
 
 namespace google {
 namespace cloud {
-namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision_internal {
 
 ProductSearchConnectionImpl::ProductSearchConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<vision_internal::ProductSearchStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProductSearchStub> stub,
+    Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -59,7 +60,8 @@ ProductSearchConnectionImpl::ListProductSets(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<vision::ProductSearchRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProductSearchRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProductSets(request);
   char const* function_name = __func__;
@@ -145,7 +147,8 @@ ProductSearchConnectionImpl::ListProducts(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<vision::ProductSearchRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProductSearchRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProducts(request);
   char const* function_name = __func__;
@@ -243,7 +246,8 @@ ProductSearchConnectionImpl::ListReferenceImages(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<vision::ProductSearchRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProductSearchRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListReferenceImages(request);
   char const* function_name = __func__;
@@ -318,7 +322,8 @@ ProductSearchConnectionImpl::ListProductsInProductSet(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<vision::ProductSearchRetryPolicy const>(retry_policy());
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProductSearchRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProductsInProductSet(request);
   char const* function_name = __func__;
@@ -403,7 +408,7 @@ ProductSearchConnectionImpl::PurgeProducts(
       idempotency_policy()->PurgeProducts(request), polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

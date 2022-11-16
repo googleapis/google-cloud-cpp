@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkconnectivity {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkconnectivity {
 
 class HubServiceConnectionIdempotencyPolicy {
  public:
@@ -74,8 +74,8 @@ class HubServiceConnectionIdempotencyPolicy {
 std::unique_ptr<HubServiceConnectionIdempotencyPolicy>
 MakeDefaultHubServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

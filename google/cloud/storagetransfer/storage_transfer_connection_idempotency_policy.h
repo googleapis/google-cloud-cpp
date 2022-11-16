@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer {
 
 class StorageTransferServiceConnectionIdempotencyPolicy {
  public:
@@ -87,8 +87,8 @@ class StorageTransferServiceConnectionIdempotencyPolicy {
 std::unique_ptr<StorageTransferServiceConnectionIdempotencyPolicy>
 MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

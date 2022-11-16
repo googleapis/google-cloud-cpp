@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigtable_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigtable_admin_internal {
 
 class BigtableInstanceAdminLogging : public BigtableInstanceAdminStub {
  public:
@@ -157,8 +157,8 @@ class BigtableInstanceAdminLogging : public BigtableInstanceAdminStub {
   std::set<std::string> components_;
 };  // BigtableInstanceAdminLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

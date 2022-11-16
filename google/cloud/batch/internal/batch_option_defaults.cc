@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace batch_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace batch_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,34 +38,41 @@ Options BatchServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_BATCH_SERVICE_AUTHORITY", "batch.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<batch::BatchServiceRetryPolicyOption>()) {
-    options.set<batch::BatchServiceRetryPolicyOption>(
-        batch::BatchServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::BatchServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::BatchServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::BatchServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<batch::BatchServiceBackoffPolicyOption>()) {
-    options.set<batch::BatchServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::BatchServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::BatchServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<batch::BatchServicePollingPolicyOption>()) {
-    options.set<batch::BatchServicePollingPolicyOption>(
-        GenericPollingPolicy<batch::BatchServiceRetryPolicyOption::Type,
-                             batch::BatchServiceBackoffPolicyOption::Type>(
-            options.get<batch::BatchServiceRetryPolicyOption>()->clone(),
-            options.get<batch::BatchServiceBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::BatchServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::BatchServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::BatchServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::BatchServiceBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::BatchServiceRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::BatchServiceBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<batch::BatchServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<batch::BatchServiceConnectionIdempotencyPolicyOption>(
-        batch::MakeDefaultBatchServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       BatchServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::BatchServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultBatchServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

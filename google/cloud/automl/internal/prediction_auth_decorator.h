@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace automl_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl_internal {
 
 class PredictionServiceAuth : public PredictionServiceStub {
  public:
@@ -63,8 +63,8 @@ class PredictionServiceAuth : public PredictionServiceStub {
   std::shared_ptr<PredictionServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

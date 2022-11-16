@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 class SystemPolicyV1Logging : public SystemPolicyV1Stub {
  public:
@@ -49,8 +49,8 @@ class SystemPolicyV1Logging : public SystemPolicyV1Stub {
   std::set<std::string> components_;
 };  // SystemPolicyV1Logging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

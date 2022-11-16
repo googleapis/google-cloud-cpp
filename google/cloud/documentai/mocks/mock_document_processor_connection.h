@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace documentai_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai_mocks {
 
 /**
  * A class to mock `DocumentProcessorServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockDocumentProcessorServiceConnection
-    : public documentai::DocumentProcessorServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -155,8 +155,8 @@ class MockDocumentProcessorServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

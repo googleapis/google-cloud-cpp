@@ -37,16 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
-class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
+class AdminServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::AdminServiceConnection {
  public:
   ~AdminServiceConnectionImpl() override = default;
 
   AdminServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<pubsublite_internal::AdminServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AdminServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -128,53 +129,61 @@ class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
       override;
 
  private:
-  std::unique_ptr<pubsublite::AdminServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<pubsublite::AdminServiceRetryPolicyOption>()) {
-      return options.get<pubsublite::AdminServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<pubsublite::AdminServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<pubsublite::AdminServiceBackoffPolicyOption>()) {
-      return options.get<pubsublite::AdminServiceBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::AdminServiceBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::AdminServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<pubsublite::AdminServiceBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::AdminServiceBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<pubsublite::AdminServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AdminServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        AdminServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   AdminServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<pubsublite::AdminServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 AdminServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<pubsublite::AdminServicePollingPolicyOption>()) {
-      return options.get<pubsublite::AdminServicePollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::AdminServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::AdminServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<pubsublite::AdminServicePollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::AdminServicePollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<pubsublite_internal::AdminServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AdminServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

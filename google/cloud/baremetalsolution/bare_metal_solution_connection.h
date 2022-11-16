@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace baremetalsolution {
 
 using BareMetalSolutionRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        baremetalsolution_internal::BareMetalSolutionRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BareMetalSolutionRetryTraits>;
 
 using BareMetalSolutionLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        baremetalsolution_internal::BareMetalSolutionRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BareMetalSolutionRetryTraits>;
 
 using BareMetalSolutionLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        baremetalsolution_internal::BareMetalSolutionRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BareMetalSolutionRetryTraits>;
 
 /**
  * The `BareMetalSolutionConnection` object for `BareMetalSolutionClient`.
@@ -59,7 +59,8 @@ using BareMetalSolutionLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeBareMetalSolutionConnection()`.
  *
- * For mocking, see `baremetalsolution_mocks::MockBareMetalSolutionConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockBareMetalSolutionConnection`.
  */
 class BareMetalSolutionConnection {
  public:
@@ -166,7 +167,7 @@ class BareMetalSolutionConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::baremetalsolution::BareMetalSolutionPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::BareMetalSolutionPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -177,8 +178,8 @@ class BareMetalSolutionConnection {
 std::shared_ptr<BareMetalSolutionConnection> MakeBareMetalSolutionConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

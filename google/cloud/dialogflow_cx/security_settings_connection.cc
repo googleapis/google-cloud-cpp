@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 SecuritySettingsServiceConnection::~SecuritySettingsServiceConnection() =
     default;
@@ -74,13 +74,13 @@ MakeSecuritySettingsServiceConnection(std::string const& location,
                                  UnifiedCredentialsOptionList,
                                  SecuritySettingsServicePolicyOptionList>(
       options, __func__);
-  options = dialogflow_cx_internal::SecuritySettingsServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_cx_internal::CreateDefaultSecuritySettingsServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultSecuritySettingsServiceStub(
       background->cq(), options);
   return std::make_shared<
-      dialogflow_cx_internal::SecuritySettingsServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -90,7 +90,7 @@ MakeSecuritySettingsServiceConnection(Options options) {
                                                std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

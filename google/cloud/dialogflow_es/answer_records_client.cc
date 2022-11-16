@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 AnswerRecordsClient::AnswerRecordsClient(
     std::shared_ptr<AnswerRecordsConnection> connection, Options opts)
@@ -67,7 +67,7 @@ AnswerRecordsClient::UpdateAnswerRecord(
   return connection_->UpdateAnswerRecord(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

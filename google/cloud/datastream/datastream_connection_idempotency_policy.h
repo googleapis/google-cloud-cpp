@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace datastream {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream {
 
 class DatastreamConnectionIdempotencyPolicy {
  public:
@@ -124,8 +124,8 @@ class DatastreamConnectionIdempotencyPolicy {
 std::unique_ptr<DatastreamConnectionIdempotencyPolicy>
 MakeDefaultDatastreamConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

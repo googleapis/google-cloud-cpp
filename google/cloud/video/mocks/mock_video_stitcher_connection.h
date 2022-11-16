@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace video_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_mocks {
 
 /**
  * A class to mock `VideoStitcherServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockVideoStitcherServiceConnection
-    : public video::VideoStitcherServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -162,8 +162,8 @@ class MockVideoStitcherServiceConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

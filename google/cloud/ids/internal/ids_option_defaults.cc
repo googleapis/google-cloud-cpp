@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace ids_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,33 +38,35 @@ Options IDSDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_IDS_AUTHORITY", "ids.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<ids::IDSRetryPolicyOption>()) {
-    options.set<ids::IDSRetryPolicyOption>(
-        ids::IDSLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::IDSRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::IDSRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::IDSLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<ids::IDSBackoffPolicyOption>()) {
-    options.set<ids::IDSBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::IDSBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::IDSBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<ids::IDSPollingPolicyOption>()) {
-    options.set<ids::IDSPollingPolicyOption>(
-        GenericPollingPolicy<ids::IDSRetryPolicyOption::Type,
-                             ids::IDSBackoffPolicyOption::Type>(
-            options.get<ids::IDSRetryPolicyOption>()->clone(),
-            options.get<ids::IDSBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::IDSPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::IDSPollingPolicyOption>(
+        GenericPollingPolicy<GOOGLE_CLOUD_CPP_NS::IDSRetryPolicyOption::Type,
+                             GOOGLE_CLOUD_CPP_NS::IDSBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::IDSRetryPolicyOption>()->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::IDSBackoffPolicyOption>()->clone())
             .clone());
   }
-  if (!options.has<ids::IDSConnectionIdempotencyPolicyOption>()) {
-    options.set<ids::IDSConnectionIdempotencyPolicyOption>(
-        ids::MakeDefaultIDSConnectionIdempotencyPolicy());
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::IDSConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::IDSConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultIDSConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

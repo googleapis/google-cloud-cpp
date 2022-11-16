@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace vpcaccess_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vpcaccess_internal {
 
 VpcAccessServiceConnectionImpl::VpcAccessServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<vpcaccess_internal::VpcAccessServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -88,8 +88,9 @@ VpcAccessServiceConnectionImpl::ListConnectors(
     google::cloud::vpcaccess::v1::ListConnectorsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<vpcaccess::VpcAccessServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VpcAccessServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListConnectors(request);
   char const* function_name = __func__;
@@ -146,7 +147,7 @@ VpcAccessServiceConnectionImpl::DeleteConnector(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace vmmigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vmmigration {
 
 VmMigrationConnection::~VmMigrationConnection() = default;
 
@@ -374,15 +374,15 @@ std::shared_ptr<VmMigrationConnection> MakeVmMigrationConnection(
                                  UnifiedCredentialsOptionList,
                                  VmMigrationPolicyOptionList>(options,
                                                               __func__);
-  options = vmmigration_internal::VmMigrationDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::VmMigrationDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = vmmigration_internal::CreateDefaultVmMigrationStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultVmMigrationStub(
       background->cq(), options);
-  return std::make_shared<vmmigration_internal::VmMigrationConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::VmMigrationConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

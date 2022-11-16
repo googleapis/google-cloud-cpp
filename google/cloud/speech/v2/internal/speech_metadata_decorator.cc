@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace speech_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech_v2_internal {
 
 SpeechMetadata::SpeechMetadata(std::shared_ptr<SpeechStub> child)
     : child_(std::move(child)),
@@ -261,7 +261,7 @@ void SpeechMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

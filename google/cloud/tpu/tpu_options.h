@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace tpu {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -77,8 +77,8 @@ using TpuPolicyOptionList =
     OptionList<TpuRetryPolicyOption, TpuBackoffPolicyOption,
                TpuPollingPolicyOption, TpuConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

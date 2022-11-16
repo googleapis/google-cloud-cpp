@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 BatchControllerConnection::~BatchControllerConnection() = default;
 
@@ -68,12 +68,12 @@ std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
                                  UnifiedCredentialsOptionList,
                                  BatchControllerPolicyOptionList>(options,
                                                                   __func__);
-  options = dataproc_internal::BatchControllerDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::BatchControllerDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dataproc_internal::CreateDefaultBatchControllerStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultBatchControllerStub(
       background->cq(), options);
-  return std::make_shared<dataproc_internal::BatchControllerConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::BatchControllerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -82,7 +82,7 @@ std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
   return MakeBatchControllerConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

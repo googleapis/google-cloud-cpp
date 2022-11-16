@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks_internal {
 
 CloudTasksStub::~CloudTasksStub() = default;
 
@@ -209,7 +209,7 @@ StatusOr<google::cloud::tasks::v2::Task> DefaultCloudTasksStub::RunTask(
   return response;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

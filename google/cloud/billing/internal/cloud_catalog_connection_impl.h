@@ -34,16 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing_internal {
 
-class CloudCatalogConnectionImpl : public billing::CloudCatalogConnection {
+class CloudCatalogConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::CloudCatalogConnection {
  public:
   ~CloudCatalogConnectionImpl() override = default;
 
   CloudCatalogConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<billing_internal::CloudCatalogStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudCatalogStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -55,42 +56,50 @@ class CloudCatalogConnectionImpl : public billing::CloudCatalogConnection {
       google::cloud::billing::v1::ListSkusRequest request) override;
 
  private:
-  std::unique_ptr<billing::CloudCatalogRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudCatalogRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<billing::CloudCatalogRetryPolicyOption>()) {
-      return options.get<billing::CloudCatalogRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudCatalogRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudCatalogRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<billing::CloudCatalogRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudCatalogRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<billing::CloudCatalogBackoffPolicyOption>()) {
-      return options.get<billing::CloudCatalogBackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudCatalogBackoffPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::CloudCatalogBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<billing::CloudCatalogBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudCatalogBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<billing::CloudCatalogConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudCatalogConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<billing::CloudCatalogConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CloudCatalogConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<billing::CloudCatalogConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CloudCatalogConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<billing::CloudCatalogConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 CloudCatalogConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<billing_internal::CloudCatalogStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudCatalogStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

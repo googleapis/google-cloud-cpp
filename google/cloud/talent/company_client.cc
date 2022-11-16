@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 CompanyServiceClient::CompanyServiceClient(
     std::shared_ptr<CompanyServiceConnection> connection, Options opts)
@@ -113,7 +113,7 @@ CompanyServiceClient::ListCompanies(
   return connection_->ListCompanies(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

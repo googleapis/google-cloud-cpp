@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace oslogin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace oslogin {
 
 OsLoginServiceClient::OsLoginServiceClient(
     std::shared_ptr<OsLoginServiceConnection> connection, Options opts)
@@ -159,7 +159,7 @@ OsLoginServiceClient::UpdateSshPublicKey(
   return connection_->UpdateSshPublicKey(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

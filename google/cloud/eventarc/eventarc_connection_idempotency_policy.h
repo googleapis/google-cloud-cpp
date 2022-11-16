@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc {
 
 class EventarcConnectionIdempotencyPolicy {
  public:
@@ -99,8 +99,8 @@ class EventarcConnectionIdempotencyPolicy {
 std::unique_ptr<EventarcConnectionIdempotencyPolicy>
 MakeDefaultEventarcConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

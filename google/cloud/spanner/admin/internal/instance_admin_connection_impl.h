@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace spanner_admin_internal {
 
 class InstanceAdminConnectionImpl
-    : public spanner_admin::InstanceAdminConnection {
+    : public GOOGLE_CLOUD_CPP_NS::InstanceAdminConnection {
  public:
   ~InstanceAdminConnectionImpl() override = default;
 
   InstanceAdminConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::InstanceAdminStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -112,58 +112,65 @@ class InstanceAdminConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<spanner_admin::InstanceAdminRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::InstanceAdminRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::InstanceAdminRetryPolicyOption>()) {
-      return options.get<spanner_admin::InstanceAdminRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::InstanceAdminRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::InstanceAdminRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<spanner_admin::InstanceAdminRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::InstanceAdminRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::InstanceAdminBackoffPolicyOption>()) {
-      return options.get<spanner_admin::InstanceAdminBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<spanner_admin::InstanceAdminBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<spanner_admin::InstanceAdminConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::InstanceAdminBackoffPolicyOption>()) {
       return options
-          .get<spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::InstanceAdminBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<spanner_admin::InstanceAdminConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::InstanceAdminBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::InstanceAdminConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        InstanceAdminConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   InstanceAdminConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 InstanceAdminConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::InstanceAdminPollingPolicyOption>()) {
-      return options.get<spanner_admin::InstanceAdminPollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::InstanceAdminPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::InstanceAdminPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<spanner_admin::InstanceAdminPollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::InstanceAdminPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<spanner_admin_internal::InstanceAdminStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::InstanceAdminStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

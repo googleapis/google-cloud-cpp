@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: binaryauthorization::ValidationHelperV1Client
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::ValidationHelperV1Client
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::binaryauthorization::ValidationHelperV1Client(
-      google::cloud::binaryauthorization::MakeValidationHelperV1Connection(
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::ValidationHelperV1Client(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeValidationHelperV1Connection(
           options));
   //! [set-client-endpoint]
 }
@@ -56,8 +56,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::binaryauthorization::ValidationHelperV1Client(
-        google::cloud::binaryauthorization::MakeValidationHelperV1Connection(
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::ValidationHelperV1Client(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeValidationHelperV1Connection(
             options));
   }
   //! [with-service-account]

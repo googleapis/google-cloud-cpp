@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace orgpolicy_internal {
 
 /// Define the gRPC status code semantics for retrying requests.
 struct OrgPolicyRetryTraits {
@@ -35,8 +35,8 @@ struct OrgPolicyRetryTraits {
   }
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

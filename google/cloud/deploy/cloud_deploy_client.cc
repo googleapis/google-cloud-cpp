@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace deploy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace deploy {
 
 CloudDeployClient::CloudDeployClient(
     std::shared_ptr<CloudDeployConnection> connection, Options opts)
@@ -395,7 +395,7 @@ StatusOr<google::cloud::deploy::v1::Config> CloudDeployClient::GetConfig(
   return connection_->GetConfig(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace deploy
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

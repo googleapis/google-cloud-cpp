@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace datamigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datamigration {
 
 class DataMigrationServiceConnectionIdempotencyPolicy {
  public:
@@ -96,8 +96,8 @@ class DataMigrationServiceConnectionIdempotencyPolicy {
 std::unique_ptr<DataMigrationServiceConnectionIdempotencyPolicy>
 MakeDefaultDataMigrationServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace networkconnectivity {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace networkconnectivity {
 
 HubServiceClient::HubServiceClient(
     std::shared_ptr<HubServiceConnection> connection, Options opts)
@@ -206,7 +206,7 @@ HubServiceClient::DeleteSpoke(
   return connection_->DeleteSpoke(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkconnectivity
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

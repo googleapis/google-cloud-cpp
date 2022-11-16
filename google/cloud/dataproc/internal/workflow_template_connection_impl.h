@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 class WorkflowTemplateServiceConnectionImpl
-    : public dataproc::WorkflowTemplateServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceConnection {
  public:
   ~WorkflowTemplateServiceConnectionImpl() override = default;
 
   WorkflowTemplateServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dataproc_internal::WorkflowTemplateServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -86,62 +86,73 @@ class WorkflowTemplateServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<dataproc::WorkflowTemplateServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::WorkflowTemplateServiceRetryPolicyOption>()) {
-      return options.get<dataproc::WorkflowTemplateServiceRetryPolicyOption>()
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<dataproc::WorkflowTemplateServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::WorkflowTemplateServiceBackoffPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        WorkflowTemplateServiceBackoffPolicyOption>()) {
       return options
-          .get<dataproc::WorkflowTemplateServiceBackoffPolicyOption>()
+          .get<
+              GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<dataproc::WorkflowTemplateServiceBackoffPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<dataproc::WorkflowTemplateServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            dataproc::
+            GOOGLE_CLOUD_CPP_NS::
                 WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<dataproc::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dataproc::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::WorkflowTemplateServicePollingPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        WorkflowTemplateServicePollingPolicyOption>()) {
       return options
-          .get<dataproc::WorkflowTemplateServicePollingPolicyOption>()
+          .get<
+              GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<dataproc::WorkflowTemplateServicePollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dataproc_internal::WorkflowTemplateServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

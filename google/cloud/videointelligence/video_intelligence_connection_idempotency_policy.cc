@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence {
 
 using ::google::cloud::Idempotency;
 
@@ -47,7 +47,7 @@ MakeDefaultVideoIntelligenceServiceConnectionIdempotencyPolicy() {
       VideoIntelligenceServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

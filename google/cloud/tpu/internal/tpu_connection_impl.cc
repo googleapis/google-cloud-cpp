@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace tpu_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu_internal {
 
 TpuConnectionImpl::TpuConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<tpu_internal::TpuStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TpuStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -43,7 +43,8 @@ StreamRange<google::cloud::tpu::v1::Node> TpuConnectionImpl::ListNodes(
     google::cloud::tpu::v1::ListNodesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<tpu::TpuRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TpuRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNodes(request);
   char const* function_name = __func__;
@@ -219,7 +220,8 @@ TpuConnectionImpl::ListTensorFlowVersions(
     google::cloud::tpu::v1::ListTensorFlowVersionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<tpu::TpuRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TpuRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTensorFlowVersions(request);
   char const* function_name = __func__;
@@ -265,7 +267,8 @@ TpuConnectionImpl::ListAcceleratorTypes(
     google::cloud::tpu::v1::ListAcceleratorTypesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<tpu::TpuRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TpuRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAcceleratorTypes(request);
   char const* function_name = __func__;
@@ -305,7 +308,7 @@ TpuConnectionImpl::GetAcceleratorType(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

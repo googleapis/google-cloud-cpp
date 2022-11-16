@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace artifactregistry_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace artifactregistry_mocks {
 
 /**
  * A class to mock `ArtifactRegistryConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockArtifactRegistryConnection
-    : public artifactregistry::ArtifactRegistryConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ArtifactRegistryConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -213,8 +213,8 @@ class MockArtifactRegistryConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

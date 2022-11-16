@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: dataproc::ClusterControllerClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::ClusterControllerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,9 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::dataproc::ClusterControllerClient(
-      google::cloud::dataproc::MakeClusterControllerConnection(options));
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::ClusterControllerClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeClusterControllerConnection(
+          options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +56,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::dataproc::ClusterControllerClient(
-        google::cloud::dataproc::MakeClusterControllerConnection(options));
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::ClusterControllerClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeClusterControllerConnection(
+            options));
   }
   //! [with-service-account]
   (argv.at(0));

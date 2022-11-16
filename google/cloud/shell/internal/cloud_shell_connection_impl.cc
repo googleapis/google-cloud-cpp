@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace shell_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace shell_internal {
 
 CloudShellServiceConnectionImpl::CloudShellServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<shell_internal::CloudShellServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudShellServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -168,7 +168,7 @@ CloudShellServiceConnectionImpl::RemovePublicKey(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

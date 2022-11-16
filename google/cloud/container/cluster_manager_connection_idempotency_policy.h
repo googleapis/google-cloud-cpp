@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace container {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace container {
 
 class ClusterManagerConnectionIdempotencyPolicy {
  public:
@@ -141,8 +141,8 @@ class ClusterManagerConnectionIdempotencyPolicy {
 std::unique_ptr<ClusterManagerConnectionIdempotencyPolicy>
 MakeDefaultClusterManagerConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

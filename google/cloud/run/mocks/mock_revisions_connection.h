@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace run_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace run_mocks {
 
 /**
  * A class to mock `RevisionsConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockRevisionsConnection : public run::RevisionsConnection {
+class MockRevisionsConnection
+    : public GOOGLE_CLOUD_CPP_NS::RevisionsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -60,8 +61,8 @@ class MockRevisionsConnection : public run::RevisionsConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace run_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 AuthorizedCertificatesStub::~AuthorizedCertificatesStub() = default;
 
@@ -93,7 +93,7 @@ Status DefaultAuthorizedCertificatesStub::DeleteAuthorizedCertificate(
   return google::cloud::Status();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

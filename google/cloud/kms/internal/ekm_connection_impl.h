@@ -34,16 +34,18 @@
 
 namespace google {
 namespace cloud {
-namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms_internal {
 
-class EkmServiceConnectionImpl : public kms::EkmServiceConnection {
+class EkmServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::EkmServiceConnection {
  public:
   ~EkmServiceConnectionImpl() override = default;
 
   EkmServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<kms_internal::EkmServiceStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EkmServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -62,40 +64,48 @@ class EkmServiceConnectionImpl : public kms::EkmServiceConnection {
       override;
 
  private:
-  std::unique_ptr<kms::EkmServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::EkmServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<kms::EkmServiceRetryPolicyOption>()) {
-      return options.get<kms::EkmServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EkmServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::EkmServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<kms::EkmServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::EkmServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<kms::EkmServiceBackoffPolicyOption>()) {
-      return options.get<kms::EkmServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<kms::EkmServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<kms::EkmServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<kms::EkmServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<kms::EkmServiceConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::EkmServiceBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::EkmServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<kms::EkmServiceConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::EkmServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::EkmServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        EkmServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   EkmServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::EkmServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<kms_internal::EkmServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EkmServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

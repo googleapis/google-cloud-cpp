@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager_mocks {
 
 /**
  * A class to mock `ProjectsConnection`.
@@ -42,7 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockProjectsConnection : public resourcemanager::ProjectsConnection {
+class MockProjectsConnection : public GOOGLE_CLOUD_CPP_NS::ProjectsConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -105,8 +105,8 @@ class MockProjectsConnection : public resourcemanager::ProjectsConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

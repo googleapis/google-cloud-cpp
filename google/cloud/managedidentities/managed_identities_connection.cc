@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities {
 
 ManagedIdentitiesServiceConnection::~ManagedIdentitiesServiceConnection() =
     default;
@@ -119,18 +119,17 @@ MakeManagedIdentitiesServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  ManagedIdentitiesServicePolicyOptionList>(
       options, __func__);
-  options = managedidentities_internal::ManagedIdentitiesServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      managedidentities_internal::CreateDefaultManagedIdentitiesServiceStub(
-          background->cq(), options);
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultManagedIdentitiesServiceStub(
+      background->cq(), options);
   return std::make_shared<
-      managedidentities_internal::ManagedIdentitiesServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

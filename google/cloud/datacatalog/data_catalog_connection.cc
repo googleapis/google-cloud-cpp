@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog {
 
 DataCatalogConnection::~DataCatalogConnection() = default;
 
@@ -232,15 +232,15 @@ std::shared_ptr<DataCatalogConnection> MakeDataCatalogConnection(
                                  UnifiedCredentialsOptionList,
                                  DataCatalogPolicyOptionList>(options,
                                                               __func__);
-  options = datacatalog_internal::DataCatalogDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::DataCatalogDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = datacatalog_internal::CreateDefaultDataCatalogStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultDataCatalogStub(
       background->cq(), options);
-  return std::make_shared<datacatalog_internal::DataCatalogConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::DataCatalogConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

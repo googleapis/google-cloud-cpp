@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog {
 
 using PolicyTagManagerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        datacatalog_internal::PolicyTagManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PolicyTagManagerRetryTraits>;
 
 using PolicyTagManagerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        datacatalog_internal::PolicyTagManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PolicyTagManagerRetryTraits>;
 
 using PolicyTagManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        datacatalog_internal::PolicyTagManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::PolicyTagManagerRetryTraits>;
 
 /**
  * The `PolicyTagManagerConnection` object for `PolicyTagManagerClient`.
@@ -56,7 +56,7 @@ using PolicyTagManagerLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakePolicyTagManagerConnection()`.
  *
- * For mocking, see `datacatalog_mocks::MockPolicyTagManagerConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockPolicyTagManagerConnection`.
  */
 class PolicyTagManagerConnection {
  public:
@@ -118,7 +118,7 @@ class PolicyTagManagerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::datacatalog::PolicyTagManagerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::PolicyTagManagerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -129,8 +129,8 @@ class PolicyTagManagerConnection {
 std::shared_ptr<PolicyTagManagerConnection> MakePolicyTagManagerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

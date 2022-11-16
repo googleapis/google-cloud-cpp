@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,32 +39,33 @@ Options RegistrationServiceDefaultOptions(Options options) {
       "servicedirectory.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<servicedirectory::RegistrationServiceRetryPolicyOption>()) {
-    options.set<servicedirectory::RegistrationServiceRetryPolicyOption>(
-        servicedirectory::RegistrationServiceLimitedTimeRetryPolicy(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::RegistrationServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::RegistrationServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::RegistrationServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options
-           .has<servicedirectory::RegistrationServiceBackoffPolicyOption>()) {
-    options.set<servicedirectory::RegistrationServiceBackoffPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::RegistrationServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::RegistrationServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
   if (!options
-           .has<servicedirectory::
+           .has<GOOGLE_CLOUD_CPP_NS::
                     RegistrationServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        servicedirectory::RegistrationServiceConnectionIdempotencyPolicyOption>(
-        servicedirectory::
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    RegistrationServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultRegistrationServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

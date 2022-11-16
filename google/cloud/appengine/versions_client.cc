@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 VersionsClient::VersionsClient(std::shared_ptr<VersionsConnection> connection,
                                Options opts)
@@ -62,7 +62,7 @@ VersionsClient::DeleteVersion(
   return connection_->DeleteVersion(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

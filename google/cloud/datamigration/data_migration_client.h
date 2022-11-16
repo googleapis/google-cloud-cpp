@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace datamigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datamigration {
 
 ///
 /// Database Migration service
@@ -640,8 +640,8 @@ class DataMigrationServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

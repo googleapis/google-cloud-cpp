@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace edgecontainer_mocks {
 
 /**
  * A class to mock `EdgeContainerConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockEdgeContainerConnection
-    : public edgecontainer::EdgeContainerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::EdgeContainerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -147,8 +147,8 @@ class MockEdgeContainerConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

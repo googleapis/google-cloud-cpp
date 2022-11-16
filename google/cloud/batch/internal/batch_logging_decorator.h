@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace batch_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace batch_internal {
 
 class BatchServiceLogging : public BatchServiceStub {
  public:
@@ -80,8 +80,8 @@ class BatchServiceLogging : public BatchServiceStub {
   std::set<std::string> components_;
 };  // BatchServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

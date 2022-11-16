@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace edgecontainer_internal {
 
 class EdgeContainerLogging : public EdgeContainerStub {
  public:
@@ -150,8 +150,8 @@ class EdgeContainerLogging : public EdgeContainerStub {
   std::set<std::string> components_;
 };  // EdgeContainerLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

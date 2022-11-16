@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace documentai_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai_internal {
 
 class DocumentProcessorServiceConnectionImpl
-    : public documentai::DocumentProcessorServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceConnection {
  public:
   ~DocumentProcessorServiceConnectionImpl() override = default;
 
   DocumentProcessorServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<documentai_internal::DocumentProcessorServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -130,70 +130,73 @@ class DocumentProcessorServiceConnectionImpl
                      request) override;
 
  private:
-  std::unique_ptr<documentai::DocumentProcessorServiceRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<documentai::DocumentProcessorServiceRetryPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryPolicyOption>()) {
       return options
-          .get<documentai::DocumentProcessorServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<documentai::DocumentProcessorServiceRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<documentai::DocumentProcessorServiceBackoffPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        DocumentProcessorServiceBackoffPolicyOption>()) {
       return options
-          .get<documentai::DocumentProcessorServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   DocumentProcessorServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<documentai::DocumentProcessorServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      documentai::DocumentProcessorServiceConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            documentai::
+            GOOGLE_CLOUD_CPP_NS::
                 DocumentProcessorServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<documentai::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    DocumentProcessorServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<documentai::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  DocumentProcessorServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<documentai::DocumentProcessorServicePollingPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        DocumentProcessorServicePollingPolicyOption>()) {
       return options
-          .get<documentai::DocumentProcessorServicePollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   DocumentProcessorServicePollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<documentai::DocumentProcessorServicePollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::DocumentProcessorServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<documentai_internal::DocumentProcessorServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

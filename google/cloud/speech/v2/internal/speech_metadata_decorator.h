@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace speech_v2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech_v2_internal {
 
 class SpeechMetadata : public SpeechStub {
  public:
@@ -176,8 +176,8 @@ class SpeechMetadata : public SpeechStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

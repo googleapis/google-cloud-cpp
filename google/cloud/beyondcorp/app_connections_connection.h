@@ -35,20 +35,20 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp {
 
 using AppConnectionsServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        beyondcorp_internal::AppConnectionsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceRetryTraits>;
 
 using AppConnectionsServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        beyondcorp_internal::AppConnectionsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceRetryTraits>;
 
 using AppConnectionsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        beyondcorp_internal::AppConnectionsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AppConnectionsServiceRetryTraits>;
 
 /**
  * The `AppConnectionsServiceConnection` object for
@@ -61,7 +61,8 @@ using AppConnectionsServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeAppConnectionsServiceConnection()`.
  *
- * For mocking, see `beyondcorp_mocks::MockAppConnectionsServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockAppConnectionsServiceConnection`.
  */
 class AppConnectionsServiceConnection {
  public:
@@ -115,7 +116,7 @@ class AppConnectionsServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::beyondcorp::AppConnectionsServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::AppConnectionsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -126,8 +127,8 @@ class AppConnectionsServiceConnection {
 std::shared_ptr<AppConnectionsServiceConnection>
 MakeAppConnectionsServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

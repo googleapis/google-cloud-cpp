@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 ProductServiceClient::ProductServiceClient(
     std::shared_ptr<ProductServiceConnection> connection, Options opts)
@@ -210,7 +210,7 @@ ProductServiceClient::RemoveLocalInventories(
   return connection_->RemoveLocalInventories(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

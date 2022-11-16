@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 ModelServiceClient::ModelServiceClient(
     std::shared_ptr<ModelServiceConnection> connection, Options opts)
@@ -108,7 +108,7 @@ Status ModelServiceClient::DeleteModel(
   return connection_->DeleteModel(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

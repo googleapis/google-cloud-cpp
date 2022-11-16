@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace logging_internal {
 
 LoggingServiceV2Logging::LoggingServiceV2Logging(
     std::shared_ptr<LoggingServiceV2Stub> child, TracingOptions tracing_options,
@@ -131,7 +131,7 @@ LoggingServiceV2Logging::AsyncWriteLogEntries(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

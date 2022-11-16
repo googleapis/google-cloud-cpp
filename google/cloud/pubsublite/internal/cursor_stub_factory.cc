@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 std::shared_ptr<CursorServiceStub> CreateDefaultCursorServiceStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -59,7 +59,7 @@ std::shared_ptr<CursorServiceStub> CreateDefaultCursorServiceStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

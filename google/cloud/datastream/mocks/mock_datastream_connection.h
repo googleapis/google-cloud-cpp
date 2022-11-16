@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace datastream_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream_mocks {
 
 /**
  * A class to mock `DatastreamConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockDatastreamConnection : public datastream::DatastreamConnection {
+class MockDatastreamConnection
+    : public GOOGLE_CLOUD_CPP_NS::DatastreamConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -188,8 +189,8 @@ class MockDatastreamConnection : public datastream::DatastreamConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

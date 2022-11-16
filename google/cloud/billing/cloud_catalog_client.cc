@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing {
 
 CloudCatalogClient::CloudCatalogClient(
     std::shared_ptr<CloudCatalogConnection> connection, Options opts)
@@ -59,7 +59,7 @@ StreamRange<google::cloud::billing::v1::Sku> CloudCatalogClient::ListSkus(
   return connection_->ListSkus(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_internal {
 
 class SessionEntityTypesConnectionImpl
-    : public dialogflow_cx::SessionEntityTypesConnection {
+    : public GOOGLE_CLOUD_CPP_NS::SessionEntityTypesConnection {
  public:
   ~SessionEntityTypesConnectionImpl() override = default;
 
   SessionEntityTypesConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dialogflow_cx_internal::SessionEntityTypesStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -74,51 +74,58 @@ class SessionEntityTypesConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<dialogflow_cx::SessionEntityTypesRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::SessionEntityTypesRetryPolicyOption>()) {
-      return options.get<dialogflow_cx::SessionEntityTypesRetryPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<dialogflow_cx::SessionEntityTypesRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dialogflow_cx::SessionEntityTypesBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::SessionEntityTypesBackoffPolicyOption>()) {
       return options
-          .get<dialogflow_cx::SessionEntityTypesBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<dialogflow_cx::SessionEntityTypesBackoffPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<dialogflow_cx::SessionEntityTypesConnectionIdempotencyPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::SessionEntityTypesConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<dialogflow_cx::
+            .has<GOOGLE_CLOUD_CPP_NS::
                      SessionEntityTypesConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<dialogflow_cx::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    SessionEntityTypesConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dialogflow_cx::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  SessionEntityTypesConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dialogflow_cx_internal::SessionEntityTypesStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SessionEntityTypesStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -28,13 +28,13 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices_internal {
 
 GameServerDeploymentsServiceConnectionImpl::
     GameServerDeploymentsServiceConnectionImpl(
         std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<gameservices_internal::GameServerDeploymentsServiceStub>
+        std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GameServerDeploymentsServiceStub>
             stub,
         Options options)
     : background_(std::move(background)),
@@ -49,7 +49,7 @@ GameServerDeploymentsServiceConnectionImpl::ListGameServerDeployments(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      gameservices::GameServerDeploymentsServiceRetryPolicy const>(
+      GOOGLE_CLOUD_CPP_NS::GameServerDeploymentsServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListGameServerDeployments(request);
@@ -264,7 +264,7 @@ GameServerDeploymentsServiceConnectionImpl::FetchDeploymentState(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

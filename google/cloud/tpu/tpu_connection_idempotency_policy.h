@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace tpu {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu {
 
 class TpuConnectionIdempotencyPolicy {
  public:
@@ -74,8 +74,8 @@ class TpuConnectionIdempotencyPolicy {
 std::unique_ptr<TpuConnectionIdempotencyPolicy>
 MakeDefaultTpuConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

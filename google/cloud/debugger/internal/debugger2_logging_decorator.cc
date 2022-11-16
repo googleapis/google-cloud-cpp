@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace debugger_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace debugger_internal {
 
 Debugger2Logging::Debugger2Logging(std::shared_ptr<Debugger2Stub> child,
                                    TracingOptions tracing_options,
@@ -92,7 +92,7 @@ Debugger2Logging::ListDebuggees(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

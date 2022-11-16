@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace cloudbuild {
 
 ///
 /// Creates and manages builds on Google Cloud Platform.
@@ -883,8 +883,8 @@ class CloudBuildClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

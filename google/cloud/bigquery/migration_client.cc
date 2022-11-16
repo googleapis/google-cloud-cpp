@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 MigrationServiceClient::MigrationServiceClient(
     std::shared_ptr<MigrationServiceConnection> connection, Options opts)
@@ -159,7 +159,7 @@ MigrationServiceClient::ListMigrationSubtasks(
   return connection_->ListMigrationSubtasks(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

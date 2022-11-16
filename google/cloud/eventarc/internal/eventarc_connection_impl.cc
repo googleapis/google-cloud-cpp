@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc_internal {
 
 EventarcConnectionImpl::EventarcConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<eventarc_internal::EventarcStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EventarcStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -57,8 +57,8 @@ EventarcConnectionImpl::ListTriggers(
     google::cloud::eventarc::v1::ListTriggersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<eventarc::EventarcRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EventarcRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTriggers(request);
   char const* function_name = __func__;
@@ -187,8 +187,8 @@ EventarcConnectionImpl::ListChannels(
     google::cloud::eventarc::v1::ListChannelsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<eventarc::EventarcRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EventarcRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListChannels(request);
   char const* function_name = __func__;
@@ -317,8 +317,8 @@ EventarcConnectionImpl::ListProviders(
     google::cloud::eventarc::v1::ListProvidersRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<eventarc::EventarcRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EventarcRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProviders(request);
   char const* function_name = __func__;
@@ -364,8 +364,8 @@ EventarcConnectionImpl::ListChannelConnections(
     google::cloud::eventarc::v1::ListChannelConnectionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<eventarc::EventarcRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::EventarcRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListChannelConnections(request);
   char const* function_name = __func__;
@@ -486,7 +486,7 @@ EventarcConnectionImpl::UpdateGoogleChannelConfig(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

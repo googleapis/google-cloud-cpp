@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace connectors_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace connectors_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,34 +38,41 @@ Options ConnectorsDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_CONNECTORS_AUTHORITY", "connectors.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<connectors::ConnectorsRetryPolicyOption>()) {
-    options.set<connectors::ConnectorsRetryPolicyOption>(
-        connectors::ConnectorsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ConnectorsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ConnectorsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ConnectorsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<connectors::ConnectorsBackoffPolicyOption>()) {
-    options.set<connectors::ConnectorsBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ConnectorsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ConnectorsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<connectors::ConnectorsPollingPolicyOption>()) {
-    options.set<connectors::ConnectorsPollingPolicyOption>(
-        GenericPollingPolicy<connectors::ConnectorsRetryPolicyOption::Type,
-                             connectors::ConnectorsBackoffPolicyOption::Type>(
-            options.get<connectors::ConnectorsRetryPolicyOption>()->clone(),
-            options.get<connectors::ConnectorsBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ConnectorsPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ConnectorsPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::ConnectorsRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::ConnectorsBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::ConnectorsRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::ConnectorsBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<connectors::ConnectorsConnectionIdempotencyPolicyOption>()) {
-    options.set<connectors::ConnectorsConnectionIdempotencyPolicyOption>(
-        connectors::MakeDefaultConnectorsConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ConnectorsConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::ConnectorsConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultConnectorsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

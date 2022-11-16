@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: edgecontainer::EdgeContainerClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::EdgeContainerClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::edgecontainer::EdgeContainerClient(
-      google::cloud::edgecontainer::MakeEdgeContainerConnection(options));
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::EdgeContainerClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeEdgeContainerConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +55,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::edgecontainer::EdgeContainerClient(
-        google::cloud::edgecontainer::MakeEdgeContainerConnection(options));
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::EdgeContainerClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeEdgeContainerConnection(
+            options));
   }
   //! [with-service-account]
   (argv.at(0));

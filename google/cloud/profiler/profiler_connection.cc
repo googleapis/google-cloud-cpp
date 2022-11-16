@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace profiler {
 
 ProfilerServiceConnection::~ProfilerServiceConnection() = default;
 
@@ -59,15 +59,15 @@ std::shared_ptr<ProfilerServiceConnection> MakeProfilerServiceConnection(
                                  ProfilerServicePolicyOptionList>(options,
                                                                   __func__);
   options =
-      profiler_internal::ProfilerServiceDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::ProfilerServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = profiler_internal::CreateDefaultProfilerServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultProfilerServiceStub(
       background->cq(), options);
-  return std::make_shared<profiler_internal::ProfilerServiceConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ProfilerServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

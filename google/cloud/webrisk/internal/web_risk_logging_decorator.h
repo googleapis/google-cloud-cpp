@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace webrisk_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace webrisk_internal {
 
 class WebRiskServiceLogging : public WebRiskServiceStub {
  public:
@@ -63,8 +63,8 @@ class WebRiskServiceLogging : public WebRiskServiceStub {
   std::set<std::string> components_;
 };  // WebRiskServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 ConversationProfilesConnection::~ConversationProfilesConnection() = default;
 
@@ -89,13 +89,13 @@ MakeConversationProfilesConnection(std::string const& location,
                                  UnifiedCredentialsOptionList,
                                  ConversationProfilesPolicyOptionList>(
       options, __func__);
-  options = dialogflow_es_internal::ConversationProfilesDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::ConversationProfilesDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_es_internal::CreateDefaultConversationProfilesStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultConversationProfilesStub(
       background->cq(), options);
   return std::make_shared<
-      dialogflow_es_internal::ConversationProfilesConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::ConversationProfilesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -104,7 +104,7 @@ MakeConversationProfilesConnection(Options options) {
   return MakeConversationProfilesConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms {
 
 EkmServiceConnection::~EkmServiceConnection() = default;
 
@@ -66,15 +66,15 @@ std::shared_ptr<EkmServiceConnection> MakeEkmServiceConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  EkmServicePolicyOptionList>(options, __func__);
-  options = kms_internal::EkmServiceDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::EkmServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      kms_internal::CreateDefaultEkmServiceStub(background->cq(), options);
-  return std::make_shared<kms_internal::EkmServiceConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultEkmServiceStub(background->cq(),
+                                                               options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::EkmServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

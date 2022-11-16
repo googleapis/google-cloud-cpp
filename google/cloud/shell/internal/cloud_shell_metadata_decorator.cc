@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace shell_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace shell_internal {
 
 CloudShellServiceMetadata::CloudShellServiceMetadata(
     std::shared_ptr<CloudShellServiceStub> child)
@@ -112,7 +112,7 @@ void CloudShellServiceMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

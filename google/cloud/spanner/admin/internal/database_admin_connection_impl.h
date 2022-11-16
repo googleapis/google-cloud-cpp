@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace spanner_admin_internal {
 
 class DatabaseAdminConnectionImpl
-    : public spanner_admin::DatabaseAdminConnection {
+    : public GOOGLE_CLOUD_CPP_NS::DatabaseAdminConnection {
  public:
   ~DatabaseAdminConnectionImpl() override = default;
 
   DatabaseAdminConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<spanner_admin_internal::DatabaseAdminStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatabaseAdminStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -132,58 +132,65 @@ class DatabaseAdminConnectionImpl
       override;
 
  private:
-  std::unique_ptr<spanner_admin::DatabaseAdminRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::DatabaseAdminRetryPolicyOption>()) {
-      return options.get<spanner_admin::DatabaseAdminRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<spanner_admin::DatabaseAdminRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::DatabaseAdminBackoffPolicyOption>()) {
-      return options.get<spanner_admin::DatabaseAdminBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<spanner_admin::DatabaseAdminBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<spanner_admin::DatabaseAdminConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DatabaseAdminBackoffPolicyOption>()) {
       return options
-          .get<spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::DatabaseAdminBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<spanner_admin::DatabaseAdminConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::DatabaseAdminBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::DatabaseAdminConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        DatabaseAdminConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   DatabaseAdminConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 DatabaseAdminConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<spanner_admin::DatabaseAdminPollingPolicyOption>()) {
-      return options.get<spanner_admin::DatabaseAdminPollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::DatabaseAdminPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::DatabaseAdminPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<spanner_admin::DatabaseAdminPollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::DatabaseAdminPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<spanner_admin_internal::DatabaseAdminStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatabaseAdminStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace translate_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace translate_internal {
 
 class TranslationServiceLogging : public TranslationServiceStub {
  public:
@@ -111,8 +111,8 @@ class TranslationServiceLogging : public TranslationServiceStub {
   std::set<std::string> components_;
 };  // TranslationServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

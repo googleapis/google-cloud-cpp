@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace container {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace container {
 
 ///
 /// Google Kubernetes Engine Cluster Manager v1
@@ -1297,8 +1297,8 @@ class ClusterManagerClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

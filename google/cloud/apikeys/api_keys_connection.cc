@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace apikeys {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apikeys {
 
 ApiKeysConnection::~ApiKeysConnection() = default;
 
@@ -91,15 +91,15 @@ std::shared_ptr<ApiKeysConnection> MakeApiKeysConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  ApiKeysPolicyOptionList>(options, __func__);
-  options = apikeys_internal::ApiKeysDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::ApiKeysDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
-      apikeys_internal::CreateDefaultApiKeysStub(background->cq(), options);
-  return std::make_shared<apikeys_internal::ApiKeysConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultApiKeysStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ApiKeysConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

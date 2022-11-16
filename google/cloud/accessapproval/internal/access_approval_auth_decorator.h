@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accessapproval_internal {
 
 class AccessApprovalAuth : public AccessApprovalStub {
  public:
@@ -96,8 +96,8 @@ class AccessApprovalAuth : public AccessApprovalStub {
   std::shared_ptr<AccessApprovalStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

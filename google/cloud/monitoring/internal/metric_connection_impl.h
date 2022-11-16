@@ -34,16 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
-class MetricServiceConnectionImpl : public monitoring::MetricServiceConnection {
+class MetricServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::MetricServiceConnection {
  public:
   ~MetricServiceConnectionImpl() override = default;
 
   MetricServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<monitoring_internal::MetricServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::MetricServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -86,45 +87,52 @@ class MetricServiceConnectionImpl : public monitoring::MetricServiceConnection {
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
  private:
-  std::unique_ptr<monitoring::MetricServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::MetricServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::MetricServiceRetryPolicyOption>()) {
-      return options.get<monitoring::MetricServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::MetricServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::MetricServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<monitoring::MetricServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::MetricServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<monitoring::MetricServiceBackoffPolicyOption>()) {
-      return options.get<monitoring::MetricServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<monitoring::MetricServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<monitoring::MetricServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            monitoring::MetricServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::MetricServiceBackoffPolicyOption>()) {
       return options
-          .get<monitoring::MetricServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::MetricServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<monitoring::MetricServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::MetricServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::MetricServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        MetricServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   MetricServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 MetricServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<monitoring_internal::MetricServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::MetricServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

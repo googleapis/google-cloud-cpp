@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc_mocks {
 
 /**
  * A class to mock `PublisherConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockPublisherConnection : public eventarc::PublisherConnection {
+class MockPublisherConnection
+    : public GOOGLE_CLOUD_CPP_NS::PublisherConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -61,8 +62,8 @@ class MockPublisherConnection : public eventarc::PublisherConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

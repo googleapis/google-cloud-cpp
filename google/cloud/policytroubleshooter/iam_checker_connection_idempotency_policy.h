@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace policytroubleshooter {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace policytroubleshooter {
 
 class IamCheckerConnectionIdempotencyPolicy {
  public:
@@ -45,8 +45,8 @@ class IamCheckerConnectionIdempotencyPolicy {
 std::unique_ptr<IamCheckerConnectionIdempotencyPolicy>
 MakeDefaultIamCheckerConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcesettings_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcesettings_internal {
 
 class ResourceSettingsServiceStub {
  public:
@@ -78,8 +78,8 @@ class DefaultResourceSettingsServiceStub : public ResourceSettingsServiceStub {
       grpc_stub_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

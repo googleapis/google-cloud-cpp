@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager {
 
 ProjectsConnection::~ProjectsConnection() = default;
 
@@ -117,16 +117,15 @@ std::shared_ptr<ProjectsConnection> MakeProjectsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  ProjectsPolicyOptionList>(options, __func__);
-  options =
-      resourcemanager_internal::ProjectsDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::ProjectsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = resourcemanager_internal::CreateDefaultProjectsStub(
-      background->cq(), options);
-  return std::make_shared<resourcemanager_internal::ProjectsConnectionImpl>(
+  auto stub =
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultProjectsStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ProjectsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

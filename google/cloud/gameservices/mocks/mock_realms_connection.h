@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices_mocks {
 
 /**
  * A class to mock `RealmsServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockRealmsServiceConnection
-    : public gameservices::RealmsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::RealmsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -75,8 +75,8 @@ class MockRealmsServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

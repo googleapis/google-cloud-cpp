@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace vmmigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vmmigration {
 
 using VmMigrationRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    vmmigration_internal::VmMigrationRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::VmMigrationRetryTraits>;
 
 using VmMigrationLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        vmmigration_internal::VmMigrationRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VmMigrationRetryTraits>;
 
 using VmMigrationLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        vmmigration_internal::VmMigrationRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VmMigrationRetryTraits>;
 
 /**
  * The `VmMigrationConnection` object for `VmMigrationClient`.
@@ -58,7 +58,7 @@ using VmMigrationLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeVmMigrationConnection()`.
  *
- * For mocking, see `vmmigration_mocks::MockVmMigrationConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockVmMigrationConnection`.
  */
 class VmMigrationConnection {
  public:
@@ -263,7 +263,7 @@ class VmMigrationConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::vmmigration::VmMigrationPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::VmMigrationPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -274,8 +274,8 @@ class VmMigrationConnection {
 std::shared_ptr<VmMigrationConnection> MakeVmMigrationConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

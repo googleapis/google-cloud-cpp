@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 class TranscoderServiceConnectionImpl
-    : public video::TranscoderServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::TranscoderServiceConnection {
  public:
   ~TranscoderServiceConnectionImpl() override = default;
 
   TranscoderServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<video_internal::TranscoderServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TranscoderServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -80,44 +80,57 @@ class TranscoderServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<video::TranscoderServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::TranscoderServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<video::TranscoderServiceRetryPolicyOption>()) {
-      return options.get<video::TranscoderServiceRetryPolicyOption>()->clone();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::TranscoderServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::TranscoderServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<video::TranscoderServiceRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::TranscoderServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<video::TranscoderServiceBackoffPolicyOption>()) {
-      return options.get<video::TranscoderServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<video::TranscoderServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<video::TranscoderServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
     if (options
-            .has<video::TranscoderServiceConnectionIdempotencyPolicyOption>()) {
+            .has<GOOGLE_CLOUD_CPP_NS::TranscoderServiceBackoffPolicyOption>()) {
       return options
-          .get<video::TranscoderServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::TranscoderServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<video::TranscoderServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::TranscoderServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::TranscoderServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        TranscoderServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   TranscoderServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 TranscoderServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<video_internal::TranscoderServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TranscoderServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

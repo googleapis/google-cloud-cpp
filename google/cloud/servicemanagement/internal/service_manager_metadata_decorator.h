@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicemanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicemanagement_internal {
 
 class ServiceManagerMetadata : public ServiceManagerStub {
  public:
@@ -127,8 +127,8 @@ class ServiceManagerMetadata : public ServiceManagerStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

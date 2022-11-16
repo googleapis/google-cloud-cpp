@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,48 +39,49 @@ Options StorageTransferServiceDefaultOptions(Options options) {
       "storagetransfer.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options
-           .has<storagetransfer::StorageTransferServiceRetryPolicyOption>()) {
-    options.set<storagetransfer::StorageTransferServiceRetryPolicyOption>(
-        storagetransfer::StorageTransferServiceLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::StorageTransferServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::StorageTransferServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::StorageTransferServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options
-           .has<storagetransfer::StorageTransferServiceBackoffPolicyOption>()) {
-    options.set<storagetransfer::StorageTransferServiceBackoffPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::StorageTransferServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::StorageTransferServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<storagetransfer::StorageTransferServicePollingPolicyOption>()) {
-    options.set<storagetransfer::StorageTransferServicePollingPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::StorageTransferServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::StorageTransferServicePollingPolicyOption>(
         GenericPollingPolicy<
-            storagetransfer::StorageTransferServiceRetryPolicyOption::Type,
-            storagetransfer::StorageTransferServiceBackoffPolicyOption::Type>(
-            options
-                .get<storagetransfer::StorageTransferServiceRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<storagetransfer::
-                         StorageTransferServiceBackoffPolicyOption>()
-                ->clone())
+            GOOGLE_CLOUD_CPP_NS::StorageTransferServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::StorageTransferServiceBackoffPolicyOption::
+                Type>(options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   StorageTransferServiceRetryPolicyOption>()
+                          ->clone(),
+                      options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   StorageTransferServiceBackoffPolicyOption>()
+                          ->clone())
             .clone());
   }
   if (!options.has<
-          storagetransfer::
+          GOOGLE_CLOUD_CPP_NS::
               StorageTransferServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<storagetransfer::
+    options.set<GOOGLE_CLOUD_CPP_NS::
                     StorageTransferServiceConnectionIdempotencyPolicyOption>(
-        storagetransfer::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultStorageTransferServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

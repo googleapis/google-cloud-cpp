@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis {
 
 ContainerAnalysisConnection::~ContainerAnalysisConnection() = default;
 
@@ -64,17 +64,16 @@ std::shared_ptr<ContainerAnalysisConnection> MakeContainerAnalysisConnection(
                                  UnifiedCredentialsOptionList,
                                  ContainerAnalysisPolicyOptionList>(options,
                                                                     __func__);
-  options = containeranalysis_internal::ContainerAnalysisDefaultOptions(
-      std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::ContainerAnalysisDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = containeranalysis_internal::CreateDefaultContainerAnalysisStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultContainerAnalysisStub(
       background->cq(), options);
-  return std::make_shared<
-      containeranalysis_internal::ContainerAnalysisConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ContainerAnalysisConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

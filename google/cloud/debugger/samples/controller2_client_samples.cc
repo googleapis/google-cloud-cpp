@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: debugger::Controller2Client
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::Controller2Client
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::debugger::Controller2Client(
-      google::cloud::debugger::MakeController2Connection(options));
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::Controller2Client(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeController2Connection(options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +55,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::debugger::Controller2Client(
-        google::cloud::debugger::MakeController2Connection(options));
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::Controller2Client(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeController2Connection(options));
   }
   //! [with-service-account]
   (argv.at(0));

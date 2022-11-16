@@ -32,20 +32,20 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 using AutoscalingPolicyServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dataproc_internal::AutoscalingPolicyServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceRetryTraits>;
 
 using AutoscalingPolicyServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dataproc_internal::AutoscalingPolicyServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceRetryTraits>;
 
 using AutoscalingPolicyServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dataproc_internal::AutoscalingPolicyServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceRetryTraits>;
 
 /**
  * The `AutoscalingPolicyServiceConnection` object for
@@ -59,7 +59,8 @@ using AutoscalingPolicyServiceLimitedErrorCountRetryPolicy =
  * To create a concrete instance, see
  * `MakeAutoscalingPolicyServiceConnection()`.
  *
- * For mocking, see `dataproc_mocks::MockAutoscalingPolicyServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockAutoscalingPolicyServiceConnection`.
  */
 class AutoscalingPolicyServiceConnection {
  public:
@@ -105,7 +106,8 @@ class AutoscalingPolicyServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dataproc::AutoscalingPolicyServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -128,8 +130,8 @@ MakeAutoscalingPolicyServiceConnection(std::string const& location,
 std::shared_ptr<AutoscalingPolicyServiceConnection>
 MakeAutoscalingPolicyServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

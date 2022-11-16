@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace iam_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iam_internal {
 
 class IAMPolicyAuth : public IAMPolicyStub {
  public:
@@ -55,8 +55,8 @@ class IAMPolicyAuth : public IAMPolicyStub {
   std::shared_ptr<IAMPolicyStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iam_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

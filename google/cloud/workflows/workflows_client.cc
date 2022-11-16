@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows {
 
 WorkflowsClient::WorkflowsClient(
     std::shared_ptr<WorkflowsConnection> connection, Options opts)
@@ -117,7 +117,7 @@ WorkflowsClient::UpdateWorkflow(
   return connection_->UpdateWorkflow(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -38,17 +38,17 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp_internal {
 
 class ClientConnectorServicesServiceConnectionImpl
-    : public beyondcorp::ClientConnectorServicesServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ClientConnectorServicesServiceConnection {
  public:
   ~ClientConnectorServicesServiceConnectionImpl() override = default;
 
   ClientConnectorServicesServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<beyondcorp_internal::ClientConnectorServicesServiceStub>
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ClientConnectorServicesServiceStub>
           stub,
       Options options);
 
@@ -85,74 +85,81 @@ class ClientConnectorServicesServiceConnectionImpl
           DeleteClientConnectorServiceRequest const& request) override;
 
  private:
-  std::unique_ptr<beyondcorp::ClientConnectorServicesServiceRetryPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ClientConnectorServicesServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            beyondcorp::ClientConnectorServicesServiceRetryPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ClientConnectorServicesServiceRetryPolicyOption>()) {
       return options
-          .get<beyondcorp::ClientConnectorServicesServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ClientConnectorServicesServiceRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<beyondcorp::ClientConnectorServicesServiceRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ClientConnectorServicesServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            beyondcorp::ClientConnectorServicesServiceBackoffPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ClientConnectorServicesServiceBackoffPolicyOption>()) {
       return options
-          .get<beyondcorp::ClientConnectorServicesServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ClientConnectorServicesServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<beyondcorp::ClientConnectorServicesServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ClientConnectorServicesServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
-      beyondcorp::ClientConnectorServicesServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::
+                      ClientConnectorServicesServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            beyondcorp::
+            GOOGLE_CLOUD_CPP_NS::
                 ClientConnectorServicesServiceConnectionIdempotencyPolicyOption>()) {
       return options
           .get<
-              beyondcorp::
+              GOOGLE_CLOUD_CPP_NS::
                   ClientConnectorServicesServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
         .get<
-            beyondcorp::
+            GOOGLE_CLOUD_CPP_NS::
                 ClientConnectorServicesServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            beyondcorp::ClientConnectorServicesServicePollingPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ClientConnectorServicesServicePollingPolicyOption>()) {
       return options
-          .get<beyondcorp::ClientConnectorServicesServicePollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ClientConnectorServicesServicePollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<beyondcorp::ClientConnectorServicesServicePollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ClientConnectorServicesServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<beyondcorp_internal::ClientConnectorServicesServiceStub>
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ClientConnectorServicesServiceStub>
       stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace assuredworkloads {
 
 class AssuredWorkloadsServiceConnectionIdempotencyPolicy {
  public:
@@ -74,8 +74,8 @@ class AssuredWorkloadsServiceConnectionIdempotencyPolicy {
 std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
 MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

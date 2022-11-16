@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,28 +39,31 @@ Options DashboardsServiceDefaultOptions(Options options) {
       "monitoring.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<monitoring::DashboardsServiceRetryPolicyOption>()) {
-    options.set<monitoring::DashboardsServiceRetryPolicyOption>(
-        monitoring::DashboardsServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DashboardsServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DashboardsServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::DashboardsServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<monitoring::DashboardsServiceBackoffPolicyOption>()) {
-    options.set<monitoring::DashboardsServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::DashboardsServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DashboardsServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          monitoring::DashboardsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<monitoring::DashboardsServiceConnectionIdempotencyPolicyOption>(
-        monitoring::MakeDefaultDashboardsServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       DashboardsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    DashboardsServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultDashboardsServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

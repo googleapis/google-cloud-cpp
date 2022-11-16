@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace asset_internal {
 
 class AssetServiceLogging : public AssetServiceStub {
  public:
@@ -151,8 +151,8 @@ class AssetServiceLogging : public AssetServiceStub {
   std::set<std::string> components_;
 };  // AssetServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

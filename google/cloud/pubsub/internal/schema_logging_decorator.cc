@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsub_internal {
 
 SchemaServiceLogging::SchemaServiceLogging(
     std::shared_ptr<SchemaServiceStub> child, TracingOptions tracing_options,
@@ -103,7 +103,7 @@ SchemaServiceLogging::ValidateMessage(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

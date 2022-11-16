@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace tpu_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,33 +38,35 @@ Options TpuDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_TPU_AUTHORITY", "tpu.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<tpu::TpuRetryPolicyOption>()) {
-    options.set<tpu::TpuRetryPolicyOption>(
-        tpu::TpuLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::TpuRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::TpuRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::TpuLimitedTimeRetryPolicy(std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<tpu::TpuBackoffPolicyOption>()) {
-    options.set<tpu::TpuBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::TpuBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::TpuBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<tpu::TpuPollingPolicyOption>()) {
-    options.set<tpu::TpuPollingPolicyOption>(
-        GenericPollingPolicy<tpu::TpuRetryPolicyOption::Type,
-                             tpu::TpuBackoffPolicyOption::Type>(
-            options.get<tpu::TpuRetryPolicyOption>()->clone(),
-            options.get<tpu::TpuBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::TpuPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::TpuPollingPolicyOption>(
+        GenericPollingPolicy<GOOGLE_CLOUD_CPP_NS::TpuRetryPolicyOption::Type,
+                             GOOGLE_CLOUD_CPP_NS::TpuBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::TpuRetryPolicyOption>()->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::TpuBackoffPolicyOption>()->clone())
             .clone());
   }
-  if (!options.has<tpu::TpuConnectionIdempotencyPolicyOption>()) {
-    options.set<tpu::TpuConnectionIdempotencyPolicyOption>(
-        tpu::MakeDefaultTpuConnectionIdempotencyPolicy());
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::TpuConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::TpuConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultTpuConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

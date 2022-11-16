@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,34 +39,34 @@ Options GoldenThingAdminDefaultOptions(Options options) {
       "test.googleapis.com");
   options = google::cloud::internal::PopulateGrpcOptions(
       std::move(options), "GOLDEN_KITCHEN_SINK_EMULATOR_HOST");
-  if (!options.has<golden::GoldenThingAdminRetryPolicyOption>()) {
-    options.set<golden::GoldenThingAdminRetryPolicyOption>(
-        golden::GoldenThingAdminLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::GoldenThingAdminLimitedTimeRetryPolicy(
             std::chrono::minutes(30)).clone());
   }
-  if (!options.has<golden::GoldenThingAdminBackoffPolicyOption>()) {
-    options.set<golden::GoldenThingAdminBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
             std::chrono::minutes(5), kBackoffScaling).clone());
   }
-  if (!options.has<golden::GoldenThingAdminPollingPolicyOption>()) {
-    options.set<golden::GoldenThingAdminPollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminPollingPolicyOption>(
         GenericPollingPolicy<
-            golden::GoldenThingAdminRetryPolicyOption::Type,
-            golden::GoldenThingAdminBackoffPolicyOption::Type>(
-            options.get<golden::GoldenThingAdminRetryPolicyOption>()->clone(),
-            options.get<golden::GoldenThingAdminBackoffPolicyOption>()->clone())
+            GOOGLE_CLOUD_CPP_NS::GoldenThingAdminRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::GoldenThingAdminBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminRetryPolicyOption>()->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminBackoffPolicyOption>()->clone())
             .clone());
   }
-  if (!options.has<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()) {
-    options.set<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>(
-        golden::MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

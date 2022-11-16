@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace speech {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech {
 
 SpeechClient::SpeechClient(std::shared_ptr<SpeechConnection> connection,
                            Options opts)
@@ -74,7 +74,7 @@ SpeechClient::AsyncStreamingRecognize(ExperimentalTag tag, Options opts) {
   return connection_->AsyncStreamingRecognize(std::move(tag));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

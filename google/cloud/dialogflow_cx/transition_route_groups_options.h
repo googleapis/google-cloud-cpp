@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 /**
  * Use with `google::cloud::Options` to configure the retry policy.
@@ -69,8 +69,8 @@ using TransitionRouteGroupsPolicyOptionList =
                TransitionRouteGroupsBackoffPolicyOption,
                TransitionRouteGroupsConnectionIdempotencyPolicyOption>;
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

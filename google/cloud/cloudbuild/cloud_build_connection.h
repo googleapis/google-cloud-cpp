@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace cloudbuild {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace cloudbuild {
 
 using CloudBuildRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    cloudbuild_internal::CloudBuildRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::CloudBuildRetryTraits>;
 
 using CloudBuildLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        cloudbuild_internal::CloudBuildRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudBuildRetryTraits>;
 
 using CloudBuildLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        cloudbuild_internal::CloudBuildRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudBuildRetryTraits>;
 
 /**
  * The `CloudBuildConnection` object for `CloudBuildClient`.
@@ -58,7 +58,7 @@ using CloudBuildLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeCloudBuildConnection()`.
  *
- * For mocking, see `cloudbuild_mocks::MockCloudBuildConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockCloudBuildConnection`.
  */
 class CloudBuildConnection {
  public:
@@ -151,7 +151,7 @@ class CloudBuildConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::cloudbuild::CloudBuildPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CloudBuildPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -162,8 +162,8 @@ class CloudBuildConnection {
 std::shared_ptr<CloudBuildConnection> MakeCloudBuildConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

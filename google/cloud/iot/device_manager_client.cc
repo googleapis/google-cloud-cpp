@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace iot {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iot {
 
 DeviceManagerClient::DeviceManagerClient(
     std::shared_ptr<DeviceManagerConnection> connection, Options opts)
@@ -400,7 +400,7 @@ DeviceManagerClient::UnbindDeviceFromGateway(
   return connection_->UnbindDeviceFromGateway(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

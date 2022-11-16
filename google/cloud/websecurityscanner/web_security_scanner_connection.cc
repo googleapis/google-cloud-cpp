@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace websecurityscanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace websecurityscanner {
 
 WebSecurityScannerConnection::~WebSecurityScannerConnection() = default;
 
@@ -126,17 +126,17 @@ std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
                                  UnifiedCredentialsOptionList,
                                  WebSecurityScannerPolicyOptionList>(options,
                                                                      __func__);
-  options = websecurityscanner_internal::WebSecurityScannerDefaultOptions(
-      std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::WebSecurityScannerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = websecurityscanner_internal::CreateDefaultWebSecurityScannerStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultWebSecurityScannerStub(
       background->cq(), options);
   return std::make_shared<
-      websecurityscanner_internal::WebSecurityScannerConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::WebSecurityScannerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

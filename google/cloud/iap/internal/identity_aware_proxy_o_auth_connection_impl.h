@@ -34,17 +34,18 @@
 
 namespace google {
 namespace cloud {
-namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap_internal {
 
 class IdentityAwareProxyOAuthServiceConnectionImpl
-    : public iap::IdentityAwareProxyOAuthServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyOAuthServiceConnection {
  public:
   ~IdentityAwareProxyOAuthServiceConnectionImpl() override = default;
 
   IdentityAwareProxyOAuthServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<iap_internal::IdentityAwareProxyOAuthServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyOAuthServiceStub>
+          stub,
       Options options);
 
   Options options() override { return options_; }
@@ -83,57 +84,66 @@ class IdentityAwareProxyOAuthServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<iap::IdentityAwareProxyOAuthServiceRetryPolicy>
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyOAuthServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<iap::IdentityAwareProxyOAuthServiceRetryPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        IdentityAwareProxyOAuthServiceRetryPolicyOption>()) {
       return options
-          .get<iap::IdentityAwareProxyOAuthServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   IdentityAwareProxyOAuthServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<iap::IdentityAwareProxyOAuthServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 IdentityAwareProxyOAuthServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<iap::IdentityAwareProxyOAuthServiceBackoffPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        IdentityAwareProxyOAuthServiceBackoffPolicyOption>()) {
       return options
-          .get<iap::IdentityAwareProxyOAuthServiceBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   IdentityAwareProxyOAuthServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<iap::IdentityAwareProxyOAuthServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 IdentityAwareProxyOAuthServiceBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<
-      iap::IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::
+                      IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            iap::
+            GOOGLE_CLOUD_CPP_NS::
                 IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption>()) {
       return options
           .get<
-              iap::
+              GOOGLE_CLOUD_CPP_NS::
                   IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
         .get<
-            iap::
+            GOOGLE_CLOUD_CPP_NS::
                 IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<iap_internal::IdentityAwareProxyOAuthServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyOAuthServiceStub>
+      stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

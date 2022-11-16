@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace secretmanager_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace secretmanager_mocks {
 
 /**
  * A class to mock `SecretManagerServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockSecretManagerServiceConnection
-    : public secretmanager::SecretManagerServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::SecretManagerServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -132,8 +132,8 @@ class MockSecretManagerServiceConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

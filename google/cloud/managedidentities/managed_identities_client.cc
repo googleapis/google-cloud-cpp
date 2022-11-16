@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities {
 
 ManagedIdentitiesServiceClient::ManagedIdentitiesServiceClient(
     std::shared_ptr<ManagedIdentitiesServiceConnection> connection,
@@ -220,7 +220,7 @@ ManagedIdentitiesServiceClient::ValidateTrust(
   return connection_->ValidateTrust(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

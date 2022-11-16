@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace memcache_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache_mocks {
 
 /**
  * A class to mock `CloudMemcacheConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockCloudMemcacheConnection : public memcache::CloudMemcacheConnection {
+class MockCloudMemcacheConnection
+    : public GOOGLE_CLOUD_CPP_NS::CloudMemcacheConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -81,8 +82,8 @@ class MockCloudMemcacheConnection : public memcache::CloudMemcacheConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization {
 
 BinauthzManagementServiceV1Connection::
     ~BinauthzManagementServiceV1Connection() = default;
@@ -85,18 +85,17 @@ MakeBinauthzManagementServiceV1Connection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  BinauthzManagementServiceV1PolicyOptionList>(
       options, __func__);
-  options =
-      binaryauthorization_internal::BinauthzManagementServiceV1DefaultOptions(
-          std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1DefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = binaryauthorization_internal::
-      CreateDefaultBinauthzManagementServiceV1Stub(background->cq(), options);
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultBinauthzManagementServiceV1Stub(
+      background->cq(), options);
   return std::make_shared<
-      binaryauthorization_internal::BinauthzManagementServiceV1ConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1ConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

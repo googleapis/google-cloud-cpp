@@ -37,18 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace assuredworkloads_internal {
 
 class AssuredWorkloadsServiceConnectionImpl
-    : public assuredworkloads::AssuredWorkloadsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceConnection {
  public:
   ~AssuredWorkloadsServiceConnectionImpl() override = default;
 
   AssuredWorkloadsServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub>
-          stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -94,71 +93,73 @@ class AssuredWorkloadsServiceConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<assuredworkloads::AssuredWorkloadsServiceRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceRetryPolicyOption>()) {
       return options
-          .get<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        AssuredWorkloadsServiceBackoffPolicyOption>()) {
       return options
-          .get<assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()
+          .get<
+              GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      assuredworkloads::AssuredWorkloadsServiceConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            assuredworkloads::
+            GOOGLE_CLOUD_CPP_NS::
                 AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<assuredworkloads::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<assuredworkloads::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<
-            assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        AssuredWorkloadsServicePollingPolicyOption>()) {
       return options
-          .get<assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()
+          .get<
+              GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServicePollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<assuredworkloads_internal::AssuredWorkloadsServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

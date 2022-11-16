@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace profiler {
 
 using ProfilerServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        profiler_internal::ProfilerServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ProfilerServiceRetryTraits>;
 
 using ProfilerServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        profiler_internal::ProfilerServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ProfilerServiceRetryTraits>;
 
 using ProfilerServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        profiler_internal::ProfilerServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ProfilerServiceRetryTraits>;
 
 /**
  * The `ProfilerServiceConnection` object for `ProfilerServiceClient`.
@@ -55,7 +55,7 @@ using ProfilerServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeProfilerServiceConnection()`.
  *
- * For mocking, see `profiler_mocks::MockProfilerServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockProfilerServiceConnection`.
  */
 class ProfilerServiceConnection {
  public:
@@ -89,7 +89,7 @@ class ProfilerServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::profiler::ProfilerServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ProfilerServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -100,8 +100,8 @@ class ProfilerServiceConnection {
 std::shared_ptr<ProfilerServiceConnection> MakeProfilerServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace profiler
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

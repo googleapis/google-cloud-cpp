@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
 EventServiceLogging::EventServiceLogging(
     std::shared_ptr<EventServiceStub> child, TracingOptions tracing_options,
@@ -47,7 +47,7 @@ EventServiceLogging::CreateClientEvent(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

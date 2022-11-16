@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig {
 
 class OsConfigServiceConnectionIdempotencyPolicy {
  public:
@@ -78,8 +78,8 @@ class OsConfigServiceConnectionIdempotencyPolicy {
 std::unique_ptr<OsConfigServiceConnectionIdempotencyPolicy>
 MakeDefaultOsConfigServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

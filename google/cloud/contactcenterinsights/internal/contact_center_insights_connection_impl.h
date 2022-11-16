@@ -37,18 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace contactcenterinsights_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace contactcenterinsights_internal {
 
 class ContactCenterInsightsConnectionImpl
-    : public contactcenterinsights::ContactCenterInsightsConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsConnection {
  public:
   ~ContactCenterInsightsConnectionImpl() override = default;
 
   ContactCenterInsightsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<contactcenterinsights_internal::ContactCenterInsightsStub>
-          stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -211,74 +210,71 @@ class ContactCenterInsightsConnectionImpl
           request) override;
 
  private:
-  std::unique_ptr<contactcenterinsights::ContactCenterInsightsRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            contactcenterinsights::ContactCenterInsightsRetryPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsRetryPolicyOption>()) {
       return options
-          .get<contactcenterinsights::ContactCenterInsightsRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<contactcenterinsights::ContactCenterInsightsRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<contactcenterinsights::
-                        ContactCenterInsightsBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsBackoffPolicyOption>()) {
       return options
-          .get<
-              contactcenterinsights::ContactCenterInsightsBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<contactcenterinsights::ContactCenterInsightsBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      contactcenterinsights::ContactCenterInsightsConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            contactcenterinsights::
+            GOOGLE_CLOUD_CPP_NS::
                 ContactCenterInsightsConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<contactcenterinsights::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    ContactCenterInsightsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<contactcenterinsights::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  ContactCenterInsightsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<contactcenterinsights::
-                        ContactCenterInsightsPollingPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsPollingPolicyOption>()) {
       return options
-          .get<
-              contactcenterinsights::ContactCenterInsightsPollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsPollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<contactcenterinsights::ContactCenterInsightsPollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<contactcenterinsights_internal::ContactCenterInsightsStub>
-      stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ContactCenterInsightsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

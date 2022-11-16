@@ -36,17 +36,17 @@
 
 namespace google {
 namespace cloud {
-namespace shell_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace shell_internal {
 
 class CloudShellServiceConnectionImpl
-    : public shell::CloudShellServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::CloudShellServiceConnection {
  public:
   ~CloudShellServiceConnectionImpl() override = default;
 
   CloudShellServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<shell_internal::CloudShellServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudShellServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -71,53 +71,70 @@ class CloudShellServiceConnectionImpl
       google::cloud::shell::v1::RemovePublicKeyRequest const& request) override;
 
  private:
-  std::unique_ptr<shell::CloudShellServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudShellServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<shell::CloudShellServiceRetryPolicyOption>()) {
-      return options.get<shell::CloudShellServiceRetryPolicyOption>()->clone();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::CloudShellServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::CloudShellServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<shell::CloudShellServiceRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::CloudShellServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<shell::CloudShellServiceBackoffPolicyOption>()) {
-      return options.get<shell::CloudShellServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<shell::CloudShellServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<shell::CloudShellServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
     if (options
-            .has<shell::CloudShellServiceConnectionIdempotencyPolicyOption>()) {
+            .has<GOOGLE_CLOUD_CPP_NS::CloudShellServiceBackoffPolicyOption>()) {
       return options
-          .get<shell::CloudShellServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::CloudShellServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<shell::CloudShellServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::CloudShellServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::CloudShellServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CloudShellServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CloudShellServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 CloudShellServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<shell::CloudShellServicePollingPolicyOption>()) {
-      return options.get<shell::CloudShellServicePollingPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::CloudShellServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::CloudShellServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<shell::CloudShellServicePollingPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::CloudShellServicePollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<shell_internal::CloudShellServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudShellServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace shell_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 AnalyticsHubServiceConnection::~AnalyticsHubServiceConnection() = default;
 
@@ -136,16 +136,17 @@ MakeAnalyticsHubServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  AnalyticsHubServicePolicyOptionList>(options,
                                                                       __func__);
-  options =
-      bigquery_internal::AnalyticsHubServiceDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::AnalyticsHubServiceDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = bigquery_internal::CreateDefaultAnalyticsHubServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultAnalyticsHubServiceStub(
       background->cq(), options);
-  return std::make_shared<bigquery_internal::AnalyticsHubServiceConnectionImpl>(
+  return std::make_shared<
+      GOOGLE_CLOUD_CPP_NS::AnalyticsHubServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

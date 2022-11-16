@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicemanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicemanagement {
 
 ServiceManagerConnection::~ServiceManagerConnection() = default;
 
@@ -132,17 +132,16 @@ std::shared_ptr<ServiceManagerConnection> MakeServiceManagerConnection(
                                  UnifiedCredentialsOptionList,
                                  ServiceManagerPolicyOptionList>(options,
                                                                  __func__);
-  options = servicemanagement_internal::ServiceManagerDefaultOptions(
-      std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::ServiceManagerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = servicemanagement_internal::CreateDefaultServiceManagerStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultServiceManagerStub(
       background->cq(), options);
-  return std::make_shared<
-      servicemanagement_internal::ServiceManagerConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ServiceManagerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

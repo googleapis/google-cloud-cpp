@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 class SessionEntityTypesConnectionIdempotencyPolicy {
  public:
@@ -61,8 +61,8 @@ class SessionEntityTypesConnectionIdempotencyPolicy {
 std::unique_ptr<SessionEntityTypesConnectionIdempotencyPolicy>
 MakeDefaultSessionEntityTypesConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

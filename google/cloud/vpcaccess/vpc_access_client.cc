@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace vpcaccess {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vpcaccess {
 
 VpcAccessServiceClient::VpcAccessServiceClient(
     std::shared_ptr<VpcAccessServiceConnection> connection, Options opts)
@@ -99,7 +99,7 @@ VpcAccessServiceClient::DeleteConnector(
   return connection_->DeleteConnector(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

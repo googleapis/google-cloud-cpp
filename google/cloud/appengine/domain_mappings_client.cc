@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 DomainMappingsClient::DomainMappingsClient(
     std::shared_ptr<DomainMappingsConnection> connection, Options opts)
@@ -70,7 +70,7 @@ DomainMappingsClient::DeleteDomainMapping(
   return connection_->DeleteDomainMapping(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

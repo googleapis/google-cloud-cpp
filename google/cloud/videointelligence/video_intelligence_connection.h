@@ -33,20 +33,20 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence {
 
 using VideoIntelligenceServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        videointelligence_internal::VideoIntelligenceServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceRetryTraits>;
 
 using VideoIntelligenceServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        videointelligence_internal::VideoIntelligenceServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceRetryTraits>;
 
 using VideoIntelligenceServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        videointelligence_internal::VideoIntelligenceServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServiceRetryTraits>;
 
 /**
  * The `VideoIntelligenceServiceConnection` object for
@@ -61,7 +61,7 @@ using VideoIntelligenceServiceLimitedErrorCountRetryPolicy =
  * `MakeVideoIntelligenceServiceConnection()`.
  *
  * For mocking, see
- * `videointelligence_mocks::MockVideoIntelligenceServiceConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockVideoIntelligenceServiceConnection`.
  */
 class VideoIntelligenceServiceConnection {
  public:
@@ -92,7 +92,7 @@ class VideoIntelligenceServiceConnection {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
  * -
- * `google::cloud::videointelligence::VideoIntelligenceServicePolicyOptionList`
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::VideoIntelligenceServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -103,8 +103,8 @@ class VideoIntelligenceServiceConnection {
 std::shared_ptr<VideoIntelligenceServiceConnection>
 MakeVideoIntelligenceServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

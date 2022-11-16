@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory {
 
 class LookupServiceConnectionIdempotencyPolicy {
  public:
@@ -46,8 +46,8 @@ class LookupServiceConnectionIdempotencyPolicy {
 std::unique_ptr<LookupServiceConnectionIdempotencyPolicy>
 MakeDefaultLookupServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

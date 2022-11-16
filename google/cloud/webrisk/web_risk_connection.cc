@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace webrisk {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace webrisk {
 
 WebRiskServiceConnection::~WebRiskServiceConnection() = default;
 
@@ -64,15 +64,16 @@ std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
                                  UnifiedCredentialsOptionList,
                                  WebRiskServicePolicyOptionList>(options,
                                                                  __func__);
-  options = webrisk_internal::WebRiskServiceDefaultOptions(std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::WebRiskServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = webrisk_internal::CreateDefaultWebRiskServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultWebRiskServiceStub(
       background->cq(), options);
-  return std::make_shared<webrisk_internal::WebRiskServiceConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::WebRiskServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

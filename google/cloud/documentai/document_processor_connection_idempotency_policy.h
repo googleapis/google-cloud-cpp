@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace documentai {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai {
 
 class DocumentProcessorServiceConnectionIdempotencyPolicy {
  public:
@@ -97,8 +97,8 @@ class DocumentProcessorServiceConnectionIdempotencyPolicy {
 std::unique_ptr<DocumentProcessorServiceConnectionIdempotencyPolicy>
 MakeDefaultDocumentProcessorServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

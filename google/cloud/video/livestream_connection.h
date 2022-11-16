@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video {
 
 using LivestreamServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        video_internal::LivestreamServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryTraits>;
 
 using LivestreamServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        video_internal::LivestreamServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryTraits>;
 
 using LivestreamServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        video_internal::LivestreamServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryTraits>;
 
 /**
  * The `LivestreamServiceConnection` object for `LivestreamServiceClient`.
@@ -59,7 +59,8 @@ using LivestreamServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeLivestreamServiceConnection()`.
  *
- * For mocking, see `video_mocks::MockLivestreamServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockLivestreamServiceConnection`.
  */
 class LivestreamServiceConnection {
  public:
@@ -147,7 +148,7 @@ class LivestreamServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::video::LivestreamServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::LivestreamServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -158,8 +159,8 @@ class LivestreamServiceConnection {
 std::shared_ptr<LivestreamServiceConnection> MakeLivestreamServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

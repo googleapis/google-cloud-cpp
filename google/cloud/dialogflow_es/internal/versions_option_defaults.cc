@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -41,27 +41,28 @@ Options VersionsDefaultOptions(std::string const& location, Options options) {
                    "dialogflow.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dialogflow_es::VersionsRetryPolicyOption>()) {
-    options.set<dialogflow_es::VersionsRetryPolicyOption>(
-        dialogflow_es::VersionsLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::VersionsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VersionsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::VersionsLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dialogflow_es::VersionsBackoffPolicyOption>()) {
-    options.set<dialogflow_es::VersionsBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::VersionsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VersionsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options
-           .has<dialogflow_es::VersionsConnectionIdempotencyPolicyOption>()) {
-    options.set<dialogflow_es::VersionsConnectionIdempotencyPolicyOption>(
-        dialogflow_es::MakeDefaultVersionsConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::VersionsConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VersionsConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultVersionsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

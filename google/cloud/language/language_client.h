@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace language {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace language {
 
 ///
 /// Provides text analysis operations such as sentiment analysis and entity
@@ -449,8 +449,8 @@ class LanguageServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

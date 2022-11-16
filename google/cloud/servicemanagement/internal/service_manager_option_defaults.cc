@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicemanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicemanagement_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,41 +39,42 @@ Options ServiceManagerDefaultOptions(Options options) {
       "servicemanagement.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<servicemanagement::ServiceManagerRetryPolicyOption>()) {
-    options.set<servicemanagement::ServiceManagerRetryPolicyOption>(
-        servicemanagement::ServiceManagerLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ServiceManagerRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ServiceManagerRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ServiceManagerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<servicemanagement::ServiceManagerBackoffPolicyOption>()) {
-    options.set<servicemanagement::ServiceManagerBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ServiceManagerBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ServiceManagerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<servicemanagement::ServiceManagerPollingPolicyOption>()) {
-    options.set<servicemanagement::ServiceManagerPollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ServiceManagerPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ServiceManagerPollingPolicyOption>(
         GenericPollingPolicy<
-            servicemanagement::ServiceManagerRetryPolicyOption::Type,
-            servicemanagement::ServiceManagerBackoffPolicyOption::Type>(
-            options.get<servicemanagement::ServiceManagerRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::ServiceManagerRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::ServiceManagerBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::ServiceManagerRetryPolicyOption>()
                 ->clone(),
-            options.get<servicemanagement::ServiceManagerBackoffPolicyOption>()
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::ServiceManagerBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<servicemanagement::
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
                        ServiceManagerConnectionIdempotencyPolicyOption>()) {
     options.set<
-        servicemanagement::ServiceManagerConnectionIdempotencyPolicyOption>(
-        servicemanagement::
+        GOOGLE_CLOUD_CPP_NS::ServiceManagerConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultServiceManagerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing_internal {
 
 class CloudCatalogLogging : public CloudCatalogStub {
  public:
@@ -52,8 +52,8 @@ class CloudCatalogLogging : public CloudCatalogStub {
   std::set<std::string> components_;
 };  // CloudCatalogLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

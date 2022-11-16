@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace osconfig {
 
 using AgentEndpointServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        osconfig_internal::AgentEndpointServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceRetryTraits>;
 
 using AgentEndpointServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        osconfig_internal::AgentEndpointServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceRetryTraits>;
 
 using AgentEndpointServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        osconfig_internal::AgentEndpointServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AgentEndpointServiceRetryTraits>;
 
 /**
  * The `AgentEndpointServiceConnection` object for `AgentEndpointServiceClient`.
@@ -56,7 +56,8 @@ using AgentEndpointServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeAgentEndpointServiceConnection()`.
  *
- * For mocking, see `osconfig_mocks::MockAgentEndpointServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockAgentEndpointServiceConnection`.
  */
 class AgentEndpointServiceConnection {
  public:
@@ -113,7 +114,7 @@ class AgentEndpointServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::osconfig::AgentEndpointServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::AgentEndpointServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -124,8 +125,8 @@ class AgentEndpointServiceConnection {
 std::shared_ptr<AgentEndpointServiceConnection>
 MakeAgentEndpointServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

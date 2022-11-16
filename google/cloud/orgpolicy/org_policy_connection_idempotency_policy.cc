@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace orgpolicy {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace orgpolicy {
 
 using ::google::cloud::Idempotency;
 
@@ -75,7 +75,7 @@ MakeDefaultOrgPolicyConnectionIdempotencyPolicy() {
   return absl::make_unique<OrgPolicyConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

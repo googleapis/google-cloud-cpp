@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap_internal {
 
 IdentityAwareProxyOAuthServiceLogging::IdentityAwareProxyOAuthServiceLogging(
     std::shared_ptr<IdentityAwareProxyOAuthServiceStub> child,
@@ -140,7 +140,7 @@ Status IdentityAwareProxyOAuthServiceLogging::DeleteIdentityAwareProxyClient(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

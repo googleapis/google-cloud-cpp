@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicemanagement {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicemanagement {
 
 ///
 /// [Google Service Management
@@ -766,8 +766,8 @@ class ServiceManagerClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

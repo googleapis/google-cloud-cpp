@@ -37,16 +37,18 @@
 
 namespace google {
 namespace cloud {
-namespace workflows_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace workflows_internal {
 
-class WorkflowsConnectionImpl : public workflows::WorkflowsConnection {
+class WorkflowsConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::WorkflowsConnection {
  public:
   ~WorkflowsConnectionImpl() override = default;
 
   WorkflowsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<workflows_internal::WorkflowsStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WorkflowsStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -69,50 +71,58 @@ class WorkflowsConnectionImpl : public workflows::WorkflowsConnection {
       override;
 
  private:
-  std::unique_ptr<workflows::WorkflowsRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::WorkflowsRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<workflows::WorkflowsRetryPolicyOption>()) {
-      return options.get<workflows::WorkflowsRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::WorkflowsRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::WorkflowsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<workflows::WorkflowsRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::WorkflowsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<workflows::WorkflowsBackoffPolicyOption>()) {
-      return options.get<workflows::WorkflowsBackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::WorkflowsBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::WorkflowsBackoffPolicyOption>()
+          ->clone();
     }
-    return options_.get<workflows::WorkflowsBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::WorkflowsBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<workflows::WorkflowsConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::WorkflowsConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<workflows::WorkflowsConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        WorkflowsConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<workflows::WorkflowsConnectionIdempotencyPolicyOption>()
+          .get<
+              GOOGLE_CLOUD_CPP_NS::WorkflowsConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<workflows::WorkflowsConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::WorkflowsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<workflows::WorkflowsPollingPolicyOption>()) {
-      return options.get<workflows::WorkflowsPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::WorkflowsPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::WorkflowsPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<workflows::WorkflowsPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::WorkflowsPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<workflows_internal::WorkflowsStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::WorkflowsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

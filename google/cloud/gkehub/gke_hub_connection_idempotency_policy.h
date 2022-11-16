@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub {
 
 class GkeHubConnectionIdempotencyPolicy {
  public:
@@ -74,8 +74,8 @@ class GkeHubConnectionIdempotencyPolicy {
 std::unique_ptr<GkeHubConnectionIdempotencyPolicy>
 MakeDefaultGkeHubConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

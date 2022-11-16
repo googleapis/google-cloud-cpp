@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices {
 
 GameServerClustersServiceClient::GameServerClustersServiceClient(
     std::shared_ptr<GameServerClustersServiceConnection> connection,
@@ -150,7 +150,7 @@ GameServerClustersServiceClient::PreviewUpdateGameServerCluster(
   return connection_->PreviewUpdateGameServerCluster(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

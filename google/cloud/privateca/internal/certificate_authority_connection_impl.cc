@@ -28,13 +28,13 @@
 
 namespace google {
 namespace cloud {
-namespace privateca_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace privateca_internal {
 
 CertificateAuthorityServiceConnectionImpl::
     CertificateAuthorityServiceConnectionImpl(
         std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<privateca_internal::CertificateAuthorityServiceStub>
+        std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceStub>
             stub,
         Options options)
     : background_(std::move(background)),
@@ -77,9 +77,9 @@ CertificateAuthorityServiceConnectionImpl::ListCertificates(
     google::cloud::security::privateca::v1::ListCertificatesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<privateca::CertificateAuthorityServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCertificates(request);
   char const* function_name = __func__;
@@ -302,9 +302,9 @@ CertificateAuthorityServiceConnectionImpl::ListCertificateAuthorities(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<privateca::CertificateAuthorityServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCertificateAuthorities(request);
   char const* function_name = __func__;
@@ -507,9 +507,9 @@ CertificateAuthorityServiceConnectionImpl::ListCaPools(
     google::cloud::security::privateca::v1::ListCaPoolsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<privateca::CertificateAuthorityServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCaPools(request);
   char const* function_name = __func__;
@@ -600,9 +600,9 @@ CertificateAuthorityServiceConnectionImpl::ListCertificateRevocationLists(
         ListCertificateRevocationListsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<privateca::CertificateAuthorityServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency =
       idempotency_policy()->ListCertificateRevocationLists(request);
@@ -751,9 +751,9 @@ CertificateAuthorityServiceConnectionImpl::ListCertificateTemplates(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<privateca::CertificateAuthorityServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::CertificateAuthorityServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCertificateTemplates(request);
   char const* function_name = __func__;
@@ -814,7 +814,7 @@ CertificateAuthorityServiceConnectionImpl::UpdateCertificateTemplate(
       polling_policy(), __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

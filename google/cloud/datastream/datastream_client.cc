@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace datastream {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream {
 
 DatastreamClient::DatastreamClient(
     std::shared_ptr<DatastreamConnection> connection, Options opts)
@@ -444,7 +444,7 @@ DatastreamClient::DeleteRoute(
   return connection_->DeleteRoute(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

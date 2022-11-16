@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicemanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicemanagement_internal {
 
 class ServiceManagerAuth : public ServiceManagerStub {
  public:
@@ -127,8 +127,8 @@ class ServiceManagerAuth : public ServiceManagerStub {
   std::shared_ptr<ServiceManagerStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

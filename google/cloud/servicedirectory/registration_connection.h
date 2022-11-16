@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory {
 
 using RegistrationServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        servicedirectory_internal::RegistrationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::RegistrationServiceRetryTraits>;
 
 using RegistrationServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        servicedirectory_internal::RegistrationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::RegistrationServiceRetryTraits>;
 
 using RegistrationServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        servicedirectory_internal::RegistrationServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::RegistrationServiceRetryTraits>;
 
 /**
  * The `RegistrationServiceConnection` object for `RegistrationServiceClient`.
@@ -56,7 +56,8 @@ using RegistrationServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeRegistrationServiceConnection()`.
  *
- * For mocking, see `servicedirectory_mocks::MockRegistrationServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockRegistrationServiceConnection`.
  */
 class RegistrationServiceConnection {
  public:
@@ -147,7 +148,7 @@ class RegistrationServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::servicedirectory::RegistrationServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::RegistrationServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -158,8 +159,8 @@ class RegistrationServiceConnection {
 std::shared_ptr<RegistrationServiceConnection>
 MakeRegistrationServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

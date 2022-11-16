@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es_internal {
 
 class AnswerRecordsLogging : public AnswerRecordsStub {
  public:
@@ -55,8 +55,8 @@ class AnswerRecordsLogging : public AnswerRecordsStub {
   std::set<std::string> components_;
 };  // AnswerRecordsLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

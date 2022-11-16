@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks_internal {
 
 class CloudTasksLogging : public CloudTasksStub {
  public:
@@ -108,8 +108,8 @@ class CloudTasksLogging : public CloudTasksStub {
   std::set<std::string> components_;
 };  // CloudTasksLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision {
 
 class ProductSearchConnectionIdempotencyPolicy {
  public:
@@ -100,8 +100,8 @@ class ProductSearchConnectionIdempotencyPolicy {
 std::unique_ptr<ProductSearchConnectionIdempotencyPolicy>
 MakeDefaultProductSearchConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

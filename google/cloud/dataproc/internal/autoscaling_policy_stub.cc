@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 AutoscalingPolicyServiceStub::~AutoscalingPolicyServiceStub() = default;
 
@@ -97,7 +97,7 @@ Status DefaultAutoscalingPolicyServiceStub::DeleteAutoscalingPolicy(
   return google::cloud::Status();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

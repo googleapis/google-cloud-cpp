@@ -32,8 +32,8 @@
 
 namespace google {
 namespace cloud {
-namespace speech_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech_v2 {
 
 ///
 /// Enables speech transcription and resource management.
@@ -1061,8 +1061,8 @@ class SpeechClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

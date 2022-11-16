@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace automl {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl {
 
 using AutoMlRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    automl_internal::AutoMlRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::AutoMlRetryTraits>;
 
 using AutoMlLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        automl_internal::AutoMlRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AutoMlRetryTraits>;
 
 using AutoMlLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        automl_internal::AutoMlRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AutoMlRetryTraits>;
 
 /**
  * The `AutoMlConnection` object for `AutoMlClient`.
@@ -58,7 +58,7 @@ using AutoMlLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeAutoMlConnection()`.
  *
- * For mocking, see `automl_mocks::MockAutoMlConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockAutoMlConnection`.
  */
 class AutoMlConnection {
  public:
@@ -136,7 +136,7 @@ class AutoMlConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::automl::AutoMlPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::AutoMlPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -146,8 +146,8 @@ class AutoMlConnection {
  */
 std::shared_ptr<AutoMlConnection> MakeAutoMlConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

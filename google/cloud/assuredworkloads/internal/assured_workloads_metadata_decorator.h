@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace assuredworkloads_internal {
 
 class AssuredWorkloadsServiceMetadata : public AssuredWorkloadsServiceStub {
  public:
@@ -105,8 +105,8 @@ class AssuredWorkloadsServiceMetadata : public AssuredWorkloadsServiceStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace certificatemanager_internal {
 
 class CertificateManagerConnectionImpl
-    : public certificatemanager::CertificateManagerConnection {
+    : public GOOGLE_CLOUD_CPP_NS::CertificateManagerConnection {
  public:
   ~CertificateManagerConnectionImpl() override = default;
 
   CertificateManagerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<certificatemanager_internal::CertificateManagerStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CertificateManagerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -173,71 +173,71 @@ class CertificateManagerConnectionImpl
           DeleteCertificateIssuanceConfigRequest const& request) override;
 
  private:
-  std::unique_ptr<certificatemanager::CertificateManagerRetryPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicy>
   retry_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<certificatemanager::CertificateManagerRetryPolicyOption>()) {
+            .has<GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicyOption>()) {
       return options
-          .get<certificatemanager::CertificateManagerRetryPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicyOption>()
           ->clone();
     }
     return options_
-        .get<certificatemanager::CertificateManagerRetryPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::CertificateManagerRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<certificatemanager::CertificateManagerBackoffPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::CertificateManagerBackoffPolicyOption>()) {
       return options
-          .get<certificatemanager::CertificateManagerBackoffPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::CertificateManagerBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<certificatemanager::CertificateManagerBackoffPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::CertificateManagerBackoffPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<
-      certificatemanager::CertificateManagerConnectionIdempotencyPolicy>
+      GOOGLE_CLOUD_CPP_NS::CertificateManagerConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options
-            .has<certificatemanager::
+            .has<GOOGLE_CLOUD_CPP_NS::
                      CertificateManagerConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<certificatemanager::
+          .get<GOOGLE_CLOUD_CPP_NS::
                    CertificateManagerConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<certificatemanager::
+        .get<GOOGLE_CLOUD_CPP_NS::
                  CertificateManagerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<certificatemanager::CertificateManagerPollingPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::CertificateManagerPollingPolicyOption>()) {
       return options
-          .get<certificatemanager::CertificateManagerPollingPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::CertificateManagerPollingPolicyOption>()
           ->clone();
     }
     return options_
-        .get<certificatemanager::CertificateManagerPollingPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::CertificateManagerPollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<certificatemanager_internal::CertificateManagerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CertificateManagerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

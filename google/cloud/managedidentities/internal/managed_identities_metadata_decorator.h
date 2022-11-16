@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities_internal {
 
 class ManagedIdentitiesServiceMetadata : public ManagedIdentitiesServiceStub {
  public:
@@ -113,8 +113,8 @@ class ManagedIdentitiesServiceMetadata : public ManagedIdentitiesServiceStub {
   std::string api_client_header_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

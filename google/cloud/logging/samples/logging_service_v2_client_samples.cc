@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: logging::LoggingServiceV2Client
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::LoggingServiceV2Client
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,9 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::logging::LoggingServiceV2Client(
-      google::cloud::logging::MakeLoggingServiceV2Connection(options));
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::LoggingServiceV2Client(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeLoggingServiceV2Connection(
+          options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +56,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::logging::LoggingServiceV2Client(
-        google::cloud::logging::MakeLoggingServiceV2Connection(options));
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::LoggingServiceV2Client(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeLoggingServiceV2Connection(
+            options));
   }
   //! [with-service-account]
   (argv.at(0));

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace translate_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace translate_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,39 +39,47 @@ Options TranslationServiceDefaultOptions(Options options) {
       "translate.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<translate::TranslationServiceRetryPolicyOption>()) {
-    options.set<translate::TranslationServiceRetryPolicyOption>(
-        translate::TranslationServiceLimitedTimeRetryPolicy(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::TranslationServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::TranslationServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::TranslationServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<translate::TranslationServiceBackoffPolicyOption>()) {
-    options.set<translate::TranslationServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::TranslationServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::TranslationServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<translate::TranslationServicePollingPolicyOption>()) {
-    options.set<translate::TranslationServicePollingPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::TranslationServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::TranslationServicePollingPolicyOption>(
         GenericPollingPolicy<
-            translate::TranslationServiceRetryPolicyOption::Type,
-            translate::TranslationServiceBackoffPolicyOption::Type>(
-            options.get<translate::TranslationServiceRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::TranslationServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::TranslationServiceBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::TranslationServiceRetryPolicyOption>()
                 ->clone(),
-            options.get<translate::TranslationServiceBackoffPolicyOption>()
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::
+                         TranslationServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<
-          translate::TranslationServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<translate::TranslationServiceConnectionIdempotencyPolicyOption>(
-        translate::MakeDefaultTranslationServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       TranslationServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    TranslationServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultTranslationServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

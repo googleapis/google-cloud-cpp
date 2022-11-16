@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub {
 
 using ::google::cloud::Idempotency;
 
@@ -95,7 +95,7 @@ MakeDefaultGkeHubConnectionIdempotencyPolicy() {
   return absl::make_unique<GkeHubConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace baremetalsolution_internal {
 
 BareMetalSolutionMetadata::BareMetalSolutionMetadata(
     std::shared_ptr<BareMetalSolutionStub> child)
@@ -240,7 +240,7 @@ void BareMetalSolutionMetadata::SetMetadata(grpc::ClientContext& context) {
   if (!authority.empty()) context.set_authority(authority);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

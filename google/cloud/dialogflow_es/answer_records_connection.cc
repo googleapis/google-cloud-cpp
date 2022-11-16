@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 AnswerRecordsConnection::~AnswerRecordsConnection() = default;
 
@@ -55,12 +55,12 @@ std::shared_ptr<AnswerRecordsConnection> MakeAnswerRecordsConnection(
                                  UnifiedCredentialsOptionList,
                                  AnswerRecordsPolicyOptionList>(options,
                                                                 __func__);
-  options = dialogflow_es_internal::AnswerRecordsDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::AnswerRecordsDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_es_internal::CreateDefaultAnswerRecordsStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultAnswerRecordsStub(
       background->cq(), options);
-  return std::make_shared<dialogflow_es_internal::AnswerRecordsConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::AnswerRecordsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -69,7 +69,7 @@ std::shared_ptr<AnswerRecordsConnection> MakeAnswerRecordsConnection(
   return MakeAnswerRecordsConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

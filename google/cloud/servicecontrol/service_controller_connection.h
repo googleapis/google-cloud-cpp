@@ -30,20 +30,20 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol {
 
 using ServiceControllerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        servicecontrol_internal::ServiceControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ServiceControllerRetryTraits>;
 
 using ServiceControllerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        servicecontrol_internal::ServiceControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ServiceControllerRetryTraits>;
 
 using ServiceControllerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        servicecontrol_internal::ServiceControllerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ServiceControllerRetryTraits>;
 
 /**
  * The `ServiceControllerConnection` object for `ServiceControllerClient`.
@@ -55,7 +55,8 @@ using ServiceControllerLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeServiceControllerConnection()`.
  *
- * For mocking, see `servicecontrol_mocks::MockServiceControllerConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockServiceControllerConnection`.
  */
 class ServiceControllerConnection {
  public:
@@ -85,7 +86,7 @@ class ServiceControllerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::servicecontrol::ServiceControllerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ServiceControllerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -96,8 +97,8 @@ class ServiceControllerConnection {
 std::shared_ptr<ServiceControllerConnection> MakeServiceControllerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

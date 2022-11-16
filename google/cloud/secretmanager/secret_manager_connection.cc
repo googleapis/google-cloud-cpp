@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace secretmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace secretmanager {
 
 SecretManagerServiceConnection::~SecretManagerServiceConnection() = default;
 
@@ -132,17 +132,17 @@ MakeSecretManagerServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  SecretManagerServicePolicyOptionList>(
       options, __func__);
-  options = secretmanager_internal::SecretManagerServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::SecretManagerServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = secretmanager_internal::CreateDefaultSecretManagerServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultSecretManagerServiceStub(
       background->cq(), options);
   return std::make_shared<
-      secretmanager_internal::SecretManagerServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::SecretManagerServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

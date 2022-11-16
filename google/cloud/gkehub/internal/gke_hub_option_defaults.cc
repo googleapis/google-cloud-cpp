@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace gkehub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gkehub_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,33 +38,39 @@ Options GkeHubDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_GKE_HUB_AUTHORITY", "gkehub.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<gkehub::GkeHubRetryPolicyOption>()) {
-    options.set<gkehub::GkeHubRetryPolicyOption>(
-        gkehub::GkeHubLimitedTimeRetryPolicy(std::chrono::minutes(30)).clone());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::GkeHubRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GkeHubRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::GkeHubLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
+            .clone());
   }
-  if (!options.has<gkehub::GkeHubBackoffPolicyOption>()) {
-    options.set<gkehub::GkeHubBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::GkeHubBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GkeHubBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<gkehub::GkeHubPollingPolicyOption>()) {
-    options.set<gkehub::GkeHubPollingPolicyOption>(
-        GenericPollingPolicy<gkehub::GkeHubRetryPolicyOption::Type,
-                             gkehub::GkeHubBackoffPolicyOption::Type>(
-            options.get<gkehub::GkeHubRetryPolicyOption>()->clone(),
-            options.get<gkehub::GkeHubBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::GkeHubPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GkeHubPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::GkeHubRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::GkeHubBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::GkeHubRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::GkeHubBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<gkehub::GkeHubConnectionIdempotencyPolicyOption>()) {
-    options.set<gkehub::GkeHubConnectionIdempotencyPolicyOption>(
-        gkehub::MakeDefaultGkeHubConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::GkeHubConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::GkeHubConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultGkeHubConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

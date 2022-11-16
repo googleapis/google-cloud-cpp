@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace automl_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,38 +39,46 @@ Options PredictionServiceDefaultOptions(Options options) {
       "automl.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<automl::PredictionServiceRetryPolicyOption>()) {
-    options.set<automl::PredictionServiceRetryPolicyOption>(
-        automl::PredictionServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::PredictionServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<automl::PredictionServiceBackoffPolicyOption>()) {
-    options.set<automl::PredictionServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::PredictionServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::PredictionServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<automl::PredictionServicePollingPolicyOption>()) {
-    options.set<automl::PredictionServicePollingPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::PredictionServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::PredictionServicePollingPolicyOption>(
         GenericPollingPolicy<
-            automl::PredictionServiceRetryPolicyOption::Type,
-            automl::PredictionServiceBackoffPolicyOption::Type>(
-            options.get<automl::PredictionServiceRetryPolicyOption>()->clone(),
-            options.get<automl::PredictionServiceBackoffPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::PredictionServiceBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::PredictionServiceRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<
+                    GOOGLE_CLOUD_CPP_NS::PredictionServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options
-           .has<automl::PredictionServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<automl::PredictionServiceConnectionIdempotencyPolicyOption>(
-        automl::MakeDefaultPredictionServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       PredictionServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    PredictionServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultPredictionServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

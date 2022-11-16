@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace container {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace container {
 
 using ::google::cloud::Idempotency;
 
@@ -205,7 +205,7 @@ MakeDefaultClusterManagerConnectionIdempotencyPolicy() {
   return absl::make_unique<ClusterManagerConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

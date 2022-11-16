@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 JobControllerClient::JobControllerClient(
     std::shared_ptr<JobControllerConnection> connection, Options opts)
@@ -155,7 +155,7 @@ Status JobControllerClient::DeleteJob(
   return connection_->DeleteJob(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

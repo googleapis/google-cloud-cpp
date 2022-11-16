@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,38 +38,42 @@ Options DomainMappingsDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_DOMAIN_MAPPINGS_AUTHORITY", "appengine.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<appengine::DomainMappingsRetryPolicyOption>()) {
-    options.set<appengine::DomainMappingsRetryPolicyOption>(
-        appengine::DomainMappingsLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DomainMappingsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DomainMappingsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::DomainMappingsLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<appengine::DomainMappingsBackoffPolicyOption>()) {
-    options.set<appengine::DomainMappingsBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DomainMappingsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DomainMappingsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<appengine::DomainMappingsPollingPolicyOption>()) {
-    options.set<appengine::DomainMappingsPollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DomainMappingsPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DomainMappingsPollingPolicyOption>(
         GenericPollingPolicy<
-            appengine::DomainMappingsRetryPolicyOption::Type,
-            appengine::DomainMappingsBackoffPolicyOption::Type>(
-            options.get<appengine::DomainMappingsRetryPolicyOption>()->clone(),
-            options.get<appengine::DomainMappingsBackoffPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::DomainMappingsRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::DomainMappingsBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::DomainMappingsRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::DomainMappingsBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options
-           .has<appengine::DomainMappingsConnectionIdempotencyPolicyOption>()) {
-    options.set<appengine::DomainMappingsConnectionIdempotencyPolicyOption>(
-        appengine::MakeDefaultDomainMappingsConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       DomainMappingsConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::DomainMappingsConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultDomainMappingsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

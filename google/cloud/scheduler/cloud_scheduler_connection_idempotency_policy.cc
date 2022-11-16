@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler {
 
 using ::google::cloud::Idempotency;
 
@@ -80,7 +80,7 @@ MakeDefaultCloudSchedulerConnectionIdempotencyPolicy() {
   return absl::make_unique<CloudSchedulerConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

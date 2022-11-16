@@ -34,17 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager_internal {
 
 class OrganizationsConnectionImpl
-    : public resourcemanager::OrganizationsConnection {
+    : public GOOGLE_CLOUD_CPP_NS::OrganizationsConnection {
  public:
   ~OrganizationsConnectionImpl() override = default;
 
   OrganizationsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<resourcemanager_internal::OrganizationsStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::OrganizationsStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -68,48 +68,52 @@ class OrganizationsConnectionImpl
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<resourcemanager::OrganizationsRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::OrganizationsRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::OrganizationsRetryPolicyOption>()) {
-      return options.get<resourcemanager::OrganizationsRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::OrganizationsRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::OrganizationsRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<resourcemanager::OrganizationsRetryPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::OrganizationsRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::OrganizationsBackoffPolicyOption>()) {
-      return options.get<resourcemanager::OrganizationsBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<resourcemanager::OrganizationsBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<resourcemanager::OrganizationsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::
-                        OrganizationsConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::OrganizationsBackoffPolicyOption>()) {
       return options
-          .get<
-              resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::OrganizationsBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<resourcemanager::OrganizationsConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::OrganizationsBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::OrganizationsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        OrganizationsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   OrganizationsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 OrganizationsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<resourcemanager_internal::OrganizationsStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::OrganizationsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

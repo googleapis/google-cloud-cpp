@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol {
 
 ServiceControllerClient::ServiceControllerClient(
     std::shared_ptr<ServiceControllerConnection> connection, Options opts)
@@ -47,7 +47,7 @@ ServiceControllerClient::Report(
   return connection_->Report(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

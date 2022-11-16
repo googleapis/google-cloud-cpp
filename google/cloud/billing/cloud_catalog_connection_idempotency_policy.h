@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing {
 
 class CloudCatalogConnectionIdempotencyPolicy {
  public:
@@ -48,8 +48,8 @@ class CloudCatalogConnectionIdempotencyPolicy {
 std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy>
 MakeDefaultCloudCatalogConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 class LivestreamServiceConnectionImpl
-    : public video::LivestreamServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::LivestreamServiceConnection {
  public:
   ~LivestreamServiceConnectionImpl() override = default;
 
   LivestreamServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<video_internal::LivestreamServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LivestreamServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -118,53 +118,70 @@ class LivestreamServiceConnectionImpl
       override;
 
  private:
-  std::unique_ptr<video::LivestreamServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<video::LivestreamServiceRetryPolicyOption>()) {
-      return options.get<video::LivestreamServiceRetryPolicyOption>()->clone();
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<video::LivestreamServiceRetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<video::LivestreamServiceBackoffPolicyOption>()) {
-      return options.get<video::LivestreamServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<video::LivestreamServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<video::LivestreamServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
     if (options
-            .has<video::LivestreamServiceConnectionIdempotencyPolicyOption>()) {
+            .has<GOOGLE_CLOUD_CPP_NS::LivestreamServiceBackoffPolicyOption>()) {
       return options
-          .get<video::LivestreamServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::LivestreamServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<video::LivestreamServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::LivestreamServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::LivestreamServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        LivestreamServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   LivestreamServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 LivestreamServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<video::LivestreamServicePollingPolicyOption>()) {
-      return options.get<video::LivestreamServicePollingPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::LivestreamServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::LivestreamServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<video::LivestreamServicePollingPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::LivestreamServicePollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<video_internal::LivestreamServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LivestreamServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

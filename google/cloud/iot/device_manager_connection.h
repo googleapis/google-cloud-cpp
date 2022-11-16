@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace iot {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iot {
 
 using DeviceManagerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        iot_internal::DeviceManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DeviceManagerRetryTraits>;
 
 using DeviceManagerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        iot_internal::DeviceManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DeviceManagerRetryTraits>;
 
 using DeviceManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        iot_internal::DeviceManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DeviceManagerRetryTraits>;
 
 /**
  * The `DeviceManagerConnection` object for `DeviceManagerClient`.
@@ -56,7 +56,7 @@ using DeviceManagerLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeDeviceManagerConnection()`.
  *
- * For mocking, see `iot_mocks::MockDeviceManagerConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockDeviceManagerConnection`.
  */
 class DeviceManagerConnection {
  public:
@@ -142,7 +142,7 @@ class DeviceManagerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::iot::DeviceManagerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::DeviceManagerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -153,8 +153,8 @@ class DeviceManagerConnection {
 std::shared_ptr<DeviceManagerConnection> MakeDeviceManagerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

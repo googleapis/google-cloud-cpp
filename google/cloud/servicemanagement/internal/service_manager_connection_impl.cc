@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace servicemanagement_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicemanagement_internal {
 
 ServiceManagerConnectionImpl::ServiceManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<servicemanagement_internal::ServiceManagerStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServiceManagerStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -46,7 +46,7 @@ ServiceManagerConnectionImpl::ListServices(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<servicemanagement::ServiceManagerRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServiceManagerRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListServices(request);
@@ -179,7 +179,7 @@ ServiceManagerConnectionImpl::ListServiceConfigs(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<servicemanagement::ServiceManagerRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServiceManagerRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListServiceConfigs(request);
@@ -271,7 +271,7 @@ ServiceManagerConnectionImpl::ListServiceRollouts(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry =
-      std::shared_ptr<servicemanagement::ServiceManagerRetryPolicy const>(
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ServiceManagerRetryPolicy const>(
           retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListServiceRollouts(request);
@@ -363,7 +363,7 @@ ServiceManagerConnectionImpl::GenerateConfigReport(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

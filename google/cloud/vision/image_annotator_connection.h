@@ -33,20 +33,20 @@
 
 namespace google {
 namespace cloud {
-namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision {
 
 using ImageAnnotatorRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        vision_internal::ImageAnnotatorRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ImageAnnotatorRetryTraits>;
 
 using ImageAnnotatorLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        vision_internal::ImageAnnotatorRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ImageAnnotatorRetryTraits>;
 
 using ImageAnnotatorLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        vision_internal::ImageAnnotatorRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ImageAnnotatorRetryTraits>;
 
 /**
  * The `ImageAnnotatorConnection` object for `ImageAnnotatorClient`.
@@ -58,7 +58,7 @@ using ImageAnnotatorLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeImageAnnotatorConnection()`.
  *
- * For mocking, see `vision_mocks::MockImageAnnotatorConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockImageAnnotatorConnection`.
  */
 class ImageAnnotatorConnection {
  public:
@@ -99,7 +99,7 @@ class ImageAnnotatorConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::vision::ImageAnnotatorPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ImageAnnotatorPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -110,8 +110,8 @@ class ImageAnnotatorConnection {
 std::shared_ptr<ImageAnnotatorConnection> MakeImageAnnotatorConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

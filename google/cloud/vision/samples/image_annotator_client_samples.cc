@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: vision::ImageAnnotatorClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::ImageAnnotatorClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,9 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::vision::ImageAnnotatorClient(
-      google::cloud::vision::MakeImageAnnotatorConnection(options));
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::ImageAnnotatorClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeImageAnnotatorConnection(
+          options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +56,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::vision::ImageAnnotatorClient(
-        google::cloud::vision::MakeImageAnnotatorConnection(options));
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::ImageAnnotatorClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeImageAnnotatorConnection(
+            options));
   }
   //! [with-service-account]
   (argv.at(0));

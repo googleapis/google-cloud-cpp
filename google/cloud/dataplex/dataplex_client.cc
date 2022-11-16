@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex {
 
 DataplexServiceClient::DataplexServiceClient(
     std::shared_ptr<DataplexServiceConnection> connection, Options opts)
@@ -560,7 +560,7 @@ DataplexServiceClient::ListSessions(
   return connection_->ListSessions(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

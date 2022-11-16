@@ -37,16 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace memcache_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache_internal {
 
-class CloudMemcacheConnectionImpl : public memcache::CloudMemcacheConnection {
+class CloudMemcacheConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::CloudMemcacheConnection {
  public:
   ~CloudMemcacheConnectionImpl() override = default;
 
   CloudMemcacheConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<memcache_internal::CloudMemcacheStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudMemcacheStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -78,51 +79,64 @@ class CloudMemcacheConnectionImpl : public memcache::CloudMemcacheConnection {
       override;
 
  private:
-  std::unique_ptr<memcache::CloudMemcacheRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudMemcacheRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<memcache::CloudMemcacheRetryPolicyOption>()) {
-      return options.get<memcache::CloudMemcacheRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudMemcacheRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudMemcacheRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<memcache::CloudMemcacheRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudMemcacheRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<memcache::CloudMemcacheBackoffPolicyOption>()) {
-      return options.get<memcache::CloudMemcacheBackoffPolicyOption>()->clone();
-    }
-    return options_.get<memcache::CloudMemcacheBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<memcache::CloudMemcacheConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<memcache::CloudMemcacheConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudMemcacheBackoffPolicyOption>()) {
       return options
-          .get<memcache::CloudMemcacheConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::CloudMemcacheBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<memcache::CloudMemcacheConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::CloudMemcacheBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudMemcacheConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CloudMemcacheConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CloudMemcacheConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 CloudMemcacheConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<memcache::CloudMemcachePollingPolicyOption>()) {
-      return options.get<memcache::CloudMemcachePollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudMemcachePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::CloudMemcachePollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<memcache::CloudMemcachePollingPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::CloudMemcachePollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<memcache_internal::CloudMemcacheStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudMemcacheStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

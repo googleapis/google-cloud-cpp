@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace serviceusage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace serviceusage {
 
 ServiceUsageClient::ServiceUsageClient(
     std::shared_ptr<ServiceUsageConnection> connection, Options opts)
@@ -77,7 +77,7 @@ ServiceUsageClient::BatchGetServices(
   return connection_->BatchGetServices(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace serviceusage
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

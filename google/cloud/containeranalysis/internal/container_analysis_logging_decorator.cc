@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
 ContainerAnalysisLogging::ContainerAnalysisLogging(
     std::shared_ptr<ContainerAnalysisStub> child,
@@ -83,7 +83,7 @@ ContainerAnalysisLogging::GetVulnerabilityOccurrencesSummary(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

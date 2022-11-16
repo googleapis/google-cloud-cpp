@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks_internal {
 
 CloudTasksLogging::CloudTasksLogging(std::shared_ptr<CloudTasksStub> child,
                                      TracingOptions tracing_options,
@@ -213,7 +213,7 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksLogging::RunTask(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

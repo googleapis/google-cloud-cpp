@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager {
 
 class OrganizationsConnectionIdempotencyPolicy {
  public:
@@ -58,8 +58,8 @@ class OrganizationsConnectionIdempotencyPolicy {
 std::unique_ptr<OrganizationsConnectionIdempotencyPolicy>
 MakeDefaultOrganizationsConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

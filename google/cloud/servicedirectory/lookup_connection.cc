@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory {
 
 LookupServiceConnection::~LookupServiceConnection() = default;
 
@@ -46,17 +46,16 @@ std::shared_ptr<LookupServiceConnection> MakeLookupServiceConnection(
                                  UnifiedCredentialsOptionList,
                                  LookupServicePolicyOptionList>(options,
                                                                 __func__);
-  options = servicedirectory_internal::LookupServiceDefaultOptions(
-      std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::LookupServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = servicedirectory_internal::CreateDefaultLookupServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultLookupServiceStub(
       background->cq(), options);
-  return std::make_shared<
-      servicedirectory_internal::LookupServiceConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::LookupServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

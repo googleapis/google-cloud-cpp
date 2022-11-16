@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace batch {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace batch {
 
 using BatchServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        batch_internal::BatchServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BatchServiceRetryTraits>;
 
 using BatchServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        batch_internal::BatchServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BatchServiceRetryTraits>;
 
 using BatchServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        batch_internal::BatchServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BatchServiceRetryTraits>;
 
 /**
  * The `BatchServiceConnection` object for `BatchServiceClient`.
@@ -59,7 +59,7 @@ using BatchServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeBatchServiceConnection()`.
  *
- * For mocking, see `batch_mocks::MockBatchServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockBatchServiceConnection`.
  */
 class BatchServiceConnection {
  public:
@@ -99,7 +99,7 @@ class BatchServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::batch::BatchServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::BatchServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -110,8 +110,8 @@ class BatchServiceConnection {
 std::shared_ptr<BatchServiceConnection> MakeBatchServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

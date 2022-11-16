@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace channel_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace channel_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,39 +39,49 @@ Options CloudChannelServiceDefaultOptions(Options options) {
       "cloudchannel.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<channel::CloudChannelServiceRetryPolicyOption>()) {
-    options.set<channel::CloudChannelServiceRetryPolicyOption>(
-        channel::CloudChannelServiceLimitedTimeRetryPolicy(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::CloudChannelServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudChannelServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::CloudChannelServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<channel::CloudChannelServiceBackoffPolicyOption>()) {
-    options.set<channel::CloudChannelServiceBackoffPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::CloudChannelServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudChannelServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<channel::CloudChannelServicePollingPolicyOption>()) {
-    options.set<channel::CloudChannelServicePollingPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::CloudChannelServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudChannelServicePollingPolicyOption>(
         GenericPollingPolicy<
-            channel::CloudChannelServiceRetryPolicyOption::Type,
-            channel::CloudChannelServiceBackoffPolicyOption::Type>(
-            options.get<channel::CloudChannelServiceRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::CloudChannelServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::CloudChannelServiceBackoffPolicyOption::Type>(
+            options
+                .get<
+                    GOOGLE_CLOUD_CPP_NS::CloudChannelServiceRetryPolicyOption>()
                 ->clone(),
-            options.get<channel::CloudChannelServiceBackoffPolicyOption>()
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::
+                         CloudChannelServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<
-          channel::CloudChannelServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<channel::CloudChannelServiceConnectionIdempotencyPolicyOption>(
-        channel::MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::
+                    CloudChannelServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    CloudChannelServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultCloudChannelServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

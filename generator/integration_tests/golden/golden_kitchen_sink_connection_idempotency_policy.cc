@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden {
 
 using ::google::cloud::Idempotency;
 
@@ -71,7 +71,7 @@ std::unique_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>
   return absl::make_unique<GoldenKitchenSinkConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 AuthorizedDomainsConnection::~AuthorizedDomainsConnection() = default;
 
@@ -50,15 +50,15 @@ std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
                                  AuthorizedDomainsPolicyOptionList>(options,
                                                                     __func__);
   options =
-      appengine_internal::AuthorizedDomainsDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::AuthorizedDomainsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = appengine_internal::CreateDefaultAuthorizedDomainsStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultAuthorizedDomainsStub(
       background->cq(), options);
-  return std::make_shared<appengine_internal::AuthorizedDomainsConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::AuthorizedDomainsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace securitycenter_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace securitycenter_internal {
 
 class SecurityCenterAuth : public SecurityCenterStub {
  public:
@@ -245,8 +245,8 @@ class SecurityCenterAuth : public SecurityCenterStub {
   std::shared_ptr<SecurityCenterStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

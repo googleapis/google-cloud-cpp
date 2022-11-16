@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_mocks {
 
 /**
  * A class to mock `CompanyServiceConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockCompanyServiceConnection : public talent::CompanyServiceConnection {
+class MockCompanyServiceConnection
+    : public GOOGLE_CLOUD_CPP_NS::CompanyServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -67,8 +68,8 @@ class MockCompanyServiceConnection : public talent::CompanyServiceConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

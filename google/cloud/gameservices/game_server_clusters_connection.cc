@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices {
 
 GameServerClustersServiceConnection::~GameServerClustersServiceConnection() =
     default;
@@ -98,17 +98,17 @@ MakeGameServerClustersServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  GameServerClustersServicePolicyOptionList>(
       options, __func__);
-  options = gameservices_internal::GameServerClustersServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::GameServerClustersServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = gameservices_internal::CreateDefaultGameServerClustersServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultGameServerClustersServiceStub(
       background->cq(), options);
   return std::make_shared<
-      gameservices_internal::GameServerClustersServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::GameServerClustersServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

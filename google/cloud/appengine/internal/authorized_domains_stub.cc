@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 AuthorizedDomainsStub::~AuthorizedDomainsStub() = default;
 
@@ -42,7 +42,7 @@ DefaultAuthorizedDomainsStub::ListAuthorizedDomains(
   return response;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

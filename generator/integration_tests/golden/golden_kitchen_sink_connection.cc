@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden {
 
 GoldenKitchenSinkConnection::~GoldenKitchenSinkConnection() = default;
 
@@ -109,16 +109,16 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
       UnifiedCredentialsOptionList,
       GoldenKitchenSinkPolicyOptionList>(options, __func__);
-  options = golden_internal::GoldenKitchenSinkDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = golden_internal::CreateDefaultGoldenKitchenSinkStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultGoldenKitchenSinkStub(
     background->cq(), options);
-  return std::make_shared<golden_internal::GoldenKitchenSinkConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::GoldenKitchenSinkConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

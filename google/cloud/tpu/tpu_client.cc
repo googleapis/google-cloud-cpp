@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace tpu {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu {
 
 TpuClient::TpuClient(std::shared_ptr<TpuConnection> connection, Options opts)
     : connection_(std::move(connection)),
@@ -169,7 +169,7 @@ StatusOr<google::cloud::tpu::v1::AcceleratorType> TpuClient::GetAcceleratorType(
   return connection_->GetAcceleratorType(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

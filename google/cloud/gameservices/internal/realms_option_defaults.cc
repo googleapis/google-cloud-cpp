@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,39 +39,42 @@ Options RealmsServiceDefaultOptions(Options options) {
       "gameservices.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<gameservices::RealmsServiceRetryPolicyOption>()) {
-    options.set<gameservices::RealmsServiceRetryPolicyOption>(
-        gameservices::RealmsServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::RealmsServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::RealmsServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::RealmsServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<gameservices::RealmsServiceBackoffPolicyOption>()) {
-    options.set<gameservices::RealmsServiceBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::RealmsServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::RealmsServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<gameservices::RealmsServicePollingPolicyOption>()) {
-    options.set<gameservices::RealmsServicePollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::RealmsServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::RealmsServicePollingPolicyOption>(
         GenericPollingPolicy<
-            gameservices::RealmsServiceRetryPolicyOption::Type,
-            gameservices::RealmsServiceBackoffPolicyOption::Type>(
-            options.get<gameservices::RealmsServiceRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::RealmsServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::RealmsServiceBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::RealmsServiceRetryPolicyOption>()
                 ->clone(),
-            options.get<gameservices::RealmsServiceBackoffPolicyOption>()
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::RealmsServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<
-          gameservices::RealmsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<gameservices::RealmsServiceConnectionIdempotencyPolicyOption>(
-        gameservices::MakeDefaultRealmsServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       RealmsServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::RealmsServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultRealmsServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

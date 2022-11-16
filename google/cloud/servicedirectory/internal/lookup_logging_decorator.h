@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory_internal {
 
 class LookupServiceLogging : public LookupServiceStub {
  public:
@@ -50,8 +50,8 @@ class LookupServiceLogging : public LookupServiceStub {
   std::set<std::string> components_;
 };  // LookupServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

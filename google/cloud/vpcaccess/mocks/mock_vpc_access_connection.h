@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace vpcaccess_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vpcaccess_mocks {
 
 /**
  * A class to mock `VpcAccessServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockVpcAccessServiceConnection
-    : public vpcaccess::VpcAccessServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::VpcAccessServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -70,8 +70,8 @@ class MockVpcAccessServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

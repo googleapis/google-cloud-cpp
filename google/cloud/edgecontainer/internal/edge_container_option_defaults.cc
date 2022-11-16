@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace edgecontainer_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,39 +39,42 @@ Options EdgeContainerDefaultOptions(Options options) {
       "edgecontainer.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<edgecontainer::EdgeContainerRetryPolicyOption>()) {
-    options.set<edgecontainer::EdgeContainerRetryPolicyOption>(
-        edgecontainer::EdgeContainerLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::EdgeContainerRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::EdgeContainerRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::EdgeContainerLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<edgecontainer::EdgeContainerBackoffPolicyOption>()) {
-    options.set<edgecontainer::EdgeContainerBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::EdgeContainerBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::EdgeContainerBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<edgecontainer::EdgeContainerPollingPolicyOption>()) {
-    options.set<edgecontainer::EdgeContainerPollingPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::EdgeContainerPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::EdgeContainerPollingPolicyOption>(
         GenericPollingPolicy<
-            edgecontainer::EdgeContainerRetryPolicyOption::Type,
-            edgecontainer::EdgeContainerBackoffPolicyOption::Type>(
-            options.get<edgecontainer::EdgeContainerRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::EdgeContainerRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::EdgeContainerBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::EdgeContainerRetryPolicyOption>()
                 ->clone(),
-            options.get<edgecontainer::EdgeContainerBackoffPolicyOption>()
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::EdgeContainerBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<
-          edgecontainer::EdgeContainerConnectionIdempotencyPolicyOption>()) {
-    options.set<edgecontainer::EdgeContainerConnectionIdempotencyPolicyOption>(
-        edgecontainer::MakeDefaultEdgeContainerConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       EdgeContainerConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::EdgeContainerConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultEdgeContainerConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

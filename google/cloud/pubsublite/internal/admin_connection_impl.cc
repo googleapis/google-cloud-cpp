@@ -29,12 +29,12 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 AdminServiceConnectionImpl::AdminServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<pubsublite_internal::AdminServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AdminServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -85,8 +85,9 @@ AdminServiceConnectionImpl::ListTopics(
     google::cloud::pubsublite::v1::ListTopicsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTopics(request);
   char const* function_name = __func__;
@@ -140,8 +141,9 @@ StreamRange<std::string> AdminServiceConnectionImpl::ListTopicSubscriptions(
     google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTopicSubscriptions(request);
   char const* function_name = __func__;
@@ -198,8 +200,9 @@ AdminServiceConnectionImpl::ListSubscriptions(
     google::cloud::pubsublite::v1::ListSubscriptionsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSubscriptions(request);
   char const* function_name = __func__;
@@ -317,8 +320,9 @@ AdminServiceConnectionImpl::ListReservations(
     google::cloud::pubsublite::v1::ListReservationsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListReservations(request);
   char const* function_name = __func__;
@@ -376,8 +380,9 @@ StreamRange<std::string> AdminServiceConnectionImpl::ListReservationTopics(
     google::cloud::pubsublite::v1::ListReservationTopicsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AdminServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListReservationTopics(request);
   char const* function_name = __func__;
@@ -418,7 +423,7 @@ AdminServiceConnectionImpl::AsyncGetTopicPartitions(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

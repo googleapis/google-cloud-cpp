@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace memcache_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,35 +38,42 @@ Options CloudMemcacheDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_CLOUD_MEMCACHE_AUTHORITY", "memcache.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<memcache::CloudMemcacheRetryPolicyOption>()) {
-    options.set<memcache::CloudMemcacheRetryPolicyOption>(
-        memcache::CloudMemcacheLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudMemcacheRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudMemcacheRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::CloudMemcacheLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<memcache::CloudMemcacheBackoffPolicyOption>()) {
-    options.set<memcache::CloudMemcacheBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudMemcacheBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudMemcacheBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<memcache::CloudMemcachePollingPolicyOption>()) {
-    options.set<memcache::CloudMemcachePollingPolicyOption>(
-        GenericPollingPolicy<memcache::CloudMemcacheRetryPolicyOption::Type,
-                             memcache::CloudMemcacheBackoffPolicyOption::Type>(
-            options.get<memcache::CloudMemcacheRetryPolicyOption>()->clone(),
-            options.get<memcache::CloudMemcacheBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::CloudMemcachePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::CloudMemcachePollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::CloudMemcacheRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::CloudMemcacheBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::CloudMemcacheRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::CloudMemcacheBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options
-           .has<memcache::CloudMemcacheConnectionIdempotencyPolicyOption>()) {
-    options.set<memcache::CloudMemcacheConnectionIdempotencyPolicyOption>(
-        memcache::MakeDefaultCloudMemcacheConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       CloudMemcacheConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::CloudMemcacheConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultCloudMemcacheConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

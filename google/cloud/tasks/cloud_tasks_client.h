@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks {
 
 ///
 /// Cloud Tasks allows developers to manage the execution of background
@@ -997,8 +997,8 @@ class CloudTasksClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 class PredictionServiceAuth : public PredictionServiceStub {
  public:
@@ -47,8 +47,8 @@ class PredictionServiceAuth : public PredictionServiceStub {
   std::shared_ptr<PredictionServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

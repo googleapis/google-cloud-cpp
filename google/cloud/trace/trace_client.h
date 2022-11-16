@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace trace {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace trace {
 
 ///
 /// This file describes an API for collecting and viewing traces and spans
@@ -148,8 +148,8 @@ class TraceServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

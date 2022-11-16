@@ -28,13 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_internal {
 
 TestCasesConnectionImpl::TestCasesConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<dialogflow_cx_internal::TestCasesStub> stub,
-    Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TestCasesStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -45,7 +44,7 @@ TestCasesConnectionImpl::ListTestCases(
     google::cloud::dialogflow::cx::v3::ListTestCasesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_cx::TestCasesRetryPolicy const>(
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TestCasesRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTestCases(request);
@@ -263,7 +262,7 @@ TestCasesConnectionImpl::ListTestCaseResults(
     google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<dialogflow_cx::TestCasesRetryPolicy const>(
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TestCasesRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListTestCaseResults(request);
@@ -307,7 +306,7 @@ TestCasesConnectionImpl::GetTestCaseResult(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

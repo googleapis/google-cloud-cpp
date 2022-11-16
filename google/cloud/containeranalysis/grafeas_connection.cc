@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis {
 
 GrafeasConnection::~GrafeasConnection() = default;
 
@@ -116,16 +116,15 @@ std::shared_ptr<GrafeasConnection> MakeGrafeasConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  GrafeasPolicyOptionList>(options, __func__);
-  options =
-      containeranalysis_internal::GrafeasDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::GrafeasDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = containeranalysis_internal::CreateDefaultGrafeasStub(
-      background->cq(), options);
-  return std::make_shared<containeranalysis_internal::GrafeasConnectionImpl>(
+  auto stub =
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultGrafeasStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::GrafeasConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

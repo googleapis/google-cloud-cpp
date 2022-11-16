@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace edgecontainer {
 
 class EdgeContainerConnectionIdempotencyPolicy {
  public:
@@ -96,8 +96,8 @@ class EdgeContainerConnectionIdempotencyPolicy {
 std::unique_ptr<EdgeContainerConnectionIdempotencyPolicy>
 MakeDefaultEdgeContainerConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

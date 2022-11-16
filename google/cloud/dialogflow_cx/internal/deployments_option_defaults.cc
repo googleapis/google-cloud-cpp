@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -42,28 +42,30 @@ Options DeploymentsDefaultOptions(std::string const& location,
                    "dialogflow.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dialogflow_cx::DeploymentsRetryPolicyOption>()) {
-    options.set<dialogflow_cx::DeploymentsRetryPolicyOption>(
-        dialogflow_cx::DeploymentsLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DeploymentsRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DeploymentsRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::DeploymentsLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dialogflow_cx::DeploymentsBackoffPolicyOption>()) {
-    options.set<dialogflow_cx::DeploymentsBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DeploymentsBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DeploymentsBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          dialogflow_cx::DeploymentsConnectionIdempotencyPolicyOption>()) {
-    options.set<dialogflow_cx::DeploymentsConnectionIdempotencyPolicyOption>(
-        dialogflow_cx::MakeDefaultDeploymentsConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       DeploymentsConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::DeploymentsConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultDeploymentsConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

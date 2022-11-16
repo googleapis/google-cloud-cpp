@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_mocks {
 
 /**
  * A class to mock `MetricsScopesConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockMetricsScopesConnection : public monitoring::MetricsScopesConnection {
+class MockMetricsScopesConnection
+    : public GOOGLE_CLOUD_CPP_NS::MetricsScopesConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -75,8 +76,8 @@ class MockMetricsScopesConnection : public monitoring::MetricsScopesConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

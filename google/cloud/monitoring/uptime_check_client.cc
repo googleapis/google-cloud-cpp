@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 UptimeCheckServiceClient::UptimeCheckServiceClient(
     std::shared_ptr<UptimeCheckServiceConnection> connection, Options opts)
@@ -125,7 +125,7 @@ UptimeCheckServiceClient::ListUptimeCheckIps(
   return connection_->ListUptimeCheckIps(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

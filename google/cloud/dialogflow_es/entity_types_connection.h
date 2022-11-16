@@ -35,19 +35,19 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 using EntityTypesRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_es_internal::EntityTypesRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::EntityTypesRetryTraits>;
 
 using EntityTypesLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_es_internal::EntityTypesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EntityTypesRetryTraits>;
 
 using EntityTypesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_es_internal::EntityTypesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EntityTypesRetryTraits>;
 
 /**
  * The `EntityTypesConnection` object for `EntityTypesClient`.
@@ -59,7 +59,7 @@ using EntityTypesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeEntityTypesConnection()`.
  *
- * For mocking, see `dialogflow_es_mocks::MockEntityTypesConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockEntityTypesConnection`.
  */
 class EntityTypesConnection {
  public:
@@ -116,7 +116,7 @@ class EntityTypesConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_es::EntityTypesPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::EntityTypesPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -138,8 +138,8 @@ std::shared_ptr<EntityTypesConnection> MakeEntityTypesConnection(
 std::shared_ptr<EntityTypesConnection> MakeEntityTypesConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

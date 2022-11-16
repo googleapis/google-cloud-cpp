@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace iap {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap {
 
 using ::google::cloud::Idempotency;
 
@@ -91,7 +91,7 @@ MakeDefaultIdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy() {
       IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

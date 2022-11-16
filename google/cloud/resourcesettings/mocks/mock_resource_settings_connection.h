@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcesettings_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcesettings_mocks {
 
 /**
  * A class to mock `ResourceSettingsServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockResourceSettingsServiceConnection
-    : public resourcesettings::ResourceSettingsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ResourceSettingsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -64,8 +64,8 @@ class MockResourceSettingsServiceConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

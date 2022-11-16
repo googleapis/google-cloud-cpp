@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace apigateway_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigateway_internal {
 
 class ApiGatewayServiceConnectionImpl
-    : public apigateway::ApiGatewayServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceConnection {
  public:
   ~ApiGatewayServiceConnectionImpl() override = default;
 
   ApiGatewayServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<apigateway_internal::ApiGatewayServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -105,57 +105,70 @@ class ApiGatewayServiceConnectionImpl
                       request) override;
 
  private:
-  std::unique_ptr<apigateway::ApiGatewayServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<apigateway::ApiGatewayServiceRetryPolicyOption>()) {
-      return options.get<apigateway::ApiGatewayServiceRetryPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceRetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<apigateway::ApiGatewayServiceRetryPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceRetryPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<apigateway::ApiGatewayServiceBackoffPolicyOption>()) {
-      return options.get<apigateway::ApiGatewayServiceBackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<apigateway::ApiGatewayServiceBackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<apigateway::ApiGatewayServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceBackoffPolicyOption>()) {
       return options
-          .get<apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   ApiGatewayServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 ApiGatewayServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<apigateway::ApiGatewayServicePollingPolicyOption>()) {
-      return options.get<apigateway::ApiGatewayServicePollingPolicyOption>()
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::ApiGatewayServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::ApiGatewayServicePollingPolicyOption>()
           ->clone();
     }
-    return options_.get<apigateway::ApiGatewayServicePollingPolicyOption>()
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::ApiGatewayServicePollingPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<apigateway_internal::ApiGatewayServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 QueryServiceClient::QueryServiceClient(
     std::shared_ptr<QueryServiceConnection> connection, Options opts)
@@ -38,7 +38,7 @@ QueryServiceClient::QueryTimeSeries(
   return connection_->QueryTimeSeries(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

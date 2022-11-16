@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_internal {
 
 class GoldenThingAdminAuth : public GoldenThingAdminStub {
  public:
@@ -140,8 +140,8 @@ class GoldenThingAdminAuth : public GoldenThingAdminStub {
   std::shared_ptr<GoldenThingAdminStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

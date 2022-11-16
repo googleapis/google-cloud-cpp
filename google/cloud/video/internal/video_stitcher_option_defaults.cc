@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,28 +39,33 @@ Options VideoStitcherServiceDefaultOptions(Options options) {
       "videostitcher.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<video::VideoStitcherServiceRetryPolicyOption>()) {
-    options.set<video::VideoStitcherServiceRetryPolicyOption>(
-        video::VideoStitcherServiceLimitedTimeRetryPolicy(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<video::VideoStitcherServiceBackoffPolicyOption>()) {
-    options.set<video::VideoStitcherServiceBackoffPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          video::VideoStitcherServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<video::VideoStitcherServiceConnectionIdempotencyPolicyOption>(
-        video::MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy());
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::
+                    VideoStitcherServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    VideoStitcherServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

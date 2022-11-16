@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accesscontextmanager_internal {
 
 class AccessContextManagerAuth : public AccessContextManagerStub {
  public:
@@ -209,8 +209,8 @@ class AccessContextManagerAuth : public AccessContextManagerStub {
   std::shared_ptr<AccessContextManagerStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

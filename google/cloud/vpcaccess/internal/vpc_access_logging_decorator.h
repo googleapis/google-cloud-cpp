@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace vpcaccess_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vpcaccess_internal {
 
 class VpcAccessServiceLogging : public VpcAccessServiceStub {
  public:
@@ -77,8 +77,8 @@ class VpcAccessServiceLogging : public VpcAccessServiceStub {
   std::set<std::string> components_;
 };  // VpcAccessServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

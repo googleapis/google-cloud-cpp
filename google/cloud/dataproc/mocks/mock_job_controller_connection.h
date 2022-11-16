@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_mocks {
 
 /**
  * A class to mock `JobControllerConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockJobControllerConnection : public dataproc::JobControllerConnection {
+class MockJobControllerConnection
+    : public GOOGLE_CLOUD_CPP_NS::JobControllerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -76,8 +77,8 @@ class MockJobControllerConnection : public dataproc::JobControllerConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace kms_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms_internal {
 
 class KeyManagementServiceAuth : public KeyManagementServiceStub {
  public:
@@ -157,8 +157,8 @@ class KeyManagementServiceAuth : public KeyManagementServiceStub {
   std::shared_ptr<KeyManagementServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

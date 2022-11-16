@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video {
 
 class LivestreamServiceConnectionIdempotencyPolicy {
  public:
@@ -93,8 +93,8 @@ class LivestreamServiceConnectionIdempotencyPolicy {
 std::unique_ptr<LivestreamServiceConnectionIdempotencyPolicy>
 MakeDefaultLivestreamServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace connectors {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace connectors {
 
 ///
 /// Connectors is the interface for managing Connectors.
@@ -675,8 +675,8 @@ class ConnectorsClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

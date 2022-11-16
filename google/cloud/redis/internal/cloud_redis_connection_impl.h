@@ -37,16 +37,18 @@
 
 namespace google {
 namespace cloud {
-namespace redis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace redis_internal {
 
-class CloudRedisConnectionImpl : public redis::CloudRedisConnection {
+class CloudRedisConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::CloudRedisConnection {
  public:
   ~CloudRedisConnectionImpl() override = default;
 
   CloudRedisConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<redis_internal::CloudRedisStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudRedisStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -87,48 +89,58 @@ class CloudRedisConnectionImpl : public redis::CloudRedisConnection {
       override;
 
  private:
-  std::unique_ptr<redis::CloudRedisRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudRedisRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<redis::CloudRedisRetryPolicyOption>()) {
-      return options.get<redis::CloudRedisRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudRedisRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudRedisRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<redis::CloudRedisRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudRedisRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<redis::CloudRedisBackoffPolicyOption>()) {
-      return options.get<redis::CloudRedisBackoffPolicyOption>()->clone();
-    }
-    return options_.get<redis::CloudRedisBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<redis::CloudRedisConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<redis::CloudRedisConnectionIdempotencyPolicyOption>()) {
-      return options.get<redis::CloudRedisConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudRedisBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudRedisBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<redis::CloudRedisConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudRedisBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::CloudRedisConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        CloudRedisConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   CloudRedisConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::CloudRedisConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<redis::CloudRedisPollingPolicyOption>()) {
-      return options.get<redis::CloudRedisPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::CloudRedisPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::CloudRedisPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<redis::CloudRedisPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::CloudRedisPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<redis_internal::CloudRedisStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::CloudRedisStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

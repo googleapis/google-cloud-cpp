@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 using VersionsRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    appengine_internal::VersionsRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::VersionsRetryTraits>;
 
 using VersionsLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        appengine_internal::VersionsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VersionsRetryTraits>;
 
 using VersionsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        appengine_internal::VersionsRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::VersionsRetryTraits>;
 
 /**
  * The `VersionsConnection` object for `VersionsClient`.
@@ -58,7 +58,7 @@ using VersionsLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeVersionsConnection()`.
  *
- * For mocking, see `appengine_mocks::MockVersionsConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockVersionsConnection`.
  */
 class VersionsConnection {
  public:
@@ -95,7 +95,7 @@ class VersionsConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::appengine::VersionsPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::VersionsPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -106,8 +106,8 @@ class VersionsConnection {
 std::shared_ptr<VersionsConnection> MakeVersionsConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

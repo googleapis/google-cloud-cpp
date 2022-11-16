@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataplex {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataplex {
 
 class DataplexServiceConnectionIdempotencyPolicy {
  public:
@@ -138,8 +138,8 @@ class DataplexServiceConnectionIdempotencyPolicy {
 std::unique_ptr<DataplexServiceConnectionIdempotencyPolicy>
 MakeDefaultDataplexServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataplex
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

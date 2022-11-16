@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigeeconnect {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigeeconnect {
 
 ///
 /// Service Interface for the Apigee Connect connection management APIs.
@@ -129,8 +129,8 @@ class ConnectionServiceClient {
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

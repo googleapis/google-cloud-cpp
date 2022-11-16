@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
 TenantServiceLogging::TenantServiceLogging(
     std::shared_ptr<TenantServiceStub> child, TracingOptions tracing_options,
@@ -90,7 +90,7 @@ TenantServiceLogging::ListTenants(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

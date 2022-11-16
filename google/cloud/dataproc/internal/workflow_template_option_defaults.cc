@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -42,42 +42,51 @@ Options WorkflowTemplateServiceDefaultOptions(std::string const& location,
                    "dataproc.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dataproc::WorkflowTemplateServiceRetryPolicyOption>()) {
-    options.set<dataproc::WorkflowTemplateServiceRetryPolicyOption>(
-        dataproc::WorkflowTemplateServiceLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dataproc::WorkflowTemplateServiceBackoffPolicyOption>()) {
-    options.set<dataproc::WorkflowTemplateServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceBackoffPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
-  if (!options.has<dataproc::WorkflowTemplateServicePollingPolicyOption>()) {
-    options.set<dataproc::WorkflowTemplateServicePollingPolicyOption>(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServicePollingPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServicePollingPolicyOption>(
         GenericPollingPolicy<
-            dataproc::WorkflowTemplateServiceRetryPolicyOption::Type,
-            dataproc::WorkflowTemplateServiceBackoffPolicyOption::Type>(
-            options.get<dataproc::WorkflowTemplateServiceRetryPolicyOption>()
-                ->clone(),
-            options.get<dataproc::WorkflowTemplateServiceBackoffPolicyOption>()
-                ->clone())
+            GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::WorkflowTemplateServiceBackoffPolicyOption::
+                Type>(options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   WorkflowTemplateServiceRetryPolicyOption>()
+                          ->clone(),
+                      options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   WorkflowTemplateServiceBackoffPolicyOption>()
+                          ->clone())
             .clone());
   }
   if (!options.has<
-          dataproc::
+          GOOGLE_CLOUD_CPP_NS::
               WorkflowTemplateServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        dataproc::WorkflowTemplateServiceConnectionIdempotencyPolicyOption>(
-        dataproc::
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    WorkflowTemplateServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

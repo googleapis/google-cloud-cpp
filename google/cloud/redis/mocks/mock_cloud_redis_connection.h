@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace redis_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace redis_mocks {
 
 /**
  * A class to mock `CloudRedisConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockCloudRedisConnection : public redis::CloudRedisConnection {
+class MockCloudRedisConnection
+    : public GOOGLE_CLOUD_CPP_NS::CloudRedisConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -102,8 +103,8 @@ class MockCloudRedisConnection : public redis::CloudRedisConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

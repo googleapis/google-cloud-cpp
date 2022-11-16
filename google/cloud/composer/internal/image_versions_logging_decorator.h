@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer_internal {
 
 class ImageVersionsLogging : public ImageVersionsStub {
  public:
@@ -50,8 +50,8 @@ class ImageVersionsLogging : public ImageVersionsStub {
   std::set<std::string> components_;
 };  // ImageVersionsLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

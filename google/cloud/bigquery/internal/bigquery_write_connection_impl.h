@@ -34,16 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
-class BigQueryWriteConnectionImpl : public bigquery::BigQueryWriteConnection {
+class BigQueryWriteConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::BigQueryWriteConnection {
  public:
   ~BigQueryWriteConnectionImpl() override = default;
 
   BigQueryWriteConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<bigquery_internal::BigQueryWriteStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BigQueryWriteStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -77,43 +78,52 @@ class BigQueryWriteConnectionImpl : public bigquery::BigQueryWriteConnection {
       override;
 
  private:
-  std::unique_ptr<bigquery::BigQueryWriteRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::BigQueryWriteRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::BigQueryWriteRetryPolicyOption>()) {
-      return options.get<bigquery::BigQueryWriteRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::BigQueryWriteRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::BigQueryWriteRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<bigquery::BigQueryWriteRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::BigQueryWriteRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<bigquery::BigQueryWriteBackoffPolicyOption>()) {
-      return options.get<bigquery::BigQueryWriteBackoffPolicyOption>()->clone();
-    }
-    return options_.get<bigquery::BigQueryWriteBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<bigquery::BigQueryWriteConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<bigquery::BigQueryWriteConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::BigQueryWriteBackoffPolicyOption>()) {
       return options
-          .get<bigquery::BigQueryWriteConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::BigQueryWriteBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<bigquery::BigQueryWriteConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::BigQueryWriteBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::BigQueryWriteConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        BigQueryWriteConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   BigQueryWriteConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 BigQueryWriteConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<bigquery_internal::BigQueryWriteStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BigQueryWriteStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

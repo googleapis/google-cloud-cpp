@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace language {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace language {
 
 LanguageServiceClient::LanguageServiceClient(
     std::shared_ptr<LanguageServiceConnection> connection, Options opts)
@@ -193,7 +193,7 @@ LanguageServiceClient::AnnotateText(
   return connection_->AnnotateText(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

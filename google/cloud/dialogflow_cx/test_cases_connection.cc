@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 TestCasesConnection::~TestCasesConnection() = default;
 
@@ -123,12 +123,12 @@ std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  TestCasesPolicyOptionList>(options, __func__);
-  options = dialogflow_cx_internal::TestCasesDefaultOptions(location,
-                                                            std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::TestCasesDefaultOptions(location,
+                                                         std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_cx_internal::CreateDefaultTestCasesStub(
-      background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::TestCasesConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultTestCasesStub(background->cq(),
+                                                              options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::TestCasesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -136,7 +136,7 @@ std::shared_ptr<TestCasesConnection> MakeTestCasesConnection(Options options) {
   return MakeTestCasesConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

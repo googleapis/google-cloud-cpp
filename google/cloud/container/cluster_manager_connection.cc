@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace container {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace container {
 
 ClusterManagerConnection::~ClusterManagerConnection() = default;
 
@@ -237,15 +237,15 @@ std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
                                  ClusterManagerPolicyOptionList>(options,
                                                                  __func__);
   options =
-      container_internal::ClusterManagerDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::ClusterManagerDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = container_internal::CreateDefaultClusterManagerStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultClusterManagerStub(
       background->cq(), options);
-  return std::make_shared<container_internal::ClusterManagerConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ClusterManagerConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

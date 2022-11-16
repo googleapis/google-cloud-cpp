@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace tpu_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu_mocks {
 
 /**
  * A class to mock `TpuConnection`.
@@ -42,7 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockTpuConnection : public tpu::TpuConnection {
+class MockTpuConnection : public GOOGLE_CLOUD_CPP_NS::TpuConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -94,8 +94,8 @@ class MockTpuConnection : public tpu::TpuConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

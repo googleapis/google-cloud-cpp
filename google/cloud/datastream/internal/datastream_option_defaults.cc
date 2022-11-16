@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace datastream_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,34 +38,41 @@ Options DatastreamDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_DATASTREAM_AUTHORITY", "datastream.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<datastream::DatastreamRetryPolicyOption>()) {
-    options.set<datastream::DatastreamRetryPolicyOption>(
-        datastream::DatastreamLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::DatastreamLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<datastream::DatastreamBackoffPolicyOption>()) {
-    options.set<datastream::DatastreamBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DatastreamBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DatastreamBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<datastream::DatastreamPollingPolicyOption>()) {
-    options.set<datastream::DatastreamPollingPolicyOption>(
-        GenericPollingPolicy<datastream::DatastreamRetryPolicyOption::Type,
-                             datastream::DatastreamBackoffPolicyOption::Type>(
-            options.get<datastream::DatastreamRetryPolicyOption>()->clone(),
-            options.get<datastream::DatastreamBackoffPolicyOption>()->clone())
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::DatastreamPollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::DatastreamPollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::DatastreamBackoffPolicyOption::Type>(
+            options.get<GOOGLE_CLOUD_CPP_NS::DatastreamRetryPolicyOption>()
+                ->clone(),
+            options.get<GOOGLE_CLOUD_CPP_NS::DatastreamBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options.has<datastream::DatastreamConnectionIdempotencyPolicyOption>()) {
-    options.set<datastream::DatastreamConnectionIdempotencyPolicyOption>(
-        datastream::MakeDefaultDatastreamConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::DatastreamConnectionIdempotencyPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::DatastreamConnectionIdempotencyPolicyOption>(
+            GOOGLE_CLOUD_CPP_NS::
+                MakeDefaultDatastreamConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

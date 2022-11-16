@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace ids_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace ids_internal {
 
 IDSConnectionImpl::IDSConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<ids_internal::IDSStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IDSStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -43,7 +43,8 @@ StreamRange<google::cloud::ids::v1::Endpoint> IDSConnectionImpl::ListEndpoints(
     google::cloud::ids::v1::ListEndpointsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<ids::IDSRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::IDSRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListEndpoints(request);
   char const* function_name = __func__;
@@ -140,7 +141,7 @@ IDSConnectionImpl::DeleteEndpoint(
       __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

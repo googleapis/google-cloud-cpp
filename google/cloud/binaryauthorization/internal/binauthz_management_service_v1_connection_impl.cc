@@ -27,14 +27,13 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 BinauthzManagementServiceV1ConnectionImpl::
     BinauthzManagementServiceV1ConnectionImpl(
         std::unique_ptr<google::cloud::BackgroundThreads> background,
-        std::shared_ptr<
-            binaryauthorization_internal::BinauthzManagementServiceV1Stub>
+        std::shared_ptr<GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1Stub>
             stub,
         Options options)
     : background_(std::move(background)),
@@ -114,7 +113,7 @@ BinauthzManagementServiceV1ConnectionImpl::ListAttestors(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      binaryauthorization::BinauthzManagementServiceV1RetryPolicy const>(
+      GOOGLE_CLOUD_CPP_NS::BinauthzManagementServiceV1RetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAttestors(request);
@@ -156,7 +155,7 @@ Status BinauthzManagementServiceV1ConnectionImpl::DeleteAttestor(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

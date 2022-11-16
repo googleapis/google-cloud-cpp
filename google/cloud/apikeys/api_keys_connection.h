@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace apikeys {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apikeys {
 
 using ApiKeysRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    apikeys_internal::ApiKeysRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::ApiKeysRetryTraits>;
 
 using ApiKeysLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        apikeys_internal::ApiKeysRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ApiKeysRetryTraits>;
 
 using ApiKeysLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        apikeys_internal::ApiKeysRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ApiKeysRetryTraits>;
 
 /**
  * The `ApiKeysConnection` object for `ApiKeysClient`.
@@ -58,7 +58,7 @@ using ApiKeysLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeApiKeysConnection()`.
  *
- * For mocking, see `apikeys_mocks::MockApiKeysConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockApiKeysConnection`.
  */
 class ApiKeysConnection {
  public:
@@ -104,7 +104,7 @@ class ApiKeysConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::apikeys::ApiKeysPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ApiKeysPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -114,8 +114,8 @@ class ApiKeysConnection {
  */
 std::shared_ptr<ApiKeysConnection> MakeApiKeysConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

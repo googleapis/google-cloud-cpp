@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision_internal {
 
 class ProductSearchAuth : public ProductSearchStub {
  public:
@@ -146,8 +146,8 @@ class ProductSearchAuth : public ProductSearchStub {
   std::shared_ptr<ProductSearchStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

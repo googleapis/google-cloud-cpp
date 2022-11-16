@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 using ProductServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        retail_internal::ProductServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ProductServiceRetryTraits>;
 
 using ProductServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        retail_internal::ProductServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ProductServiceRetryTraits>;
 
 using ProductServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        retail_internal::ProductServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ProductServiceRetryTraits>;
 
 /**
  * The `ProductServiceConnection` object for `ProductServiceClient`.
@@ -59,7 +59,7 @@ using ProductServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeProductServiceConnection()`.
  *
- * For mocking, see `retail_mocks::MockProductServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockProductServiceConnection`.
  */
 class ProductServiceConnection {
  public:
@@ -123,7 +123,7 @@ class ProductServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::retail::ProductServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::ProductServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -134,8 +134,8 @@ class ProductServiceConnection {
 std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

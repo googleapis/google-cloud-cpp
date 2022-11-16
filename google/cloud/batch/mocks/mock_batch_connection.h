@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace batch_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace batch_mocks {
 
 /**
  * A class to mock `BatchServiceConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockBatchServiceConnection : public batch::BatchServiceConnection {
+class MockBatchServiceConnection
+    : public GOOGLE_CLOUD_CPP_NS::BatchServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -70,8 +71,8 @@ class MockBatchServiceConnection : public batch::BatchServiceConnection {
               (google::cloud::batch::v1::ListTasksRequest request), (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

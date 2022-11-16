@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace scheduler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace scheduler {
 
 using CloudSchedulerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        scheduler_internal::CloudSchedulerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudSchedulerRetryTraits>;
 
 using CloudSchedulerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        scheduler_internal::CloudSchedulerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudSchedulerRetryTraits>;
 
 using CloudSchedulerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        scheduler_internal::CloudSchedulerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudSchedulerRetryTraits>;
 
 /**
  * The `CloudSchedulerConnection` object for `CloudSchedulerClient`.
@@ -56,7 +56,7 @@ using CloudSchedulerLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeCloudSchedulerConnection()`.
  *
- * For mocking, see `scheduler_mocks::MockCloudSchedulerConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockCloudSchedulerConnection`.
  */
 class CloudSchedulerConnection {
  public:
@@ -102,7 +102,7 @@ class CloudSchedulerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::scheduler::CloudSchedulerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CloudSchedulerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -113,8 +113,8 @@ class CloudSchedulerConnection {
 std::shared_ptr<CloudSchedulerConnection> MakeCloudSchedulerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

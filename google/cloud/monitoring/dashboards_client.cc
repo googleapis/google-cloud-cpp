@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 DashboardsServiceClient::DashboardsServiceClient(
     std::shared_ptr<DashboardsServiceConnection> connection, Options opts)
@@ -70,7 +70,7 @@ DashboardsServiceClient::UpdateDashboard(
   return connection_->UpdateDashboard(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

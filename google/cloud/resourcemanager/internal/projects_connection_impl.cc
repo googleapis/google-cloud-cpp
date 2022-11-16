@@ -28,13 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager_internal {
 
 ProjectsConnectionImpl::ProjectsConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<resourcemanager_internal::ProjectsStub> stub,
-    Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProjectsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -57,7 +56,7 @@ ProjectsConnectionImpl::ListProjects(
     google::cloud::resourcemanager::v3::ListProjectsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<resourcemanager::ProjectsRetryPolicy const>(
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProjectsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListProjects(request);
@@ -89,7 +88,7 @@ ProjectsConnectionImpl::SearchProjects(
     google::cloud::resourcemanager::v3::SearchProjectsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<resourcemanager::ProjectsRetryPolicy const>(
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::ProjectsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->SearchProjects(request);
@@ -299,7 +298,7 @@ ProjectsConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

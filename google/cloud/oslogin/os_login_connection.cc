@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace oslogin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace oslogin {
 
 OsLoginServiceConnection::~OsLoginServiceConnection() = default;
 
@@ -74,15 +74,16 @@ std::shared_ptr<OsLoginServiceConnection> MakeOsLoginServiceConnection(
                                  UnifiedCredentialsOptionList,
                                  OsLoginServicePolicyOptionList>(options,
                                                                  __func__);
-  options = oslogin_internal::OsLoginServiceDefaultOptions(std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::OsLoginServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = oslogin_internal::CreateDefaultOsLoginServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultOsLoginServiceStub(
       background->cq(), options);
-  return std::make_shared<oslogin_internal::OsLoginServiceConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::OsLoginServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

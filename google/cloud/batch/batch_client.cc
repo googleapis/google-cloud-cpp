@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace batch {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace batch {
 
 BatchServiceClient::BatchServiceClient(
     std::shared_ptr<BatchServiceConnection> connection, Options opts)
@@ -119,7 +119,7 @@ StreamRange<google::cloud::batch::v1::Task> BatchServiceClient::ListTasks(
   return connection_->ListTasks(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace batch
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

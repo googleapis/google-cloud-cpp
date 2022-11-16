@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace trace {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace trace {
 
 TraceServiceClient::TraceServiceClient(
     std::shared_ptr<TraceServiceConnection> connection, Options opts)
@@ -55,7 +55,7 @@ StatusOr<google::devtools::cloudtrace::v2::Span> TraceServiceClient::CreateSpan(
   return connection_->CreateSpan(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

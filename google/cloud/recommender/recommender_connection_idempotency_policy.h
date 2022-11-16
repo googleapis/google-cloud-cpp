@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace recommender {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender {
 
 class RecommenderConnectionIdempotencyPolicy {
  public:
@@ -85,8 +85,8 @@ class RecommenderConnectionIdempotencyPolicy {
 std::unique_ptr<RecommenderConnectionIdempotencyPolicy>
 MakeDefaultRecommenderConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

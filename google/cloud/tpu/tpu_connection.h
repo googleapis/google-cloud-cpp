@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace tpu {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tpu {
 
 using TpuRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    tpu_internal::TpuRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::TpuRetryTraits>;
 
 using TpuLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        tpu_internal::TpuRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TpuRetryTraits>;
 
 using TpuLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        tpu_internal::TpuRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::TpuRetryTraits>;
 
 /**
  * The `TpuConnection` object for `TpuClient`.
@@ -58,7 +58,7 @@ using TpuLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeTpuConnection()`.
  *
- * For mocking, see `tpu_mocks::MockTpuConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockTpuConnection`.
  */
 class TpuConnection {
  public:
@@ -116,7 +116,7 @@ class TpuConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::tpu::TpuPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::TpuPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -126,8 +126,8 @@ class TpuConnection {
  */
 std::shared_ptr<TpuConnection> MakeTpuConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

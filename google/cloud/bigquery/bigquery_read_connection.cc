@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 void BigQueryReadReadRowsStreamingUpdater(
     google::cloud::bigquery::storage::v1::ReadRowsResponse const& response,
@@ -70,16 +70,16 @@ std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
                                  UnifiedCredentialsOptionList,
                                  BigQueryReadPolicyOptionList>(options,
                                                                __func__);
-  options = bigquery_internal::BigQueryReadDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::BigQueryReadDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = bigquery_internal::CreateDefaultBigQueryReadStub(background->cq(),
-                                                               options);
-  return std::make_shared<bigquery_internal::BigQueryReadConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultBigQueryReadStub(
+      background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::BigQueryReadConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

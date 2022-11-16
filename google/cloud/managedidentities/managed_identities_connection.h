@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace managedidentities {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace managedidentities {
 
 using ManagedIdentitiesServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        managedidentities_internal::ManagedIdentitiesServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceRetryTraits>;
 
 using ManagedIdentitiesServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        managedidentities_internal::ManagedIdentitiesServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceRetryTraits>;
 
 using ManagedIdentitiesServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        managedidentities_internal::ManagedIdentitiesServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServiceRetryTraits>;
 
 /**
  * The `ManagedIdentitiesServiceConnection` object for
@@ -62,7 +62,7 @@ using ManagedIdentitiesServiceLimitedErrorCountRetryPolicy =
  * `MakeManagedIdentitiesServiceConnection()`.
  *
  * For mocking, see
- * `managedidentities_mocks::MockManagedIdentitiesServiceConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockManagedIdentitiesServiceConnection`.
  */
 class ManagedIdentitiesServiceConnection {
  public:
@@ -129,7 +129,7 @@ class ManagedIdentitiesServiceConnection {
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
  * -
- * `google::cloud::managedidentities::ManagedIdentitiesServicePolicyOptionList`
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::ManagedIdentitiesServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -140,8 +140,8 @@ class ManagedIdentitiesServiceConnection {
 std::shared_ptr<ManagedIdentitiesServiceConnection>
 MakeManagedIdentitiesServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

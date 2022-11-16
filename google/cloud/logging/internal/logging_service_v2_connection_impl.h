@@ -35,17 +35,17 @@
 
 namespace google {
 namespace cloud {
-namespace logging_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace logging_internal {
 
 class LoggingServiceV2ConnectionImpl
-    : public logging::LoggingServiceV2Connection {
+    : public GOOGLE_CLOUD_CPP_NS::LoggingServiceV2Connection {
  public:
   ~LoggingServiceV2ConnectionImpl() override = default;
 
   LoggingServiceV2ConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2Stub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -77,45 +77,56 @@ class LoggingServiceV2ConnectionImpl
       google::logging::v2::WriteLogEntriesRequest const& request) override;
 
  private:
-  std::unique_ptr<logging::LoggingServiceV2RetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2RetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<logging::LoggingServiceV2RetryPolicyOption>()) {
-      return options.get<logging::LoggingServiceV2RetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2RetryPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2RetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<logging::LoggingServiceV2RetryPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2RetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<logging::LoggingServiceV2BackoffPolicyOption>()) {
-      return options.get<logging::LoggingServiceV2BackoffPolicyOption>()
-          ->clone();
-    }
-    return options_.get<logging::LoggingServiceV2BackoffPolicyOption>()
-        ->clone();
-  }
-
-  std::unique_ptr<logging::LoggingServiceV2ConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<
-            logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()) {
+    if (options
+            .has<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2BackoffPolicyOption>()) {
       return options
-          .get<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2BackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<logging::LoggingServiceV2ConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2BackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<
+      GOOGLE_CLOUD_CPP_NS::LoggingServiceV2ConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        LoggingServiceV2ConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   LoggingServiceV2ConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 LoggingServiceV2ConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<logging_internal::LoggingServiceV2Stub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::LoggingServiceV2Stub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

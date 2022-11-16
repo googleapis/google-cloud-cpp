@@ -26,8 +26,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -43,31 +43,34 @@ Options AutoscalingPolicyServiceDefaultOptions(std::string const& location,
                    "dataproc.googleapis.com"));
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<dataproc::AutoscalingPolicyServiceRetryPolicyOption>()) {
-    options.set<dataproc::AutoscalingPolicyServiceRetryPolicyOption>(
-        dataproc::AutoscalingPolicyServiceLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<dataproc::AutoscalingPolicyServiceBackoffPolicyOption>()) {
-    options.set<dataproc::AutoscalingPolicyServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceBackoffPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
   if (!options.has<
-          dataproc::
+          GOOGLE_CLOUD_CPP_NS::
               AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<
-        dataproc::AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>(
-        dataproc::
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    AutoscalingPolicyServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultAutoscalingPolicyServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

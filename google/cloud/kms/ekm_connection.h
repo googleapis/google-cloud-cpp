@@ -31,19 +31,19 @@
 
 namespace google {
 namespace cloud {
-namespace kms {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace kms {
 
 using EkmServiceRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    kms_internal::EkmServiceRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::EkmServiceRetryTraits>;
 
 using EkmServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        kms_internal::EkmServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EkmServiceRetryTraits>;
 
 using EkmServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        kms_internal::EkmServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EkmServiceRetryTraits>;
 
 /**
  * The `EkmServiceConnection` object for `EkmServiceClient`.
@@ -55,7 +55,7 @@ using EkmServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeEkmServiceConnection()`.
  *
- * For mocking, see `kms_mocks::MockEkmServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockEkmServiceConnection`.
  */
 class EkmServiceConnection {
  public:
@@ -89,7 +89,7 @@ class EkmServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::kms::EkmServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::EkmServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -100,8 +100,8 @@ class EkmServiceConnection {
 std::shared_ptr<EkmServiceConnection> MakeEkmServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

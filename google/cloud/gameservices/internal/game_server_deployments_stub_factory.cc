@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace gameservices_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace gameservices_internal {
 
 std::shared_ptr<GameServerDeploymentsServiceStub>
 CreateDefaultGameServerDeploymentsServiceStub(google::cloud::CompletionQueue cq,
@@ -63,7 +63,7 @@ CreateDefaultGameServerDeploymentsServiceStub(google::cloud::CompletionQueue cq,
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace apigateway_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apigateway_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,39 +39,46 @@ Options ApiGatewayServiceDefaultOptions(Options options) {
       "apigateway.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<apigateway::ApiGatewayServiceRetryPolicyOption>()) {
-    options.set<apigateway::ApiGatewayServiceRetryPolicyOption>(
-        apigateway::ApiGatewayServiceLimitedTimeRetryPolicy(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<apigateway::ApiGatewayServiceBackoffPolicyOption>()) {
-    options.set<apigateway::ApiGatewayServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<apigateway::ApiGatewayServicePollingPolicyOption>()) {
-    options.set<apigateway::ApiGatewayServicePollingPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::ApiGatewayServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ApiGatewayServicePollingPolicyOption>(
         GenericPollingPolicy<
-            apigateway::ApiGatewayServiceRetryPolicyOption::Type,
-            apigateway::ApiGatewayServiceBackoffPolicyOption::Type>(
-            options.get<apigateway::ApiGatewayServiceRetryPolicyOption>()
+            GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceRetryPolicyOption>()
                 ->clone(),
-            options.get<apigateway::ApiGatewayServiceBackoffPolicyOption>()
+            options
+                .get<
+                    GOOGLE_CLOUD_CPP_NS::ApiGatewayServiceBackoffPolicyOption>()
                 ->clone())
             .clone());
   }
-  if (!options.has<
-          apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<apigateway::ApiGatewayServiceConnectionIdempotencyPolicyOption>(
-        apigateway::MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       ApiGatewayServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    ApiGatewayServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultApiGatewayServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

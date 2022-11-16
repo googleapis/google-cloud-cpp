@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 using ::google::cloud::Idempotency;
 
@@ -64,7 +64,7 @@ MakeDefaultMetricsScopesConnectionIdempotencyPolicy() {
   return absl::make_unique<MetricsScopesConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

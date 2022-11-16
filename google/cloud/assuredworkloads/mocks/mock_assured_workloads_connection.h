@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace assuredworkloads_mocks {
 
 /**
  * A class to mock `AssuredWorkloadsServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockAssuredWorkloadsServiceConnection
-    : public assuredworkloads::AssuredWorkloadsServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -101,8 +101,8 @@ class MockAssuredWorkloadsServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

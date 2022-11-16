@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace assuredworkloads {
 
 using AssuredWorkloadsServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        assuredworkloads_internal::AssuredWorkloadsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceRetryTraits>;
 
 using AssuredWorkloadsServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        assuredworkloads_internal::AssuredWorkloadsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceRetryTraits>;
 
 using AssuredWorkloadsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        assuredworkloads_internal::AssuredWorkloadsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceRetryTraits>;
 
 /**
  * The `AssuredWorkloadsServiceConnection` object for
@@ -61,7 +61,7 @@ using AssuredWorkloadsServiceLimitedErrorCountRetryPolicy =
  * To create a concrete instance, see `MakeAssuredWorkloadsServiceConnection()`.
  *
  * For mocking, see
- * `assuredworkloads_mocks::MockAssuredWorkloadsServiceConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockAssuredWorkloadsServiceConnection`.
  */
 class AssuredWorkloadsServiceConnection {
  public:
@@ -124,7 +124,8 @@ class AssuredWorkloadsServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::assuredworkloads::AssuredWorkloadsServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -135,8 +136,8 @@ class AssuredWorkloadsServiceConnection {
 std::shared_ptr<AssuredWorkloadsServiceConnection>
 MakeAssuredWorkloadsServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

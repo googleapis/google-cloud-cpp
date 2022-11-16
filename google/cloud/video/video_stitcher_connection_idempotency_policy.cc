@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video {
 
 using ::google::cloud::Idempotency;
 
@@ -146,7 +146,7 @@ MakeDefaultVideoStitcherServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<VideoStitcherServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

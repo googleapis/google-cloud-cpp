@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace optimization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization {
 
 FleetRoutingClient::FleetRoutingClient(
     std::shared_ptr<FleetRoutingConnection> connection, Options opts)
@@ -47,7 +47,7 @@ FleetRoutingClient::BatchOptimizeTours(
   return connection_->BatchOptimizeTours(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace vision_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace vision_internal {
 
 class ImageAnnotatorLogging : public ImageAnnotatorStub {
  public:
@@ -79,8 +79,8 @@ class ImageAnnotatorLogging : public ImageAnnotatorStub {
   std::set<std::string> components_;
 };  // ImageAnnotatorLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

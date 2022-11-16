@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace beyondcorp {
 
 AppConnectorsServiceConnection::~AppConnectorsServiceConnection() = default;
 
@@ -93,17 +93,17 @@ MakeAppConnectorsServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  AppConnectorsServicePolicyOptionList>(
       options, __func__);
-  options = beyondcorp_internal::AppConnectorsServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::AppConnectorsServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = beyondcorp_internal::CreateDefaultAppConnectorsServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultAppConnectorsServiceStub(
       background->cq(), options);
   return std::make_shared<
-      beyondcorp_internal::AppConnectorsServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::AppConnectorsServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace beyondcorp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

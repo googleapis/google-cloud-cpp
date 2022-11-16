@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace trace_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace trace_mocks {
 
 /**
  * A class to mock `TraceServiceConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockTraceServiceConnection : public trace::TraceServiceConnection {
+class MockTraceServiceConnection
+    : public GOOGLE_CLOUD_CPP_NS::TraceServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -56,8 +57,8 @@ class MockTraceServiceConnection : public trace::TraceServiceConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

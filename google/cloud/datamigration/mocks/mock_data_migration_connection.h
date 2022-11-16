@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace datamigration_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datamigration_mocks {
 
 /**
  * A class to mock `DataMigrationServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockDataMigrationServiceConnection
-    : public datamigration::DataMigrationServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::DataMigrationServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -150,8 +150,8 @@ class MockDataMigrationServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_mocks {
 
 /**
  * A class to mock `ValidationHelperV1Connection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockValidationHelperV1Connection
-    : public binaryauthorization::ValidationHelperV1Connection {
+    : public GOOGLE_CLOUD_CPP_NS::ValidationHelperV1Connection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -55,8 +55,8 @@ class MockValidationHelperV1Connection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace servicedirectory_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicedirectory_internal {
 
 RegistrationServiceConnectionImpl::RegistrationServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<servicedirectory_internal::RegistrationServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::RegistrationServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -57,9 +57,9 @@ RegistrationServiceConnectionImpl::ListNamespaces(
     google::cloud::servicedirectory::v1::ListNamespacesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<servicedirectory::RegistrationServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::RegistrationServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListNamespaces(request);
   char const* function_name = __func__;
@@ -140,9 +140,9 @@ RegistrationServiceConnectionImpl::ListServices(
     google::cloud::servicedirectory::v1::ListServicesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<servicedirectory::RegistrationServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::RegistrationServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListServices(request);
   char const* function_name = __func__;
@@ -220,9 +220,9 @@ RegistrationServiceConnectionImpl::ListEndpoints(
     google::cloud::servicedirectory::v1::ListEndpointsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<servicedirectory::RegistrationServiceRetryPolicy const>(
-          retry_policy());
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::RegistrationServiceRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListEndpoints(request);
   char const* function_name = __func__;
@@ -322,7 +322,7 @@ RegistrationServiceConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

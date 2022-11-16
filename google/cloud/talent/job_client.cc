@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 JobServiceClient::JobServiceClient(
     std::shared_ptr<JobServiceConnection> connection, Options opts)
@@ -176,7 +176,7 @@ JobServiceClient::SearchJobsForAlert(
   return connection_->SearchJobsForAlert(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

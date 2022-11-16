@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 TranscoderServiceConnectionImpl::TranscoderServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<video_internal::TranscoderServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TranscoderServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -56,8 +56,9 @@ TranscoderServiceConnectionImpl::ListJobs(
     google::cloud::video::transcoder::v1::ListJobsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<video::TranscoderServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TranscoderServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListJobs(request);
   char const* function_name = __func__;
@@ -125,8 +126,9 @@ TranscoderServiceConnectionImpl::ListJobTemplates(
     google::cloud::video::transcoder::v1::ListJobTemplatesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<video::TranscoderServiceRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TranscoderServiceRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListJobTemplates(request);
   char const* function_name = __func__;
@@ -180,7 +182,7 @@ Status TranscoderServiceConnectionImpl::DeleteJobTemplate(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

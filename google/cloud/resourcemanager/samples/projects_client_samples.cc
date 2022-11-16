@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: resourcemanager::ProjectsClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::ProjectsClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::resourcemanager::ProjectsClient(
-      google::cloud::resourcemanager::MakeProjectsConnection(options));
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::ProjectsClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeProjectsConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +55,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::resourcemanager::ProjectsClient(
-        google::cloud::resourcemanager::MakeProjectsConnection(options));
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::ProjectsClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeProjectsConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));

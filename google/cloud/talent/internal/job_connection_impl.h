@@ -37,16 +37,18 @@
 
 namespace google {
 namespace cloud {
-namespace talent_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent_internal {
 
-class JobServiceConnectionImpl : public talent::JobServiceConnection {
+class JobServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::JobServiceConnection {
  public:
   ~JobServiceConnectionImpl() override = default;
 
   JobServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<talent_internal::JobServiceStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::JobServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -84,48 +86,58 @@ class JobServiceConnectionImpl : public talent::JobServiceConnection {
       google::cloud::talent::v4::SearchJobsRequest const& request) override;
 
  private:
-  std::unique_ptr<talent::JobServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::JobServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<talent::JobServiceRetryPolicyOption>()) {
-      return options.get<talent::JobServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::JobServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::JobServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<talent::JobServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::JobServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<talent::JobServiceBackoffPolicyOption>()) {
-      return options.get<talent::JobServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<talent::JobServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<talent::JobServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<talent::JobServiceConnectionIdempotencyPolicyOption>()) {
-      return options.get<talent::JobServiceConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::JobServiceBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::JobServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<talent::JobServiceConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::JobServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::JobServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        JobServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   JobServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::JobServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<talent::JobServicePollingPolicyOption>()) {
-      return options.get<talent::JobServicePollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::JobServicePollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::JobServicePollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<talent::JobServicePollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::JobServicePollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<talent_internal::JobServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::JobServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

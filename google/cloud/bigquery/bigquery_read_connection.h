@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 using BigQueryReadRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::BigQueryReadRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BigQueryReadRetryTraits>;
 
 using BigQueryReadLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::BigQueryReadRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BigQueryReadRetryTraits>;
 
 using BigQueryReadLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::BigQueryReadRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BigQueryReadRetryTraits>;
 
 GOOGLE_CLOUD_CPP_DEPRECATED(
     "applications should not need this."
@@ -64,7 +64,7 @@ void BigQueryReadReadRowsStreamingUpdater(
  *
  * To create a concrete instance, see `MakeBigQueryReadConnection()`.
  *
- * For mocking, see `bigquery_mocks::MockBigQueryReadConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockBigQueryReadConnection`.
  */
 class BigQueryReadConnection {
  public:
@@ -101,7 +101,7 @@ class BigQueryReadConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::BigQueryReadPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::BigQueryReadPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -112,9 +112,9 @@ class BigQueryReadConnection {
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -35,20 +35,20 @@
 
 namespace google {
 namespace cloud {
-namespace documentai {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai {
 
 using DocumentProcessorServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        documentai_internal::DocumentProcessorServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryTraits>;
 
 using DocumentProcessorServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        documentai_internal::DocumentProcessorServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryTraits>;
 
 using DocumentProcessorServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        documentai_internal::DocumentProcessorServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceRetryTraits>;
 
 /**
  * The `DocumentProcessorServiceConnection` object for
@@ -62,7 +62,8 @@ using DocumentProcessorServiceLimitedErrorCountRetryPolicy =
  * To create a concrete instance, see
  * `MakeDocumentProcessorServiceConnection()`.
  *
- * For mocking, see `documentai_mocks::MockDocumentProcessorServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockDocumentProcessorServiceConnection`.
  */
 class DocumentProcessorServiceConnection {
  public:
@@ -162,7 +163,8 @@ class DocumentProcessorServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::documentai::DocumentProcessorServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::DocumentProcessorServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -185,8 +187,8 @@ MakeDocumentProcessorServiceConnection(std::string const& location,
 std::shared_ptr<DocumentProcessorServiceConnection>
 MakeDocumentProcessorServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

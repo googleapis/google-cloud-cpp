@@ -37,16 +37,16 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
-class VersionsConnectionImpl : public appengine::VersionsConnection {
+class VersionsConnectionImpl : public GOOGLE_CLOUD_CPP_NS::VersionsConnection {
  public:
   ~VersionsConnectionImpl() override = default;
 
   VersionsConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<appengine_internal::VersionsStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VersionsStub> stub, Options options);
 
   Options options() override { return options_; }
 
@@ -66,49 +66,57 @@ class VersionsConnectionImpl : public appengine::VersionsConnection {
       google::appengine::v1::DeleteVersionRequest const& request) override;
 
  private:
-  std::unique_ptr<appengine::VersionsRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::VersionsRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::VersionsRetryPolicyOption>()) {
-      return options.get<appengine::VersionsRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::VersionsRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::VersionsRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<appengine::VersionsRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::VersionsRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::VersionsBackoffPolicyOption>()) {
-      return options.get<appengine::VersionsBackoffPolicyOption>()->clone();
-    }
-    return options_.get<appengine::VersionsBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<appengine::VersionsConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::VersionsConnectionIdempotencyPolicyOption>()) {
-      return options
-          .get<appengine::VersionsConnectionIdempotencyPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::VersionsBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::VersionsBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<appengine::VersionsConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::VersionsBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::VersionsConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::VersionsConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::VersionsConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::VersionsConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<appengine::VersionsPollingPolicyOption>()) {
-      return options.get<appengine::VersionsPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::VersionsPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::VersionsPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<appengine::VersionsPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::VersionsPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<appengine_internal::VersionsStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VersionsStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

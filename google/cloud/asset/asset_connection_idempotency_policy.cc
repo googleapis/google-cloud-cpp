@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace asset {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace asset {
 
 using ::google::cloud::Idempotency;
 
@@ -142,7 +142,7 @@ MakeDefaultAssetServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<AssetServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

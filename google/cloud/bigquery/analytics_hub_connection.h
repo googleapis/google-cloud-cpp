@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery {
 
 using AnalyticsHubServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        bigquery_internal::AnalyticsHubServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AnalyticsHubServiceRetryTraits>;
 
 using AnalyticsHubServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        bigquery_internal::AnalyticsHubServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AnalyticsHubServiceRetryTraits>;
 
 using AnalyticsHubServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        bigquery_internal::AnalyticsHubServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::AnalyticsHubServiceRetryTraits>;
 
 /**
  * The `AnalyticsHubServiceConnection` object for `AnalyticsHubServiceClient`.
@@ -56,7 +56,8 @@ using AnalyticsHubServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeAnalyticsHubServiceConnection()`.
  *
- * For mocking, see `bigquery_mocks::MockAnalyticsHubServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockAnalyticsHubServiceConnection`.
  */
 class AnalyticsHubServiceConnection {
  public:
@@ -144,7 +145,7 @@ class AnalyticsHubServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::bigquery::AnalyticsHubServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::AnalyticsHubServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -155,8 +156,8 @@ class AnalyticsHubServiceConnection {
 std::shared_ptr<AnalyticsHubServiceConnection>
 MakeAnalyticsHubServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

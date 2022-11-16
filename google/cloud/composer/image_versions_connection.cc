@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace composer {
 
 ImageVersionsConnection::~ImageVersionsConnection() = default;
 
@@ -49,15 +49,16 @@ std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(
                                  UnifiedCredentialsOptionList,
                                  ImageVersionsPolicyOptionList>(options,
                                                                 __func__);
-  options = composer_internal::ImageVersionsDefaultOptions(std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::ImageVersionsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = composer_internal::CreateDefaultImageVersionsStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultImageVersionsStub(
       background->cq(), options);
-  return std::make_shared<composer_internal::ImageVersionsConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::ImageVersionsConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

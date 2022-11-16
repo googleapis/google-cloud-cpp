@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storage_internal {
 
 StorageStub::~StorageStub() = default;
 
@@ -467,7 +467,7 @@ DefaultStorageStub::AsyncQueryWriteStatus(
       request, std::move(context));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 CompanyServiceConnection::~CompanyServiceConnection() = default;
 
@@ -72,15 +72,16 @@ std::shared_ptr<CompanyServiceConnection> MakeCompanyServiceConnection(
                                  UnifiedCredentialsOptionList,
                                  CompanyServicePolicyOptionList>(options,
                                                                  __func__);
-  options = talent_internal::CompanyServiceDefaultOptions(std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::CompanyServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = talent_internal::CreateDefaultCompanyServiceStub(background->cq(),
-                                                               options);
-  return std::make_shared<talent_internal::CompanyServiceConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultCompanyServiceStub(
+      background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::CompanyServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

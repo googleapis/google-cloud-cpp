@@ -32,19 +32,19 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 using WebhooksRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    dialogflow_cx_internal::WebhooksRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::WebhooksRetryTraits>;
 
 using WebhooksLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::WebhooksRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::WebhooksRetryTraits>;
 
 using WebhooksLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::WebhooksRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::WebhooksRetryTraits>;
 
 /**
  * The `WebhooksConnection` object for `WebhooksClient`.
@@ -56,7 +56,7 @@ using WebhooksLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeWebhooksConnection()`.
  *
- * For mocking, see `dialogflow_cx_mocks::MockWebhooksConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockWebhooksConnection`.
  */
 class WebhooksConnection {
  public:
@@ -93,7 +93,7 @@ class WebhooksConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::WebhooksPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::WebhooksPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -115,8 +115,8 @@ std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(
 std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

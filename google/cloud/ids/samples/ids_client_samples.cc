@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: ids::IDSClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::IDSClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::ids::IDSClient(
-      google::cloud::ids::MakeIDSConnection(options));
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::IDSClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeIDSConnection(options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +55,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::ids::IDSClient(
-        google::cloud::ids::MakeIDSConnection(options));
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::IDSClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeIDSConnection(options));
   }
   //! [with-service-account]
   (argv.at(0));

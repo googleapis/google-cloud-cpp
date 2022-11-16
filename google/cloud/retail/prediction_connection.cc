@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 PredictionServiceConnection::~PredictionServiceConnection() = default;
 
@@ -47,15 +47,15 @@ std::shared_ptr<PredictionServiceConnection> MakePredictionServiceConnection(
                                  PredictionServicePolicyOptionList>(options,
                                                                     __func__);
   options =
-      retail_internal::PredictionServiceDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::PredictionServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = retail_internal::CreateDefaultPredictionServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultPredictionServiceStub(
       background->cq(), options);
-  return std::make_shared<retail_internal::PredictionServiceConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::PredictionServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 class SearchServiceLogging : public SearchServiceStub {
  public:
@@ -48,8 +48,8 @@ class SearchServiceLogging : public SearchServiceStub {
   std::set<std::string> components_;
 };  // SearchServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

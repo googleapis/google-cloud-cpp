@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace notebooks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace notebooks {
 
 ManagedNotebookServiceConnection::~ManagedNotebookServiceConnection() = default;
 
@@ -117,17 +117,17 @@ MakeManagedNotebookServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  ManagedNotebookServicePolicyOptionList>(
       options, __func__);
-  options = notebooks_internal::ManagedNotebookServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = notebooks_internal::CreateDefaultManagedNotebookServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultManagedNotebookServiceStub(
       background->cq(), options);
   return std::make_shared<
-      notebooks_internal::ManagedNotebookServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::ManagedNotebookServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,35 +39,46 @@ Options LivestreamServiceDefaultOptions(Options options) {
       "livestream.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<video::LivestreamServiceRetryPolicyOption>()) {
-    options.set<video::LivestreamServiceRetryPolicyOption>(
-        video::LivestreamServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::LivestreamServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<video::LivestreamServiceBackoffPolicyOption>()) {
-    options.set<video::LivestreamServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::LivestreamServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::LivestreamServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<video::LivestreamServicePollingPolicyOption>()) {
-    options.set<video::LivestreamServicePollingPolicyOption>(
-        GenericPollingPolicy<video::LivestreamServiceRetryPolicyOption::Type,
-                             video::LivestreamServiceBackoffPolicyOption::Type>(
-            options.get<video::LivestreamServiceRetryPolicyOption>()->clone(),
-            options.get<video::LivestreamServiceBackoffPolicyOption>()->clone())
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::LivestreamServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::LivestreamServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::LivestreamServiceBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::LivestreamServiceRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<
+                    GOOGLE_CLOUD_CPP_NS::LivestreamServiceBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options
-           .has<video::LivestreamServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<video::LivestreamServiceConnectionIdempotencyPolicyOption>(
-        video::MakeDefaultLivestreamServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       LivestreamServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::
+                    LivestreamServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultLivestreamServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

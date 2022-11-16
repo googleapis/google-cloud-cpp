@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace connectors {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace connectors {
 
 class ConnectorsConnectionIdempotencyPolicy {
  public:
@@ -87,8 +87,8 @@ class ConnectorsConnectionIdempotencyPolicy {
 std::unique_ptr<ConnectorsConnectionIdempotencyPolicy>
 MakeDefaultConnectorsConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace connectors
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

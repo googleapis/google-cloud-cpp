@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace billing_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing_internal {
 
 BudgetServiceLogging::BudgetServiceLogging(
     std::shared_ptr<BudgetServiceStub> child, TracingOptions tracing_options,
@@ -88,7 +88,7 @@ Status BudgetServiceLogging::DeleteBudget(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

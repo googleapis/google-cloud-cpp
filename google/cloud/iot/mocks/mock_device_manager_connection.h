@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace iot_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iot_mocks {
 
 /**
  * A class to mock `DeviceManagerConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockDeviceManagerConnection : public iot::DeviceManagerConnection {
+class MockDeviceManagerConnection
+    : public GOOGLE_CLOUD_CPP_NS::DeviceManagerConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -138,8 +139,8 @@ class MockDeviceManagerConnection : public iot::DeviceManagerConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

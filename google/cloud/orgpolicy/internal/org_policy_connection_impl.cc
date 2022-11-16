@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace orgpolicy_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace orgpolicy_internal {
 
 OrgPolicyConnectionImpl::OrgPolicyConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<orgpolicy_internal::OrgPolicyStub> stub, Options options)
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::OrgPolicyStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
@@ -43,8 +43,8 @@ OrgPolicyConnectionImpl::ListConstraints(
     google::cloud::orgpolicy::v2::ListConstraintsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<orgpolicy::OrgPolicyRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::OrgPolicyRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListConstraints(request);
   char const* function_name = __func__;
@@ -76,8 +76,8 @@ OrgPolicyConnectionImpl::ListPolicies(
     google::cloud::orgpolicy::v2::ListPoliciesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry =
-      std::shared_ptr<orgpolicy::OrgPolicyRetryPolicy const>(retry_policy());
+  auto retry = std::shared_ptr<GOOGLE_CLOUD_CPP_NS::OrgPolicyRetryPolicy const>(
+      retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListPolicies(request);
   char const* function_name = __func__;
@@ -169,7 +169,7 @@ Status OrgPolicyConnectionImpl::DeletePolicy(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

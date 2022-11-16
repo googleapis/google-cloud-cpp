@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace channel_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace channel_mocks {
 
 /**
  * A class to mock `CloudChannelServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockCloudChannelServiceConnection
-    : public channel::CloudChannelServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::CloudChannelServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -307,8 +307,8 @@ class MockCloudChannelServiceConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace asset {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace asset {
 
 AssetServiceConnection::~AssetServiceConnection() = default;
 
@@ -167,15 +167,15 @@ std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
                                  UnifiedCredentialsOptionList,
                                  AssetServicePolicyOptionList>(options,
                                                                __func__);
-  options = asset_internal::AssetServiceDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::AssetServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      asset_internal::CreateDefaultAssetServiceStub(background->cq(), options);
-  return std::make_shared<asset_internal::AssetServiceConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultAssetServiceStub(
+      background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::AssetServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace datacatalog_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datacatalog_internal {
 
 class PolicyTagManagerSerializationLogging
     : public PolicyTagManagerSerializationStub {
@@ -62,8 +62,8 @@ class PolicyTagManagerSerializationLogging
   std::set<std::string> components_;
 };  // PolicyTagManagerSerializationLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

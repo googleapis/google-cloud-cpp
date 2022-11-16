@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol {
 
 QuotaControllerClient::QuotaControllerClient(
     std::shared_ptr<QuotaControllerConnection> connection, Options opts)
@@ -39,7 +39,7 @@ QuotaControllerClient::AllocateQuota(
   return connection_->AllocateQuota(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

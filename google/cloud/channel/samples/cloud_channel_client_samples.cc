@@ -26,7 +26,7 @@
 #include <string>
 #include <vector>
 
-// main-dox-marker: channel::CloudChannelServiceClient
+// main-dox-marker: GOOGLE_CLOUD_CPP_NS::CloudChannelServiceClient
 namespace {
 
 void SetClientEndpoint(std::vector<std::string> const& argv) {
@@ -38,8 +38,9 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::channel::CloudChannelServiceClient(
-      google::cloud::channel::MakeCloudChannelServiceConnection(options));
+  auto client = google::cloud::GOOGLE_CLOUD_CPP_NS::CloudChannelServiceClient(
+      google::cloud::GOOGLE_CLOUD_CPP_NS::MakeCloudChannelServiceConnection(
+          options));
   //! [set-client-endpoint]
 }
 
@@ -55,8 +56,9 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::channel::CloudChannelServiceClient(
-        google::cloud::channel::MakeCloudChannelServiceConnection(options));
+    return google::cloud::GOOGLE_CLOUD_CPP_NS::CloudChannelServiceClient(
+        google::cloud::GOOGLE_CLOUD_CPP_NS::MakeCloudChannelServiceConnection(
+            options));
   }
   //! [with-service-account]
   (argv.at(0));

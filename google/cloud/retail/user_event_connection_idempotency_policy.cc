@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 using ::google::cloud::Idempotency;
 
@@ -65,7 +65,7 @@ MakeDefaultUserEventServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<UserEventServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

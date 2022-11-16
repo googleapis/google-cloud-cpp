@@ -34,16 +34,17 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
-class SearchServiceConnectionImpl : public retail::SearchServiceConnection {
+class SearchServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::SearchServiceConnection {
  public:
   ~SearchServiceConnectionImpl() override = default;
 
   SearchServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<retail_internal::SearchServiceStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SearchServiceStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -52,42 +53,52 @@ class SearchServiceConnectionImpl : public retail::SearchServiceConnection {
       google::cloud::retail::v2::SearchRequest request) override;
 
  private:
-  std::unique_ptr<retail::SearchServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::SearchServiceRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::SearchServiceRetryPolicyOption>()) {
-      return options.get<retail::SearchServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::SearchServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::SearchServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<retail::SearchServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::SearchServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<retail::SearchServiceBackoffPolicyOption>()) {
-      return options.get<retail::SearchServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<retail::SearchServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<retail::SearchServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<retail::SearchServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::SearchServiceBackoffPolicyOption>()) {
       return options
-          .get<retail::SearchServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::SearchServiceBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<retail::SearchServiceConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::SearchServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::SearchServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        SearchServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   SearchServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 SearchServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<retail_internal::SearchServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::SearchServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

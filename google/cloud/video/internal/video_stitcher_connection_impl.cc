@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace video_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video_internal {
 
 VideoStitcherServiceConnectionImpl::VideoStitcherServiceConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<video_internal::VideoStitcherServiceStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -56,7 +56,8 @@ VideoStitcherServiceConnectionImpl::ListCdnKeys(
     google::cloud::video::stitcher::v1::ListCdnKeysRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<video::VideoStitcherServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListCdnKeys(request);
@@ -149,7 +150,8 @@ VideoStitcherServiceConnectionImpl::ListVodStitchDetails(
     google::cloud::video::stitcher::v1::ListVodStitchDetailsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<video::VideoStitcherServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListVodStitchDetails(request);
@@ -197,7 +199,8 @@ VideoStitcherServiceConnectionImpl::ListVodAdTagDetails(
     google::cloud::video::stitcher::v1::ListVodAdTagDetailsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<video::VideoStitcherServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListVodAdTagDetails(request);
@@ -246,7 +249,8 @@ VideoStitcherServiceConnectionImpl::ListLiveAdTagDetails(
     google::cloud::video::stitcher::v1::ListLiveAdTagDetailsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<video::VideoStitcherServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListLiveAdTagDetails(request);
@@ -306,7 +310,8 @@ VideoStitcherServiceConnectionImpl::ListSlates(
     google::cloud::video::stitcher::v1::ListSlatesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<video::VideoStitcherServiceRetryPolicy const>(
+  auto retry = std::shared_ptr<
+      GOOGLE_CLOUD_CPP_NS::VideoStitcherServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListSlates(request);
@@ -395,7 +400,7 @@ VideoStitcherServiceConnectionImpl::GetLiveSession(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

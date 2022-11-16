@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace ids {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace ids {
 
 class IDSConnectionIdempotencyPolicy {
  public:
@@ -53,8 +53,8 @@ class IDSConnectionIdempotencyPolicy {
 std::unique_ptr<IDSConnectionIdempotencyPolicy>
 MakeDefaultIDSConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

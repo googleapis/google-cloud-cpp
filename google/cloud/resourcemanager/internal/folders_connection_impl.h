@@ -37,17 +37,16 @@
 
 namespace google {
 namespace cloud {
-namespace resourcemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcemanager_internal {
 
-class FoldersConnectionImpl : public resourcemanager::FoldersConnection {
+class FoldersConnectionImpl : public GOOGLE_CLOUD_CPP_NS::FoldersConnection {
  public:
   ~FoldersConnectionImpl() override = default;
 
   FoldersConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<resourcemanager_internal::FoldersStub> stub,
-      Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::FoldersStub> stub, Options options);
 
   Options options() override { return options_; }
 
@@ -92,53 +91,57 @@ class FoldersConnectionImpl : public resourcemanager::FoldersConnection {
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
  private:
-  std::unique_ptr<resourcemanager::FoldersRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::FoldersRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::FoldersRetryPolicyOption>()) {
-      return options.get<resourcemanager::FoldersRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::FoldersRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::FoldersRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<resourcemanager::FoldersRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::FoldersRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::FoldersBackoffPolicyOption>()) {
-      return options.get<resourcemanager::FoldersBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::FoldersBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::FoldersBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<resourcemanager::FoldersBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::FoldersBackoffPolicyOption>()
+        ->clone();
   }
 
-  std::unique_ptr<resourcemanager::FoldersConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::FoldersConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options
-            .has<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()) {
+    if (options.has<
+            GOOGLE_CLOUD_CPP_NS::FoldersConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::FoldersConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<resourcemanager::FoldersConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::FoldersConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<resourcemanager::FoldersPollingPolicyOption>()) {
-      return options.get<resourcemanager::FoldersPollingPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::FoldersPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::FoldersPollingPolicyOption>()
           ->clone();
     }
-    return options_.get<resourcemanager::FoldersPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::FoldersPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<resourcemanager_internal::FoldersStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::FoldersStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

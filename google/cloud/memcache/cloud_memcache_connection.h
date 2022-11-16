@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace memcache {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache {
 
 using CloudMemcacheRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        memcache_internal::CloudMemcacheRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudMemcacheRetryTraits>;
 
 using CloudMemcacheLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        memcache_internal::CloudMemcacheRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudMemcacheRetryTraits>;
 
 using CloudMemcacheLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        memcache_internal::CloudMemcacheRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudMemcacheRetryTraits>;
 
 /**
  * The `CloudMemcacheConnection` object for `CloudMemcacheClient`.
@@ -59,7 +59,7 @@ using CloudMemcacheLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeCloudMemcacheConnection()`.
  *
- * For mocking, see `memcache_mocks::MockCloudMemcacheConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockCloudMemcacheConnection`.
  */
 class CloudMemcacheConnection {
  public:
@@ -107,7 +107,7 @@ class CloudMemcacheConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::memcache::CloudMemcachePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CloudMemcachePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -118,8 +118,8 @@ class CloudMemcacheConnection {
 std::shared_ptr<CloudMemcacheConnection> MakeCloudMemcacheConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

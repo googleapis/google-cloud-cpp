@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail {
 
 SearchServiceClient::SearchServiceClient(
     std::shared_ptr<SearchServiceConnection> connection, Options opts)
@@ -38,7 +38,7 @@ SearchServiceClient::Search(google::cloud::retail::v2::SearchRequest request,
   return connection_->Search(std::move(request));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

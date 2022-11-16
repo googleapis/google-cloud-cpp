@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace datastream {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datastream {
 
 using ::google::cloud::Idempotency;
 
@@ -165,7 +165,7 @@ MakeDefaultDatastreamConnectionIdempotencyPolicy() {
   return absl::make_unique<DatastreamConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datastream
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

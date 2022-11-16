@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace memcache {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace memcache {
 
 CloudMemcacheConnection::~CloudMemcacheConnection() = default;
 
@@ -95,15 +95,16 @@ std::shared_ptr<CloudMemcacheConnection> MakeCloudMemcacheConnection(
                                  UnifiedCredentialsOptionList,
                                  CloudMemcachePolicyOptionList>(options,
                                                                 __func__);
-  options = memcache_internal::CloudMemcacheDefaultOptions(std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::CloudMemcacheDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = memcache_internal::CreateDefaultCloudMemcacheStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultCloudMemcacheStub(
       background->cq(), options);
-  return std::make_shared<memcache_internal::CloudMemcacheConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::CloudMemcacheConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

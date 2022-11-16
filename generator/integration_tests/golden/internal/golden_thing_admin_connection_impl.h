@@ -37,17 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace golden_internal {
 
 class GoldenThingAdminConnectionImpl
-    : public golden::GoldenThingAdminConnection {
+    : public GOOGLE_CLOUD_CPP_NS::GoldenThingAdminConnection {
  public:
   ~GoldenThingAdminConnectionImpl() override = default;
 
   GoldenThingAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<golden_internal::GoldenThingAdminStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminStub> stub,
     Options options);
 
   Options options() override { return options_; }
@@ -113,46 +113,46 @@ class GoldenThingAdminConnectionImpl
   AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) override;
 
  private:
-  std::unique_ptr<golden::GoldenThingAdminRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenThingAdminRetryPolicyOption>()) {
-      return options.get<golden::GoldenThingAdminRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminRetryPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenThingAdminRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminRetryPolicyOption>()->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenThingAdminBackoffPolicyOption>()) {
-      return options.get<golden::GoldenThingAdminBackoffPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminBackoffPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenThingAdminBackoffPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminBackoffPolicyOption>()->clone();
   }
 
-  std::unique_ptr<golden::GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminConnectionIdempotencyPolicy> idempotency_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()) {
-      return options.get<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminConnectionIdempotencyPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminConnectionIdempotencyPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenThingAdminConnectionIdempotencyPolicyOption>()->
+    return options_.get<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminConnectionIdempotencyPolicyOption>()->
 clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<golden::GoldenThingAdminPollingPolicyOption>()) {
-      return options.get<golden::GoldenThingAdminPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminPollingPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminPollingPolicyOption>()->clone();
     }
-    return options_.get<golden::GoldenThingAdminPollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminPollingPolicyOption>()->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<golden_internal::GoldenThingAdminStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GoldenThingAdminStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

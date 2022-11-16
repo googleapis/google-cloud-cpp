@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace certificatemanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace certificatemanager_internal {
 
 std::shared_ptr<CertificateManagerStub> CreateDefaultCertificateManagerStub(
     google::cloud::CompletionQueue cq, Options const& options) {
@@ -62,7 +62,7 @@ std::shared_ptr<CertificateManagerStub> CreateDefaultCertificateManagerStub(
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace certificatemanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

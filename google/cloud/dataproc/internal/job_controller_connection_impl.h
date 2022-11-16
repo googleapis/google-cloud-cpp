@@ -37,16 +37,17 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
-class JobControllerConnectionImpl : public dataproc::JobControllerConnection {
+class JobControllerConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::JobControllerConnection {
  public:
   ~JobControllerConnectionImpl() override = default;
 
   JobControllerConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<dataproc_internal::JobControllerStub> stub,
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::JobControllerStub> stub,
       Options options);
 
   Options options() override { return options_; }
@@ -73,51 +74,64 @@ class JobControllerConnectionImpl : public dataproc::JobControllerConnection {
       google::cloud::dataproc::v1::DeleteJobRequest const& request) override;
 
  private:
-  std::unique_ptr<dataproc::JobControllerRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::JobControllerRetryPolicy>
+  retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::JobControllerRetryPolicyOption>()) {
-      return options.get<dataproc::JobControllerRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::JobControllerRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::JobControllerRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<dataproc::JobControllerRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::JobControllerRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::JobControllerBackoffPolicyOption>()) {
-      return options.get<dataproc::JobControllerBackoffPolicyOption>()->clone();
-    }
-    return options_.get<dataproc::JobControllerBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<dataproc::JobControllerConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options
-            .has<dataproc::JobControllerConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::JobControllerBackoffPolicyOption>()) {
       return options
-          .get<dataproc::JobControllerConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::JobControllerBackoffPolicyOption>()
           ->clone();
     }
     return options_
-        .get<dataproc::JobControllerConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::JobControllerBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::JobControllerConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        JobControllerConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   JobControllerConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 JobControllerConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<dataproc::JobControllerPollingPolicyOption>()) {
-      return options.get<dataproc::JobControllerPollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::JobControllerPollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::JobControllerPollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<dataproc::JobControllerPollingPolicyOption>()->clone();
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::JobControllerPollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<dataproc_internal::JobControllerStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::JobControllerStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

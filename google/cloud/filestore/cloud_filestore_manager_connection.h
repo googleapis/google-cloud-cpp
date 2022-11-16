@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace filestore {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace filestore {
 
 using CloudFilestoreManagerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        filestore_internal::CloudFilestoreManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerRetryTraits>;
 
 using CloudFilestoreManagerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        filestore_internal::CloudFilestoreManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerRetryTraits>;
 
 using CloudFilestoreManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        filestore_internal::CloudFilestoreManagerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerRetryTraits>;
 
 /**
  * The `CloudFilestoreManagerConnection` object for
@@ -60,7 +60,8 @@ using CloudFilestoreManagerLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeCloudFilestoreManagerConnection()`.
  *
- * For mocking, see `filestore_mocks::MockCloudFilestoreManagerConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockCloudFilestoreManagerConnection`.
  */
 class CloudFilestoreManagerConnection {
  public:
@@ -122,7 +123,7 @@ class CloudFilestoreManagerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::filestore::CloudFilestoreManagerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::CloudFilestoreManagerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -133,8 +134,8 @@ class CloudFilestoreManagerConnection {
 std::shared_ptr<CloudFilestoreManagerConnection>
 MakeCloudFilestoreManagerConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

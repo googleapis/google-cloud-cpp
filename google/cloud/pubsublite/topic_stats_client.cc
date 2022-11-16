@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite {
 
 TopicStatsServiceClient::TopicStatsServiceClient(
     std::shared_ptr<TopicStatsServiceConnection> connection, Options opts)
@@ -55,7 +55,7 @@ TopicStatsServiceClient::ComputeTimeCursor(
   return connection_->ComputeTimeCursor(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

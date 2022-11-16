@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 MetricsScopesConnection::~MetricsScopesConnection() = default;
 
@@ -73,15 +73,15 @@ std::shared_ptr<MetricsScopesConnection> MakeMetricsScopesConnection(
                                  MetricsScopesPolicyOptionList>(options,
                                                                 __func__);
   options =
-      monitoring_internal::MetricsScopesDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::MetricsScopesDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = monitoring_internal::CreateDefaultMetricsScopesStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultMetricsScopesStub(
       background->cq(), options);
-  return std::make_shared<monitoring_internal::MetricsScopesConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::MetricsScopesConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

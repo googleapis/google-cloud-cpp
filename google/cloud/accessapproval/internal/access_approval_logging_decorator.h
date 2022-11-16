@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accessapproval_internal {
 
 class AccessApprovalLogging : public AccessApprovalStub {
  public:
@@ -97,8 +97,8 @@ class AccessApprovalLogging : public AccessApprovalStub {
   std::set<std::string> components_;
 };  // AccessApprovalLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

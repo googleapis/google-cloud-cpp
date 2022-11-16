@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace bigquery_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace bigquery_internal {
 
 ModelServiceLogging::ModelServiceLogging(
     std::shared_ptr<ModelServiceStub> child, TracingOptions tracing_options,
@@ -79,7 +79,7 @@ Status ModelServiceLogging::DeleteModel(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

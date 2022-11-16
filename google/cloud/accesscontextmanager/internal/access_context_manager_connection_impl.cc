@@ -28,13 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace accesscontextmanager_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accesscontextmanager_internal {
 
 AccessContextManagerConnectionImpl::AccessContextManagerConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<accesscontextmanager_internal::AccessContextManagerStub>
-        stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AccessContextManagerStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -48,7 +47,7 @@ AccessContextManagerConnectionImpl::ListAccessPolicies(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      accesscontextmanager::AccessContextManagerRetryPolicy const>(
+      GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAccessPolicies(request);
@@ -195,7 +194,7 @@ AccessContextManagerConnectionImpl::ListAccessLevels(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      accesscontextmanager::AccessContextManagerRetryPolicy const>(
+      GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListAccessLevels(request);
@@ -376,7 +375,7 @@ AccessContextManagerConnectionImpl::ListServicePerimeters(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      accesscontextmanager::AccessContextManagerRetryPolicy const>(
+      GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListServicePerimeters(request);
@@ -598,7 +597,7 @@ AccessContextManagerConnectionImpl::ListGcpUserAccessBindings(
   request.clear_page_token();
   auto& stub = stub_;
   auto retry = std::shared_ptr<
-      accesscontextmanager::AccessContextManagerRetryPolicy const>(
+      GOOGLE_CLOUD_CPP_NS::AccessContextManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListGcpUserAccessBindings(request);
@@ -784,7 +783,7 @@ AccessContextManagerConnectionImpl::TestIamPermissions(
       request, __func__);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

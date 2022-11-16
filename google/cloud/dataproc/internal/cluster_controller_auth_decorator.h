@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 class ClusterControllerAuth : public ClusterControllerStub {
  public:
@@ -96,8 +96,8 @@ class ClusterControllerAuth : public ClusterControllerStub {
   std::shared_ptr<ClusterControllerStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine {
 
 class AuthorizedDomainsConnectionIdempotencyPolicy {
  public:
@@ -45,8 +45,8 @@ class AuthorizedDomainsConnectionIdempotencyPolicy {
 std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>
 MakeDefaultAuthorizedDomainsConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

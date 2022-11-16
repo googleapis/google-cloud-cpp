@@ -31,8 +31,8 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence_internal {
 
 std::shared_ptr<VideoIntelligenceServiceStub>
 CreateDefaultVideoIntelligenceServiceStub(google::cloud::CompletionQueue cq,
@@ -63,7 +63,7 @@ CreateDefaultVideoIntelligenceServiceStub(google::cloud::CompletionQueue cq,
   return stub;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

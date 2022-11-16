@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc {
 
 class AutoscalingPolicyServiceConnectionIdempotencyPolicy {
  public:
@@ -60,8 +60,8 @@ class AutoscalingPolicyServiceConnectionIdempotencyPolicy {
 std::unique_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>
 MakeDefaultAutoscalingPolicyServiceConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

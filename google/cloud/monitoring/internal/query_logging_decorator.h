@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_internal {
 
 class QueryServiceLogging : public QueryServiceStub {
  public:
@@ -48,8 +48,8 @@ class QueryServiceLogging : public QueryServiceStub {
   std::set<std::string> components_;
 };  // QueryServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

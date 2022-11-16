@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace iap {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace iap {
 
 using IdentityAwareProxyAdminServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        iap_internal::IdentityAwareProxyAdminServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyAdminServiceRetryTraits>;
 
 using IdentityAwareProxyAdminServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        iap_internal::IdentityAwareProxyAdminServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyAdminServiceRetryTraits>;
 
 using IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        iap_internal::IdentityAwareProxyAdminServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyAdminServiceRetryTraits>;
 
 /**
  * The `IdentityAwareProxyAdminServiceConnection` object for
@@ -58,7 +58,8 @@ using IdentityAwareProxyAdminServiceLimitedErrorCountRetryPolicy =
  * To create a concrete instance, see
  * `MakeIdentityAwareProxyAdminServiceConnection()`.
  *
- * For mocking, see `iap_mocks::MockIdentityAwareProxyAdminServiceConnection`.
+ * For mocking, see
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockIdentityAwareProxyAdminServiceConnection`.
  */
 class IdentityAwareProxyAdminServiceConnection {
  public:
@@ -115,7 +116,8 @@ class IdentityAwareProxyAdminServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::iap::IdentityAwareProxyAdminServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::IdentityAwareProxyAdminServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -126,8 +128,8 @@ class IdentityAwareProxyAdminServiceConnection {
 std::shared_ptr<IdentityAwareProxyAdminServiceConnection>
 MakeIdentityAwareProxyAdminServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

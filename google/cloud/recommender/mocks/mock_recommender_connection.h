@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace recommender_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace recommender_mocks {
 
 /**
  * A class to mock `RecommenderConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockRecommenderConnection : public recommender::RecommenderConnection {
+class MockRecommenderConnection
+    : public GOOGLE_CLOUD_CPP_NS::RecommenderConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -124,8 +125,8 @@ class MockRecommenderConnection : public recommender::RecommenderConnection {
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

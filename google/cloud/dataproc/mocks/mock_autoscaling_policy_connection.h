@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_mocks {
 
 /**
  * A class to mock `AutoscalingPolicyServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockAutoscalingPolicyServiceConnection
-    : public dataproc::AutoscalingPolicyServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AutoscalingPolicyServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -80,8 +80,8 @@ class MockAutoscalingPolicyServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

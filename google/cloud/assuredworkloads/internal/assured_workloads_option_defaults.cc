@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace assuredworkloads_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace assuredworkloads_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,49 +39,51 @@ Options AssuredWorkloadsServiceDefaultOptions(Options options) {
       "assuredworkloads.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options
-           .has<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>()) {
-    options.set<assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption>(
-        assuredworkloads::AssuredWorkloadsServiceLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
   if (!options.has<
-          assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>()) {
-    options.set<assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+          GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceBackoffPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
   if (!options.has<
-          assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>()) {
-    options.set<assuredworkloads::AssuredWorkloadsServicePollingPolicyOption>(
+          GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServicePollingPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServicePollingPolicyOption>(
         GenericPollingPolicy<
-            assuredworkloads::AssuredWorkloadsServiceRetryPolicyOption::Type,
-            assuredworkloads::AssuredWorkloadsServiceBackoffPolicyOption::Type>(
-            options
-                .get<assuredworkloads::
-                         AssuredWorkloadsServiceRetryPolicyOption>()
-                ->clone(),
-            options
-                .get<assuredworkloads::
-                         AssuredWorkloadsServiceBackoffPolicyOption>()
-                ->clone())
+            GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::AssuredWorkloadsServiceBackoffPolicyOption::
+                Type>(options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   AssuredWorkloadsServiceRetryPolicyOption>()
+                          ->clone(),
+                      options
+                          .get<GOOGLE_CLOUD_CPP_NS::
+                                   AssuredWorkloadsServiceBackoffPolicyOption>()
+                          ->clone())
             .clone());
   }
   if (!options.has<
-          assuredworkloads::
+          GOOGLE_CLOUD_CPP_NS::
               AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<assuredworkloads::
+    options.set<GOOGLE_CLOUD_CPP_NS::
                     AssuredWorkloadsServiceConnectionIdempotencyPolicyOption>(
-        assuredworkloads::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultAssuredWorkloadsServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

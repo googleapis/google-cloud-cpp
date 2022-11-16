@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace translate_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace translate_mocks {
 
 /**
  * A class to mock `TranslationServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockTranslationServiceConnection
-    : public translate::TranslationServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::TranslationServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -110,8 +110,8 @@ class MockTranslationServiceConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace translate_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

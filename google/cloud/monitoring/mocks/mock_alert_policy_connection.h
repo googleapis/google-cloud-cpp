@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring_mocks {
 
 /**
  * A class to mock `AlertPolicyServiceConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockAlertPolicyServiceConnection
-    : public monitoring::AlertPolicyServiceConnection {
+    : public GOOGLE_CLOUD_CPP_NS::AlertPolicyServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -69,8 +69,8 @@ class MockAlertPolicyServiceConnection
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -36,19 +36,19 @@
 
 namespace google {
 namespace cloud {
-namespace speech_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace speech_v2 {
 
 using SpeechRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    speech_v2_internal::SpeechRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::SpeechRetryTraits>;
 
 using SpeechLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        speech_v2_internal::SpeechRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SpeechRetryTraits>;
 
 using SpeechLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        speech_v2_internal::SpeechRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SpeechRetryTraits>;
 
 /**
  * The `SpeechConnection` object for `SpeechClient`.
@@ -60,7 +60,7 @@ using SpeechLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeSpeechConnection()`.
  *
- * For mocking, see `speech_v2_mocks::MockSpeechConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockSpeechConnection`.
  */
 class SpeechConnection {
  public:
@@ -166,7 +166,7 @@ class SpeechConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::speech_v2::SpeechPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::SpeechPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -176,8 +176,8 @@ class SpeechConnection {
  */
 std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

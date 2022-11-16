@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks {
 
 class CloudTasksConnectionIdempotencyPolicy {
  public:
@@ -89,8 +89,8 @@ class CloudTasksConnectionIdempotencyPolicy {
 std::unique_ptr<CloudTasksConnectionIdempotencyPolicy>
 MakeDefaultCloudTasksConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

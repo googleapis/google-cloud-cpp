@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 SystemPolicyV1Logging::SystemPolicyV1Logging(
     std::shared_ptr<SystemPolicyV1Stub> child, TracingOptions tracing_options,
@@ -47,7 +47,7 @@ SystemPolicyV1Logging::GetSystemPolicy(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

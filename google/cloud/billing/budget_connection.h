@@ -31,20 +31,20 @@
 
 namespace google {
 namespace cloud {
-namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace billing {
 
 using BudgetServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        billing_internal::BudgetServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BudgetServiceRetryTraits>;
 
 using BudgetServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        billing_internal::BudgetServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BudgetServiceRetryTraits>;
 
 using BudgetServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        billing_internal::BudgetServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::BudgetServiceRetryTraits>;
 
 /**
  * The `BudgetServiceConnection` object for `BudgetServiceClient`.
@@ -56,7 +56,7 @@ using BudgetServiceLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeBudgetServiceConnection()`.
  *
- * For mocking, see `billing_mocks::MockBudgetServiceConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockBudgetServiceConnection`.
  */
 class BudgetServiceConnection {
  public:
@@ -93,7 +93,7 @@ class BudgetServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::billing::BudgetServicePolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::BudgetServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -104,8 +104,8 @@ class BudgetServiceConnection {
 std::shared_ptr<BudgetServiceConnection> MakeBudgetServiceConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

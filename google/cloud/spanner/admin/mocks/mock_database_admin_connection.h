@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_admin_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace spanner_admin_mocks {
 
 /**
  * A class to mock `DatabaseAdminConnection`.
@@ -43,7 +43,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
 class MockDatabaseAdminConnection
-    : public spanner_admin::DatabaseAdminConnection {
+    : public GOOGLE_CLOUD_CPP_NS::DatabaseAdminConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -156,8 +156,8 @@ class MockDatabaseAdminConnection
       (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace spanner_admin_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

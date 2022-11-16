@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace monitoring {
 
 ServiceMonitoringServiceConnection::~ServiceMonitoringServiceConnection() =
     default;
@@ -104,17 +104,17 @@ MakeServiceMonitoringServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  ServiceMonitoringServicePolicyOptionList>(
       options, __func__);
-  options = monitoring_internal::ServiceMonitoringServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::ServiceMonitoringServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = monitoring_internal::CreateDefaultServiceMonitoringServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultServiceMonitoringServiceStub(
       background->cq(), options);
   return std::make_shared<
-      monitoring_internal::ServiceMonitoringServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::ServiceMonitoringServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

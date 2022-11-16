@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,35 +38,45 @@ Options UserEventServiceDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_USER_EVENT_SERVICE_AUTHORITY", "retail.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<retail::UserEventServiceRetryPolicyOption>()) {
-    options.set<retail::UserEventServiceRetryPolicyOption>(
-        retail::UserEventServiceLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::UserEventServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::UserEventServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::UserEventServiceLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<retail::UserEventServiceBackoffPolicyOption>()) {
-    options.set<retail::UserEventServiceBackoffPolicyOption>(
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::UserEventServiceBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::UserEventServiceBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<retail::UserEventServicePollingPolicyOption>()) {
-    options.set<retail::UserEventServicePollingPolicyOption>(
-        GenericPollingPolicy<retail::UserEventServiceRetryPolicyOption::Type,
-                             retail::UserEventServiceBackoffPolicyOption::Type>(
-            options.get<retail::UserEventServiceRetryPolicyOption>()->clone(),
-            options.get<retail::UserEventServiceBackoffPolicyOption>()->clone())
+  if (!options
+           .has<GOOGLE_CLOUD_CPP_NS::UserEventServicePollingPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::UserEventServicePollingPolicyOption>(
+        GenericPollingPolicy<
+            GOOGLE_CLOUD_CPP_NS::UserEventServiceRetryPolicyOption::Type,
+            GOOGLE_CLOUD_CPP_NS::UserEventServiceBackoffPolicyOption::Type>(
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::UserEventServiceRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<GOOGLE_CLOUD_CPP_NS::UserEventServiceBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
-  if (!options
-           .has<retail::UserEventServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<retail::UserEventServiceConnectionIdempotencyPolicyOption>(
-        retail::MakeDefaultUserEventServiceConnectionIdempotencyPolicy());
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::
+                       UserEventServiceConnectionIdempotencyPolicyOption>()) {
+    options.set<
+        GOOGLE_CLOUD_CPP_NS::UserEventServiceConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::
+            MakeDefaultUserEventServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

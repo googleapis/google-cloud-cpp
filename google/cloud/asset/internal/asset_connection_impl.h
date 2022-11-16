@@ -37,16 +37,18 @@
 
 namespace google {
 namespace cloud {
-namespace asset_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace asset_internal {
 
-class AssetServiceConnectionImpl : public asset::AssetServiceConnection {
+class AssetServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::AssetServiceConnection {
  public:
   ~AssetServiceConnectionImpl() override = default;
 
   AssetServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<asset_internal::AssetServiceStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AssetServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -124,49 +126,61 @@ class AssetServiceConnectionImpl : public asset::AssetServiceConnection {
           request) override;
 
  private:
-  std::unique_ptr<asset::AssetServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AssetServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<asset::AssetServiceRetryPolicyOption>()) {
-      return options.get<asset::AssetServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::AssetServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::AssetServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<asset::AssetServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::AssetServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<asset::AssetServiceBackoffPolicyOption>()) {
-      return options.get<asset::AssetServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<asset::AssetServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<asset::AssetServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<asset::AssetServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::AssetServiceBackoffPolicyOption>()) {
       return options
-          .get<asset::AssetServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::AssetServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<asset::AssetServiceConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::AssetServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::AssetServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        AssetServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   AssetServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 AssetServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<PollingPolicy> polling_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<asset::AssetServicePollingPolicyOption>()) {
-      return options.get<asset::AssetServicePollingPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::AssetServicePollingPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::AssetServicePollingPolicyOption>()
+          ->clone();
     }
-    return options_.get<asset::AssetServicePollingPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::AssetServicePollingPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<asset_internal::AssetServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::AssetServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

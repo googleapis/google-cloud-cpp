@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis {
 
 class GrafeasConnectionIdempotencyPolicy {
  public:
@@ -83,8 +83,8 @@ class GrafeasConnectionIdempotencyPolicy {
 std::unique_ptr<GrafeasConnectionIdempotencyPolicy>
 MakeDefaultGrafeasConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

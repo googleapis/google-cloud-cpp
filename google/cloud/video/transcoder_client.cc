@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace video {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace video {
 
 TranscoderServiceClient::TranscoderServiceClient(
     std::shared_ptr<TranscoderServiceConnection> connection, Options opts)
@@ -168,7 +168,7 @@ Status TranscoderServiceClient::DeleteJobTemplate(
   return connection_->DeleteJobTemplate(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace video
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

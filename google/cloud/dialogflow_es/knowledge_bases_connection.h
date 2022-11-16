@@ -32,20 +32,20 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_es {
 
 using KnowledgeBasesRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dialogflow_es_internal::KnowledgeBasesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::KnowledgeBasesRetryTraits>;
 
 using KnowledgeBasesLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_es_internal::KnowledgeBasesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::KnowledgeBasesRetryTraits>;
 
 using KnowledgeBasesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_es_internal::KnowledgeBasesRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::KnowledgeBasesRetryTraits>;
 
 /**
  * The `KnowledgeBasesConnection` object for `KnowledgeBasesClient`.
@@ -57,7 +57,7 @@ using KnowledgeBasesLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeKnowledgeBasesConnection()`.
  *
- * For mocking, see `dialogflow_es_mocks::MockKnowledgeBasesConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockKnowledgeBasesConnection`.
  */
 class KnowledgeBasesConnection {
  public:
@@ -98,7 +98,7 @@ class KnowledgeBasesConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_es::KnowledgeBasesPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::KnowledgeBasesPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -120,8 +120,8 @@ std::shared_ptr<KnowledgeBasesConnection> MakeKnowledgeBasesConnection(
 std::shared_ptr<KnowledgeBasesConnection> MakeKnowledgeBasesConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

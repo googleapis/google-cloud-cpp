@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace baremetalsolution {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace baremetalsolution {
 
 using ::google::cloud::Idempotency;
 
@@ -140,7 +140,7 @@ MakeDefaultBareMetalSolutionConnectionIdempotencyPolicy() {
   return absl::make_unique<BareMetalSolutionConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace baremetalsolution
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -27,8 +27,8 @@
 
 namespace google {
 namespace cloud {
-namespace optimization {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace optimization {
 
 class FleetRoutingConnectionIdempotencyPolicy {
  public:
@@ -49,8 +49,8 @@ class FleetRoutingConnectionIdempotencyPolicy {
 std::unique_ptr<FleetRoutingConnectionIdempotencyPolicy>
 MakeDefaultFleetRoutingConnectionIdempotencyPolicy();
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace optimization
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

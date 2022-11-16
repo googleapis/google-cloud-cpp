@@ -28,12 +28,12 @@
 
 namespace google {
 namespace cloud {
-namespace spanner_admin_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace spanner_admin_internal {
 
 DatabaseAdminConnectionImpl::DatabaseAdminConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<spanner_admin_internal::DatabaseAdminStub> stub,
+    std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatabaseAdminStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -45,8 +45,9 @@ DatabaseAdminConnectionImpl::ListDatabases(
     google::spanner::admin::database::v1::ListDatabasesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDatabases(request);
   char const* function_name = __func__;
@@ -308,8 +309,9 @@ DatabaseAdminConnectionImpl::ListBackups(
     google::spanner::admin::database::v1::ListBackupsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBackups(request);
   char const* function_name = __func__;
@@ -372,8 +374,9 @@ DatabaseAdminConnectionImpl::ListDatabaseOperations(
         request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDatabaseOperations(request);
   char const* function_name = __func__;
@@ -407,8 +410,9 @@ DatabaseAdminConnectionImpl::ListBackupOperations(
     google::spanner::admin::database::v1::ListBackupOperationsRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListBackupOperations(request);
   char const* function_name = __func__;
@@ -441,8 +445,9 @@ DatabaseAdminConnectionImpl::ListDatabaseRoles(
     google::spanner::admin::database::v1::ListDatabaseRolesRequest request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<spanner_admin::DatabaseAdminRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::DatabaseAdminRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDatabaseRoles(request);
   char const* function_name = __func__;
@@ -470,8 +475,8 @@ DatabaseAdminConnectionImpl::ListDatabaseRoles(
       });
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

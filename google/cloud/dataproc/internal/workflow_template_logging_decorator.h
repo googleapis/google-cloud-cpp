@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace dataproc_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dataproc_internal {
 
 class WorkflowTemplateServiceLogging : public WorkflowTemplateServiceStub {
  public:
@@ -97,8 +97,8 @@ class WorkflowTemplateServiceLogging : public WorkflowTemplateServiceStub {
   std::set<std::string> components_;
 };  // WorkflowTemplateServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

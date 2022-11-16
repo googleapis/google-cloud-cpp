@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 WebhooksConnection::~WebhooksConnection() = default;
 
@@ -71,12 +71,12 @@ std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  WebhooksPolicyOptionList>(options, __func__);
-  options = dialogflow_cx_internal::WebhooksDefaultOptions(location,
-                                                           std::move(options));
+  options =
+      GOOGLE_CLOUD_CPP_NS::WebhooksDefaultOptions(location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = dialogflow_cx_internal::CreateDefaultWebhooksStub(
-      background->cq(), options);
-  return std::make_shared<dialogflow_cx_internal::WebhooksConnectionImpl>(
+  auto stub =
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultWebhooksStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::WebhooksConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -84,7 +84,7 @@ std::shared_ptr<WebhooksConnection> MakeWebhooksConnection(Options options) {
   return MakeWebhooksConnection(std::string{}, std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace retail_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace retail_mocks {
 
 /**
  * A class to mock `CatalogServiceConnection`.
@@ -42,7 +42,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
  */
-class MockCatalogServiceConnection : public retail::CatalogServiceConnection {
+class MockCatalogServiceConnection
+    : public GOOGLE_CLOUD_CPP_NS::CatalogServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
 
@@ -108,8 +109,8 @@ class MockCatalogServiceConnection : public retail::CatalogServiceConnection {
               (override));
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_mocks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace language {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace language {
 
 LanguageServiceConnection::~LanguageServiceConnection() = default;
 
@@ -77,15 +77,15 @@ std::shared_ptr<LanguageServiceConnection> MakeLanguageServiceConnection(
                                  LanguageServicePolicyOptionList>(options,
                                                                   __func__);
   options =
-      language_internal::LanguageServiceDefaultOptions(std::move(options));
+      GOOGLE_CLOUD_CPP_NS::LanguageServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = language_internal::CreateDefaultLanguageServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultLanguageServiceStub(
       background->cq(), options);
-  return std::make_shared<language_internal::LanguageServiceConnectionImpl>(
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::LanguageServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace language
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

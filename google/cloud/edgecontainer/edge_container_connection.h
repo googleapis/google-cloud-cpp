@@ -34,20 +34,20 @@
 
 namespace google {
 namespace cloud {
-namespace edgecontainer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace edgecontainer {
 
 using EdgeContainerRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        edgecontainer_internal::EdgeContainerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EdgeContainerRetryTraits>;
 
 using EdgeContainerLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        edgecontainer_internal::EdgeContainerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EdgeContainerRetryTraits>;
 
 using EdgeContainerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        edgecontainer_internal::EdgeContainerRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EdgeContainerRetryTraits>;
 
 /**
  * The `EdgeContainerConnection` object for `EdgeContainerClient`.
@@ -59,7 +59,7 @@ using EdgeContainerLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeEdgeContainerConnection()`.
  *
- * For mocking, see `edgecontainer_mocks::MockEdgeContainerConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockEdgeContainerConnection`.
  */
 class EdgeContainerConnection {
  public:
@@ -147,7 +147,7 @@ class EdgeContainerConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::edgecontainer::EdgeContainerPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::EdgeContainerPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -158,8 +158,8 @@ class EdgeContainerConnection {
 std::shared_ptr<EdgeContainerConnection> MakeEdgeContainerConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace edgecontainer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

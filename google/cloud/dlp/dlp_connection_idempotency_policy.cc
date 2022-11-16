@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace dlp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dlp {
 
 using ::google::cloud::Idempotency;
 
@@ -210,7 +210,7 @@ MakeDefaultDlpServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<DlpServiceConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

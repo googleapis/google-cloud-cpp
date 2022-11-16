@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace dlp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dlp {
 
 DlpServiceClient::DlpServiceClient(
     std::shared_ptr<DlpServiceConnection> connection, Options opts)
@@ -554,7 +554,7 @@ Status DlpServiceClient::FinishDlpJob(
   return connection_->FinishDlpJob(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

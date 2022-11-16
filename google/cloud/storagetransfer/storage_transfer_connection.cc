@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace storagetransfer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace storagetransfer {
 
 StorageTransferServiceConnection::~StorageTransferServiceConnection() = default;
 
@@ -127,17 +127,17 @@ MakeStorageTransferServiceConnection(Options options) {
                                  UnifiedCredentialsOptionList,
                                  StorageTransferServicePolicyOptionList>(
       options, __func__);
-  options = storagetransfer_internal::StorageTransferServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::StorageTransferServiceDefaultOptions(
       std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = storagetransfer_internal::CreateDefaultStorageTransferServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultStorageTransferServiceStub(
       background->cq(), options);
   return std::make_shared<
-      storagetransfer_internal::StorageTransferServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::StorageTransferServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

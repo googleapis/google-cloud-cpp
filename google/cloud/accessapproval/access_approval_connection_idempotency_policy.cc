@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace accessapproval {
 
 using ::google::cloud::Idempotency;
 
@@ -95,7 +95,7 @@ MakeDefaultAccessApprovalConnectionIdempotencyPolicy() {
   return absl::make_unique<AccessApprovalConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace appengine_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace appengine_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -38,26 +38,28 @@ Options FirewallDefaultOptions(Options options) {
       "GOOGLE_CLOUD_CPP_FIREWALL_AUTHORITY", "appengine.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<appengine::FirewallRetryPolicyOption>()) {
-    options.set<appengine::FirewallRetryPolicyOption>(
-        appengine::FirewallLimitedTimeRetryPolicy(std::chrono::minutes(30))
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::FirewallRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::FirewallRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::FirewallLimitedTimeRetryPolicy(
+            std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<appengine::FirewallBackoffPolicyOption>()) {
-    options.set<appengine::FirewallBackoffPolicyOption>(
+  if (!options.has<GOOGLE_CLOUD_CPP_NS::FirewallBackoffPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::FirewallBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<appengine::FirewallConnectionIdempotencyPolicyOption>()) {
-    options.set<appengine::FirewallConnectionIdempotencyPolicyOption>(
-        appengine::MakeDefaultFirewallConnectionIdempotencyPolicy());
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::FirewallConnectionIdempotencyPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::FirewallConnectionIdempotencyPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::MakeDefaultFirewallConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

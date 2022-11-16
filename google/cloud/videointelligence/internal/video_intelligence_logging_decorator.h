@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence_internal {
 
 class VideoIntelligenceServiceLogging : public VideoIntelligenceServiceStub {
  public:
@@ -61,8 +61,8 @@ class VideoIntelligenceServiceLogging : public VideoIntelligenceServiceStub {
   std::set<std::string> components_;
 };  // VideoIntelligenceServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

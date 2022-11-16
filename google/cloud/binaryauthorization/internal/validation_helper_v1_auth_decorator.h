@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace binaryauthorization_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace binaryauthorization_internal {
 
 class ValidationHelperV1Auth : public ValidationHelperV1Stub {
  public:
@@ -50,8 +50,8 @@ class ValidationHelperV1Auth : public ValidationHelperV1Stub {
   std::shared_ptr<ValidationHelperV1Stub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

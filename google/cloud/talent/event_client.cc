@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace talent {
 
 EventServiceClient::EventServiceClient(
     std::shared_ptr<EventServiceConnection> connection, Options opts)
@@ -50,7 +50,7 @@ EventServiceClient::CreateClientEvent(
   return connection_->CreateClientEvent(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

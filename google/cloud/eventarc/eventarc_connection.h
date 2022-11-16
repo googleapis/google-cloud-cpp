@@ -34,19 +34,19 @@
 
 namespace google {
 namespace cloud {
-namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace eventarc {
 
 using EventarcRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    eventarc_internal::EventarcRetryTraits>;
+    GOOGLE_CLOUD_CPP_NS::EventarcRetryTraits>;
 
 using EventarcLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        eventarc_internal::EventarcRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EventarcRetryTraits>;
 
 using EventarcLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        eventarc_internal::EventarcRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::EventarcRetryTraits>;
 
 /**
  * The `EventarcConnection` object for `EventarcClient`.
@@ -58,7 +58,7 @@ using EventarcLimitedErrorCountRetryPolicy =
  *
  * To create a concrete instance, see `MakeEventarcConnection()`.
  *
- * For mocking, see `eventarc_mocks::MockEventarcConnection`.
+ * For mocking, see `GOOGLE_CLOUD_CPP_NS_mocks::MockEventarcConnection`.
  */
 class EventarcConnection {
  public:
@@ -144,7 +144,7 @@ class EventarcConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::eventarc::EventarcPolicyOptionList`
+ * - `google::cloud::GOOGLE_CLOUD_CPP_NS::EventarcPolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -155,8 +155,8 @@ class EventarcConnection {
 std::shared_ptr<EventarcConnection> MakeEventarcConnection(
     Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

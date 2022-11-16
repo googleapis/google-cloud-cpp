@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace documentai {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace documentai {
 
 DocumentProcessorServiceConnection::~DocumentProcessorServiceConnection() =
     default;
@@ -171,13 +171,13 @@ MakeDocumentProcessorServiceConnection(std::string const& location,
                                  UnifiedCredentialsOptionList,
                                  DocumentProcessorServicePolicyOptionList>(
       options, __func__);
-  options = documentai_internal::DocumentProcessorServiceDefaultOptions(
+  options = GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceDefaultOptions(
       location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = documentai_internal::CreateDefaultDocumentProcessorServiceStub(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultDocumentProcessorServiceStub(
       background->cq(), options);
   return std::make_shared<
-      documentai_internal::DocumentProcessorServiceConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::DocumentProcessorServiceConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
@@ -187,7 +187,7 @@ MakeDocumentProcessorServiceConnection(Options options) {
                                                 std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace documentai
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

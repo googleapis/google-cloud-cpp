@@ -33,16 +33,18 @@
 
 namespace google {
 namespace cloud {
-namespace trace_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace trace_internal {
 
-class TraceServiceConnectionImpl : public trace::TraceServiceConnection {
+class TraceServiceConnectionImpl
+    : public GOOGLE_CLOUD_CPP_NS::TraceServiceConnection {
  public:
   ~TraceServiceConnectionImpl() override = default;
 
   TraceServiceConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<trace_internal::TraceServiceStub> stub, Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TraceServiceStub> stub,
+      Options options);
 
   Options options() override { return options_; }
 
@@ -54,41 +56,50 @@ class TraceServiceConnectionImpl : public trace::TraceServiceConnection {
       google::devtools::cloudtrace::v2::Span const& request) override;
 
  private:
-  std::unique_ptr<trace::TraceServiceRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::TraceServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<trace::TraceServiceRetryPolicyOption>()) {
-      return options.get<trace::TraceServiceRetryPolicyOption>()->clone();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::TraceServiceRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::TraceServiceRetryPolicyOption>()
+          ->clone();
     }
-    return options_.get<trace::TraceServiceRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::TraceServiceRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<trace::TraceServiceBackoffPolicyOption>()) {
-      return options.get<trace::TraceServiceBackoffPolicyOption>()->clone();
-    }
-    return options_.get<trace::TraceServiceBackoffPolicyOption>()->clone();
-  }
-
-  std::unique_ptr<trace::TraceServiceConnectionIdempotencyPolicy>
-  idempotency_policy() {
-    auto const& options = internal::CurrentOptions();
-    if (options.has<trace::TraceServiceConnectionIdempotencyPolicyOption>()) {
+    if (options.has<GOOGLE_CLOUD_CPP_NS::TraceServiceBackoffPolicyOption>()) {
       return options
-          .get<trace::TraceServiceConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::TraceServiceBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<trace::TraceServiceConnectionIdempotencyPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::TraceServiceBackoffPolicyOption>()
+        ->clone();
+  }
+
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::TraceServiceConnectionIdempotencyPolicy>
+  idempotency_policy() {
+    auto const& options = internal::CurrentOptions();
+    if (options.has<GOOGLE_CLOUD_CPP_NS::
+                        TraceServiceConnectionIdempotencyPolicyOption>()) {
+      return options
+          .get<GOOGLE_CLOUD_CPP_NS::
+                   TraceServiceConnectionIdempotencyPolicyOption>()
+          ->clone();
+    }
+    return options_
+        .get<GOOGLE_CLOUD_CPP_NS::
+                 TraceServiceConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<trace_internal::TraceServiceStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::TraceServiceStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

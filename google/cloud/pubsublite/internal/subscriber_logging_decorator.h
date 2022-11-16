@@ -28,8 +28,8 @@
 
 namespace google {
 namespace cloud {
-namespace pubsublite_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace pubsublite_internal {
 
 class SubscriberServiceLogging : public SubscriberServiceStub {
  public:
@@ -50,8 +50,8 @@ class SubscriberServiceLogging : public SubscriberServiceStub {
   std::set<std::string> components_;
 };  // SubscriberServiceLogging
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

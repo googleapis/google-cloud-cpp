@@ -25,8 +25,8 @@
 
 namespace google {
 namespace cloud {
-namespace resourcesettings_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace resourcesettings_internal {
 
 namespace {
 auto constexpr kBackoffScaling = 2.0;
@@ -39,33 +39,34 @@ Options ResourceSettingsServiceDefaultOptions(Options options) {
       "resourcesettings.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options
-           .has<resourcesettings::ResourceSettingsServiceRetryPolicyOption>()) {
-    options.set<resourcesettings::ResourceSettingsServiceRetryPolicyOption>(
-        resourcesettings::ResourceSettingsServiceLimitedTimeRetryPolicy(
+  if (!options.has<
+          GOOGLE_CLOUD_CPP_NS::ResourceSettingsServiceRetryPolicyOption>()) {
+    options.set<GOOGLE_CLOUD_CPP_NS::ResourceSettingsServiceRetryPolicyOption>(
+        GOOGLE_CLOUD_CPP_NS::ResourceSettingsServiceLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
   if (!options.has<
-          resourcesettings::ResourceSettingsServiceBackoffPolicyOption>()) {
-    options.set<resourcesettings::ResourceSettingsServiceBackoffPolicyOption>(
-        ExponentialBackoffPolicy(std::chrono::seconds(1),
-                                 std::chrono::minutes(5), kBackoffScaling)
-            .clone());
+          GOOGLE_CLOUD_CPP_NS::ResourceSettingsServiceBackoffPolicyOption>()) {
+    options
+        .set<GOOGLE_CLOUD_CPP_NS::ResourceSettingsServiceBackoffPolicyOption>(
+            ExponentialBackoffPolicy(std::chrono::seconds(1),
+                                     std::chrono::minutes(5), kBackoffScaling)
+                .clone());
   }
   if (!options.has<
-          resourcesettings::
+          GOOGLE_CLOUD_CPP_NS::
               ResourceSettingsServiceConnectionIdempotencyPolicyOption>()) {
-    options.set<resourcesettings::
+    options.set<GOOGLE_CLOUD_CPP_NS::
                     ResourceSettingsServiceConnectionIdempotencyPolicyOption>(
-        resourcesettings::
+        GOOGLE_CLOUD_CPP_NS::
             MakeDefaultResourceSettingsServiceConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

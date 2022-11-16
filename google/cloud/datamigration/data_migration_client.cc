@@ -21,8 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace datamigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace datamigration {
 
 DataMigrationServiceClient::DataMigrationServiceClient(
     std::shared_ptr<DataMigrationServiceConnection> connection, Options opts)
@@ -269,7 +269,7 @@ DataMigrationServiceClient::DeleteConnectionProfile(
   return connection_->DeleteConnectionProfile(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

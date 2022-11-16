@@ -32,20 +32,20 @@
 
 namespace google {
 namespace cloud {
-namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace dialogflow_cx {
 
 using SecuritySettingsServiceRetryPolicy =
     ::google::cloud::internal::TraitBasedRetryPolicy<
-        dialogflow_cx_internal::SecuritySettingsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceRetryTraits>;
 
 using SecuritySettingsServiceLimitedTimeRetryPolicy =
     ::google::cloud::internal::LimitedTimeRetryPolicy<
-        dialogflow_cx_internal::SecuritySettingsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceRetryTraits>;
 
 using SecuritySettingsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        dialogflow_cx_internal::SecuritySettingsServiceRetryTraits>;
+        GOOGLE_CLOUD_CPP_NS::SecuritySettingsServiceRetryTraits>;
 
 /**
  * The `SecuritySettingsServiceConnection` object for
@@ -59,7 +59,7 @@ using SecuritySettingsServiceLimitedErrorCountRetryPolicy =
  * To create a concrete instance, see `MakeSecuritySettingsServiceConnection()`.
  *
  * For mocking, see
- * `dialogflow_cx_mocks::MockSecuritySettingsServiceConnection`.
+ * `GOOGLE_CLOUD_CPP_NS_mocks::MockSecuritySettingsServiceConnection`.
  */
 class SecuritySettingsServiceConnection {
  public:
@@ -106,7 +106,8 @@ class SecuritySettingsServiceConnection {
  * - `google::cloud::CommonOptionList`
  * - `google::cloud::GrpcOptionList`
  * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::dialogflow_cx::SecuritySettingsServicePolicyOptionList`
+ * -
+ * `google::cloud::GOOGLE_CLOUD_CPP_NS::SecuritySettingsServicePolicyOptionList`
  *
  * @note Unexpected options will be ignored. To log unexpected options instead,
  *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
@@ -129,8 +130,8 @@ MakeSecuritySettingsServiceConnection(std::string const& location,
 std::shared_ptr<SecuritySettingsServiceConnection>
 MakeSecuritySettingsServiceConnection(Options options = {});
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_cx
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

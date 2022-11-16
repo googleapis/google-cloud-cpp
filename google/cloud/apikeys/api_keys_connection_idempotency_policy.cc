@@ -22,8 +22,8 @@
 
 namespace google {
 namespace cloud {
-namespace apikeys {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace apikeys {
 
 using ::google::cloud::Idempotency;
 
@@ -80,7 +80,7 @@ MakeDefaultApiKeysConnectionIdempotencyPolicy() {
   return absl::make_unique<ApiKeysConnectionIdempotencyPolicy>();
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apikeys
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

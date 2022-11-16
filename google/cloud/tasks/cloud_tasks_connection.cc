@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks {
 
 CloudTasksConnection::~CloudTasksConnection() = default;
 
@@ -125,15 +125,15 @@ std::shared_ptr<CloudTasksConnection> MakeCloudTasksConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  CloudTasksPolicyOptionList>(options, __func__);
-  options = tasks_internal::CloudTasksDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::CloudTasksDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub =
-      tasks_internal::CreateDefaultCloudTasksStub(background->cq(), options);
-  return std::make_shared<tasks_internal::CloudTasksConnectionImpl>(
+  auto stub = GOOGLE_CLOUD_CPP_NS::CreateDefaultCloudTasksStub(background->cq(),
+                                                               options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::CloudTasksConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

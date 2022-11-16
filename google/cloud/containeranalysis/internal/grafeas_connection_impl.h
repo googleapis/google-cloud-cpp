@@ -34,17 +34,16 @@
 
 namespace google {
 namespace cloud {
-namespace containeranalysis_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace containeranalysis_internal {
 
-class GrafeasConnectionImpl : public containeranalysis::GrafeasConnection {
+class GrafeasConnectionImpl : public GOOGLE_CLOUD_CPP_NS::GrafeasConnection {
  public:
   ~GrafeasConnectionImpl() override = default;
 
   GrafeasConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<containeranalysis_internal::GrafeasStub> stub,
-      Options options);
+      std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GrafeasStub> stub, Options options);
 
   Options options() override { return options_; }
 
@@ -90,46 +89,47 @@ class GrafeasConnectionImpl : public containeranalysis::GrafeasConnection {
       grafeas::v1::ListNoteOccurrencesRequest request) override;
 
  private:
-  std::unique_ptr<containeranalysis::GrafeasRetryPolicy> retry_policy() {
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::GrafeasRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<containeranalysis::GrafeasRetryPolicyOption>()) {
-      return options.get<containeranalysis::GrafeasRetryPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::GrafeasRetryPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::GrafeasRetryPolicyOption>()
           ->clone();
     }
-    return options_.get<containeranalysis::GrafeasRetryPolicyOption>()->clone();
+    return options_.get<GOOGLE_CLOUD_CPP_NS::GrafeasRetryPolicyOption>()
+        ->clone();
   }
 
   std::unique_ptr<BackoffPolicy> backoff_policy() {
     auto const& options = internal::CurrentOptions();
-    if (options.has<containeranalysis::GrafeasBackoffPolicyOption>()) {
-      return options.get<containeranalysis::GrafeasBackoffPolicyOption>()
+    if (options.has<GOOGLE_CLOUD_CPP_NS::GrafeasBackoffPolicyOption>()) {
+      return options.get<GOOGLE_CLOUD_CPP_NS::GrafeasBackoffPolicyOption>()
           ->clone();
     }
-    return options_.get<containeranalysis::GrafeasBackoffPolicyOption>()
+    return options_.get<GOOGLE_CLOUD_CPP_NS::GrafeasBackoffPolicyOption>()
         ->clone();
   }
 
-  std::unique_ptr<containeranalysis::GrafeasConnectionIdempotencyPolicy>
+  std::unique_ptr<GOOGLE_CLOUD_CPP_NS::GrafeasConnectionIdempotencyPolicy>
   idempotency_policy() {
     auto const& options = internal::CurrentOptions();
     if (options.has<
-            containeranalysis::GrafeasConnectionIdempotencyPolicyOption>()) {
+            GOOGLE_CLOUD_CPP_NS::GrafeasConnectionIdempotencyPolicyOption>()) {
       return options
-          .get<containeranalysis::GrafeasConnectionIdempotencyPolicyOption>()
+          .get<GOOGLE_CLOUD_CPP_NS::GrafeasConnectionIdempotencyPolicyOption>()
           ->clone();
     }
     return options_
-        .get<containeranalysis::GrafeasConnectionIdempotencyPolicyOption>()
+        .get<GOOGLE_CLOUD_CPP_NS::GrafeasConnectionIdempotencyPolicyOption>()
         ->clone();
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<containeranalysis_internal::GrafeasStub> stub_;
+  std::shared_ptr<GOOGLE_CLOUD_CPP_NS::GrafeasStub> stub_;
   Options options_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

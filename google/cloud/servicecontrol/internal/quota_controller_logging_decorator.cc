@@ -24,8 +24,8 @@
 
 namespace google {
 namespace cloud {
-namespace servicecontrol_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace servicecontrol_internal {
 
 QuotaControllerLogging::QuotaControllerLogging(
     std::shared_ptr<QuotaControllerStub> child, TracingOptions tracing_options,
@@ -45,7 +45,7 @@ QuotaControllerLogging::AllocateQuota(
       context, request, __func__, tracing_options_);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

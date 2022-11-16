@@ -29,8 +29,8 @@
 
 namespace google {
 namespace cloud {
-namespace videointelligence_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace videointelligence_internal {
 
 class VideoIntelligenceServiceAuth : public VideoIntelligenceServiceStub {
  public:
@@ -60,8 +60,8 @@ class VideoIntelligenceServiceAuth : public VideoIntelligenceServiceStub {
   std::shared_ptr<VideoIntelligenceServiceStub> child_;
 };
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence_internal
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 

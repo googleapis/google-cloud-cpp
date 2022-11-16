@@ -23,8 +23,8 @@
 
 namespace google {
 namespace cloud {
-namespace tasks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace tasks {
 
 CloudTasksClient::CloudTasksClient(
     std::shared_ptr<CloudTasksConnection> connection, Options opts)
@@ -299,7 +299,7 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksClient::RunTask(
   return connection_->RunTask(request);
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

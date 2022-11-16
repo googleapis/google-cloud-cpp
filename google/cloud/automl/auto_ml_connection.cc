@@ -30,8 +30,8 @@
 
 namespace google {
 namespace cloud {
-namespace automl {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace automl {
 
 AutoMlConnection::~AutoMlConnection() = default;
 
@@ -165,15 +165,15 @@ std::shared_ptr<AutoMlConnection> MakeAutoMlConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  AutoMlPolicyOptionList>(options, __func__);
-  options = automl_internal::AutoMlDefaultOptions(std::move(options));
+  options = GOOGLE_CLOUD_CPP_NS::AutoMlDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub =
-      automl_internal::CreateDefaultAutoMlStub(background->cq(), options);
-  return std::make_shared<automl_internal::AutoMlConnectionImpl>(
+      GOOGLE_CLOUD_CPP_NS::CreateDefaultAutoMlStub(background->cq(), options);
+  return std::make_shared<GOOGLE_CLOUD_CPP_NS::AutoMlConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
