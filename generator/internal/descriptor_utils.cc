@@ -39,6 +39,7 @@
 #include "generator/internal/sample_generator.h"
 #include "generator/internal/scaffold_generator.h"
 #include "generator/internal/stub_factory_generator.h"
+#include "generator/internal/stub_factory_rest_generator.h"
 #include "generator/internal/stub_generator.h"
 #include "generator/internal/stub_rest_generator.h"
 #include <google/api/routing.pb.h>
@@ -1010,6 +1011,12 @@ VarsDictionary CreateServiceVars(
   vars["stub_factory_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_stub_factory.h");
+  vars["stub_factory_rest_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_stub_factory.cc");
+  vars["stub_factory_rest_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_stub_factory.h");
   SetRetryStatusCodeExpression(vars);
   return vars;
 }
@@ -1122,6 +1129,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
     code_generators.push_back(absl::make_unique<LoggingDecoratorRestGenerator>(
         service, service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<MetadataDecoratorRestGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(absl::make_unique<StubFactoryRestGenerator>(
         service, service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<StubRestGenerator>(
         service, service_vars, method_vars, context));

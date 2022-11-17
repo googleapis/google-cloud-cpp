@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_REST_OPTIONS_H
 
 #include "google/cloud/options.h"
+#include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <chrono>
 #include <string>
@@ -61,10 +62,19 @@ struct ServerTimeoutOption {
   using Type = std::chrono::milliseconds;
 };
 
+/**
+ * The `TracingOptions` to use when printing REST transport http messages.
+ *
+ * @ingroup options
+ */
+struct RestTracingOptionsOption {
+  using Type = TracingOptions;
+};
+
 /// The complete list of options accepted by `CurlRestClient`
 using RestOptionList =
-    ::google::cloud::OptionList<QuotaUserOption, ServerTimeoutOption,
-                                UserIpOption>;
+    ::google::cloud::OptionList<QuotaUserOption, RestTracingOptionsOption,
+                                ServerTimeoutOption, UserIpOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
