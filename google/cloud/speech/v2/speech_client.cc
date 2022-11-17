@@ -24,7 +24,8 @@ namespace cloud {
 namespace speech_v2 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-SpeechClient::SpeechClient(std::shared_ptr<SpeechConnection> connection,
+SpeechClient::SpeechClient(ExperimentalTag,
+                           std::shared_ptr<SpeechConnection> connection,
                            Options opts)
     : connection_(std::move(connection)),
       options_(

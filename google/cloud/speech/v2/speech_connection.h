@@ -174,7 +174,8 @@ class SpeechConnection {
  * @param options (optional) Configure the `SpeechConnection` created by
  * this function.
  */
-std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options = {});
+std::shared_ptr<SpeechConnection> MakeSpeechConnection(ExperimentalTag,
+                                                       Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech_v2

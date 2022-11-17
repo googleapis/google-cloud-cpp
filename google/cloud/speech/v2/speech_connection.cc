@@ -206,7 +206,8 @@ SpeechConnection::UndeletePhraseSet(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
-std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options) {
+std::shared_ptr<SpeechConnection> MakeSpeechConnection(ExperimentalTag,
+                                                       Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList,
                                  SpeechPolicyOptionList>(options, __func__);
