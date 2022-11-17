@@ -75,7 +75,7 @@ class ErrorContext {
       std::vector<std::pair<absl::string_view, absl::string_view>>;
 
   ErrorContext() = default;
-  ErrorContext(std::initializer_list<Container::value_type> m) : metadata_(m) {}
+  explicit ErrorContext(Container m) : metadata_(std::move(m)) {}
 
   ErrorContext(ErrorContext const&) = delete;
   ErrorContext& operator=(ErrorContext const&) = delete;
