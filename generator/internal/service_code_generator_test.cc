@@ -115,6 +115,7 @@ TEST(PredicateUtilsTest, IsExperimental) {
   TestGenerator g2(
       service_file_descriptor->service(0), generator_context.get(),
       {{"header_path_key", "header_path"}, {"experimental", "true"}});
+  EXPECT_TRUE(g2.IsExperimental());
 
   TestGenerator g3(
       service_file_descriptor->service(0), generator_context.get(),

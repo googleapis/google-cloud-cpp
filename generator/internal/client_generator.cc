@@ -356,20 +356,16 @@ Status ClientGenerator::GenerateCc() {
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
 
-  CcPrint(  // clang-format off
-    "\n"
-    "$client_class_name$::$client_class_name$("
-    );
-  if (IsExperimental()) CcPrint("ExperimentalTag, ");
-  CcPrint(
-    "std::shared_ptr<$connection_class_name$> connection, Options opts)"
-    " : connection_(std::move(connection)),"
-    " options_(internal::MergeOptions(std::move(opts),"
-    " connection_->options())) {}\n");
-  // clang-format on
-
-  CcPrint(  // clang-format off
-    "$client_class_name$::~$client_class_name$() = default;\n");
+  CcPrint(R"""(
+$client_class_name$::$client_class_name$()""");
+  if (IsExperimental()) CcPrint("ExperimentalTag,");
+  CcPrint(R"""(
+    std::shared_ptr<$connection_class_name$> connection, Options opts)
+    : connection_(std::move(connection)),
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+$client_class_name$::~$client_class_name$() = default;
+)""");
   // clang-format on
 
   for (google::protobuf::MethodDescriptor const& method : methods()) {
