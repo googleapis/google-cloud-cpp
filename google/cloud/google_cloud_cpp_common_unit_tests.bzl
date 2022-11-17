@@ -47,6 +47,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/sha256_hash_test.cc",
     "internal/status_payload_keys_test.cc",
     "internal/strerror_test.cc",
+    "internal/subject_token_test.cc",
     "internal/throw_delegate_test.cc",
     "internal/tuple_test.cc",
     "internal/type_list_test.cc",
