@@ -109,6 +109,7 @@ set(google_cloud_cpp_generator_golden_tests
     tests/golden_kitchen_sink_option_defaults_test.cc
     tests/golden_kitchen_sink_rest_logging_decorator_test.cc
     tests/golden_kitchen_sink_rest_metadata_decorator_test.cc
+    tests/golden_kitchen_sink_rest_stub_factory_test.cc
     tests/golden_kitchen_sink_rest_stub_test.cc
     tests/golden_kitchen_sink_round_robin_decorator_test.cc
     tests/golden_kitchen_sink_stub_factory_test.cc
@@ -122,6 +123,7 @@ set(google_cloud_cpp_generator_golden_tests
     tests/golden_thing_admin_option_defaults_test.cc
     tests/golden_thing_admin_rest_logging_decorator_test.cc
     tests/golden_thing_admin_rest_metadata_decorator_test.cc
+    tests/golden_thing_admin_rest_stub_factory_test.cc
     tests/golden_thing_admin_rest_stub_test.cc
     tests/golden_thing_admin_round_robin_decorator_test.cc
     tests/golden_thing_admin_stub_factory_test.cc
