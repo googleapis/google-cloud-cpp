@@ -30,8 +30,8 @@ mapfile -t feature_list < <(bazelisk --batch query \
   sed -e 's;//:;;')
 enabled="$(printf ";%s" "${feature_list[@]}")"
 # These two are not libraries that require enabling.
-enabled="${enabled/;common}"
-enabled="${enabled/;grpc_utils}"
+enabled="${enabled/;common/}"
+enabled="${enabled/;grpc_utils/}"
 enabled="${enabled:1}"
 
 INSTALL_PREFIX=/var/tmp/google-cloud-cpp
@@ -68,7 +68,8 @@ function check_abi() {
     public_headers="${prefix}/include/google/cloud"
   fi
 
-  local version=$(git rev-parse --short HEAD)
+  local version
+  version=$(git rev-parse --short HEAD)
   local actual_dump_file="${library}.actual.abi.dump"
   local -a dump_options=(
     # The source .so file
@@ -91,8 +92,8 @@ function check_abi() {
     # Use the system's debuginfo
     -search-debuginfo /usr
   )
-  abi-dumper "${dump_options[@]}" >/dev/null 2>&1 |\
-    grep -v "ERROR: missed type id"  || true
+  abi-dumper "${dump_options[@]}" >/dev/null 2>&1 |
+    grep -v "ERROR: missed type id" || true
 
   local project_dir="${project_root}/ci/abi-dumps"
   local expected_dump_file="${library}.expected.abi.dump"
