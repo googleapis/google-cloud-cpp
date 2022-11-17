@@ -29,6 +29,7 @@
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/logging_decorator_rest_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
+#include "generator/internal/metadata_decorator_rest_generator.h"
 #include "generator/internal/mock_connection_generator.h"
 #include "generator/internal/option_defaults_generator.h"
 #include "generator/internal/options_generator.h"
@@ -925,16 +926,14 @@ VarsDictionary CreateServiceVars(
   vars["metadata_header_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_metadata_decorator.h");
-
-  vars["round_robin_class_name"] =
-      absl::StrCat(descriptor.name(), "RoundRobin");
-  vars["round_robin_cc_path"] = absl::StrCat(
+  vars["metadata_rest_class_name"] =
+      absl::StrCat(descriptor.name(), "RestMetadata");
+  vars["metadata_rest_cc_path"] = absl::StrCat(
       vars["product_path"], "internal/",
-      ServiceNameToFilePath(descriptor.name()), "_round_robin_decorator.cc");
-  vars["round_robin_header_path"] = absl::StrCat(
+      ServiceNameToFilePath(descriptor.name()), "_rest_metadata_decorator.cc");
+  vars["metadata_rest_header_path"] = absl::StrCat(
       vars["product_path"], "internal/",
-      ServiceNameToFilePath(descriptor.name()), "_round_robin_decorator.h");
-
+      ServiceNameToFilePath(descriptor.name()), "_rest_metadata_decorator.h");
   vars["mock_connection_class_name"] =
       absl::StrCat("Mock", descriptor.name(), "Connection");
   vars["mock_connection_header_path"] =
@@ -962,6 +961,14 @@ VarsDictionary CreateServiceVars(
   vars["retry_traits_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_retry_traits.h");
+  vars["round_robin_class_name"] =
+      absl::StrCat(descriptor.name(), "RoundRobin");
+  vars["round_robin_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_round_robin_decorator.cc");
+  vars["round_robin_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_round_robin_decorator.h");
   vars["service_endpoint"] =
       descriptor.options().GetExtension(google::api::default_host);
   auto& service_endpoint_env_var = vars["service_endpoint_env_var"];
@@ -1113,6 +1120,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   if (generate_rest_transport != service_vars.end() &&
       generate_rest_transport->second == "true") {
     code_generators.push_back(absl::make_unique<LoggingDecoratorRestGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(absl::make_unique<MetadataDecoratorRestGenerator>(
         service, service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<StubRestGenerator>(
         service, service_vars, method_vars, context));
