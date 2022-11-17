@@ -34,7 +34,7 @@ namespace internal {
  * to confuse their roles. A struct to wrap them provides enough type
  * annotations to avoid most mistakes.
  *
- * [RFC 8663]: https://www.rfc-editor.org/rfc/rfc8693.html
+ * [RFC 8693]: https://www.rfc-editor.org/rfc/rfc8693.html
  */
 struct SubjectToken {
   std::string token;
