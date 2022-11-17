@@ -7,7 +7,7 @@ given function call. Both `Client` and `Connection` classes can be created with
 `google::cloud::Options`. Individual function calls in a `Client` can be passed
 `google::cloud::Options`. Some environment variables can be set such that the
 variable value sets an option associated with that environment variable. Lastly,
-the storage library predates the google::cloud::Options mechanism, and many of
+the storage library predates the `google::cloud::Options` mechanism, and many of
 the functions in this library consume a parameter pack that sets optional values
 for the RPCs used in the function.
 
