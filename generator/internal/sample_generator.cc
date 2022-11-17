@@ -44,6 +44,7 @@ Status SampleGenerator::GenerateHeader() {
       "google/cloud/credentials.h",
       "google/cloud/internal/getenv.h",
       "google/cloud/testing_util/example_driver.h",
+      IsExperimental() ? "google/cloud/experimental_tag.h" : "",
   });
   HeaderSystemIncludes({"iostream", "fstream", "string", "vector"});
 
@@ -60,8 +61,12 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   //     https://cloud.google.com/vpc/docs/private-google-access
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
-  auto client = google::cloud::$product_namespace$::$client_class_name$(
-      google::cloud::$product_namespace$::Make$connection_class_name$(options));
+  auto client = google::cloud::$product_namespace$::$client_class_name$()""");
+  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
+  HeaderPrint(R"""(
+      google::cloud::$product_namespace$::Make$connection_class_name$()""");
+  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
+  HeaderPrint(R"""(options));
   //! [set-client-endpoint]
 }
 
@@ -77,8 +82,12 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
     auto options =
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
-    return google::cloud::$product_namespace$::$client_class_name$(
-        google::cloud::$product_namespace$::Make$connection_class_name$(options));
+    return google::cloud::$product_namespace$::$client_class_name$()""");
+  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
+  HeaderPrint(R"""(
+        google::cloud::$product_namespace$::Make$connection_class_name$()""");
+  if (IsExperimental()) HeaderPrint("google::cloud::ExperimentalTag{},");
+  HeaderPrint(R"""(options));
   }
   //! [with-service-account]
   (argv.at(0));
