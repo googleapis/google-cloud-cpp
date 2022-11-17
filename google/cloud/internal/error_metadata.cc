@@ -29,15 +29,6 @@ std::string Format(absl::string_view message, ErrorContext const& context) {
   return absl::StrCat(message, ", ", absl::StrJoin(context, ", ", format));
 }
 
-std::string Format(absl::string_view message,
-                   SavedErrorContext const& context) {
-  if (context.empty()) return std::string{message};
-  auto format = [](std::string* out, auto const& i) {
-    absl::StrAppend(out, i.first, "=", i.second);
-  };
-  return absl::StrCat(message, ", ", absl::StrJoin(context, ", ", format));
-}
-
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

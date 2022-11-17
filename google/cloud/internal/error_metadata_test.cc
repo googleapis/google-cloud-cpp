@@ -37,19 +37,6 @@ TEST(ErrorContext, Format) {
   EXPECT_THAT(actual, HasSubstr("filename=the-filename"));
 }
 
-TEST(ErrorContext, FormatEmptySaved) {
-  EXPECT_EQ("error message",
-            Format("error message", SavedErrorContext{ErrorContext{}}));
-}
-
-TEST(ErrorContext, FormatSaved) {
-  auto const context =
-      ErrorContext{{{"key", "value"}, {"filename", "the-filename"}}};
-  auto const expected = Format("error message", context);
-  auto const actual = Format("error message", SavedErrorContext(context));
-  EXPECT_EQ(actual, expected);
-}
-
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
