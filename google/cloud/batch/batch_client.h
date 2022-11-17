@@ -68,15 +68,15 @@ class BatchServiceClient {
       std::shared_ptr<BatchServiceConnection> connection, Options opts = {});
   ~BatchServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   BatchServiceClient(BatchServiceClient const&) = default;
   BatchServiceClient& operator=(BatchServiceClient const&) = default;
   BatchServiceClient(BatchServiceClient&&) = default;
   BatchServiceClient& operator=(BatchServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(BatchServiceClient const& a,
                          BatchServiceClient const& b) {
@@ -86,7 +86,7 @@ class BatchServiceClient {
                          BatchServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Create a Job.

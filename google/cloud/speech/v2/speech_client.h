@@ -68,15 +68,15 @@ class SpeechClient {
                         Options opts = {});
   ~SpeechClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   SpeechClient(SpeechClient const&) = default;
   SpeechClient& operator=(SpeechClient const&) = default;
   SpeechClient(SpeechClient&&) = default;
   SpeechClient& operator=(SpeechClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(SpeechClient const& a, SpeechClient const& b) {
     return a.connection_ == b.connection_;
@@ -84,7 +84,7 @@ class SpeechClient {
   friend bool operator!=(SpeechClient const& a, SpeechClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a [Recognizer][google.cloud.speech.v2.Recognizer].

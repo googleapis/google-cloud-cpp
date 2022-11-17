@@ -67,15 +67,15 @@ class QuotaControllerClient {
       std::shared_ptr<QuotaControllerConnection> connection, Options opts = {});
   ~QuotaControllerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   QuotaControllerClient(QuotaControllerClient const&) = default;
   QuotaControllerClient& operator=(QuotaControllerClient const&) = default;
   QuotaControllerClient(QuotaControllerClient&&) = default;
   QuotaControllerClient& operator=(QuotaControllerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(QuotaControllerClient const& a,
                          QuotaControllerClient const& b) {
@@ -85,7 +85,7 @@ class QuotaControllerClient {
                          QuotaControllerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Attempts to allocate quota for the specified consumer. It should be called

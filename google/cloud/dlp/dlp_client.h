@@ -72,15 +72,15 @@ class DlpServiceClient {
                             Options opts = {});
   ~DlpServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DlpServiceClient(DlpServiceClient const&) = default;
   DlpServiceClient& operator=(DlpServiceClient const&) = default;
   DlpServiceClient(DlpServiceClient&&) = default;
   DlpServiceClient& operator=(DlpServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DlpServiceClient const& a, DlpServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -88,7 +88,7 @@ class DlpServiceClient {
   friend bool operator!=(DlpServiceClient const& a, DlpServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Finds potentially sensitive info in content.

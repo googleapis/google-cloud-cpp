@@ -66,15 +66,15 @@ class BatchControllerClient {
       std::shared_ptr<BatchControllerConnection> connection, Options opts = {});
   ~BatchControllerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   BatchControllerClient(BatchControllerClient const&) = default;
   BatchControllerClient& operator=(BatchControllerClient const&) = default;
   BatchControllerClient(BatchControllerClient&&) = default;
   BatchControllerClient& operator=(BatchControllerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(BatchControllerClient const& a,
                          BatchControllerClient const& b) {
@@ -84,7 +84,7 @@ class BatchControllerClient {
                          BatchControllerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a batch workload that executes asynchronously.

@@ -65,15 +65,15 @@ class ConversationsClient {
       std::shared_ptr<ConversationsConnection> connection, Options opts = {});
   ~ConversationsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ConversationsClient(ConversationsClient const&) = default;
   ConversationsClient& operator=(ConversationsClient const&) = default;
   ConversationsClient(ConversationsClient&&) = default;
   ConversationsClient& operator=(ConversationsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ConversationsClient const& a,
                          ConversationsClient const& b) {
@@ -83,7 +83,7 @@ class ConversationsClient {
                          ConversationsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new conversation. Conversations are auto-completed after 24

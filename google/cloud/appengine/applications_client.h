@@ -65,15 +65,15 @@ class ApplicationsClient {
       std::shared_ptr<ApplicationsConnection> connection, Options opts = {});
   ~ApplicationsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ApplicationsClient(ApplicationsClient const&) = default;
   ApplicationsClient& operator=(ApplicationsClient const&) = default;
   ApplicationsClient(ApplicationsClient&&) = default;
   ApplicationsClient& operator=(ApplicationsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ApplicationsClient const& a,
                          ApplicationsClient const& b) {
@@ -83,7 +83,7 @@ class ApplicationsClient {
                          ApplicationsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Gets information about an application.

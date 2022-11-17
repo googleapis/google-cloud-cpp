@@ -65,15 +65,15 @@ class MetadataServiceClient {
       std::shared_ptr<MetadataServiceConnection> connection, Options opts = {});
   ~MetadataServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   MetadataServiceClient(MetadataServiceClient const&) = default;
   MetadataServiceClient& operator=(MetadataServiceClient const&) = default;
   MetadataServiceClient(MetadataServiceClient&&) = default;
   MetadataServiceClient& operator=(MetadataServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(MetadataServiceClient const& a,
                          MetadataServiceClient const& b) {
@@ -83,7 +83,7 @@ class MetadataServiceClient {
                          MetadataServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Create a metadata entity.

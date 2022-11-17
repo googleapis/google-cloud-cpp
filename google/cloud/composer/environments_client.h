@@ -66,15 +66,15 @@ class EnvironmentsClient {
       std::shared_ptr<EnvironmentsConnection> connection, Options opts = {});
   ~EnvironmentsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   EnvironmentsClient(EnvironmentsClient const&) = default;
   EnvironmentsClient& operator=(EnvironmentsClient const&) = default;
   EnvironmentsClient(EnvironmentsClient&&) = default;
   EnvironmentsClient& operator=(EnvironmentsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(EnvironmentsClient const& a,
                          EnvironmentsClient const& b) {
@@ -84,7 +84,7 @@ class EnvironmentsClient {
                          EnvironmentsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Create a new environment.

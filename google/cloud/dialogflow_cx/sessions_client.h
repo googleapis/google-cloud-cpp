@@ -68,15 +68,15 @@ class SessionsClient {
                           Options opts = {});
   ~SessionsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   SessionsClient(SessionsClient const&) = default;
   SessionsClient& operator=(SessionsClient const&) = default;
   SessionsClient(SessionsClient&&) = default;
   SessionsClient& operator=(SessionsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(SessionsClient const& a, SessionsClient const& b) {
     return a.connection_ == b.connection_;
@@ -84,7 +84,7 @@ class SessionsClient {
   friend bool operator!=(SessionsClient const& a, SessionsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Processes a natural language query and returns structured, actionable data

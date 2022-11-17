@@ -77,7 +77,7 @@ class ClientConnectorServicesServiceClient {
       Options opts = {});
   ~ClientConnectorServicesServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ClientConnectorServicesServiceClient(
       ClientConnectorServicesServiceClient const&) = default;
@@ -87,9 +87,9 @@ class ClientConnectorServicesServiceClient {
       default;
   ClientConnectorServicesServiceClient& operator=(
       ClientConnectorServicesServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ClientConnectorServicesServiceClient const& a,
                          ClientConnectorServicesServiceClient const& b) {
@@ -99,7 +99,7 @@ class ClientConnectorServicesServiceClient {
                          ClientConnectorServicesServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists ClientConnectorServices in a given project and location.

@@ -66,7 +66,7 @@ class AuthorizedCertificatesClient {
       Options opts = {});
   ~AuthorizedCertificatesClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AuthorizedCertificatesClient(AuthorizedCertificatesClient const&) = default;
   AuthorizedCertificatesClient& operator=(AuthorizedCertificatesClient const&) =
@@ -74,9 +74,9 @@ class AuthorizedCertificatesClient {
   AuthorizedCertificatesClient(AuthorizedCertificatesClient&&) = default;
   AuthorizedCertificatesClient& operator=(AuthorizedCertificatesClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AuthorizedCertificatesClient const& a,
                          AuthorizedCertificatesClient const& b) {
@@ -86,7 +86,7 @@ class AuthorizedCertificatesClient {
                          AuthorizedCertificatesClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all SSL certificates the user is authorized to administer.

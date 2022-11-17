@@ -66,15 +66,15 @@ class ApiKeysClient {
                          Options opts = {});
   ~ApiKeysClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ApiKeysClient(ApiKeysClient const&) = default;
   ApiKeysClient& operator=(ApiKeysClient const&) = default;
   ApiKeysClient(ApiKeysClient&&) = default;
   ApiKeysClient& operator=(ApiKeysClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ApiKeysClient const& a, ApiKeysClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class ApiKeysClient {
   friend bool operator!=(ApiKeysClient const& a, ApiKeysClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new API key.

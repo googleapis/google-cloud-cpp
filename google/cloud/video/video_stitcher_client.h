@@ -70,16 +70,16 @@ class VideoStitcherServiceClient {
       Options opts = {});
   ~VideoStitcherServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   VideoStitcherServiceClient(VideoStitcherServiceClient const&) = default;
   VideoStitcherServiceClient& operator=(VideoStitcherServiceClient const&) =
       default;
   VideoStitcherServiceClient(VideoStitcherServiceClient&&) = default;
   VideoStitcherServiceClient& operator=(VideoStitcherServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(VideoStitcherServiceClient const& a,
                          VideoStitcherServiceClient const& b) {
@@ -89,7 +89,7 @@ class VideoStitcherServiceClient {
                          VideoStitcherServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new CDN key.

@@ -65,15 +65,15 @@ class LanguageServiceClient {
       std::shared_ptr<LanguageServiceConnection> connection, Options opts = {});
   ~LanguageServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   LanguageServiceClient(LanguageServiceClient const&) = default;
   LanguageServiceClient& operator=(LanguageServiceClient const&) = default;
   LanguageServiceClient(LanguageServiceClient&&) = default;
   LanguageServiceClient& operator=(LanguageServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(LanguageServiceClient const& a,
                          LanguageServiceClient const& b) {
@@ -83,7 +83,7 @@ class LanguageServiceClient {
                          LanguageServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Analyzes the sentiment of the provided text.

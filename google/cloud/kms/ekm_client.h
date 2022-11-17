@@ -68,15 +68,15 @@ class EkmServiceClient {
                             Options opts = {});
   ~EkmServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   EkmServiceClient(EkmServiceClient const&) = default;
   EkmServiceClient& operator=(EkmServiceClient const&) = default;
   EkmServiceClient(EkmServiceClient&&) = default;
   EkmServiceClient& operator=(EkmServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(EkmServiceClient const& a, EkmServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -84,7 +84,7 @@ class EkmServiceClient {
   friend bool operator!=(EkmServiceClient const& a, EkmServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists [EkmConnections][google.cloud.kms.v1.EkmConnection].

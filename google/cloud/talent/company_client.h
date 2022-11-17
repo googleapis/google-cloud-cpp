@@ -64,15 +64,15 @@ class CompanyServiceClient {
       std::shared_ptr<CompanyServiceConnection> connection, Options opts = {});
   ~CompanyServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CompanyServiceClient(CompanyServiceClient const&) = default;
   CompanyServiceClient& operator=(CompanyServiceClient const&) = default;
   CompanyServiceClient(CompanyServiceClient&&) = default;
   CompanyServiceClient& operator=(CompanyServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CompanyServiceClient const& a,
                          CompanyServiceClient const& b) {
@@ -82,7 +82,7 @@ class CompanyServiceClient {
                          CompanyServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new company entity.

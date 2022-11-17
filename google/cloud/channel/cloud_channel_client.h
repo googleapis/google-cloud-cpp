@@ -85,16 +85,16 @@ class CloudChannelServiceClient {
       Options opts = {});
   ~CloudChannelServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CloudChannelServiceClient(CloudChannelServiceClient const&) = default;
   CloudChannelServiceClient& operator=(CloudChannelServiceClient const&) =
       default;
   CloudChannelServiceClient(CloudChannelServiceClient&&) = default;
   CloudChannelServiceClient& operator=(CloudChannelServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CloudChannelServiceClient const& a,
                          CloudChannelServiceClient const& b) {
@@ -104,7 +104,7 @@ class CloudChannelServiceClient {
                          CloudChannelServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// List [Customer][google.cloud.channel.v1.Customer]s.

@@ -83,15 +83,15 @@ class OrgPolicyClient {
                            Options opts = {});
   ~OrgPolicyClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   OrgPolicyClient(OrgPolicyClient const&) = default;
   OrgPolicyClient& operator=(OrgPolicyClient const&) = default;
   OrgPolicyClient(OrgPolicyClient&&) = default;
   OrgPolicyClient& operator=(OrgPolicyClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(OrgPolicyClient const& a, OrgPolicyClient const& b) {
     return a.connection_ == b.connection_;
@@ -99,7 +99,7 @@ class OrgPolicyClient {
   friend bool operator!=(OrgPolicyClient const& a, OrgPolicyClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists `Constraints` that could be applied on the specified resource.

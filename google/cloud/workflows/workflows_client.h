@@ -68,15 +68,15 @@ class WorkflowsClient {
                            Options opts = {});
   ~WorkflowsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   WorkflowsClient(WorkflowsClient const&) = default;
   WorkflowsClient& operator=(WorkflowsClient const&) = default;
   WorkflowsClient(WorkflowsClient&&) = default;
   WorkflowsClient& operator=(WorkflowsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(WorkflowsClient const& a, WorkflowsClient const& b) {
     return a.connection_ == b.connection_;
@@ -84,7 +84,7 @@ class WorkflowsClient {
   friend bool operator!=(WorkflowsClient const& a, WorkflowsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists Workflows in a given project and location.

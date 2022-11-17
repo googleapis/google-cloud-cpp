@@ -65,7 +65,7 @@ class SecuritySettingsServiceClient {
       Options opts = {});
   ~SecuritySettingsServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   SecuritySettingsServiceClient(SecuritySettingsServiceClient const&) = default;
   SecuritySettingsServiceClient& operator=(
@@ -73,9 +73,9 @@ class SecuritySettingsServiceClient {
   SecuritySettingsServiceClient(SecuritySettingsServiceClient&&) = default;
   SecuritySettingsServiceClient& operator=(SecuritySettingsServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(SecuritySettingsServiceClient const& a,
                          SecuritySettingsServiceClient const& b) {
@@ -85,7 +85,7 @@ class SecuritySettingsServiceClient {
                          SecuritySettingsServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Create security settings in the specified location.

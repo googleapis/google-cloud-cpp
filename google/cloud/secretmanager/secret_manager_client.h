@@ -72,16 +72,16 @@ class SecretManagerServiceClient {
       Options opts = {});
   ~SecretManagerServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   SecretManagerServiceClient(SecretManagerServiceClient const&) = default;
   SecretManagerServiceClient& operator=(SecretManagerServiceClient const&) =
       default;
   SecretManagerServiceClient(SecretManagerServiceClient&&) = default;
   SecretManagerServiceClient& operator=(SecretManagerServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(SecretManagerServiceClient const& a,
                          SecretManagerServiceClient const& b) {
@@ -91,7 +91,7 @@ class SecretManagerServiceClient {
                          SecretManagerServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists [Secrets][google.cloud.secretmanager.v1.Secret].

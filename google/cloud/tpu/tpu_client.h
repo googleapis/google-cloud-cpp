@@ -68,15 +68,15 @@ class TpuClient {
                      Options opts = {});
   ~TpuClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   TpuClient(TpuClient const&) = default;
   TpuClient& operator=(TpuClient const&) = default;
   TpuClient(TpuClient&&) = default;
   TpuClient& operator=(TpuClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(TpuClient const& a, TpuClient const& b) {
     return a.connection_ == b.connection_;
@@ -84,7 +84,7 @@ class TpuClient {
   friend bool operator!=(TpuClient const& a, TpuClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists nodes.

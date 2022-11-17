@@ -75,15 +75,15 @@ class GroupServiceClient {
       std::shared_ptr<GroupServiceConnection> connection, Options opts = {});
   ~GroupServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   GroupServiceClient(GroupServiceClient const&) = default;
   GroupServiceClient& operator=(GroupServiceClient const&) = default;
   GroupServiceClient(GroupServiceClient&&) = default;
   GroupServiceClient& operator=(GroupServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(GroupServiceClient const& a,
                          GroupServiceClient const& b) {
@@ -93,7 +93,7 @@ class GroupServiceClient {
                          GroupServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the existing groups.

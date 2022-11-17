@@ -67,16 +67,16 @@ class WebSecurityScannerClient {
       Options opts = {});
   ~WebSecurityScannerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   WebSecurityScannerClient(WebSecurityScannerClient const&) = default;
   WebSecurityScannerClient& operator=(WebSecurityScannerClient const&) =
       default;
   WebSecurityScannerClient(WebSecurityScannerClient&&) = default;
   WebSecurityScannerClient& operator=(WebSecurityScannerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(WebSecurityScannerClient const& a,
                          WebSecurityScannerClient const& b) {
@@ -86,7 +86,7 @@ class WebSecurityScannerClient {
                          WebSecurityScannerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new ScanConfig.

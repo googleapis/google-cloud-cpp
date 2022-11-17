@@ -67,15 +67,15 @@ class ProductServiceClient {
       std::shared_ptr<ProductServiceConnection> connection, Options opts = {});
   ~ProductServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ProductServiceClient(ProductServiceClient const&) = default;
   ProductServiceClient& operator=(ProductServiceClient const&) = default;
   ProductServiceClient(ProductServiceClient&&) = default;
   ProductServiceClient& operator=(ProductServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ProductServiceClient const& a,
                          ProductServiceClient const& b) {
@@ -85,7 +85,7 @@ class ProductServiceClient {
                          ProductServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a [Product][google.cloud.retail.v2.Product].

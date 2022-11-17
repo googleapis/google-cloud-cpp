@@ -67,15 +67,15 @@ class LoggingServiceV2Client {
       Options opts = {});
   ~LoggingServiceV2Client();
 
-  //@{
+  ///@{
   // @name Copy and move support
   LoggingServiceV2Client(LoggingServiceV2Client const&) = default;
   LoggingServiceV2Client& operator=(LoggingServiceV2Client const&) = default;
   LoggingServiceV2Client(LoggingServiceV2Client&&) = default;
   LoggingServiceV2Client& operator=(LoggingServiceV2Client&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(LoggingServiceV2Client const& a,
                          LoggingServiceV2Client const& b) {
@@ -85,7 +85,7 @@ class LoggingServiceV2Client {
                          LoggingServiceV2Client const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Deletes all the log entries in a log for the _Default Log Bucket. The log

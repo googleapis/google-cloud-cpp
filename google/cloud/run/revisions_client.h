@@ -66,15 +66,15 @@ class RevisionsClient {
                            Options opts = {});
   ~RevisionsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   RevisionsClient(RevisionsClient const&) = default;
   RevisionsClient& operator=(RevisionsClient const&) = default;
   RevisionsClient(RevisionsClient&&) = default;
   RevisionsClient& operator=(RevisionsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(RevisionsClient const& a, RevisionsClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class RevisionsClient {
   friend bool operator!=(RevisionsClient const& a, RevisionsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Gets information about a Revision.

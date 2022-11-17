@@ -67,15 +67,15 @@ class JobServiceClient {
                             Options opts = {});
   ~JobServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   JobServiceClient(JobServiceClient const&) = default;
   JobServiceClient& operator=(JobServiceClient const&) = default;
   JobServiceClient(JobServiceClient&&) = default;
   JobServiceClient& operator=(JobServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(JobServiceClient const& a, JobServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -83,7 +83,7 @@ class JobServiceClient {
   friend bool operator!=(JobServiceClient const& a, JobServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new job.

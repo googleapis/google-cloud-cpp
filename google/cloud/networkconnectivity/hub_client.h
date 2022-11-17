@@ -68,15 +68,15 @@ class HubServiceClient {
                             Options opts = {});
   ~HubServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   HubServiceClient(HubServiceClient const&) = default;
   HubServiceClient& operator=(HubServiceClient const&) = default;
   HubServiceClient(HubServiceClient&&) = default;
   HubServiceClient& operator=(HubServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(HubServiceClient const& a, HubServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -84,7 +84,7 @@ class HubServiceClient {
   friend bool operator!=(HubServiceClient const& a, HubServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the Network Connectivity Center hubs associated with a given

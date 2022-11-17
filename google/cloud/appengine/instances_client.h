@@ -65,15 +65,15 @@ class InstancesClient {
                            Options opts = {});
   ~InstancesClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   InstancesClient(InstancesClient const&) = default;
   InstancesClient& operator=(InstancesClient const&) = default;
   InstancesClient(InstancesClient&&) = default;
   InstancesClient& operator=(InstancesClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(InstancesClient const& a, InstancesClient const& b) {
     return a.connection_ == b.connection_;
@@ -81,7 +81,7 @@ class InstancesClient {
   friend bool operator!=(InstancesClient const& a, InstancesClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the instances of a version.

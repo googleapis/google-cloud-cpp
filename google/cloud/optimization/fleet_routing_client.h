@@ -81,15 +81,15 @@ class FleetRoutingClient {
       std::shared_ptr<FleetRoutingConnection> connection, Options opts = {});
   ~FleetRoutingClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   FleetRoutingClient(FleetRoutingClient const&) = default;
   FleetRoutingClient& operator=(FleetRoutingClient const&) = default;
   FleetRoutingClient(FleetRoutingClient&&) = default;
   FleetRoutingClient& operator=(FleetRoutingClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(FleetRoutingClient const& a,
                          FleetRoutingClient const& b) {
@@ -99,7 +99,7 @@ class FleetRoutingClient {
                          FleetRoutingClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Sends an `OptimizeToursRequest` containing a `ShipmentModel` and returns

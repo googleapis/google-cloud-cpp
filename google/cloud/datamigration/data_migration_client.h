@@ -67,16 +67,16 @@ class DataMigrationServiceClient {
       Options opts = {});
   ~DataMigrationServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DataMigrationServiceClient(DataMigrationServiceClient const&) = default;
   DataMigrationServiceClient& operator=(DataMigrationServiceClient const&) =
       default;
   DataMigrationServiceClient(DataMigrationServiceClient&&) = default;
   DataMigrationServiceClient& operator=(DataMigrationServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DataMigrationServiceClient const& a,
                          DataMigrationServiceClient const& b) {
@@ -86,7 +86,7 @@ class DataMigrationServiceClient {
                          DataMigrationServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists migration jobs in a given project and location.

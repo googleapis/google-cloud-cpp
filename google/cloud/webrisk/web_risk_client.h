@@ -65,15 +65,15 @@ class WebRiskServiceClient {
       std::shared_ptr<WebRiskServiceConnection> connection, Options opts = {});
   ~WebRiskServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   WebRiskServiceClient(WebRiskServiceClient const&) = default;
   WebRiskServiceClient& operator=(WebRiskServiceClient const&) = default;
   WebRiskServiceClient(WebRiskServiceClient&&) = default;
   WebRiskServiceClient& operator=(WebRiskServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(WebRiskServiceClient const& a,
                          WebRiskServiceClient const& b) {
@@ -83,7 +83,7 @@ class WebRiskServiceClient {
                          WebRiskServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Gets the most recent threat list diffs. These diffs should be applied to

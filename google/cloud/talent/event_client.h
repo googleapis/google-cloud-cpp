@@ -64,15 +64,15 @@ class EventServiceClient {
       std::shared_ptr<EventServiceConnection> connection, Options opts = {});
   ~EventServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   EventServiceClient(EventServiceClient const&) = default;
   EventServiceClient& operator=(EventServiceClient const&) = default;
   EventServiceClient(EventServiceClient&&) = default;
   EventServiceClient& operator=(EventServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(EventServiceClient const& a,
                          EventServiceClient const& b) {
@@ -82,7 +82,7 @@ class EventServiceClient {
                          EventServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Report events issued when end user interacts with customer's application

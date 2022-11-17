@@ -66,15 +66,15 @@ class ParticipantsClient {
       std::shared_ptr<ParticipantsConnection> connection, Options opts = {});
   ~ParticipantsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ParticipantsClient(ParticipantsClient const&) = default;
   ParticipantsClient& operator=(ParticipantsClient const&) = default;
   ParticipantsClient(ParticipantsClient&&) = default;
   ParticipantsClient& operator=(ParticipantsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ParticipantsClient const& a,
                          ParticipantsClient const& b) {
@@ -84,7 +84,7 @@ class ParticipantsClient {
                          ParticipantsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new participant in a conversation.

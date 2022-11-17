@@ -67,15 +67,15 @@ class ApiGatewayServiceClient {
       Options opts = {});
   ~ApiGatewayServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ApiGatewayServiceClient(ApiGatewayServiceClient const&) = default;
   ApiGatewayServiceClient& operator=(ApiGatewayServiceClient const&) = default;
   ApiGatewayServiceClient(ApiGatewayServiceClient&&) = default;
   ApiGatewayServiceClient& operator=(ApiGatewayServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ApiGatewayServiceClient const& a,
                          ApiGatewayServiceClient const& b) {
@@ -85,7 +85,7 @@ class ApiGatewayServiceClient {
                          ApiGatewayServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists Gateways in a given project and location.

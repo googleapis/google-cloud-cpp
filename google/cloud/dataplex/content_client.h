@@ -65,15 +65,15 @@ class ContentServiceClient {
       std::shared_ptr<ContentServiceConnection> connection, Options opts = {});
   ~ContentServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ContentServiceClient(ContentServiceClient const&) = default;
   ContentServiceClient& operator=(ContentServiceClient const&) = default;
   ContentServiceClient(ContentServiceClient&&) = default;
   ContentServiceClient& operator=(ContentServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ContentServiceClient const& a,
                          ContentServiceClient const& b) {
@@ -83,7 +83,7 @@ class ContentServiceClient {
                          ContentServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Create a content.

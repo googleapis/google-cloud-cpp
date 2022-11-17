@@ -68,15 +68,15 @@ class TraceServiceClient {
       std::shared_ptr<TraceServiceConnection> connection, Options opts = {});
   ~TraceServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   TraceServiceClient(TraceServiceClient const&) = default;
   TraceServiceClient& operator=(TraceServiceClient const&) = default;
   TraceServiceClient(TraceServiceClient&&) = default;
   TraceServiceClient& operator=(TraceServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(TraceServiceClient const& a,
                          TraceServiceClient const& b) {
@@ -86,7 +86,7 @@ class TraceServiceClient {
                          TraceServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Sends new spans to new or existing traces. You cannot update

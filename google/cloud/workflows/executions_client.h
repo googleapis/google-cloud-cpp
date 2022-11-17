@@ -65,15 +65,15 @@ class ExecutionsClient {
                             Options opts = {});
   ~ExecutionsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ExecutionsClient(ExecutionsClient const&) = default;
   ExecutionsClient& operator=(ExecutionsClient const&) = default;
   ExecutionsClient(ExecutionsClient&&) = default;
   ExecutionsClient& operator=(ExecutionsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ExecutionsClient const& a, ExecutionsClient const& b) {
     return a.connection_ == b.connection_;
@@ -81,7 +81,7 @@ class ExecutionsClient {
   friend bool operator!=(ExecutionsClient const& a, ExecutionsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns a list of executions which belong to the workflow with

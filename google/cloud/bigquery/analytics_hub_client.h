@@ -70,16 +70,16 @@ class AnalyticsHubServiceClient {
       Options opts = {});
   ~AnalyticsHubServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AnalyticsHubServiceClient(AnalyticsHubServiceClient const&) = default;
   AnalyticsHubServiceClient& operator=(AnalyticsHubServiceClient const&) =
       default;
   AnalyticsHubServiceClient(AnalyticsHubServiceClient&&) = default;
   AnalyticsHubServiceClient& operator=(AnalyticsHubServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AnalyticsHubServiceClient const& a,
                          AnalyticsHubServiceClient const& b) {
@@ -89,7 +89,7 @@ class AnalyticsHubServiceClient {
                          AnalyticsHubServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all data exchanges in a given project and location.

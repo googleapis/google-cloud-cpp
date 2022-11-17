@@ -73,15 +73,15 @@ class CloudBuildClient {
                             Options opts = {});
   ~CloudBuildClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CloudBuildClient(CloudBuildClient const&) = default;
   CloudBuildClient& operator=(CloudBuildClient const&) = default;
   CloudBuildClient(CloudBuildClient&&) = default;
   CloudBuildClient& operator=(CloudBuildClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CloudBuildClient const& a, CloudBuildClient const& b) {
     return a.connection_ == b.connection_;
@@ -89,7 +89,7 @@ class CloudBuildClient {
   friend bool operator!=(CloudBuildClient const& a, CloudBuildClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Starts a build with the specified configuration.

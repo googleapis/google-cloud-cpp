@@ -68,7 +68,7 @@ class PolicyTagManagerSerializationClient {
       Options opts = {});
   ~PolicyTagManagerSerializationClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   PolicyTagManagerSerializationClient(
       PolicyTagManagerSerializationClient const&) = default;
@@ -78,9 +78,9 @@ class PolicyTagManagerSerializationClient {
       default;
   PolicyTagManagerSerializationClient& operator=(
       PolicyTagManagerSerializationClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(PolicyTagManagerSerializationClient const& a,
                          PolicyTagManagerSerializationClient const& b) {
@@ -90,7 +90,7 @@ class PolicyTagManagerSerializationClient {
                          PolicyTagManagerSerializationClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Replaces (updates) a taxonomy and all its policy tags.

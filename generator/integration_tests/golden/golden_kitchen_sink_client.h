@@ -66,15 +66,15 @@ class GoldenKitchenSinkClient {
   explicit GoldenKitchenSinkClient(std::shared_ptr<GoldenKitchenSinkConnection> connection, Options opts = {});
   ~GoldenKitchenSinkClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   GoldenKitchenSinkClient(GoldenKitchenSinkClient const&) = default;
   GoldenKitchenSinkClient& operator=(GoldenKitchenSinkClient const&) = default;
   GoldenKitchenSinkClient(GoldenKitchenSinkClient&&) = default;
   GoldenKitchenSinkClient& operator=(GoldenKitchenSinkClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(GoldenKitchenSinkClient const& a, GoldenKitchenSinkClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class GoldenKitchenSinkClient {
   friend bool operator!=(GoldenKitchenSinkClient const& a, GoldenKitchenSinkClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Generates an OAuth 2.0 access token for a service account.

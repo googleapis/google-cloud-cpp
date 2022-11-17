@@ -66,15 +66,15 @@ class QueryServiceClient {
       std::shared_ptr<QueryServiceConnection> connection, Options opts = {});
   ~QueryServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   QueryServiceClient(QueryServiceClient const&) = default;
   QueryServiceClient& operator=(QueryServiceClient const&) = default;
   QueryServiceClient(QueryServiceClient&&) = default;
   QueryServiceClient& operator=(QueryServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(QueryServiceClient const& a,
                          QueryServiceClient const& b) {
@@ -84,7 +84,7 @@ class QueryServiceClient {
                          QueryServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Queries time series using Monitoring Query Language. This method does not

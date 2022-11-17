@@ -69,7 +69,7 @@ class CertificateAuthorityServiceClient {
       Options opts = {});
   ~CertificateAuthorityServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CertificateAuthorityServiceClient(CertificateAuthorityServiceClient const&) =
       default;
@@ -79,9 +79,9 @@ class CertificateAuthorityServiceClient {
       default;
   CertificateAuthorityServiceClient& operator=(
       CertificateAuthorityServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CertificateAuthorityServiceClient const& a,
                          CertificateAuthorityServiceClient const& b) {
@@ -91,7 +91,7 @@ class CertificateAuthorityServiceClient {
                          CertificateAuthorityServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Create a new [Certificate][google.cloud.security.privateca.v1.Certificate]

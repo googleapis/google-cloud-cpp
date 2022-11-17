@@ -67,7 +67,7 @@ class NotificationChannelServiceClient {
       Options opts = {});
   ~NotificationChannelServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   NotificationChannelServiceClient(NotificationChannelServiceClient const&) =
       default;
@@ -77,9 +77,9 @@ class NotificationChannelServiceClient {
       default;
   NotificationChannelServiceClient& operator=(
       NotificationChannelServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(NotificationChannelServiceClient const& a,
                          NotificationChannelServiceClient const& b) {
@@ -89,7 +89,7 @@ class NotificationChannelServiceClient {
                          NotificationChannelServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the descriptors for supported channel types. The use of descriptors

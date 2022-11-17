@@ -75,15 +75,15 @@ class Debugger2Client {
                            Options opts = {});
   ~Debugger2Client();
 
-  //@{
+  ///@{
   // @name Copy and move support
   Debugger2Client(Debugger2Client const&) = default;
   Debugger2Client& operator=(Debugger2Client const&) = default;
   Debugger2Client(Debugger2Client&&) = default;
   Debugger2Client& operator=(Debugger2Client&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(Debugger2Client const& a, Debugger2Client const& b) {
     return a.connection_ == b.connection_;
@@ -91,7 +91,7 @@ class Debugger2Client {
   friend bool operator!=(Debugger2Client const& a, Debugger2Client const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Sets the breakpoint to the debuggee.

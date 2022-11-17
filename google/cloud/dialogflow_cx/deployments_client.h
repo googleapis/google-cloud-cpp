@@ -65,15 +65,15 @@ class DeploymentsClient {
                              Options opts = {});
   ~DeploymentsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DeploymentsClient(DeploymentsClient const&) = default;
   DeploymentsClient& operator=(DeploymentsClient const&) = default;
   DeploymentsClient(DeploymentsClient&&) = default;
   DeploymentsClient& operator=(DeploymentsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DeploymentsClient const& a,
                          DeploymentsClient const& b) {
@@ -83,7 +83,7 @@ class DeploymentsClient {
                          DeploymentsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all deployments in the specified

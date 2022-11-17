@@ -81,7 +81,7 @@ class AppConnectionsServiceClient {
       Options opts = {});
   ~AppConnectionsServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AppConnectionsServiceClient(AppConnectionsServiceClient const&) = default;
   AppConnectionsServiceClient& operator=(AppConnectionsServiceClient const&) =
@@ -89,9 +89,9 @@ class AppConnectionsServiceClient {
   AppConnectionsServiceClient(AppConnectionsServiceClient&&) = default;
   AppConnectionsServiceClient& operator=(AppConnectionsServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AppConnectionsServiceClient const& a,
                          AppConnectionsServiceClient const& b) {
@@ -101,7 +101,7 @@ class AppConnectionsServiceClient {
                          AppConnectionsServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists AppConnections in a given project and location.
