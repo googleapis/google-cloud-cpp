@@ -24,7 +24,11 @@ namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GoldenKitchenSinkClient::GoldenKitchenSinkClient(std::shared_ptr<GoldenKitchenSinkConnection> connection, Options opts) : connection_(std::move(connection)), options_(internal::MergeOptions(std::move(opts), connection_->options())) {}
+GoldenKitchenSinkClient::GoldenKitchenSinkClient(
+    std::shared_ptr<GoldenKitchenSinkConnection> connection, Options opts)
+    : connection_(std::move(connection)),
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 GoldenKitchenSinkClient::~GoldenKitchenSinkClient() = default;
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
