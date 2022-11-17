@@ -83,6 +83,8 @@ add_library(
     internal/ios_flags_saver.h
     internal/log_impl.cc
     internal/log_impl.h
+    internal/make_status.cc
+    internal/make_status.h
     internal/non_constructible.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
@@ -301,6 +303,7 @@ if (BUILD_TESTING)
         internal/group_options_test.cc
         internal/invoke_result_test.cc
         internal/log_impl_test.cc
+        internal/make_status_test.cc
         internal/pagination_range_test.cc
         internal/parse_rfc3339_test.cc
         internal/populate_common_options_test.cc
