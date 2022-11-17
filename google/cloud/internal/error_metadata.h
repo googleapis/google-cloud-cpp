@@ -113,8 +113,7 @@ std::string Format(absl::string_view message, ErrorContext const& context);
  */
 class SavedErrorContext {
  public:
-  using Container =
-      std::vector<std::pair<absl::string_view, absl::string_view>>;
+  using Container = std::vector<std::pair<std::string, std::string>>;
 
   explicit SavedErrorContext(ErrorContext const& rhs)
       : metadata_(rhs.begin(), rhs.end()) {}
