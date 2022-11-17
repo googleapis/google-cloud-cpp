@@ -62,7 +62,9 @@ Status ConnectionGenerator::GenerateHeader() {
        HasBidirStreamingMethod()
            ? "google/cloud/internal/async_read_write_stream_impl.h"
            : "",
-       HasBidirStreamingMethod() ? "google/cloud/experimental_tag.h" : "",
+       HasBidirStreamingMethod() || IsExperimental()
+           ? "google/cloud/experimental_tag.h"
+           : "",
        "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
@@ -247,6 +249,7 @@ class $connection_class_name$ {
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 )""");
   HeaderPrint("    ");
+  if (IsExperimental()) HeaderPrint("ExperimentalTag, ");
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
@@ -434,6 +437,7 @@ $connection_class_name$::Async$method_name$(
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 )""");
   CcPrint("    ");
+  if (IsExperimental()) CcPrint("ExperimentalTag, ");
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT:
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:

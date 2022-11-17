@@ -257,6 +257,9 @@ int main(int argc, char** argv) {
     for (auto const& additional_proto_file : service.additional_proto_files()) {
       args.emplace_back(additional_proto_file);
     }
+    if (service.experimental()) {
+      args.emplace_back("--cpp_codegen_opt=experimental=true");
+    }
 
     GCP_LOG(INFO) << "Generating service code using: "
                   << absl::StrJoin(args, ";") << "\n";
