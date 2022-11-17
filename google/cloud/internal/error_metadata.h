@@ -36,11 +36,15 @@ namespace internal {
  * file to parse it, but may want to show the filename, the start of the
  * parsing call tree, and maybe some key intermediate callers.
  *
+ * This class can be used to pass these additional parameters as needed, maybe
+ * growing as parsing partially succeeds, and if there is an error the data
+ * can be included as part of the message (or `google::cloud::ErrorInfo`).
+ *
  * @par Example
  * @code
  * namespace google::cloud::internal {
  * StatusOr<Foo> ParseFooFile(std::string filename) {
- *   ErrorContext error_context{
+ *   ErrorContext ec{
  *     {"filename", filename},
  *     {"origin", __func__},
  *   };
@@ -51,19 +55,17 @@ namespace internal {
  *        StatusCode::kInvalidArgument,
  *        Format("cannot read file", error_context));
  *   }
- *   return ParseFooFileContents(
- *       std::move(contents), std::move(error_context));
+ *   return ParseFooFileContents(std::move(contents), std::move(ec));
  * }
  *
- * StatusOr<Foo> ParseFooFileContents(
- *     std::string contents, ErrorContext error_context) {
+ * StatusOr<Foo> ParseFooFileContents(std::string contents, ErrorContext ec) {
  *   // Do some stuff
  *   if (has_bar()) return ParseFooFileContentsWithBar(
  *       .., std::move(error_context));
  *   // do more stuff
  *   if (bad()) return Status(
  *       StatusCode::kInvalidArgument,
- *       Format("badness parsing thingamajig", error_context));
+ *       Format("badness parsing thingamajig", ec));
  *   // all good
  *   return Foo{...};
  * }
@@ -71,14 +73,13 @@ namespace internal {
  */
 class ErrorContext {
  public:
-  using Container =
-      std::vector<std::pair<absl::string_view, absl::string_view>>;
+  using Container = std::vector<std::pair<std::string, std::string>>;
 
   ErrorContext() = default;
   explicit ErrorContext(Container m) : metadata_(std::move(m)) {}
 
-  ErrorContext(ErrorContext const&) = delete;
-  ErrorContext& operator=(ErrorContext const&) = delete;
+  ErrorContext(ErrorContext const&) = default;
+  ErrorContext& operator=(ErrorContext const&) = default;
   ErrorContext(ErrorContext&&) = default;
   ErrorContext& operator=(ErrorContext&&) = default;
 
@@ -102,53 +103,6 @@ class ErrorContext {
 };
 
 std::string Format(absl::string_view message, ErrorContext const& context);
-
-/**
- * Stores an error context for later use.
- *
- * In most cases an error context is used in a single call tree, and therefore
- * using `absl::string_view` gives a good performance tradeoff.  Sometimes one
- * needs to capture the error context for use after the function returns.  In
- * this case we need a deep copy.
- */
-class SavedErrorContext {
- public:
-  using Container = std::vector<std::pair<std::string, std::string>>;
-
-  explicit SavedErrorContext(ErrorContext const& rhs)
-      : metadata_(rhs.begin(), rhs.end()) {}
-
-  SavedErrorContext& operator=(ErrorContext const& rhs) {
-    SavedErrorContext tmp(rhs);
-    tmp.metadata_.swap(metadata_);
-    return *this;
-  }
-
-  SavedErrorContext(SavedErrorContext const&) = default;
-  SavedErrorContext& operator=(SavedErrorContext const&) = default;
-  SavedErrorContext(SavedErrorContext&&) = default;
-  SavedErrorContext& operator=(SavedErrorContext&&) = default;
-
-  template <typename... A>
-  Container::reference emplace_back(A&&... a) {
-    return metadata_.emplace_back(std::forward<A>(a)...);
-  }
-
-  void push_back(Container::value_type p) {
-    return metadata_.push_back(std::move(p));
-  }
-
-  bool empty() const { return metadata_.empty(); }
-
-  Container::const_iterator begin() const { return metadata_.begin(); }
-
-  Container::const_iterator end() const { return metadata_.end(); }
-
- private:
-  Container metadata_;
-};
-
-std::string Format(absl::string_view message, SavedErrorContext const& context);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
