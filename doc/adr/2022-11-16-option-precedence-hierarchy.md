@@ -3,26 +3,30 @@
 **Status**: proposed
 
 **Context**: There are a variety of ways that options can be customized for a
-given rpc call. Both `Client` and `Connection` classes can be created with a set
-of `google::cloud::Options`. Individual function calls in a `Client` can be
-passed `google::cloud::Options`. Some environment variables can be set that
-such that the variable value sets an Option associated with that environment
-variable. Lastly, GCS `Request` types inherit from various Option templates
-which allow the corresponding option to be set in an instance of the `Request`.
+given function call. Both `Client` and `Connection` classes can be created with
+`google::cloud::Options`. Individual function calls in a `Client` can be passed
+`google::cloud::Options`. Some environment variables can be set such that the
+variable value sets an Option associated with that environment variable. Lastly,
+the storage library precedes the google::cloud::Options mechanism. Many of the
+functions in this library consume a parameter pack, the parameter pack sets
+optional values for the RPCs used in the function.
 
-When the same Option is set, with different values, via more than one of these
+When the same option is set, with different values, via more than one of these
 mechanisms, there needs to be a uniform process of determining which value to
 use.
 
-**Decision**: The following hierarchy will be followed when determining which
-value to use when the same Option is set via multiple mechanisms:
+**Decision**: The following priorities will be followed when determining which
+value to use when the same option is set via multiple mechanisms:
 
 1. Environment variables
 1. Per function call/GCS `Request` instance (if both are set with different values, an error is returned)
-1. `Client` Options
-1. `Connection` Options
-1. Default values for Options
+1. `<service>Client` constructor `Options`
+1. `Make<service>Connection` factory function `Options`
+1. Default values
 
-**Consequences**: For the most part, this hierarchy is already applied. However,
-it may result in some behavioral changes for existing users, particularly in the
-case where both "per call" and `Request` options are set to different values.
+**Consequences**: The intent was always to follow the priority defined here.
+However,
+
+- failure to detect conflicts is a bug in the library
+- any changes in behavior are bug fixes
+- the number of conflicts is expected to be small as the overlap is tiny and the features are rarely used.
