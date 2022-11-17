@@ -807,8 +807,8 @@ void GetDatabaseDdl(google::cloud::spanner_admin::DatabaseAdminClient client,
 }
 //! [END spanner_get_database_ddl] [get-database-ddl]
 
-//! [START spanner_add_and_drop_database_roles]
-void AddAndDropDatabaseRoles(
+//! [START spanner_add_and_drop_database_role]
+void AddAndDropDatabaseRole(
     google::cloud::spanner_admin::DatabaseAdminClient client,
     std::string const& project_id, std::string const& instance_id,
     std::string const& database_id, std::string const& role_parent,
@@ -840,7 +840,7 @@ void AddAndDropDatabaseRoles(
   if (!metadata) throw std::move(metadata).status();
   std::cout << "Revoked privileges and dropped role " << role_child << "\n";
 }
-//! [END spanner_add_and_drop_database_roles]
+//! [END spanner_add_and_drop_database_role]
 
 //! [START spanner_read_data_with_database_role]
 void ReadDataWithDatabaseRole(std::string const& project_id,
@@ -4371,9 +4371,9 @@ void RunAll(bool emulator) {
   GetDatabaseDdl(database_admin_client, project_id, instance_id, database_id);
 
   if (!emulator) {
-    SampleBanner("spanner_add_and_drop_database_roles");
-    AddAndDropDatabaseRoles(database_admin_client, project_id, instance_id,
-                            database_id, "new_parent", "new_child");
+    SampleBanner("spanner_add_and_drop_database_role");
+    AddAndDropDatabaseRole(database_admin_client, project_id, instance_id,
+                           database_id, "new_parent", "new_child");
 
     SampleBanner("spanner_read_data_with_database_role");
     ReadDataWithDatabaseRole(project_id, instance_id, database_id,
