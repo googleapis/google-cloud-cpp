@@ -6,10 +6,10 @@
 given function call. Both `Client` and `Connection` classes can be created with
 `google::cloud::Options`. Individual function calls in a `Client` can be passed
 `google::cloud::Options`. Some environment variables can be set such that the
-variable value sets an Option associated with that environment variable. Lastly,
-the storage library precedes the google::cloud::Options mechanism. Many of the
-functions in this library consume a parameter pack, the parameter pack sets
-optional values for the RPCs used in the function.
+variable value sets an option associated with that environment variable. Lastly,
+the storage library predates the google::cloud::Options mechanism, and many of
+the functions in this library consume a parameter pack that sets optional values
+for the RPCs used in the function.
 
 When the same option is set, with different values, via more than one of these
 mechanisms, there needs to be a uniform process of determining which value to
@@ -25,8 +25,8 @@ value to use when the same option is set via multiple mechanisms:
 1. Default values
 
 **Consequences**: The intent was always to follow the priority defined here.
-However,
+Thus:
 
-- failure to detect conflicts is a bug in the library
-- any changes in behavior are bug fixes
-- the number of conflicts is expected to be small as the overlap is tiny and the features are rarely used.
+- Failure to detect conflicts is a bug in the library.
+- Any changes in behavior are bug fixes.
+- The number of conflicts is expected to be small as the overlap is tiny and the features are rarely used.
