@@ -71,12 +71,13 @@ Status ClientGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
-  HeaderLocalIncludes(
-      {vars("connection_header_path"),
-       HasBidirStreamingMethod() ? "google/cloud/experimental_tag.h" : "",
-       "google/cloud/future.h", "google/cloud/options.h",
-       "google/cloud/polling_policy.h", "google/cloud/status_or.h",
-       "google/cloud/version.h"});
+  HeaderLocalIncludes({vars("connection_header_path"),
+                       HasBidirStreamingMethod() || IsExperimental()
+                           ? "google/cloud/experimental_tag.h"
+                           : "",
+                       "google/cloud/future.h", "google/cloud/options.h",
+                       "google/cloud/polling_policy.h",
+                       "google/cloud/status_or.h", "google/cloud/version.h"});
   if (get_iam_policy_extension_ && set_iam_policy_extension_) {
     HeaderLocalIncludes({"google/cloud/iam_updater.h"});
   }
@@ -89,32 +90,35 @@ Status ClientGenerator::GenerateHeader() {
   if (!result.ok()) return result;
 
   // Client Class
-  HeaderPrint(  // clang-format off
-    "\n"
-    "$class_comment_block$\n"
-    "class $client_class_name$ {\n"
-    " public:\n"
-    "  explicit $client_class_name$(std::shared_ptr<$connection_class_name$> connection, Options opts = {});\n"
-    "  ~$client_class_name$();\n"
-    "\n"
-    "  //@{\n"
-    "  // @name Copy and move support\n"
-    "  $client_class_name$($client_class_name$ const&) = default;\n"
-    "  $client_class_name$& operator=($client_class_name$ const&) = default;\n"
-    "  $client_class_name$($client_class_name$&&) = default;\n"
-    "  $client_class_name$& operator=($client_class_name$&&) = default;\n"
-    "  //@}\n"
-    "\n"
-    "  //@{\n"
-    "  // @name Equality\n"
-    "  friend bool operator==($client_class_name$ const& a, $client_class_name$ const& b) {\n"
-    "    return a.connection_ == b.connection_;\n"
-    "  }\n"
-    "  friend bool operator!=($client_class_name$ const& a, $client_class_name$ const& b) {\n"
-    "    return !(a == b);\n"
-    "  }\n"
-    "  //@}\n");
-  // clang-format on
+  HeaderPrint(
+      R"""(
+$class_comment_block$
+class $client_class_name$ {
+ public:
+  explicit $client_class_name$()""");
+  if (IsExperimental()) HeaderPrint("ExperimentalTag, ");
+  HeaderPrint(
+      R"""(std::shared_ptr<$connection_class_name$> connection, Options opts = {});
+  ~$client_class_name$();
+
+  //@{
+  // @name Copy and move support
+  $client_class_name$($client_class_name$ const&) = default;
+  $client_class_name$& operator=($client_class_name$ const&) = default;
+  $client_class_name$($client_class_name$&&) = default;
+  $client_class_name$& operator=($client_class_name$&&) = default;
+  //@}
+
+  //@{
+  // @name Equality
+  friend bool operator==($client_class_name$ const& a, $client_class_name$ const& b) {
+    return a.connection_ == b.connection_;
+  }
+  friend bool operator!=($client_class_name$ const& a, $client_class_name$ const& b) {
+    return !(a == b);
+  }
+  //@}
+)""");
 
   for (google::protobuf::MethodDescriptor const& method : methods()) {
     if (IsBidirStreaming(method)) {
@@ -352,16 +356,16 @@ Status ClientGenerator::GenerateCc() {
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
 
-  CcPrint(  // clang-format off
-    "\n"
-    "$client_class_name$::$client_class_name$(std::shared_ptr<$connection_class_name$> connection, Options opts)"
-    " : connection_(std::move(connection)),"
-    " options_(internal::MergeOptions(std::move(opts),"
-    " connection_->options())) {}\n");
-  // clang-format on
-
-  CcPrint(  // clang-format off
-    "$client_class_name$::~$client_class_name$() = default;\n");
+  CcPrint(R"""(
+$client_class_name$::$client_class_name$()""");
+  if (IsExperimental()) CcPrint("ExperimentalTag,");
+  CcPrint(R"""(
+    std::shared_ptr<$connection_class_name$> connection, Options opts)
+    : connection_(std::move(connection)),
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+$client_class_name$::~$client_class_name$() = default;
+)""");
   // clang-format on
 
   for (google::protobuf::MethodDescriptor const& method : methods()) {

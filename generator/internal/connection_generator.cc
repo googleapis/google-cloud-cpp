@@ -62,7 +62,9 @@ Status ConnectionGenerator::GenerateHeader() {
        HasBidirStreamingMethod()
            ? "google/cloud/internal/async_read_write_stream_impl.h"
            : "",
-       HasBidirStreamingMethod() ? "google/cloud/experimental_tag.h" : "",
+       HasBidirStreamingMethod() || IsExperimental()
+           ? "google/cloud/experimental_tag.h"
+           : "",
        "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
@@ -246,16 +248,7 @@ class $connection_class_name$ {
  */
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 )""");
-  HeaderPrint("    ");
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT:
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      HeaderPrint("std::string const& location, ");
-      break;
-    default:
-      break;
-  }
-  HeaderPrint("Options options = {});\n");
+  HeaderPrint("    " + ConnectionFactoryFunctionArguments() + " = {});\n");
 
   switch (endpoint_location_style) {
     case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
@@ -433,16 +426,7 @@ $connection_class_name$::Async$method_name$(
   CcPrint(R"""(
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 )""");
-  CcPrint("    ");
-  switch (endpoint_location_style) {
-    case ServiceConfiguration::LOCATION_DEPENDENT:
-    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
-      CcPrint("std::string const& location, ");
-      break;
-    default:
-      break;
-  }
-  CcPrint("Options options) {");
+  CcPrint("    " + ConnectionFactoryFunctionArguments() + ") {");
   CcPrint(R"""(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
       UnifiedCredentialsOptionList,
@@ -484,6 +468,21 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
   CcCloseNamespaces();
 
   return {};
+}
+
+std::string ConnectionGenerator::ConnectionFactoryFunctionArguments() const {
+  std::string args;
+  if (IsExperimental()) args += "ExperimentalTag, ";
+  switch (EndpointLocationStyle()) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      args += "std::string const& location, ";
+      break;
+    default:
+      break;
+  }
+  args += "Options options";
+  return args;
 }
 
 }  // namespace generator_internal

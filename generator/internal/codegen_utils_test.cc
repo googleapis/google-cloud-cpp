@@ -330,6 +330,14 @@ TEST(ProcessCommandLineArgs, ProcessEndpointLocationStyle) {
                                      "LOCATION_DEPENDENT_COMPAT")));
 }
 
+TEST(ProcessCommandLineArgs, ProcessExperimental) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/spanner/"
+      ",experimental=true");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("experimental", "true")));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud

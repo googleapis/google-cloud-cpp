@@ -95,6 +95,11 @@ ServiceCodeGenerator::EndpointLocationStyle() const {
   return endpoint_location_style;
 }
 
+bool ServiceCodeGenerator::IsExperimental() const {
+  auto iter = vars().find("experimental");
+  return iter != vars().end() && iter->second == "true";
+}
+
 bool ServiceCodeGenerator::HasLongrunningMethod() const {
   return std::any_of(methods_.begin(), methods_.end(),
                      [](google::protobuf::MethodDescriptor const& m) {

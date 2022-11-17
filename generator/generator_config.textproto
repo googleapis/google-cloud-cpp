@@ -1397,6 +1397,8 @@ service {
   product_path: "google/cloud/speech/v2"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  #TODO(#10264): Remove experimental when service goes GA.
+  experimental: true
 }
 
 # Storage

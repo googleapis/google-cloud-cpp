@@ -101,6 +101,12 @@ class ServiceCodeGenerator : public GeneratorInterface {
   ServiceConfiguration::EndpointLocationStyle EndpointLocationStyle() const;
 
   /**
+   * Whether a service is experimental. If true, we add the `ExperimentalTag` to
+   * certain APIs.
+   */
+  bool IsExperimental() const;
+
+  /**
    * Determines if the service contains at least one method that returns a
    * google::longrunning::Operation.
    */

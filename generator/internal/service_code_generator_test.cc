@@ -71,10 +71,11 @@ class AbortingErrorCollector : public DescriptorPool::ErrorCollector {
 class TestGenerator : public ServiceCodeGenerator {
  public:
   TestGenerator(google::protobuf::ServiceDescriptor const* service_descriptor,
-                google::protobuf::compiler::GeneratorContext* context)
+                google::protobuf::compiler::GeneratorContext* context,
+                VarsDictionary service_vars = {{"header_path_key",
+                                                "header_path"}})
       : ServiceCodeGenerator("header_path_key", service_descriptor,
-                             {{"header_path_key", "header_path"}}, {},
-                             context) {}
+                             std::move(service_vars), {}, context) {}
 
   using ServiceCodeGenerator::HasBidirStreamingMethod;
   using ServiceCodeGenerator::HasExplicitRoutingMethod;
@@ -83,11 +84,44 @@ class TestGenerator : public ServiceCodeGenerator {
   using ServiceCodeGenerator::HasPaginatedMethod;
   using ServiceCodeGenerator::HasStreamingReadMethod;
   using ServiceCodeGenerator::HasStreamingWriteMethod;
+  using ServiceCodeGenerator::IsExperimental;
   using ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes;
 
   Status GenerateHeader() override { return {}; }
   Status GenerateCc() override { return {}; }
 };
+
+TEST(PredicateUtilsTest, IsExperimental) {
+  FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.foo.v1"
+    service { name: "Service" }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  auto generator_context = absl::make_unique<MockGeneratorContext>();
+  EXPECT_CALL(*generator_context, Open("header_path"))
+      .WillRepeatedly(Return(nullptr));
+
+  TestGenerator g1(service_file_descriptor->service(0),
+                   generator_context.get());
+  EXPECT_FALSE(g1.IsExperimental());
+
+  TestGenerator g2(
+      service_file_descriptor->service(0), generator_context.get(),
+      {{"header_path_key", "header_path"}, {"experimental", "true"}});
+  EXPECT_TRUE(g2.IsExperimental());
+
+  TestGenerator g3(
+      service_file_descriptor->service(0), generator_context.get(),
+      {{"header_path_key", "header_path"}, {"experimental", "false"}});
+  EXPECT_FALSE(g3.IsExperimental());
+}
 
 TEST(PredicateUtilsTest, HasLongRunningMethodNone) {
   FileDescriptorProto longrunning_file;

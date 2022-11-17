@@ -63,7 +63,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ///
 class SpeechClient {
  public:
-  explicit SpeechClient(std::shared_ptr<SpeechConnection> connection,
+  explicit SpeechClient(ExperimentalTag,
+                        std::shared_ptr<SpeechConnection> connection,
                         Options opts = {});
   ~SpeechClient();
 
