@@ -38,8 +38,8 @@ struct ChainFutureImpl {
  *
  * Given two futures `future<U> r` and `future<T> f` we often want to write:
  * @code
- * f.then([tmp = std::move(f)](future<T>) mutable { return std::move(tmp); }
- * @encode
+ * f.then([tmp = std::move(f)](future<T>) mutable { return std::move(tmp); });
+ * @endcode
  *
  * Unfortunately we cannot, as the project needs to support C++11. This is
  * a helper to avoid repetition of this pattern.
