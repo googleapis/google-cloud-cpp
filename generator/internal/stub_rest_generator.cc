@@ -141,6 +141,7 @@ Status StubRestGenerator::GenerateCc() {
 
   CcPrint("\n");
   CcLocalIncludes({vars("stub_rest_header_path"),
+                   "google/cloud/common_options.h",
                    "google/cloud/internal/absl_str_cat_quiet.h",
                    "google/cloud/internal/rest_stub_helpers.h",
                    "google/cloud/status_or.h"});
@@ -152,11 +153,10 @@ Status StubRestGenerator::GenerateCc() {
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
-  // TODO(#10214): Emit code to check options for a potential endpoint override.
   CcPrint(R"""(
 Default$stub_rest_class_name$::Default$stub_rest_class_name$(Options options)
     : rest_client_(rest_internal::MakePooledRestClient(
-          "https://$service_endpoint$", options)),
+      options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 Default$stub_rest_class_name$::Default$stub_rest_class_name$(
