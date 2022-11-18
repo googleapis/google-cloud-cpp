@@ -68,7 +68,7 @@ class StorageTransferServiceClient {
       Options opts = {});
   ~StorageTransferServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   StorageTransferServiceClient(StorageTransferServiceClient const&) = default;
   StorageTransferServiceClient& operator=(StorageTransferServiceClient const&) =
@@ -76,9 +76,9 @@ class StorageTransferServiceClient {
   StorageTransferServiceClient(StorageTransferServiceClient&&) = default;
   StorageTransferServiceClient& operator=(StorageTransferServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(StorageTransferServiceClient const& a,
                          StorageTransferServiceClient const& b) {
@@ -88,7 +88,7 @@ class StorageTransferServiceClient {
                          StorageTransferServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the Google service account that is used by Storage Transfer

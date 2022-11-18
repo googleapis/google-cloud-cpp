@@ -72,7 +72,7 @@ class BinauthzManagementServiceV1Client {
       Options opts = {});
   ~BinauthzManagementServiceV1Client();
 
-  //@{
+  ///@{
   // @name Copy and move support
   BinauthzManagementServiceV1Client(BinauthzManagementServiceV1Client const&) =
       default;
@@ -82,9 +82,9 @@ class BinauthzManagementServiceV1Client {
       default;
   BinauthzManagementServiceV1Client& operator=(
       BinauthzManagementServiceV1Client&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(BinauthzManagementServiceV1Client const& a,
                          BinauthzManagementServiceV1Client const& b) {
@@ -94,7 +94,7 @@ class BinauthzManagementServiceV1Client {
                          BinauthzManagementServiceV1Client const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// A [policy][google.cloud.binaryauthorization.v1.Policy] specifies the

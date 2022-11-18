@@ -74,16 +74,16 @@ class ReachabilityServiceClient {
       Options opts = {});
   ~ReachabilityServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ReachabilityServiceClient(ReachabilityServiceClient const&) = default;
   ReachabilityServiceClient& operator=(ReachabilityServiceClient const&) =
       default;
   ReachabilityServiceClient(ReachabilityServiceClient&&) = default;
   ReachabilityServiceClient& operator=(ReachabilityServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ReachabilityServiceClient const& a,
                          ReachabilityServiceClient const& b) {
@@ -93,7 +93,7 @@ class ReachabilityServiceClient {
                          ReachabilityServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all Connectivity Tests owned by a project.

@@ -67,15 +67,15 @@ class SecurityCenterClient {
       std::shared_ptr<SecurityCenterConnection> connection, Options opts = {});
   ~SecurityCenterClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   SecurityCenterClient(SecurityCenterClient const&) = default;
   SecurityCenterClient& operator=(SecurityCenterClient const&) = default;
   SecurityCenterClient(SecurityCenterClient&&) = default;
   SecurityCenterClient& operator=(SecurityCenterClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(SecurityCenterClient const& a,
                          SecurityCenterClient const& b) {
@@ -85,7 +85,7 @@ class SecurityCenterClient {
                          SecurityCenterClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Kicks off an LRO to bulk mute findings for a parent based on a filter. The

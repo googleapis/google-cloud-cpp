@@ -66,15 +66,15 @@ class BigQueryReadClient {
       std::shared_ptr<BigQueryReadConnection> connection, Options opts = {});
   ~BigQueryReadClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   BigQueryReadClient(BigQueryReadClient const&) = default;
   BigQueryReadClient& operator=(BigQueryReadClient const&) = default;
   BigQueryReadClient(BigQueryReadClient&&) = default;
   BigQueryReadClient& operator=(BigQueryReadClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(BigQueryReadClient const& a,
                          BigQueryReadClient const& b) {
@@ -84,7 +84,7 @@ class BigQueryReadClient {
                          BigQueryReadClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new read session. A read session divides the contents of a

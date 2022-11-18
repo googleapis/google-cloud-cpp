@@ -65,15 +65,15 @@ class TopicStatsServiceClient {
       Options opts = {});
   ~TopicStatsServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   TopicStatsServiceClient(TopicStatsServiceClient const&) = default;
   TopicStatsServiceClient& operator=(TopicStatsServiceClient const&) = default;
   TopicStatsServiceClient(TopicStatsServiceClient&&) = default;
   TopicStatsServiceClient& operator=(TopicStatsServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(TopicStatsServiceClient const& a,
                          TopicStatsServiceClient const& b) {
@@ -83,7 +83,7 @@ class TopicStatsServiceClient {
                          TopicStatsServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Compute statistics about a range of messages in a given topic and

@@ -72,16 +72,16 @@ class UptimeCheckServiceClient {
       Options opts = {});
   ~UptimeCheckServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   UptimeCheckServiceClient(UptimeCheckServiceClient const&) = default;
   UptimeCheckServiceClient& operator=(UptimeCheckServiceClient const&) =
       default;
   UptimeCheckServiceClient(UptimeCheckServiceClient&&) = default;
   UptimeCheckServiceClient& operator=(UptimeCheckServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(UptimeCheckServiceClient const& a,
                          UptimeCheckServiceClient const& b) {
@@ -91,7 +91,7 @@ class UptimeCheckServiceClient {
                          UptimeCheckServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the existing valid Uptime check configurations for the project

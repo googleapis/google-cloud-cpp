@@ -70,7 +70,7 @@ class BigtableInstanceAdminClient {
       Options opts = {});
   ~BigtableInstanceAdminClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   BigtableInstanceAdminClient(BigtableInstanceAdminClient const&) = default;
   BigtableInstanceAdminClient& operator=(BigtableInstanceAdminClient const&) =
@@ -78,9 +78,9 @@ class BigtableInstanceAdminClient {
   BigtableInstanceAdminClient(BigtableInstanceAdminClient&&) = default;
   BigtableInstanceAdminClient& operator=(BigtableInstanceAdminClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(BigtableInstanceAdminClient const& a,
                          BigtableInstanceAdminClient const& b) {
@@ -90,7 +90,7 @@ class BigtableInstanceAdminClient {
                          BigtableInstanceAdminClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Create an instance within a project.

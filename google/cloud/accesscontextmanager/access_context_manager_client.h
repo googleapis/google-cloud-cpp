@@ -76,16 +76,16 @@ class AccessContextManagerClient {
       Options opts = {});
   ~AccessContextManagerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AccessContextManagerClient(AccessContextManagerClient const&) = default;
   AccessContextManagerClient& operator=(AccessContextManagerClient const&) =
       default;
   AccessContextManagerClient(AccessContextManagerClient&&) = default;
   AccessContextManagerClient& operator=(AccessContextManagerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AccessContextManagerClient const& a,
                          AccessContextManagerClient const& b) {
@@ -95,7 +95,7 @@ class AccessContextManagerClient {
                          AccessContextManagerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all [access policies]

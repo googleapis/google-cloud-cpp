@@ -77,16 +77,16 @@ class KeyManagementServiceClient {
       Options opts = {});
   ~KeyManagementServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   KeyManagementServiceClient(KeyManagementServiceClient const&) = default;
   KeyManagementServiceClient& operator=(KeyManagementServiceClient const&) =
       default;
   KeyManagementServiceClient(KeyManagementServiceClient&&) = default;
   KeyManagementServiceClient& operator=(KeyManagementServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(KeyManagementServiceClient const& a,
                          KeyManagementServiceClient const& b) {
@@ -96,7 +96,7 @@ class KeyManagementServiceClient {
                          KeyManagementServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists [KeyRings][google.cloud.kms.v1.KeyRing].

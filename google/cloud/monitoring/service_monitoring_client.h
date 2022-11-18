@@ -69,7 +69,7 @@ class ServiceMonitoringServiceClient {
       Options opts = {});
   ~ServiceMonitoringServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ServiceMonitoringServiceClient(ServiceMonitoringServiceClient const&) =
       default;
@@ -78,9 +78,9 @@ class ServiceMonitoringServiceClient {
   ServiceMonitoringServiceClient(ServiceMonitoringServiceClient&&) = default;
   ServiceMonitoringServiceClient& operator=(ServiceMonitoringServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ServiceMonitoringServiceClient const& a,
                          ServiceMonitoringServiceClient const& b) {
@@ -90,7 +90,7 @@ class ServiceMonitoringServiceClient {
                          ServiceMonitoringServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Create a `Service`.

@@ -80,16 +80,16 @@ class AppConnectorsServiceClient {
       Options opts = {});
   ~AppConnectorsServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AppConnectorsServiceClient(AppConnectorsServiceClient const&) = default;
   AppConnectorsServiceClient& operator=(AppConnectorsServiceClient const&) =
       default;
   AppConnectorsServiceClient(AppConnectorsServiceClient&&) = default;
   AppConnectorsServiceClient& operator=(AppConnectorsServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AppConnectorsServiceClient const& a,
                          AppConnectorsServiceClient const& b) {
@@ -99,7 +99,7 @@ class AppConnectorsServiceClient {
                          AppConnectorsServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists AppConnectors in a given project and location.

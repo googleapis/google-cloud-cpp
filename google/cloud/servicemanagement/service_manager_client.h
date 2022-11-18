@@ -66,15 +66,15 @@ class ServiceManagerClient {
       std::shared_ptr<ServiceManagerConnection> connection, Options opts = {});
   ~ServiceManagerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ServiceManagerClient(ServiceManagerClient const&) = default;
   ServiceManagerClient& operator=(ServiceManagerClient const&) = default;
   ServiceManagerClient(ServiceManagerClient&&) = default;
   ServiceManagerClient& operator=(ServiceManagerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ServiceManagerClient const& a,
                          ServiceManagerClient const& b) {
@@ -84,7 +84,7 @@ class ServiceManagerClient {
                          ServiceManagerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists managed services.

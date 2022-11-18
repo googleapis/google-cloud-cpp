@@ -81,15 +81,15 @@ class ProductSearchClient {
       std::shared_ptr<ProductSearchConnection> connection, Options opts = {});
   ~ProductSearchClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ProductSearchClient(ProductSearchClient const&) = default;
   ProductSearchClient& operator=(ProductSearchClient const&) = default;
   ProductSearchClient(ProductSearchClient&&) = default;
   ProductSearchClient& operator=(ProductSearchClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ProductSearchClient const& a,
                          ProductSearchClient const& b) {
@@ -99,7 +99,7 @@ class ProductSearchClient {
                          ProductSearchClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates and returns a new ProductSet resource.

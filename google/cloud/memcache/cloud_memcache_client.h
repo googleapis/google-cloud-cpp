@@ -82,15 +82,15 @@ class CloudMemcacheClient {
       std::shared_ptr<CloudMemcacheConnection> connection, Options opts = {});
   ~CloudMemcacheClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CloudMemcacheClient(CloudMemcacheClient const&) = default;
   CloudMemcacheClient& operator=(CloudMemcacheClient const&) = default;
   CloudMemcacheClient(CloudMemcacheClient&&) = default;
   CloudMemcacheClient& operator=(CloudMemcacheClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CloudMemcacheClient const& a,
                          CloudMemcacheClient const& b) {
@@ -100,7 +100,7 @@ class CloudMemcacheClient {
                          CloudMemcacheClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists Instances in a given location.

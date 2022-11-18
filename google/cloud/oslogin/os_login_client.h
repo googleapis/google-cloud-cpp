@@ -68,15 +68,15 @@ class OsLoginServiceClient {
       std::shared_ptr<OsLoginServiceConnection> connection, Options opts = {});
   ~OsLoginServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   OsLoginServiceClient(OsLoginServiceClient const&) = default;
   OsLoginServiceClient& operator=(OsLoginServiceClient const&) = default;
   OsLoginServiceClient(OsLoginServiceClient&&) = default;
   OsLoginServiceClient& operator=(OsLoginServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(OsLoginServiceClient const& a,
                          OsLoginServiceClient const& b) {
@@ -86,7 +86,7 @@ class OsLoginServiceClient {
                          OsLoginServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Deletes a POSIX account.

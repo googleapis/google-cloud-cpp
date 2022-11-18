@@ -68,15 +68,15 @@ class ClusterControllerClient {
       Options opts = {});
   ~ClusterControllerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ClusterControllerClient(ClusterControllerClient const&) = default;
   ClusterControllerClient& operator=(ClusterControllerClient const&) = default;
   ClusterControllerClient(ClusterControllerClient&&) = default;
   ClusterControllerClient& operator=(ClusterControllerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ClusterControllerClient const& a,
                          ClusterControllerClient const& b) {
@@ -86,7 +86,7 @@ class ClusterControllerClient {
                          ClusterControllerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a cluster in a project. The returned

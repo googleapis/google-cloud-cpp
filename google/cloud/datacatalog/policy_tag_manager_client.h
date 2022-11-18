@@ -70,15 +70,15 @@ class PolicyTagManagerClient {
       Options opts = {});
   ~PolicyTagManagerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   PolicyTagManagerClient(PolicyTagManagerClient const&) = default;
   PolicyTagManagerClient& operator=(PolicyTagManagerClient const&) = default;
   PolicyTagManagerClient(PolicyTagManagerClient&&) = default;
   PolicyTagManagerClient& operator=(PolicyTagManagerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(PolicyTagManagerClient const& a,
                          PolicyTagManagerClient const& b) {
@@ -88,7 +88,7 @@ class PolicyTagManagerClient {
                          PolicyTagManagerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a taxonomy in a specified project.

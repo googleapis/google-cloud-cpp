@@ -66,15 +66,15 @@ class DatastreamClient {
                             Options opts = {});
   ~DatastreamClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DatastreamClient(DatastreamClient const&) = default;
   DatastreamClient& operator=(DatastreamClient const&) = default;
   DatastreamClient(DatastreamClient&&) = default;
   DatastreamClient& operator=(DatastreamClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DatastreamClient const& a, DatastreamClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class DatastreamClient {
   friend bool operator!=(DatastreamClient const& a, DatastreamClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Use this method to list connection profiles created in a project and

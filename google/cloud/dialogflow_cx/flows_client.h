@@ -65,15 +65,15 @@ class FlowsClient {
                        Options opts = {});
   ~FlowsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   FlowsClient(FlowsClient const&) = default;
   FlowsClient& operator=(FlowsClient const&) = default;
   FlowsClient(FlowsClient&&) = default;
   FlowsClient& operator=(FlowsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(FlowsClient const& a, FlowsClient const& b) {
     return a.connection_ == b.connection_;
@@ -81,7 +81,7 @@ class FlowsClient {
   friend bool operator!=(FlowsClient const& a, FlowsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a flow in the specified agent.

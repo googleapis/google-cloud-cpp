@@ -89,15 +89,15 @@ class IAMPolicyClient {
                            Options opts = {});
   ~IAMPolicyClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   IAMPolicyClient(IAMPolicyClient const&) = default;
   IAMPolicyClient& operator=(IAMPolicyClient const&) = default;
   IAMPolicyClient(IAMPolicyClient&&) = default;
   IAMPolicyClient& operator=(IAMPolicyClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(IAMPolicyClient const& a, IAMPolicyClient const& b) {
     return a.connection_ == b.connection_;
@@ -105,7 +105,7 @@ class IAMPolicyClient {
   friend bool operator!=(IAMPolicyClient const& a, IAMPolicyClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Sets the access control policy on the specified resource. Replaces any

@@ -66,15 +66,15 @@ class IDSClient {
                      Options opts = {});
   ~IDSClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   IDSClient(IDSClient const&) = default;
   IDSClient& operator=(IDSClient const&) = default;
   IDSClient(IDSClient&&) = default;
   IDSClient& operator=(IDSClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(IDSClient const& a, IDSClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class IDSClient {
   friend bool operator!=(IDSClient const& a, IDSClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists Endpoints in a given project and location.

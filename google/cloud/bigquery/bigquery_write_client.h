@@ -70,15 +70,15 @@ class BigQueryWriteClient {
       std::shared_ptr<BigQueryWriteConnection> connection, Options opts = {});
   ~BigQueryWriteClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   BigQueryWriteClient(BigQueryWriteClient const&) = default;
   BigQueryWriteClient& operator=(BigQueryWriteClient const&) = default;
   BigQueryWriteClient(BigQueryWriteClient&&) = default;
   BigQueryWriteClient& operator=(BigQueryWriteClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(BigQueryWriteClient const& a,
                          BigQueryWriteClient const& b) {
@@ -88,7 +88,7 @@ class BigQueryWriteClient {
                          BigQueryWriteClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a write stream to the given table.

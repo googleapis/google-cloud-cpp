@@ -79,16 +79,16 @@ class ReservationServiceClient {
       Options opts = {});
   ~ReservationServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ReservationServiceClient(ReservationServiceClient const&) = default;
   ReservationServiceClient& operator=(ReservationServiceClient const&) =
       default;
   ReservationServiceClient(ReservationServiceClient&&) = default;
   ReservationServiceClient& operator=(ReservationServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ReservationServiceClient const& a,
                          ReservationServiceClient const& b) {
@@ -98,7 +98,7 @@ class ReservationServiceClient {
                          ReservationServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new reservation resource.

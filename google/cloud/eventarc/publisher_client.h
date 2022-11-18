@@ -87,15 +87,15 @@ class PublisherClient {
                            Options opts = {});
   ~PublisherClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   PublisherClient(PublisherClient const&) = default;
   PublisherClient& operator=(PublisherClient const&) = default;
   PublisherClient(PublisherClient&&) = default;
   PublisherClient& operator=(PublisherClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(PublisherClient const& a, PublisherClient const& b) {
     return a.connection_ == b.connection_;
@@ -103,7 +103,7 @@ class PublisherClient {
   friend bool operator!=(PublisherClient const& a, PublisherClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Publish events to a ChannelConnection in a partner's project.

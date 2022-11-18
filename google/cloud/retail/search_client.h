@@ -68,15 +68,15 @@ class SearchServiceClient {
       std::shared_ptr<SearchServiceConnection> connection, Options opts = {});
   ~SearchServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   SearchServiceClient(SearchServiceClient const&) = default;
   SearchServiceClient& operator=(SearchServiceClient const&) = default;
   SearchServiceClient(SearchServiceClient&&) = default;
   SearchServiceClient& operator=(SearchServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(SearchServiceClient const& a,
                          SearchServiceClient const& b) {
@@ -86,7 +86,7 @@ class SearchServiceClient {
                          SearchServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Performs a search.

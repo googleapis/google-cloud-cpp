@@ -66,15 +66,15 @@ class ConnectorsClient {
                             Options opts = {});
   ~ConnectorsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ConnectorsClient(ConnectorsClient const&) = default;
   ConnectorsClient& operator=(ConnectorsClient const&) = default;
   ConnectorsClient(ConnectorsClient&&) = default;
   ConnectorsClient& operator=(ConnectorsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ConnectorsClient const& a, ConnectorsClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class ConnectorsClient {
   friend bool operator!=(ConnectorsClient const& a, ConnectorsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists Connections in a given project and location.

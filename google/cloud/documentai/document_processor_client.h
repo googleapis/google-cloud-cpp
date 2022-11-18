@@ -69,7 +69,7 @@ class DocumentProcessorServiceClient {
       Options opts = {});
   ~DocumentProcessorServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DocumentProcessorServiceClient(DocumentProcessorServiceClient const&) =
       default;
@@ -78,9 +78,9 @@ class DocumentProcessorServiceClient {
   DocumentProcessorServiceClient(DocumentProcessorServiceClient&&) = default;
   DocumentProcessorServiceClient& operator=(DocumentProcessorServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DocumentProcessorServiceClient const& a,
                          DocumentProcessorServiceClient const& b) {
@@ -90,7 +90,7 @@ class DocumentProcessorServiceClient {
                          DocumentProcessorServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Processes a single document.

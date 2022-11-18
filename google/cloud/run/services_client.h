@@ -66,15 +66,15 @@ class ServicesClient {
                           Options opts = {});
   ~ServicesClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ServicesClient(ServicesClient const&) = default;
   ServicesClient& operator=(ServicesClient const&) = default;
   ServicesClient(ServicesClient&&) = default;
   ServicesClient& operator=(ServicesClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ServicesClient const& a, ServicesClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class ServicesClient {
   friend bool operator!=(ServicesClient const& a, ServicesClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new Service in a given project and location.

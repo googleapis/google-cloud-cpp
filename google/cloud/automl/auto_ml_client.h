@@ -79,15 +79,15 @@ class AutoMlClient {
                         Options opts = {});
   ~AutoMlClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AutoMlClient(AutoMlClient const&) = default;
   AutoMlClient& operator=(AutoMlClient const&) = default;
   AutoMlClient(AutoMlClient&&) = default;
   AutoMlClient& operator=(AutoMlClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AutoMlClient const& a, AutoMlClient const& b) {
     return a.connection_ == b.connection_;
@@ -95,7 +95,7 @@ class AutoMlClient {
   friend bool operator!=(AutoMlClient const& a, AutoMlClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a dataset.

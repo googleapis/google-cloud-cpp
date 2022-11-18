@@ -67,7 +67,7 @@ class AutoscalingPolicyServiceClient {
       Options opts = {});
   ~AutoscalingPolicyServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AutoscalingPolicyServiceClient(AutoscalingPolicyServiceClient const&) =
       default;
@@ -76,9 +76,9 @@ class AutoscalingPolicyServiceClient {
   AutoscalingPolicyServiceClient(AutoscalingPolicyServiceClient&&) = default;
   AutoscalingPolicyServiceClient& operator=(AutoscalingPolicyServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AutoscalingPolicyServiceClient const& a,
                          AutoscalingPolicyServiceClient const& b) {
@@ -88,7 +88,7 @@ class AutoscalingPolicyServiceClient {
                          AutoscalingPolicyServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates new autoscaling policy.

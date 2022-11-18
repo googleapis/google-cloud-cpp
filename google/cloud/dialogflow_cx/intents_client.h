@@ -65,15 +65,15 @@ class IntentsClient {
                          Options opts = {});
   ~IntentsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   IntentsClient(IntentsClient const&) = default;
   IntentsClient& operator=(IntentsClient const&) = default;
   IntentsClient(IntentsClient&&) = default;
   IntentsClient& operator=(IntentsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(IntentsClient const& a, IntentsClient const& b) {
     return a.connection_ == b.connection_;
@@ -81,7 +81,7 @@ class IntentsClient {
   friend bool operator!=(IntentsClient const& a, IntentsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all intents in the specified agent.

@@ -67,15 +67,15 @@ class ImageAnnotatorClient {
       std::shared_ptr<ImageAnnotatorConnection> connection, Options opts = {});
   ~ImageAnnotatorClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ImageAnnotatorClient(ImageAnnotatorClient const&) = default;
   ImageAnnotatorClient& operator=(ImageAnnotatorClient const&) = default;
   ImageAnnotatorClient(ImageAnnotatorClient&&) = default;
   ImageAnnotatorClient& operator=(ImageAnnotatorClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ImageAnnotatorClient const& a,
                          ImageAnnotatorClient const& b) {
@@ -85,7 +85,7 @@ class ImageAnnotatorClient {
                          ImageAnnotatorClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Run image detection and annotation for a batch of images.

@@ -65,15 +65,15 @@ class SystemPolicyV1Client {
       std::shared_ptr<SystemPolicyV1Connection> connection, Options opts = {});
   ~SystemPolicyV1Client();
 
-  //@{
+  ///@{
   // @name Copy and move support
   SystemPolicyV1Client(SystemPolicyV1Client const&) = default;
   SystemPolicyV1Client& operator=(SystemPolicyV1Client const&) = default;
   SystemPolicyV1Client(SystemPolicyV1Client&&) = default;
   SystemPolicyV1Client& operator=(SystemPolicyV1Client&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(SystemPolicyV1Client const& a,
                          SystemPolicyV1Client const& b) {
@@ -83,7 +83,7 @@ class SystemPolicyV1Client {
                          SystemPolicyV1Client const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Gets the current system policy in the specified location.

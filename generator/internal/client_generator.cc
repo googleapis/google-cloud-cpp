@@ -101,15 +101,15 @@ class $client_class_name$ {
       R"""(std::shared_ptr<$connection_class_name$> connection, Options opts = {});
   ~$client_class_name$();
 
-  //@{
+  ///@{
   // @name Copy and move support
   $client_class_name$($client_class_name$ const&) = default;
   $client_class_name$& operator=($client_class_name$ const&) = default;
   $client_class_name$($client_class_name$&&) = default;
   $client_class_name$& operator=($client_class_name$&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==($client_class_name$ const& a, $client_class_name$ const& b) {
     return a.connection_ == b.connection_;
@@ -117,7 +117,7 @@ class $client_class_name$ {
   friend bool operator!=($client_class_name$ const& a, $client_class_name$ const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 )""");
 
   for (google::protobuf::MethodDescriptor const& method : methods()) {

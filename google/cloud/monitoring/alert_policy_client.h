@@ -74,16 +74,16 @@ class AlertPolicyServiceClient {
       Options opts = {});
   ~AlertPolicyServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AlertPolicyServiceClient(AlertPolicyServiceClient const&) = default;
   AlertPolicyServiceClient& operator=(AlertPolicyServiceClient const&) =
       default;
   AlertPolicyServiceClient(AlertPolicyServiceClient&&) = default;
   AlertPolicyServiceClient& operator=(AlertPolicyServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AlertPolicyServiceClient const& a,
                          AlertPolicyServiceClient const& b) {
@@ -93,7 +93,7 @@ class AlertPolicyServiceClient {
                          AlertPolicyServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the existing alerting policies for the workspace.

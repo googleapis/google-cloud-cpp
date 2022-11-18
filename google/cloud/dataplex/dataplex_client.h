@@ -70,15 +70,15 @@ class DataplexServiceClient {
       std::shared_ptr<DataplexServiceConnection> connection, Options opts = {});
   ~DataplexServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DataplexServiceClient(DataplexServiceClient const&) = default;
   DataplexServiceClient& operator=(DataplexServiceClient const&) = default;
   DataplexServiceClient(DataplexServiceClient&&) = default;
   DataplexServiceClient& operator=(DataplexServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DataplexServiceClient const& a,
                          DataplexServiceClient const& b) {
@@ -88,7 +88,7 @@ class DataplexServiceClient {
                          DataplexServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a lake resource.

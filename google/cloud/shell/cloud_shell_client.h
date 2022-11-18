@@ -72,15 +72,15 @@ class CloudShellServiceClient {
       Options opts = {});
   ~CloudShellServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CloudShellServiceClient(CloudShellServiceClient const&) = default;
   CloudShellServiceClient& operator=(CloudShellServiceClient const&) = default;
   CloudShellServiceClient(CloudShellServiceClient&&) = default;
   CloudShellServiceClient& operator=(CloudShellServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CloudShellServiceClient const& a,
                          CloudShellServiceClient const& b) {
@@ -90,7 +90,7 @@ class CloudShellServiceClient {
                          CloudShellServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Gets an environment. Returns NOT_FOUND if the environment does not exist.

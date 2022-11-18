@@ -92,16 +92,16 @@ class CertificateManagerClient {
       Options opts = {});
   ~CertificateManagerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CertificateManagerClient(CertificateManagerClient const&) = default;
   CertificateManagerClient& operator=(CertificateManagerClient const&) =
       default;
   CertificateManagerClient(CertificateManagerClient&&) = default;
   CertificateManagerClient& operator=(CertificateManagerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CertificateManagerClient const& a,
                          CertificateManagerClient const& b) {
@@ -111,7 +111,7 @@ class CertificateManagerClient {
                          CertificateManagerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists Certificates in a given project and location.

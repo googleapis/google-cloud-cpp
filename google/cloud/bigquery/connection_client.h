@@ -65,15 +65,15 @@ class ConnectionServiceClient {
       Options opts = {});
   ~ConnectionServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ConnectionServiceClient(ConnectionServiceClient const&) = default;
   ConnectionServiceClient& operator=(ConnectionServiceClient const&) = default;
   ConnectionServiceClient(ConnectionServiceClient&&) = default;
   ConnectionServiceClient& operator=(ConnectionServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ConnectionServiceClient const& a,
                          ConnectionServiceClient const& b) {
@@ -83,7 +83,7 @@ class ConnectionServiceClient {
                          ConnectionServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new connection.

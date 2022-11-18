@@ -71,15 +71,15 @@ class TranscoderServiceClient {
       Options opts = {});
   ~TranscoderServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   TranscoderServiceClient(TranscoderServiceClient const&) = default;
   TranscoderServiceClient& operator=(TranscoderServiceClient const&) = default;
   TranscoderServiceClient(TranscoderServiceClient&&) = default;
   TranscoderServiceClient& operator=(TranscoderServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(TranscoderServiceClient const& a,
                          TranscoderServiceClient const& b) {
@@ -89,7 +89,7 @@ class TranscoderServiceClient {
                          TranscoderServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a job in the specified region.

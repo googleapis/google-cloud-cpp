@@ -78,15 +78,15 @@ class ContainerAnalysisClient {
       Options opts = {});
   ~ContainerAnalysisClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ContainerAnalysisClient(ContainerAnalysisClient const&) = default;
   ContainerAnalysisClient& operator=(ContainerAnalysisClient const&) = default;
   ContainerAnalysisClient(ContainerAnalysisClient&&) = default;
   ContainerAnalysisClient& operator=(ContainerAnalysisClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ContainerAnalysisClient const& a,
                          ContainerAnalysisClient const& b) {
@@ -96,7 +96,7 @@ class ContainerAnalysisClient {
                          ContainerAnalysisClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Sets the access control policy on the specified note or occurrence.

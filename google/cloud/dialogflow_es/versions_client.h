@@ -64,15 +64,15 @@ class VersionsClient {
                           Options opts = {});
   ~VersionsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   VersionsClient(VersionsClient const&) = default;
   VersionsClient& operator=(VersionsClient const&) = default;
   VersionsClient(VersionsClient&&) = default;
   VersionsClient& operator=(VersionsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(VersionsClient const& a, VersionsClient const& b) {
     return a.connection_ == b.connection_;
@@ -80,7 +80,7 @@ class VersionsClient {
   friend bool operator!=(VersionsClient const& a, VersionsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all versions of the specified agent.

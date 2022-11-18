@@ -68,15 +68,15 @@ class RecommenderClient {
                              Options opts = {});
   ~RecommenderClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   RecommenderClient(RecommenderClient const&) = default;
   RecommenderClient& operator=(RecommenderClient const&) = default;
   RecommenderClient(RecommenderClient&&) = default;
   RecommenderClient& operator=(RecommenderClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(RecommenderClient const& a,
                          RecommenderClient const& b) {
@@ -86,7 +86,7 @@ class RecommenderClient {
                          RecommenderClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists insights for the specified Cloud Resource. Requires the

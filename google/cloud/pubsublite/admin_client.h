@@ -67,15 +67,15 @@ class AdminServiceClient {
       std::shared_ptr<AdminServiceConnection> connection, Options opts = {});
   ~AdminServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AdminServiceClient(AdminServiceClient const&) = default;
   AdminServiceClient& operator=(AdminServiceClient const&) = default;
   AdminServiceClient(AdminServiceClient&&) = default;
   AdminServiceClient& operator=(AdminServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AdminServiceClient const& a,
                          AdminServiceClient const& b) {
@@ -85,7 +85,7 @@ class AdminServiceClient {
                          AdminServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new topic.

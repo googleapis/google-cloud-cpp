@@ -66,15 +66,15 @@ class NotebookServiceClient {
       std::shared_ptr<NotebookServiceConnection> connection, Options opts = {});
   ~NotebookServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   NotebookServiceClient(NotebookServiceClient const&) = default;
   NotebookServiceClient& operator=(NotebookServiceClient const&) = default;
   NotebookServiceClient(NotebookServiceClient&&) = default;
   NotebookServiceClient& operator=(NotebookServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(NotebookServiceClient const& a,
                          NotebookServiceClient const& b) {
@@ -84,7 +84,7 @@ class NotebookServiceClient {
                          NotebookServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists instances in a given project and location.

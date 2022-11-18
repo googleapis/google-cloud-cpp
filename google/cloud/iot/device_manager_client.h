@@ -66,15 +66,15 @@ class DeviceManagerClient {
       std::shared_ptr<DeviceManagerConnection> connection, Options opts = {});
   ~DeviceManagerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DeviceManagerClient(DeviceManagerClient const&) = default;
   DeviceManagerClient& operator=(DeviceManagerClient const&) = default;
   DeviceManagerClient(DeviceManagerClient&&) = default;
   DeviceManagerClient& operator=(DeviceManagerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DeviceManagerClient const& a,
                          DeviceManagerClient const& b) {
@@ -84,7 +84,7 @@ class DeviceManagerClient {
                          DeviceManagerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a device registry that contains devices.

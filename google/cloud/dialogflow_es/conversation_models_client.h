@@ -66,16 +66,16 @@ class ConversationModelsClient {
       Options opts = {});
   ~ConversationModelsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ConversationModelsClient(ConversationModelsClient const&) = default;
   ConversationModelsClient& operator=(ConversationModelsClient const&) =
       default;
   ConversationModelsClient(ConversationModelsClient&&) = default;
   ConversationModelsClient& operator=(ConversationModelsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ConversationModelsClient const& a,
                          ConversationModelsClient const& b) {
@@ -85,7 +85,7 @@ class ConversationModelsClient {
                          ConversationModelsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a model.

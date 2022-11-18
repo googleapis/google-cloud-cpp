@@ -67,15 +67,15 @@ class DataCatalogClient {
                              Options opts = {});
   ~DataCatalogClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DataCatalogClient(DataCatalogClient const&) = default;
   DataCatalogClient& operator=(DataCatalogClient const&) = default;
   DataCatalogClient(DataCatalogClient&&) = default;
   DataCatalogClient& operator=(DataCatalogClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DataCatalogClient const& a,
                          DataCatalogClient const& b) {
@@ -85,7 +85,7 @@ class DataCatalogClient {
                          DataCatalogClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Searches Data Catalog for multiple resources like entries and tags that

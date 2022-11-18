@@ -65,15 +65,15 @@ class ClusterManagerClient {
       std::shared_ptr<ClusterManagerConnection> connection, Options opts = {});
   ~ClusterManagerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ClusterManagerClient(ClusterManagerClient const&) = default;
   ClusterManagerClient& operator=(ClusterManagerClient const&) = default;
   ClusterManagerClient(ClusterManagerClient&&) = default;
   ClusterManagerClient& operator=(ClusterManagerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ClusterManagerClient const& a,
                          ClusterManagerClient const& b) {
@@ -83,7 +83,7 @@ class ClusterManagerClient {
                          ClusterManagerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all clusters owned by a project in either the specified zone or all

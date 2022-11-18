@@ -64,15 +64,15 @@ class TextToSpeechClient {
       std::shared_ptr<TextToSpeechConnection> connection, Options opts = {});
   ~TextToSpeechClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   TextToSpeechClient(TextToSpeechClient const&) = default;
   TextToSpeechClient& operator=(TextToSpeechClient const&) = default;
   TextToSpeechClient(TextToSpeechClient&&) = default;
   TextToSpeechClient& operator=(TextToSpeechClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(TextToSpeechClient const& a,
                          TextToSpeechClient const& b) {
@@ -82,7 +82,7 @@ class TextToSpeechClient {
                          TextToSpeechClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns a list of Voice supported for synthesis.

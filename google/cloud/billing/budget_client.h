@@ -65,15 +65,15 @@ class BudgetServiceClient {
       std::shared_ptr<BudgetServiceConnection> connection, Options opts = {});
   ~BudgetServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   BudgetServiceClient(BudgetServiceClient const&) = default;
   BudgetServiceClient& operator=(BudgetServiceClient const&) = default;
   BudgetServiceClient(BudgetServiceClient&&) = default;
   BudgetServiceClient& operator=(BudgetServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(BudgetServiceClient const& a,
                          BudgetServiceClient const& b) {
@@ -83,7 +83,7 @@ class BudgetServiceClient {
                          BudgetServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new budget. See

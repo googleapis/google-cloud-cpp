@@ -70,15 +70,15 @@ class GoldenThingAdminClient {
   explicit GoldenThingAdminClient(std::shared_ptr<GoldenThingAdminConnection> connection, Options opts = {});
   ~GoldenThingAdminClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   GoldenThingAdminClient(GoldenThingAdminClient const&) = default;
   GoldenThingAdminClient& operator=(GoldenThingAdminClient const&) = default;
   GoldenThingAdminClient(GoldenThingAdminClient&&) = default;
   GoldenThingAdminClient& operator=(GoldenThingAdminClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(GoldenThingAdminClient const& a, GoldenThingAdminClient const& b) {
     return a.connection_ == b.connection_;
@@ -86,7 +86,7 @@ class GoldenThingAdminClient {
   friend bool operator!=(GoldenThingAdminClient const& a, GoldenThingAdminClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists Cloud Test databases.

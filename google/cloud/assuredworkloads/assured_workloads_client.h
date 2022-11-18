@@ -67,7 +67,7 @@ class AssuredWorkloadsServiceClient {
       Options opts = {});
   ~AssuredWorkloadsServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AssuredWorkloadsServiceClient(AssuredWorkloadsServiceClient const&) = default;
   AssuredWorkloadsServiceClient& operator=(
@@ -75,9 +75,9 @@ class AssuredWorkloadsServiceClient {
   AssuredWorkloadsServiceClient(AssuredWorkloadsServiceClient&&) = default;
   AssuredWorkloadsServiceClient& operator=(AssuredWorkloadsServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AssuredWorkloadsServiceClient const& a,
                          AssuredWorkloadsServiceClient const& b) {
@@ -87,7 +87,7 @@ class AssuredWorkloadsServiceClient {
                          AssuredWorkloadsServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates Assured Workload.
