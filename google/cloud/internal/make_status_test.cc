@@ -22,6 +22,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
+using ::testing::Contains;
+using ::testing::Pair;
 
 TEST(MakeStatus, Basic) {
   auto error_info = ErrorInfo("REASON", "domain", {{"key", "value"}});
@@ -57,6 +60,123 @@ TEST(MakeStatus, Basic) {
     EXPECT_THAT(test.status, StatusIs(test.code));
     EXPECT_EQ(test.status.message(), "test");
     EXPECT_EQ(test.status.error_info(), error_info);
+  }
+}
+
+TEST(MakeStatus, ErrorInfoBuilderDefault) {
+  auto const code = StatusCode::kInvalidArgument;
+  auto const actual = GCP_ERROR_INFO().Build(code);
+  EXPECT_EQ(actual.reason(), StatusCodeToString(code));
+  EXPECT_EQ(actual.domain(), "gcloud-cpp");
+  EXPECT_THAT(actual.metadata(),
+              Contains(Pair("gcloud-cpp.version", version_string())));
+  EXPECT_THAT(actual.metadata(),
+              Contains(Pair("gcloud-cpp.source.filename", __FILE__)));
+  EXPECT_THAT(actual.metadata(), Contains(Pair("gcloud-cpp.source.line", _)));
+  EXPECT_THAT(actual.metadata(),
+              Contains(Pair("gcloud-cpp.source.function", _)));
+}
+
+TEST(MakeStatus, ErrorInfoBuilderWithReason) {
+  auto const code = StatusCode::kInvalidArgument;
+  auto const actual = GCP_ERROR_INFO().WithReason("TEST_REASON").Build(code);
+  EXPECT_EQ(actual.reason(), "TEST_REASON");
+  EXPECT_EQ(actual.domain(), "gcloud-cpp");
+  EXPECT_THAT(actual.metadata(),
+              Contains(Pair("gcloud-cpp.version", version_string())));
+  EXPECT_THAT(actual.metadata(),
+              Contains(Pair("gcloud-cpp.source.filename", __FILE__)));
+  EXPECT_THAT(actual.metadata(), Contains(Pair("gcloud-cpp.source.line", _)));
+  EXPECT_THAT(actual.metadata(),
+              Contains(Pair("gcloud-cpp.source.function", _)));
+}
+
+TEST(MakeStatus, ErrorInfoBuilderWithErrorContext) {
+  auto ec1 = ErrorContext({{"k0", "v0"}, {"k1", "v1"}});
+  auto ec2 = ErrorContext({{"k0", "not-used"}, {"k2", "v2"}});
+
+  auto const code = StatusCode::kInvalidArgument;
+  auto const actual =
+      GCP_ERROR_INFO().WithContext(ec1).WithContext(ec2).Build(code);
+  EXPECT_THAT(actual.metadata(), Contains(Pair("k0", "v0")));
+  EXPECT_THAT(actual.metadata(), Contains(Pair("k1", "v1")));
+  EXPECT_THAT(actual.metadata(), Contains(Pair("k2", "v2")));
+  EXPECT_EQ(actual.reason(), StatusCodeToString(code));
+  EXPECT_EQ(actual.domain(), "gcloud-cpp");
+  EXPECT_THAT(actual.metadata(),
+              Contains(Pair("gcloud-cpp.version", version_string())));
+  EXPECT_THAT(actual.metadata(),
+              Contains(Pair("gcloud-cpp.source.filename", __FILE__)));
+  EXPECT_THAT(actual.metadata(), Contains(Pair("gcloud-cpp.source.line", _)));
+  EXPECT_THAT(actual.metadata(),
+              Contains(Pair("gcloud-cpp.source.function", _)));
+}
+
+TEST(MakeStatus, ErrorInfoBuilderWithMetadata) {
+  auto const code = StatusCode::kInvalidArgument;
+  auto const actual = GCP_ERROR_INFO()
+                          .WithMetadata("k0", "v0")
+                          .WithMetadata("k1", "v1")
+                          .WithMetadata("k0", "not-used")
+                          .Build(code);
+  EXPECT_THAT(actual.metadata(), Contains(Pair("k0", "v0")));
+  EXPECT_THAT(actual.metadata(), Contains(Pair("k1", "v1")));
+  EXPECT_EQ(actual.reason(), StatusCodeToString(code));
+  EXPECT_EQ(actual.domain(), "gcloud-cpp");
+  EXPECT_THAT(actual.metadata(),
+              Contains(Pair("gcloud-cpp.version", version_string())));
+  EXPECT_THAT(actual.metadata(),
+              Contains(Pair("gcloud-cpp.source.filename", __FILE__)));
+  EXPECT_THAT(actual.metadata(), Contains(Pair("gcloud-cpp.source.line", _)));
+  EXPECT_THAT(actual.metadata(),
+              Contains(Pair("gcloud-cpp.source.function", _)));
+}
+
+TEST(MakeStatus, WithErrorInfo) {
+  struct TestCase {
+    StatusCode code;
+    Status status;
+  } cases[] = {
+      {StatusCode::kCancelled, CancelledError("test", GCP_ERROR_INFO())},
+      {StatusCode::kUnknown, UnknownError("test", GCP_ERROR_INFO())},
+      {StatusCode::kInvalidArgument,
+       InvalidArgumentError("test", GCP_ERROR_INFO())},
+      {StatusCode::kDeadlineExceeded,
+       DeadlineExceededError("test", GCP_ERROR_INFO())},
+      {StatusCode::kNotFound, NotFoundError("test", GCP_ERROR_INFO())},
+      {StatusCode::kAlreadyExists,
+       AlreadyExistsError("test", GCP_ERROR_INFO())},
+      {StatusCode::kPermissionDenied,
+       PermissionDeniedError("test", GCP_ERROR_INFO())},
+      {StatusCode::kUnauthenticated,
+       UnauthenticatedError("test", GCP_ERROR_INFO())},
+      {StatusCode::kResourceExhausted,
+       ResourceExhaustedError("test", GCP_ERROR_INFO())},
+      {StatusCode::kFailedPrecondition,
+       FailedPreconditionError("test", GCP_ERROR_INFO())},
+      {StatusCode::kAborted, AbortedError("test", GCP_ERROR_INFO())},
+      {StatusCode::kOutOfRange, OutOfRangeError("test", GCP_ERROR_INFO())},
+      {StatusCode::kUnimplemented,
+       UnimplementedError("test", GCP_ERROR_INFO())},
+      {StatusCode::kInternal, InternalError("test", GCP_ERROR_INFO())},
+      {StatusCode::kUnavailable, UnavailableError("test", GCP_ERROR_INFO())},
+      {StatusCode::kDataLoss, DataLossError("test", GCP_ERROR_INFO())},
+  };
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing for " + StatusCodeToString(test.code));
+    EXPECT_THAT(test.status, StatusIs(test.code));
+    EXPECT_EQ(test.status.message(), "test");
+    EXPECT_EQ(test.status.error_info().reason(), StatusCodeToString(test.code));
+    EXPECT_EQ(test.status.error_info().domain(), "gcloud-cpp");
+    EXPECT_THAT(test.status.error_info().metadata(),
+                Contains(Pair("gcloud-cpp.version", _)));
+    EXPECT_THAT(test.status.error_info().metadata(),
+                Contains(Pair("gcloud-cpp.source.filename", __FILE__)));
+    EXPECT_THAT(test.status.error_info().metadata(),
+                Contains(Pair("gcloud-cpp.source.line", _)));
+    EXPECT_THAT(test.status.error_info().metadata(),
+                Contains(Pair("gcloud-cpp.source.function", _)));
   }
 }
 
