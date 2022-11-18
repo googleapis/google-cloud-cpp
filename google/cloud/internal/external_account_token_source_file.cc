@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/external_account_token_source_file.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/external_account_parsing.h"
+#include "google/cloud/internal/external_account_source_format.h"
 #include "google/cloud/internal/make_status.h"
 #include <fstream>
 
@@ -64,36 +64,6 @@ StatusOr<internal::SubjectToken> JsonFileReader(
   return internal::SubjectToken{it->get<std::string>()};
 }
 
-struct Format {
-  std::string type;
-  std::string subject_token_field_name;
-};
-
-StatusOr<Format> ParseFormat(nlohmann::json const& credentials_source,
-                             internal::ErrorContext const& ec) {
-  auto it = credentials_source.find("format");
-  if (it == credentials_source.end()) return Format{"text", {}};
-  if (!it->is_object()) {
-    return InvalidArgumentError(
-        "invalid type for `format` field in `credentials_source`",
-        GCP_ERROR_INFO().WithContext(ec));
-  }
-  auto const& format = *it;
-  auto type = ValidateStringField(format, "type", "credentials_source.format",
-                                  "text", ec);
-  if (!type) return std::move(type).status();
-  if (*type == "text") return Format{"text", {}};
-  if (*type != "json") {
-    return InvalidArgumentError(
-        absl::StrCat("invalid file type <", *type, "> in `credentials_source`"),
-        GCP_ERROR_INFO().WithContext(ec));
-  }
-  auto field = ValidateStringField(format, "subject_token_field_name",
-                                   "credentials_source.format", ec);
-  if (!field) return std::move(field).status();
-  return Format{*std::move(type), *std::move(field)};
-}
-
 }  // namespace
 
 StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceFile(
@@ -108,7 +78,7 @@ StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceFile(
   auto context = ec;
   context.emplace_back("credentials_source.type", "file");
   context.emplace_back("credentials_source.file.filename", *file);
-  auto format = ParseFormat(credentials_source, context);
+  auto format = ParseExternalAccountSourceFormat(credentials_source, context);
   if (!format) return std::move(format).status();
   if (format->type == "text") {
     context.emplace_back("credentials_source.file.type", "text");
