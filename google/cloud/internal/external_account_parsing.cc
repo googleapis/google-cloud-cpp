@@ -25,7 +25,7 @@ StatusOr<std::string> ValidateStringField(nlohmann::json const& json,
                                           absl::string_view name,
                                           absl::string_view object_name,
                                           internal::ErrorContext const& ec) {
-  auto it = json.find(name);
+  auto it = json.find(std::string{name});
   if (it == json.end()) {
     return InvalidArgumentError(
         absl::StrCat("cannot find `", name, "` field in `", object_name, "`"),
@@ -44,7 +44,7 @@ StatusOr<std::string> ValidateStringField(nlohmann::json const& json,
                                           absl::string_view object_name,
                                           absl::string_view default_value,
                                           internal::ErrorContext const& ec) {
-  auto it = json.find(name);
+  auto it = json.find(std::string{name});
   if (it == json.end()) return std::string{default_value};
   if (!it->is_string()) {
     return InvalidArgumentError(absl::StrCat("invalid type for `", name,
