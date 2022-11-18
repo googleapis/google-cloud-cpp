@@ -22,7 +22,22 @@ namespace internal {
 namespace {
 
 using ::testing::HasSubstr;
+using ::testing::Pair;
 using ::testing::StartsWith;
+using ::testing::UnorderedElementsAre;
+
+TEST(ErrorContext, Basic) {
+  auto const other =
+      ErrorContext{{{"key", "value"}, {"filename", "the-filename"}}};
+  auto actual = ErrorContext{other};
+  EXPECT_EQ(other, actual);
+  actual.push_back(std::make_pair("k0", "v0"));
+  actual.emplace_back("k1", "v1");
+  EXPECT_NE(other, actual);
+  EXPECT_THAT(actual, UnorderedElementsAre(Pair("key", "value"),
+                                           Pair("filename", "the-filename"),
+                                           Pair("k0", "v0"), Pair("k1", "v1")));
+}
 
 TEST(ErrorContext, FormatEmpty) {
   EXPECT_EQ("error message", Format("error message", ErrorContext{}));

@@ -74,6 +74,12 @@ namespace internal {
 class ErrorContext {
  public:
   using Container = std::vector<std::pair<std::string, std::string>>;
+  using value_type = Container::value_type;
+  using reference = Container::reference;
+  using const_reference = Container::const_reference;
+  using difference_type = Container::difference_type;
+  using size_type = Container::size_type;
+  using const_iterator = Container::const_iterator;
 
   ErrorContext() = default;
   explicit ErrorContext(Container m) : metadata_(std::move(m)) {}
@@ -83,20 +89,32 @@ class ErrorContext {
   ErrorContext(ErrorContext&&) = default;
   ErrorContext& operator=(ErrorContext&&) = default;
 
-  template <typename... A>
-  Container::reference emplace_back(A&&... a) {
-    return metadata_.emplace_back(std::forward<A>(a)...);
+  friend bool operator==(ErrorContext const& lhs, ErrorContext const& rhs) {
+    return lhs.metadata_ == rhs.metadata_;
   }
 
-  void push_back(Container::value_type p) {
-    return metadata_.push_back(std::move(p));
+  friend bool operator!=(ErrorContext const& lhs, ErrorContext const& rhs) {
+    return !(lhs == rhs);
   }
+
+  void swap(ErrorContext& rhs) { metadata_.swap(rhs.metadata_); }
+
+  template <typename... A>
+  void emplace_back(A&&... a) {
+    metadata_.emplace_back(std::forward<A>(a)...);
+  }
+
+  void push_back(Container::value_type p) { metadata_.push_back(std::move(p)); }
+
+  size_type size() const { return metadata_.size(); }
+
+  size_type max_size() const { return metadata_.max_size(); }
 
   bool empty() const { return metadata_.empty(); }
 
-  Container::const_iterator begin() const { return metadata_.begin(); }
+  const_iterator begin() const { return metadata_.begin(); }
 
-  Container::const_iterator end() const { return metadata_.end(); }
+  const_iterator end() const { return metadata_.end(); }
 
  private:
   Container metadata_;
