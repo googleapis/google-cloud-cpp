@@ -157,7 +157,7 @@ Status StubRestGenerator::GenerateCc() {
 Default$stub_rest_class_name$::Default$stub_rest_class_name$(Options options)
     : rest_client_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
-          options_(std::move(options)) {}
+      options_(std::move(options)) {}
 
 Default$stub_rest_class_name$::Default$stub_rest_class_name$(
     std::shared_ptr<rest_internal::RestClient> rest_client, Options options)
