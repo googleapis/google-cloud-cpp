@@ -23,10 +23,8 @@ namespace internal {
 
 std::string Format(absl::string_view message, ErrorContext const& context) {
   if (context.empty()) return std::string{message};
-  auto format = [](std::string* out, auto const& i) {
-    absl::StrAppend(out, i.first, "=", i.second);
-  };
-  return absl::StrCat(message, ", ", absl::StrJoin(context, ", ", format));
+  return absl::StrCat(message, ", ",
+                      absl::StrJoin(context, ", ", absl::PairFormatter("=")));
 }
 
 }  // namespace internal
