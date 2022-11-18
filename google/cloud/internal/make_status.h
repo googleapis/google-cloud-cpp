@@ -24,22 +24,22 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-Status CancelledError(std::string msg, ErrorInfo info);
-Status UnknownError(std::string msg, ErrorInfo info);
-Status InvalidArgumentError(std::string msg, ErrorInfo info);
-Status DeadlineExceededError(std::string msg, ErrorInfo info);
-Status NotFoundError(std::string msg, ErrorInfo info);
-Status AlreadyExistsError(std::string msg, ErrorInfo info);
-Status PermissionDeniedError(std::string msg, ErrorInfo info);
-Status UnauthenticatedError(std::string msg, ErrorInfo info);
-Status ResourceExhaustedError(std::string msg, ErrorInfo info);
-Status FailedPreconditionError(std::string msg, ErrorInfo info);
-Status AbortedError(std::string msg, ErrorInfo info);
-Status OutOfRangeError(std::string msg, ErrorInfo info);
-Status UnimplementedError(std::string msg, ErrorInfo info);
-Status InternalError(std::string msg, ErrorInfo info);
-Status UnavailableError(std::string msg, ErrorInfo info);
-Status DataLossError(std::string msg, ErrorInfo info);
+Status CancelledError(std::string msg, ErrorInfo info = {});
+Status UnknownError(std::string msg, ErrorInfo info = {});
+Status InvalidArgumentError(std::string msg, ErrorInfo info = {});
+Status DeadlineExceededError(std::string msg, ErrorInfo info = {});
+Status NotFoundError(std::string msg, ErrorInfo info = {});
+Status AlreadyExistsError(std::string msg, ErrorInfo info = {});
+Status PermissionDeniedError(std::string msg, ErrorInfo info = {});
+Status UnauthenticatedError(std::string msg, ErrorInfo info = {});
+Status ResourceExhaustedError(std::string msg, ErrorInfo info = {});
+Status FailedPreconditionError(std::string msg, ErrorInfo info = {});
+Status AbortedError(std::string msg, ErrorInfo info = {});
+Status OutOfRangeError(std::string msg, ErrorInfo info = {});
+Status UnimplementedError(std::string msg, ErrorInfo info = {});
+Status InternalError(std::string msg, ErrorInfo info = {});
+Status UnavailableError(std::string msg, ErrorInfo info = {});
+Status DataLossError(std::string msg, ErrorInfo info = {});
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
