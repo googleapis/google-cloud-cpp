@@ -32,8 +32,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DefaultGoldenThingAdminRestStub::DefaultGoldenThingAdminRestStub(Options options)
     : rest_client_(rest_internal::MakePooledRestClient(
-      options.get<EndpointOption>(), options)),
-      options_(std::move(options)) {}
+          options.get<EndpointOption>(), options)),
+          options_(std::move(options)) {}
 
 DefaultGoldenThingAdminRestStub::DefaultGoldenThingAdminRestStub(
     std::shared_ptr<rest_internal::RestClient> rest_client, Options options)
