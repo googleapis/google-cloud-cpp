@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/version.h"
 
 namespace google {
 namespace cloud {
@@ -83,6 +84,99 @@ Status UnavailableError(std::string msg, ErrorInfo info) {
 
 Status DataLossError(std::string msg, ErrorInfo info) {
   return Status(StatusCode::kDataLoss, std::move(msg), std::move(info));
+}
+
+ErrorInfoBuilder::ErrorInfoBuilder(std::string file, int line,
+                                   std::string function) {
+  metadata_.emplace("gcloud-cpp.version", version_string());
+  metadata_.emplace("gcloud-cpp.source.filename", std::move(file));
+  metadata_.emplace("gcloud-cpp.source.line", std::to_string(line));
+  metadata_.emplace("gcloud-cpp.source.function", std::move(function));
+}
+
+ErrorInfo ErrorInfoBuilder::Build(StatusCode code) && {
+  return ErrorInfo(reason_.value_or(StatusCodeToString(code)), "gcloud-cpp",
+                   std::move(metadata_));
+}
+
+Status CancelledError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kCancelled, std::move(msg),
+                std::move(b).Build(StatusCode::kCancelled));
+}
+
+Status UnknownError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kUnknown, std::move(msg),
+                std::move(b).Build(StatusCode::kUnknown));
+}
+
+Status InvalidArgumentError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kInvalidArgument, std::move(msg),
+                std::move(b).Build(StatusCode::kInvalidArgument));
+}
+
+Status DeadlineExceededError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kDeadlineExceeded, std::move(msg),
+                std::move(b).Build(StatusCode::kDeadlineExceeded));
+}
+
+Status NotFoundError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kNotFound, std::move(msg),
+                std::move(b).Build(StatusCode::kNotFound));
+}
+
+Status AlreadyExistsError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kAlreadyExists, std::move(msg),
+                std::move(b).Build(StatusCode::kAlreadyExists));
+}
+
+Status PermissionDeniedError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kPermissionDenied, std::move(msg),
+                std::move(b).Build(StatusCode::kPermissionDenied));
+}
+
+Status UnauthenticatedError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kUnauthenticated, std::move(msg),
+                std::move(b).Build(StatusCode::kUnauthenticated));
+}
+
+Status ResourceExhaustedError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kResourceExhausted, std::move(msg),
+                std::move(b).Build(StatusCode::kResourceExhausted));
+}
+
+Status FailedPreconditionError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kFailedPrecondition, std::move(msg),
+                std::move(b).Build(StatusCode::kFailedPrecondition));
+}
+
+Status AbortedError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kAborted, std::move(msg),
+                std::move(b).Build(StatusCode::kAborted));
+}
+
+Status OutOfRangeError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kOutOfRange, std::move(msg),
+                std::move(b).Build(StatusCode::kOutOfRange));
+}
+
+Status UnimplementedError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kUnimplemented, std::move(msg),
+                std::move(b).Build(StatusCode::kUnimplemented));
+}
+
+Status InternalError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kInternal, std::move(msg),
+                std::move(b).Build(StatusCode::kInternal));
+}
+
+Status UnavailableError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kUnavailable, std::move(msg),
+                std::move(b).Build(StatusCode::kUnavailable));
+}
+
+Status DataLossError(std::string msg, ErrorInfoBuilder b) {
+  return Status(StatusCode::kDataLoss, std::move(msg),
+                std::move(b).Build(StatusCode::kDataLoss));
 }
 
 }  // namespace internal
