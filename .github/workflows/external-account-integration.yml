@@ -16,6 +16,10 @@ jobs:
   identity-federation-integration-test:
     name: external-account-integration-test
     runs-on: ubuntu-20.04
+    # Add "id-token" with the intended permissions.
+    permissions:
+      contents: 'read'
+      id-token: 'write'
 
     steps:
       - name: install ninja
@@ -52,4 +56,22 @@ jobs:
               -DGOOGLE_CLOUD_CPP_ENABLE=storage,iam \
               -DCMAKE_TOOLCHAIN_FILE="${{runner.temp}}/vcpkg/scripts/buildsystems/vcpkg.cmake"
 
-      # Later we can add steps tp build tests and run them.
+      - name: build
+        run: |
+          cmake --build "${{runner.temp}}/build" -j 2 \
+            --target rest_internal_internal_external_account_integration_test
+
+      # Configure Workload Identity Federation and generate an access token.
+      - id: 'auth'
+        name: 'Authenticate to GCP'
+        uses: 'google-github-actions/auth@v1'
+        with:
+          create_credentials_file: 'true'
+          workload_identity_provider: 'projects/49427430084/locations/global/workloadIdentityPools/github-wif-pool/providers/github-wif-provider'
+          service_account: 'github-actions@cloud-cpp-identity-federation.iam.gserviceaccount.com'
+      - id: 'test'
+        name: 'test'
+        env:
+          GOOGLE_CLOUD_CPP_EXTERNAL_ACCOUNT_FILE: "${{ steps.auth.outputs.credentials_file_path }}"
+        run: |
+          ctest --test-dir "${{runner.temp}}/build" --output-on-failure -R rest_internal_internal_external_account_integration_test

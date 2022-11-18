@@ -44,6 +44,8 @@ add_library(
     internal/external_account_source_format.h
     internal/external_account_token_source_file.cc
     internal/external_account_token_source_file.h
+    internal/external_account_token_source_url.cc
+    internal/external_account_token_source_url.h
     internal/http_payload.h
     internal/make_jwt_assertion.cc
     internal/make_jwt_assertion.h
@@ -202,6 +204,7 @@ if (BUILD_TESTING)
         internal/external_account_parsing_test.cc
         internal/external_account_source_format_test.cc
         internal/external_account_token_source_file_test.cc
+        internal/external_account_token_source_url_test.cc
         internal/make_jwt_assertion_test.cc
         internal/oauth2_access_token_credentials_test.cc
         internal/oauth2_anonymous_credentials_test.cc
@@ -230,6 +233,7 @@ if (BUILD_TESTING)
     # dependencies.
     set(google_cloud_cpp_rest_internal_production_integration_tests
         # cmake-format: sort
+        internal/external_account_integration_test.cc
         internal/unified_rest_credentials_integration_test.cc)
 
     # Export the list of unit and integration tests so the Bazel BUILD file can
