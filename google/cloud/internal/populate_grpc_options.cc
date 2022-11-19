@@ -29,7 +29,8 @@ Options PopulateGrpcOptions(Options opts, std::string const& emulator_env_var) {
       opts.set<GrpcCredentialOption>(grpc::InsecureChannelCredentials());
     }
   }
-  if (!opts.has<GrpcCredentialOption>()) {
+  if (!opts.has<GrpcCredentialOption>() &&
+      !opts.has<UnifiedCredentialsOption>()) {
     opts.set<GrpcCredentialOption>(grpc::GoogleDefaultCredentials());
   }
   if (!opts.has<GrpcTracingOptionsOption>()) {
