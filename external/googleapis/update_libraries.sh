@@ -211,6 +211,7 @@ declare -A -r LIBRARIES=(
   ["videointelligence"]="@com_google_googleapis//google/cloud/videointelligence/v1:videointelligence_cc_grpc"
   ["vision"]="@com_google_googleapis//google/cloud/vision/v1:vision_cc_grpc"
   ["vmmigration"]="@com_google_googleapis//google/cloud/vmmigration/v1:vmmigration_cc_grpc"
+  ["vmwareengine"]="@com_google_googleapis//google/cloud/vmwareengine/v1:vmwareengine_cc_grpc"
   ["vpcaccess"]="@com_google_googleapis//google/cloud/vpcaccess/v1:vpcaccess_cc_grpc"
   ["webrisk"]="@com_google_googleapis//google/cloud/webrisk/v1:webrisk_cc_grpc"
   ["websecurityscanner"]="@com_google_googleapis//google/cloud/websecurityscanner/v1:websecurityscanner_cc_grpc"

@@ -1555,6 +1555,14 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# VMware Engine
+service {
+  service_proto_path: "google/cloud/vmwareengine/v1/vmwareengine.proto"
+  product_path: "google/cloud/vmwareengine/v1"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Serverless VPC Access
 service {
   service_proto_path: "google/cloud/vpcaccess/v1/vpc_access.proto"
