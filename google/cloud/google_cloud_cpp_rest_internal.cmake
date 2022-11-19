@@ -58,6 +58,7 @@ add_library(
     internal/oauth2_credentials.h
     internal/oauth2_error_credentials.cc
     internal/oauth2_error_credentials.h
+    internal/oauth2_external_account_token_source.h
     internal/oauth2_google_application_default_credentials_file.cc
     internal/oauth2_google_application_default_credentials_file.h
     internal/oauth2_google_credentials.cc
