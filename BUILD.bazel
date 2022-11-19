@@ -116,6 +116,7 @@ GA_LIBRARIES = [
     "videointelligence",
     "vision",
     "vmmigration",
+    "vmwareengine",
     "vpcaccess",
     "webrisk",
     "websecurityscanner",

@@ -408,6 +408,10 @@
 ./include/google/cloud/vmmigration/internal
 ./include/google/cloud/vmmigration/mocks
 ./include/google/cloud/vmmigration/v1
+./include/google/cloud/vmwareengine
+./include/google/cloud/vmwareengine/v1
+./include/google/cloud/vmwareengine/v1/internal
+./include/google/cloud/vmwareengine/v1/mocks
 ./include/google/cloud/vpcaccess
 ./include/google/cloud/vpcaccess/internal
 ./include/google/cloud/vpcaccess/mocks
@@ -567,6 +571,7 @@
 ./lib64/cmake/google_cloud_cpp_videointelligence
 ./lib64/cmake/google_cloud_cpp_vision
 ./lib64/cmake/google_cloud_cpp_vmmigration
+./lib64/cmake/google_cloud_cpp_vmwareengine
 ./lib64/cmake/google_cloud_cpp_vpcaccess
 ./lib64/cmake/google_cloud_cpp_webrisk
 ./lib64/cmake/google_cloud_cpp_websecurityscanner
