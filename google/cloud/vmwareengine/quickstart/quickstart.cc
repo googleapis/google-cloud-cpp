@@ -12,24 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/vmwareengine/ EDIT HERE .h"
+#include "google/cloud/vmwareengine/v1/vmware_engine_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location\n";
     return 1;
   }
 
-  namespace vmwareengine = ::google::cloud::vmwareengine;
-  auto client =
-      vmwareengine::Client(vmwareengine::MakeConnection(/* EDIT HERE */));
+  namespace vmwareengine = ::google::cloud::vmwareengine_v1;
+  auto client = vmwareengine::VmwareEngineClient(
+      vmwareengine::MakeVmwareEngineConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto c : client.ListPrivateClouds(parent)) {
+    if (!c) throw std::move(c).status();
+    std::cout << c->DebugString() << "\n";
   }
 
   return 0;

@@ -3,7 +3,7 @@
 @mainpage VMware Engine API C++ Client Library
 
 An idiomatic C++ client library for the [VMware Engine API][cloud-service-docs], a service
-to The Google VMware Engine API lets you programmatically manage VMware environments.
+to programmatically manage VMware environments.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -127,7 +127,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/vmwareengine
+[cloud-service-docs]: https://cloud.google.com/vmware-engine
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

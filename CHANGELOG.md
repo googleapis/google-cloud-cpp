@@ -124,6 +124,7 @@ We are happy to announce the following GA library.  Unless specifically noted,
 the APIs in these libraries are stable, and are ready for production use.
 
 - [Connectors API](/google/cloud/connectors/README.md)
+- [VMware Engine API](/google/cloud/vmwareengine/README.md)
 
 ## v2.4.0 - 2022-11
 

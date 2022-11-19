@@ -1,7 +1,8 @@
 # VMware Engine API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[VMware Engine API][cloud-service-docs], a service to The Google VMware Engine API lets you programmatically manage VMware environments.
+[VMware Engine API][cloud-service-docs], a service to programmatically
+manage VMware environments.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -16,7 +17,7 @@ libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 ## Documentation
 
-- Official documentation about the [VMware Engine API][cloud-service-docs] service
+- Official documentation about the [VMware Engine][cloud-service-docs] service
 - [Reference doxygen documentation][doxygen-link] for each release of this
   client library
 - Detailed header comments in our [public `.h`][source-link] files
@@ -31,24 +32,25 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/vmwareengine/ EDIT HERE .h"
+#include "google/cloud/vmwareengine/v1/vmware_engine_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id location\n";
     return 1;
   }
 
-  namespace vmwareengine = ::google::cloud::vmwareengine;
-  auto client =
-      vmwareengine::Client(vmwareengine::MakeConnection(/* EDIT HERE */));
+  namespace vmwareengine = ::google::cloud::vmwareengine_v1;
+  auto client = vmwareengine::VmwareEngineClient(
+      vmwareengine::MakeVmwareEngineConnection());
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
-    if (!r) throw std::move(r).status();
-    std::cout << r->DebugString() << "\n";
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + argv[2];
+  for (auto c : client.ListPrivateClouds(parent)) {
+    if (!c) throw std::move(c).status();
+    std::cout << c->DebugString() << "\n";
   }
 
   return 0;
@@ -87,7 +89,7 @@ as well as how to properly format your code.
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 
-[cloud-service-docs]: https://cloud.google.com/vmwareengine
+[cloud-service-docs]: https://cloud.google.com/vmware-engine
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-vmwareengine/latest/
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/vmwareengine

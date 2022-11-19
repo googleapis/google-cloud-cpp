@@ -18,10 +18,20 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "VMware Engine API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the VMware Engine API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "vmwareengine_internal"
-                            "vmwareengine_testing" "examples")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
-                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+
+unset(mocks_globs)
+unset(source_globs)
+set(service_dirs "v1/")
+foreach (dir IN LISTS service_dirs)
+    string(REPLACE "/" "_" ns "${dir}")
+    list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
+    list(APPEND mocks_globs "${dir}mocks/*.h")
+    list(APPEND DOXYGEN_EXAMPLE_PATH
+         "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
+    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "vmwareengine_${ns}internal")
+endforeach ()
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::vmwareengine_protos)
@@ -52,7 +62,7 @@ target_link_libraries(google_cloud_cpp_vmwareengine_protos PUBLIC ${proto_deps})
 file(
     GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+    ${source_globs})
 list(SORT source_files)
 add_library(google_cloud_cpp_vmwareengine ${source_files})
 target_include_directories(
@@ -82,7 +92,7 @@ add_library(google-cloud-cpp::vmwareengine ALIAS google_cloud_cpp_vmwareengine)
 file(
     GLOB relative_mock_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "mocks/*.h")
+    ${mocks_globs})
 list(SORT relative_mock_files)
 set(mock_files)
 foreach (file IN LISTS relative_mock_files)
@@ -116,8 +126,7 @@ if (BUILD_TESTING)
         COMMAND
             cmake -P "${PROJECT_SOURCE_DIR}/cmake/quickstart-runner.cmake"
             $<TARGET_FILE:vmwareengine_quickstart> GOOGLE_CLOUD_PROJECT
-            # EDIT HERE
-    )
+            GOOGLE_CLOUD_CPP_TEST_REGION)
     set_tests_properties(vmwareengine_quickstart
                          PROPERTIES LABELS "integration-test;quickstart")
 endif ()
@@ -187,3 +196,10 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 external_googleapis_install_pc("google_cloud_cpp_vmwareengine_protos")
+
+# google-cloud-cpp::vmwareengine must be defined before we can add the samples.
+foreach (dir IN LISTS service_dirs)
+    if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+        google_cloud_cpp_add_samples_relative("vmwareengine" "${dir}samples/")
+    endif ()
+endforeach ()
