@@ -103,7 +103,7 @@ StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceFile(
       ValidateStringField(credentials_source, "file", "credentials_source", ec);
   if (!file) return std::move(file).status();
 
-  // Make a copy, most of the time this function should succeed, and we need the
+  // Make a copy. Most of the time this function should succeed, and we need the
   // copy for the lambda captures.
   auto context = ec;
   context.emplace_back("credentials_source.type", "file");

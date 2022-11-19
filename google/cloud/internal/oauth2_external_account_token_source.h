@@ -37,19 +37,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * sources. The configuration for these sources can get quite involved, and the
  * sequence of HTTP requests to get a token can be fairly involved too. These
  * sources include:
- * - A single HTTP request, maybe to a local metadata service or OIDC service
+ * - A single HTTP request, maybe to a local metadata service or OIDC service.
  * - Multiple HTTP requests, where data obtained from previous requests is
  *   used in the next requests (AWS works like this).
- * - A simple file that contains the token, maybe as a field in some JSON object
+ * - A simple file that contains the token, maybe as a field in some JSON
+ *   object.
  * - A local program may generate the token, maybe returned as a field in a JSON
- *   object
+ *   object.
  *
  * This type encapsulates all this complexity behind a simple API. The functor
  * is created as part of parsing the external account configuration. To use it
  * one needs to just make a call.
  *
  * [RFC 8663]: https://www.rfc-editor.org/rfc/rfc8693.html
- *
  */
 using ExternalAccountTokenSource =
     std::function<StatusOr<internal::SubjectToken>(Options)>;
