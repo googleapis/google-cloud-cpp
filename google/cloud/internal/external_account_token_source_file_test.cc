@@ -103,87 +103,21 @@ TEST(ExternalAccountTokenSource, InvalidFileField) {
                             Pair("key", "value")}));
 }
 
-TEST(ExternalAccountTokenSource, InvalidFormat) {
-  auto const creds = nlohmann::json{
-      {"file", "/var/run/token-file.txt"},
-      {"format", true},
-  };
-  auto const source =
-      MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
-  EXPECT_THAT(source,
-              StatusIs(StatusCode::kInvalidArgument, HasSubstr("`format`")));
-  EXPECT_THAT(source.status().error_info().metadata(),
-              IsSupersetOf({Pair("credentials_source.type", "file"),
-                            Pair("filename", "my-credentials.json"),
-                            Pair("key", "value")}));
-}
-
-TEST(ExternalAccountTokenSource, InvalidFormatType) {
-  auto const creds = nlohmann::json{
-      {"file", "/var/run/token-file.txt"},
-      {"format", {{"type", true}}},
-  };
-  auto const source =
-      MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
-  EXPECT_THAT(source, StatusIs(StatusCode::kInvalidArgument,
-                               HasSubstr("invalid type for `type` field")));
-  EXPECT_THAT(
-      source.status().error_info().metadata(),
-      IsSupersetOf(
-          {Pair("credentials_source.type", "file"),
-           Pair("credentials_source.file.filename", "/var/run/token-file.txt"),
-           Pair("filename", "my-credentials.json"), Pair("key", "value")}));
-}
-
 TEST(ExternalAccountTokenSource, UnknownFormatType) {
   auto const creds = nlohmann::json{
       {"file", "/var/run/token-file.txt"},
       {"format", {{"type", "neither-json-nor-text"}}},
   };
-  auto const source =
+  auto const format =
       MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
-  EXPECT_THAT(source,
+  EXPECT_THAT(format,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("invalid file type <neither-json-nor-text>")));
   EXPECT_THAT(
-      source.status().error_info().metadata(),
+      format.status().error_info().metadata(),
       IsSupersetOf(
           {Pair("credentials_source.type", "file"),
            Pair("credentials_source.file.filename", "/var/run/token-file.txt"),
-           Pair("filename", "my-credentials.json"), Pair("key", "value")}));
-}
-
-TEST(ExternalAccountTokenSource, MissingFormatSubject) {
-  auto const creds = nlohmann::json{
-      {"file", "/var/run/token-file.json"},
-      {"format", {{"type", "json"}}},
-  };
-  auto const source =
-      MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
-  EXPECT_THAT(source, StatusIs(StatusCode::kInvalidArgument,
-                               HasSubstr("`subject_token_field_name`")));
-  EXPECT_THAT(
-      source.status().error_info().metadata(),
-      IsSupersetOf(
-          {Pair("credentials_source.type", "file"),
-           Pair("credentials_source.file.filename", "/var/run/token-file.json"),
-           Pair("filename", "my-credentials.json"), Pair("key", "value")}));
-}
-
-TEST(ExternalAccountTokenSource, InvalidFormatSubject) {
-  auto const creds = nlohmann::json{
-      {"file", "/var/run/token-file.json"},
-      {"format", {{"type", "json"}, {"subject_token_field_name", true}}},
-  };
-  auto const source =
-      MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
-  EXPECT_THAT(source, StatusIs(StatusCode::kInvalidArgument,
-                               HasSubstr("`subject_token_field_name`")));
-  EXPECT_THAT(
-      source.status().error_info().metadata(),
-      IsSupersetOf(
-          {Pair("credentials_source.type", "file"),
-           Pair("credentials_source.file.filename", "/var/run/token-file.json"),
            Pair("filename", "my-credentials.json"), Pair("key", "value")}));
 }
 
