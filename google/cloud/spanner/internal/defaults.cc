@@ -73,7 +73,7 @@ Options DefaultOptions(Options opts) {
     }
   }
 
-  // Sets Spanner-specific options from session_pool_options.h
+  // Sets Spanner-specific session-pool options.
   auto& num_channels = opts.lookup<GrpcNumChannelsOption>();
   num_channels = (std::max)(num_channels, 1);
   if (!opts.has<spanner::SessionPoolMinSessionsOption>()) {

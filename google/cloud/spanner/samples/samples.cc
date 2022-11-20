@@ -21,7 +21,6 @@
 #include "google/cloud/spanner/admin/instance_admin_options.h"
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/backup.h"
-#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/debug_log.h"  // TODO(#4758): remove

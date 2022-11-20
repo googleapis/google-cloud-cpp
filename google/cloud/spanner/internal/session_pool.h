@@ -21,7 +21,6 @@
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/retry_policy.h"
-#include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/completion_queue.h"
