@@ -32,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DefaultGoldenKitchenSinkRestStub::DefaultGoldenKitchenSinkRestStub(Options options)
     : rest_client_(rest_internal::MakePooledRestClient(
           options.get<EndpointOption>(), options)),
-          options_(std::move(options)) {}
+      options_(std::move(options)) {}
 
 DefaultGoldenKitchenSinkRestStub::DefaultGoldenKitchenSinkRestStub(
     std::shared_ptr<rest_internal::RestClient> rest_client, Options options)
