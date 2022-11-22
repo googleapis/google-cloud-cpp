@@ -27,12 +27,32 @@ capture_build_info(
     ],
 )
 
+config_setting(
+    name = "have_open_telemetry",
+    flag_values = {
+        "//:experimental-open_telemetry": "true",
+        "@io_opentelemetry_cpp//api:with_abseil": "true",
+    },
+)
+
+config_setting(
+    name = "not_have_open_telemetry",
+    flag_values = {"//:experimental-open_telemetry": "false"},
+)
+
 load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
 
 cc_library(
     name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
+    target_compatible_with = select(
+        {
+            ":have_open_telemetry": [],
+            ":not_have_open_telemetry": [],
+        },
+        no_match_error = "OpenTelemetry must be built with Abseil. To fix this error, supply the `--@io_opentelemetry_cpp//api:with_abseil` flag to your build command.",
+    ),
     visibility = [
         ":__subpackages__",
         "//:__pkg__",
