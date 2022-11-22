@@ -16,11 +16,11 @@
 #include "google/cloud/pubsub/internal/create_channel.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/subscriber_auth_decorator.h"
+#include "google/cloud/pubsub/internal/subscriber_connection_impl.h"
 #include "google/cloud/pubsub/internal/subscriber_logging_decorator.h"
 #include "google/cloud/pubsub/internal/subscriber_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/subscriber_round_robin_decorator.h"
 #include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
-#include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/credentials.h"
@@ -34,49 +34,6 @@ namespace cloud {
 namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
-
-class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
- public:
-  explicit SubscriberConnectionImpl(
-      pubsub::Subscription subscription, Options opts,
-      std::shared_ptr<pubsub_internal::SubscriberStub> stub)
-      : subscription_(std::move(subscription)),
-        opts_(std::move(opts)),
-        stub_(std::move(stub)),
-        background_(internal::MakeBackgroundThreadsFactory(opts_)()),
-        generator_(internal::MakeDefaultPRNG()) {}
-
-  ~SubscriberConnectionImpl() override = default;
-
-  future<Status> Subscribe(SubscribeParams p) override {
-    return CreateSubscriptionSession(
-        subscription_, google::cloud::internal::CurrentOptions(), stub_,
-        background_->cq(), MakeClientId(), std::move(p.callback));
-  }
-
-  future<Status> ExactlyOnceSubscribe(ExactlyOnceSubscribeParams p) override {
-    return CreateSubscriptionSession(
-        subscription_, google::cloud::internal::CurrentOptions(), stub_,
-        background_->cq(), MakeClientId(), std::move(p.callback));
-  }
-
-  Options options() override { return opts_; }
-
- private:
-  std::string MakeClientId() {
-    std::lock_guard<std::mutex> lk(mu_);
-    auto constexpr kLength = 32;
-    auto constexpr kChars = "abcdefghijklmnopqrstuvwxyz0123456789";
-    return internal::Sample(generator_, kLength, kChars);
-  }
-
-  pubsub::Subscription const subscription_;
-  Options const opts_;
-  std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
-  std::shared_ptr<BackgroundThreads> background_;
-  std::mutex mu_;
-  internal::DefaultPRNG generator_;
-};
 
 std::shared_ptr<pubsub_internal::SubscriberStub> DecorateSubscriberStub(
     Options const& opts,
@@ -141,7 +98,7 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
   });
   auto stub =
       DecorateSubscriberStub(opts, std::move(auth), std::move(children));
-  return std::make_shared<SubscriberConnectionImpl>(
+  return std::make_shared<pubsub_internal::SubscriberConnectionImpl>(
       std::move(subscription), std::move(opts), std::move(stub));
 }
 
@@ -172,7 +129,7 @@ std::shared_ptr<pubsub::SubscriberConnection> MakeTestSubscriberConnection(
       background->cq(), opts);
   auto stub =
       pubsub::DecorateSubscriberStub(opts, std::move(auth), std::move(stubs));
-  return std::make_shared<pubsub::SubscriberConnectionImpl>(
+  return std::make_shared<SubscriberConnectionImpl>(
       std::move(subscription), std::move(opts), std::move(stub));
 }
 

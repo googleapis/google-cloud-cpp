@@ -102,6 +102,8 @@ add_library(
     internal/streaming_subscription_batch_source.h
     internal/subscriber_auth_decorator.cc
     internal/subscriber_auth_decorator.h
+    internal/subscriber_connection_impl.cc
+    internal/subscriber_connection_impl.h
     internal/subscriber_logging_decorator.cc
     internal/subscriber_logging_decorator.h
     internal/subscriber_metadata_decorator.cc
@@ -275,6 +277,7 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/sequential_batch_sink_test.cc
         internal/session_shutdown_manager_test.cc
         internal/streaming_subscription_batch_source_test.cc
+        internal/subscriber_connection_impl_test.cc
         internal/subscription_concurrency_control_test.cc
         internal/subscription_lease_management_test.cc
         internal/subscription_message_queue_test.cc
