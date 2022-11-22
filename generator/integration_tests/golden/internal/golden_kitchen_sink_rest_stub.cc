@@ -17,6 +17,7 @@
 // source: generator/integration_tests/test.proto
 
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_rest_stub.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/rest_stub_helpers.h"
 #include "google/cloud/status_or.h"
@@ -30,7 +31,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 DefaultGoldenKitchenSinkRestStub::DefaultGoldenKitchenSinkRestStub(Options options)
     : rest_client_(rest_internal::MakePooledRestClient(
-          "https://goldenkitchensink.googleapis.com", options)),
+          options.get<EndpointOption>(), options)),
       options_(std::move(options)) {}
 
 DefaultGoldenKitchenSinkRestStub::DefaultGoldenKitchenSinkRestStub(
