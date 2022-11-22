@@ -1,0 +1,55 @@
+name: "External Account Integration"
+
+# Build on pull requests and pushes to `main`. The PR builds will be
+# non-blocking for now, but that is configured elsewhere.
+on:
+  pull_request:
+  push:
+    branches: [ 'main' ]
+
+jobs:
+  # A minimal build to validate external account (aka Workload/Workforce
+  # Identity Federation, aka WIF, aka BYOID).  As the name implies, external
+  # accounts support non-Google sources of identity, such as AWS, Azure, or
+  # GitHub. Most of our builds use Google Cloud Build (GCB), which is not
+  # usable in this case.
+  identity-federation-integration-test:
+    name: external-account-integration-test
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: install ninja
+        run: sudo apt install ninja-build
+      - uses: 'actions/checkout@v3'
+      - name: vcpkg-version
+        id: vcpkg-version
+        run: |
+          echo "version=$(cat ci/etc/vcpkg-version.txt)" >> "${GITHUB_OUTPUT}"
+        shell: bash
+      - name: clone-vcpkg
+        working-directory: "${{runner.temp}}"
+        run: |
+          mkdir -p vcpkg
+          curl -sSL "https://github.com/microsoft/vcpkg/archive/${{ steps.vcpkg-version.outputs.version }}.tar.gz" |
+              tar -C vcpkg --strip-components=1 -zxf -
+          vcpkg/bootstrap-vcpkg.sh -disableMetrics
+      - name: cache-vcpkg
+        id: cache-vcpkg
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/vcpkg
+          key: |
+            vcpkg-${{ steps.vcpkg-version.outputs.version }}-${{ hashFiles('vcpkg.json') }}
+          restore-keys: |
+            vcpkg-${{ steps.vcpkg-version.outputs.version }}-
+
+      # Configuring CMake installs the dependencies from the vcpkg cache, or
+      # warms up said cache.
+      - name: configure
+        run: |
+          cmake -G Ninja -S . -B "${{runner.temp}}/build" \
+              -DGOOGLE_CLOUD_CPP_ENABLE=storage,iam \
+              -DCMAKE_TOOLCHAIN_FILE="${{runner.temp}}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+
+      # Later we can add steps tp build tests and run them.
