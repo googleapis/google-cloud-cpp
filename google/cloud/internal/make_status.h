@@ -79,21 +79,31 @@ class ErrorInfoBuilder {
   ErrorInfoBuilder(std::string file, int line, std::string function);
 
   /// Adds the metadata from an error context, existing values are not replaced.
-  ErrorInfoBuilder&& WithContext(ErrorContext const& ec) && {
+  ErrorInfoBuilder& WithContext(ErrorContext const& ec) & {
     metadata_.insert(ec.begin(), ec.end());
-    return std::move(*this);
+    return *this;
+  }
+  ErrorInfoBuilder&& WithContext(ErrorContext const& ec) && {
+    return std::move(WithContext(ec));
   }
 
   /// Add a metadata pair, existing values are not replaced.
+  ErrorInfoBuilder& WithMetadata(absl::string_view key,
+                                 absl::string_view value) & {
+    metadata_.emplace(key, value);
+    return *this;
+  }
   ErrorInfoBuilder&& WithMetadata(absl::string_view key,
                                   absl::string_view value) && {
-    metadata_.emplace(key, value);
-    return std::move(*this);
+    return std::move(WithMetadata(std::move(key), std::move(value)));
   }
 
-  ErrorInfoBuilder&& WithReason(std::string reason) && {
+  ErrorInfoBuilder& WithReason(std::string reason) & {
     reason_ = std::move(reason);
-    return std::move(*this);
+    return *this;
+  }
+  ErrorInfoBuilder&& WithReason(std::string reason) && {
+    return std::move(WithReason(std::move(reason)));
   }
 
   ErrorInfo Build(StatusCode code) &&;
