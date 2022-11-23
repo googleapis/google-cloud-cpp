@@ -87,21 +87,16 @@ Status StubFactoryRestGenerator::GenerateCc() {
   CcPrint(R"""(
 std::shared_ptr<$stub_rest_class_name$>
 CreateDefault$stub_rest_class_name$(Options const& options) {
-  Options auth_option;
-  if (!options.has<UnifiedCredentialsOption>()) {
-    auth_option.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
-  })""");
-
-  CcPrint(R"""(
+  Options opts = options;
+  if (!opts.has<UnifiedCredentialsOption>()) {
+    opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+  }
   std::shared_ptr<$stub_rest_class_name$> stub =
-      std::make_shared<Default$stub_rest_class_name$>(
-          internal::MergeOptions(options, auth_option));)""");
-
-  CcPrint(R"""(
+      std::make_shared<Default$stub_rest_class_name$>(std::move(opts));
   stub = std::make_shared<$metadata_rest_class_name$>(std::move(stub));
   if (internal::Contains(
-      options.get<TracingComponentsOption>(), "http")) {
-    GCP_LOG(INFO) << "Enabled logging for HTTP calls";
+      options.get<TracingComponentsOption>(), "rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<$logging_rest_class_name$>(
         std::move(stub),
         options.get<RestTracingOptionsOption>(),

@@ -39,10 +39,11 @@ TEST(GoldenKitchenSinkRestStubFactoryTest, DefaultStubWithoutLogging) {
 TEST(GoldenKitchenSinkRestStubFactoryTest, DefaultStubWithLogging) {
   testing_util::ScopedLog log;
   Options options;
-  options.set<TracingComponentsOption>({"http"});
+  options.set<TracingComponentsOption>({"rpc"});
   auto default_stub = CreateDefaultGoldenKitchenSinkRestStub(options);
   auto const log_lines = log.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("Enabled logging for HTTP calls")));
+  EXPECT_THAT(log_lines,
+              Contains(HasSubstr("Enabled logging for REST rpc calls")));
 }
 
 }  // namespace

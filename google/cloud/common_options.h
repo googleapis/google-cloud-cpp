@@ -66,7 +66,6 @@ struct UserAgentProductsOption {
  *
  * - rpc
  * - rpc-streams
- * - http Only applicable when using REST transport.
  */
 struct TracingComponentsOption {
   using Type = std::set<std::string>;

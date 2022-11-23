@@ -35,17 +35,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<GoldenThingAdminRestStub>
 CreateDefaultGoldenThingAdminRestStub(Options const& options) {
-  Options auth_option;
-  if (!options.has<UnifiedCredentialsOption>()) {
-    auth_option.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
+  Options opts = options;
+  if (!opts.has<UnifiedCredentialsOption>()) {
+    opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   }
   std::shared_ptr<GoldenThingAdminRestStub> stub =
-      std::make_shared<DefaultGoldenThingAdminRestStub>(
-          internal::MergeOptions(options, auth_option));
+      std::make_shared<DefaultGoldenThingAdminRestStub>(std::move(opts));
   stub = std::make_shared<GoldenThingAdminRestMetadata>(std::move(stub));
   if (internal::Contains(
-      options.get<TracingComponentsOption>(), "http")) {
-    GCP_LOG(INFO) << "Enabled logging for HTTP calls";
+      options.get<TracingComponentsOption>(), "rpc")) {
+    GCP_LOG(INFO) << "Enabled logging for REST rpc calls";
     stub = std::make_shared<GoldenThingAdminRestLogging>(
         std::move(stub),
         options.get<RestTracingOptionsOption>(),
