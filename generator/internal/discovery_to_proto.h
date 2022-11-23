@@ -57,6 +57,13 @@ Status ProcessMethodRequestsAndResponses(
     std::map<std::string, DiscoveryResource>& resources,
     std::map<std::string, DiscoveryTypeVertex>& types);
 
+void EstablishTypeDependencies(
+    std::map<std::string, DiscoveryTypeVertex>& types);
+
+void ApplyResourceLabelsToTypes(
+    std::map<std::string, DiscoveryResource>& resources,
+    std::map<std::string, DiscoveryTypeVertex>& types);
+
 // Creates a DiscoveryFile object for each DiscoveryResource in resources.
 std::vector<DiscoveryFile> CreateFilesFromResources(
     std::map<std::string, DiscoveryResource> const& resources,

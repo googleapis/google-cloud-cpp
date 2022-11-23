@@ -1,0 +1,700 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.cloud.cpp.compute.regionNetworkFirewallPolicies.v1;
+
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/cloud/compute/v1/internal/common.proto";
+import "google/cloud/extended_operations.proto";
+
+// Service for the regionNetworkFirewallPolicies resource.
+// https://cloud.google.com/compute/docs/reference/rest/v1/regionNetworkFirewallPolicies
+service RegionNetworkFirewallPolicies {
+  option (google.api.default_host) = "compute.googleapis.com";
+  option (google.api.oauth_scopes) =
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
+
+  // Inserts an association for the specified network firewall policy.
+  rpc AddAssociation(AddAssociationRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/addAssociation"
+      body: "firewall_policy_association_resource"
+    };
+    option (google.api.method_signature) =
+        "project,region,firewall_policy,firewall_policy_association_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Inserts a rule into a network firewall policy.
+  rpc AddRule(AddRuleRequest) returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/addRule"
+      body: "firewall_policy_rule_resource"
+    };
+    option (google.api.method_signature) =
+        "project,region,firewall_policy,firewall_policy_rule_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Copies rules to the specified network firewall policy.
+  rpc CloneRules(CloneRulesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/cloneRules"
+      body: "*"
+    };
+    option (google.api.method_signature) = "project,region,firewall_policy";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Deletes the specified network firewall policy.
+  rpc DeleteRegionNetworkFirewallPolicies(
+      DeleteRegionNetworkFirewallPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      delete: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}"
+    };
+    option (google.api.method_signature) = "project,region,firewall_policy";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Returns the specified network firewall policy.
+  rpc GetRegionNetworkFirewallPolicies(GetRegionNetworkFirewallPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.FirewallPolicy) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}"
+    };
+    option (google.api.method_signature) = "project,region,firewall_policy";
+  }
+
+  // Gets an association with the specified name.
+  rpc GetAssociation(GetAssociationRequest)
+      returns (google.cloud.cpp.compute.v1.FirewallPolicyAssociation) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/getAssociation"
+    };
+    option (google.api.method_signature) = "project,region,firewall_policy";
+  }
+
+  // Returns the effective firewalls on a given network.
+  rpc GetEffectiveFirewalls(GetEffectiveFirewallsRequest) returns (
+      google.cloud.cpp.compute.v1
+          .RegionNetworkFirewallPoliciesGetEffectiveFirewallsResponse) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/getEffectiveFirewalls"
+    };
+    option (google.api.method_signature) = "project,region,network";
+  }
+
+  // Gets the access control policy for a resource. May be empty if no such
+  // policy or resource exists.
+  rpc GetIamPolicy(GetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{resource}/getIamPolicy"
+    };
+    option (google.api.method_signature) = "project,region,resource";
+  }
+
+  // Gets a rule of the specified priority.
+  rpc GetRule(GetRuleRequest)
+      returns (google.cloud.cpp.compute.v1.FirewallPolicyRule) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/getRule"
+    };
+    option (google.api.method_signature) = "project,region,firewall_policy";
+  }
+
+  // Creates a new network firewall policy in the specified project and region.
+  rpc InsertRegionNetworkFirewallPolicies(
+      InsertRegionNetworkFirewallPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies"
+      body: "firewall_policy_resource"
+    };
+    option (google.api.method_signature) =
+        "project,region,firewall_policy_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Lists all the network firewall policies that have been configured for the
+  // specified project in the given region.
+  rpc ListRegionNetworkFirewallPolicies(
+      ListRegionNetworkFirewallPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.FirewallPolicyList) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies"
+    };
+    option (google.api.method_signature) = "project,region";
+  }
+
+  // Patches the specified network firewall policy.
+  rpc PatchRegionNetworkFirewallPolicies(
+      PatchRegionNetworkFirewallPoliciesRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      patch: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}"
+      body: "firewall_policy_resource"
+    };
+    option (google.api.method_signature) =
+        "project,region,firewall_policy,firewall_policy_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Patches a rule of the specified priority.
+  rpc PatchRule(PatchRuleRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/patchRule"
+      body: "firewall_policy_rule_resource"
+    };
+    option (google.api.method_signature) =
+        "project,region,firewall_policy,firewall_policy_rule_resource";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Removes an association for the specified network firewall policy.
+  rpc RemoveAssociation(RemoveAssociationRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/removeAssociation"
+      body: "*"
+    };
+    option (google.api.method_signature) = "project,region,firewall_policy";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Deletes a rule of the specified priority.
+  rpc RemoveRule(RemoveRuleRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{firewall_policy}/removeRule"
+      body: "*"
+    };
+    option (google.api.method_signature) = "project,region,firewall_policy";
+    option (google.cloud.operation_service) = "RegionOperations";
+  }
+
+  // Sets the access control policy on the specified resource. Replaces any
+  // existing policy.
+  rpc SetIamPolicy(SetIamPolicyRequest)
+      returns (google.cloud.cpp.compute.v1.Policy) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{resource}/setIamPolicy"
+      body: "region_set_policy_request_resource"
+    };
+    option (google.api.method_signature) =
+        "project,region,resource,region_set_policy_request_resource";
+  }
+
+  // Returns permissions that a caller has on the specified resource.
+  rpc TestIamPermissions(TestIamPermissionsRequest)
+      returns (google.cloud.cpp.compute.v1.TestPermissionsResponse) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/regions/{region}/firewallPolicies/{resource}/testIamPermissions"
+      body: "test_permissions_request_resource"
+    };
+    option (google.api.method_signature) =
+        "project,region,resource,test_permissions_request_resource";
+  }
+}
+
+// Request message for AddAssociation.
+message AddAssociationRequest {
+  // Name of the firewall policy to update.
+  string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The FirewallPolicyAssociation for this request.
+  optional google.cloud.cpp.compute.v1.FirewallPolicyAssociation
+      firewall_policy_association_resource = 2;
+
+  // Project ID for this request.
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // Name of the region scoping this request.
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
+
+  // Indicates whether or not to replace it if an association already exists.
+  // This is false by default, in which case an error will be returned if an
+  // association already exists.
+  optional bool replace_existing_association = 5;
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 6;
+}
+
+// Request message for AddRule.
+message AddRuleRequest {
+  // Name of the firewall policy to update.
+  string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The FirewallPolicyRule for this request.
+  optional google.cloud.cpp.compute.v1.FirewallPolicyRule
+      firewall_policy_rule_resource = 2;
+
+  // When rule.priority is not specified, auto choose a unused priority between
+  // minPriority and maxPriority>. This field is exclusive with rule.priority.
+  optional int32 max_priority = 3;
+
+  // When rule.priority is not specified, auto choose a unused priority between
+  // minPriority and maxPriority>. This field is exclusive with rule.priority.
+  optional int32 min_priority = 4;
+
+  // Project ID for this request.
+  string project = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // Name of the region scoping this request.
+  string region = 6 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 7;
+}
+
+// Request message for CloneRules.
+message CloneRulesRequest {
+  // Name of the firewall policy to update.
+  string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // Name of the region scoping this request.
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 4;
+
+  // The firewall policy from which to copy rules.
+  optional string source_firewall_policy = 5;
+}
+
+// Request message for DeleteRegionNetworkFirewallPolicies.
+message DeleteRegionNetworkFirewallPoliciesRequest {
+  // Name of the firewall policy to delete.
+  string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // Name of the region scoping this request.
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 4;
+}
+
+// Request message for GetAssociation.
+message GetAssociationRequest {
+  // Name of the firewall policy to which the queried association belongs.
+  string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The name of the association to get from the firewall policy.
+  optional string name = 2;
+
+  // Project ID for this request.
+  string project = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the region scoping this request.
+  string region = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for GetEffectiveFirewalls.
+message GetEffectiveFirewallsRequest {
+  // Network reference
+  string network = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the region scoping this request.
+  string region = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for GetIamPolicy.
+message GetIamPolicyRequest {
+  // Requested IAM Policy version.
+  optional int32 options_requested_policy_version = 1;
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The name of the region for this request.
+  string region = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Name or id of the resource for this request.
+  string resource = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for GetRegionNetworkFirewallPolicies.
+message GetRegionNetworkFirewallPoliciesRequest {
+  // Name of the firewall policy to get.
+  string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the region scoping this request.
+  string region = 3 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for GetRule.
+message GetRuleRequest {
+  // Name of the firewall policy to which the queried rule belongs.
+  string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The priority of the rule to get from the firewall policy.
+  optional int32 priority = 2;
+
+  // Project ID for this request.
+  string project = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the region scoping this request.
+  string region = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for InsertRegionNetworkFirewallPolicies.
+message InsertRegionNetworkFirewallPoliciesRequest {
+  // The FirewallPolicy for this request.
+  optional google.cloud.cpp.compute.v1.FirewallPolicy firewall_policy_resource =
+      1;
+
+  // Project ID for this request.
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // Name of the region scoping this request.
+  string region = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 4;
+}
+
+// Request message for ListRegionNetworkFirewallPolicies.
+message ListRegionNetworkFirewallPoliciesRequest {
+  // A filter expression that filters resources listed in the response. Most
+  // Compute resources support two types of filter expressions: expressions that
+  // support regular expressions and expressions that follow API improvement
+  // proposal AIP-160. If you want to use AIP-160, your expression must specify
+  // the field name, an operator, and the value that you want to use for
+  // filtering. The value must be a string, a number, or a boolean. The operator
+  // must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`. For example, if you
+  // are filtering Compute Engine instances, you can exclude instances named
+  // `example-instance` by specifying `name != example-instance`. The `:`
+  // operator can be used with string fields to match substrings. For non-string
+  // fields it is equivalent to the `=` operator. The `:*` comparison can be
+  // used to test whether a key has been defined. For example, to find all
+  // objects with `owner` label use: ``` labels.owner:* ``` You can also filter
+  // nested fields. For example, you could specify `scheduling.automaticRestart
+  // = false` to include instances only if they are not scheduled for automatic
+  // restarts. You can use filtering on nested fields to filter based on
+  // resource labels. To filter on multiple expressions, provide each separate
+  // expression within parentheses. For example: ```
+  // (scheduling.automaticRestart = true) (cpuPlatform = "Intel Skylake") ``` By
+  // default, each expression is an `AND` expression. However, you can include
+  // `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform =
+  // "Intel Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+  // (scheduling.automaticRestart = true) ``` If you want to use a regular
+  // expression, use the `eq` (equal) or `ne` (not equal) operator against a
+  // single un-parenthesized expression with or without quotes or against
+  // multiple parenthesized expressions. Examples: `fieldname eq unquoted
+  // literal` `fieldname eq 'single quoted literal'` `fieldname eq "double
+  // quoted literal"` `(fieldname1 eq literal) (fieldname2 ne "literal")` The
+  // literal value is interpreted as a regular expression using Google RE2
+  // library syntax. The literal value must match the entire field. For example,
+  // to filter for instances that do not end with name "instance", you would use
+  // `name ne .*instance`.
+  optional string filter = 1;
+
+  // The maximum number of results per page that should be returned. If the
+  // number of available results is larger than `maxResults`, Compute Engine
+  // returns a `nextPageToken` that can be used to get the next page of results
+  // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
+  // (Default: `500`)
+  optional uint32 max_results = 2;
+
+  // Sorts list results by a certain order. By default, results are returned in
+  // alphanumerical order based on the resource name. You can also sort results
+  // in descending order based on the creation timestamp using
+  // `orderBy="creationTimestamp desc"`. This sorts results based on the
+  // `creationTimestamp` field in reverse chronological order (newest result
+  // first). Use this to sort resources like operations so that the newest
+  // operation is returned first. Currently, only sorting by `name` or
+  // `creationTimestamp desc` is supported.
+  optional string order_by = 3;
+
+  // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
+  // returned by a previous list request to get the next page of results.
+  optional string page_token = 4;
+
+  // Project ID for this request.
+  string project = 5 [(google.api.field_behavior) = REQUIRED];
+
+  // Name of the region scoping this request.
+  string region = 6 [(google.api.field_behavior) = REQUIRED];
+
+  // Opt-in for partial success behavior which provides partial results in case
+  // of failure. The default value is false.
+  optional bool return_partial_success = 7;
+}
+
+// Request message for PatchRegionNetworkFirewallPolicies.
+message PatchRegionNetworkFirewallPoliciesRequest {
+  // Name of the firewall policy to update.
+  string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The FirewallPolicy for this request.
+  optional google.cloud.cpp.compute.v1.FirewallPolicy firewall_policy_resource =
+      2;
+
+  // Project ID for this request.
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // Name of the region scoping this request.
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 5;
+}
+
+// Request message for PatchRule.
+message PatchRuleRequest {
+  // Name of the firewall policy to update.
+  string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The FirewallPolicyRule for this request.
+  optional google.cloud.cpp.compute.v1.FirewallPolicyRule
+      firewall_policy_rule_resource = 2;
+
+  // The priority of the rule to patch.
+  optional int32 priority = 3;
+
+  // Project ID for this request.
+  string project = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // Name of the region scoping this request.
+  string region = 5 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 6;
+}
+
+// Request message for RemoveAssociation.
+message RemoveAssociationRequest {
+  // Name of the firewall policy to update.
+  string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Name for the association that will be removed.
+  optional string name = 2;
+
+  // Project ID for this request.
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // Name of the region scoping this request.
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 5;
+}
+
+// Request message for RemoveRule.
+message RemoveRuleRequest {
+  // Name of the firewall policy to update.
+  string firewall_policy = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The priority of the rule to remove from the firewall policy.
+  optional int32 priority = 2;
+
+  // Project ID for this request.
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // Name of the region scoping this request.
+  string region = 4 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "region"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 5;
+}
+
+// Request message for SetIamPolicy.
+message SetIamPolicyRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The name of the region for this request.
+  string region = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // The RegionSetPolicyRequest for this request.
+  optional google.cloud.cpp.compute.v1.RegionSetPolicyRequest
+      region_set_policy_request_resource = 3;
+
+  // Name or id of the resource for this request.
+  string resource = 4 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for TestIamPermissions.
+message TestIamPermissionsRequest {
+  // Project ID for this request.
+  string project = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The name of the region for this request.
+  string region = 2 [(google.api.field_behavior) = REQUIRED];
+
+  // Name or id of the resource for this request.
+  string resource = 3 [(google.api.field_behavior) = REQUIRED];
+
+  // The TestPermissionsRequest for this request.
+  optional google.cloud.cpp.compute.v1.TestPermissionsRequest
+      test_permissions_request_resource = 4;
+}

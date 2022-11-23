@@ -13,10 +13,12 @@
 // limitations under the License.
 
 #include "generator/internal/discovery_to_proto.h"
+#include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
@@ -148,6 +150,10 @@ StatusOr<DiscoveryTypeVertex const*> DetermineAndVerifyResponseType(
           "Response name=%s not found in types", response_type_name));
     }
     response_type = &iter->second;
+#if NEED_RESOURCE_TYPE_TRACKING
+    response_type->second.AddNeededByResource(resource.name());
+    resource.AddResponseType(response_type->first, &response_type->second);
+#endif
   }
   return response_type;
 }
@@ -255,6 +261,9 @@ Status ProcessMethodRequestsAndResponses(
           return internal::InternalError(
               absl::StrCat("Unable to insert type ", resource_name, ".", id));
         }
+#if NEED_RESOURCE_TYPE_TRACKING
+        insert_result.first->second.AddNeededByResource(resource_name);
+#endif
         resource.second.AddRequestType(id, &insert_result.first->second);
       } else {
         resource.second.AddEmptyRequestType();
@@ -265,6 +274,42 @@ Status ProcessMethodRequestsAndResponses(
   return {};
 }
 
+void EstablishTypeDependencies(
+    std::map<std::string, DiscoveryTypeVertex>& types) {
+  nlohmann::json fields;
+  for (auto& type : types) {
+    auto const& json = type.second.json();
+    if (json.contains("properties")) {
+      fields = json["properties"];
+    } else if (json.contains("additionalProperties")) {
+      fields = json["additionalProperties"];
+    }
+    for (auto const& p : fields) {
+      if (p.contains("$ref")) {
+        std::string dep = p["$ref"];
+        type.second.AddNeedsTypeName(dep);
+        auto& provider = types[dep];
+        provider.AddNeededByTypeName(type.first);
+      } else if (p.contains("type") && p["type"] == "array") {
+        auto const& items = p["items"];
+        auto const& dep = items.find("$ref");
+        if (dep != items.end()) {
+          type.second.AddNeedsTypeName(*dep);
+          auto& provider = types[*dep];
+          provider.AddNeededByTypeName(type.first);
+        }
+      }
+    }
+  }
+}
+
+void ApplyResourceLabelsToTypes(std::map<std::string, DiscoveryResource>&,
+                                std::map<std::string, DiscoveryTypeVertex>&) {
+  // TODO(sdhart): Not yet implemented
+  // starting from each resource bfs needs edges for request and response types
+  // and add resource label to each type encountered
+}
+
 std::vector<DiscoveryFile> CreateFilesFromResources(
     std::map<std::string, DiscoveryResource> const& resources,
     DiscoveryDocumentProperties const& document_properties,
@@ -272,12 +317,18 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
   std::vector<DiscoveryFile> files;
   files.reserve(resources.size());
   for (auto const& r : resources) {
+    // Not sure if this is needed for dependency tracking or not.
+    //    std::vector<DiscoveryTypeVertex const*> types;
+    //    for (auto const& request_type : r.second.request_types()) {
+    //      types.push_back(request_type.second);
+    //    }
     DiscoveryFile f{
         &r.second,
         r.second.FormatFilePath(document_properties.product_name,
                                 document_properties.version, output_path),
         r.second.package_name(), r.second.GetRequestTypesList()};
-    f.AddImportPath("google/api/annotations.proto")
+    f.AddResourceLabel(r.first)
+        .AddImportPath("google/api/annotations.proto")
         .AddImportPath("google/api/client.proto")
         .AddImportPath("google/api/field_behavior.proto")
         .AddImportPath(
@@ -327,6 +378,26 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
                       document_properties.version),
       std::move(common_types));
   return files;
+}
+
+void EmitConfigTextProto(
+    std::map<std::string, DiscoveryResource> const& resources) {
+  for (auto const& r : resources) {
+    google::cloud::cpp::generator::ServiceConfiguration s;
+    s.set_service_proto_path(
+        absl::StrFormat("google/cloud/compute/%s/v1/%s.proto",
+                        CamelCaseToSnakeCase(r.second.name()),
+                        CamelCaseToSnakeCase(r.second.name())));
+    s.set_product_path(absl::StrFormat("google/cloud/compute/%s/v1",
+                                       CamelCaseToSnakeCase(r.second.name())));
+    s.set_initial_copyright_year("2023");
+    *s.add_retryable_status_codes() = "kUnavailable";
+    s.set_generate_grpc_transport(false);
+    s.set_generate_rest_transport(true);
+    s.set_experimental(true);
+
+    std::cout << absl::StrFormat("rest_service {\n%s}\n", s.DebugString());
+  }
 }
 
 StatusOr<std::string> DefaultHostFromRootUrl(nlohmann::json const& json) {
@@ -392,17 +463,35 @@ Status GenerateProtosFromDiscoveryDoc(nlohmann::json const& discovery_doc,
   auto types = ExtractTypesFromSchema(document_properties, discovery_doc);
   if (!types) return std::move(types).status();
 
+  //  std::cerr << "output_path: " << output_path << "\n";
+  //  std::cerr << "num_schemas: " << types->size() << "\n";
+
   auto resources = ExtractResources(document_properties, discovery_doc);
   if (resources.empty()) {
     return internal::InvalidArgumentError(
         "No resources found in Discovery Document.");
   }
 
+  //  EmitConfigTextProto(resources);
+
+  //  std::cerr << "num_resources: " << resources.size() << "\n";
+
   auto method_status = ProcessMethodRequestsAndResponses(resources, *types);
   if (!method_status.ok()) return method_status;
 
+#if NEED_RESOURCE_TYPE_TRACKING
+  EstablishTypeDependencies(*types);
+  ApplyResourceLabelsToTypes(resources, *types);
+#endif
+
+  // group types with equal resource label sets into "files"
   std::vector<DiscoveryFile> files = AssignResourcesAndTypesToFiles(
       resources, *types, document_properties, output_path);
+
+  //  std::cerr << "num_files: " << files.size() << std::endl;
+  // Determine common files and add imports
+  // add import directives to "files" by using topological sort of types to
+  //     determine starting types and walking needed_by edges
 
   std::vector<std::future<google::cloud::Status>> tasks;
   tasks.reserve(files.size());

@@ -95,3 +95,17 @@ cc_binary(
         "@com_google_absl//absl/flags:parse",
     ],
 )
+
+cc_binary(
+    name = "generator_discovery",
+    srcs = ["discovery_main.cc"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//generator:google_cloud_cpp_generator",
+        "//google/cloud:google_cloud_cpp_rest_internal",
+        "@com_google_absl//absl/flags:commandlineflag",
+        "@com_google_absl//absl/flags:flag",
+        "@com_google_absl//absl/flags:parse",
+        "@com_google_protobuf//:protoc_lib",
+    ],
+)

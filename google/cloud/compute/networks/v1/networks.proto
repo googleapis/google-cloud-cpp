@@ -1,0 +1,498 @@
+// Copyright 2023 Google LLC
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      https://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+syntax = "proto3";
+
+package google.cloud.cpp.compute.networks.v1;
+
+import "google/api/annotations.proto";
+import "google/api/client.proto";
+import "google/api/field_behavior.proto";
+import "google/cloud/compute/v1/internal/common.proto";
+import "google/cloud/extended_operations.proto";
+
+// Service for the networks resource.
+// https://cloud.google.com/compute/docs/reference/rest/v1/networks
+service Networks {
+  option (google.api.default_host) = "compute.googleapis.com";
+  option (google.api.oauth_scopes) =
+      "https://www.googleapis.com/auth/cloud-platform,"
+      "https://www.googleapis.com/auth/compute,"
+      "https://www.googleapis.com/auth/compute.readonly";
+
+  // Adds a peering to the specified network.
+  rpc AddPeering(AddPeeringRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/global/networks/{network}/addPeering"
+      body: "networks_add_peering_request_resource"
+    };
+    option (google.api.method_signature) =
+        "project,network,networks_add_peering_request_resource";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+
+  // Deletes the specified network.
+  rpc DeleteNetworks(DeleteNetworksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      delete: "/compute/v1/projects/{project}/global/networks/{network}"
+    };
+    option (google.api.method_signature) = "project,network";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+
+  // Returns the specified network.
+  rpc GetNetworks(GetNetworksRequest)
+      returns (google.cloud.cpp.compute.v1.Network) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/global/networks/{network}"
+    };
+    option (google.api.method_signature) = "project,network";
+  }
+
+  // Returns the effective firewalls on a given network.
+  rpc GetEffectiveFirewalls(GetEffectiveFirewallsRequest) returns (
+      google.cloud.cpp.compute.v1.NetworksGetEffectiveFirewallsResponse) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/global/networks/{network}/getEffectiveFirewalls"
+    };
+    option (google.api.method_signature) = "project,network";
+  }
+
+  // Creates a network in the specified project using the data included in the
+  // request.
+  rpc InsertNetworks(InsertNetworksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/global/networks"
+      body: "network_resource"
+    };
+    option (google.api.method_signature) = "project,network_resource";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+
+  // Retrieves the list of networks available to the specified project.
+  rpc ListNetworks(ListNetworksRequest)
+      returns (google.cloud.cpp.compute.v1.NetworkList) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/global/networks"
+    };
+    option (google.api.method_signature) = "project";
+  }
+
+  // Lists the peering routes exchanged over peering connection.
+  rpc ListPeeringRoutes(ListPeeringRoutesRequest)
+      returns (google.cloud.cpp.compute.v1.ExchangedPeeringRoutesList) {
+    option (google.api.http) = {
+      get: "/compute/v1/projects/{project}/global/networks/{network}/listPeeringRoutes"
+    };
+    option (google.api.method_signature) = "project,network";
+  }
+
+  // Patches the specified network with the data included in the request. Only
+  // the following fields can be modified: routingConfig.routingMode.
+  rpc PatchNetworks(PatchNetworksRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      patch: "/compute/v1/projects/{project}/global/networks/{network}"
+      body: "network_resource"
+    };
+    option (google.api.method_signature) = "project,network,network_resource";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+
+  // Removes a peering from the specified network.
+  rpc RemovePeering(RemovePeeringRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/global/networks/{network}/removePeering"
+      body: "networks_remove_peering_request_resource"
+    };
+    option (google.api.method_signature) =
+        "project,network,networks_remove_peering_request_resource";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+
+  // Switches the network mode from auto subnet mode to custom subnet mode.
+  rpc SwitchToCustomMode(SwitchToCustomModeRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      post: "/compute/v1/projects/{project}/global/networks/{network}/switchToCustomMode"
+      body: "*"
+    };
+    option (google.api.method_signature) = "project,network";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+
+  // Updates the specified network peering with the data included in the
+  // request. You can only modify the NetworkPeering.export_custom_routes field
+  // and the NetworkPeering.import_custom_routes field.
+  rpc UpdatePeering(UpdatePeeringRequest)
+      returns (google.cloud.cpp.compute.v1.Operation) {
+    option (google.api.http) = {
+      patch: "/compute/v1/projects/{project}/global/networks/{network}/updatePeering"
+      body: "networks_update_peering_request_resource"
+    };
+    option (google.api.method_signature) =
+        "project,network,networks_update_peering_request_resource";
+    option (google.cloud.operation_service) = "GlobalOperations";
+  }
+}
+
+// Request message for AddPeering.
+message AddPeeringRequest {
+  // Name of the network resource to add peering to.
+  string network = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The NetworksAddPeeringRequest for this request.
+  optional google.cloud.cpp.compute.v1.NetworksAddPeeringRequest
+      networks_add_peering_request_resource = 2;
+
+  // Project ID for this request.
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 4;
+}
+
+// Request message for DeleteNetworks.
+message DeleteNetworksRequest {
+  // Name of the network to delete.
+  string network = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 3;
+}
+
+// Request message for GetEffectiveFirewalls.
+message GetEffectiveFirewallsRequest {
+  // Name of the network for this request.
+  string network = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for GetNetworks.
+message GetNetworksRequest {
+  // Name of the network to return.
+  string network = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [(google.api.field_behavior) = REQUIRED];
+}
+
+// Request message for InsertNetworks.
+message InsertNetworksRequest {
+  // The Network for this request.
+  optional google.cloud.cpp.compute.v1.Network network_resource = 1;
+
+  // Project ID for this request.
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 3;
+}
+
+// Request message for ListNetworks.
+message ListNetworksRequest {
+  // A filter expression that filters resources listed in the response. Most
+  // Compute resources support two types of filter expressions: expressions that
+  // support regular expressions and expressions that follow API improvement
+  // proposal AIP-160. If you want to use AIP-160, your expression must specify
+  // the field name, an operator, and the value that you want to use for
+  // filtering. The value must be a string, a number, or a boolean. The operator
+  // must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`. For example, if you
+  // are filtering Compute Engine instances, you can exclude instances named
+  // `example-instance` by specifying `name != example-instance`. The `:`
+  // operator can be used with string fields to match substrings. For non-string
+  // fields it is equivalent to the `=` operator. The `:*` comparison can be
+  // used to test whether a key has been defined. For example, to find all
+  // objects with `owner` label use: ``` labels.owner:* ``` You can also filter
+  // nested fields. For example, you could specify `scheduling.automaticRestart
+  // = false` to include instances only if they are not scheduled for automatic
+  // restarts. You can use filtering on nested fields to filter based on
+  // resource labels. To filter on multiple expressions, provide each separate
+  // expression within parentheses. For example: ```
+  // (scheduling.automaticRestart = true) (cpuPlatform = "Intel Skylake") ``` By
+  // default, each expression is an `AND` expression. However, you can include
+  // `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform =
+  // "Intel Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+  // (scheduling.automaticRestart = true) ``` If you want to use a regular
+  // expression, use the `eq` (equal) or `ne` (not equal) operator against a
+  // single un-parenthesized expression with or without quotes or against
+  // multiple parenthesized expressions. Examples: `fieldname eq unquoted
+  // literal` `fieldname eq 'single quoted literal'` `fieldname eq "double
+  // quoted literal"` `(fieldname1 eq literal) (fieldname2 ne "literal")` The
+  // literal value is interpreted as a regular expression using Google RE2
+  // library syntax. The literal value must match the entire field. For example,
+  // to filter for instances that do not end with name "instance", you would use
+  // `name ne .*instance`.
+  optional string filter = 1;
+
+  // The maximum number of results per page that should be returned. If the
+  // number of available results is larger than `maxResults`, Compute Engine
+  // returns a `nextPageToken` that can be used to get the next page of results
+  // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
+  // (Default: `500`)
+  optional uint32 max_results = 2;
+
+  // Sorts list results by a certain order. By default, results are returned in
+  // alphanumerical order based on the resource name. You can also sort results
+  // in descending order based on the creation timestamp using
+  // `orderBy="creationTimestamp desc"`. This sorts results based on the
+  // `creationTimestamp` field in reverse chronological order (newest result
+  // first). Use this to sort resources like operations so that the newest
+  // operation is returned first. Currently, only sorting by `name` or
+  // `creationTimestamp desc` is supported.
+  optional string order_by = 3;
+
+  // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
+  // returned by a previous list request to get the next page of results.
+  optional string page_token = 4;
+
+  // Project ID for this request.
+  string project = 5 [(google.api.field_behavior) = REQUIRED];
+
+  // Opt-in for partial success behavior which provides partial results in case
+  // of failure. The default value is false.
+  optional bool return_partial_success = 6;
+}
+
+// Request message for ListPeeringRoutes.
+message ListPeeringRoutesRequest {
+  // The direction of the exchanged routes.
+  // INCOMING: For routes exported from peer network.
+  // OUTGOING: For routes exported from local network.
+  optional string direction = 1;
+
+  // A filter expression that filters resources listed in the response. Most
+  // Compute resources support two types of filter expressions: expressions that
+  // support regular expressions and expressions that follow API improvement
+  // proposal AIP-160. If you want to use AIP-160, your expression must specify
+  // the field name, an operator, and the value that you want to use for
+  // filtering. The value must be a string, a number, or a boolean. The operator
+  // must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`. For example, if you
+  // are filtering Compute Engine instances, you can exclude instances named
+  // `example-instance` by specifying `name != example-instance`. The `:`
+  // operator can be used with string fields to match substrings. For non-string
+  // fields it is equivalent to the `=` operator. The `:*` comparison can be
+  // used to test whether a key has been defined. For example, to find all
+  // objects with `owner` label use: ``` labels.owner:* ``` You can also filter
+  // nested fields. For example, you could specify `scheduling.automaticRestart
+  // = false` to include instances only if they are not scheduled for automatic
+  // restarts. You can use filtering on nested fields to filter based on
+  // resource labels. To filter on multiple expressions, provide each separate
+  // expression within parentheses. For example: ```
+  // (scheduling.automaticRestart = true) (cpuPlatform = "Intel Skylake") ``` By
+  // default, each expression is an `AND` expression. However, you can include
+  // `AND` and `OR` expressions explicitly. For example: ``` (cpuPlatform =
+  // "Intel Skylake") OR (cpuPlatform = "Intel Broadwell") AND
+  // (scheduling.automaticRestart = true) ``` If you want to use a regular
+  // expression, use the `eq` (equal) or `ne` (not equal) operator against a
+  // single un-parenthesized expression with or without quotes or against
+  // multiple parenthesized expressions. Examples: `fieldname eq unquoted
+  // literal` `fieldname eq 'single quoted literal'` `fieldname eq "double
+  // quoted literal"` `(fieldname1 eq literal) (fieldname2 ne "literal")` The
+  // literal value is interpreted as a regular expression using Google RE2
+  // library syntax. The literal value must match the entire field. For example,
+  // to filter for instances that do not end with name "instance", you would use
+  // `name ne .*instance`.
+  optional string filter = 2;
+
+  // The maximum number of results per page that should be returned. If the
+  // number of available results is larger than `maxResults`, Compute Engine
+  // returns a `nextPageToken` that can be used to get the next page of results
+  // in subsequent list requests. Acceptable values are `0` to `500`, inclusive.
+  // (Default: `500`)
+  optional uint32 max_results = 3;
+
+  // Name of the network for this request.
+  string network = 4 [(google.api.field_behavior) = REQUIRED];
+
+  // Sorts list results by a certain order. By default, results are returned in
+  // alphanumerical order based on the resource name. You can also sort results
+  // in descending order based on the creation timestamp using
+  // `orderBy="creationTimestamp desc"`. This sorts results based on the
+  // `creationTimestamp` field in reverse chronological order (newest result
+  // first). Use this to sort resources like operations so that the newest
+  // operation is returned first. Currently, only sorting by `name` or
+  // `creationTimestamp desc` is supported.
+  optional string order_by = 5;
+
+  // Specifies a page token to use. Set `pageToken` to the `nextPageToken`
+  // returned by a previous list request to get the next page of results.
+  optional string page_token = 6;
+
+  // The response will show routes exchanged over the given peering connection.
+  optional string peering_name = 7;
+
+  // Project ID for this request.
+  string project = 8 [(google.api.field_behavior) = REQUIRED];
+
+  // The region of the request. The response will include all subnet routes,
+  // static routes and dynamic routes in the region.
+  optional string region = 9;
+
+  // Opt-in for partial success behavior which provides partial results in case
+  // of failure. The default value is false.
+  optional bool return_partial_success = 10;
+}
+
+// Request message for PatchNetworks.
+message PatchNetworksRequest {
+  // Name of the network to update.
+  string network = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The Network for this request.
+  optional google.cloud.cpp.compute.v1.Network network_resource = 2;
+
+  // Project ID for this request.
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 4;
+}
+
+// Request message for RemovePeering.
+message RemovePeeringRequest {
+  // Name of the network resource to remove peering from.
+  string network = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The NetworksRemovePeeringRequest for this request.
+  optional google.cloud.cpp.compute.v1.NetworksRemovePeeringRequest
+      networks_remove_peering_request_resource = 2;
+
+  // Project ID for this request.
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 4;
+}
+
+// Request message for SwitchToCustomMode.
+message SwitchToCustomModeRequest {
+  // Name of the network to be updated.
+  string network = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // Project ID for this request.
+  string project = 2 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 3;
+}
+
+// Request message for UpdatePeering.
+message UpdatePeeringRequest {
+  // Name of the network resource which the updated peering is belonging to.
+  string network = 1 [(google.api.field_behavior) = REQUIRED];
+
+  // The NetworksUpdatePeeringRequest for this request.
+  optional google.cloud.cpp.compute.v1.NetworksUpdatePeeringRequest
+      networks_update_peering_request_resource = 2;
+
+  // Project ID for this request.
+  string project = 3 [
+    (google.api.field_behavior) = REQUIRED,
+    (google.cloud.operation_request_field) = "project"
+  ];
+
+  // An optional request ID to identify requests. Specify a unique request ID so
+  // that if you must retry your request, the server will know to ignore the
+  // request if it has already been completed. For example, consider a situation
+  // where you make an initial request and the request times out. If you make
+  // the request again with the same request ID, the server can check if
+  // original operation with the same request ID was received, and if so, will
+  // ignore the second request. This prevents clients from accidentally creating
+  // duplicate commitments. The request ID must be a valid UUID with the
+  // exception that zero UUID is not supported (
+  // 00000000-0000-0000-0000-000000000000).
+  optional string request_id = 4;
+}

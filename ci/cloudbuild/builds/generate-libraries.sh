@@ -33,11 +33,31 @@ bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
   --config_file="${PWD}/generator/integration_tests/golden_config.textproto"
 
 if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
+  io::log_h2 "Running the generator to emit protos from discovery docs"
+  bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
+    //generator:google-cloud-cpp-codegen -- \
+    --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
+    --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
+    --discovery_proto_path="${PWD}" \
+    --output_path="${PROJECT_ROOT}" \
+    --check_parameter_comment_substitutions=true \
+    --generate_discovery_protos=true \
+    --config_file="${PROJECT_ROOT}/generator/generator_config.textproto"
+
+  io::log_h2 "Formatting generated protos"
+  git ls-files -z -- '*.proto' |
+    xargs -P "$(nproc)" -n 1 -0 clang-format -i
+else
+  io::log_red "Skipping update of protos generated from discovery docs."
+fi
+
+if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
   io::log_h2 "Running the generator to update the generated libraries"
   bazel run --action_env=GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes \
     //generator:google-cloud-cpp-codegen -- \
     --protobuf_proto_path="${bazel_output_base}"/external/com_google_protobuf/src \
     --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
+    --discovery_proto_path="${PWD}" \
     --output_path="${PROJECT_ROOT}" \
     --check_parameter_comment_substitutions=true \
     --config_file="${PROJECT_ROOT}/generator/generator_config.textproto"

@@ -15,7 +15,9 @@
 #include "generator/internal/discovery_file.h"
 #include "generator/internal/codegen_utils.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/make_status.h"
 #include "absl/strings/str_format.h"
+#include "absl/strings/strip.h"
 #include <google/protobuf/io/printer.h>
 #include <google/protobuf/io/zero_copy_stream_impl.h>
 #include <fstream>
@@ -100,8 +102,11 @@ Status DiscoveryFile::WriteFile(
   std::string version_dir_path = file_path_.substr(0, file_path_.rfind('/'));
   std::string service_dir_path =
       version_dir_path.substr(0, version_dir_path.rfind('/'));
+  //  std::cerr << "mkdir " << service_dir_path << "\n";
   MakeDirectory(service_dir_path);
+  //  std::cerr << "mkdir " << version_dir_path << "\n";
   MakeDirectory(version_dir_path);
+  //  std::cerr << "file_path_ " << file_path_ << "\n";
   std::ofstream os(file_path_);
   return FormatFile(document_properties, types, os);
 }

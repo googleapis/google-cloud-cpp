@@ -23,6 +23,7 @@ proto_library(
     srcs = [
         "backup.proto",
         "common.proto",
+        "discovery.proto",
         "test.proto",
         "test2.proto",
     ],
