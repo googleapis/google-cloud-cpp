@@ -64,6 +64,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/api/system_parameter.proto"
     "google/api/usage.proto"
     "google/api/visibility.proto"
+    "google/cloud/extended_operations.proto"
     # orgpolicy/v**1** is used *indirectly* by google/cloud/asset, therefore it
     # does not appear in protolists/asset.list. In addition, it is not compiled
     # by any other library. So, added manually.
@@ -252,7 +253,8 @@ set(PROTO_FILES_WITH_DEPENDENCIES
 foreach (proto IN LISTS EXTERNAL_GOOGLEAPIS_PROTO_FILES)
     if (proto MATCHES "^google/api/"
         OR proto MATCHES "^google/type"
-        OR proto MATCHES "^google/rpc/")
+        OR proto MATCHES "^google/rpc/"
+        OR proto MATCHES "^google/cloud/")
         external_googleapis_short_name(short_name "${proto}")
         list(APPEND external_googleapis_installed_libraries_list
              google_cloud_cpp_${short_name})

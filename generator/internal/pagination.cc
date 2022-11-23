@@ -109,6 +109,7 @@ DetermineAlternatePagination(MethodDescriptor const& method) {
 
   FieldDescriptor const* items = response_message->FindFieldByName("items");
   if (!items->is_repeated()) return {};
+  if (items->is_map()) return {};
   return std::make_pair(items->name(), items->message_type());
 }
 

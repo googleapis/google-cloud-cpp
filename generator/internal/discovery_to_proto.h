@@ -57,6 +57,13 @@ Status ProcessMethodRequestsAndResponses(
     std::map<std::string, DiscoveryResource>& resources,
     std::map<std::string, DiscoveryTypeVertex>& types);
 
+void EstablishTypeDependencies(
+    std::map<std::string, DiscoveryTypeVertex>& types);
+
+void ApplyResourceLabelsToTypes(
+    std::map<std::string, DiscoveryResource>& resources,
+    std::map<std::string, DiscoveryTypeVertex>& types);
+
 // Creates a DiscoveryFile object for each DiscoveryResource in resources.
 std::vector<DiscoveryFile> CreateFilesFromResources(
     std::map<std::string, DiscoveryResource> const& resources,
@@ -71,10 +78,12 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
     DiscoveryDocumentProperties const& document_properties,
     std::string const& output_path);
 
-Status GenerateProtosFromDiscoveryDoc(std::string const& url,
+Status GenerateProtosFromDiscoveryDoc(nlohmann::json const& discovery_doc,
                                       std::string const& protobuf_proto_path,
                                       std::string const& googleapis_proto_path,
                                       std::string const& output_path);
+
+StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url);
 
 }  // namespace generator_internal
 }  // namespace cloud

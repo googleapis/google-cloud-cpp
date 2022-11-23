@@ -28,6 +28,7 @@ google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_generator_golden_protos
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/backup.proto
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/common.proto
+    ${PROJECT_SOURCE_DIR}/generator/integration_tests/discovery.proto
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/test.proto
     ${PROJECT_SOURCE_DIR}/generator/integration_tests/test2.proto
     PROTO_PATH_DIRECTORIES

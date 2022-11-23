@@ -1,5 +1,7 @@
 [files]
 extend-exclude = [
+    # discovery json
+    "generator/discovery/compute.json",
     # Testing input file
     "google/cloud/testing_util/rest_testing_large_json.json",
     # Test files
