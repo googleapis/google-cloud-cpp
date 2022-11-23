@@ -55,7 +55,6 @@ class PullAckHandler : public pubsub::ExactlyOnceAckHandler::Impl {
  private:
   CompletionQueue cq_;
   std::weak_ptr<SubscriberStub> stub_;
-  Options options_;
   pubsub::Subscription subscription_;
   std::string ack_id_;
   std::int32_t delivery_attempt_;

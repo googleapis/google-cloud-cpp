@@ -13,9 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/pull_ack_handler.h"
+#include "google/cloud/pubsub/internal/exactly_once_policies.h"
 #include "google/cloud/pubsub/internal/pull_lease_manager.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/async_retry_loop.h"
+#include "absl/memory/memory.h"
 #include <google/pubsub/v1/pubsub.pb.h>
 
 namespace google {
@@ -30,12 +32,11 @@ PullAckHandler::PullAckHandler(CompletionQueue cq,
                                std::int32_t delivery_attempt)
     : cq_(std::move(cq)),
       stub_(std::move(w)),
-      options_(std::move(options)),
       subscription_(std::move(subscription)),
       ack_id_(std::move(ack_id)),
       delivery_attempt_(delivery_attempt),
       lease_manager_(std::make_shared<PullLeaseManager>(
-          cq_, stub_, options_, subscription_, ack_id_)) {}
+          cq_, stub_, std::move(options), subscription_, ack_id_)) {}
 
 PullAckHandler::~PullAckHandler() = default;
 
@@ -45,9 +46,9 @@ future<Status> PullAckHandler::ack() {
     request.set_subscription(subscription_.FullName());
     request.add_ack_ids(ack_id_);
     return internal::AsyncRetryLoop(
-        options_.get<pubsub::RetryPolicyOption>()->clone(),
-        options_.get<pubsub::BackoffPolicyOption>()->clone(),
-        google::cloud::Idempotency::kIdempotent, cq_,
+        absl::make_unique<ExactlyOnceRetryPolicy>(ack_id_),
+        ExactlyOnceBackoffPolicy(), google::cloud::Idempotency::kIdempotent,
+        cq_,
         [stub = std::move(s)](auto cq, auto context, auto const& request) {
           return stub->AsyncAcknowledge(cq, std::move(context), request);
         },
@@ -64,9 +65,9 @@ future<Status> PullAckHandler::nack() {
     request.set_ack_deadline_seconds(0);
     request.add_ack_ids(ack_id_);
     return internal::AsyncRetryLoop(
-        options_.get<pubsub::RetryPolicyOption>()->clone(),
-        options_.get<pubsub::BackoffPolicyOption>()->clone(),
-        google::cloud::Idempotency::kIdempotent, cq_,
+        absl::make_unique<ExactlyOnceRetryPolicy>(ack_id_),
+        ExactlyOnceBackoffPolicy(), google::cloud::Idempotency::kIdempotent,
+        cq_,
         [stub = std::move(s)](auto cq, auto context, auto const& request) {
           return stub->AsyncModifyAckDeadline(cq, std::move(context), request);
         },
