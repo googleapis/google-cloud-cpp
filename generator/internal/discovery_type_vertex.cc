@@ -57,6 +57,10 @@ void DiscoveryTypeVertex::AddNeededByTypeName(std::string type_name) {
   needed_by_.insert(std::move(type_name));
 }
 
+void DiscoveryTypeVertex::AddNeededByResource(std::string resource_name) {
+  needed_by_resources_.insert(std::move(resource_name));
+}
+
 std::string DiscoveryTypeVertex::DetermineIntroducer(
     nlohmann::json const& field) {
   if (field.empty()) return "";
@@ -261,6 +265,13 @@ StatusOr<std::vector<std::string>> DiscoveryTypeVertex::FormatProperties(
   return text;
 }
 
+// add google.api.resource_reference ??? not currently used
+// add google.cloud.operation_field (rest lro option)
+//    only applies to 4 specific fields in the Operation schema
+//    this may be something set by the config textproto
+// add google.cloud.operation_response_field (rest lro option)
+//    only 4 uses of this and always has the value of "name"
+//    this may also be something set by the config textproto
 std::string DiscoveryTypeVertex::FormatFieldOptions(
     std::string const& field_name, nlohmann::json const& field_json) {
   std::vector<std::pair<std::string, std::string>> field_options;

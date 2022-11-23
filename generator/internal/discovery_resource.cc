@@ -35,6 +35,7 @@ DiscoveryResource::DiscoveryResource(std::string name, std::string package_name,
                                      nlohmann::json json)
     : name_(std::move(name)),
       package_name_(std::move(package_name)),
+      has_empty_request_or_response_(false),
       json_(std::move(json)) {}
 
 void DiscoveryResource::AddRequestType(std::string name,
@@ -74,6 +75,7 @@ std::string DiscoveryResource::FormatUrlPath(std::string const& path) {
   return output;
 }
 
+// add google.cloud.operation_polling_method
 StatusOr<std::string> DiscoveryResource::FormatRpcOptions(
     nlohmann::json const& method_json, std::string const& base_path,
     DiscoveryTypeVertex const* request_type) {

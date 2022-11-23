@@ -51,6 +51,10 @@ class DiscoveryTypeVertex {
   // field.
   void AddNeededByTypeName(std::string type_name);
 
+  // Adds the name of the resource that either directly or transitively depends
+  // on this type.
+  void AddNeededByResource(std::string resource_name);
+
   // Returns "optional ", "repeated ", or an empty string depending on the
   // field type.
   static std::string DetermineIntroducer(nlohmann::json const& field);
@@ -105,6 +109,7 @@ class DiscoveryTypeVertex {
   nlohmann::json json_;
   std::set<std::string> needs_;
   std::set<std::string> needed_by_;
+  std::set<std::string> needed_by_resources_;
 };
 
 }  // namespace generator_internal

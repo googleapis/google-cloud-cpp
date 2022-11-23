@@ -608,6 +608,7 @@ TEST(ProcessMethodRequestsAndResponsesTest, RequestWithOperationResponse) {
       types, UnorderedElementsAre(Key("Foos.CreateRequest"), Key("Operation")));
   EXPECT_THAT(resources.begin()->second.response_types(),
               UnorderedElementsAre(Key("Operation")));
+  EXPECT_TRUE(resources.begin()->second.RequiresLROImport());
 }
 
 TEST(ProcessMethodRequestsAndResponsesTest, MethodWithEmptyRequest) {
@@ -631,6 +632,36 @@ TEST(ProcessMethodRequestsAndResponsesTest, MethodWithEmptyRequest) {
   auto result = ProcessMethodRequestsAndResponses(resources, types);
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(types, IsEmpty());
+  EXPECT_TRUE(resources.begin()->second.RequiresEmptyImport());
+}
+
+TEST(ProcessMethodRequestsAndResponsesTest, MethodWithEmptyResponse) {
+  auto constexpr kResourceJson = R"""({
+  "methods": {
+    "cancel": {
+      "scopes": [
+        "https://www.googleapis.com/auth/cloud-platform"
+      ],
+      "path": "projects/myResources",
+      "httpMethod": "POST",
+      "parameters": {
+        "project": {
+          "type": "string"
+        }
+      }
+    }
+  }
+})""";
+  auto const resource_json =
+      nlohmann::json::parse(kResourceJson, nullptr, false);
+  ASSERT_TRUE(resource_json.is_object());
+  std::map<std::string, DiscoveryResource> resources;
+  resources.emplace("foos", DiscoveryResource("foos", "", resource_json));
+  std::map<std::string, DiscoveryTypeVertex> types;
+  auto result = ProcessMethodRequestsAndResponses(resources, types);
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(types, Not(IsEmpty()));
+  EXPECT_TRUE(resources.begin()->second.RequiresEmptyImport());
 }
 
 TEST(ProcessMethodRequestsAndResponsesTest, ResponseError) {

@@ -14,6 +14,20 @@
 # proto-file: generator/generator_config.proto
 # proto-message: GeneratorConfiguration
 
+discovery_products {
+#  discovery_document_url: "https://www.googleapis.com/discovery/v1/apis/compute/v1/rest"
+  discovery_document_url: "file:///workspace/generator/discovery-compute_public_google_rest_v1.json"
+  rest_service {
+    service_proto_path: "google/cloud/compute/instances/v1/instances.proto"
+    product_path: "google/cloud/compute/instances/v1"
+    initial_copyright_year: "2023"
+    retryable_status_codes: ["kUnavailable"]
+    generate_grpc_transport: false
+    generate_rest_transport: true
+    experimental: true
+  }
+}
+
 # Access Approval
 service {
   service_proto_path: "google/cloud/accessapproval/v1/accessapproval.proto"

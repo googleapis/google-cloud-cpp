@@ -17,6 +17,7 @@
 #include "generator/internal/discovery_resource.h"
 #include "generator/internal/discovery_type_vertex.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
@@ -27,7 +28,9 @@
 #include "absl/strings/str_split.h"
 #include <nlohmann/json.hpp>
 #include <fstream>
+#include <future>
 #include <map>
+#include <thread>
 #include <utility>
 
 namespace google {
@@ -56,6 +59,8 @@ google::cloud::StatusOr<std::string> GetPage(std::string const& url) {
   return rest::ReadAll(std::move(payload));
 }
 
+}  // namespace
+
 StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
   nlohmann::json parsed_discovery_doc;
   if (absl::StartsWith(url, "file://")) {
@@ -73,13 +78,21 @@ StatusOr<nlohmann::json> GetDiscoveryDoc(std::string const& url) {
   }
 
   if (!parsed_discovery_doc.is_object()) {
+    // TODO(sdhart): figure out if we can get more error info from nhlomann as
+    // to why the parsing failed and put it into ErrorInfo.
     return internal::InvalidArgumentError("Error parsing Discovery Doc");
   }
 
   return parsed_discovery_doc;
 }
 
-}  // namespace
+std::string DefaultHostFromRootUrl(nlohmann::json const& json) {
+  std::string root_url(json["rootUrl"]);
+  absl::string_view host = root_url;
+  absl::ConsumePrefix(&host, "https://");
+  absl::ConsumeSuffix(&host, "/");
+  return std::string(host);
+}
 
 StatusOr<std::map<std::string, DiscoveryTypeVertex>> ExtractTypesFromSchema(
     DiscoveryDocumentProperties const& document_properties,
@@ -169,6 +182,10 @@ StatusOr<DiscoveryTypeVertex const*> DetermineAndVerifyResponseType(
           "Response name=%s not found in types", response_type_name));
     }
     response_type = &iter->second;
+#if NEED_RESOURCE_TYPE_TRACKING
+    response_type->second.AddNeededByResource(resource.name());
+    resource.AddResponseType(response_type->first, &response_type->second);
+#endif
   }
   return response_type;
 }
@@ -259,6 +276,8 @@ Status ProcessMethodRequestsAndResponses(
         response_type_name = (*response_type)->name();
         DiscoveryTypeVertex const* node = *response_type;
         resource.second.AddResponseType(response_type_name, node);
+      } else {
+        resource.second.AddEmptyResponseType();
       }
 
       if (m->contains("parameters")) {
@@ -274,12 +293,53 @@ Status ProcessMethodRequestsAndResponses(
           return internal::InternalError(
               absl::StrCat("Unable to insert type ", resource_name, ".", id));
         }
+#if NEED_RESOURCE_TYPE_TRACKING
+        insert_result.first->second.AddNeededByResource(resource_name);
+#endif
         resource.second.AddRequestType(id, &insert_result.first->second);
+      } else {
+        resource.second.AddEmptyRequestType();
       }
     }
   }
 
   return {};
+}
+
+void EstablishTypeDependencies(
+    std::map<std::string, DiscoveryTypeVertex>& types) {
+  nlohmann::json fields;
+  for (auto& type : types) {
+    auto const& json = type.second.json();
+    if (json.contains("properties")) {
+      fields = json["properties"];
+    } else if (json.contains("additionalProperties")) {
+      fields = json["additionalProperties"];
+    }
+    for (auto const& p : fields) {
+      if (p.contains("$ref")) {
+        std::string dep = p["$ref"];
+        type.second.AddNeedsTypeName(dep);
+        auto& provider = types[dep];
+        provider.AddNeededByTypeName(type.first);
+      } else if (p.contains("type") && p["type"] == "array") {
+        auto const& items = p["items"];
+        auto const& dep = items.find("$ref");
+        if (dep != items.end()) {
+          type.second.AddNeedsTypeName(*dep);
+          auto& provider = types[*dep];
+          provider.AddNeededByTypeName(type.first);
+        }
+      }
+    }
+  }
+}
+
+void ApplyResourceLabelsToTypes(std::map<std::string, DiscoveryResource>&,
+                                std::map<std::string, DiscoveryTypeVertex>&) {
+  // TODO(sdhart): Not yet implemented
+  // starting from each resource bfs needs edges for request and response types
+  // and add resource label to each type encountered
 }
 
 std::vector<DiscoveryFile> CreateFilesFromResources(
@@ -289,13 +349,32 @@ std::vector<DiscoveryFile> CreateFilesFromResources(
   std::vector<DiscoveryFile> files;
   files.reserve(resources.size());
   for (auto const& r : resources) {
-    files.push_back(DiscoveryFile{
+    // Not sure if this is needed for dependency tracking or not.
+    //    std::vector<DiscoveryTypeVertex const*> types;
+    //    for (auto const& request_type : r.second.request_types()) {
+    //      types.push_back(request_type.second);
+    //    }
+    DiscoveryFile f{
         &r.second,
         r.second.FormatFilePath(document_properties.product_name,
                                 document_properties.version, output_path),
-        r.second.package_name(), r.second.GetRequestTypesList()}
-                        .AddImportPath("google/cloud/$product_name$/$version$/"
-                                       "internal/common.proto"));
+        r.second.package_name(), r.second.GetRequestTypesList()};
+    f.AddResourceLabel(r.first)
+        .AddImportPath("google/api/annotations.proto")
+        .AddImportPath("google/api/client.proto")
+        .AddImportPath("google/api/field_behavior.proto")
+        .AddImportPath(
+            "google/cloud/$product_name$/$version$/"
+            "internal/common.proto");
+
+    if (r.second.RequiresEmptyImport()) {
+      f.AddImportPath("google/protobuf/empty.proto");
+    }
+    if (r.second.RequiresLROImport()) {
+      f.AddImportPath("google/cloud/extended_operations.proto");
+    }
+
+    files.push_back(std::move(f));
   }
   return files;
 }
@@ -333,14 +412,78 @@ std::vector<DiscoveryFile> AssignResourcesAndTypesToFiles(
   return files;
 }
 
-Status GenerateProtosFromDiscoveryDoc(std::string const& url,
+Status GenerateProtosFromDiscoveryDoc(nlohmann::json const& discovery_doc,
                                       std::string const&, std::string const&,
-                                      std::string const&) {
-  auto discovery_doc = GetDiscoveryDoc(url);
-  if (!discovery_doc) return discovery_doc.status();
+                                      std::string const& output_path) {
+  std::string const base_path = discovery_doc["basePath"];
+  std::string const default_hostname =
+      google::cloud::generator_internal::DefaultHostFromRootUrl(discovery_doc);
+  std::string const version = discovery_doc["version"];
+  // TODO(sdhart): get this value from the generator_config.
+  std::string const product_name = "compute";
 
-  // TODO(10980): Finish implementing this function.
-  return internal::UnimplementedError("Not implemented.");
+  DiscoveryDocumentProperties document_properties{base_path, default_hostname,
+                                                  product_name, version};
+
+  auto types = ExtractTypesFromSchema(document_properties, discovery_doc);
+  if (!types) return std::move(types).status();
+
+  std::cerr << "output_path: " << output_path << "\n";
+  std::cerr << "num_schemas: " << types->size() << "\n";
+
+  auto resources = ExtractResources(document_properties, discovery_doc);
+  if (resources.empty()) {
+    return internal::NotFoundError("No resources found in Discovery Document.");
+  }
+
+  std::cerr << "num_resources: " << resources.size() << "\n";
+
+  // inside each resource create sets of request types and response types
+  auto method_status = ProcessMethodRequestsAndResponses(resources, *types);
+  if (!method_status.ok()) return method_status;
+
+#if NEED_RESOURCE_TYPE_TRACKING
+  EstablishTypeDependencies(*types);
+  ApplyResourceLabelsToTypes(resources, *types);
+#endif
+
+  // group types with equal resource label sets into "files"
+  std::vector<DiscoveryFile> files = AssignResourcesAndTypesToFiles(
+      resources, *types, document_properties, output_path);
+
+  std::cerr << "num_files: " << files.size() << std::endl;
+  // Determine common files and add imports
+  // add import directives to "files" by using topological sort of types to
+  //     determine starting types and walking needed_by edges
+
+  std::vector<std::future<google::cloud::Status>> tasks;
+  tasks.reserve(files.size());
+  for (auto f : files) {
+    tasks.push_back(std::async(
+        std::launch::async,
+        [](DiscoveryFile const& f,
+           DiscoveryDocumentProperties const& document_properties,
+           std::map<std::string, DiscoveryTypeVertex> const& types) {
+          return f.WriteFile(document_properties, types);
+        },
+        std::move(f), document_properties, *types));
+  }
+
+  bool file_write_error = false;
+  for (auto& t : tasks) {
+    auto result = t.get();
+    if (!result.ok()) {
+      GCP_LOG(ERROR) << result;
+      file_write_error = true;
+    }
+  }
+
+  if (file_write_error) {
+    return internal::InternalError(
+        "Error encountered writing file. Check log for additional details.");
+  }
+
+  return {};
 }
 
 }  // namespace generator_internal
