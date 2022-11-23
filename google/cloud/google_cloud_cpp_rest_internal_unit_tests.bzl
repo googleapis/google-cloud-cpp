@@ -32,6 +32,7 @@ google_cloud_cpp_rest_internal_unit_tests = [
     "internal/external_account_parsing_test.cc",
     "internal/external_account_source_format_test.cc",
     "internal/external_account_token_source_file_test.cc",
+    "internal/external_account_token_source_url_test.cc",
     "internal/make_jwt_assertion_test.cc",
     "internal/oauth2_access_token_credentials_test.cc",
     "internal/oauth2_anonymous_credentials_test.cc",
