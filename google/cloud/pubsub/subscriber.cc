@@ -36,6 +36,11 @@ future<Status> Subscriber::Subscribe(ExactlyOnceApplicationCallback cb,
   return connection_->ExactlyOnceSubscribe({std::move(cb)});
 }
 
+StatusOr<PullResponse> Subscriber::Pull(Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Pull();
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
 }  // namespace cloud

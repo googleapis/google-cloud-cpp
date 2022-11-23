@@ -139,6 +139,7 @@ add_library(
     publisher_options.h
     pull_ack_handler.cc
     pull_ack_handler.h
+    pull_response.h
     retry_policy.h
     schema.cc
     schema.h

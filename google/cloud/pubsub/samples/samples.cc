@@ -1358,6 +1358,19 @@ void ExactlyOnceSubscribe(google::cloud::pubsub::Subscriber subscriber,
       sample(std::move(subscriber)), __func__);
 }
 
+void Pull(google::cloud::pubsub::Subscriber subscriber,
+          std::vector<std::string> const&) {
+  //! [pull]
+  [](google::cloud::pubsub::Subscriber subscriber) {
+    auto response = subscriber.Pull();
+    if (!response) throw std::move(response).status();
+    std::cout << "Received message " << response->message << "\n";
+    std::move(response->handler).ack();
+  }
+  //! [pull]
+  (std::move(subscriber));
+}
+
 void SubscribeErrorListener(google::cloud::pubsub::Subscriber subscriber,
                             std::vector<std::string> const&) {
   auto current = EventCounter::Instance().Current();
@@ -2248,6 +2261,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning ExactlyOnceSubscribe() sample" << std::endl;
   ExactlyOnceSubscribe(exactly_once_subscriber, {});
 
+  std::cout << "\nRunning Pull() sample" << std::endl;
+  PublishHelper(publisher, "Pull()", 1);
+  Pull(subscriber, {});
+
   std::cout << "\nRunning Subscribe(filtered) sample" << std::endl;
   PublishHelper(publisher, "Subscribe(filtered)", 8);
   Subscribe(filtered_subscriber, {});
@@ -2499,6 +2516,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreateSubscriberCommand("subscribe", {}, Subscribe),
       CreateSubscriberCommand("exactly-once-subscribe", {},
                               ExactlyOnceSubscribe),
+      CreateSubscriberCommand("pull", {}, Pull),
       CreateSubscriberCommand("subscribe-error-listener", {},
                               SubscribeErrorListener),
       CreateSubscriberCommand("subscribe-custom-attributes", {},

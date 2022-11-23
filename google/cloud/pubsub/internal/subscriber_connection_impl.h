@@ -17,7 +17,6 @@
 
 #include "google/cloud/pubsub/ack_handler.h"
 #include "google/cloud/pubsub/message.h"
-#include "google/cloud/pubsub/pull_ack_handler.h"
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -39,13 +38,7 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
 
   future<Status> ExactlyOnceSubscribe(ExactlyOnceSubscribeParams p) override;
 
-  // TODO(#7187) - move to pubsub::SubscriberConnection
-  struct PullResponse {
-    pubsub::PullAckHandler handler;
-    pubsub::Message message;
-  };
-
-  StatusOr<PullResponse> Pull();
+  StatusOr<pubsub::PullResponse> Pull() override;
 
   Options options() override;
 

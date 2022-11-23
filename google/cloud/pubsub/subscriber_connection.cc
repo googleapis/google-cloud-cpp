@@ -24,6 +24,7 @@
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/credentials.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/random.h"
 #include "google/cloud/log.h"
 #include <algorithm>
@@ -63,14 +64,18 @@ SubscriberConnection::~SubscriberConnection() = default;
 // NOLINTNEXTLINE(performance-unnecessary-value-param)
 future<Status> SubscriberConnection::Subscribe(SubscribeParams) {
   return make_ready_future(
-      Status{StatusCode::kUnimplemented, "needs-override"});
+      internal::UnimplementedError("needs-override", GCP_ERROR_INFO()));
 }
 
 future<Status> SubscriberConnection::ExactlyOnceSubscribe(
     // NOLINTNEXTLINE(performance-unnecessary-value-param)
     ExactlyOnceSubscribeParams) {
   return make_ready_future(
-      Status{StatusCode::kUnimplemented, "needs-override"});
+      internal::UnimplementedError("needs-override", GCP_ERROR_INFO()));
+}
+
+StatusOr<pubsub::PullResponse> SubscriberConnection::Pull() {
+  return internal::UnimplementedError("needs-override", GCP_ERROR_INFO());
 }
 
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
