@@ -15,9 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_ACK_HANDLER_IMPL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_ACK_HANDLER_IMPL_H
 
-#include "google/cloud/pubsub/backoff_policy.h"
-#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
+#include "google/cloud/pubsub/pull_ack_handler.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
@@ -41,7 +40,7 @@ class PullLeaseManager;
  *
  * This is an implementation detail, hidden from the application.
  */
-class PullAckHandlerImpl : public pubsub::ExactlyOnceAckHandler::Impl {
+class PullAckHandlerImpl : public pubsub::PullAckHandler::Impl {
  public:
   PullAckHandlerImpl(CompletionQueue cq, std::weak_ptr<SubscriberStub> w,
                      Options options, pubsub::Subscription subscription,

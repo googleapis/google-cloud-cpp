@@ -137,6 +137,8 @@ add_library(
     publisher_connection.h
     publisher_options.cc
     publisher_options.h
+    pull_ack_handler.cc
+    pull_ack_handler.h
     retry_policy.h
     schema.cc
     schema.h
@@ -208,6 +210,7 @@ set(google_cloud_cpp_pubsub_mocks_hdrs
     mocks/mock_blocking_publisher_connection.h
     mocks/mock_exactly_once_ack_handler.h
     mocks/mock_publisher_connection.h
+    mocks/mock_pull_ack_handler.h
     mocks/mock_schema_admin_connection.h
     mocks/mock_subscriber_connection.h
     mocks/mock_subscription_admin_connection.h
