@@ -69,6 +69,8 @@ add_library(
     internal/service_code_generator.h
     internal/stub_factory_generator.cc
     internal/stub_factory_generator.h
+    internal/stub_factory_rest_generator.cc
+    internal/stub_factory_rest_generator.h
     internal/stub_generator.cc
     internal/stub_generator.h
     internal/stub_rest_generator.cc
