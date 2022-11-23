@@ -36,7 +36,6 @@ using ::google::pubsub::v1::AcknowledgeRequest;
 using ::google::pubsub::v1::ModifyAckDeadlineRequest;
 using ::testing::_;
 using ::testing::AllOf;
-using ::testing::AtLeast;
 using ::testing::ByMove;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
@@ -69,6 +68,15 @@ Status TransientError() {
   return Status(StatusCode::kUnavailable, "try-again");
 }
 
+Status TransientError(std::string ack_id) {
+  return Status(StatusCode::kUnknown, "oh noes!",
+                ErrorInfo("test-only-reason", "test-only-domain",
+                          {
+                              {"some-other-id", "PERMANENT_"},
+                              {ack_id, "TRANSIENT_FAILURE_NO_BIGGIE"},
+                          }));
+}
+
 Status PermanentError() {
   return Status(StatusCode::kPermissionDenied, "uh-oh");
 }
@@ -82,6 +90,8 @@ TEST(PullAckHandlerTest, AckSimple) {
       Property(&AcknowledgeRequest::subscription, subscription.FullName()));
   EXPECT_CALL(*mock, AsyncAcknowledge(_, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(TransientError()))))
+      .WillOnce(
+          Return(ByMove(make_ready_future(TransientError("test-ack-id")))))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
@@ -92,32 +102,10 @@ TEST(PullAckHandlerTest, AckSimple) {
   auto timer = aseq.PopFrontWithName();
   EXPECT_EQ(timer.second, "MakeRelativeTimer");
   timer.first.set_value(true);
+  timer = aseq.PopFrontWithName();
+  EXPECT_EQ(timer.second, "MakeRelativeTimer");
+  timer.first.set_value(true);
   EXPECT_STATUS_OK(status.get());
-}
-
-TEST(PullAckHandlerTest, AckTooManyTransients) {
-  auto subscription = pubsub::Subscription("test-project", "test-subscription");
-
-  auto mock = std::make_shared<MockSubscriberStub>();
-  auto request_matcher = AllOf(
-      Property(&AcknowledgeRequest::ack_ids, ElementsAre("test-ack-id")),
-      Property(&AcknowledgeRequest::subscription, subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncAcknowledge(_, _, request_matcher))
-      .Times(AtLeast(2))
-      .WillRepeatedly([] { return make_ready_future(TransientError()); });
-  AsyncSequencer<bool> aseq;
-  auto cq = MakeMockCompletionQueue(aseq);
-  auto handler = absl::make_unique<PullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
-  EXPECT_EQ(handler->delivery_attempt(), 42);
-  auto status = handler->ack();
-  for (int i = 0; i != 3; ++i) {
-    auto timer = aseq.PopFrontWithName();
-    EXPECT_EQ(timer.second, "MakeRelativeTimer");
-    timer.first.set_value(true);
-  }
-  EXPECT_THAT(status.get(),
-              StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
 
 TEST(PullAckHandlerTest, AckPermanentError) {
@@ -150,6 +138,8 @@ TEST(PullAckHandlerTest, NackSimple) {
                subscription.FullName()));
   EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, request_matcher))
       .WillOnce(Return(ByMove(make_ready_future(TransientError()))))
+      .WillOnce(
+          Return(ByMove(make_ready_future(TransientError("test-ack-id")))))
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
@@ -160,34 +150,10 @@ TEST(PullAckHandlerTest, NackSimple) {
   auto timer = aseq.PopFrontWithName();
   EXPECT_EQ(timer.second, "MakeRelativeTimer");
   timer.first.set_value(true);
+  timer = aseq.PopFrontWithName();
+  EXPECT_EQ(timer.second, "MakeRelativeTimer");
+  timer.first.set_value(true);
   EXPECT_STATUS_OK(status.get());
-}
-
-TEST(PullAckHandlerTest, NackTooManyTransients) {
-  auto subscription = pubsub::Subscription("test-project", "test-subscription");
-
-  auto mock = std::make_shared<MockSubscriberStub>();
-  auto request_matcher = AllOf(
-      Property(&ModifyAckDeadlineRequest::ack_ids, ElementsAre("test-ack-id")),
-      Property(&ModifyAckDeadlineRequest::ack_deadline_seconds, 0),
-      Property(&ModifyAckDeadlineRequest::subscription,
-               subscription.FullName()));
-  EXPECT_CALL(*mock, AsyncModifyAckDeadline(_, _, request_matcher))
-      .Times(AtLeast(2))
-      .WillRepeatedly([] { return make_ready_future(TransientError()); });
-  AsyncSequencer<bool> aseq;
-  auto cq = MakeMockCompletionQueue(aseq);
-  auto handler = absl::make_unique<PullAckHandler>(
-      cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
-  EXPECT_EQ(handler->delivery_attempt(), 42);
-  auto status = handler->nack();
-  for (int i = 0; i != 3; ++i) {
-    auto timer = aseq.PopFrontWithName();
-    EXPECT_EQ(timer.second, "MakeRelativeTimer");
-    timer.first.set_value(true);
-  }
-  EXPECT_THAT(status.get(),
-              StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
 }
 
 TEST(PullAckHandlerTest, NackPermanentError) {
