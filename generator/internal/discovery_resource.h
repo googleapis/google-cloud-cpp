@@ -33,6 +33,10 @@ class DiscoveryResource {
   std::string const& name() const { return name_; }
   std::string const& package_name() const { return package_name_; }
   nlohmann::json const& json() const { return json_; }
+  std::map<std::string, DiscoveryTypeVertex const*> const& request_types()
+      const {
+    return request_types_;
+  }
   std::map<std::string, DiscoveryTypeVertex const*> const& response_types()
       const {
     return response_types_;

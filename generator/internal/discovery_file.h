@@ -43,6 +43,20 @@ class DiscoveryFile {
     return (resource_ ? resource_->name() : "");
   }
   std::vector<DiscoveryTypeVertex const*> types() const { return types_; }
+#ifdef NOT_CURRENTLY_NEEDED
+  std::set<std::string> const& resource_labels() const {
+    return resource_labels_;
+  }
+
+  std::vector<DiscoveryTypeVertex const*> const& types() const {
+    return types_;
+  }
+#endif
+
+  DiscoveryFile& AddResourceLabel(std::string resource) {
+    resource_labels_.insert(std::move(resource));
+    return *this;
+  }
 
   DiscoveryFile& AddImportPath(std::string import_path) {
     import_paths_.insert(std::move(import_path));
@@ -64,6 +78,7 @@ class DiscoveryFile {
   std::string file_path_;
   std::string package_name_;
   std::set<std::string> import_paths_;
+  std::set<std::string> resource_labels_;
   std::vector<DiscoveryTypeVertex const*> types_;
 };
 

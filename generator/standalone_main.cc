@@ -42,6 +42,8 @@ ABSL_FLAG(std::string, googleapis_proto_path, "",
           "Path to root dir of protos distributed with googleapis.");
 ABSL_FLAG(std::string, golden_proto_path, "",
           "Path to root dir of protos distributed with googleapis.");
+ABSL_FLAG(std::string, discovery_proto_path, "",
+          "Path to root dir of protos created from discovery documents.");
 ABSL_FLAG(std::string, output_path, ".",
           "Path to root dir where code is emitted.");
 ABSL_FLAG(std::string, scaffold_templates_path, ".",
@@ -66,6 +68,7 @@ struct CommandLineArgs {
   std::string protobuf_proto_path;
   std::string googleapis_proto_path;
   std::string golden_proto_path;
+  std::string discovery_proto_path;
   std::string output_path;
   std::string scaffold_templates_path;
   std::string scaffold;
@@ -190,10 +193,14 @@ GenerateProtosForRestProducts(
       google::cloud::cpp::generator::ServiceConfiguration>
       services;
 
+  std::string output_path = generator_args.output_path;
   for (auto const& p : rest_products) {
+    auto doc = google::cloud::generator_internal::GetDiscoveryDoc(
+        p.discovery_document_url());
+    if (!doc) return std::move(doc).status();
     auto status =
         google::cloud::generator_internal::GenerateProtosFromDiscoveryDoc(
-            p.discovery_document_url(), generator_args.protobuf_proto_path,
+            *doc, generator_args.protobuf_proto_path,
             generator_args.googleapis_proto_path, generator_args.output_path);
     if (!status.ok()) return status;
     services.Add(p.rest_service().begin(), p.rest_service().end());
@@ -222,6 +229,9 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     args.emplace_back("--proto_path=" + generator_args.googleapis_proto_path);
     if (!generator_args.golden_proto_path.empty()) {
       args.emplace_back("--proto_path=" + generator_args.golden_proto_path);
+    }
+    if (!generator_args.discovery_proto_path.empty()) {
+      args.emplace_back("--proto_path=" + generator_args.discovery_proto_path);
     }
     args.emplace_back("--cpp_codegen_out=" + generator_args.output_path);
     args.emplace_back("--cpp_codegen_opt=product_path=" +
@@ -307,6 +317,9 @@ std::vector<std::future<google::cloud::Status>> GenerateCodeFromProtos(
     GCP_LOG(INFO) << "Generating service code using: "
                   << absl::StrJoin(args, ";") << "\n";
 
+    std::cerr << "Generating service code using: " << absl::StrJoin(args, ";")
+              << "\n";
+
     tasks.push_back(std::async(std::launch::async, [args] {
       google::protobuf::compiler::CommandLineInterface cli;
       google::cloud::generator::Generator generator;
@@ -367,6 +380,7 @@ int main(int argc, char** argv) {
                              absl::GetFlag(FLAGS_protobuf_proto_path),
                              absl::GetFlag(FLAGS_googleapis_proto_path),
                              absl::GetFlag(FLAGS_golden_proto_path),
+                             absl::GetFlag(FLAGS_discovery_proto_path),
                              absl::GetFlag(FLAGS_output_path),
                              absl::GetFlag(FLAGS_scaffold_templates_path),
                              absl::GetFlag(FLAGS_scaffold),
@@ -375,6 +389,7 @@ int main(int argc, char** argv) {
 
   GCP_LOG(INFO) << "proto_path = " << args.protobuf_proto_path << "\n";
   GCP_LOG(INFO) << "googleapis_path = " << args.googleapis_proto_path << "\n";
+  std::cerr << "googleapis_path = " << args.googleapis_proto_path << "\n";
   GCP_LOG(INFO) << "config_file = " << args.config_file << "\n";
   GCP_LOG(INFO) << "output_path = " << args.output_path << "\n";
 
