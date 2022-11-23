@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/pull_ack_handler.h"
+#include "google/cloud/pubsub/internal/pull_ack_handler_impl.h"
 #include "google/cloud/pubsub/internal/exactly_once_policies.h"
 #include "google/cloud/pubsub/internal/pull_lease_manager.h"
 #include "google/cloud/pubsub/options.h"
@@ -25,11 +25,12 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-PullAckHandler::PullAckHandler(CompletionQueue cq,
-                               std::weak_ptr<SubscriberStub> w, Options options,
-                               pubsub::Subscription subscription,
-                               std::string ack_id,
-                               std::int32_t delivery_attempt)
+PullAckHandlerImpl::PullAckHandlerImpl(CompletionQueue cq,
+                                       std::weak_ptr<SubscriberStub> w,
+                                       Options options,
+                                       pubsub::Subscription subscription,
+                                       std::string ack_id,
+                                       std::int32_t delivery_attempt)
     : cq_(std::move(cq)),
       stub_(std::move(w)),
       subscription_(std::move(subscription)),
@@ -38,9 +39,9 @@ PullAckHandler::PullAckHandler(CompletionQueue cq,
       lease_manager_(std::make_shared<PullLeaseManager>(
           cq_, stub_, std::move(options), subscription_, ack_id_)) {}
 
-PullAckHandler::~PullAckHandler() = default;
+PullAckHandlerImpl::~PullAckHandlerImpl() = default;
 
-future<Status> PullAckHandler::ack() {
+future<Status> PullAckHandlerImpl::ack() {
   if (auto s = stub_.lock()) {
     google::pubsub::v1::AcknowledgeRequest request;
     request.set_subscription(subscription_.FullName());
@@ -58,7 +59,7 @@ future<Status> PullAckHandler::ack() {
       Status(StatusCode::kFailedPrecondition, "session already shutdown"));
 }
 
-future<Status> PullAckHandler::nack() {
+future<Status> PullAckHandlerImpl::nack() {
   if (auto s = stub_.lock()) {
     google::pubsub::v1::ModifyAckDeadlineRequest request;
     request.set_subscription(subscription_.FullName());
@@ -77,7 +78,7 @@ future<Status> PullAckHandler::nack() {
       Status(StatusCode::kFailedPrecondition, "session already shutdown"));
 }
 
-std::int32_t PullAckHandler::delivery_attempt() const {
+std::int32_t PullAckHandlerImpl::delivery_attempt() const {
   return delivery_attempt_;
 }
 
