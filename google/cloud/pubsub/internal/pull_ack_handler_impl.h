@@ -12,8 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_ACK_HANDLER_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_ACK_HANDLER_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_ACK_HANDLER_IMPL_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_ACK_HANDLER_IMPL_H
 
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
@@ -41,12 +41,12 @@ class PullLeaseManager;
  *
  * This is an implementation detail, hidden from the application.
  */
-class PullAckHandler : public pubsub::ExactlyOnceAckHandler::Impl {
+class PullAckHandlerImpl : public pubsub::ExactlyOnceAckHandler::Impl {
  public:
-  PullAckHandler(CompletionQueue cq, std::weak_ptr<SubscriberStub> w,
-                 Options options, pubsub::Subscription subscription,
-                 std::string ack_id, std::int32_t delivery_attempt);
-  ~PullAckHandler() override;
+  PullAckHandlerImpl(CompletionQueue cq, std::weak_ptr<SubscriberStub> w,
+                     Options options, pubsub::Subscription subscription,
+                     std::string ack_id, std::int32_t delivery_attempt);
+  ~PullAckHandlerImpl() override;
 
   future<Status> ack() override;
   future<Status> nack() override;
@@ -66,4 +66,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_ACK_HANDLER_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_ACK_HANDLER_IMPL_H
