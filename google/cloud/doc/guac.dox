@@ -36,9 +36,9 @@ Cloud is outside the scope of this document, a brief introduction may help.
 
 As we mentioned in passing, authentication supports both user accounts and
 service accounts. These are referred as "principals". User accounts represent
-a developers, administrator, or any other person who interacts with GCP
-services. In contrast, service accounts are accounts that do not represent a
-person. They typically represent an application, or another service.
+a developer, administrator, or any other person who interacts with GCP services.
+In contrast, service accounts are accounts that do not represent a person. They
+typically represent an application, or another service.
 
 Google Cloud Platform largely uses [OAuth2] access tokens for authentication.
 There are multiple ways to create such tokens. For example, when running on
