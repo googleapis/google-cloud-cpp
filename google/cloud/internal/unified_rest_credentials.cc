@@ -16,11 +16,11 @@
 #include "google/cloud/internal/make_jwt_assertion.h"
 #include "google/cloud/internal/oauth2_access_token_credentials.h"
 #include "google/cloud/internal/oauth2_anonymous_credentials.h"
+#include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_error_credentials.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
-#include <nlohmann/json.hpp>
 
 namespace google {
 namespace cloud {
@@ -70,6 +70,8 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
           google::cloud::oauth2_internal::GoogleDefaultCredentials();
       if (credentials) {
         result = *std::move(credentials);
+        result = std::make_shared<oauth2_internal::CachedCredentials>(
+            std::move(result));
         return;
       }
       result = std::make_shared<oauth2_internal::ErrorCredentials>(
@@ -84,12 +86,15 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     void visit(ImpersonateServiceAccountConfig& config) override {
       result = std::make_shared<
           oauth2_internal::ImpersonateServiceAccountCredentials>(config);
+      result = std::make_shared<oauth2_internal::CachedCredentials>(
+          std::move(result));
     }
 
     void visit(ServiceAccountConfig& cfg) override {
-      auto credentials =
+      result =
           CreateServiceAccountCredentialsFromJsonContents(cfg.json_object());
-      result = std::move(credentials);
+      result = std::make_shared<oauth2_internal::CachedCredentials>(
+          std::move(result));
     }
   } visitor;
 

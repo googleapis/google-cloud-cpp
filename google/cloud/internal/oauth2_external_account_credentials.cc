@@ -157,12 +157,6 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
   return internal::AccessToken{*token, tp + std::chrono::seconds(*expires_in)};
 }
 
-StatusOr<std::pair<std::string, std::string>>
-ExternalAccountCredentials::AuthorizationHeader() {
-  return internal::UnimplementedError(
-      "WIP(#10316) - use decorator for credentials", GCP_ERROR_INFO());
-}
-
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud

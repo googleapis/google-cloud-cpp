@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
+#include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
 
 namespace google {
@@ -31,45 +32,23 @@ GenerateAccessTokenRequest MakeRequest(
   };
 }
 
-auto constexpr kUseSlack = std::chrono::seconds(30);
-
 }  // namespace
 
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
-    google::cloud::internal::ImpersonateServiceAccountConfig const& config,
-    CurrentTimeFn current_time_fn)
+    google::cloud::internal::ImpersonateServiceAccountConfig const& config)
     : ImpersonateServiceAccountCredentials(
           config,
           MakeMinimalIamCredentialsRestStub(
-              rest_internal::MapCredentials(config.base_credentials())),
-          std::move(current_time_fn)) {}
+              rest_internal::MapCredentials(config.base_credentials()))) {}
 
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     google::cloud::internal::ImpersonateServiceAccountConfig const& config,
-    std::shared_ptr<MinimalIamCredentialsRest> stub,
-    CurrentTimeFn current_time_fn)
-    : stub_(std::move(stub)),
-      request_(MakeRequest(config)),
-      current_time_fn_(std::move(current_time_fn)) {}
+    std::shared_ptr<MinimalIamCredentialsRest> stub)
+    : stub_(std::move(stub)), request_(MakeRequest(config)) {}
 
-StatusOr<std::pair<std::string, std::string>>
-ImpersonateServiceAccountCredentials::AuthorizationHeader() {
-  return AuthorizationHeader(current_time_fn_());
-}
-
-StatusOr<std::pair<std::string, std::string>>
-ImpersonateServiceAccountCredentials::AuthorizationHeader(
-    std::chrono::system_clock::time_point now) {
-  std::unique_lock<std::mutex> lk(mu_);
-  if (now + kUseSlack <= expiration_) return header_;
-  auto response = stub_->GenerateAccessToken(request_);
-  if (!response) {
-    if (current_time_fn_() < expiration_) return header_;
-    return std::move(response).status();
-  }
-  expiration_ = response->expiration;
-  header_ = std::make_pair("Authorization", "Bearer " + response->token);
-  return header_;
+StatusOr<internal::AccessToken> ImpersonateServiceAccountCredentials::GetToken(
+    std::chrono::system_clock::time_point /*tp*/) {
+  return stub_->GenerateAccessToken(request_);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
