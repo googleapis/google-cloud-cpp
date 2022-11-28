@@ -45,8 +45,8 @@ using ::testing::Return;
 
 class MockCredentials : public google::cloud::oauth2_internal::Credentials {
  public:
-  MOCK_METHOD((StatusOr<std::pair<std::string, std::string>>),
-              AuthorizationHeader, (), (override));
+  MOCK_METHOD(StatusOr<internal::AccessToken>, GetToken,
+              (std::chrono::system_clock::time_point), (override));
 };
 
 class MinimalIamCredentialsRestTest : public ::testing::Test {
@@ -66,8 +66,8 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   std::string scope = "my_scope";
   std::string delegate = "my_delegate";
 
-  EXPECT_CALL(*mock_credentials_, AuthorizationHeader).WillOnce([] {
-    return std::make_pair(std::string("Authorization"), std::string("Foo"));
+  EXPECT_CALL(*mock_credentials_, GetToken).WillOnce([lifetime](auto tp) {
+    return internal::AccessToken{"test-token", tp + lifetime};
   });
 
   std::string response = R"""({
@@ -124,8 +124,8 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenNonRfc3339Time) {
   std::string scope = "my_scope";
   std::string delegate = "my_delegate";
 
-  EXPECT_CALL(*mock_credentials_, AuthorizationHeader).WillOnce([] {
-    return std::make_pair(std::string("Authorization"), std::string("Foo"));
+  EXPECT_CALL(*mock_credentials_, GetToken).WillOnce([lifetime](auto tp) {
+    return internal::AccessToken{"test-token", tp + lifetime};
   });
 
   std::string response = R"""({
@@ -181,8 +181,8 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenInvalidResponse) {
   std::string scope = "my_scope";
   std::string delegate = "my_delegate";
 
-  EXPECT_CALL(*mock_credentials_, AuthorizationHeader).WillOnce([] {
-    return std::make_pair(std::string("Authorization"), std::string("Foo"));
+  EXPECT_CALL(*mock_credentials_, GetToken).WillOnce([lifetime](auto tp) {
+    return internal::AccessToken{"test-token", tp + lifetime};
   });
 
   std::string response = R"""({
@@ -237,8 +237,8 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenPostFailure) {
   std::string scope = "my_scope";
   std::string delegate = "my_delegate";
 
-  EXPECT_CALL(*mock_credentials_, AuthorizationHeader).WillOnce([] {
-    return std::make_pair(std::string("Authorization"), std::string("Foo"));
+  EXPECT_CALL(*mock_credentials_, GetToken).WillOnce([lifetime](auto tp) {
+    return internal::AccessToken{"test-token", tp + lifetime};
   });
 
   auto* mock_response = new MockRestResponse();
@@ -281,7 +281,7 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenPostFailure) {
 }
 
 TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenCredentialFailure) {
-  EXPECT_CALL(*mock_credentials_, AuthorizationHeader).WillOnce([] {
+  EXPECT_CALL(*mock_credentials_, GetToken).WillOnce([] {
     return Status(StatusCode::kPermissionDenied, "Permission Denied");
   });
   auto stub = MinimalIamCredentialsRestStub(std::move(mock_credentials_), {},

@@ -70,37 +70,32 @@ StatusOr<internal::AccessToken> ParseAuthorizedUserRefreshResponse(
  */
 class AuthorizedUserCredentials : public Credentials {
  public:
-  using CurrentTimeFn =
-      std::function<std::chrono::time_point<std::chrono::system_clock>()>;
-
   /**
    * Creates an instance of AuthorizedUserCredentials.
    *
    * @param rest_client a dependency injection point. It makes it possible to
    *     mock internal REST types. This should generally not be overridden
    *     except for testing.
-   * @param current_time_fn a dependency injection point to fetch the current
-   *     time. This should generally not be overridden except for testing.
    */
   explicit AuthorizedUserCredentials(
       AuthorizedUserCredentialsInfo info, Options options = {},
-      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr,
-      CurrentTimeFn current_time_fn = std::chrono::system_clock::now);
+      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr);
 
   /**
    * Returns a key value pair for an "Authorization" header.
    */
-  StatusOr<std::pair<std::string, std::string>> AuthorizationHeader() override;
+  StatusOr<internal::AccessToken> GetToken(
+      std::chrono::system_clock::time_point tp) override;
 
  private:
-  StatusOr<internal::AccessToken> Refresh();
+  StatusOr<internal::AccessToken> Refresh(
+      std::chrono::system_clock::time_point tp);
 
   AuthorizedUserCredentialsInfo info_;
   Options options_;
-  CurrentTimeFn current_time_fn_;
   std::unique_ptr<rest_internal::RestClient> rest_client_;
   mutable std::mutex mu_;
-  RefreshingCredentialsWrapper refreshing_creds_;
+  internal::AccessToken access_token_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

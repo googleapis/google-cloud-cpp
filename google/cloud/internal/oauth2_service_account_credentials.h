@@ -207,13 +207,13 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
    */
   explicit ServiceAccountCredentials(
       ServiceAccountCredentialsInfo info, Options options = {},
-      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr,
-      CurrentTimeFn current_time_fn = std::chrono::system_clock::now);
+      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr);
 
   /**
    * Returns a key value pair for an "Authorization" header.
    */
-  StatusOr<std::pair<std::string, std::string>> AuthorizationHeader() override;
+  StatusOr<internal::AccessToken> GetToken(
+      std::chrono::system_clock::time_point tp) override;
 
   /**
    * Create a RSA SHA256 signature of the blob using the Credential object.
@@ -236,16 +236,18 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
 
  private:
   bool UseOAuth();
-  StatusOr<internal::AccessToken> Refresh();
-  StatusOr<internal::AccessToken> RefreshOAuth() const;
-  StatusOr<internal::AccessToken> RefreshSelfSigned() const;
+  StatusOr<internal::AccessToken> Refresh(
+      std::chrono::system_clock::time_point tp);
+  StatusOr<internal::AccessToken> RefreshOAuth(
+      std::chrono::system_clock::time_point tp) const;
+  StatusOr<internal::AccessToken> RefreshSelfSigned(
+      std::chrono::system_clock::time_point tp) const;
 
   ServiceAccountCredentialsInfo info_;
-  CurrentTimeFn current_time_fn_;
   std::unique_ptr<rest_internal::RestClient> rest_client_;
   Options options_;
   mutable std::mutex mu_;
-  RefreshingCredentialsWrapper refreshing_creds_;
+  internal::AccessToken access_token_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

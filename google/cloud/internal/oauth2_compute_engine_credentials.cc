@@ -78,13 +78,9 @@ StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
         " compute engine credentials.";
     return Status{StatusCode::kInvalidArgument, error_payload, {}};
   }
-  std::string header_value = access_token.value("token_type", "");
-  header_value += ' ';
-  header_value += access_token.value("access_token", "");
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
-  auto new_expiration = now + expires_in;
-
-  return internal::AccessToken{std::move(header_value), new_expiration};
+  return internal::AccessToken{access_token.value("access_token", ""),
+                               now + expires_in};
 }
 
 ComputeEngineCredentials::ComputeEngineCredentials()
@@ -92,10 +88,8 @@ ComputeEngineCredentials::ComputeEngineCredentials()
 
 ComputeEngineCredentials::ComputeEngineCredentials(
     std::string service_account_email, Options options,
-    std::unique_ptr<rest_internal::RestClient> rest_client,
-    CurrentTimeFn current_time_fn)
-    : current_time_fn_(std::move(current_time_fn)),
-      rest_client_(std::move(rest_client)),
+    std::unique_ptr<rest_internal::RestClient> rest_client)
+    : rest_client_(std::move(rest_client)),
       service_account_email_(std::move(service_account_email)),
       options_(std::move(options)) {
   if (!rest_client_) {
@@ -105,10 +99,22 @@ ComputeEngineCredentials::ComputeEngineCredentials(
   }
 }
 
-StatusOr<std::pair<std::string, std::string>>
-ComputeEngineCredentials::AuthorizationHeader() {
+StatusOr<internal::AccessToken> ComputeEngineCredentials::GetToken(
+    std::chrono::system_clock::time_point tp) {
   std::unique_lock<std::mutex> lock(mu_);
-  return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
+  if (tp + GoogleOAuthAccessTokenExpirationSlack() <=
+      access_token_.expiration) {
+    return access_token_;
+  }
+  // If the token is "about" to expire, try to get a new one.
+  auto response = Refresh(tp);
+  if (!response) {
+    // If the refresh failed, but the token is still valid, continue to use it.
+    if (tp < access_token_.expiration) return access_token_;
+    return std::move(response).status();
+  }
+  access_token_ = *std::move(response);
+  return access_token_;
 }
 
 std::string ComputeEngineCredentials::AccountEmail() const {
@@ -159,11 +165,10 @@ Status ComputeEngineCredentials::RetrieveServiceAccountInfo() const {
   return Status();
 }
 
-StatusOr<internal::AccessToken> ComputeEngineCredentials::Refresh() const {
+StatusOr<internal::AccessToken> ComputeEngineCredentials::Refresh(
+    std::chrono::system_clock::time_point tp) const {
   auto status = RetrieveServiceAccountInfo();
-  if (!status.ok()) {
-    return status;
-  }
+  if (!status.ok()) return status;
 
   auto response = DoMetadataServerGetRequest(
       "computeMetadata/v1/instance/service-accounts/" + service_account_email_ +
@@ -176,7 +181,7 @@ StatusOr<internal::AccessToken> ComputeEngineCredentials::Refresh() const {
     return AsStatus(std::move(**response));
   }
 
-  return ParseComputeEngineRefreshResponse(**response, current_time_fn_());
+  return ParseComputeEngineRefreshResponse(**response, tp);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

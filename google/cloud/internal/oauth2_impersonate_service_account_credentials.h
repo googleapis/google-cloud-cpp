@@ -32,9 +32,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ImpersonateServiceAccountCredentials
     : public oauth2_internal::Credentials {
  public:
-  using CurrentTimeFn =
-      std::function<std::chrono::time_point<std::chrono::system_clock>()>;
-
   /**
    * Creates an instance of ImpersonateServiceAccountCredentials.
    *
@@ -42,24 +39,17 @@ class ImpersonateServiceAccountCredentials
    *     time. This should generally not be overridden except for testing.
    */
   explicit ImpersonateServiceAccountCredentials(
-      google::cloud::internal::ImpersonateServiceAccountConfig const& config,
-      CurrentTimeFn current_time_fn = std::chrono::system_clock::now);
+      google::cloud::internal::ImpersonateServiceAccountConfig const& config);
   ImpersonateServiceAccountCredentials(
       google::cloud::internal::ImpersonateServiceAccountConfig const& config,
-      std::shared_ptr<MinimalIamCredentialsRest> stub,
-      CurrentTimeFn current_time_fn = std::chrono::system_clock::now);
+      std::shared_ptr<MinimalIamCredentialsRest> stub);
 
-  StatusOr<std::pair<std::string, std::string>> AuthorizationHeader() override;
-  StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(
-      std::chrono::system_clock::time_point now);
+  StatusOr<internal::AccessToken> GetToken(
+      std::chrono::system_clock::time_point tp) override;
 
  private:
   std::shared_ptr<MinimalIamCredentialsRest> stub_;
   GenerateAccessTokenRequest request_;
-  CurrentTimeFn current_time_fn_;
-  std::mutex mu_;
-  std::pair<std::string, std::string> header_;
-  std::chrono::system_clock::time_point expiration_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

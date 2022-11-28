@@ -77,21 +77,16 @@ StatusOr<internal::AccessToken> ParseAuthorizedUserRefreshResponse(
         " token for service account credentials.";
     return AsStatus(status_code, error_payload);
   }
-  std::string header_value = access_token.value("token_type", "");
-  header_value += ' ';
-  header_value += access_token.value("access_token", "");
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
-  auto new_expiration = now + expires_in;
-  return internal::AccessToken{std::move(header_value), new_expiration};
+  return internal::AccessToken{access_token.value("access_token", ""),
+                               now + expires_in};
 }
 
 AuthorizedUserCredentials::AuthorizedUserCredentials(
     AuthorizedUserCredentialsInfo info, Options options,
-    std::unique_ptr<rest_internal::RestClient> rest_client,
-    CurrentTimeFn current_time_fn)
+    std::unique_ptr<rest_internal::RestClient> rest_client)
     : info_(std::move(info)),
       options_(std::move(options)),
-      current_time_fn_(std::move(current_time_fn)),
       rest_client_(std::move(rest_client)) {
   if (!rest_client_) {
     rest_client_ =
@@ -99,13 +94,26 @@ AuthorizedUserCredentials::AuthorizedUserCredentials(
   }
 }
 
-StatusOr<std::pair<std::string, std::string>>
-AuthorizedUserCredentials::AuthorizationHeader() {
+StatusOr<internal::AccessToken> AuthorizedUserCredentials::GetToken(
+    std::chrono::system_clock::time_point tp) {
   std::unique_lock<std::mutex> lock(mu_);
-  return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
+  if (tp + GoogleOAuthAccessTokenExpirationSlack() <=
+      access_token_.expiration) {
+    return access_token_;
+  }
+  // If the token is "about" to expire, try to get a new one.
+  auto response = Refresh(tp);
+  if (!response) {
+    // If the refresh failed, but the token is still valid, continue to use it.
+    if (tp < access_token_.expiration) return access_token_;
+    return std::move(response).status();
+  }
+  access_token_ = *std::move(response);
+  return access_token_;
 }
 
-StatusOr<internal::AccessToken> AuthorizedUserCredentials::Refresh() {
+StatusOr<internal::AccessToken> AuthorizedUserCredentials::Refresh(
+    std::chrono::system_clock::time_point tp) {
   rest_internal::RestRequest request;
   request.AddHeader("content-type", "application/x-www-form-urlencoded");
   std::vector<std::pair<std::string, std::string>> form_data;
@@ -120,7 +128,7 @@ StatusOr<internal::AccessToken> AuthorizedUserCredentials::Refresh() {
       std::move(response.value());
   if (real_response->StatusCode() >= 300)
     return AsStatus(std::move(*real_response));
-  return ParseAuthorizedUserRefreshResponse(*real_response, current_time_fn_());
+  return ParseAuthorizedUserRefreshResponse(*real_response, tp);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

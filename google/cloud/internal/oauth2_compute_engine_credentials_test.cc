@@ -124,9 +124,10 @@ TEST_F(ComputeEngineCredentialsTest,
   ComputeEngineCredentials credentials(alias, options_,
                                        std::move(mock_rest_client_));
   // Calls Refresh to obtain the access token for our authorization header.
-  EXPECT_EQ(std::make_pair(std::string{"Authorization"},
-                           std::string{"tokentype mysupersecrettoken"}),
-            credentials.AuthorizationHeader().value());
+  auto const now = std::chrono::system_clock::now();
+  auto const expected = internal::AccessToken{"mysupersecrettoken",
+                                              now + std::chrono::seconds(3600)};
+  EXPECT_EQ(expected, credentials.GetToken(now).value());
   // Make sure we obtain the scopes and email from the metadata server.
   EXPECT_EQ(email, credentials.service_account_email());
   EXPECT_THAT(credentials.scopes(), UnorderedElementsAre("scope1", "scope2"));
@@ -219,7 +220,7 @@ TEST_F(ComputeEngineCredentialsTest, ParseComputeEngineRefreshResponse) {
                 .time_since_epoch()
                 .count(),
             clock_value + expires_in);
-  EXPECT_EQ(token.token, "tokentype mysupersecrettoken");
+  EXPECT_EQ(token.token, "mysupersecrettoken");
 }
 
 /// @test Parsing a metadata server response yields a ServiceAccountMetadata.
@@ -310,192 +311,11 @@ TEST_F(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
   ComputeEngineCredentials credentials(alias, options_,
                                        std::move(mock_rest_client_));
   // Response 1
-  auto status = credentials.AuthorizationHeader();
+  auto status = credentials.GetToken(std::chrono::system_clock::now());
   EXPECT_THAT(status, Not(IsOk()));
   // Response 2
-  status = credentials.AuthorizationHeader();
+  status = credentials.GetToken(std::chrono::system_clock::now());
   EXPECT_THAT(status, Not(IsOk()));
-}
-
-/// @test Mock a failed refresh response.
-TEST_F(ComputeEngineCredentialsTest, FailedRefresh) {
-  std::string alias = "default";
-  std::string email = "foo@bar.baz";
-  std::string hostname = GceMetadataHostname();
-  std::string svc_acct_info_resp = R"""({
-      "email": ")""" + email + R"""(",
-      "scopes": ["scope1","scope2"]
-  })""";
-  // Missing fields.
-  std::string token_info_resp = R"""({
-      "expires_in": 3600,
-      "token_type": "tokentype"
-  })""";
-
-  auto mock_response2 = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*mock_response2, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response2), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
-          std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
-                    buffer.begin());
-          return svc_acct_info_resp.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
-  });
-
-  auto mock_response4 = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*mock_response4, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response4), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
-          std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
-                    buffer.begin());
-          return svc_acct_info_resp.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
-  });
-
-  auto mock_response5 = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*mock_response5, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
-  EXPECT_CALL(std::move(*mock_response5), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read).WillOnce([](absl::Span<char>) {
-      return 0;
-    });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
-  });
-
-  auto mock_response6 = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*mock_response6, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response6), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([svc_acct_info_resp](absl::Span<char> buffer) {
-          std::copy(svc_acct_info_resp.begin(), svc_acct_info_resp.end(),
-                    buffer.begin());
-          return svc_acct_info_resp.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
-  });
-
-  auto mock_response7 = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*mock_response7, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response7), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([token_info_resp](absl::Span<char> buffer) {
-          std::copy(token_info_resp.begin(), token_info_resp.end(),
-                    buffer.begin());
-          return token_info_resp.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
-  });
-
-  // Fail the first call to RetrieveServiceAccountInfo immediately.
-  EXPECT_CALL(*mock_rest_client_, Get)
-      .WillOnce([&](RestRequest const& request) {
-        EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
-        EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
-        // For the first expected failures, the alias is used until the metadata
-        // request succeeds.
-        EXPECT_THAT(
-            request.path(),
-            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
-               alias + "/"));
-        return Status{StatusCode::kAborted, "Fake Curl error", {}};
-      })
-      // Make the call to RetrieveServiceAccountInfo return a good response,
-      .WillOnce([&](RestRequest const& request) {
-        EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
-        EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
-        // For the first expected failures, the alias is used until the metadata
-        // request succeeds.
-        EXPECT_THAT(
-            request.path(),
-            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
-               alias + "/"));
-        return std::unique_ptr<RestResponse>(std::move(mock_response2));
-      })
-      // but fail the token request immediately.
-      .WillOnce([&](RestRequest const& request) {
-        EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
-        EXPECT_THAT(
-            request.path(),
-            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
-               email + "/token"));
-        return Status{StatusCode::kAborted, "Fake Curl error", {}};
-      })
-      // Make the call to RetrieveServiceAccountInfo return a good response,
-      .WillOnce([&](RestRequest const& request) {
-        EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
-        EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
-        // Now that the first request has succeeded and the metadata has been
-        // retrieved, the the email is used for refresh.
-        EXPECT_THAT(
-            request.path(),
-            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
-               email + "/"));
-        return std::unique_ptr<RestResponse>(std::move(mock_response4));
-      })
-      // but fail the token request with a bad HTTP error code.
-      .WillOnce([&](RestRequest const& request) {
-        EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
-        EXPECT_THAT(
-            request.path(),
-            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
-               email + "/token"));
-        return std::unique_ptr<RestResponse>(std::move(mock_response5));
-      })
-      // Make the call to RetrieveServiceAccountInfo return a good response,
-      .WillOnce([&](RestRequest const& request) {
-        EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
-        EXPECT_THAT(request.GetQueryParameter("recursive"), Contains("true"));
-        // Now that the first request has succeeded and the metadata has been
-        // retrieved, the the email is used for refresh.
-        EXPECT_THAT(
-            request.path(),
-            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
-               email + "/"));
-        return std::unique_ptr<RestResponse>(std::move(mock_response6));
-      })
-      // but, parse with an invalid token response.
-      .WillOnce([&](RestRequest const& request) {
-        EXPECT_THAT(request.GetHeader("metadata-flavor"), Contains("Google"));
-        EXPECT_THAT(
-            request.path(),
-            Eq(std::string("computeMetadata/v1/instance/service-accounts/") +
-               email + "/token"));
-        return std::unique_ptr<RestResponse>(std::move(mock_response7));
-      });
-
-  ComputeEngineCredentials credentials(alias, options_,
-                                       std::move(mock_rest_client_));
-  // Response 1
-  auto status = credentials.AuthorizationHeader();
-  EXPECT_THAT(status, StatusIs(StatusCode::kAborted));
-  // Response 2
-  status = credentials.AuthorizationHeader();
-  EXPECT_THAT(status, Not(IsOk()));
-  // Response 3
-  status = credentials.AuthorizationHeader();
-  EXPECT_THAT(status, Not(IsOk()));
-  // Response 4
-  status = credentials.AuthorizationHeader();
-  EXPECT_THAT(status,
-              StatusIs(Not(StatusCode::kOk),
-                       HasSubstr("Could not find all required fields")));
 }
 
 /// @test Verify that we can force a refresh of the service account email.

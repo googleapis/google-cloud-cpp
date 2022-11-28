@@ -73,9 +73,6 @@ StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
  */
 class ComputeEngineCredentials : public Credentials {
  public:
-  using CurrentTimeFn =
-      std::function<std::chrono::time_point<std::chrono::system_clock>()>;
-
   explicit ComputeEngineCredentials();
 
   /**
@@ -84,18 +81,16 @@ class ComputeEngineCredentials : public Credentials {
    * @param rest_client a dependency injection point. It makes it possible to
    *     mock internal libcurl wrappers. This should generally not be overridden
    *     except for testing.
-   * @param current_time_fn a dependency injection point to fetch the current
-   *     time. This should generally not be overridden except for testing.
    */
   explicit ComputeEngineCredentials(
       std::string service_account_email, Options options = {},
-      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr,
-      CurrentTimeFn current_time_fn = std::chrono::system_clock::now);
+      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr);
 
   /**
    * Returns a key value pair for an "Authorization" header.
    */
-  StatusOr<std::pair<std::string, std::string>> AuthorizationHeader() override;
+  StatusOr<internal::AccessToken> GetToken(
+      std::chrono::system_clock::time_point tp) override;
 
   /**
    * Returns the current Service Account email.
@@ -144,12 +139,12 @@ class ComputeEngineCredentials : public Credentials {
   /**
    * Attempts to refresh the credentials.
    */
-  StatusOr<internal::AccessToken> Refresh() const;
+  StatusOr<internal::AccessToken> Refresh(
+      std::chrono::system_clock::time_point tp) const;
 
   mutable std::mutex mu_;
-  CurrentTimeFn current_time_fn_;
+  internal::AccessToken access_token_;
   std::unique_ptr<rest_internal::RestClient> rest_client_;
-  RefreshingCredentialsWrapper refreshing_creds_;
   mutable std::set<std::string> scopes_;
   mutable std::string service_account_email_;
   Options options_;
