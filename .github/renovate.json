@@ -52,6 +52,11 @@
       "ignoreUnstable": false
     },
     {
+      "matchPackageNames": ["io_opentelemetry_cpp", "open-telemetry/opentelemetry-cpp"],
+      "groupName": "OpenTelemetry",
+      "versioning": "loose"
+    },
+    {
       "matchManagers": ["pip_requirements"],
       "schedule": ["before 12pm on Tuesday"]
     }
