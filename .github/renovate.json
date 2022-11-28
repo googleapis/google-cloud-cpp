@@ -52,8 +52,23 @@
       "ignoreUnstable": false
     },
     {
+      "matchPackageNames": ["com_github_nlohmann_json", "nlohmann/json"],
+      "groupName": "JSON",
+      "versioning": "loose"
+    },
+    {
       "matchPackageNames": ["io_opentelemetry_cpp", "open-telemetry/opentelemetry-cpp"],
       "groupName": "OpenTelemetry",
+      "versioning": "loose"
+    },
+    {
+      "matchPackageNames": ["com_google_benchmark", "google/benchmark"],
+      "groupName": "Benchmark",
+      "versioning": "loose"
+    },
+    {
+      "matchPackageNames": ["com_google_googletest", "google/googletest"],
+      "groupName": "GoogleTest",
       "versioning": "loose"
     },
     {
