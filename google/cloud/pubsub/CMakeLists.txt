@@ -60,6 +60,8 @@ add_library(
     internal/create_channel.h
     internal/default_batch_sink.cc
     internal/default_batch_sink.h
+    internal/default_pull_ack_handler.cc
+    internal/default_pull_ack_handler.h
     internal/defaults.cc
     internal/defaults.h
     internal/exactly_once_policies.cc
@@ -82,8 +84,6 @@ add_library(
     internal/publisher_stub.h
     internal/publisher_stub_factory.cc
     internal/publisher_stub_factory.h
-    internal/pull_ack_handler_impl.cc
-    internal/pull_ack_handler_impl.h
     internal/pull_lease_manager.cc
     internal/pull_lease_manager.h
     internal/rejects_with_ordering_key.cc
@@ -137,6 +137,8 @@ add_library(
     publisher_connection.h
     publisher_options.cc
     publisher_options.h
+    pull_ack_handler.cc
+    pull_ack_handler.h
     retry_policy.h
     schema.cc
     schema.h
@@ -208,6 +210,7 @@ set(google_cloud_cpp_pubsub_mocks_hdrs
     mocks/mock_blocking_publisher_connection.h
     mocks/mock_exactly_once_ack_handler.h
     mocks/mock_publisher_connection.h
+    mocks/mock_pull_ack_handler.h
     mocks/mock_schema_admin_connection.h
     mocks/mock_subscriber_connection.h
     mocks/mock_subscription_admin_connection.h
@@ -272,12 +275,12 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         internal/ack_handler_wrapper_test.cc
         internal/batching_publisher_connection_test.cc
         internal/default_batch_sink_test.cc
+        internal/default_pull_ack_handler_test.cc
         internal/defaults_test.cc
         internal/exactly_once_policies_test.cc
         internal/extend_leases_with_retry_test.cc
         internal/flow_controlled_publisher_connection_test.cc
         internal/ordering_key_publisher_connection_test.cc
-        internal/pull_ack_handler_impl_test.cc
         internal/pull_lease_manager_test.cc
         internal/rejects_with_ordering_key_test.cc
         internal/sequential_batch_sink_test.cc

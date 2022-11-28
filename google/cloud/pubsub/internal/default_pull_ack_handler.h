@@ -12,12 +12,11 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_ACK_HANDLER_IMPL_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_ACK_HANDLER_IMPL_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_PULL_ACK_HANDLER_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_PULL_ACK_HANDLER_H
 
-#include "google/cloud/pubsub/backoff_policy.h"
-#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
+#include "google/cloud/pubsub/pull_ack_handler.h"
 #include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
@@ -36,17 +35,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class PullLeaseManager;
 
 /**
- * Implements a `pubsub::ExactlyOnceAckHandler` suitable for blocking pull
- * requests.
+ * The default implementation for a `pubsub::PullAckHandler::Impl`.
  *
  * This is an implementation detail, hidden from the application.
  */
-class PullAckHandlerImpl : public pubsub::ExactlyOnceAckHandler::Impl {
+class DefaultPullAckHandler : public pubsub::PullAckHandler::Impl {
  public:
-  PullAckHandlerImpl(CompletionQueue cq, std::weak_ptr<SubscriberStub> w,
-                     Options options, pubsub::Subscription subscription,
-                     std::string ack_id, std::int32_t delivery_attempt);
-  ~PullAckHandlerImpl() override;
+  DefaultPullAckHandler(CompletionQueue cq, std::weak_ptr<SubscriberStub> w,
+                        Options options, pubsub::Subscription subscription,
+                        std::string ack_id, std::int32_t delivery_attempt);
+  ~DefaultPullAckHandler() override;
 
   future<Status> ack() override;
   future<Status> nack() override;
@@ -66,4 +64,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_PULL_ACK_HANDLER_IMPL_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_INTERNAL_DEFAULT_PULL_ACK_HANDLER_H
