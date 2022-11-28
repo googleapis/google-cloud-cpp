@@ -69,7 +69,7 @@
     {
       "matchPackageNames": ["com_google_googletest", "google/googletest"],
       "groupName": "GoogleTest",
-      "versioning": "loose"
+      "versioning": "regex:^release-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)?$"
     },
     {
       "matchManagers": ["pip_requirements"],
