@@ -70,7 +70,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.1.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/googletest
-RUN curl -sSL https://github.com/google/googletest/archive/release-1.11.0.tar.gz | \
+RUN curl -sSL https://github.com/google/googletest/archive/release-1.12.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
