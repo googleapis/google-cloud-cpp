@@ -163,7 +163,7 @@ class Subscriber {
    * @par Idempotency
    * @parblock
    * This is an idempotent operation; it only reads messages from the service.
-   * Will make multiple attempts to pull a message from the service, subject
+   * It will make multiple attempts to pull a message from the service, subject
    * to the retry policies configured in the `SubscriberConnection`.
    *
    * Note that calling `PullAckHandler::ack()` and/or `PullAckHandler::nack()`

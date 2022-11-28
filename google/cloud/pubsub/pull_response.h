@@ -1,4 +1,4 @@
-// Copyright 2020 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -35,7 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * the invocation succeeds. With best-efforts subscriptions, the service *may*
  * redeliver the message, even after a successful `handler.ack()` invocation.
  *
- * If `handler` is not an rvalue, you may need to use `std::move(ack).ack()`
+ * If `handler` is not an rvalue, you may need to use `std::move(handler).ack()`
  * or `std::move(handler).nack()`.
  *
  * @see https://cloud.google.com/pubsub/docs/exactly-once-delivery
