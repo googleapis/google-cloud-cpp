@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/pubsub/internal/pull_ack_handler_impl.h"
+#include "google/cloud/pubsub/internal/default_pull_ack_handler.h"
 #include "google/cloud/pubsub/internal/pull_lease_manager.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"
@@ -95,7 +95,7 @@ TEST(PullAckHandlerTest, AckSimple) {
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
-  auto handler = absl::make_unique<PullAckHandlerImpl>(
+  auto handler = absl::make_unique<DefaultPullAckHandler>(
       cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->ack();
@@ -119,7 +119,7 @@ TEST(PullAckHandlerTest, AckPermanentError) {
       .WillOnce(Return(ByMove(make_ready_future(PermanentError()))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
-  auto handler = absl::make_unique<PullAckHandlerImpl>(
+  auto handler = absl::make_unique<DefaultPullAckHandler>(
       cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->ack();
@@ -143,7 +143,7 @@ TEST(PullAckHandlerTest, NackSimple) {
       .WillOnce(Return(ByMove(make_ready_future(Status{}))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
-  auto handler = absl::make_unique<PullAckHandlerImpl>(
+  auto handler = absl::make_unique<DefaultPullAckHandler>(
       cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->nack();
@@ -169,7 +169,7 @@ TEST(PullAckHandlerTest, NackPermanentError) {
       .WillOnce(Return(ByMove(make_ready_future(PermanentError()))));
   AsyncSequencer<bool> aseq;
   auto cq = MakeMockCompletionQueue(aseq);
-  auto handler = absl::make_unique<PullAckHandlerImpl>(
+  auto handler = absl::make_unique<DefaultPullAckHandler>(
       cq, mock, MakeTestOptions(), subscription, "test-ack-id", 42);
   EXPECT_EQ(handler->delivery_attempt(), 42);
   auto status = handler->nack();

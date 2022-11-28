@@ -25,19 +25,15 @@ namespace pubsub_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * A googlemock-based mock for
- * [pubsub::PullAckHandler::Impl][mocked-link]
+ * A googlemock-based mock for [pubsub::PullAckHandler::Impl][mocked-link]
  *
  * [mocked-link]: @ref
  * google::cloud::pubsub_internal::PullAckHandler::Impl
- *
- * @see @ref subscriber-mock for an example using this class.
  */
 class MockPullAckHandler : public pubsub::PullAckHandler::Impl {
  public:
   MOCK_METHOD(future<Status>, ack, (), (override));
   MOCK_METHOD(future<Status>, nack, (), (override));
-  MOCK_METHOD(std::string, ack_id, ());
   MOCK_METHOD(std::int32_t, delivery_attempt, (), (const, override));
 };
 

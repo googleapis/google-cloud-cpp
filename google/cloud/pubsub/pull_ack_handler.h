@@ -42,7 +42,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * @par Thread Safety
  *
- * This class is *thread compatible*, only one thread should call non-const
+ * This class is *thread compatible*; only one thread should call non-const
  * member functions of this class at a time. Note that because the non-const
  * member functions are `&&` overloads the application can only call `ack()` or
  * `nack()` exactly once, and only one of them.
@@ -69,7 +69,7 @@ class PullAckHandler {
    * If the future is satisfied with an Okay `Status` **and** exactly-once
    * delivery is enabled in the subscription, then the message will not be
    * resent by Cloud Pub/Sub.  We remind the reader that Cloud Pub/Sub defaults
-   * to "at least once" delivery, that is, without exactly-once delivery, the
+   * to "at least once" delivery. That is, without exactly-once delivery, the
    * message *may* be resent even after the future is satisfied with an Okay
    * `Status`.
    *
