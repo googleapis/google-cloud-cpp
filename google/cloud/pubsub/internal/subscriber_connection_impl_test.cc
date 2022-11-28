@@ -36,9 +36,13 @@ using ::google::cloud::pubsub::Message;
 using ::google::cloud::pubsub::Subscription;
 using ::google::cloud::pubsub_testing::FakeAsyncStreamingPull;
 using ::google::cloud::testing_util::StatusIs;
+using ::google::pubsub::v1::PullRequest;
+using ::testing::_;
+using ::testing::AllOf;
 using ::testing::AtLeast;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Property;
 using ::testing::StartsWith;
 
 Options MakeTestOptions(Options opts = {}) {
@@ -145,7 +149,7 @@ TEST(SubscriberConnectionTest, ExactlyOnce) {
   t.join();
 }
 
-TEST(SubscriberConnectionTest, PullFailure) {
+TEST(SubscriberConnectionTest, StreamingPullFailure) {
   auto const subscription = Subscription("test-project", "test-subscription");
   auto const expected = Status(StatusCode::kPermissionDenied, "uh-oh");
 
@@ -193,6 +197,102 @@ TEST(SubscriberConnectionTest, PullFailure) {
   auto response = subscriber->Subscribe({handler});
   EXPECT_THAT(response.get(),
               StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+}
+
+TEST(SubscriberConnectionTest, Pull) {
+  auto const subscription = Subscription("test-project", "test-subscription");
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, AsyncModifyAckDeadline)
+      .WillRepeatedly([](google::cloud::CompletionQueue&,
+                         std::unique_ptr<grpc::ClientContext>,
+                         google::pubsub::v1::ModifyAckDeadlineRequest const&) {
+        return make_ready_future(Status{});
+      });
+  EXPECT_CALL(*mock, AsyncAcknowledge)
+      .WillOnce([](google::cloud::CompletionQueue&,
+                   std::unique_ptr<grpc::ClientContext>,
+                   google::pubsub::v1::AcknowledgeRequest const& request) {
+        EXPECT_THAT(request.ack_ids(), Contains("test-ack-id-0"));
+        return make_ready_future(
+            Status{StatusCode::kUnknown, "test-only-unknown"});
+      });
+  EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
+                                   Property(&PullRequest::subscription,
+                                            subscription.FullName()))))
+      .WillOnce([](auto&, google::pubsub::v1::PullRequest const&) {
+        return Status(StatusCode::kUnavailable, "try-again");
+      })
+      .WillOnce([](auto&, google::pubsub::v1::PullRequest const&) {
+        google::pubsub::v1::PullResponse response;
+        auto& message = *response.add_received_messages();
+        message.set_delivery_attempt(42);
+        message.set_ack_id("test-ack-id-0");
+        message.mutable_message()->set_data("test-data-0");
+        return response;
+      });
+
+  CompletionQueue cq;
+  std::thread t([&cq] { cq.Run(); });
+
+  auto subscriber = std::make_shared<SubscriberConnectionImpl>(
+      subscription, MakeTestOptions(cq), mock);
+  google::cloud::internal::OptionsSpan span(subscriber->options());
+  auto response = subscriber->Pull();
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->message.data(), "test-data-0");
+  std::move(response->handler).ack();
+
+  cq.Shutdown();
+  t.join();
+}
+
+TEST(SubscriberConnectionTest, PullPermanentFailure) {
+  auto const subscription = Subscription("test-project", "test-subscription");
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
+                                   Property(&PullRequest::subscription,
+                                            subscription.FullName()))))
+      .WillOnce([](auto&, google::pubsub::v1::PullRequest const&) {
+        return Status(StatusCode::kPermissionDenied, "uh-oh");
+      });
+
+  CompletionQueue cq;
+  std::thread t([&cq] { cq.Run(); });
+
+  auto subscriber = std::make_shared<SubscriberConnectionImpl>(
+      subscription, MakeTestOptions(cq), mock);
+  google::cloud::internal::OptionsSpan span(subscriber->options());
+  auto response = subscriber->Pull();
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kPermissionDenied, HasSubstr("uh-oh")));
+
+  cq.Shutdown();
+  t.join();
+}
+
+TEST(SubscriberConnectionTest, PullTooManyTransientFailures) {
+  auto const subscription = Subscription("test-project", "test-subscription");
+  auto mock = std::make_shared<pubsub_testing::MockSubscriberStub>();
+  EXPECT_CALL(*mock, Pull(_, AllOf(Property(&PullRequest::max_messages, 1),
+                                   Property(&PullRequest::subscription,
+                                            subscription.FullName()))))
+      .Times(AtLeast(2))
+      .WillRepeatedly([](auto&, google::pubsub::v1::PullRequest const&) {
+        return Status(StatusCode::kUnavailable, "try-again");
+      });
+
+  CompletionQueue cq;
+  std::thread t([&cq] { cq.Run(); });
+
+  auto subscriber = std::make_shared<SubscriberConnectionImpl>(
+      subscription, MakeTestOptions(cq), mock);
+  google::cloud::internal::OptionsSpan span(subscriber->options());
+  auto response = subscriber->Pull();
+  EXPECT_THAT(response,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("try-again")));
+
+  cq.Shutdown();
+  t.join();
 }
 
 }  // namespace
