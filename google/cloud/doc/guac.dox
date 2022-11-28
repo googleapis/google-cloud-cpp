@@ -1,12 +1,14 @@
 /*!
 @defgroup guac Authentication Components
 
-## Overview
+## Overview and Motivation
+
+@tableofcontents{HTML:2}
 
 Most services in Google Cloud Platform require the client to authenticate the
 requests. Notable exceptions include public buckets in GCS and public data
-sets in BigQuery. The C++ client libraries are automatically configured
-to use "Google Default Credentials", but some applications may need to override
+sets in BigQuery. The C++ client libraries are automatically configured to use
+[Application Default Credentials], but some applications may need to override
 this default. The functions and classes related to changing the authentication
 configuration are documented here.
 
@@ -16,18 +18,27 @@ Platform. For readers seeking such an introduction we recommend
 any detail is also out of scope. We recommend reading the [IAM overview] if that
 is of interest.
 
-In most cases applications can control the [principal][principal-overview]
-used by the client libraries without having to change any code. By default the
-client libraries use [Application Default Credentials] which can be configured
-via environment variables, the `gcloud` CLI, or by changing the service account
-associated with your deployment environment (GCE, Cloud Run, GKE, etc.)
+The most common motivation to change authentication is to use a different
+[principal][principal-overview], that is, to make the request(s) on behalf of a
+different user or robot account.  In many cases the default principal can be
+changed without having to change any code. The [Application Default Credentials]
+can be configured via environment variables, or via the `gcloud` CLI. If your
+application is running in GCE, Cloud Run, GKE or a similar environment you or
+the system administrator may change the service account associated with this
+deployment environment. Consider using these mechanisms instead of changing the
+code, as that may give your DevOps, SRE, or system administration team more
+flexibility.
 
 ## General Concepts
 
-As mentioned, a complete overview of authentication and authorization for Google
-Cloud is outside the scope of this document. The following brief introduction
-may help as you read the reference documentation for components related to
-authentication.
+While a complete overview of authentication and authorization for Google
+Cloud is outside the scope of this document, a brief introduction may help.
+
+As we mentioned in passing, authentication supports both user accounts and
+service accounts. These are referred as "principals". User accounts represent
+a developer, administrator, or any other person who interacts with GCP services.
+In contrast, service accounts are accounts that do not represent a person. They
+typically represent an application, or another service.
 
 Google Cloud Platform largely uses [OAuth2] access tokens for authentication.
 There are multiple ways to create such tokens. For example, when running on
@@ -36,22 +47,31 @@ any application running on the VM. As another example, you can download a
 [service account keyfile] and the C++ client libraries will create access
 tokens using the contents of this file.
 
-Access tokens usually expire in about an hour. The client libraries
-automatically refresh these tokens when needed. The only exception is
-`MakeAccessTokenCredentials()`, where the application provides the access token.
+Access tokens are bearer tokens. Having the token authenticates the principal,
+they can be used in separate connections, or from different computers than
+the one used to create them. If these tokens are exposed to third-parties the
+token can be used to make calls on behalf of the principal identified by the
+token. To reduce exposure, access tokens are always time limited. They
+automatically expire after a period of time (usually one hour).
+
+The client libraries automatically refresh access tokens, that is, create new
+tokens before they expire. The only exception is `MakeAccessTokenCredentials()`,
+where the application provides the access token.
 
 ## Development Workstations
 
-During development the most common configurations that use Application Default
-Credentials are:
+We find that developers typically use Application Default Credentials to test
+their applications. The developer would either:
 
-1. Use the `gcloud auth application-default` to authenticate using the
-   developer's account for authentication.
-1. Set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to load a
+-# Use `gcloud auth application-default` to authenticate using the
+   developer's account. Keep in mind that this persists a "refresh token" in
+   your workstation's filesystem. This refresh token is long-lived and can be
+   used to create access tokens with full access to all GCP services.
+-# Set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable to load a
    service account key. The value of this environment variable is the full path
    of a file that contains the service account key. Keep in mind the security
    implications of keeping such a file as plain text in your filesystem.
-1. If you are using a GCE instance as your development environment, simply
+-# If you are using a GCE instance as your development environment, simply
    use the service account of the GCE machine to access GCP services.
 
 ## Limitations
