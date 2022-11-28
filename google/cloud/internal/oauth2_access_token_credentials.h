@@ -33,12 +33,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class AccessTokenCredentials : public oauth2_internal::Credentials {
  public:
   explicit AccessTokenCredentials(
-      google::cloud::internal::AccessToken const& access_token);
+      google::cloud::internal::AccessToken access_token);
 
-  StatusOr<std::pair<std::string, std::string>> AuthorizationHeader() override;
+  StatusOr<internal::AccessToken> GetToken(
+      std::chrono::system_clock::time_point tp) override;
 
  private:
-  std::pair<std::string, std::string> header_;
+  internal::AccessToken access_token_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

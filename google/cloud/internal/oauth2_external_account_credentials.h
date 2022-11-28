@@ -49,7 +49,6 @@ class ExternalAccountCredentials : public oauth2_internal::Credentials {
 
   StatusOr<internal::AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
-  StatusOr<std::pair<std::string, std::string>> AuthorizationHeader() override;
 
  private:
   ExternalAccountInfo info_;

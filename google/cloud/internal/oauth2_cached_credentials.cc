@@ -53,11 +53,6 @@ StatusOr<internal::AccessToken> CachedCredentials::GetToken(
   return token_;
 }
 
-StatusOr<std::pair<std::string, std::string>>
-CachedCredentials::AuthorizationHeader() {
-  return impl_->AuthorizationHeader();
-}
-
 StatusOr<std::vector<std::uint8_t>> CachedCredentials::SignBlob(
     absl::optional<std::string> const& signing_service_account,
     std::string const& string_to_sign) const {

@@ -260,8 +260,8 @@ TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
   auto creds = GoogleDefaultCredentials();
   ASSERT_STATUS_OK(creds);
   ASSERT_THAT(*creds, NotNull());
-  auto header = (*creds)->AuthorizationHeader();
-  EXPECT_THAT(header, StatusIs(Not(StatusCode::kOk)));
+  auto token = (*creds)->GetToken(std::chrono::system_clock::now());
+  EXPECT_THAT(token, StatusIs(Not(StatusCode::kOk)));
 }
 
 }  // namespace

@@ -15,6 +15,7 @@
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -87,21 +88,20 @@ class UnifiedRestCredentialsTest : public ::testing::Test {
 
 TEST_F(UnifiedRestCredentialsTest, Insecure) {
   auto credentials = MapCredentials(MakeInsecureCredentials());
-  auto header = credentials->AuthorizationHeader();
-  ASSERT_THAT(header, IsOk());
-  EXPECT_THAT(header->first, IsEmpty());
-  EXPECT_THAT(header->second, IsEmpty());
+  auto token = credentials->GetToken(std::chrono::system_clock::now());
+  ASSERT_THAT(token, IsOk());
+  EXPECT_THAT(token->token, IsEmpty());
 }
 
 TEST_F(UnifiedRestCredentialsTest, AccessToken) {
-  auto credentials = MapCredentials(
-      MakeAccessTokenCredentials("token1", std::chrono::system_clock::now()));
-  for (std::string expected : {"token1", "token1", "token1"}) {
-    auto header = credentials->AuthorizationHeader();
-    ASSERT_THAT(header, IsOk());
-    EXPECT_THAT(header->first, Eq("Authorization"));
-    EXPECT_THAT(header->second, Eq(std::string{"Bearer "} + expected));
-  }
+  auto const now = std::chrono::system_clock::now();
+  auto const expiration = now + std::chrono::seconds(1800);
+  auto credentials =
+      MapCredentials(MakeAccessTokenCredentials("token1", expiration));
+  auto token = credentials->GetToken(now);
+  ASSERT_THAT(token, IsOk());
+  EXPECT_THAT(token->token, Eq("token1"));
+  EXPECT_THAT(token->expiration, Eq(expiration));
 }
 
 TEST_F(UnifiedRestCredentialsTest, LoadError) {
@@ -111,7 +111,8 @@ TEST_F(UnifiedRestCredentialsTest, LoadError) {
   ScopedEnvironment env("GOOGLE_APPLICATION_CREDENTIALS", filename);
 
   auto credentials = MapCredentials(MakeGoogleDefaultCredentials());
-  EXPECT_THAT(credentials->AuthorizationHeader(), Not(IsOk()));
+  EXPECT_THAT(credentials->GetToken(std::chrono::system_clock::now()),
+              Not(IsOk()));
 }
 
 TEST_F(UnifiedRestCredentialsTest, LoadSuccess) {

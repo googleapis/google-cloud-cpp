@@ -29,11 +29,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::std::chrono::minutes;
 using ::std::chrono::seconds;
-using ::testing::EndsWith;
-using ::testing::Eq;
-using ::testing::MockFunction;
 using ::testing::Return;
-using ::testing::StartsWith;
 
 class MockMinimalIamCredentialsRest : public MinimalIamCredentialsRest {
  public:
@@ -48,10 +44,7 @@ TEST(ImpersonateServiceAccountCredentialsTest, Basic) {
   auto mock = std::make_shared<MockMinimalIamCredentialsRest>();
   EXPECT_CALL(*mock, GenerateAccessToken)
       .WillOnce(
-          Return(make_status_or(AccessToken{"token1", now + minutes(15)})))
-      .WillOnce(
-          Return(make_status_or(AccessToken{"token2", now + minutes(30)})))
-      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "")))
+          Return(make_status_or(AccessToken{"token1", now + minutes(30)})))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "")));
 
   auto config = google::cloud::internal::ImpersonateServiceAccountConfig(
@@ -59,39 +52,14 @@ TEST(ImpersonateServiceAccountCredentialsTest, Basic) {
       "test-only-invalid@test.invalid",
       Options{}.set<AccessTokenLifetimeOption>(std::chrono::minutes(15)));
 
-  MockFunction<ImpersonateServiceAccountCredentials::CurrentTimeFn>
-      mock_current_time_fn;
+  ImpersonateServiceAccountCredentials under_test(config, mock);
 
-  EXPECT_CALL(mock_current_time_fn, Call())
-      .WillOnce([&] { return now + seconds(1790); })
-      .WillOnce([&] { return now + minutes(45); });
+  auto token = under_test.GetToken(now + minutes(1));
+  ASSERT_THAT(token, IsOk());
+  EXPECT_THAT(token->token, "token1");
 
-  ImpersonateServiceAccountCredentials under_test(
-      config, mock, mock_current_time_fn.AsStdFunction());
-
-  for (auto const i : {1, 5, 9}) {
-    SCOPED_TRACE("Testing with i = " + std::to_string(i));
-    auto header = under_test.AuthorizationHeader(now + minutes(i));
-    ASSERT_THAT(header, IsOk());
-    EXPECT_THAT(header->first, Eq("Authorization"));
-    EXPECT_THAT(header->second, StartsWith("Bearer"));
-    EXPECT_THAT(header->second, EndsWith("token1"));
-  }
-
-  auto header = under_test.AuthorizationHeader(now + minutes(20));
-  ASSERT_THAT(header, IsOk());
-  EXPECT_THAT(header->first, Eq("Authorization"));
-  EXPECT_THAT(header->second, StartsWith("Bearer"));
-  EXPECT_THAT(header->second, EndsWith("token2"));
-
-  header = under_test.AuthorizationHeader(now + seconds(1790));
-  ASSERT_THAT(header, IsOk());
-  EXPECT_THAT(header->first, Eq("Authorization"));
-  EXPECT_THAT(header->second, StartsWith("Bearer"));
-  EXPECT_THAT(header->second, EndsWith("token2"));
-
-  header = under_test.AuthorizationHeader(now + minutes(45));
-  ASSERT_THAT(header, StatusIs(StatusCode::kPermissionDenied));
+  token = under_test.GetToken(now + minutes(45));
+  ASSERT_THAT(token, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace

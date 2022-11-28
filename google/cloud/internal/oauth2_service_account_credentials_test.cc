@@ -17,7 +17,7 @@
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/testing_util/mock_fake_clock.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
@@ -36,7 +36,6 @@ namespace {
 
 using ::google::cloud::internal::SignUsingSha256;
 using ::google::cloud::internal::UrlsafeBase64Decode;
-using ::google::cloud::testing_util::FakeClock;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
@@ -49,9 +48,7 @@ using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Not;
-using ::testing::Pair;
 using ::testing::Return;
-using ::testing::StartsWith;
 
 constexpr char kScopeForTest0[] =
     "https://www.googleapis.com/auth/devstorage.full_control";
@@ -124,7 +121,8 @@ std::string MakeTestContents() {
 
 void CheckInfoYieldsExpectedAssertion(std::unique_ptr<MockRestClient> mock,
                                       ServiceAccountCredentialsInfo const& info,
-                                      std::string const& assertion) {
+                                      std::string const& assertion,
+                                      std::time_t assertion_time) {
   std::string response = R"""({
       "token_type": "Type",
       "access_token": "access-token-value",
@@ -151,12 +149,13 @@ void CheckInfoYieldsExpectedAssertion(std::unique_ptr<MockRestClient> mock,
             return std::unique_ptr<rest_internal::RestResponse>(mock_response1);
           });
 
-  ServiceAccountCredentials credentials(info, Options{}, std::move(mock),
-                                        FakeClock::now);
+  auto const tp = std::chrono::system_clock::from_time_t(assertion_time);
+  ServiceAccountCredentials credentials(info, Options{}, std::move(mock));
   // Calls Refresh to obtain the access token for our authorization header.
-  EXPECT_EQ(std::make_pair(std::string{"Authorization"},
-                           std::string{"Type access-token-value"}),
-            credentials.AuthorizationHeader().value());
+  auto token = credentials.GetToken(tp);
+  ASSERT_STATUS_OK(token);
+  EXPECT_EQ(token->token, "access-token-value");
+  EXPECT_EQ(token->expiration, tp + std::chrono::seconds(1234));
 }
 
 TEST(ServiceAccountCredentialsTest, MakeSelfSignedJWT) {
@@ -265,7 +264,6 @@ TEST(ServiceAccountCredentialsTest,
   auto const expected_header =
       nlohmann::json{{"alg", "RS256"}, {"typ", "JWT"}, {"kid", kPrivateKeyId}};
 
-  FakeClock::reset_clock(kFixedJwtTimestamp);
   auto const iat = static_cast<std::intmax_t>(kFixedJwtTimestamp);
   auto const exp = iat + 3600;
   auto const expected_payload = nlohmann::json{
@@ -279,7 +277,7 @@ TEST(ServiceAccountCredentialsTest,
   auto const assertion = MakeJWTAssertion(expected_header.dump(),
                                           expected_payload.dump(), kPrivateKey);
   CheckInfoYieldsExpectedAssertion(absl::make_unique<MockRestClient>(), *info,
-                                   assertion);
+                                   assertion, kFixedJwtTimestamp);
 }
 
 /// @test Verify that ServiceAccountCredentials defaults to self-signed JWTs.
@@ -306,16 +304,15 @@ TEST(ServiceAccountCredentialsTest, RefreshWithSelfSignedJWT) {
       Post(_, A<std::vector<std::pair<std::string, std::string>> const&>()))
       .Times(0);
 
-  ServiceAccountCredentials credentials(*info, Options{}, std::move(mock),
-                                        FakeClock::now);
-  auto header = credentials.AuthorizationHeader();
-  ASSERT_STATUS_OK(header);
-  ASSERT_THAT(*header, Pair("Authorization", StartsWith("Bearer ")));
+  ServiceAccountCredentials credentials(*info, Options{}, std::move(mock));
+  auto const now = std::chrono::system_clock::now();
+  auto access_token = credentials.GetToken(now);
+  ASSERT_STATUS_OK(access_token);
 
-  auto token = MakeSelfSignedJWT(*info, FakeClock::now());
+  auto token = MakeSelfSignedJWT(*info, now);
   ASSERT_STATUS_OK(token);
 
-  EXPECT_EQ(header->second, "Bearer " + *token);
+  EXPECT_EQ(access_token->token, *token);
 }
 
 /// @test Verify that we can create service account credentials from a keyfile.
@@ -332,7 +329,6 @@ TEST(ServiceAccountCredentialsTest,
   auto const expected_header =
       nlohmann::json{{"alg", "RS256"}, {"typ", "JWT"}, {"kid", kPrivateKeyId}};
 
-  FakeClock::reset_clock(kFixedJwtTimestamp);
   auto const iat = static_cast<std::intmax_t>(kFixedJwtTimestamp);
   auto const exp = iat + 3600;
   auto const expected_payload = nlohmann::json{
@@ -344,7 +340,7 @@ TEST(ServiceAccountCredentialsTest,
   auto const assertion = MakeJWTAssertion(expected_header.dump(),
                                           expected_payload.dump(), kPrivateKey);
   CheckInfoYieldsExpectedAssertion(absl::make_unique<MockRestClient>(), *info,
-                                   assertion);
+                                   assertion, kFixedJwtTimestamp);
 }
 
 TEST(ServiceAccountCredentialsTest, MultipleScopes) {
@@ -367,76 +363,6 @@ TEST(ServiceAccountCredentialsTest, MultipleScopes) {
   actual_info.subject = std::string(kSubjectForGrant);
   auto const actual_components = AssertionComponentsFromInfo(actual_info, now);
   EXPECT_EQ(actual_components, expected_components);
-}
-
-/// @test Verify that we refresh service account credentials appropriately.
-TEST(ServiceAccountCredentialsTest,
-     RefreshCalledOnlyWhenAccessTokenIsMissingOrInvalid) {
-  ScopedEnvironment disable_self_signed_jwt(
-      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
-
-  // Prepare two responses, the first one is used but becomes immediately
-  // expired, resulting in another refresh next time the caller tries to get
-  // an authorization header.
-  std::string r1 = R"""({
-    "token_type": "Type",
-    "access_token": "access-token-r1",
-    "expires_in": 0
-})""";
-  std::string r2 = R"""({
-    "token_type": "Type",
-    "access_token": "access-token-r2",
-    "expires_in": 1000
-})""";
-
-  auto* mock_response1 = new MockRestResponse();
-  EXPECT_CALL(*mock_response1, StatusCode)
-      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response1), ExtractPayload).WillOnce([&] {
-    return MakeMockHttpPayloadSuccess(r1);
-  });
-
-  auto* mock_response2 = new MockRestResponse();
-  EXPECT_CALL(*mock_response2, StatusCode)
-      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response2), ExtractPayload).WillOnce([&] {
-    return MakeMockHttpPayloadSuccess(r2);
-  });
-
-  auto mock = absl::make_unique<MockRestClient>();
-  EXPECT_CALL(
-      *mock,
-      Post(_, A<std::vector<std::pair<std::string, std::string>> const&>()))
-      .WillOnce(
-          [&](rest_internal::RestRequest const&,
-              std::vector<std::pair<std::string, std::string>> const& payload) {
-            EXPECT_THAT(payload, Contains(std::pair<std::string, std::string>(
-                                     "grant_type", kGrantParamUnescaped)));
-            return std::unique_ptr<rest_internal::RestResponse>(mock_response1);
-          })
-      .WillOnce(
-          [&](rest_internal::RestRequest const&,
-              std::vector<std::pair<std::string, std::string>> const& payload) {
-            EXPECT_THAT(payload, Contains(std::pair<std::string, std::string>(
-                                     "grant_type", kGrantParamUnescaped)));
-            return std::unique_ptr<rest_internal::RestResponse>(mock_response2);
-          });
-
-  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
-  ASSERT_STATUS_OK(info);
-  ServiceAccountCredentials credentials(*info, {}, std::move(mock));
-  // Calls Refresh to obtain the access token for our authorization header.
-  EXPECT_EQ(std::make_pair(std::string{"Authorization"},
-                           std::string{"Type access-token-r1"}),
-            credentials.AuthorizationHeader().value());
-  // Token is expired, resulting in another call to Refresh.
-  EXPECT_EQ(std::make_pair(std::string{"Authorization"},
-                           std::string{"Type access-token-r2"}),
-            credentials.AuthorizationHeader().value());
-  // Token still valid; should return cached token instead of calling Refresh.
-  EXPECT_EQ(std::make_pair(std::string{"Authorization"},
-                           std::string{"Type access-token-r2"}),
-            credentials.AuthorizationHeader().value());
 }
 
 /// @test Verify that `nlohmann::json::parse()` failures are reported as
@@ -573,116 +499,6 @@ TEST(ServiceAccountCredentialsTest, ParseOptionalField) {
   ASSERT_STATUS_OK(actual.status());
 }
 
-/// @test Verify that refreshing a credential updates the timestamps.
-TEST(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
-  ScopedEnvironment disable_self_signed_jwt(
-      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
-
-  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
-  ASSERT_STATUS_OK(info);
-
-  // NOLINTNEXTLINE(google-runtime-int)
-  auto request_assertion =
-      [&info](int timestamp,
-              std::vector<std::pair<std::string, std::string>> const& p) {
-        EXPECT_THAT(p, Contains(std::pair<std::string, std::string>(
-                           "grant_type", kGrantParamUnescaped)));
-
-        auto assertion =
-            std::find_if(p.begin(), p.end(),
-                         [](std::pair<std::string, std::string> const& e) {
-                           return e.first == "assertion";
-                         });
-        ASSERT_NE(assertion, p.end());
-
-        std::vector<std::string> const tokens =
-            absl::StrSplit(assertion->second, '.');
-        std::string const& encoded_header = tokens[0];
-        std::string const& encoded_payload = tokens[1];
-
-        auto header_bytes =
-            internal::UrlsafeBase64Decode(encoded_header).value();
-        std::string header_str{header_bytes.begin(), header_bytes.end()};
-        auto payload_bytes =
-            internal::UrlsafeBase64Decode(encoded_payload).value();
-        std::string payload_str{payload_bytes.begin(), payload_bytes.end()};
-
-        auto header = nlohmann::json::parse(header_str);
-        EXPECT_EQ("RS256", header.value("alg", ""));
-        EXPECT_EQ("JWT", header.value("typ", ""));
-        EXPECT_EQ(info->private_key_id, header.value("kid", ""));
-
-        auto payload = nlohmann::json::parse(payload_str);
-        EXPECT_EQ(timestamp, payload.value("iat", 0));
-        EXPECT_EQ(timestamp + 3600, payload.value("exp", 0));
-        EXPECT_EQ(info->client_email, payload.value("iss", ""));
-        EXPECT_EQ(info->token_uri, payload.value("aud", ""));
-      };
-
-  // Set up the mock request / response for the first Refresh().
-  auto const clock_value_1 = 10000;
-  auto const clock_value_2 = 20000;
-
-  auto response = [&](int timestamp) {
-    std::string token = "mock-token-value-" + std::to_string(timestamp);
-    nlohmann::json response{{"token_type", "Mock-Type"},
-                            {"access_token", token},
-                            {"expires_in", 3600}};
-    return response.dump();
-  };
-
-  auto* mock_response1 = new MockRestResponse();
-  EXPECT_CALL(*mock_response1, StatusCode)
-      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response1), ExtractPayload).WillOnce([&] {
-    return MakeMockHttpPayloadSuccess(response(clock_value_1));
-  });
-
-  auto* mock_response2 = new MockRestResponse();
-  EXPECT_CALL(*mock_response2, StatusCode)
-      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response2), ExtractPayload).WillOnce([&] {
-    return MakeMockHttpPayloadSuccess(response(clock_value_2));
-  });
-
-  auto mock = absl::make_unique<MockRestClient>();
-  EXPECT_CALL(
-      *mock,
-      Post(_, A<std::vector<std::pair<std::string, std::string>> const&>()))
-      .WillOnce(
-          [&](rest_internal::RestRequest const&,
-              std::vector<std::pair<std::string, std::string>> const& payload) {
-            request_assertion(clock_value_1, payload);
-            return std::unique_ptr<rest_internal::RestResponse>(mock_response1);
-          })
-      .WillOnce(
-          [&](rest_internal::RestRequest const&,
-              std::vector<std::pair<std::string, std::string>> const& payload) {
-            request_assertion(clock_value_2, payload);
-            return std::unique_ptr<rest_internal::RestResponse>(mock_response2);
-          });
-
-  FakeClock::now_value_ = clock_value_1;
-  ServiceAccountCredentials credentials(*info, {}, std::move(mock),
-                                        FakeClock::now);
-  // Call Refresh to obtain the access token for our authorization header.
-  auto authorization_header = credentials.AuthorizationHeader();
-  ASSERT_STATUS_OK(authorization_header);
-  EXPECT_EQ(std::make_pair(std::string{"Authorization"},
-                           std::string{"Mock-Type mock-token-value-10000"}),
-            authorization_header.value());
-
-  // Advance the clock past the expiration time of the token and then get a
-  // new header.
-  FakeClock::now_value_ = clock_value_2;
-  EXPECT_GT(clock_value_2 - clock_value_1, 2 * 3600);
-  authorization_header = credentials.AuthorizationHeader();
-  ASSERT_STATUS_OK(authorization_header);
-  EXPECT_EQ(std::make_pair(std::string{"Authorization"},
-                           std::string{"Mock-Type mock-token-value-20000"}),
-            authorization_header.value());
-}
-
 /// @test Verify that we can create sign blobs using a service account.
 TEST(ServiceAccountCredentialsTest, SignBlob) {
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
@@ -748,9 +564,8 @@ TEST(ServiceAccountCredentialsTest, ClientId) {
 TEST(ServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
-  auto const clock_value_1 = 10000;
-  FakeClock::reset_clock(clock_value_1);
-  auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
+  auto const now = std::chrono::system_clock::now();
+  auto components = AssertionComponentsFromInfo(*info, now);
 
   auto header = nlohmann::json::parse(components.first);
   EXPECT_EQ("RS256", header.value("alg", ""));
@@ -758,8 +573,10 @@ TEST(ServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
   EXPECT_EQ(info->private_key_id, header.value("kid", ""));
 
   auto payload = nlohmann::json::parse(components.second);
-  EXPECT_EQ(clock_value_1, payload.value("iat", 0));
-  EXPECT_EQ(clock_value_1 + 3600, payload.value("exp", 0));
+  EXPECT_EQ(std::chrono::system_clock::to_time_t(now), payload.value("iat", 0));
+  EXPECT_EQ(
+      std::chrono::system_clock::to_time_t(now + std::chrono::seconds(3600)),
+      payload.value("exp", 0));
   EXPECT_EQ(info->client_email, payload.value("iss", ""));
   EXPECT_EQ(info->token_uri, payload.value("aud", ""));
 }
@@ -769,9 +586,8 @@ TEST(ServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
 TEST(ServiceAccountCredentialsTest, MakeJWTAssertion) {
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
-  FakeClock::reset_clock(kFixedJwtTimestamp);
-  auto const tp = FakeClock::now();
 
+  auto const tp = std::chrono::system_clock::from_time_t(kFixedJwtTimestamp);
   auto components = AssertionComponentsFromInfo(*info, tp);
   auto assertion =
       MakeJWTAssertion(components.first, components.second, info->private_key);
@@ -815,12 +631,11 @@ TEST(ServiceAccountCredentialsTest, MakeJWTAssertion) {
 TEST(ServiceAccountCredentialsTest, CreateServiceAccountRefreshPayload) {
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
-  FakeClock::reset_clock(kFixedJwtTimestamp);
-  auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
+  auto const now = std::chrono::system_clock::now();
+  auto components = AssertionComponentsFromInfo(*info, now);
   auto assertion =
       MakeJWTAssertion(components.first, components.second, info->private_key);
-  auto actual_payload =
-      CreateServiceAccountRefreshPayload(*info, FakeClock::now());
+  auto actual_payload = CreateServiceAccountRefreshPayload(*info, now);
 
   EXPECT_THAT(actual_payload, Contains(std::pair<std::string, std::string>(
                                   "assertion", assertion)));
@@ -854,15 +669,13 @@ TEST(ServiceAccountCredentialsTest,
   EXPECT_CALL(std::move(*mock_response2), ExtractPayload)
       .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(r2))));
 
-  FakeClock::reset_clock(1000);
-  auto status =
-      ParseServiceAccountRefreshResponse(*mock_response1, FakeClock::now());
+  auto const now = std::chrono::system_clock::now();
+  auto status = ParseServiceAccountRefreshResponse(*mock_response1, now);
   EXPECT_THAT(status,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Could not find all required fields")));
 
-  status =
-      ParseServiceAccountRefreshResponse(*mock_response2, FakeClock::now());
+  status = ParseServiceAccountRefreshResponse(*mock_response2, now);
   EXPECT_THAT(status,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("Could not find all required fields")));
@@ -873,6 +686,7 @@ TEST(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
   ScopedEnvironment disable_self_signed_jwt(
       "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
 
+  auto const expires_in = 1000;
   std::string r1 = R"""({
     "token_type": "Type",
     "access_token": "access-token-r1",
@@ -885,17 +699,12 @@ TEST(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
   EXPECT_CALL(std::move(*mock_response1), ExtractPayload)
       .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(r1))));
 
-  auto expires_in = 1000;
-  FakeClock::reset_clock(2000);
-  auto status =
-      ParseServiceAccountRefreshResponse(*mock_response1, FakeClock::now());
+  auto const now = std::chrono::system_clock::now();
+  auto status = ParseServiceAccountRefreshResponse(*mock_response1, now);
   EXPECT_STATUS_OK(status);
   auto token = *status;
-  EXPECT_EQ(std::chrono::time_point_cast<std::chrono::seconds>(token.expiration)
-                .time_since_epoch()
-                .count(),
-            FakeClock::now_value_ + expires_in);
-  EXPECT_EQ(token.token, "Type access-token-r1");
+  EXPECT_EQ(token.expiration, now + std::chrono::seconds(expires_in));
+  EXPECT_EQ(token.token, "access-token-r1");
 }
 
 }  // namespace
