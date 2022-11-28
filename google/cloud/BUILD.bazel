@@ -27,12 +27,43 @@ capture_build_info(
     ],
 )
 
+config_setting(
+    name = "enable_open_telemetry_valid",
+    flag_values = {
+        "//:experimental-open_telemetry": "true",
+        "@io_opentelemetry_cpp//api:with_abseil": "true",
+    },
+)
+
+config_setting(
+    name = "disable_open_telemetry",
+    flag_values = {"//:experimental-open_telemetry": "false"},
+)
+
 load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
 
 cc_library(
     name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
+    target_compatible_with = select(
+        {
+            ":enable_open_telemetry_valid": [],
+            ":disable_open_telemetry": [],
+        },
+        # else, OpenTelemetry is enabled, but with an invalid configuration.
+        no_match_error = """
+
+
+You requested OpenTelemetry support for `google-cloud-cpp`, but OpenTelemetry is
+configured without Abseil support. This configuration will result in ODR
+violations, and possibly build-time errors, as OpenTelemetry redefines Abseil
+symbols in this case, and `google-cloud-cpp` uses Abseil directly too.
+
+To fix this problem, supply the `--@io_opentelemetry_cpp//api:with_abseil` flag
+to your build command, or set this value in your `.bazelrc` file(s).
+""",
+    ),
     visibility = [
         ":__subpackages__",
         "//:__pkg__",
