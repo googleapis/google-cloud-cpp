@@ -394,7 +394,7 @@ TEST_F(AuthorizedUserCredentialsTest,
                        HasSubstr("Could not find all required fields")));
 }
 
-/// @test Parsing a refresh response yields a TemporaryToken.
+/// @test Parsing a refresh response yields an access token.
 TEST_F(AuthorizedUserCredentialsTest, ParseAuthorizedUserRefreshResponse) {
   std::string r1 = R"""({
     "token_type": "Type",

@@ -66,8 +66,7 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
-/// Parses a refresh response JSON string and uses the current time to create a
-/// TemporaryToken.
+/// Parses a refresh response JSON string to create an access token.
 StatusOr<internal::AccessToken> ParseServiceAccountRefreshResponse(
     rest_internal::RestResponse& response,
     std::chrono::system_clock::time_point now);

@@ -46,8 +46,7 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
-/// Parses a refresh response JSON string into an authorization header. The
-/// header and the current time (for the expiration) form a TemporaryToken.
+/// Parses a refresh response JSON string into an access token.
 StatusOr<internal::AccessToken> ParseAuthorizedUserRefreshResponse(
     rest_internal::RestResponse& response,
     std::chrono::system_clock::time_point now);

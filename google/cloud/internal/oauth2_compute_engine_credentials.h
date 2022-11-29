@@ -49,8 +49,7 @@ StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
  */
 ServiceAccountMetadata ParseMetadataServerResponse(std::string const& payload);
 
-/// Parses a refresh response JSON string into an authorization header. The
-/// header and the current time (for the expiration) form a TemporaryToken.
+/// Parses a refresh response JSON string into an access token.
 StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
     rest_internal::RestResponse& response,
     std::chrono::system_clock::time_point now);

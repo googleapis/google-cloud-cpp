@@ -185,7 +185,7 @@ TEST_F(ComputeEngineCredentialsTest,
                        HasSubstr("Could not find all required fields")));
 }
 
-/// @test Parsing a refresh response yields a TemporaryToken.
+/// @test Parsing a refresh response yields an access token.
 TEST_F(ComputeEngineCredentialsTest, ParseComputeEngineRefreshResponse) {
   std::string token_info_resp = R"""({
       "access_token": "mysupersecrettoken",

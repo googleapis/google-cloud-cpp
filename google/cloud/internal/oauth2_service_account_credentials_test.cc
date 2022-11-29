@@ -920,7 +920,7 @@ TEST(ServiceAccountCredentialsTest,
                        HasSubstr("Could not find all required fields")));
 }
 
-/// @test Parsing a refresh response yields a TemporaryToken.
+/// @test Parsing a refresh response yields an access token.
 TEST(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
   ScopedEnvironment disable_self_signed_jwt(
       "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
