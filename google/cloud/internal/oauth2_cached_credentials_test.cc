@@ -156,7 +156,7 @@ TEST(CachedCredentials, SignBlob) {
   CachedCredentials tested(mock);
   auto actual = tested.SignBlob("test-account", "test-blob");
   ASSERT_STATUS_OK(actual);
-  EXPECT_THAT(*actual, ElementsAreArray(expected.begin(), expected.end()));
+  EXPECT_THAT(*actual, ElementsAreArray(expected));
 }
 
 TEST(CachedCredentials, AccountEmail) {

@@ -44,8 +44,8 @@ StatusOr<internal::AccessToken> CachedCredentials::GetToken(
   if (!ExpiringSoon(token_, now)) return token_;
   auto refreshed = impl_->GetToken(now);
   if (!refreshed) {
-    // Refreshing the token may have failed, but the old refreshed may still
-    // be usable
+    // Refreshing the token may have failed, but the old token may still be
+    // usable
     if (Expired(token_, now)) return std::move(refreshed).status();
     return token_;
   }
