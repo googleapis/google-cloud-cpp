@@ -46,11 +46,10 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
-/// Parses a refresh response JSON string into an authorization header. The
-/// header and the current time (for the expiration) form a TemporaryToken.
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-ParseAuthorizedUserRefreshResponse(rest_internal::RestResponse& response,
-                                   std::chrono::system_clock::time_point now);
+/// Parses a refresh response JSON string into an access token.
+StatusOr<internal::AccessToken> ParseAuthorizedUserRefreshResponse(
+    rest_internal::RestResponse& response,
+    std::chrono::system_clock::time_point now);
 
 /**
  * Wrapper class for Google OAuth 2.0 user account credentials.
@@ -94,7 +93,7 @@ class AuthorizedUserCredentials : public Credentials {
   StatusOr<std::pair<std::string, std::string>> AuthorizationHeader() override;
 
  private:
-  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh();
+  StatusOr<internal::AccessToken> Refresh();
 
   AuthorizedUserCredentialsInfo info_;
   Options options_;

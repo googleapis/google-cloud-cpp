@@ -394,7 +394,7 @@ TEST_F(AuthorizedUserCredentialsTest,
                        HasSubstr("Could not find all required fields")));
 }
 
-/// @test Parsing a refresh response yields a TemporaryToken.
+/// @test Parsing a refresh response yields an access token.
 TEST_F(AuthorizedUserCredentialsTest, ParseAuthorizedUserRefreshResponse) {
   std::string r1 = R"""({
     "token_type": "Type",
@@ -424,15 +424,14 @@ TEST_F(AuthorizedUserCredentialsTest, ParseAuthorizedUserRefreshResponse) {
   EXPECT_STATUS_OK(status);
   auto token = *status;
   EXPECT_EQ(
-      std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
+      std::chrono::time_point_cast<std::chrono::seconds>(token.expiration)
           .time_since_epoch()
           .count(),
       std::chrono::time_point_cast<std::chrono::seconds>(
           std::chrono::system_clock::from_time_t(clock_value + expires_in))
           .time_since_epoch()
           .count());
-  EXPECT_EQ(token.token, std::make_pair(std::string{"Authorization"},
-                                        std::string{"Type access-token-r1"}));
+  EXPECT_EQ(token.token, "Type access-token-r1");
 }
 
 }  // namespace

@@ -59,9 +59,9 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
       credentials.value("token_uri", default_token_uri)};
 }
 
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-ParseAuthorizedUserRefreshResponse(rest_internal::RestResponse& response,
-                                   std::chrono::system_clock::time_point now) {
+StatusOr<internal::AccessToken> ParseAuthorizedUserRefreshResponse(
+    rest_internal::RestResponse& response,
+    std::chrono::system_clock::time_point now) {
   auto status_code = response.StatusCode();
   auto payload = rest_internal::ReadAll(std::move(response).ExtractPayload());
   if (!payload.ok()) return std::move(payload).status();
@@ -82,8 +82,7 @@ ParseAuthorizedUserRefreshResponse(rest_internal::RestResponse& response,
   header_value += access_token.value("access_token", "");
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
   auto new_expiration = now + expires_in;
-  return RefreshingCredentialsWrapper::TemporaryToken{
-      std::make_pair("Authorization", std::move(header_value)), new_expiration};
+  return internal::AccessToken{std::move(header_value), new_expiration};
 }
 
 AuthorizedUserCredentials::AuthorizedUserCredentials(
@@ -106,8 +105,7 @@ AuthorizedUserCredentials::AuthorizationHeader() {
   return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
 }
 
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-AuthorizedUserCredentials::Refresh() {
+StatusOr<internal::AccessToken> AuthorizedUserCredentials::Refresh() {
   rest_internal::RestRequest request;
   request.AddHeader("content-type", "application/x-www-form-urlencoded");
   std::vector<std::pair<std::string, std::string>> form_data;

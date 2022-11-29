@@ -185,7 +185,7 @@ TEST_F(ComputeEngineCredentialsTest,
                        HasSubstr("Could not find all required fields")));
 }
 
-/// @test Parsing a refresh response yields a TemporaryToken.
+/// @test Parsing a refresh response yields an access token.
 TEST_F(ComputeEngineCredentialsTest, ParseComputeEngineRefreshResponse) {
   std::string token_info_resp = R"""({
       "access_token": "mysupersecrettoken",
@@ -215,14 +215,11 @@ TEST_F(ComputeEngineCredentialsTest, ParseComputeEngineRefreshResponse) {
       *mock_response, std::chrono::system_clock::from_time_t(clock_value));
   EXPECT_STATUS_OK(status);
   auto token = *status;
-  EXPECT_EQ(
-      std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
-          .time_since_epoch()
-          .count(),
-      clock_value + expires_in);
-  EXPECT_EQ(token.token,
-            std::make_pair(std::string{"Authorization"},
-                           std::string{"tokentype mysupersecrettoken"}));
+  EXPECT_EQ(std::chrono::time_point_cast<std::chrono::seconds>(token.expiration)
+                .time_since_epoch()
+                .count(),
+            clock_value + expires_in);
+  EXPECT_EQ(token.token, "tokentype mysupersecrettoken");
 }
 
 /// @test Parsing a metadata server response yields a ServiceAccountMetadata.

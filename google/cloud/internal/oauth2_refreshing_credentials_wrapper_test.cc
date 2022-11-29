@@ -39,12 +39,11 @@ TEST(RefreshingCredentialsWrapper, IsValid) {
   RefreshingCredentialsWrapper w(mock_current_time_fn.AsStdFunction());
   std::pair<std::string, std::string> const auth_token =
       std::make_pair("Authorization", "foo");
-  auto refresh_fn =
-      [&]() -> StatusOr<RefreshingCredentialsWrapper::TemporaryToken> {
-    RefreshingCredentialsWrapper::TemporaryToken token;
-    token.token = auth_token;
-    token.expiration_time = now + minutes(60);
-    return token;
+  auto refresh_fn = [&] {
+    internal::AccessToken token;
+    token.token = auth_token.second;
+    token.expiration = now + minutes(60);
+    return make_status_or(token);
   };
   auto token = w.AuthorizationHeader(refresh_fn);
   EXPECT_TRUE(w.IsValid());
@@ -69,17 +68,14 @@ TEST(RefreshingCredentialsWrapper, RefreshTokenSuccess) {
 
   // Test that we only call the refresh_fn on the first call to
   // AuthorizationHeader.
-  testing::MockFunction<absl::FunctionRef<
-      StatusOr<RefreshingCredentialsWrapper::TemporaryToken>()>>
+  testing::MockFunction<absl::FunctionRef<StatusOr<internal::AccessToken>()>>
       mock_refresh_fn;
-  EXPECT_CALL(mock_refresh_fn, Call())
-      .WillOnce(
-          [&]() -> StatusOr<RefreshingCredentialsWrapper::TemporaryToken> {
-            RefreshingCredentialsWrapper::TemporaryToken token;
-            token.token = auth_token;
-            token.expiration_time = now + minutes(60);
-            return token;
-          });
+  EXPECT_CALL(mock_refresh_fn, Call()).WillOnce([&] {
+    internal::AccessToken token;
+    token.token = auth_token.second;
+    token.expiration = now + minutes(60);
+    return make_status_or(token);
+  });
   auto token = w.AuthorizationHeader(mock_refresh_fn.AsStdFunction());
   ASSERT_THAT(token, IsOk());
   EXPECT_THAT(*token, Eq(auth_token));
@@ -90,8 +86,7 @@ TEST(RefreshingCredentialsWrapper, RefreshTokenSuccess) {
 }
 
 TEST(RefreshingCredentialsWrapper, RefreshTokenFailure) {
-  auto refresh_fn =
-      [&]() -> StatusOr<RefreshingCredentialsWrapper::TemporaryToken> {
+  auto refresh_fn = [&]() -> StatusOr<internal::AccessToken> {
     return Status(StatusCode::kInvalidArgument, {}, {});
   };
   RefreshingCredentialsWrapper w;
@@ -116,17 +111,15 @@ TEST(RefreshingCredentialsWrapper, RefreshTokenFailureValidToken) {
   std::pair<std::string, std::string> const auth_token =
       std::make_pair("Authorization", "foo");
   RefreshingCredentialsWrapper w(mock_current_time_fn.AsStdFunction());
-  auto refresh_fn =
-      [&]() -> StatusOr<RefreshingCredentialsWrapper::TemporaryToken> {
-    RefreshingCredentialsWrapper::TemporaryToken token;
-    token.token = auth_token;
-    token.expiration_time = expire_time;
-    return token;
+  auto refresh_fn = [&] {
+    internal::AccessToken token;
+    token.token = auth_token.second;
+    token.expiration = expire_time;
+    return make_status_or(token);
   };
   auto token = w.AuthorizationHeader(refresh_fn);
 
-  auto failing_refresh_fn =
-      [&]() -> StatusOr<RefreshingCredentialsWrapper::TemporaryToken> {
+  auto failing_refresh_fn = []() -> StatusOr<internal::AccessToken> {
     return Status(StatusCode::kInvalidArgument, {}, {});
   };
   token = w.AuthorizationHeader(failing_refresh_fn);
@@ -146,17 +139,15 @@ TEST(RefreshingCredentialsWrapper, RefreshTokenFailureInvalidToken) {
   std::pair<std::string, std::string> const auth_token =
       std::make_pair("Authorization", "foo");
   RefreshingCredentialsWrapper w(mock_current_time_fn.AsStdFunction());
-  auto refresh_fn =
-      [&]() -> StatusOr<RefreshingCredentialsWrapper::TemporaryToken> {
-    RefreshingCredentialsWrapper::TemporaryToken token;
-    token.token = auth_token;
-    token.expiration_time = expire_time;
-    return token;
+  auto refresh_fn = [&] {
+    internal::AccessToken token;
+    token.token = auth_token.second;
+    token.expiration = expire_time;
+    return make_status_or(token);
   };
   auto token = w.AuthorizationHeader(refresh_fn);
 
-  auto failing_refresh_fn =
-      [&]() -> StatusOr<RefreshingCredentialsWrapper::TemporaryToken> {
+  auto failing_refresh_fn = [&]() -> StatusOr<internal::AccessToken> {
     return Status(StatusCode::kInvalidArgument, {}, {});
   };
   token = w.AuthorizationHeader(failing_refresh_fn);

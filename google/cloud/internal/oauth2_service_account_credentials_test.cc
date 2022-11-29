@@ -920,7 +920,7 @@ TEST(ServiceAccountCredentialsTest,
                        HasSubstr("Could not find all required fields")));
 }
 
-/// @test Parsing a refresh response yields a TemporaryToken.
+/// @test Parsing a refresh response yields an access token.
 TEST(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
   ScopedEnvironment disable_self_signed_jwt(
       "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
@@ -951,13 +951,11 @@ TEST(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
       ParseServiceAccountRefreshResponse(*mock_response1, FakeClock::now());
   EXPECT_STATUS_OK(status);
   auto token = *status;
-  EXPECT_EQ(
-      std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
-          .time_since_epoch()
-          .count(),
-      FakeClock::now_value_ + expires_in);
-  EXPECT_EQ(token.token, std::make_pair(std::string{"Authorization"},
-                                        std::string{"Type access-token-r1"}));
+  EXPECT_EQ(std::chrono::time_point_cast<std::chrono::seconds>(token.expiration)
+                .time_since_epoch()
+                .count(),
+            FakeClock::now_value_ + expires_in);
+  EXPECT_EQ(token.token, "Type access-token-r1");
 }
 
 }  // namespace
