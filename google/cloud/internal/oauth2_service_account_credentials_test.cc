@@ -951,13 +951,11 @@ TEST(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
       ParseServiceAccountRefreshResponse(*mock_response1, FakeClock::now());
   EXPECT_STATUS_OK(status);
   auto token = *status;
-  EXPECT_EQ(
-      std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
-          .time_since_epoch()
-          .count(),
-      FakeClock::now_value_ + expires_in);
-  EXPECT_EQ(token.token, std::make_pair(std::string{"Authorization"},
-                                        std::string{"Type access-token-r1"}));
+  EXPECT_EQ(std::chrono::time_point_cast<std::chrono::seconds>(token.expiration)
+                .time_since_epoch()
+                .count(),
+            FakeClock::now_value_ + expires_in);
+  EXPECT_EQ(token.token, "Type access-token-r1");
 }
 
 }  // namespace

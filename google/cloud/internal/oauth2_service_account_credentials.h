@@ -68,9 +68,9 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
 
 /// Parses a refresh response JSON string and uses the current time to create a
 /// TemporaryToken.
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-ParseServiceAccountRefreshResponse(rest_internal::RestResponse& response,
-                                   std::chrono::system_clock::time_point now);
+StatusOr<internal::AccessToken> ParseServiceAccountRefreshResponse(
+    rest_internal::RestResponse& response,
+    std::chrono::system_clock::time_point now);
 
 /**
  * Splits a ServiceAccountCredentialsInfo into header and payload components
@@ -237,10 +237,9 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
 
  private:
   bool UseOAuth();
-  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh();
-  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshOAuth() const;
-  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshSelfSigned()
-      const;
+  StatusOr<internal::AccessToken> Refresh();
+  StatusOr<internal::AccessToken> RefreshOAuth() const;
+  StatusOr<internal::AccessToken> RefreshSelfSigned() const;
 
   ServiceAccountCredentialsInfo info_;
   CurrentTimeFn current_time_fn_;

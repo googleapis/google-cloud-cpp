@@ -51,9 +51,9 @@ ServiceAccountMetadata ParseMetadataServerResponse(std::string const& payload);
 
 /// Parses a refresh response JSON string into an authorization header. The
 /// header and the current time (for the expiration) form a TemporaryToken.
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-ParseComputeEngineRefreshResponse(rest_internal::RestResponse& response,
-                                  std::chrono::system_clock::time_point now);
+StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
+    rest_internal::RestResponse& response,
+    std::chrono::system_clock::time_point now);
 
 /**
  * Wrapper class for Google OAuth 2.0 GCE instance service account credentials.
@@ -145,7 +145,7 @@ class ComputeEngineCredentials : public Credentials {
   /**
    * Attempts to refresh the credentials.
    */
-  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() const;
+  StatusOr<internal::AccessToken> Refresh() const;
 
   mutable std::mutex mu_;
   CurrentTimeFn current_time_fn_;

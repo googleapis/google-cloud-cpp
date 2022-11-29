@@ -44,17 +44,16 @@ class RefreshingCredentialsWrapper {
   template <typename RefreshFunctor>
   StatusOr<std::string> AuthorizationHeader(
       std::chrono::system_clock::time_point, RefreshFunctor refresh_fn) const {
-    auto refresh_fn_wrapper = [refresh_fn]()
-        -> StatusOr<
-            oauth2_internal::RefreshingCredentialsWrapper::TemporaryToken> {
+    auto refresh_fn_wrapper =
+        [refresh_fn]() -> StatusOr<google::cloud::internal::AccessToken> {
       auto temp_token = refresh_fn();
       if (!temp_token.ok()) return temp_token.status();
       auto token = SplitToken(temp_token->token);
-      return oauth2_internal::RefreshingCredentialsWrapper::TemporaryToken{
-          std::move(token), temp_token->expiration_time};
+      return google::cloud::internal::AccessToken{std::move(token.second),
+                                                  temp_token->expiration_time};
     };
     auto header = impl_->AuthorizationHeader(refresh_fn_wrapper);
-    if (!header.ok()) return header.status();
+    if (!header.ok()) return std::move(header).status();
     return header->first + ": " + header->second;
   }
 

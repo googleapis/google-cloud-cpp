@@ -36,15 +36,13 @@ std::pair<std::string, std::string> RefreshingCredentialsWrapper::SplitToken(
 
 bool RefreshingCredentialsWrapper::IsExpired(
     std::chrono::system_clock::time_point now) const {
-  return now > (impl_->temporary_token_.expiration_time -
-                GoogleOAuthAccessTokenExpirationSlack());
+  return now >
+         (impl_->token_.expiration - GoogleOAuthAccessTokenExpirationSlack());
 }
 
 bool RefreshingCredentialsWrapper::IsValid(
     std::chrono::system_clock::time_point now) const {
-  return (!impl_->temporary_token_.token.first.empty() ||
-          !impl_->temporary_token_.token.second.empty()) &&
-         !IsExpired(now);
+  return !impl_->token_.token.empty() && !IsExpired(now);
 }
 
 }  // namespace oauth2
