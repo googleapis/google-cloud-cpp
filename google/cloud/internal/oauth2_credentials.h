@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_CREDENTIALS_H
 
+#include "google/cloud/internal/access_token.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -25,6 +26,7 @@ namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Interface for OAuth 2.0 credentials for use with Google's Unified Auth Client
  * (GUAC) library. Internally, GUAC credentials are mapped to the appropriate
@@ -39,6 +41,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Credentials {
  public:
   virtual ~Credentials() = default;
+
+  /**
+   * Obtains an access token.
+   *
+   * Most implementations will cache the access token and (if possible) refresh
+   * the token before it expires. Refreshing the token may fail, as it often
+   * requires making HTTP requests.  In that case, the last error is returned.
+   *
+   * @param tp the current time, most callers should provide
+   *     `std::chrono::system_clock::now()`. In tests, other value may be
+   *     considered.
+   */
+  virtual StatusOr<internal::AccessToken> GetToken(
+      std::chrono::system_clock::time_point tp);
 
   /**
    * Attempts to obtain a value for the Authorization HTTP header.
