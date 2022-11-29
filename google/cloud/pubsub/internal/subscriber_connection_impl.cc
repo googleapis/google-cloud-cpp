@@ -16,6 +16,7 @@
 #include "google/cloud/pubsub/internal/ack_handler_wrapper.h"
 #include "google/cloud/pubsub/internal/default_pull_ack_handler.h"
 #include "google/cloud/pubsub/internal/subscription_session.h"
+#include "google/cloud/pubsub/options.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/retry_loop.h"
 
@@ -25,10 +26,8 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SubscriberConnectionImpl::SubscriberConnectionImpl(
-    pubsub::Subscription subscription, Options opts,
-    std::shared_ptr<pubsub_internal::SubscriberStub> stub)
-    : subscription_(std::move(subscription)),
-      opts_(std::move(opts)),
+    Options opts, std::shared_ptr<pubsub_internal::SubscriberStub> stub)
+    : opts_(std::move(opts)),
       stub_(std::move(stub)),
       background_(internal::MakeBackgroundThreadsFactory(opts_)()),
       generator_(internal::MakeDefaultPRNG()) {}
@@ -36,24 +35,26 @@ SubscriberConnectionImpl::SubscriberConnectionImpl(
 SubscriberConnectionImpl::~SubscriberConnectionImpl() = default;
 
 future<Status> SubscriberConnectionImpl::Subscribe(SubscribeParams p) {
-  return CreateSubscriptionSession(
-      subscription_, google::cloud::internal::CurrentOptions(), stub_,
-      background_->cq(), MakeClientId(), std::move(p.callback));
+  return CreateSubscriptionSession(google::cloud::internal::CurrentOptions(),
+                                   stub_, background_->cq(), MakeClientId(),
+                                   std::move(p.callback));
 }
 
 future<Status> SubscriberConnectionImpl::ExactlyOnceSubscribe(
     ExactlyOnceSubscribeParams p) {
-  return CreateSubscriptionSession(
-      subscription_, google::cloud::internal::CurrentOptions(), stub_,
-      background_->cq(), MakeClientId(), std::move(p.callback));
+  return CreateSubscriptionSession(google::cloud::internal::CurrentOptions(),
+                                   stub_, background_->cq(), MakeClientId(),
+                                   std::move(p.callback));
 }
 
 StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
+  auto const& current = internal::CurrentOptions();
+  auto subscription = current.get<pubsub::SubscriptionOption>();
+
   google::pubsub::v1::PullRequest request;
-  request.set_subscription(subscription_.FullName());
+  request.set_subscription(subscription.FullName());
   request.set_max_messages(1);
 
-  auto const& current = internal::CurrentOptions();
   auto response = google::cloud::internal::RetryLoop(
       current.get<pubsub::RetryPolicyOption>()->clone(),
       current.get<pubsub::BackoffPolicyOption>()->clone(),
@@ -70,7 +71,7 @@ StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
   auto received_message =
       std::move(response->mutable_received_messages()->at(0));
   auto impl = absl::make_unique<pubsub_internal::DefaultPullAckHandler>(
-      background_->cq(), stub_, current, subscription_,
+      background_->cq(), stub_, current, std::move(subscription),
       std::move(*received_message.mutable_ack_id()),
       received_message.delivery_attempt());
   auto message = pubsub_internal::FromProto(

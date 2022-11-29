@@ -29,8 +29,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
  public:
   explicit SubscriberConnectionImpl(
-      pubsub::Subscription subscription, Options opts,
-      std::shared_ptr<pubsub_internal::SubscriberStub> stub);
+      Options opts, std::shared_ptr<pubsub_internal::SubscriberStub> stub);
 
   ~SubscriberConnectionImpl() override;
 
@@ -45,7 +44,6 @@ class SubscriberConnectionImpl : public pubsub::SubscriberConnection {
  private:
   std::string MakeClientId();
 
-  pubsub::Subscription const subscription_;
   Options const opts_;
   std::shared_ptr<pubsub_internal::SubscriberStub> stub_;
   std::shared_ptr<BackgroundThreads> background_;

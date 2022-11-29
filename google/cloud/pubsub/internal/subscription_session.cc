@@ -192,12 +192,13 @@ class SubscriptionSessionImpl
 }  // namespace
 
 future<Status> CreateSubscriptionSession(
-    pubsub::Subscription const& subscription, Options const& opts,
-    std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
-    std::string client_id, pubsub::ApplicationCallback application_callback) {
+    Options const& opts, std::shared_ptr<SubscriberStub> const& stub,
+    CompletionQueue const& cq, std::string client_id,
+    pubsub::ApplicationCallback application_callback) {
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto batch = std::make_shared<StreamingSubscriptionBatchSource>(
-      cq, shutdown_manager, stub, subscription.FullName(), std::move(client_id),
+      cq, shutdown_manager, stub,
+      opts.get<pubsub::SubscriptionOption>().FullName(), std::move(client_id),
       opts);
   auto lease_management = SubscriptionLeaseManagement::Create(
       cq, shutdown_manager, std::move(batch),
@@ -210,13 +211,13 @@ future<Status> CreateSubscriptionSession(
 }
 
 future<Status> CreateSubscriptionSession(
-    pubsub::Subscription const& subscription, Options const& opts,
-    std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
-    std::string client_id,
+    Options const& opts, std::shared_ptr<SubscriberStub> const& stub,
+    CompletionQueue const& cq, std::string client_id,
     pubsub::ExactlyOnceApplicationCallback application_callback) {
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto batch = std::make_shared<StreamingSubscriptionBatchSource>(
-      cq, shutdown_manager, stub, subscription.FullName(), std::move(client_id),
+      cq, shutdown_manager, stub,
+      opts.get<pubsub::SubscriptionOption>().FullName(), std::move(client_id),
       opts);
   auto lease_management = SubscriptionLeaseManagement::Create(
       cq, shutdown_manager, std::move(batch),
