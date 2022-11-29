@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/subscriber_connection.h"
+#include "google/cloud/pubsub/ack_handler.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"

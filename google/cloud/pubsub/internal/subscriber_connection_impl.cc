@@ -48,8 +48,7 @@ future<Status> SubscriberConnectionImpl::ExactlyOnceSubscribe(
       background_->cq(), MakeClientId(), std::move(p.callback));
 }
 
-StatusOr<SubscriberConnectionImpl::PullResponse>
-SubscriberConnectionImpl::Pull() {
+StatusOr<pubsub::PullResponse> SubscriberConnectionImpl::Pull() {
   google::pubsub::v1::PullRequest request;
   request.set_subscription(subscription_.FullName());
   request.set_max_messages(1);
@@ -76,8 +75,8 @@ SubscriberConnectionImpl::Pull() {
       received_message.delivery_attempt());
   auto message = pubsub_internal::FromProto(
       std::move(*received_message.mutable_message()));
-  return PullResponse{pubsub::PullAckHandler(std::move(impl)),
-                      std::move(message)};
+  return pubsub::PullResponse{pubsub::PullAckHandler(std::move(impl)),
+                              std::move(message)};
 }
 
 Options SubscriberConnectionImpl::options() { return opts_; }
