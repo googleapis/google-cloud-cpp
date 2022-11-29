@@ -46,6 +46,13 @@ cc_library(
     name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
+    defines = select({
+        ":enable_open_telemetry_valid": [
+            # Enable OpenTelemetry features in google-cloud-cpp
+            "GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY",
+        ],
+        "//conditions:default": [],
+    }),
     target_compatible_with = select(
         {
             ":enable_open_telemetry_valid": [],
@@ -344,3 +351,19 @@ load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cp
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_protobuf_internal_unit_tests]
+
+cc_test(
+    name = "internal_open_telemetry_defines_test",
+    srcs = select({
+        ":enable_open_telemetry_valid": [
+            "internal/open_telemetry_enabled_test.cc",
+        ],
+        "//conditions:default": [
+            "internal/open_telemetry_disabled_test.cc",
+        ],
+    }),
+    deps = [
+        "//:common",
+        "@com_google_googletest//:gtest_main",
+    ],
+)

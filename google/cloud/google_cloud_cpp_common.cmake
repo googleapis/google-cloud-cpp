@@ -147,6 +147,15 @@ target_link_libraries(
            absl::variant
            Threads::Threads
            OpenSSL::Crypto)
+# Take a dependency on the OpenTelemetry API, if it is available.
+find_package(opentelemetry-cpp CONFIG)
+if (opentelemetry-cpp_FOUND)
+    target_link_libraries(google_cloud_cpp_common PUBLIC opentelemetry-cpp::api)
+    target_compile_definitions(
+        google_cloud_cpp_common
+        PUBLIC # Enable OpenTelemetry features in google-cloud-cpp
+               GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY)
+endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
     google_cloud_cpp_common PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -337,6 +346,16 @@ if (BUILD_TESTING)
     # Export the list of unit tests so the Bazel BUILD file can pick it up.
     export_list_to_bazel("google_cloud_cpp_common_unit_tests.bzl"
                          "google_cloud_cpp_common_unit_tests" YEAR "2018")
+
+    # Add a test to confirm GOOGLE_CLOUD_CPP_HAVE_OPEN_TELEMETRY is set when
+    # opentelemetry-cpp is present. The same switch is done in bazel.
+    if (opentelemetry-cpp_FOUND)
+        list(APPEND google_cloud_cpp_common_unit_tests
+             internal/open_telemetry_enabled_test.cc)
+    else ()
+        list(APPEND google_cloud_cpp_common_unit_tests
+             internal/open_telemetry_disabled_test.cc)
+    endif ()
 
     foreach (fname ${google_cloud_cpp_common_unit_tests})
         google_cloud_cpp_add_executable(target "common" "${fname}")
