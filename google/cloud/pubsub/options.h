@@ -369,7 +369,8 @@ struct ShutdownPollingPeriodOption {
  * Override the default subscription for a request.
  *
  * Some applications need to receive messages from multiple subscriptions. In
- * these case they can use this option to override the default
+ * this case they can use this option to override the default subscription
+ * in a `Subscriber::Pull()` or `Subscriber::Subscribe()` call.
  *
  * @ingroup pubsub-options
  */
