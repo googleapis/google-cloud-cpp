@@ -150,7 +150,6 @@ target_link_libraries(
 # Take a dependency on the OpenTelemetry API, if it is available.
 find_package(opentelemetry-cpp CONFIG)
 if (opentelemetry-cpp_FOUND)
-    target_link_libraries(google_cloud_cpp_common PUBLIC opentelemetry-cpp::api)
     target_compile_definitions(
         google_cloud_cpp_common
         PUBLIC # Enable OpenTelemetry features in google-cloud-cpp
