@@ -38,6 +38,10 @@ build --experimental_convenience_symlinks=ignore
 # in a random order to help expose undesirable interdependencies.
 test --test_env=GTEST_SHUFFLE --test_env=GTEST_RANDOM_SEED
 
+# By default, build the library with OpenTelemetry
+build --@io_opentelemetry_cpp//api:with_abseil
+build --//:experimental-open_telemetry
+
 # Clang Sanitizers, use with (for example):
 #
 # --client_env=CXX=clang++ --client_env=CC=clang --config asan
