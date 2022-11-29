@@ -89,6 +89,9 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
                                  UnifiedCredentialsOptionList, PolicyOptionList,
                                  SubscriberOptionList>(opts, __func__);
+  opts = internal::MergeOptions(
+      std::move(opts),
+      Options{}.set<SubscriptionOption>(std::move(subscription)));
   opts = pubsub_internal::DefaultSubscriberOptions(std::move(opts));
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
@@ -104,7 +107,7 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
   auto stub =
       DecorateSubscriberStub(opts, std::move(auth), std::move(children));
   return std::make_shared<pubsub_internal::SubscriberConnectionImpl>(
-      std::move(subscription), std::move(opts), std::move(stub));
+      std::move(opts), std::move(stub));
 }
 
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
@@ -134,8 +137,9 @@ std::shared_ptr<pubsub::SubscriberConnection> MakeTestSubscriberConnection(
       background->cq(), opts);
   auto stub =
       pubsub::DecorateSubscriberStub(opts, std::move(auth), std::move(stubs));
-  return std::make_shared<SubscriberConnectionImpl>(
-      std::move(subscription), std::move(opts), std::move(stub));
+  opts.set<pubsub::SubscriptionOption>(std::move(subscription));
+  return std::make_shared<SubscriberConnectionImpl>(std::move(opts),
+                                                    std::move(stub));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

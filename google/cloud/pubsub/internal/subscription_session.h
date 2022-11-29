@@ -36,14 +36,13 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 future<Status> CreateSubscriptionSession(
-    pubsub::Subscription const& subscription, Options const& opts,
-    std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
-    std::string client_id, pubsub::ApplicationCallback application_callback);
+    Options const& opts, std::shared_ptr<SubscriberStub> const& stub,
+    CompletionQueue const& cq, std::string client_id,
+    pubsub::ApplicationCallback application_callback);
 
 future<Status> CreateSubscriptionSession(
-    pubsub::Subscription const& subscription, Options const& opts,
-    std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
-    std::string client_id,
+    Options const& opts, std::shared_ptr<SubscriberStub> const& stub,
+    CompletionQueue const& cq, std::string client_id,
     pubsub::ExactlyOnceApplicationCallback application_callback);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

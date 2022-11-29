@@ -40,6 +40,7 @@
 
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/retry_policy.h"
+#include "google/cloud/pubsub/subscription.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/options.h"
 #include <chrono>
@@ -364,12 +365,25 @@ struct ShutdownPollingPeriodOption {
   using Type = std::chrono::milliseconds;
 };
 
+/**
+ * Override the default subscription for a request.
+ *
+ * Some applications need to receive messages from multiple subscriptions. In
+ * these case they can use this option to override the default
+ *
+ * @ingroup pubsub-options
+ */
+struct SubscriptionOption {
+  using Type = Subscription;
+};
+
 /// The list of options specific to subscribers.
+/// @ingroup pubsub-options
 using SubscriberOptionList =
     OptionList<MaxDeadlineTimeOption, MaxDeadlineExtensionOption,
                MinDeadlineExtensionOption, MaxOutstandingMessagesOption,
                MaxOutstandingBytesOption, MaxConcurrencyOption,
-               ShutdownPollingPeriodOption>;
+               ShutdownPollingPeriodOption, SubscriptionOption>;
 
 /**
  * Convenience function to initialize a

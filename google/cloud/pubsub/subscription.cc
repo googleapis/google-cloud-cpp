@@ -19,6 +19,8 @@ namespace cloud {
 namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+Subscription::Subscription() : Subscription("--invalid--", "--invalid--") {}
+
 std::string Subscription::FullName() const {
   return "projects/" + project_id() + "/subscriptions/" + subscription_id();
 }

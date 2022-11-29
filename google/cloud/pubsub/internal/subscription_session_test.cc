@@ -50,20 +50,22 @@ future<Status> CreateTestSubscriptionSession(
     pubsub::Subscription const& subscription, Options opts,
     std::shared_ptr<SubscriberStub> const& mock, CompletionQueue const& cq,
     pubsub::SubscriberConnection::SubscribeParams p) {
+  opts.set<pubsub::SubscriptionOption>(subscription);
   opts = DefaultSubscriberOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
-  return CreateSubscriptionSession(subscription, std::move(opts), mock, cq,
-                                   "test-client-id", std::move(p.callback));
+  return CreateSubscriptionSession(std::move(opts), mock, cq, "test-client-id",
+                                   std::move(p.callback));
 }
 
 future<Status> CreateTestSubscriptionSession(
     pubsub::Subscription const& subscription, Options opts,
     std::shared_ptr<SubscriberStub> const& mock, CompletionQueue const& cq,
     pubsub::ExactlyOnceApplicationCallback callback) {
+  opts.set<pubsub::SubscriptionOption>(subscription);
   opts = DefaultSubscriberOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
-  return CreateSubscriptionSession(subscription, std::move(opts), mock, cq,
-                                   "test-client-id", std::move(callback));
+  return CreateSubscriptionSession(std::move(opts), mock, cq, "test-client-id",
+                                   std::move(callback));
 }
 
 /// @test Verify callbacks are scheduled in the background threads.
