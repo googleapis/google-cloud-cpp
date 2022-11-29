@@ -34,6 +34,7 @@ class MockAlarmRegistry
 class MockAlarmRegistryCancelToken
     : public google::cloud::pubsublite_internal::AlarmRegistry::CancelToken {
  public:
+  // NOLINTNEXTLINE(bugprone-exception-escape)
   ~MockAlarmRegistryCancelToken() override { Destroy(); }
   MOCK_METHOD(void, Destroy, (), ());
 };
