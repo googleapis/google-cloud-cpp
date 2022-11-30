@@ -49,7 +49,34 @@ TEST(ScaffoldGeneratorTest, LibraryName) {
   EXPECT_EQ("test", LibraryName("google/cloud/test"));
   EXPECT_EQ("test", LibraryName("google/cloud/test/"));
   EXPECT_EQ("test", LibraryName("google/cloud/test/v1"));
+  EXPECT_EQ("test", LibraryName("google/cloud/test/v1/"));
+  EXPECT_EQ("test", LibraryName("google/cloud/test/foo/v1"));
   EXPECT_EQ("golden", LibraryName("blah/golden"));
+  EXPECT_EQ("golden", LibraryName("blah/golden/v1"));
+  EXPECT_EQ("service", LibraryName("foo/bar/service"));
+}
+
+TEST(ScaffoldGeneratorTest, LibraryPath) {
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test"));
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test/"));
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test/v1"));
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test/v1/"));
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test/foo/v1"));
+  EXPECT_EQ("blah/golden/", LibraryPath("blah/golden"));
+  EXPECT_EQ("blah/golden/", LibraryPath("blah/golden/v1"));
+  EXPECT_EQ("foo/bar/service/", LibraryPath("foo/bar/service"));
+}
+
+TEST(ScaffoldGeneratorTest, ServiceSubdirectory) {
+  EXPECT_EQ("", ServiceSubdirectory("google/cloud/test"));
+  EXPECT_EQ("", ServiceSubdirectory("google/cloud/test/"));
+  EXPECT_EQ("v1/", ServiceSubdirectory("google/cloud/test/v1"));
+  EXPECT_EQ("v1/", ServiceSubdirectory("google/cloud/test/v1/"));
+  EXPECT_EQ("foo/v1/", ServiceSubdirectory("google/cloud/test/foo/v1"));
+  EXPECT_EQ("", ServiceSubdirectory("blah/golden"));
+  EXPECT_EQ("v1/", ServiceSubdirectory("blah/golden/v1"));
+  EXPECT_EQ("v1/", ServiceSubdirectory("blah/golden/v1"));
+  EXPECT_EQ("", ServiceSubdirectory("foo/bar/service"));
 }
 
 class ScaffoldGenerator : public ::testing::Test {
