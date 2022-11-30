@@ -81,6 +81,11 @@ std::string ServiceSubdirectory(std::string const& product_path) {
   return absl::StrCat(parsed.service_subdirectory, "/");
 }
 
+std::string OptionsGroup(std::string const& product_path) {
+  return absl::StrCat(
+      absl::StrReplaceAll(LibraryPath(product_path), {{"/", "-"}}), "options");
+}
+
 std::string SiteRoot(
     google::cloud::cpp::generator::ServiceConfiguration const& service) {
   // TODO(#7605) - get a configurable source for this
@@ -121,8 +126,7 @@ std::map<std::string, std::string> ScaffoldVars(
   auto const library = LibraryName(service.product_path());
   vars["copyright_year"] = service.initial_copyright_year();
   vars["library"] = library;
-  vars["product_options_page"] =
-      absl::StrCat("google-cloud-", library, "-options");
+  vars["product_options_page"] = OptionsGroup(service.product_path());
   vars["site_root"] = SiteRoot(service);
   vars["library_prefix"] = experimental ? "experimental-" : "";
   vars["doxygen_version_suffix"] = experimental ? " (Experimental)" : "";
