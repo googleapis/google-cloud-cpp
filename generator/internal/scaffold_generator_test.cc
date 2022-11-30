@@ -80,11 +80,11 @@ TEST(ScaffoldGeneratorTest, ServiceSubdirectory) {
 }
 
 TEST(ScaffoldGeneratorTest, OptionsGroup) {
-  EXPECT_EQ("google-cloud-test-options", LibraryPath("google/cloud/test"));
-  EXPECT_EQ("google-cloud-test-options", LibraryPath("google/cloud/test/v1"));
-  EXPECT_EQ("blah-golden-options", LibraryPath("blah/golden"));
-  EXPECT_EQ("blah-golden-options", LibraryPath("blah/golden/v1"));
-  EXPECT_EQ("foo-bar-service-options", LibraryPath("foo/bar/service"));
+  EXPECT_EQ("google-cloud-test-options", OptionsGroup("google/cloud/test"));
+  EXPECT_EQ("google-cloud-test-options", OptionsGroup("google/cloud/test/v1"));
+  EXPECT_EQ("blah-golden-options", OptionsGroup("blah/golden"));
+  EXPECT_EQ("blah-golden-options", OptionsGroup("blah/golden/v1"));
+  EXPECT_EQ("foo-bar-service-options", OptionsGroup("foo/bar/service"));
 }
 
 class ScaffoldGenerator : public ::testing::Test {
