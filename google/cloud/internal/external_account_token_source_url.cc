@@ -47,7 +47,7 @@ StatusOr<std::string> FetchContents(HttpClientFactory const& client_factory,
                                     std::string const& url,
                                     Headers const& headers,
                                     internal::ErrorContext const& ec) {
-  auto client = client_factory();
+  auto client = client_factory(Options{});
   auto request = rest_internal::RestRequest(url);
   for (auto const& h : headers) request.AddHeader(h.first, h.second);
   auto status = client->Get(request);
@@ -120,7 +120,7 @@ StatusOr<Headers> ParseHeaders(nlohmann::json const& credentials_source,
 }  // namespace
 
 StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceUrl(
-    nlohmann::json const& credentials_source, HttpClientFactory client_factory,
+    nlohmann::json const& credentials_source,
     internal::ErrorContext const& ec) {
   auto url =
       ValidateStringField(credentials_source, "url", "credentials_source", ec);
@@ -137,18 +137,18 @@ StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceUrl(
   if (format->type == "text") {
     context.emplace_back("credentials_source.url.type", "text");
     return ExternalAccountTokenSource{
-        [cf = std::move(client_factory), url = *std::move(url),
-         headers = *std::move(headers), ec = std::move(context)](
-            Options const&) { return FetchTokenText(cf, url, headers, ec); }};
+        [url = *std::move(url), headers = *std::move(headers),
+         ec = std::move(context)](HttpClientFactory const& cf, Options const&) {
+          return FetchTokenText(cf, url, headers, ec);
+        }};
   }
   context.emplace_back("credentials_source.url.type", "json");
   context.emplace_back("credentials_source.url.subject_token_field_name",
                        format->subject_token_field_name);
   return ExternalAccountTokenSource{
-      [cf = std::move(client_factory), url = *std::move(url),
-       headers = *std::move(headers),
+      [url = *std::move(url), headers = *std::move(headers),
        fn = std::move(format->subject_token_field_name),
-       ec = std::move(context)](Options const&) {
+       ec = std::move(context)](HttpClientFactory const& cf, Options const&) {
         return FetchTokenJson(cf, url, headers, fn, ec);
       }};
 }

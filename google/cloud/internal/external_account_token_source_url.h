@@ -17,7 +17,6 @@
 
 #include "google/cloud/internal/error_metadata.h"
 #include "google/cloud/internal/oauth2_external_account_token_source.h"
-#include "google/cloud/internal/rest_client.h"
 #include "google/cloud/version.h"
 #include <nlohmann/json.hpp>
 #include <functional>
@@ -26,9 +25,6 @@ namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-using HttpClientFactory =
-    std::function<std::unique_ptr<rest_internal::RestClient>()>;
 
 /**
  * Creates an `ExternalAccountTokenSource` for URL-based credential sources.
@@ -52,8 +48,7 @@ using HttpClientFactory =
  * https://google.aip.dev/auth/4117#determining-the-subject-token-in-microsoft-azure-and-url-sourced-credentials
  */
 StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceUrl(
-    nlohmann::json const& credentials_source, HttpClientFactory client_factory,
-    internal::ErrorContext const& ec);
+    nlohmann::json const& credentials_source, internal::ErrorContext const& ec);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal

@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_EXTERNAL_ACCOUNT_TOKEN_SOURCE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_EXTERNAL_ACCOUNT_TOKEN_SOURCE_H
 
+#include "google/cloud/internal/rest_client.h"
 #include "google/cloud/internal/subject_token.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -25,6 +26,9 @@ namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+using HttpClientFactory =
+    std::function<std::unique_ptr<rest_internal::RestClient>(Options const&)>;
 
 /**
  * Return subject tokens for external account credentials.
@@ -52,7 +56,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * [RFC 8663]: https://www.rfc-editor.org/rfc/rfc8693.html
  */
 using ExternalAccountTokenSource =
-    std::function<StatusOr<internal::SubjectToken>(Options)>;
+    std::function<StatusOr<internal::SubjectToken>(HttpClientFactory const&,
+                                                   Options)>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal

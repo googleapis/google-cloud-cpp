@@ -83,18 +83,19 @@ StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceFile(
   if (format->type == "text") {
     context.emplace_back("credentials_source.file.type", "text");
     return ExternalAccountTokenSource{
-        [f = *std::move(file), ec = std::move(context)](Options const&) {
+        [f = *std::move(file), ec = std::move(context)](
+            HttpClientFactory const&, Options const&) {
           return TextFileReader(f, ec);
         }};
   }
   context.emplace_back("credentials_source.file.type", "json");
   context.emplace_back("credentials_source.file.source_token_field_name",
                        format->subject_token_field_name);
-  return ExternalAccountTokenSource{[f = *std::move(file),
-                                     field = format->subject_token_field_name,
-                                     ec = std::move(context)](Options const&) {
-    return JsonFileReader(f, field, ec);
-  }};
+  return ExternalAccountTokenSource{
+      [f = *std::move(file), field = format->subject_token_field_name,
+       ec = std::move(context)](HttpClientFactory const&, Options const&) {
+        return JsonFileReader(f, field, ec);
+      }};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

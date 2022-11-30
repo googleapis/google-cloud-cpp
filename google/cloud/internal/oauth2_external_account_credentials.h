@@ -37,9 +37,6 @@ struct ExternalAccountInfo {
 
 class ExternalAccountCredentials : public oauth2_internal::Credentials {
  public:
-  using HttpClientFactory =
-      std::function<std::unique_ptr<rest_internal::RestClient>(Options const&)>;
-
   ExternalAccountCredentials(ExternalAccountInfo info,
                              HttpClientFactory client_factory,
                              Options options = {});
