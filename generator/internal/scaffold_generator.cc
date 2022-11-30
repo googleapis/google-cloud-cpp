@@ -127,6 +127,7 @@ std::map<std::string, std::string> ScaffoldVars(
   vars["copyright_year"] = service.initial_copyright_year();
   vars["library"] = library;
   vars["product_options_page"] = OptionsGroup(service.product_path());
+  vars["service_subdirectory"] = ServiceSubdirectory(service.product_path());
   vars["site_root"] = SiteRoot(service);
   vars["library_prefix"] = experimental ? "experimental-" : "";
   vars["doxygen_version_suffix"] = experimental ? " (Experimental)" : "";
@@ -170,17 +171,15 @@ void GenerateScaffold(
       {"quickstart/WORKSPACE.bazel", GenerateQuickstartWorkspace},
       {"quickstart/BUILD.bazel", GenerateQuickstartBuild},
       {"quickstart/.bazelrc", GenerateQuickstartBazelrc},
-      {"samples/BUILD.bazel", GenerateSamplesBuild},
-      {"samples/CMakeLists.txt", GenerateSamplesCMake},
   };
 
   auto const vars = ScaffoldVars(googleapis_path, service, experimental);
   MakeDirectory(output_path + "/");
-  auto const destination = output_path + "/" + service.product_path() + "/";
+  auto const destination =
+      output_path + "/" + LibraryPath(service.product_path());
   MakeDirectory(destination);
   MakeDirectory(destination + "doc/");
   MakeDirectory(destination + "quickstart/");
-  MakeDirectory(destination + "samples/");
   for (auto const& f : files) {
     std::ofstream os(destination + f.name);
     f.generator(os, vars);
@@ -309,25 +308,30 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
+service_dirs = [
+    "$service_subdirectory$",
+]
+
+internal_dirs = [
+    "",
+    "internal/",
+]
+
+src_dirs = [s + i for s in service_dirs for i in internal_dirs]
+
 filegroup(
     name = "srcs",
-    srcs = glob([
-        "*.cc",
-        "internal/*.cc",
-    ]),
+    srcs = glob([d + "*.cc" for d in src_dirs]),
 )
 
 filegroup(
     name = "hdrs",
-    srcs = glob([
-        "*.h",
-        "internal/*.h",
-    ]),
+    srcs = glob([d + "*.h" for d in src_dirs]),
 )
 
 filegroup(
     name = "mocks",
-    srcs = glob(["mocks/*.h"]),
+    srcs = glob([s + "mocks/*.h" for s in service_dirs]),
 )
 
 cc_library(
@@ -351,6 +355,16 @@ cc_library(
         "@com_google_googletest//:gtest",
     ],
 )
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    tags = ["integration-test"],
+    deps = [
+        "//:$library$",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob([s + "samples/*.cc" for s in service_dirs])]
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
@@ -379,10 +393,20 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "$title$ C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the $title$")
 set(DOXYGEN_PROJECT_NUMBER "$${PROJECT_VERSION}$doxygen_version_suffix$")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "$library$_internal" "$library$_testing"
-                            "examples")
-set(DOXYGEN_EXAMPLE_PATH $${CMAKE_CURRENT_SOURCE_DIR}/samples
-                         $${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+set(DOXYGEN_EXAMPLE_PATH $${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+
+unset(mocks_globs)
+unset(source_globs)
+set(service_dirs "$service_subdirectory$")
+foreach (dir IN LISTS service_dirs)
+    string(REPLACE "/" "_" ns "$${dir}")
+    list(APPEND source_globs "$${dir}*.h" "$${dir}*.cc" "$${dir}internal/*")
+    list(APPEND mocks_globs "$${dir}mocks/*.h")
+    list(APPEND DOXYGEN_EXAMPLE_PATH
+         "$${CMAKE_CURRENT_SOURCE_DIR}/$${dir}samples")
+    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "$library$_$${ns}internal")
+endforeach ()
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::$library$_protos)
@@ -413,7 +437,7 @@ target_link_libraries(google_cloud_cpp_$library$_protos PUBLIC $${proto_deps})
 
 file(GLOB source_files
      RELATIVE "$${CMAKE_CURRENT_SOURCE_DIR}"
-     "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+     $${source_globs})
 list(SORT source_files)
 add_library(google_cloud_cpp_$library$ $${source_files})
 target_include_directories(
@@ -442,7 +466,7 @@ add_library(google-cloud-cpp::$library_prefix$$library$ ALIAS google_cloud_cpp_$
 # that they need absolute paths for their sources.
 file(GLOB relative_mock_files
      RELATIVE "$${CMAKE_CURRENT_SOURCE_DIR}"
-     "mocks/*.h")
+     $${mocks_globs})
 list(SORT relative_mock_files)
 set(mock_files)
 foreach (file IN LISTS relative_mock_files)
@@ -544,6 +568,13 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 external_googleapis_install_pc("google_cloud_cpp_$library$_protos")
+
+# google-cloud-cpp::$library$ must be defined before we can add the samples.
+foreach (dir IN LISTS service_dirs)
+    if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+        google_cloud_cpp_add_samples_relative("$library$" "$${dir}samples/")
+    endif ()
+endforeach ()
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
@@ -908,7 +939,7 @@ int main(int argc, char* argv[]) try {
 
   namespace $library$ = ::google::cloud::$library$;
   auto client = $library$::Client(
-      $library$::MakeConnection(/* EDIT HERE */));
+      $library$::MakeConnection());
 
   auto const project = google::cloud::Project(argv[1]);
   for (auto r : client.List/*EDIT HERE*/(project.FullName())) {
@@ -1141,66 +1172,6 @@ build:macos --cxxopt=-std=c++14
 # runs inside a docker image or if one builds a quickstart and then builds
 # the project separately.
 build --experimental_convenience_symlinks=ignore
-)""";
-  google::protobuf::io::OstreamOutputStream output(&os);
-  google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, kText);
-}
-
-void GenerateSamplesBuild(std::ostream& os,
-                          std::map<std::string, std::string> const& variables) {
-  auto constexpr kText = R"""(# Copyright $copyright_year$ Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-licenses(["notice"])  # Apache 2.0
-
-[cc_test(
-    name = sample.replace(".cc", ""),
-    srcs = [sample],
-    tags = ["integration-test"],
-    deps = [
-      "//:$library_prefix$$library$",
-      "//google/cloud/testing_util:google_cloud_cpp_testing_private"
-    ],
-) for sample in glob(["*.cc"])]
-)""";
-  google::protobuf::io::OstreamOutputStream output(&os);
-  google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, kText);
-}
-
-void GenerateSamplesCMake(std::ostream& os,
-                          std::map<std::string, std::string> const& variables) {
-  auto constexpr kText = R"""(# Copyright $copyright_year$ Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License"); you may not
-# use this file except in compliance with the License. You may obtain a copy of
-# the License at
-#
-# https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-# WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
-# License for the specific language governing permissions and limitations under
-# the License.
-
-if ((NOT BUILD_TESTING) OR (NOT GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS))
-  return()
-endif ()
-
-google_cloud_cpp_add_samples($library$)
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
