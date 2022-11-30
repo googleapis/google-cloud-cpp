@@ -32,14 +32,53 @@
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
+
+struct ProductPath {
+  std::string prefix;
+  std::string library_name;
+  std::string service_subdirectory;
+};
+
+ProductPath ParseProductPath(std::string const& product_path) {
+  std::vector<absl::string_view> v =
+      absl::StrSplit(product_path, '/', absl::SkipEmpty());
+  if (v.empty()) return {};
+  auto make_result = [&v](auto it) -> ProductPath {
+    return {
+        absl::StrJoin(v.begin(), it, "/"),
+        std::string{*it},
+        absl::StrJoin(std::next(it), v.end(), "/"),
+    };
+  };
+  // This is the case for our production code.
+  if (v.size() > 2 && v[0] == "google" && v[1] == "cloud") {
+    return make_result(std::next(v.begin(), 2));
+  }
+  // "golden" is a special library name used in our golden testing.
+  auto it = std::find(v.begin(), v.end(), "golden");
+  if (it != v.end()) return make_result(it);
+  // Else, just assume the last element is the library.
+  return make_result(std::prev(v.end()));
+}
+
+}  // namespace
 
 auto constexpr kApiIndexFilename = "api-index-v1.json";
 
 std::string LibraryName(std::string const& product_path) {
-  std::vector<std::string> v = absl::StrSplit(product_path, '/');
-  if (v.size() > 2 && v[0] == "google" && v[1] == "cloud") return v[2];
-  // This branch is only reached in our golden files.
-  return "golden";
+  return ParseProductPath(product_path).library_name;
+}
+
+std::string LibraryPath(std::string const& product_path) {
+  auto parsed = ParseProductPath(product_path);
+  return absl::StrCat(parsed.prefix, "/", parsed.library_name, "/");
+}
+
+std::string ServiceSubdirectory(std::string const& product_path) {
+  auto parsed = ParseProductPath(product_path);
+  if (parsed.service_subdirectory.empty()) return std::string{};
+  return absl::StrCat(parsed.service_subdirectory, "/");
 }
 
 std::string SiteRoot(

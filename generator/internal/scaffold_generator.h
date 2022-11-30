@@ -35,6 +35,22 @@ namespace generator_internal {
  */
 std::string LibraryName(std::string const& product_path);
 
+/**
+ * Returns the path to the library directory.
+ *
+ * Extract the library path (e.g. `google/cloud/foo/`) from a product path (e.g.
+ * `google/cloud/foo/bar/v1`).
+ */
+std::string LibraryPath(std::string const& product_path);
+
+/**
+ * Returns the relative path to the service from its library path.
+ *
+ * Extract the relative path (e.g. `bar/v1/`) from a product path (e.g.
+ * `google/cloud/foo/bar/v1`).
+ */
+std::string ServiceSubdirectory(std::string const& product_path);
+
 std::map<std::string, std::string> ScaffoldVars(
     std::string const& googleapis_path,
     google::cloud::cpp::generator::ServiceConfiguration const& service,
