@@ -199,6 +199,10 @@ option(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
        "${GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT}")
 mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
+option(GOOGLE_CLOUD_CPP_ENABLE_EXPERIMENTAL_OPENTELEMETRY
+       "Compile google-cloud-cpp with OpenTelemetry (EXPERIMENTAL)")
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_EXPERIMENTAL_OPENTELEMETRY)
+
 # We no longer build the generator by default, but if it was explicitly
 # requested, we add it to the list of enabled libraries.
 if (GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
@@ -341,6 +345,7 @@ function (google_cloud_cpp_enable_features)
             if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
                 add_subdirectory(google/cloud/storage)
             endif ()
+        elseif ("${feature}" STREQUAL "experimental-opentelemetry")
         else ()
             if (NOT IS_DIRECTORY
                 "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}"
