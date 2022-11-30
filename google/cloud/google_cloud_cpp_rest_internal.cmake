@@ -213,6 +213,7 @@ if (BUILD_TESTING)
         internal/oauth2_authorized_user_credentials_test.cc
         internal/oauth2_cached_credentials_test.cc
         internal/oauth2_compute_engine_credentials_test.cc
+        internal/oauth2_credentials_test.cc
         internal/oauth2_google_application_default_credentials_file_test.cc
         internal/oauth2_google_credentials_test.cc
         internal/oauth2_impersonate_service_account_credentials_test.cc

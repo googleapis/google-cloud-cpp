@@ -186,9 +186,7 @@ class ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
             Options{}.set<CARootsFilePathOption>(options.ssl_root_path()))) {}
 
   StatusOr<std::string> AuthorizationHeader() override {
-    auto header = impl_->AuthorizationHeader();
-    if (!header.ok()) return header.status();
-    return header->first + ": " + header->second;
+    return oauth2_internal::AuthorizationHeaderJoined(*impl_);
   }
 
   /**

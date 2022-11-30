@@ -32,6 +32,19 @@ StatusOr<internal::AccessToken> Credentials::GetToken(
       "WIP(#10316) - use decorator for credentials", GCP_ERROR_INFO());
 }
 
+StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(
+    Credentials& credentials, std::chrono::system_clock::time_point /*tp*/) {
+  return credentials.AuthorizationHeader();
+}
+
+StatusOr<std::string> AuthorizationHeaderJoined(
+    Credentials& credentials, std::chrono::system_clock::time_point /*tp*/) {
+  auto header = credentials.AuthorizationHeader();
+  if (!header) return std::move(header).status();
+  if (header->first.empty() || header->second.empty()) return std::string{};
+  return header->first + ": " + header->second;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud

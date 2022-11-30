@@ -19,6 +19,7 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <chrono>
 #include <string>
 #include <vector>
 
@@ -86,6 +87,24 @@ class Credentials {
   /// Return the account's key_id associated with these credentials, if any.
   virtual std::string KeyId() const { return std::string{}; }
 };
+
+/**
+ * Attempts to obtain a value for the Authorization HTTP header.
+ *
+ * If unable to obtain a value for the Authorization header, which could
+ * happen for `Credentials` that need to be periodically refreshed, the
+ * underlying `Status` will indicate failure details from the refresh HTTP
+ * request. Otherwise, the returned value will contain the Authorization
+ * header to be used in HTTP requests.
+ */
+StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(
+    Credentials& credentials, std::chrono::system_clock::time_point tp =
+                                  std::chrono::system_clock::now());
+
+/// @copydoc AuthorizationHeader()
+StatusOr<std::string> AuthorizationHeaderJoined(
+    Credentials& credentials, std::chrono::system_clock::time_point tp =
+                                  std::chrono::system_clock::now());
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
