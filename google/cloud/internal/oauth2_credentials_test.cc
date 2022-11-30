@@ -24,6 +24,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::UnavailableError;
+using ::testing::IsEmpty;
 using ::testing::Return;
 
 class MockCredentials : public Credentials {
@@ -50,6 +51,16 @@ TEST(Credentials, AuthorizationHeaderJoinedSuccess) {
   auto actual = AuthorizationHeaderJoined(mock);
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(*actual, "Authorization: Bearer test-token");
+}
+
+TEST(Credentials, AuthorizationHeaderJoinedEmpty) {
+  MockCredentials mock;
+  auto const expected =
+      std::make_pair(std::string("Authorization"), std::string{});
+  EXPECT_CALL(mock, AuthorizationHeader).WillOnce(Return(expected));
+  auto actual = AuthorizationHeaderJoined(mock);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(*actual, IsEmpty());
 }
 
 TEST(Credentials, AuthorizationHeaderError) {
