@@ -14,6 +14,8 @@
 
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/external_account_parsing.h"
+#include "google/cloud/internal/external_account_token_source_file.h"
+#include "google/cloud/internal/external_account_token_source_url.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
 #include <nlohmann/json.hpp>
@@ -22,6 +24,70 @@ namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+using ::google::cloud::internal::InvalidArgumentError;
+
+StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSource(
+    nlohmann::json const& credentials_source,
+    internal::ErrorContext const& ec) {
+  auto source = MakeExternalAccountTokenSourceUrl(credentials_source, ec);
+  if (!source) return source;
+  source = MakeExternalAccountTokenSourceFile(credentials_source, ec);
+  if (!source) return source;
+  return InvalidArgumentError(
+      "unknown subject token source for external account",
+      GCP_ERROR_INFO().WithContext(ec));
+}
+
+}  // namespace
+
+/// Parse a JSON string with an external account configuration.
+StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
+    std::string const& configuration, internal::ErrorContext const& ec) {
+  auto json = nlohmann::json::parse(configuration, nullptr, false);
+  if (!json.is_object()) {
+    return InvalidArgumentError(
+        "external account configuration was not a JSON object",
+        GCP_ERROR_INFO().WithContext(ec));
+  }
+  auto type = ValidateStringField(json, "type", "credentials-file", ec);
+  if (!type) return std::move(type).status();
+  if (*type != "external_account") {
+    return InvalidArgumentError(
+        "mismatched type (" + *type + ") in external account configuration",
+        GCP_ERROR_INFO().WithContext(ec));
+  }
+
+  auto audience = ValidateStringField(json, "audience", "credentials-file", ec);
+  if (!audience) return std::move(audience).status();
+  auto subject_token_type =
+      ValidateStringField(json, "subject_token_type", "credentials-file", ec);
+  if (!subject_token_type) return std::move(subject_token_type).status();
+  auto token_url =
+      ValidateStringField(json, "token_url", "credentials-file", ec);
+  if (!token_url) return std::move(subject_token_type).status();
+
+  auto credential_source = json.find("credential_source");
+  if (credential_source == json.end()) {
+    return InvalidArgumentError(
+        "missing `credential_source` field in external account configuration",
+        GCP_ERROR_INFO().WithContext(ec));
+  }
+  if (!credential_source->is_object()) {
+    return InvalidArgumentError(
+        "`credential_source` field is not a JSON object in external account "
+        "configuration",
+        GCP_ERROR_INFO().WithContext(ec));
+  }
+
+  auto source = MakeExternalAccountTokenSource(*credential_source, ec);
+  if (!source) return std::move(source).status();
+
+  return ExternalAccountInfo{*std::move(audience),
+                             *std::move(subject_token_type),
+                             *std::move(token_url), *std::move(source)};
+}
 
 ExternalAccountCredentials::ExternalAccountCredentials(
     ExternalAccountInfo info, HttpClientFactory client_factory, Options options)
@@ -62,7 +128,7 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
 
   auto access = nlohmann::json::parse(*payload, nullptr, false);
   if (!access.is_object()) {
-    return internal::InvalidArgumentError(
+    return InvalidArgumentError(
         "token exchange response cannot be parsed as JSON object",
         GCP_ERROR_INFO().WithContext(ec));
   }
@@ -78,7 +144,7 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
 
   if (*issued_token_type != "urn:ietf:params:oauth:token-type:access_token" ||
       *token_type != "Bearer") {
-    return internal::InvalidArgumentError(
+    return InvalidArgumentError(
         "expected a Bearer access token in token exchange response",
         GCP_ERROR_INFO()
             .WithContext(std::move(ec))
@@ -87,7 +153,7 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
   }
   auto it = access.find("expires_in");
   if (it == access.end() || !it->is_number_integer()) {
-    return internal::InvalidArgumentError(
+    return InvalidArgumentError(
         "expected a numeric `expires_in` field in the token exchange response",
         GCP_ERROR_INFO()
             .WithContext(std::move(ec))

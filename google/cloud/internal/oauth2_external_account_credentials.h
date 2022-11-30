@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_EXTERNAL_ACCOUNT_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_EXTERNAL_ACCOUNT_CREDENTIALS_H
 
+#include "google/cloud/internal/error_metadata.h"
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/oauth2_external_account_token_source.h"
 #include "google/cloud/internal/rest_client.h"
@@ -34,6 +35,10 @@ struct ExternalAccountInfo {
   std::string token_url;
   ExternalAccountTokenSource token_source;
 };
+
+/// Parse a JSON string with an external account configuration.
+StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
+    std::string const& configuration, internal::ErrorContext const& ec);
 
 class ExternalAccountCredentials : public oauth2_internal::Credentials {
  public:
