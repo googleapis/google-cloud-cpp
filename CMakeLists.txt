@@ -288,7 +288,8 @@ endif ()
 # with REST interfaces.
 set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION ON)
 if (NOT storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE
-    AND NOT experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    AND NOT experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE
+    AND NOT generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION OFF)
 endif ()
 cmake_dependent_option(
