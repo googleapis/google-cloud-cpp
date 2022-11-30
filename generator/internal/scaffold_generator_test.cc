@@ -132,7 +132,7 @@ class ScaffoldGenerator : public ::testing::Test {
 )""";
 
     google::cloud::cpp::generator::ServiceConfiguration service;
-    service.set_product_path("google/cloud/test/");
+    service.set_product_path("google/cloud/test/v1");
     service.set_service_proto_path("google/cloud/test/v1/service.proto");
     service.set_initial_copyright_year("2034");
     service_ = std::move(service);
@@ -156,6 +156,7 @@ TEST_F(ScaffoldGenerator, Vars) {
             Contains(Pair("description",
                           "Provides a placeholder to write this test.")),
             Contains(Pair("library", "test")),
+            Contains(Pair("service_subdirectory", "v1/")),
             Contains(Pair("product_options_page", "google-cloud-test-options")),
             Contains(Pair("copyright_year", "2034")),
             Contains(Pair("library_prefix", "")),
@@ -170,6 +171,7 @@ TEST_F(ScaffoldGenerator, Vars) {
             Contains(Pair("description",
                           "Provides a placeholder to write this test.")),
             Contains(Pair("library", "test")),
+            Contains(Pair("service_subdirectory", "v1/")),
             Contains(Pair("product_options_page", "google-cloud-test-options")),
             Contains(Pair("copyright_year", "2034")),
             Contains(Pair("library_prefix", "experimental-")),
@@ -341,27 +343,6 @@ TEST_F(ScaffoldGenerator, QuickstartBazelrc) {
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
-}
-
-TEST_F(ScaffoldGenerator, SamplesBuild) {
-  auto const vars = ScaffoldVars(path(), service(), false);
-  std::ostringstream os;
-  GenerateSamplesBuild(os, vars);
-  auto const actual = std::move(os).str();
-  EXPECT_THAT(actual, HasSubstr("2034"));
-  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
-  EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
-}
-
-TEST_F(ScaffoldGenerator, SamplesCMake) {
-  auto const vars = ScaffoldVars(path(), service(), false);
-  std::ostringstream os;
-  GenerateSamplesCMake(os, vars);
-  auto const actual = std::move(os).str();
-  EXPECT_THAT(actual, HasSubstr("2034"));
-  EXPECT_THAT(actual, HasSubstr("google_cloud_cpp_add_samples(test)"));
-  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
-  EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
 }
 
 }  // namespace
