@@ -44,9 +44,7 @@ class WrapRestCredentials : public oauth2::Credentials {
       : impl_(std::move(impl)) {}
 
   StatusOr<std::string> AuthorizationHeader() override {
-    auto header = impl_->AuthorizationHeader();
-    if (!header) return std::move(header).status();
-    return header->first + ": " + header->second;
+    return oauth2_internal::AuthorizationHeaderJoined(*impl_);
   }
 
   StatusOr<std::vector<std::uint8_t>> SignBlob(

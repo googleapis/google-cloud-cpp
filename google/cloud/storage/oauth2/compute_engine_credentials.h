@@ -91,9 +91,7 @@ class ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
       : impl_(std::move(service_account_email)) {}
 
   StatusOr<std::string> AuthorizationHeader() override {
-    auto header = impl_.AuthorizationHeader();
-    if (!header.ok()) return header.status();
-    return header->first + ": " + header->second;
+    return oauth2_internal::AuthorizationHeaderJoined(impl_);
   }
 
   std::string AccountEmail() const override { return impl_.AccountEmail(); }
