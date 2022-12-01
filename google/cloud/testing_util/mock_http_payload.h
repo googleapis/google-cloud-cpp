@@ -18,6 +18,8 @@
 #include "google/cloud/internal/http_payload.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
+#include <algorithm>
+#include <iterator>
 
 namespace google {
 namespace cloud {
@@ -31,6 +33,26 @@ class MockHttpPayload : public rest_internal::HttpPayload {
   MOCK_METHOD(StatusOr<std::size_t>, Read, (absl::Span<char> buffer),
               (override));
 };
+
+template <typename Collection>
+std::unique_ptr<rest_internal::HttpPayload> MakeMockHttpPayloadSuccess(
+    Collection contents) {
+  auto mock = absl::make_unique<MockHttpPayload>();
+  // This is shared by the next two mocking functions.
+  auto c = std::make_shared<Collection>(std::forward<Collection>(contents));
+  EXPECT_CALL(*mock, HasUnreadData).WillRepeatedly([c] { return !c->empty(); });
+  EXPECT_CALL(*mock, Read).WillRepeatedly([c](absl::Span<char> buffer) {
+    // Copy as much as possible from `c` into `buffer`.
+    auto const n = (std::min)(buffer.size(), c->size());
+    auto const end = std::next(c->begin(), n);
+    std::copy(c->begin(), end, buffer.begin());
+    // Remove the copied bytes from `c`:
+    auto tmp = Collection(end, c->end());
+    *c = std::forward<Collection>(tmp);
+    return n;
+  });
+  return mock;
+}
 
 }  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

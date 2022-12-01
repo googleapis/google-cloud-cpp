@@ -36,9 +36,8 @@ namespace {
 
 using ::google::cloud::internal::SignUsingSha256;
 using ::google::cloud::internal::UrlsafeBase64Decode;
-using ::google::cloud::rest_internal::HttpPayload;
 using ::google::cloud::testing_util::FakeClock;
-using ::google::cloud::testing_util::MockHttpPayload;
+using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::ScopedEnvironment;
@@ -136,14 +135,7 @@ void CheckInfoYieldsExpectedAssertion(std::unique_ptr<MockRestClient> mock,
   EXPECT_CALL(*mock_response1, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response1), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(response.begin(), response.end(), buffer.begin());
-          return response.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(response);
   });
 
   EXPECT_CALL(
@@ -401,28 +393,14 @@ TEST(ServiceAccountCredentialsTest,
   EXPECT_CALL(*mock_response1, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response1), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(r1.begin(), r1.end(), buffer.begin());
-          return r1.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(r1);
   });
 
   auto* mock_response2 = new MockRestResponse();
   EXPECT_CALL(*mock_response2, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response2), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(r2.begin(), r2.end(), buffer.begin());
-          return r2.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(r2);
   });
 
   auto mock = absl::make_unique<MockRestClient>();
@@ -645,40 +623,26 @@ TEST(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
   auto const clock_value_1 = 10000;
   auto const clock_value_2 = 20000;
 
-  auto response_fn = [&](int timestamp, absl::Span<char>& buffer) {
+  auto response = [&](int timestamp) {
     std::string token = "mock-token-value-" + std::to_string(timestamp);
     nlohmann::json response{{"token_type", "Mock-Type"},
                             {"access_token", token},
                             {"expires_in", 3600}};
-    auto r = response.dump();
-    std::copy(r.begin(), r.end(), buffer.begin());
-    return r.size();
+    return response.dump();
   };
 
   auto* mock_response1 = new MockRestResponse();
   EXPECT_CALL(*mock_response1, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response1), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          return response_fn(clock_value_1, buffer);
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(response(clock_value_1));
   });
 
   auto* mock_response2 = new MockRestResponse();
   EXPECT_CALL(*mock_response2, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response2), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          return response_fn(clock_value_2, buffer);
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(response(clock_value_2));
   });
 
   auto mock = absl::make_unique<MockRestClient>();
@@ -878,33 +842,17 @@ TEST(ServiceAccountCredentialsTest,
     "expires_in": 1000
 })""";
 
-  std::unique_ptr<MockHttpPayload> mock_http_payload1(new MockHttpPayload());
-  EXPECT_CALL(*mock_http_payload1, Read)
-      .WillOnce([&](absl::Span<char> buffer) {
-        std::copy(r1.begin(), r1.end(), buffer.begin());
-        return r1.size();
-      })
-      .WillOnce([](absl::Span<char>) { return 0; });
-
   auto mock_response1 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response1, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kBadRequest));
   EXPECT_CALL(std::move(*mock_response1), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload1))));
-
-  std::unique_ptr<MockHttpPayload> mock_http_payload2(new MockHttpPayload());
-  EXPECT_CALL(*mock_http_payload2, Read)
-      .WillOnce([&](absl::Span<char> buffer) {
-        std::copy(r2.begin(), r2.end(), buffer.begin());
-        return r2.size();
-      })
-      .WillOnce([](absl::Span<char>) { return 0; });
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(r1))));
 
   auto mock_response2 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response2, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kBadRequest));
   EXPECT_CALL(std::move(*mock_response2), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload2))));
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(r2))));
 
   FakeClock::reset_clock(1000);
   auto status =
@@ -931,19 +879,11 @@ TEST(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
     "expires_in": 1000
 })""";
 
-  std::unique_ptr<MockHttpPayload> mock_http_payload1(new MockHttpPayload());
-  EXPECT_CALL(*mock_http_payload1, Read)
-      .WillOnce([&](absl::Span<char> buffer) {
-        std::copy(r1.begin(), r1.end(), buffer.begin());
-        return r1.size();
-      })
-      .WillOnce([](absl::Span<char>) { return 0; });
-
   auto mock_response1 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response1, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response1), ExtractPayload)
-      .WillOnce(Return(ByMove(std::move(mock_http_payload1))));
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(r1))));
 
   auto expires_in = 1000;
   FakeClock::reset_clock(2000);
