@@ -46,6 +46,10 @@ ABSL_FLAG(bool, update_ci, true, "Update the CI support files.");
 
 namespace {
 
+using google::cloud::generator_internal::GenerateScaffold;
+using google::cloud::generator_internal::LibraryName;
+using google::cloud::generator_internal::LibraryPath;
+
 google::cloud::StatusOr<google::cloud::cpp::generator::GeneratorConfiguration>
 GetConfig(std::string const& filepath) {
   std::ifstream input(filepath);
@@ -112,8 +116,7 @@ int WriteInstallDirectories(
     if (!service.omit_connection()) {
       install_directories.push_back("./include/" + product_path + "/mocks");
     }
-    auto const lib =
-        google::cloud::generator_internal::LibraryName(product_path);
+    auto const lib = LibraryName(product_path);
     install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib);
   }
   std::sort(install_directories.begin(), install_directories.end());
@@ -135,8 +138,7 @@ int WriteFeatureList(
                      << service.DebugString() << "\n";
       return 1;
     }
-    features.push_back(
-        google::cloud::generator_internal::LibraryName(service.product_path()));
+    features.push_back(LibraryName(service.product_path()));
   }
   std::sort(features.begin(), features.end());
   auto const end = std::unique(features.begin(), features.end());
@@ -192,9 +194,9 @@ int main(int argc, char** argv) {
 
   std::vector<std::future<google::cloud::Status>> tasks;
   for (auto const& service : config->service()) {
-    if (service.product_path() == scaffold) {
-      google::cloud::generator_internal::GenerateScaffold(
-          googleapis_path, output_path, service, experimental_scaffold);
+    if (LibraryPath(service.product_path()) == scaffold) {
+      GenerateScaffold(googleapis_path, output_path, service,
+                       experimental_scaffold);
     }
     std::vector<std::string> args;
     // empty arg prevents first real arg from being ignored.

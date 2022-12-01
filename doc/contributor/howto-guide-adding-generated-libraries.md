@@ -86,9 +86,9 @@ index ab033dde9..3753287d8 100644
 +# Secret Manager
 +service {
 +  service_proto_path: "google/cloud/secretmanager/v1/service.proto"
-+  product_path: "google/cloud/secretmanager"
++  product_path: "google/cloud/secretmanager/v1"
 +  initial_copyright_year: "2021"
-+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
++  retryable_status_codes: ["kUnavailable"]
 +}
 +
 ```
@@ -122,7 +122,7 @@ bazel run \
   --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
   --output_path="${PWD}" \
   --config_file="${PWD}/generator/generator_config.textproto" \
-  --scaffold="google/cloud/${library}"
+  --scaffold="google/cloud/${library}/"
 ```
 
 To generate a library that is initially experimental, add an
@@ -158,6 +158,17 @@ The generated `BUILD.bazel` file may require manual editing. The scaffold will
 add one dependency from `@com_github_googleapis//${subdir}`, which might not be
 correct. You may need to modify that dependency and/or add additional
 dependencies for more complex libraries.
+
+## Potentially update the service directories
+
+A library may contain services in several subdirectories. The scaffold only
+knows about one such subdirectory. You may need to manually update the
+`service_dirs` lists to include all subdirectories in the following files:
+
+- `google/cloud/${library}/BUILD.bazel`
+- `google/cloud/${library}/CMakeLists.txt`
+
+[#10237] offers one way to automate this step.
 
 ## Update the root files
 
@@ -290,4 +301,5 @@ git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
    "google/cloud/${library}" BUILD.bazel CHANGELOG.md ci README.md
 ```
 
+[#10237]: https://github.com/googleapis/google-cloud-cpp/issues/10237
 [retryable-status-codes]: https://github.com/googleapis/googleapis/blob/0fea253787a4f2769b97b0ed3a8f5b28ef17ffa7/google/cloud/secretmanager/v1/secretmanager_grpc_service_config.json#L77-L80
