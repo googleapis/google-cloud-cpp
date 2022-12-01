@@ -121,6 +121,7 @@ may elicit a deprecation warning. See [#9086] for more details.
 ## v2.5.0 - 2022-12
 
 **BREAKING CHANGES**
+
 - feat!: bidirectional streams are GA ([#10340](https://github.com/googleapis/google-cloud-cpp/pull/10340))
 
 ### New Libraries
