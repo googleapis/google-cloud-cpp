@@ -23,7 +23,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v2::StreamingRecognizeRequest,
     google::cloud::speech::v2::StreamingRecognizeResponse>>
-SpeechConnectionImpl::AsyncStreamingRecognize(ExperimentalTag) {
+SpeechConnectionImpl::AsyncStreamingRecognize() {
   return stub_->AsyncStreamingRecognize(
       background_->cq(), absl::make_unique<grpc::ClientContext>());
 }
