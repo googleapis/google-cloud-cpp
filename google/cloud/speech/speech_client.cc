@@ -69,9 +69,9 @@ SpeechClient::LongRunningRecognize(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v1::StreamingRecognizeRequest,
     google::cloud::speech::v1::StreamingRecognizeResponse>>
-SpeechClient::AsyncStreamingRecognize(ExperimentalTag tag, Options opts) {
+SpeechClient::AsyncStreamingRecognize(Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AsyncStreamingRecognize(std::move(tag));
+  return connection_->AsyncStreamingRecognize();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

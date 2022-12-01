@@ -77,7 +77,7 @@ class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnecti
   MOCK_METHOD((std::unique_ptr<
       ::google::cloud::AsyncStreamingReadWriteRpc<
           google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>),
-      AsyncStreamingReadWrite, (ExperimentalTag), (override));
+      AsyncStreamingReadWrite, (), (override));
 
   MOCK_METHOD(Status,
   ExplicitRouting1,

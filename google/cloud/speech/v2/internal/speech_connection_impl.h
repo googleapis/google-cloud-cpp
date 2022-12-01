@@ -79,7 +79,7 @@ class SpeechConnectionImpl : public speech_v2::SpeechConnection {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v2::StreamingRecognizeRequest,
       google::cloud::speech::v2::StreamingRecognizeResponse>>
-      AsyncStreamingRecognize(ExperimentalTag) override;
+  AsyncStreamingRecognize() override;
 
   future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
   BatchRecognize(

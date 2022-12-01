@@ -405,9 +405,6 @@ class SpeechClient {
   /// Performs bidirectional streaming speech recognition: receive results while
   /// sending audio. This method is only available via the gRPC API (not REST).
   ///
-  /// @note The presence of the `ExperimentalTag` means that this function is
-  /// experimental. It is subject to change (including removal) without notice.
-  ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
@@ -423,7 +420,7 @@ class SpeechClient {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v2::StreamingRecognizeRequest,
       google::cloud::speech::v2::StreamingRecognizeResponse>>
-  AsyncStreamingRecognize(ExperimentalTag, Options opts = {});
+  AsyncStreamingRecognize(Options opts = {});
 
   ///
   /// Performs batch asynchronous speech recognition: send a request with N

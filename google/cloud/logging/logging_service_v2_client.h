@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_LOGGING_LOGGING_SERVICE_V2_CLIENT_H
 
 #include "google/cloud/logging/logging_service_v2_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -356,9 +355,6 @@ class LoggingServiceV2Client {
   /// Streaming read of log entries as they are ingested. Until the stream is
   /// terminated, it will continue reading logs.
   ///
-  /// @note The presence of the `ExperimentalTag` means that this function is
-  /// experimental. It is subject to change (including removal) without notice.
-  ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
@@ -374,7 +370,7 @@ class LoggingServiceV2Client {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
-  AsyncTailLogEntries(ExperimentalTag, Options opts = {});
+  AsyncTailLogEntries(Options opts = {});
 
   ///
   /// Writes log entries to Logging. This API method is the

@@ -77,7 +77,7 @@ class MockParticipantsConnection
       (std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
            google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
            google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>),
-      AsyncStreamingAnalyzeContent, (ExperimentalTag), (override));
+      AsyncStreamingAnalyzeContent, (), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>,

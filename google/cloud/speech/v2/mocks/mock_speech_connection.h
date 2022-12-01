@@ -83,7 +83,7 @@ class MockSpeechConnection : public speech_v2::SpeechConnection {
   MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    google::cloud::speech::v2::StreamingRecognizeRequest,
                    google::cloud::speech::v2::StreamingRecognizeResponse>>),
-              AsyncStreamingRecognize, (ExperimentalTag), (override));
+              AsyncStreamingRecognize, (), (override));
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>,

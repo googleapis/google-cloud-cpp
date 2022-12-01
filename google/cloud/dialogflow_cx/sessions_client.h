@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_CX_SESSIONS_CLIENT_H
 
 #include "google/cloud/dialogflow_cx/sessions_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -122,9 +121,6 @@ class SessionsClient {
   /// See [Versions and
   /// environments](https://cloud.google.com/dialogflow/cx/docs/concept/version).
   ///
-  /// @note The presence of the `ExperimentalTag` means that this function is
-  /// experimental. It is subject to change (including removal) without notice.
-  ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
@@ -140,7 +136,7 @@ class SessionsClient {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
-  AsyncStreamingDetectIntent(ExperimentalTag, Options opts = {});
+  AsyncStreamingDetectIntent(Options opts = {});
 
   ///
   /// Returns preliminary intent match results, doesn't change the session

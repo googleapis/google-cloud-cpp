@@ -78,7 +78,7 @@ class GoldenKitchenSinkConnectionImpl
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
-  AsyncStreamingReadWrite(ExperimentalTag) override;
+  AsyncStreamingReadWrite() override;
 
   Status
   ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;

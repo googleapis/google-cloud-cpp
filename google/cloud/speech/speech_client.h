@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPEECH_SPEECH_CLIENT_H
 
 #include "google/cloud/speech/speech_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -184,9 +183,6 @@ class SpeechClient {
   /// Performs bidirectional streaming speech recognition: receive results while
   /// sending audio. This method is only available via the gRPC API (not REST).
   ///
-  /// @note The presence of the `ExperimentalTag` means that this function is
-  /// experimental. It is subject to change (including removal) without notice.
-  ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
@@ -202,7 +198,7 @@ class SpeechClient {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
       google::cloud::speech::v1::StreamingRecognizeResponse>>
-  AsyncStreamingRecognize(ExperimentalTag, Options opts = {});
+  AsyncStreamingRecognize(Options opts = {});
 
  private:
   std::shared_ptr<SpeechConnection> connection_;

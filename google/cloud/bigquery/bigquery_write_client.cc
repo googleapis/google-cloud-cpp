@@ -55,9 +55,9 @@ BigQueryWriteClient::CreateWriteStream(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::bigquery::storage::v1::AppendRowsRequest,
     google::cloud::bigquery::storage::v1::AppendRowsResponse>>
-BigQueryWriteClient::AsyncAppendRows(ExperimentalTag tag, Options opts) {
+BigQueryWriteClient::AsyncAppendRows(Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AsyncAppendRows(std::move(tag));
+  return connection_->AsyncAppendRows();
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>

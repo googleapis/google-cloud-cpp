@@ -139,10 +139,10 @@ GoldenKitchenSinkClient::StreamingRead(google::test::admin::database::v1::Reques
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::Request,
     google::test::admin::database::v1::Response>>
-GoldenKitchenSinkClient::AsyncStreamingReadWrite(ExperimentalTag tag, Options opts) {
+GoldenKitchenSinkClient::AsyncStreamingReadWrite(Options opts) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(opts), options_));
-  return connection_->AsyncStreamingReadWrite(std::move(tag));
+  return connection_->AsyncStreamingReadWrite();
 }
 
 Status
