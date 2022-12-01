@@ -308,16 +308,9 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-service_dirs = [
-    "$service_subdirectory$",
-]
+service_dirs = ["$service_subdirectory$"]
 
-internal_dirs = [
-    "",
-    "internal/",
-]
-
-src_dirs = [s + i for s in service_dirs for i in internal_dirs]
+src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
 
 filegroup(
     name = "srcs",
@@ -331,7 +324,7 @@ filegroup(
 
 filegroup(
     name = "mocks",
-    srcs = glob([s + "mocks/*.h" for s in service_dirs]),
+    srcs = glob([d + "mocks/*.h" for d in service_dirs]),
 )
 
 cc_library(
@@ -364,7 +357,7 @@ cc_library(
         "//:$library$",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
-) for sample in glob([s + "samples/*.cc" for s in service_dirs])]
+) for sample in glob([d + "samples/*.cc" for d in service_dirs])]
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
