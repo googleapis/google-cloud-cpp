@@ -51,6 +51,15 @@ std::string LibraryPath(std::string const& product_path);
  */
 std::string ServiceSubdirectory(std::string const& product_path);
 
+/**
+ * Returns the name of the doxygen refgroup for options in a given product path.
+ *
+ * There is a single refgroup for all options in a library. For example, the
+ * options in `google/cloud/foo/v1/` and `google/cloud/foo/bar/v1` will both map
+ * to the group: `google-cloud-foo-options`.
+ */
+std::string OptionsGroup(std::string const& product_path);
+
 std::map<std::string, std::string> ScaffoldVars(
     std::string const& googleapis_path,
     google::cloud::cpp::generator::ServiceConfiguration const& service,

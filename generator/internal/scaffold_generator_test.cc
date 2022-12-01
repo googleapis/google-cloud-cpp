@@ -79,6 +79,14 @@ TEST(ScaffoldGeneratorTest, ServiceSubdirectory) {
   EXPECT_EQ("", ServiceSubdirectory("foo/bar/service"));
 }
 
+TEST(ScaffoldGeneratorTest, OptionsGroup) {
+  EXPECT_EQ("google-cloud-test-options", OptionsGroup("google/cloud/test"));
+  EXPECT_EQ("google-cloud-test-options", OptionsGroup("google/cloud/test/v1"));
+  EXPECT_EQ("blah-golden-options", OptionsGroup("blah/golden"));
+  EXPECT_EQ("blah-golden-options", OptionsGroup("blah/golden/v1"));
+  EXPECT_EQ("foo-bar-service-options", OptionsGroup("foo/bar/service"));
+}
+
 class ScaffoldGenerator : public ::testing::Test {
  protected:
   ~ScaffoldGenerator() override {

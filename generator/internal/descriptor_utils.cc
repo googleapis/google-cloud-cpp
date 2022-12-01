@@ -851,8 +851,7 @@ VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
   VarsDictionary vars(initial_values.begin(), initial_values.end());
-  vars["product_options_page"] = absl::StrCat(
-      "google-cloud-", LibraryName(vars["product_path"]), "-options");
+  vars["product_options_page"] = OptionsGroup(vars["product_path"]);
   vars["additional_pb_header_paths"] = FormatAdditionalPbHeaderPaths(vars);
   vars["class_comment_block"] =
       FormatClassCommentsFromServiceComments(descriptor);
