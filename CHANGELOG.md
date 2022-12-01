@@ -121,12 +121,12 @@ may elicit a deprecation warning. See [#9086] for more details.
 **NOTE**
 
 - feat!: We have dropped the experimental marker from bidirectional streaming APIs ([#10340](https://github.com/googleapis/google-cloud-cpp/pull/10340)). The APIs in question are:
-    - `bigquery::BigQueryWriteClient::AsyncAppendRows()`
-    - `dialogflow_cx::SessionsClient::AsyncStreamingDetectIntent()`
-    - `dialogflow_es::ParticipantsClient::AsyncStreamingAnalyzeContent()`
-    - `dialogflow_es::SessionsClient::AsyncStreamingDetectIntent()`
-    - `logging::LoggingServiceV2Client::AsyncTailLogEntries()`
-    - `speech::SpeechClient::AsyncStreamingRecognize()`
+  - `bigquery::BigQueryWriteClient::AsyncAppendRows()`
+  - `dialogflow_cx::SessionsClient::AsyncStreamingDetectIntent()`
+  - `dialogflow_es::ParticipantsClient::AsyncStreamingAnalyzeContent()`
+  - `dialogflow_es::SessionsClient::AsyncStreamingDetectIntent()`
+  - `logging::LoggingServiceV2Client::AsyncTailLogEntries()`
+  - `speech::SpeechClient::AsyncStreamingRecognize()`
 
 If you use any of these APIs, you must drop the `ExperimentalTag` in your code, accordingly.
 
