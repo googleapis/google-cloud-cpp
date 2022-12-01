@@ -56,7 +56,7 @@ class MockSessionsConnection : public dialogflow_es::SessionsConnection {
       (std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
            google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
            google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>),
-      AsyncStreamingDetectIntent, (ExperimentalTag), (override));
+      AsyncStreamingDetectIntent, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

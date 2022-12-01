@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_PARTICIPANTS_CLIENT_H
 
 #include "google/cloud/dialogflow_es/participants_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -340,9 +339,6 @@ class ParticipantsClient {
   /// sent to virtual agents. See [Versions and
   /// environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
   ///
-  /// @note The presence of the `ExperimentalTag` means that this function is
-  /// experimental. It is subject to change (including removal) without notice.
-  ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
@@ -358,7 +354,7 @@ class ParticipantsClient {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
       google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
-  AsyncStreamingAnalyzeContent(ExperimentalTag, Options opts = {});
+  AsyncStreamingAnalyzeContent(Options opts = {});
 
   ///
   /// Gets suggested articles for a participant based on specific historical

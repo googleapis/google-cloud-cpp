@@ -72,7 +72,7 @@ class ParticipantsConnectionImpl
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
       google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
-      AsyncStreamingAnalyzeContent(ExperimentalTag) override;
+  AsyncStreamingAnalyzeContent() override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(google::cloud::dialogflow::v2::SuggestArticlesRequest const&

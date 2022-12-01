@@ -43,7 +43,7 @@ SessionsConnection::DetectIntent(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
     google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
-SessionsConnection::AsyncStreamingDetectIntent(ExperimentalTag) {
+SessionsConnection::AsyncStreamingDetectIntent() {
   return absl::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
           google::cloud::dialogflow::v2::StreamingDetectIntentRequest,

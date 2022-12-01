@@ -157,9 +157,9 @@ StatusOr<google::cloud::speech::v2::RecognizeResponse> SpeechClient::Recognize(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::speech::v2::StreamingRecognizeRequest,
     google::cloud::speech::v2::StreamingRecognizeResponse>>
-SpeechClient::AsyncStreamingRecognize(ExperimentalTag tag, Options opts) {
+SpeechClient::AsyncStreamingRecognize(Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AsyncStreamingRecognize(std::move(tag));
+  return connection_->AsyncStreamingRecognize();
 }
 
 future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGQUERY_BIGQUERY_WRITE_CLIENT_H
 
 #include "google/cloud/bigquery/bigquery_write_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -175,9 +174,6 @@ class BigQueryWriteClient {
   /// finalized (via the `FinalizeWriteStream` rpc), and the stream is
   /// explicitly committed via the `BatchCommitWriteStreams` rpc.
   ///
-  /// @note The presence of the `ExperimentalTag` means that this function is
-  /// experimental. It is subject to change (including removal) without notice.
-  ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
@@ -193,7 +189,7 @@ class BigQueryWriteClient {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
       google::cloud::bigquery::storage::v1::AppendRowsResponse>>
-  AsyncAppendRows(ExperimentalTag, Options opts = {});
+  AsyncAppendRows(Options opts = {});
 
   ///
   /// Gets information about a write stream.

@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_GOLDEN_KITCHEN_SINK_CLIENT_H
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -353,9 +352,6 @@ class GoldenKitchenSinkClient {
   ///
   /// Tests the generator for streaming read-write RPCs (aka bidir streaming)
   ///
-  /// @note The presence of the `ExperimentalTag` means that this function is
-  /// experimental. It is subject to change (including removal) without notice.
-  ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type: @googleapis_link{google::test::admin::database::v1::Request,generator/integration_tests/test.proto#L934} and response (read) type: @googleapis_link{google::test::admin::database::v1::Response,generator/integration_tests/test.proto#L940}
@@ -366,7 +362,7 @@ class GoldenKitchenSinkClient {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
-  AsyncStreamingReadWrite(ExperimentalTag, Options opts = {});
+  AsyncStreamingReadWrite(Options opts = {});
 
   ///
   /// An RPC to test that explicit routing headers are supported.

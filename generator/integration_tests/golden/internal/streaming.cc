@@ -24,7 +24,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::test::admin::database::v1::Request,
     google::test::admin::database::v1::Response>>
-GoldenKitchenSinkConnectionImpl::AsyncStreamingReadWrite(google::cloud::ExperimentalTag) {
+GoldenKitchenSinkConnectionImpl::AsyncStreamingReadWrite() {
   return stub_->AsyncStreamingReadWrite(
       background_->cq(), absl::make_unique<grpc::ClientContext>());
 }

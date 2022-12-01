@@ -70,7 +70,7 @@ ParticipantsConnection::AnalyzeContent(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
     google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
-ParticipantsConnection::AsyncStreamingAnalyzeContent(ExperimentalTag) {
+ParticipantsConnection::AsyncStreamingAnalyzeContent() {
   return absl::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
           google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,

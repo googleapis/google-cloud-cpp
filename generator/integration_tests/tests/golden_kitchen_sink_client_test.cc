@@ -299,7 +299,7 @@ TEST(GoldenKitchenSinkClientTest, AsyncStreamingReadWrite) {
         .set<UserAgentProductsOption>({"override-me"});
   });
 
-  EXPECT_CALL(*mock, AsyncStreamingReadWrite).WillOnce([](ExperimentalTag) {
+  EXPECT_CALL(*mock, AsyncStreamingReadWrite).WillOnce([]() {
     auto const& current = internal::CurrentOptions();
     EXPECT_TRUE(current.has<EndpointOption>());
     EXPECT_TRUE(current.has<GrpcTracingOptionsOption>());
@@ -337,7 +337,6 @@ TEST(GoldenKitchenSinkClientTest, AsyncStreamingReadWrite) {
                            .set<EndpointOption>("test-endpoint")
                            .set<UserAgentProductsOption>({"override-me-too"}));
   auto stream = client.AsyncStreamingReadWrite(
-      ExperimentalTag{},
       Options{}.set<UserAgentProductsOption>({"test-only/1.0"}));
   ASSERT_TRUE(stream->Start().get());
   Request request;

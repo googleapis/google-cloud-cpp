@@ -316,7 +316,7 @@ TEST(GoldenKitchenSinkConnectionTest, StreamingReadWriteError) {
         Status{StatusCode::kUnavailable, "try-again"});
   });
   auto conn = CreateTestingConnection(std::move(mock));
-  auto stream = conn->AsyncStreamingReadWrite(ExperimentalTag{});
+  auto stream = conn->AsyncStreamingReadWrite();
   ASSERT_FALSE(stream->Start().get());
   auto status = stream->Finish().get();
   EXPECT_THAT(status, StatusIs(StatusCode::kUnavailable, "try-again"));

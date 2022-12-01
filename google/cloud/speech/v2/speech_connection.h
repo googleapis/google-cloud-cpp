@@ -96,7 +96,7 @@ class SpeechConnection {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v2::StreamingRecognizeRequest,
       google::cloud::speech::v2::StreamingRecognizeResponse>>
-      AsyncStreamingRecognize(ExperimentalTag);
+  AsyncStreamingRecognize();
 
   virtual future<StatusOr<google::cloud::speech::v2::BatchRecognizeResponse>>
   BatchRecognize(

@@ -43,7 +43,7 @@ BigQueryWriteConnection::CreateWriteStream(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::bigquery::storage::v1::AppendRowsRequest,
     google::cloud::bigquery::storage::v1::AppendRowsResponse>>
-BigQueryWriteConnection::AsyncAppendRows(ExperimentalTag) {
+BigQueryWriteConnection::AsyncAppendRows() {
   return absl::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
           google::cloud::bigquery::storage::v1::AppendRowsRequest,

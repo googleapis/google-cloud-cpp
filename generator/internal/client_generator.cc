@@ -71,13 +71,12 @@ Status ClientGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
-  HeaderLocalIncludes({vars("connection_header_path"),
-                       HasBidirStreamingMethod() || IsExperimental()
-                           ? "google/cloud/experimental_tag.h"
-                           : "",
-                       "google/cloud/future.h", "google/cloud/options.h",
-                       "google/cloud/polling_policy.h",
-                       "google/cloud/status_or.h", "google/cloud/version.h"});
+  HeaderLocalIncludes(
+      {vars("connection_header_path"),
+       IsExperimental() ? "google/cloud/experimental_tag.h" : "",
+       "google/cloud/future.h", "google/cloud/options.h",
+       "google/cloud/polling_policy.h", "google/cloud/status_or.h",
+       "google/cloud/version.h"});
   if (get_iam_policy_extension_ && set_iam_policy_extension_) {
     HeaderLocalIncludes({"google/cloud/iam_updater.h"});
   }
@@ -125,18 +124,12 @@ class $client_class_name$ {
       HeaderPrintMethod(
           method, __FILE__, __LINE__,
           absl::StrCat(
-              "\n",
-              FormatMethodComments(
-                  method,
-                  // clang-format off
-R"""(  /// @note The presence of the `ExperimentalTag` means that this function is
-  /// experimental. It is subject to change (including removal) without notice.
-  ///
-)"""),
+              "\n", FormatMethodComments(method, ""),
+              // clang-format off
 R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
-  Async$method_name$(ExperimentalTag, Options opts = {});
+  Async$method_name$(Options opts = {});
 )"""));
       // clang-format on
       continue;
@@ -375,10 +368,10 @@ $client_class_name$::~$client_class_name$() = default;
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $request_type$,
     $response_type$>>
-$client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
+$client_class_name$::Async$method_name$(Options opts) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(opts), options_));
-  return connection_->Async$method_name$(std::move(tag));
+  return connection_->Async$method_name$();
 }
 )""");
       continue;

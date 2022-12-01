@@ -23,7 +23,6 @@
 #include "google/cloud/bigquery/internal/bigquery_write_retry_traits.h"
 #include "google/cloud/bigquery/internal/bigquery_write_stub.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -73,7 +72,7 @@ class BigQueryWriteConnection {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
       google::cloud::bigquery::storage::v1::AppendRowsResponse>>
-      AsyncAppendRows(ExperimentalTag);
+  AsyncAppendRows();
 
   virtual StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
   GetWriteStream(

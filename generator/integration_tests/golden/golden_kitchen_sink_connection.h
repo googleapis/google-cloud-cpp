@@ -23,7 +23,6 @@
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_retry_traits.h"
 #include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -88,7 +87,7 @@ class GoldenKitchenSinkConnection {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::test::admin::database::v1::Request,
       google::test::admin::database::v1::Response>>
-  AsyncStreamingReadWrite(ExperimentalTag);
+  AsyncStreamingReadWrite();
 
   virtual Status
   ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request);

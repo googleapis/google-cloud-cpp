@@ -23,7 +23,6 @@
 #include "google/cloud/dialogflow_es/internal/sessions_stub.h"
 #include "google/cloud/dialogflow_es/sessions_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -72,7 +71,7 @@ class SessionsConnection {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
-      AsyncStreamingDetectIntent(ExperimentalTag);
+  AsyncStreamingDetectIntent();
 };
 
 /**

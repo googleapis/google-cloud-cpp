@@ -111,9 +111,9 @@ StreamRange<std::string> LoggingServiceV2Client::ListLogs(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesRequest,
     google::logging::v2::TailLogEntriesResponse>>
-LoggingServiceV2Client::AsyncTailLogEntries(ExperimentalTag tag, Options opts) {
+LoggingServiceV2Client::AsyncTailLogEntries(Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AsyncTailLogEntries(std::move(tag));
+  return connection_->AsyncTailLogEntries();
 }
 
 future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>

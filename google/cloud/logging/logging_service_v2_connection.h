@@ -23,7 +23,6 @@
 #include "google/cloud/logging/internal/logging_service_v2_stub.h"
 #include "google/cloud/logging/logging_service_v2_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -85,7 +84,7 @@ class LoggingServiceV2Connection {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
-      AsyncTailLogEntries(ExperimentalTag);
+  AsyncTailLogEntries();
 
   virtual future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
   AsyncWriteLogEntries(
