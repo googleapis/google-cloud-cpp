@@ -62,9 +62,7 @@ Status ConnectionGenerator::GenerateHeader() {
        HasBidirStreamingMethod()
            ? "google/cloud/internal/async_read_write_stream_impl.h"
            : "",
-       HasBidirStreamingMethod() || IsExperimental()
-           ? "google/cloud/experimental_tag.h"
-           : "",
+       IsExperimental() ? "google/cloud/experimental_tag.h" : "",
        "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
@@ -146,7 +144,7 @@ class $connection_class_name$ {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
-  Async$method_name$(ExperimentalTag);
+  Async$method_name$();
 )""");
       continue;
     }
@@ -320,7 +318,7 @@ $connection_class_name$::~$connection_class_name$() = default;
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $request_type$,
     $response_type$>>
-$connection_class_name$::Async$method_name$(ExperimentalTag) {
+$connection_class_name$::Async$method_name$() {
   return absl::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
           $request_type$,
