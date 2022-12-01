@@ -45,13 +45,12 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
   auto request = rest_internal::RestRequest(info_.token_url);
 
   auto client = client_factory_(options_);
-  auto status = client->Post(request, form_data);
-  if (!status) return std::move(status).status();
-  auto response = *std::move(status);
-  if (MapHttpCodeToStatus(response->StatusCode()) != StatusCode::kOk) {
-    return AsStatus(std::move(*response));
+  auto response = client->Post(request, form_data);
+  if (!response) return std::move(response).status();
+  if (MapHttpCodeToStatus((*response)->StatusCode()) != StatusCode::kOk) {
+    return AsStatus(std::move(**response));
   }
-  auto payload = rest_internal::ReadAll(std::move(*response).ExtractPayload());
+  auto payload = rest_internal::ReadAll(std::move(**response).ExtractPayload());
   if (!payload) return std::move(payload.status());
 
   auto ec = internal::ErrorContext({

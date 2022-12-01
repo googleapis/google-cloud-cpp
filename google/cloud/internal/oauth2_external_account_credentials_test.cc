@@ -38,6 +38,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::An;
 using ::testing::AtMost;
+using ::testing::HasSubstr;
 using ::testing::Pair;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
@@ -46,10 +47,10 @@ using MockClientFactory =
     ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
         Options const&)>;
 
-std::unique_ptr<RestResponse> MakeMockResponseSuccess(std::string contents) {
+std::unique_ptr<RestResponse> MakeMockResponse(HttpStatusCode code,
+                                               std::string contents) {
   auto response = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*response, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kOk));
+  EXPECT_CALL(*response, StatusCode).WillRepeatedly(Return(code));
   EXPECT_CALL(std::move(*response), ExtractPayload)
       .Times(AtMost(1))
       .WillRepeatedly([contents = std::move(contents)]() mutable {
@@ -69,6 +70,10 @@ std::unique_ptr<RestResponse> MakeMockResponseSuccess(std::string contents) {
         return std::unique_ptr<rest_internal::HttpPayload>(std::move(payload));
       });
   return response;
+}
+
+std::unique_ptr<RestResponse> MakeMockResponseSuccess(std::string contents) {
+  return MakeMockResponse(HttpStatusCode::kOk, std::move(contents));
 }
 
 // A full error payload, parseable as an error info.
@@ -92,25 +97,34 @@ auto constexpr kErrorPayload = R"""({
 })""";
 
 std::unique_ptr<RestResponse> MakeMockResponseError() {
+  return MakeMockResponse(HttpStatusCode::kNotFound,
+                          std::string{kErrorPayload});
+}
+
+std::unique_ptr<RestResponse> MakeMockResponsePartialError(
+    std::string partial) {
   auto response = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*response, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kNotFound));
+      .WillRepeatedly(Return(HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*response), ExtractPayload)
       .Times(AtMost(1))
-      .WillRepeatedly([] {
+      .WillRepeatedly([partial = std::move(partial)]() mutable {
         auto payload = absl::make_unique<MockHttpPayload>();
         // This is shared by the next two mocking functions.
-        auto c = std::make_shared<std::string>(kErrorPayload);
+        auto c = std::make_shared<std::string>();
         EXPECT_CALL(*payload, HasUnreadData).WillRepeatedly([c] {
-          return !c->empty();
+          return true;
         });
         EXPECT_CALL(*payload, Read)
-            .WillRepeatedly([c](absl::Span<char> buffer) {
-              auto const n = (std::min)(buffer.size(), c->size());
-              std::copy(c->begin(), std::next(c->begin(), n), buffer.begin());
-              c->assign(c->substr(n));
-              return n;
-            });
+            .WillRepeatedly(
+                [c](absl::Span<char> buffer) -> StatusOr<std::size_t> {
+                  auto const n = (std::min)(buffer.size(), c->size());
+                  std::copy(c->begin(), std::next(c->begin(), n),
+                            buffer.begin());
+                  c->assign(c->substr(n));
+                  if (n != 0) return n;
+                  return Status{StatusCode::kUnavailable, "read error"};
+                });
         return std::unique_ptr<rest_internal::HttpPayload>(std::move(payload));
       });
   return response;
@@ -141,23 +155,24 @@ TEST(ExternalAccount, Working) {
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
-        .WillOnce([test_url, info, response = json_response.dump()](
-                      RestRequest const& request, auto const& form_data) {
-          EXPECT_THAT(
-              form_data,
-              UnorderedElementsAre(
-                  Pair("grant_type",
-                       "urn:ietf:params:oauth:grant-type:token-exchange"),
-                  Pair("requested_token_type",
-                       "urn:ietf:params:oauth:token-type:access_token"),
-                  Pair("scope",
-                       "https://www.googleapis.com/auth/cloud-platform"),
-                  Pair("audience", "test-audience"),
-                  Pair("subject_token_type", "test-subject-token-type"),
-                  Pair("subject_token", "test-subject-token")));
-          EXPECT_EQ(request.path(), test_url);
-          return MakeMockResponseSuccess(response);
-        });
+        .WillOnce(
+            [test_url, info, response = json_response.dump()](
+                RestRequest const& request, auto const& form_data) mutable {
+              EXPECT_THAT(
+                  form_data,
+                  UnorderedElementsAre(
+                      Pair("grant_type",
+                           "urn:ietf:params:oauth:grant-type:token-exchange"),
+                      Pair("requested_token_type",
+                           "urn:ietf:params:oauth:token-type:access_token"),
+                      Pair("scope",
+                           "https://www.googleapis.com/auth/cloud-platform"),
+                      Pair("audience", "test-audience"),
+                      Pair("subject_token_type", "test-subject-token-type"),
+                      Pair("subject_token", "test-subject-token")));
+              EXPECT_EQ(request.path(), test_url);
+              return MakeMockResponseSuccess(std::move(response));
+            });
     return mock;
   });
 
@@ -170,7 +185,7 @@ TEST(ExternalAccount, Working) {
   EXPECT_EQ(access_token->token, expected_access_token);
 }
 
-TEST(ExternalAccount, HandleError) {
+TEST(ExternalAccount, HandleHttpError) {
   auto const test_url = std::string{"https://sts.example.com/"};
   auto const expected_access_token = std::string{"test-access-token"};
   auto const expected_expires_in = std::chrono::seconds(3456);
@@ -218,6 +233,143 @@ TEST(ExternalAccount, HandleError) {
   auto const now = std::chrono::system_clock::now();
   auto access_token = credentials.GetToken(now);
   EXPECT_THAT(access_token, StatusIs(StatusCode::kNotFound));
+}
+
+TEST(ExternalAccount, HandleHttpPartialError) {
+  auto const test_url = std::string{"https://sts.example.com/"};
+  auto const expected_access_token = std::string{"test-access-token"};
+  auto const response = std::string{R"""({"access_token": "1234--uh-oh)"""};
+  auto mock_source = [](Options const&) {
+    return make_status_or(internal::SubjectToken{"test-subject-token"});
+  };
+  auto const info = ExternalAccountInfo{
+      "test-audience",
+      "test-subject-token-type",
+      test_url,
+      mock_source,
+  };
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).WillOnce([&]() {
+    auto mock = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
+        .WillOnce([test_url, info, response](RestRequest const& request,
+                                             auto const& form_data) mutable {
+          EXPECT_THAT(
+              form_data,
+              UnorderedElementsAre(
+                  Pair("grant_type",
+                       "urn:ietf:params:oauth:grant-type:token-exchange"),
+                  Pair("requested_token_type",
+                       "urn:ietf:params:oauth:token-type:access_token"),
+                  Pair("scope",
+                       "https://www.googleapis.com/auth/cloud-platform"),
+                  Pair("audience", "test-audience"),
+                  Pair("subject_token_type", "test-subject-token-type"),
+                  Pair("subject_token", "test-subject-token")));
+          EXPECT_EQ(request.path(), test_url);
+          return MakeMockResponsePartialError(std::move(response));
+        });
+    return mock;
+  });
+
+  auto credentials =
+      ExternalAccountCredentials(info, client_factory.AsStdFunction());
+  auto const now = std::chrono::system_clock::now();
+  auto access_token = credentials.GetToken(now);
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kUnavailable, HasSubstr("read error")));
+}
+
+TEST(ExternalAccount, HandleNotJson) {
+  auto const test_url = std::string{"https://sts.example.com/"};
+  auto const expected_access_token = std::string{"test-access-token"};
+  auto const payload = std::string{R"""("abc--unterminated)"""};
+  auto mock_source = [](Options const&) {
+    return make_status_or(internal::SubjectToken{"test-subject-token"});
+  };
+  auto const info = ExternalAccountInfo{
+      "test-audience",
+      "test-subject-token-type",
+      test_url,
+      mock_source,
+  };
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).WillOnce([&]() {
+    auto mock = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
+        .WillOnce([test_url, info, p = payload](RestRequest const& request,
+                                                auto const& form_data) mutable {
+          EXPECT_THAT(
+              form_data,
+              UnorderedElementsAre(
+                  Pair("grant_type",
+                       "urn:ietf:params:oauth:grant-type:token-exchange"),
+                  Pair("requested_token_type",
+                       "urn:ietf:params:oauth:token-type:access_token"),
+                  Pair("scope",
+                       "https://www.googleapis.com/auth/cloud-platform"),
+                  Pair("audience", "test-audience"),
+                  Pair("subject_token_type", "test-subject-token-type"),
+                  Pair("subject_token", "test-subject-token")));
+          EXPECT_EQ(request.path(), test_url);
+          return MakeMockResponseSuccess(std::move(p));
+        });
+    return mock;
+  });
+
+  auto credentials =
+      ExternalAccountCredentials(info, client_factory.AsStdFunction());
+  auto const now = std::chrono::system_clock::now();
+  auto access_token = credentials.GetToken(now);
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("cannot be parsed as JSON object")));
+}
+
+TEST(ExternalAccount, HandleNotJsonObject) {
+  auto const test_url = std::string{"https://sts.example.com/"};
+  auto const expected_access_token = std::string{"test-access-token"};
+  auto const payload = std::string{R"""("json-string-is-not-object")"""};
+  auto mock_source = [](Options const&) {
+    return make_status_or(internal::SubjectToken{"test-subject-token"});
+  };
+  auto const info = ExternalAccountInfo{
+      "test-audience",
+      "test-subject-token-type",
+      test_url,
+      mock_source,
+  };
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).WillOnce([&]() {
+    auto mock = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
+        .WillOnce([test_url, info, p = payload](RestRequest const& request,
+                                                auto const& form_data) mutable {
+          EXPECT_THAT(
+              form_data,
+              UnorderedElementsAre(
+                  Pair("grant_type",
+                       "urn:ietf:params:oauth:grant-type:token-exchange"),
+                  Pair("requested_token_type",
+                       "urn:ietf:params:oauth:token-type:access_token"),
+                  Pair("scope",
+                       "https://www.googleapis.com/auth/cloud-platform"),
+                  Pair("audience", "test-audience"),
+                  Pair("subject_token_type", "test-subject-token-type"),
+                  Pair("subject_token", "test-subject-token")));
+          EXPECT_EQ(request.path(), test_url);
+          return MakeMockResponseSuccess(std::move(p));
+        });
+    return mock;
+  });
+
+  auto credentials =
+      ExternalAccountCredentials(info, client_factory.AsStdFunction());
+  auto const now = std::chrono::system_clock::now();
+  auto access_token = credentials.GetToken(now);
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("cannot be parsed as JSON object")));
 }
 
 TEST(ExternalAccount, MissingToken) {
@@ -368,7 +520,9 @@ TEST(ExternalAccount, InvalidIssuedTokenType) {
       ExternalAccountCredentials(info, client_factory.AsStdFunction());
   auto const now = std::chrono::system_clock::now();
   auto access_token = credentials.GetToken(now);
-  EXPECT_THAT(access_token, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("expected a Bearer access token")));
   EXPECT_THAT(access_token.status().error_info().domain(), "gcloud-cpp");
 }
 
@@ -406,11 +560,13 @@ TEST(ExternalAccount, InvalidTokenType) {
       ExternalAccountCredentials(info, client_factory.AsStdFunction());
   auto const now = std::chrono::system_clock::now();
   auto access_token = credentials.GetToken(now);
-  EXPECT_THAT(access_token, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("expected a Bearer access token")));
   EXPECT_THAT(access_token.status().error_info().domain(), "gcloud-cpp");
 }
 
-TEST(ExternalAccount, MissingExpiredIn) {
+TEST(ExternalAccount, MissingExpiresIn) {
   auto const test_url = std::string{"https://sts.example.com/"};
   auto const expected_access_token = std::string{"test-access-token"};
   auto const expected_expires_in = std::chrono::seconds(3456);
@@ -419,6 +575,7 @@ TEST(ExternalAccount, MissingExpiredIn) {
       {"invalid-expires_in", expected_expires_in.count()},
       {"issued_token_type", "urn:ietf:params:oauth:token-type:access_token"},
       {"token_type", "Bearer"},
+      // {"expires_in", 3500},
   };
   auto mock_source = [](Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
@@ -444,11 +601,13 @@ TEST(ExternalAccount, MissingExpiredIn) {
       ExternalAccountCredentials(info, client_factory.AsStdFunction());
   auto const now = std::chrono::system_clock::now();
   auto access_token = credentials.GetToken(now);
-  EXPECT_THAT(access_token, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("expected a numeric `expires_in`")));
   EXPECT_THAT(access_token.status().error_info().domain(), "gcloud-cpp");
 }
 
-TEST(ExternalAccount, InvalidExpiredIn) {
+TEST(ExternalAccount, InvalidExpiresIn) {
   auto const test_url = std::string{"https://sts.example.com/"};
   auto const expected_access_token = std::string{"test-access-token"};
   auto const json_response = nlohmann::json{
@@ -481,7 +640,9 @@ TEST(ExternalAccount, InvalidExpiredIn) {
       ExternalAccountCredentials(info, client_factory.AsStdFunction());
   auto const now = std::chrono::system_clock::now();
   auto access_token = credentials.GetToken(now);
-  EXPECT_THAT(access_token, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("expected a numeric `expires_in`")));
   EXPECT_THAT(access_token.status().error_info().domain(), "gcloud-cpp");
 }
 
