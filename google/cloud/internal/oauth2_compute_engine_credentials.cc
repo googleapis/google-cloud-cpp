@@ -138,40 +138,33 @@ ComputeEngineCredentials::DoMetadataServerGetRequest(std::string const& path,
   return rest_client_->Get(request);
 }
 
-Status ComputeEngineCredentials::RetrieveServiceAccountInfo() const {
+void ComputeEngineCredentials::RetrieveServiceAccountInfo() const {
+  // Fetch the metadata only once.
+  if (metadata_retrieved_) return;
+
   auto response = DoMetadataServerGetRequest(
       "computeMetadata/v1/instance/service-accounts/" + service_account_email_ +
           "/",
       true);
-  if (!response) {
-    return std::move(response).status();
-  }
-  if ((*response)->StatusCode() >= 300) {
-    return AsStatus(std::move(**response));
-  }
+  if (!response || (*response)->StatusCode() >= 300) return;
 
   auto metadata = ParseMetadataServerResponse(**response);
-  if (!metadata) {
-    return metadata.status();
-  }
+  if (!metadata) return;
   service_account_email_ = std::move(metadata->email);
   scopes_ = std::move(metadata->scopes);
-  return Status();
+  metadata_retrieved_ = true;
 }
 
 StatusOr<internal::AccessToken> ComputeEngineCredentials::Refresh() const {
-  auto status = RetrieveServiceAccountInfo();
-  if (!status.ok()) {
-    return status;
-  }
+  // Ignore failures fetching the account metadata, we can still get a token
+  // using the initial `service_account_email_` value.
+  RetrieveServiceAccountInfo();
 
   auto response = DoMetadataServerGetRequest(
       "computeMetadata/v1/instance/service-accounts/" + service_account_email_ +
           "/token",
       false);
-  if (!response) {
-    return std::move(response).status();
-  }
+  if (!response) return std::move(response).status();
   if ((*response)->StatusCode() >= 300) {
     return AsStatus(std::move(**response));
   }

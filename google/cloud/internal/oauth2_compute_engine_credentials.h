@@ -139,7 +139,7 @@ class ComputeEngineCredentials : public Credentials {
    * https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances
    * for more details.
    */
-  Status RetrieveServiceAccountInfo() const;
+  void RetrieveServiceAccountInfo() const;
 
   /**
    * Attempts to refresh the credentials.
@@ -150,6 +150,7 @@ class ComputeEngineCredentials : public Credentials {
   CurrentTimeFn current_time_fn_;
   std::unique_ptr<rest_internal::RestClient> rest_client_;
   RefreshingCredentialsWrapper refreshing_creds_;
+  mutable bool metadata_retrieved_ = false;
   mutable std::set<std::string> scopes_;
   mutable std::string service_account_email_;
   Options options_;
