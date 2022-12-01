@@ -116,7 +116,12 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 </details>
 
-## v2.5.0 - TBD
+## v2.6.0 - TBD
+
+## v2.5.0 - 2022-12
+
+**BREAKING CHANGES**
+- feat!: bidirectional streams are GA ([#10340](https://github.com/googleapis/google-cloud-cpp/pull/10340))
 
 ### New Libraries
 
@@ -125,6 +130,49 @@ the APIs in these libraries are stable, and are ready for production use.
 
 - [Connectors API](/google/cloud/connectors/README.md)
 - [VMware Engine API](/google/cloud/vmwareengine/README.md)
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- samples(bigtable): build admin samples with cmake ([#10246](https://github.com/googleapis/google-cloud-cpp/pull/10246))
+- doc(bigtable): create page for configuration options ([#10197](https://github.com/googleapis/google-cloud-cpp/pull/10197))
+
+### [Logging](/google/cloud/logging/README.md)
+
+- feat(logging): generate `AsyncWriteLogEntries()` ([#10194](https://github.com/googleapis/google-cloud-cpp/pull/10194))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- feat(pubsub): add option to override subscription ([#10327](https://github.com/googleapis/google-cloud-cpp/pull/10327))
+- feat(pubsub): blocking pulls ([#10317](https://github.com/googleapis/google-cloud-cpp/pull/10317))
+- doc(pubsub): create page for configuration options ([#10198](https://github.com/googleapis/google-cloud-cpp/pull/10198))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- doc(spanner): deprecate old MakeConnection() overloads ([#10284](https://github.com/googleapis/google-cloud-cpp/pull/10284))
+- fix(spanner): tweak the tag name of a FGAC sample ([#10266](https://github.com/googleapis/google-cloud-cpp/pull/10266))
+- samples(spanner): build admin samples with cmake ([#10247](https://github.com/googleapis/google-cloud-cpp/pull/10247))
+- feat(spanner): tests and samples for DML RETURNING ([#10233](https://github.com/googleapis/google-cloud-cpp/pull/10233))
+- doc(spanner): create page for configuration options ([#10199](https://github.com/googleapis/google-cloud-cpp/pull/10199))
+
+### [Speech](/google/cloud/speech/README.md)
+
+- feat(speech): generate speech v2 ([#10228](https://github.com/googleapis/google-cloud-cpp/pull/10228))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- doc(storage): create page for configuration options ([#10200](https://github.com/googleapis/google-cloud-cpp/pull/10200))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- doc: another pass on authentication components ([#10300](https://github.com/googleapis/google-cloud-cpp/pull/10300))
+- fix(common): create default gRPC credentials only if needed ([#10280](https://github.com/googleapis/google-cloud-cpp/pull/10280))
+- doc: group client functions ([#10268](https://github.com/googleapis/google-cloud-cpp/pull/10268))
+- doc: use qualified client name in samples ([#10241](https://github.com/googleapis/google-cloud-cpp/pull/10241))
+- fix(common): avoid globals for easier DLLs ([#10212](https://github.com/googleapis/google-cloud-cpp/pull/10212))
+- feat: support a pre-release component of the version string ([#10181](https://github.com/googleapis/google-cloud-cpp/pull/10181))
+- doc(common): add Doxygen group for common options ([#10192](https://github.com/googleapis/google-cloud-cpp/pull/10192))
+- doc(common): add overview section ([#10193](https://github.com/googleapis/google-cloud-cpp/pull/10193))
+- doc: better guidance for authentication samples ([#10184](https://github.com/googleapis/google-cloud-cpp/pull/10184))
 
 ## v2.4.0 - 2022-11
 
