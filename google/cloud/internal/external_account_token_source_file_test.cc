@@ -31,6 +31,10 @@ using ::testing::HasSubstr;
 using ::testing::IsSupersetOf;
 using ::testing::Pair;
 
+using MockClientFactory =
+    ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
+        Options const&)>;
+
 internal::ErrorContext MakeTestErrorContext() {
   return internal::ErrorContext{
       {{"filename", "my-credentials.json"}, {"key", "value"}}};
@@ -51,7 +55,9 @@ TEST(ExternalAccountTokenSource, WorkingTextFile) {
   auto const source =
       MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  MockClientFactory cf;
+  EXPECT_CALL(cf, Call).Times(0);
+  auto const actual = (*source)(cf.AsStdFunction(), Options{});
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(*actual, internal::SubjectToken{token});
   EXPECT_EQ(std::remove(token_filename.c_str()), 0);
@@ -69,7 +75,9 @@ TEST(ExternalAccountTokenSource, WorkingJsonFile) {
   auto const source =
       MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  MockClientFactory cf;
+  EXPECT_CALL(cf, Call).Times(0);
+  auto const actual = (*source)(cf.AsStdFunction(), Options{});
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(*actual, internal::SubjectToken{token});
   EXPECT_EQ(std::remove(token_filename.c_str()), 0);
@@ -127,7 +135,9 @@ TEST(ExternalAccountTokenSource, MissingTextFile) {
   auto const source =
       MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  MockClientFactory cf;
+  EXPECT_CALL(cf, Call).Times(0);
+  auto const actual = (*source)(cf.AsStdFunction(), Options{});
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("error reading subject token file")));
   EXPECT_THAT(
@@ -149,7 +159,9 @@ TEST(ExternalAccountTokenSource, MissingJsonFile) {
   auto const source =
       MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  MockClientFactory cf;
+  EXPECT_CALL(cf, Call).Times(0);
+  auto const actual = (*source)(cf.AsStdFunction(), Options{});
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("error reading subject token file")));
   EXPECT_THAT(
@@ -174,7 +186,9 @@ TEST(ExternalAccountTokenSource, JsonFileIsNotJson) {
   auto const source =
       MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  MockClientFactory cf;
+  EXPECT_CALL(cf, Call).Times(0);
+  auto const actual = (*source)(cf.AsStdFunction(), Options{});
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
                                AllOf(HasSubstr("parse error in JSON object"),
                                      HasSubstr(token_filename))));
@@ -201,7 +215,9 @@ TEST(ExternalAccountTokenSource, JsonFileIsNotJsonObject) {
   auto const source =
       MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  MockClientFactory cf;
+  EXPECT_CALL(cf, Call).Times(0);
+  auto const actual = (*source)(cf.AsStdFunction(), Options{});
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
                                AllOf(HasSubstr("parse error in JSON object"),
                                      HasSubstr(token_filename))));
@@ -228,7 +244,9 @@ TEST(ExternalAccountTokenSource, JsonFileMissingField) {
   auto const source =
       MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  MockClientFactory cf;
+  EXPECT_CALL(cf, Call).Times(0);
+  auto const actual = (*source)(cf.AsStdFunction(), Options{});
   EXPECT_THAT(
       actual,
       StatusIs(StatusCode::kInvalidArgument,
@@ -257,7 +275,9 @@ TEST(ExternalAccountTokenSource, JsonFileInvalidField) {
   auto const source =
       MakeExternalAccountTokenSourceFile(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  MockClientFactory cf;
+  EXPECT_CALL(cf, Call).Times(0);
+  auto const actual = (*source)(cf.AsStdFunction(), Options{});
   EXPECT_THAT(
       actual,
       StatusIs(StatusCode::kInvalidArgument,

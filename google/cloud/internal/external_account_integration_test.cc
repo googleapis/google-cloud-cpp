@@ -67,8 +67,7 @@ TEST(ExternalAccountIntegrationTest, UrlSourced) {
   auto make_client = [](Options opts = {}) {
     return rest_internal::MakeDefaultRestClient("", std::move(opts));
   };
-  auto source =
-      MakeExternalAccountTokenSourceUrl(credential_source, make_client, ec);
+  auto source = MakeExternalAccountTokenSourceUrl(credential_source, ec);
   ASSERT_STATUS_OK(source);
 
   auto info =

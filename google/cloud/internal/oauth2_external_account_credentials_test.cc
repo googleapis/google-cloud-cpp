@@ -142,7 +142,7 @@ TEST(ExternalAccount, Working) {
       {"issued_token_type", "urn:ietf:params:oauth:token-type:access_token"},
       {"token_type", "Bearer"},
   };
-  auto mock_source = [](Options const&) {
+  auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info = ExternalAccountInfo{
@@ -195,7 +195,7 @@ TEST(ExternalAccount, HandleHttpError) {
       {"issued_token_type", "urn:ietf:params:oauth:token-type:access_token"},
       {"token_type", "Bearer"},
   };
-  auto mock_source = [](Options const&) {
+  auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info = ExternalAccountInfo{
@@ -239,7 +239,7 @@ TEST(ExternalAccount, HandleHttpPartialError) {
   auto const test_url = std::string{"https://sts.example.com/"};
   auto const expected_access_token = std::string{"test-access-token"};
   auto const response = std::string{R"""({"access_token": "1234--uh-oh)"""};
-  auto mock_source = [](Options const&) {
+  auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info = ExternalAccountInfo{
@@ -284,7 +284,7 @@ TEST(ExternalAccount, HandleNotJson) {
   auto const test_url = std::string{"https://sts.example.com/"};
   auto const expected_access_token = std::string{"test-access-token"};
   auto const payload = std::string{R"""("abc--unterminated)"""};
-  auto mock_source = [](Options const&) {
+  auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info = ExternalAccountInfo{
@@ -330,7 +330,7 @@ TEST(ExternalAccount, HandleNotJsonObject) {
   auto const test_url = std::string{"https://sts.example.com/"};
   auto const expected_access_token = std::string{"test-access-token"};
   auto const payload = std::string{R"""("json-string-is-not-object")"""};
-  auto mock_source = [](Options const&) {
+  auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info = ExternalAccountInfo{
@@ -382,7 +382,7 @@ TEST(ExternalAccount, MissingToken) {
       {"issued_token_type", "urn:ietf:params:oauth:token-type:access_token"},
       {"token_type", "Bearer"},
   };
-  auto mock_source = [](Options const&) {
+  auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info = ExternalAccountInfo{
@@ -420,7 +420,7 @@ TEST(ExternalAccount, MissingIssuedTokenType) {
       // {"issued_token_type", "urn:ietf:params:oauth:token-type:access_token"},
       {"token_type", "Bearer"},
   };
-  auto mock_source = [](Options const&) {
+  auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info = ExternalAccountInfo{
@@ -458,7 +458,7 @@ TEST(ExternalAccount, MissingTokenType) {
       {"issued_token_type", "urn:ietf:params:oauth:token-type:access_token"},
       // {"token_type", "Bearer"},
   };
-  auto mock_source = [](Options const&) {
+  auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info = ExternalAccountInfo{
@@ -496,7 +496,7 @@ TEST(ExternalAccount, InvalidIssuedTokenType) {
       {"issued_token_type", "--invalid--"},
       {"token_type", "Bearer"},
   };
-  auto mock_source = [](Options const&) {
+  auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info = ExternalAccountInfo{
@@ -536,7 +536,7 @@ TEST(ExternalAccount, InvalidTokenType) {
       {"issued_token_type", "urn:ietf:params:oauth:token-type:access_token"},
       {"token_type", "--invalid--"},
   };
-  auto mock_source = [](Options const&) {
+  auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info = ExternalAccountInfo{
@@ -577,7 +577,7 @@ TEST(ExternalAccount, MissingExpiresIn) {
       {"token_type", "Bearer"},
       // {"expires_in", 3500},
   };
-  auto mock_source = [](Options const&) {
+  auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info = ExternalAccountInfo{
@@ -616,7 +616,7 @@ TEST(ExternalAccount, InvalidExpiresIn) {
       {"issued_token_type", "urn:ietf:params:oauth:token-type:access_token"},
       {"token_type", "Bearer"},
   };
-  auto mock_source = [](Options const&) {
+  auto mock_source = [](HttpClientFactory const&, Options const&) {
     return make_status_or(internal::SubjectToken{"test-subject-token"});
   };
   auto const info = ExternalAccountInfo{

@@ -40,7 +40,8 @@ using ::testing::Pair;
 using ::testing::Return;
 
 using MockClientFactory =
-    ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>()>;
+    ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
+        Options const&)>;
 
 internal::ErrorContext MakeTestErrorContext() {
   return internal::ErrorContext{
@@ -132,10 +133,10 @@ TEST(ExternalAccountTokenSource, WorkingPlainResponse) {
   });
 
   auto const creds = nlohmann::json{{"url", test_url}};
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  auto const actual = (*source)(client_factory.AsStdFunction(), Options{});
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(*actual, internal::SubjectToken{token});
 }
@@ -165,10 +166,10 @@ TEST(ExternalAccountTokenSource, WorkingPlainResponseWithHeaders) {
                                          {"Authorization", "Bearer test-only"},
                                          {"Test-Header", "test-value"},
                                      }}};
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  auto const actual = (*source)(client_factory.AsStdFunction(), Options{});
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(*actual, internal::SubjectToken{token});
 }
@@ -193,10 +194,10 @@ TEST(ExternalAccountTokenSource, WorkingJsonResponse) {
       {"url", test_url},
       {"format",
        {{"type", "json"}, {"subject_token_field_name", "subjectToken"}}}};
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  auto const actual = (*source)(client_factory.AsStdFunction(), Options{});
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(*actual, internal::SubjectToken{token});
 }
@@ -206,10 +207,8 @@ TEST(ExternalAccountTokenSource, MissingUrlField) {
       {"url-but-wrong", "https://169.254.169.254/subject/token"},
       {"format", {{"type", "text"}}},
   };
-  MockClientFactory client_factory;
-  EXPECT_CALL(client_factory, Call).Times(0);
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   EXPECT_THAT(source, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("cannot find `url` field")));
   EXPECT_THAT(source.status().error_info().metadata(),
@@ -222,10 +221,8 @@ TEST(ExternalAccountTokenSource, InvalidUrlField) {
       {"url", true},
       {"format", {{"type", "text"}}},
   };
-  MockClientFactory client_factory;
-  EXPECT_CALL(client_factory, Call).Times(0);
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   EXPECT_THAT(source, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("invalid type for `url` field")));
   EXPECT_THAT(source.status().error_info().metadata(),
@@ -238,10 +235,8 @@ TEST(ExternalAccountTokenSource, UnknownFormatType) {
       {"url", "https://169.254.169.254/subject/token"},
       {"format", {{"type", "neither-json-nor-text"}}},
   };
-  MockClientFactory client_factory;
-  EXPECT_CALL(client_factory, Call).Times(0);
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   EXPECT_THAT(source,
               StatusIs(StatusCode::kInvalidArgument,
                        HasSubstr("invalid file type <neither-json-nor-text>")));
@@ -263,10 +258,8 @@ TEST(ExternalAccountTokenSource, InvalidHeaderType) {
        }},
       {"format", {{"type", "text"}}},
   };
-  MockClientFactory client_factory;
-  EXPECT_CALL(client_factory, Call).Times(0);
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   EXPECT_THAT(source, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("invalid type for `invalid-header`")));
   EXPECT_THAT(source.status().error_info().metadata(),
@@ -290,10 +283,10 @@ TEST(ExternalAccountTokenSource, ErrorInPlainResponse) {
   });
 
   auto const creds = nlohmann::json{{"url", test_url}};
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  auto const actual = (*source)(client_factory.AsStdFunction(), Options{});
   EXPECT_THAT(actual, StatusIs(StatusCode::kNotFound));
   EXPECT_EQ(actual.status().error_info().reason(), "HTTP REQUEST");
   EXPECT_THAT(
@@ -324,10 +317,10 @@ TEST(ExternalAccountTokenSource, ErrorInJsonResponse) {
       {"url", test_url},
       {"format",
        {{"type", "json"}, {"subject_token_field_name", "fieldName"}}}};
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  auto const actual = (*source)(client_factory.AsStdFunction(), Options{});
   EXPECT_THAT(actual, StatusIs(StatusCode::kNotFound));
   EXPECT_EQ(actual.status().error_info().reason(), "HTTP REQUEST");
   EXPECT_THAT(
@@ -362,10 +355,10 @@ TEST(ExternalAccountTokenSource, JsonResponseIsNotJson) {
       {"url", test_url},
       {"format",
        {{"type", "json"}, {"subject_token_field_name", "fieldName"}}}};
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  auto const actual = (*source)(client_factory.AsStdFunction(), Options{});
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("in JSON object retrieved from "
                                          "`https://test-only.example.com/`")));
@@ -399,10 +392,10 @@ TEST(ExternalAccountTokenSource, JsonResponseIsNotJsonObject) {
       {"url", test_url},
       {"format",
        {{"type", "json"}, {"subject_token_field_name", "fieldName"}}}};
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  auto const actual = (*source)(client_factory.AsStdFunction(), Options{});
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("in JSON object retrieved from "
                                          "`https://test-only.example.com/`")));
@@ -436,10 +429,10 @@ TEST(ExternalAccountTokenSource, JsonResponseMissingField) {
       {"url", test_url},
       {"format",
        {{"type", "json"}, {"subject_token_field_name", "fieldName"}}}};
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  auto const actual = (*source)(client_factory.AsStdFunction(), Options{});
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("in JSON object retrieved from "
                                          "`https://test-only.example.com/`")));
@@ -473,10 +466,10 @@ TEST(ExternalAccountTokenSource, JsonResponseInvalidField) {
       {"url", test_url},
       {"format",
        {{"type", "json"}, {"subject_token_field_name", "fieldName"}}}};
-  auto const source = MakeExternalAccountTokenSourceUrl(
-      creds, client_factory.AsStdFunction(), MakeTestErrorContext());
+  auto const source =
+      MakeExternalAccountTokenSourceUrl(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(source);
-  auto const actual = (*source)(Options{});
+  auto const actual = (*source)(client_factory.AsStdFunction(), Options{});
   EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
                                HasSubstr("in JSON object retrieved from "
                                          "`https://test-only.example.com/`")));
