@@ -120,6 +120,263 @@ std::unique_ptr<RestResponse> MakeMockResponsePartialError(
 
 using FormDataType = std::vector<std::pair<std::string, std::string>>;
 
+TEST(ExternalAccount, ParseUrlSuccess) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source",
+       nlohmann::json{
+           {"url", "https://test-only-oidc.exampl.com/"},
+       }},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(actual->audience, "test-audience");
+  EXPECT_EQ(actual->subject_token_type, "test-subject-token-type");
+  EXPECT_EQ(actual->token_url, "test-token-url");
+}
+
+TEST(ExternalAccount, ParseFileSuccess) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(actual->audience, "test-audience");
+  EXPECT_EQ(actual->subject_token_type, "test-subject-token-type");
+  EXPECT_EQ(actual->token_url, "test-token-url");
+}
+
+TEST(ExternalAccount, ParseNotJson) {
+  auto const configuration = std::string{"not-json"};
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration}});
+  auto const actual = ParseExternalAccountConfiguration(configuration, ec);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("not a JSON object")));
+}
+
+TEST(ExternalAccount, ParseNotJsonObject) {
+  auto const configuration = std::string{R"""("json-but-not-json-object")"""};
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration}});
+  auto const actual = ParseExternalAccountConfiguration(configuration, ec);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("not a JSON object")));
+}
+
+TEST(ExternalAccount, ParseMissingType) {
+  auto const configuration = nlohmann::json{
+      // {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("cannot find `type` field")));
+}
+
+TEST(ExternalAccount, ParseInvalidType) {
+  auto const configuration = nlohmann::json{
+      {"type", true},  // should be string
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("invalid type for `type` field")));
+}
+
+TEST(ExternalAccount, ParseMismatchedType) {
+  auto const configuration = nlohmann::json{
+      {"type", "mismatched-external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(
+      actual,
+      StatusIs(StatusCode::kInvalidArgument,
+               HasSubstr("mismatched type (mismatched-external_account)")));
+}
+
+TEST(ExternalAccount, ParseMissingAudience) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      // {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("cannot find `audience` field")));
+}
+
+TEST(ExternalAccount, ParseInvalidAudience) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", true},  // should be string
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("invalid type for `audience` field")));
+}
+
+TEST(ExternalAccount, ParseMissingSubjectTokenType) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      // {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("cannot find `subject_token_type` field")));
+}
+
+TEST(ExternalAccount, ParseInvalidSubjectTokenType) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", true},  // should be string
+      {"token_url", "test-token-url"},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(
+      actual,
+      StatusIs(StatusCode::kInvalidArgument,
+               HasSubstr("invalid type for `subject_token_type` field")));
+}
+
+TEST(ExternalAccount, ParseMissingTokenUrl) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      // {"token_url", "test-token-url"},
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("cannot find `token_url` field")));
+}
+
+TEST(ExternalAccount, ParseInvalidTokenUrl) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", true},  // should be string
+      {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("invalid type for `token_url` field")));
+}
+
+TEST(ExternalAccount, ParseMissingCredentialSource) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      // {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("missing `credential_source` field")));
+}
+
+TEST(ExternalAccount, ParseInvalidCredentialSource) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source", true},  // should be object
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(
+      actual,
+      StatusIs(StatusCode::kInvalidArgument,
+               HasSubstr("`credential_source` field is not a JSON object")));
+}
+
+TEST(ExternalAccount, ParseUnknownCredentialSourceType) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source", nlohmann::json{{"environment_id", "aws1"}}},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               HasSubstr("unknown subject token source")));
+}
+
 TEST(ExternalAccount, Working) {
   auto const test_url = std::string{"https://sts.example.com/"};
   auto const expected_access_token = std::string{"test-access-token"};
