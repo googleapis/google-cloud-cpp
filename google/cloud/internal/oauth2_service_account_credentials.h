@@ -49,6 +49,7 @@ struct ServiceAccountCredentialsInfo {
   absl::optional<std::set<std::string>> scopes;
   // See https://developers.google.com/identity/protocols/OAuth2ServiceAccount.
   absl::optional<std::string> subject;
+  bool enable_self_signed_jwt;
 };
 
 /// Indicates whether or not to use a self-signed JWT or issue a request to

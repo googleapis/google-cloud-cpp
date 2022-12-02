@@ -782,23 +782,35 @@ TEST_F(ServiceAccountCredentialsTest, UseOauth) {
 
   auto p12_info = ParseServiceAccountP12File(filename);
   EXPECT_EQ(0, std::remove(filename.c_str()));
-  if (!p12_info) GTEST_SKIP();  // Some environments do not support PKCS#12
-  ASSERT_STATUS_OK(p12_info);
 
-  auto json_info = ParseServiceAccountCredentials(MakeTestContents(), "test");
-  ASSERT_STATUS_OK(json_info);
+  auto json_info_without_scopes =
+      ParseServiceAccountCredentials(MakeTestContents(), "test");
+  ASSERT_STATUS_OK(json_info_without_scopes);
+  ASSERT_FALSE(json_info_without_scopes->scopes.has_value());
+  auto json_info_with_scopes = *json_info_without_scopes;
+  json_info_with_scopes.scopes =
+      std::set<std::string>{{GoogleOAuthScopeCloudPlatform()}};
 
   struct TestCase {
     std::string name;
     ServiceAccountCredentialsInfo info;
     absl::optional<std::string> environment;
     bool expected;
-  } cases[] = {
-      {"JSON/no-env", *json_info, absl::nullopt, false},
-      {"JSON/env", *json_info, "1", true},
-      {"P12/no-env", *p12_info, absl::nullopt, true},
-      {"P12/env", *p12_info, "1", true},
   };
+
+  std::vector<TestCase> cases = {
+      {"JSON/with-scopes/no-env", json_info_with_scopes, absl::nullopt, true},
+      {"JSON/with-scopes/env", json_info_with_scopes, "1", true},
+      {"JSON/no-scopes/no-env", *json_info_without_scopes, absl::nullopt,
+       false},
+      {"JSON/no-scopes/env", *json_info_without_scopes, "1", true},
+  };
+  if (p12_info) {
+    // Some environments do not support PKCS$12, we need to test the other
+    // cases.
+    cases.push_back({"P12/no-env", *p12_info, absl::nullopt, true});
+    cases.push_back({"P12/env", *p12_info, "1", true});
+  }
 
   for (auto const& test : cases) {
     SCOPED_TRACE("Testing for " + test.name);

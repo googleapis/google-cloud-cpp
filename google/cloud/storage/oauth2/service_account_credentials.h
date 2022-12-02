@@ -208,15 +208,10 @@ class ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
                                 std::chrono::system_clock>
     : public Credentials {
  public:
-  explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo const& info)
+  explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info)
       : ServiceAccountCredentials(std::move(info), {}) {}
-  ServiceAccountCredentials(ServiceAccountCredentialsInfo const& info,
-                            ChannelOptions const& options)
-      : impl_(absl::make_unique<oauth2_internal::ServiceAccountCredentials>(
-            oauth2_internal::ServiceAccountCredentialsInfo{
-                info.client_email, info.private_key_id, info.private_key,
-                info.token_uri, info.scopes, info.subject},
-            Options{}.set<CARootsFilePathOption>(options.ssl_root_path()))) {}
+  ServiceAccountCredentials(ServiceAccountCredentialsInfo info,
+                            ChannelOptions const& options);
 
   StatusOr<std::string> AuthorizationHeader() override {
     return oauth2_internal::AuthorizationHeaderJoined(*impl_);
@@ -344,6 +339,13 @@ class ServiceAccountCredentials : public Credentials {
 };
 
 }  // namespace oauth2
+
+namespace internal {
+
+oauth2_internal::ServiceAccountCredentialsInfo MapServiceAccountCredentialsInfo(
+    oauth2::ServiceAccountCredentialsInfo info);
+
+}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
