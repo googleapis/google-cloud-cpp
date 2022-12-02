@@ -31,6 +31,7 @@ namespace {
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::rest_internal::RestResponse;
+using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockHttpPayload;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
@@ -54,20 +55,7 @@ std::unique_ptr<RestResponse> MakeMockResponse(HttpStatusCode code,
   EXPECT_CALL(std::move(*response), ExtractPayload)
       .Times(AtMost(1))
       .WillRepeatedly([contents = std::move(contents)]() mutable {
-        auto payload = absl::make_unique<MockHttpPayload>();
-        // This is shared by the next two mocking functions.
-        auto c = std::make_shared<std::string>(contents);
-        EXPECT_CALL(*payload, HasUnreadData).WillRepeatedly([c] {
-          return !c->empty();
-        });
-        EXPECT_CALL(*payload, Read)
-            .WillRepeatedly([c](absl::Span<char> buffer) {
-              auto const n = (std::min)(buffer.size(), c->size());
-              std::copy(c->begin(), std::next(c->begin(), n), buffer.begin());
-              c->assign(c->substr(n));
-              return n;
-            });
-        return std::unique_ptr<rest_internal::HttpPayload>(std::move(payload));
+        return MakeMockHttpPayloadSuccess(std::move(contents));
       });
   return response;
 }
