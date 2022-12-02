@@ -235,7 +235,9 @@ TEST(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
   ::testing::InSequence sequence;
   auto mock_rest_client = absl::make_unique<MockRestClient>();
   EXPECT_CALL(*mock_rest_client, Get(expect_service_config(alias)))
-      .WillOnce(Return(Status{StatusCode::kAborted, "Fake Curl error", {}}));
+      .WillOnce([] {
+        return Status{StatusCode::kAborted, "Fake Curl error"};
+      });
   EXPECT_CALL(*mock_rest_client, Get(expect_service_config(alias)))
       .WillOnce([&] {
         auto response = absl::make_unique<MockRestResponse>();
