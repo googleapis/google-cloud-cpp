@@ -36,7 +36,11 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
 
-/// Object to hold information used to instantiate an AuthorizedUserCredentials.
+/**
+ * Object to hold information used to instantiate an AuthorizedUserCredentials.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 struct AuthorizedUserCredentialsInfo {
   std::string client_id;
   std::string client_secret;
@@ -44,14 +48,23 @@ struct AuthorizedUserCredentialsInfo {
   std::string token_uri;
 };
 
-/// Parses a refresh response JSON string into an authorization header. The
-/// header and the current time (for the expiration) form a TemporaryToken.
+/**
+ * Parses a refresh response JSON string into an authorization header.
+ *
+ * The header and the current time (for the expiration) form a TemporaryToken.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseAuthorizedUserRefreshResponse(
     storage::internal::HttpResponse const& response,
     std::chrono::system_clock::time_point now);
 
-/// Parses a user credentials JSON string into an AuthorizedUserCredentialsInfo.
+/**
+ * Parses a user credentials JSON string into an AuthorizedUserCredentialsInfo.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri =
@@ -78,6 +91,8 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
  *     overridden except for testing.
  * @tparam ClockType a dependency injection point to fetch the current time.
  *     This should generally not be overridden except for testing.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,

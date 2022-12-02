@@ -31,6 +31,8 @@ namespace oauth2 {
 
 /**
  * Wrapper for refreshable parts of a Credentials object.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 class RefreshingCredentialsWrapper {
  public:
@@ -67,6 +69,8 @@ class RefreshingCredentialsWrapper {
    * If a Credentials is close to expiration but not quite expired, this method
    * may still return false. This helps prevent the case where an access token
    * expires between when it is obtained and when it is used.
+   *
+   * @deprecated Prefer using the unified credentials documented in @ref guac
    */
   bool IsExpired(std::chrono::system_clock::time_point now) const;
 
@@ -75,6 +79,8 @@ class RefreshingCredentialsWrapper {
    *
    * This method should be used to determine whether a Credentials object needs
    * to be refreshed.
+   *
+   * @deprecated Prefer using the unified credentials documented in @ref guac
    */
   bool IsValid(std::chrono::system_clock::time_point now) const;
 

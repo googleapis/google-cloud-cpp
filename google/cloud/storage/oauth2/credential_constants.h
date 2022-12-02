@@ -29,11 +29,17 @@ namespace oauth2 {
  *
  * We currently only support RSA with SHA-256, but use this enum for
  * readability and easy addition of support for other algorithms.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 // NOLINTNEXTLINE(readability-identifier-naming)
 enum class JwtSigningAlgorithms { RS256 };
 
-/// The max lifetime in seconds of an access token.
+/**
+ * The max lifetime in seconds of an access token.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 constexpr std::chrono::seconds GoogleOAuthAccessTokenLifetime() {
   return std::chrono::seconds(3600);
 }
@@ -46,23 +52,34 @@ constexpr std::chrono::seconds GoogleOAuthAccessTokenLifetime() {
  * check expiration time one second before the expiration, see that the token is
  * still valid, then attempt to use it two seconds later and receive an
  * error.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 constexpr std::chrono::seconds GoogleOAuthAccessTokenExpirationSlack() {
   return std::chrono::seconds(300);
 }
 
-/// The endpoint to fetch an OAuth 2.0 access token from.
+/**
+ * The endpoint to fetch an OAuth 2.0 access token from.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 inline char const* GoogleOAuthRefreshEndpoint() {
   static constexpr char kEndpoint[] = "https://oauth2.googleapis.com/token";
   return kEndpoint;
 }
 
-/// String representing the "cloud-platform" OAuth 2.0 scope.
+/**
+ * String representing the "cloud-platform" OAuth 2.0 scope.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 inline char const* GoogleOAuthScopeCloudPlatform() {
   static constexpr char kScope[] =
       "https://www.googleapis.com/auth/cloud-platform";
   return kScope;
 }
+
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
