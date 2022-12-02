@@ -20,9 +20,13 @@ enumerated below.
 Before beginning the release process, verify all CI builds are passing on
 the `main` branch. This is displayed in the GitHub page for the project.
 
-### Update CMakeLists.txt
+### Update the root CMakeLists.txt
 
 Set the pre-release version (PROJECT_VERSION_PRE_RELEASE) to the empty string.
+
+```
+set(PROJECT_VERSION_PRE_RELEASE "")
+```
 
 ### Update CHANGELOG.md
 
@@ -82,7 +86,11 @@ specified repo.
 
 Review the new release in the GitHub web UI (the link to the pre-release will
 be output from the `release.sh` script that was run in the previous step). If
-everything looks OK, uncheck the pre-release checkbox and publish.
+everything looks OK:
+
+1. Uncheck the pre-release checkbox.
+1. Check the latest release checkbox.
+1. Click the update release button.
 
 ## Check the published docs on googleapis.dev
 
