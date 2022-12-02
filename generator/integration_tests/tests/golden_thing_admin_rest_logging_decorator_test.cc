@@ -84,7 +84,7 @@ TEST(LoggingDecoratorRestTest, ListDatabases) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListDatabases")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
-
+#if 0
 TEST(LoggingDecoratorRestTest, CreateDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   testing_util::ScopedLog log;
@@ -116,7 +116,7 @@ TEST(LoggingDecoratorRestTest, UpdateDatabaseDdl) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("UpdateDatabaseDdl")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
-
+#endif
 TEST(LoggingDecoratorRestTest, DropDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   testing_util::ScopedLog log;
@@ -196,7 +196,7 @@ TEST(LoggingDecoratorRestTest, TestIamPermissions) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("TestIamPermissions")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
-
+#if 0
 TEST(LoggingDecoratorRestTest, CreateBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   testing_util::ScopedLog log;
@@ -212,7 +212,7 @@ TEST(LoggingDecoratorRestTest, CreateBackup) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("CreateBackup")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
-
+#endif
 TEST(LoggingDecoratorRestTest, GetBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   testing_util::ScopedLog log;
@@ -276,7 +276,7 @@ TEST(LoggingDecoratorRestTest, ListBackups) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("ListBackups")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
-
+#if 0
 TEST(LoggingDecoratorRestTest, RestoreDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   testing_util::ScopedLog log;
@@ -292,7 +292,7 @@ TEST(LoggingDecoratorRestTest, RestoreDatabase) {
   EXPECT_THAT(log_lines, Contains(HasSubstr("RestoreDatabase")));
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
-
+#endif
 TEST(LoggingDecoratorRestTest, ListDatabaseOperations) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   testing_util::ScopedLog log;

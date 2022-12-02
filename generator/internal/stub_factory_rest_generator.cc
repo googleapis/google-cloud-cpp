@@ -91,6 +91,10 @@ CreateDefault$stub_rest_class_name$(Options const& options) {
   if (!opts.has<UnifiedCredentialsOption>()) {
     opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   }
+  if (!opts.has<rest_internal::LongrunningEndpointOption>()) {
+    opts.set<rest_internal::LongrunningEndpointOption>(
+        "longrunning.googleapis.com");
+  }
   std::shared_ptr<$stub_rest_class_name$> stub =
       std::make_shared<Default$stub_rest_class_name$>(std::move(opts));
   stub = std::make_shared<$metadata_rest_class_name$>(std::move(stub));

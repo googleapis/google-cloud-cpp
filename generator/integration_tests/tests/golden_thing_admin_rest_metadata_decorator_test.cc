@@ -140,7 +140,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListDatabases) {
   auto status = stub.ListDatabases(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
-
+#if 0
 TEST(ThingAdminRestMetadataDecoratorTest, CreateDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, CreateDatabase)
@@ -191,7 +191,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, UpdateDatabaseDdl) {
   auto status = stub.UpdateDatabaseDdl(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
-
+#endif
 TEST(ThingAdminRestMetadataDecoratorTest, DropDatabaseExplicitRoutingMatch) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, DropDatabase)
@@ -344,7 +344,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, TestIamPermissions) {
   auto status = stub.TestIamPermissions(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
-
+#if 0
 TEST(ThingAdminRestMetadataDecoratorTest, CreateBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, CreateBackup)
@@ -368,7 +368,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, CreateBackup) {
   auto status = stub.CreateBackup(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
-
+#endif
 TEST(ThingAdminRestMetadataDecoratorTest, GetBackup) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, GetBackup)
@@ -466,7 +466,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListBackups) {
   auto status = stub.ListBackups(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
-
+#if 0
 TEST(ThingAdminRestMetadataDecoratorTest, RestoreDatabase) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, RestoreDatabase)
@@ -490,7 +490,7 @@ TEST(ThingAdminRestMetadataDecoratorTest, RestoreDatabase) {
   auto status = stub.RestoreDatabase(context, request);
   EXPECT_EQ(TransientError(), status.status());
 }
-
+#endif
 TEST(ThingAdminRestMetadataDecoratorTest, ListDatabaseOperations) {
   auto mock = std::make_shared<MockGoldenThingAdminRestStub>();
   EXPECT_CALL(*mock, ListDatabaseOperations)

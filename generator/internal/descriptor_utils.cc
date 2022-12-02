@@ -25,6 +25,7 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/connection_generator.h"
 #include "generator/internal/connection_impl_generator.h"
+#include "generator/internal/connection_impl_rest_generator.h"
 #include "generator/internal/forwarding_client_generator.h"
 #include "generator/internal/forwarding_connection_generator.h"
 #include "generator/internal/forwarding_idempotency_policy_generator.h"
@@ -888,6 +889,14 @@ VarsDictionary CreateServiceVars(
   vars["connection_impl_header_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_connection_impl.h");
+  vars["connection_impl_rest_class_name"] =
+      absl::StrCat(descriptor.name(), "RestConnectionImpl");
+  vars["connection_impl_rest_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_connection_impl.cc");
+  vars["connection_impl_rest_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_connection_impl.h");
   vars["connection_options_name"] =
       absl::StrCat(descriptor.name(), "ConnectionOptions");
   vars["connection_options_traits_name"] =
@@ -1174,6 +1183,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service_vars.find("generate_rest_transport");
   if (generate_rest_transport != service_vars.end() &&
       generate_rest_transport->second == "true") {
+    code_generators.push_back(absl::make_unique<ConnectionImplRestGenerator>(
+        service, service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<LoggingDecoratorRestGenerator>(
         service, service_vars, method_vars, context));
     code_generators.push_back(absl::make_unique<MetadataDecoratorRestGenerator>(

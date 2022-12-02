@@ -1,4 +1,4 @@
-// Copyright 2021 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,29 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_LONG_RUNNING_OPERATION_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_LONG_RUNNING_OPERATION_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_REST_LONG_RUNNING_OPERATION_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_REST_LONG_RUNNING_OPERATION_H
 
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
-#include "google/cloud/internal/async_polling_loop.h"
-#include "google/cloud/internal/async_retry_loop.h"
+#include "google/cloud/internal/async_rest_polling_loop.h"
+#include "google/cloud/internal/async_rest_retry_loop.h"
 #include "google/cloud/internal/extract_long_running_result.h"
+#include "google/cloud/internal/rest_completion_queue.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
 #include <google/longrunning/operations.pb.h>
-#include <grpcpp/grpcpp.h>
+//#include <grpcpp/grpcpp.h>
 #include <functional>
 #include <memory>
 #include <string>
 
 namespace google {
 namespace cloud {
+namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 template <typename ReturnType>
 using LongRunningOperationValueExtractor = std::function<StatusOr<ReturnType>(
@@ -116,30 +116,31 @@ using LongRunningOperationValueExtractor = std::function<StatusOr<ReturnType>(
  */
 template <typename ReturnType, typename RequestType, typename StartFunctor,
           typename RetryPolicyType, typename CompletionQueue>
-future<StatusOr<ReturnType>> AsyncLongRunningOperation(
+future<StatusOr<ReturnType>> AsyncRestLongRunningOperation(
     CompletionQueue cq, RequestType&& request, StartFunctor&& start,
-    AsyncPollLongRunningOperation poll, AsyncCancelLongRunningOperation cancel,
+    AsyncRestPollLongRunningOperation poll,
+    AsyncRestCancelLongRunningOperation cancel,
     LongRunningOperationValueExtractor<ReturnType> value_extractor,
     std::unique_ptr<RetryPolicyType> retry_policy,
     std::unique_ptr<BackoffPolicy> backoff_policy, Idempotency idempotent,
     std::unique_ptr<PollingPolicy> polling_policy, char const* location) {
   using ::google::longrunning::Operation;
   auto operation =
-      AsyncRetryLoop(std::move(retry_policy), std::move(backoff_policy),
-                     idempotent, cq, std::forward<StartFunctor>(start),
-                     std::forward<RequestType>(request), location);
+      AsyncRestRetryLoop(std::move(retry_policy), std::move(backoff_policy),
+                         idempotent, cq, std::forward<StartFunctor>(start),
+                         std::forward<RequestType>(request), location);
   auto loc = std::string{location};
-  return AsyncPollingLoop(std::move(cq), std::move(operation), std::move(poll),
-                          std::move(cancel), std::move(polling_policy),
-                          std::move(location))
+  return AsyncRestPollingLoop(std::move(cq), std::move(operation),
+                              std::move(poll), std::move(cancel),
+                              std::move(polling_policy), std::move(location))
       .then([value_extractor, loc](future<StatusOr<Operation>> g) {
         return value_extractor(g.get(), loc);
       });
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_LONG_RUNNING_OPERATION_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_ASYNC_REST_LONG_RUNNING_OPERATION_H
