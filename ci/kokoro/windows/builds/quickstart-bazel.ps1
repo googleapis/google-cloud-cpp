@@ -46,14 +46,14 @@ function Get-Released-Quickstarts {
         #   TODO(#8145) - asset (TRUE/FALSE macros)
         #   TODO(#8125) - channel (DOMAIN macro)
         #   TODO(#8785) - storagetransfer (UID_MAX/GID_MAX macros)
-        #   TODO(#10208) - beyondcorp (cleanup after the v2.5.0 release)
-        Where-Object { -not ("asset", "channel", "storagetransfer", "beyondcorp" -contains $_) } |
+        Where-Object { -not ("asset", "channel", "storagetransfer" -contains $_) } |
         # TODO(#9923) - compiling all quickstarts on Windows is too slow
         Get-Random -Count 10
     Pop-Location
 }
 
 $libraries = Get-Released-Quickstarts $project_root $common_flags
+$libraries += ("beyondcorp") # DEBUG DEBUG
 Write-Host "`n$(Get-Date -Format o) Building the following subset of the quickstarts: [${libraries}]"
 $failures=@()
 ForEach($library in $libraries) {
