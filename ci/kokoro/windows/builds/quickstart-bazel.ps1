@@ -53,7 +53,6 @@ function Get-Released-Quickstarts {
 }
 
 $libraries = Get-Released-Quickstarts $project_root $common_flags
-$libraries += ("beyondcorp") # DEBUG DEBUG
 Write-Host "`n$(Get-Date -Format o) Building the following subset of the quickstarts: [${libraries}]"
 $failures=@()
 ForEach($library in $libraries) {
