@@ -29,6 +29,8 @@ namespace oauth2 {
  *
  * This environment variable should be checked for a valid file path when
  * attempting to load Google Application Default %Credentials.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 char const* GoogleAdcEnvVar();
 
@@ -38,6 +40,8 @@ char const* GoogleAdcEnvVar();
  * If the Application Default %Credentials environment variable is set, we check
  * the path specified by its value for a file containing ADCs. Returns an
  * empty string if no such path exists or the environment variable is not set.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 std::string GoogleAdcFilePathFromEnvVarOrEmpty();
 
@@ -47,6 +51,8 @@ std::string GoogleAdcFilePathFromEnvVarOrEmpty();
  * If the gcloud utility has configured an Application Default %Credentials
  * file, the path to that file is returned. Returns an empty string if no such
  * file exists at the well known path.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
 
@@ -55,6 +61,8 @@ std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
  *
  * This environment variable is used for testing to override the path that
  * should be searched for the gcloud Application Default %Credentials file.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 char const* GoogleGcloudAdcFileEnvVar();
 
@@ -65,6 +73,8 @@ char const* GoogleGcloudAdcFileEnvVar();
  * by this environment variable, varies across environments. That directory is
  * used when constructing the well known path of the Application Default
  * Credentials file.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 char const* GoogleAdcHomeEnvVar();
 

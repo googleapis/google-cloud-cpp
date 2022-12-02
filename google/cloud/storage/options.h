@@ -98,6 +98,9 @@ struct IamEndpointOption {
  * Configure oauth2::Credentials for the GCS client library.
  *
  * @ingroup storage-options
+ *
+ * @deprecated prefer using `google::cloud::UnifiedCredentialsOption` and the
+ *     unified credentials documented in @ref guac
  */
 struct Oauth2CredentialsOption {
   using Type = std::shared_ptr<oauth2::Credentials>;

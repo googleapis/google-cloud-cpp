@@ -41,16 +41,24 @@ namespace oauth2 {
  *
  * @see https://cloud.google.com/docs/authentication/production for details
  * about Application Default %Credentials.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
     ChannelOptions const& options = {});
 
-//@{
+///@{
 /**
  * @name Functions to manually create specific credential types.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 
-/// Creates an AnonymousCredentials.
+/**
+ * Creates an AnonymousCredentials.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 std::shared_ptr<Credentials> CreateAnonymousCredentials();
 
 /**
@@ -58,6 +66,8 @@ std::shared_ptr<Credentials> CreateAnonymousCredentials();
  *
  * @note It is strongly preferred to instead use service account credentials
  * with Cloud Storage client libraries.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path);
@@ -67,13 +77,19 @@ CreateAuthorizedUserCredentialsFromJsonFilePath(std::string const& path);
  *
  * @note It is strongly preferred to instead use service account credentials
  * with Cloud Storage client libraries.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateAuthorizedUserCredentialsFromJsonContents(
     std::string const& contents, ChannelOptions const& options = {});
 
-//@{
-/// @name Load service account key files.
+///@{
+/**
+ *  @name Load service account key files.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 
 /**
  * Creates a ServiceAccountCredentials from a file at the specified path.
@@ -86,6 +102,8 @@ CreateAuthorizedUserCredentialsFromJsonContents(
  * These credentials use the cloud-platform OAuth 2.0 scope, defined by
  * `GoogleOAuthScopeCloudPlatform()`. To specify alternate scopes, use the
  * overloaded version of this function.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromFilePath(std::string const& path);
@@ -111,6 +129,8 @@ CreateServiceAccountCredentialsFromFilePath(std::string const& path);
  *
  * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  *     for more information about domain-wide delegation.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromFilePath(
@@ -123,6 +143,8 @@ CreateServiceAccountCredentialsFromFilePath(
  * These credentials use the cloud-platform OAuth 2.0 scope, defined by
  * `GoogleOAuthScopeCloudPlatform()`. To specify alternate scopes, use the
  * overloaded version of this function.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path);
@@ -145,6 +167,8 @@ CreateServiceAccountCredentialsFromJsonFilePath(std::string const& path);
  *
  * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  *     for more information about domain-wide delegation.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonFilePath(
@@ -157,6 +181,8 @@ CreateServiceAccountCredentialsFromJsonFilePath(
  * These credentials use the cloud-platform OAuth 2.0 scope, defined by
  * `GoogleOAuthScopeCloudPlatform()`. To specify alternate scopes, use the
  * overloaded version of this function.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromP12FilePath(std::string const& path);
@@ -179,12 +205,14 @@ CreateServiceAccountCredentialsFromP12FilePath(std::string const& path);
  *
  * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  *     for more information about domain-wide delegation.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromP12FilePath(
     std::string const& path, absl::optional<std::set<std::string>> scopes,
     absl::optional<std::string> subject, ChannelOptions const& options = {});
-//@}
+///@}
 
 /**
  * Produces a ServiceAccountCredentials type by trying to load the standard
@@ -200,6 +228,8 @@ CreateServiceAccountCredentialsFromP12FilePath(
  *
  * @see https://cloud.google.com/docs/authentication/production for details
  *     about Application Default %Credentials.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromDefaultPaths(
@@ -228,6 +258,8 @@ CreateServiceAccountCredentialsFromDefaultPaths(
  *
  * @see https://cloud.google.com/docs/authentication/production for details
  *     about Application Default %Credentials.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromDefaultPaths(
@@ -240,6 +272,8 @@ CreateServiceAccountCredentialsFromDefaultPaths(
  * These credentials use the cloud-platform OAuth 2.0 scope, defined by
  * `GoogleOAuthScopeCloudPlatform()`. To specify an alternate set of scopes, use
  * the overloaded version of this function.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(
@@ -264,20 +298,30 @@ CreateServiceAccountCredentialsFromJsonContents(
  *
  * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  *     for more information about domain-wide delegation.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::shared_ptr<Credentials>>
 CreateServiceAccountCredentialsFromJsonContents(
     std::string const& contents, absl::optional<std::set<std::string>> scopes,
     absl::optional<std::string> subject, ChannelOptions const& options = {});
 
-/// Creates a ComputeEngineCredentials for the VM's default service account.
+/**
+ * Creates a ComputeEngineCredentials for the VM's default service account.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 std::shared_ptr<Credentials> CreateComputeEngineCredentials();
 
-/// Creates a ComputeEngineCredentials for the VM's specified service account.
+/**
+ * Creates a ComputeEngineCredentials for the VM's specified service account.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 std::shared_ptr<Credentials> CreateComputeEngineCredentials(
     std::string const& service_account_email);
 
-//@}
+///@}
 
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

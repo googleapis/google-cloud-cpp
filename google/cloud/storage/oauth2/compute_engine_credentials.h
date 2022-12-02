@@ -36,18 +36,32 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
-/// A helper struct that contains service account metadata.
+
+/**
+ * A helper struct that contains service account metadata.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 struct ServiceAccountMetadata {
   std::set<std::string> scopes;
   std::string email;
 };
 
-/// Parses a metadata server response JSON string into a ServiceAccountMetadata.
+/**
+ * Parses a metadata server response JSON string into a ServiceAccountMetadata.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
     storage::internal::HttpResponse const& response);
 
-/// Parses a refresh response JSON string into an authorization header. The
-/// header and the current time (for the expiration) form a TemporaryToken.
+/**
+ * Parses a refresh response JSON string into an authorization header.
+ *
+ * The header and the current time (for the expiration) form a TemporaryToken.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseComputeEngineRefreshResponse(
     storage::internal::HttpResponse const& response,
@@ -75,6 +89,8 @@ ParseComputeEngineRefreshResponse(
  *     be overridden except for testing.
  * @tparam ClockType a dependency injection point to fetch the current time.
  *     This should generally not be overridden except for testing.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
