@@ -61,8 +61,7 @@ TEST(RestObjectReadSourceTest, Close) {
   EXPECT_CALL(*mock_response, Headers)
       .WillOnce(Return(std::multimap<std::string, std::string>()));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    return mock_payload;
+    return absl::make_unique<MockHttpPayload>();
   });
 
   RestObjectReadSource read_source(std::move(mock_response));
@@ -81,8 +80,7 @@ TEST(RestObjectReadSourceTest, ReadAfterClose) {
   EXPECT_CALL(*mock_response, Headers)
       .WillOnce(Return(std::multimap<std::string, std::string>()));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    return mock_payload;
+    return absl::make_unique<MockHttpPayload>();
   });
 
   RestObjectReadSource read_source(std::move(mock_response));
@@ -103,8 +101,7 @@ TEST(RestObjectReadSourceTest, ReadNotFound) {
   EXPECT_CALL(*mock_response, Headers)
       .WillOnce(Return(std::multimap<std::string, std::string>()));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    return mock_payload;
+    return absl::make_unique<MockHttpPayload>();
   });
 
   RestObjectReadSource read_source(std::move(mock_response));

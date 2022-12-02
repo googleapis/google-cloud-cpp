@@ -28,12 +28,11 @@ namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::rest_internal::HttpPayload;
 using ::google::cloud::rest_internal::HttpStatusCode;
 using ::google::cloud::rest_internal::RestContext;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::MockHttpPayload;
+using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::testing::_;
@@ -50,14 +49,7 @@ std::unique_ptr<MockRestResponse> CreateMockRestResponse(
     return http_status_code;
   });
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(json_response.begin(), json_response.end(), buffer.begin());
-          return json_response.size();
-        })
-        .WillOnce([&](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_payload));
+    return MakeMockHttpPayloadSuccess(json_response);
   });
   return mock_response;
 }
@@ -84,15 +76,7 @@ TEST(GoldenThingAdminRestStubTest, ListDatabases) {
     return HttpStatusCode::kServiceUnavailable;
   });
   EXPECT_CALL(std::move(*mock_503_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(service_unavailable.begin(), service_unavailable.end(),
-                    buffer.begin());
-          return service_unavailable.size();
-        })
-        .WillOnce([&](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_payload));
+    return MakeMockHttpPayloadSuccess(service_unavailable);
   });
 
   google::test::admin::database::v1::ListDatabasesRequest proto_request;

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::MockHttpPayload;
+using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
@@ -64,11 +64,7 @@ TEST(RestStubHelpers, DeleteWithEmptyResponse) {
     return HttpStatusCode::kOk;
   });
   EXPECT_CALL(std::move(*mock_200_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_payload, Read).WillOnce([&](absl::Span<char>) {
-      return 0;
-    });
-    return std::unique_ptr<HttpPayload>(std::move(mock_payload));
+    return MakeMockHttpPayloadSuccess(std::string{});
   });
 
   std::string json_error(kJsonErrorPayload);
@@ -77,14 +73,7 @@ TEST(RestStubHelpers, DeleteWithEmptyResponse) {
     return HttpStatusCode::kForbidden;
   });
   EXPECT_CALL(std::move(*mock_403_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(json_error.begin(), json_error.end(), buffer.begin());
-          return json_error.size();
-        })
-        .WillOnce([&](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_payload));
+    return MakeMockHttpPayloadSuccess(json_error);
   });
 
   auto mock_client = absl::make_unique<MockRestClient>();
@@ -134,14 +123,7 @@ TEST(RestStubHelpers, DeleteWithNonEmptyResponse) {
     return HttpStatusCode::kOk;
   });
   EXPECT_CALL(std::move(*mock_200_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(json_response.begin(), json_response.end(), buffer.begin());
-          return json_response.size();
-        })
-        .WillOnce([&](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_payload));
+    return MakeMockHttpPayloadSuccess(json_response);
   });
 
   auto mock_client = absl::make_unique<MockRestClient>();
@@ -175,14 +157,7 @@ TEST(RestStubHelpers, Get) {
     return HttpStatusCode::kOk;
   });
   EXPECT_CALL(std::move(*mock_200_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(json_response.begin(), json_response.end(), buffer.begin());
-          return json_response.size();
-        })
-        .WillOnce([&](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_payload));
+    return MakeMockHttpPayloadSuccess(json_response);
   });
 
   google::iam::admin::v1::GetRoleRequest proto_request;
@@ -253,14 +228,7 @@ TEST(RestStubHelpers, Patch) {
     return HttpStatusCode::kOk;
   });
   EXPECT_CALL(std::move(*mock_200_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(json_response.begin(), json_response.end(), buffer.begin());
-          return json_response.size();
-        })
-        .WillOnce([&](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_payload));
+    return MakeMockHttpPayloadSuccess(json_response);
   });
 
   google::iam::admin::v1::UpdateRoleRequest proto_request;
@@ -310,14 +278,7 @@ TEST(RestStubHelpers, PostWithNonEmptyResponse) {
     return HttpStatusCode::kOk;
   });
   EXPECT_CALL(std::move(*mock_200_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(json_response.begin(), json_response.end(), buffer.begin());
-          return json_response.size();
-        })
-        .WillOnce([&](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_payload));
+    return MakeMockHttpPayloadSuccess(json_response);
   });
 
   google::iam::admin::v1::UpdateRoleRequest proto_request;
@@ -374,11 +335,7 @@ TEST(RestStubHelpers, PostWithEmptyResponse) {
     return HttpStatusCode::kOk;
   });
   EXPECT_CALL(std::move(*mock_200_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_payload, Read).WillOnce([&](absl::Span<char>) {
-      return 0;
-    });
-    return std::unique_ptr<HttpPayload>(std::move(mock_payload));
+    return MakeMockHttpPayloadSuccess(std::string{});
   });
 
   google::iam::admin::v1::UpdateRoleRequest proto_request;
@@ -430,14 +387,7 @@ TEST(RestStubHelpers, Put) {
     return HttpStatusCode::kOk;
   });
   EXPECT_CALL(std::move(*mock_200_response), ExtractPayload).WillOnce([&] {
-    auto mock_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(json_response.begin(), json_response.end(), buffer.begin());
-          return json_response.size();
-        })
-        .WillOnce([&](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_payload));
+    return MakeMockHttpPayloadSuccess(json_response);
   });
 
   google::iam::admin::v1::UpdateRoleRequest proto_request;
