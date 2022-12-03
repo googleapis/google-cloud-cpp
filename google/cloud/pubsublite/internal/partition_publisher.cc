@@ -57,6 +57,7 @@ PartitionPublisher::~PartitionPublisher() {
 
 future<Status> PartitionPublisher::Start() {
   auto start_return = service_composite_.Start();
+  OnReadStart();
   Read();
   return start_return;
 }
@@ -94,8 +95,16 @@ void PartitionPublisher::Flush() {
 
 future<void> PartitionPublisher::Shutdown() {
   cancel_token_ = nullptr;
-  return service_composite_.Shutdown().then(
-      [this](future<void>) { SatisfyOutstandingMessages(); });
+  future<void> shutdown = service_composite_.Shutdown();
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    if (reading_) {
+      shutdown = shutdown.then(ChainFuture(reading_->get_future()));
+    }
+  }
+  // Safe to access `this` in the continuation as the caller must wait on the
+  // shutdown future before destroying the publisher.
+  return shutdown.then([this](future<void>) { SatisfyOutstandingMessages(); });
 }
 
 void PartitionPublisher::WriteBatches() {
@@ -130,23 +139,26 @@ void PartitionPublisher::OnRead(absl::optional<PublishResponse> response) {
     // if we don't receive a `MessagePublishResponse` and/or receive an
     // `InitialPublishResponse`, we abort because this should not be the
     // case once we start `Read`ing
-    service_composite_.Abort(Status(
+    OnReadEnd();
+    return service_composite_.Abort(Status(
         StatusCode::kAborted,
         absl::StrCat("Invalid `Read` response: ", response->DebugString())));
-    return;
   }
 
   std::deque<MessageWithPromise> batch;
   {
     std::lock_guard<std::mutex> g{mu_};
-    if (in_flight_batches_.empty()) {
-      return service_composite_.Abort(
-          Status(StatusCode::kFailedPrecondition,
-                 "Server sent message response when no batches were "
-                 "outstanding."));
+    if (!in_flight_batches_.empty()) {
+      batch = std::move(in_flight_batches_.front());
+      in_flight_batches_.pop_front();
     }
-    batch = std::move(in_flight_batches_.front());
-    in_flight_batches_.pop_front();
+  }
+  if (batch.empty()) {
+    OnReadEnd();
+    return service_composite_.Abort(
+        Status(StatusCode::kFailedPrecondition,
+               "Server sent message response when no batches were "
+               "outstanding."));
   }
   std::int64_t offset = response->message_response().start_cursor().offset();
   for (auto& message : batch) {
@@ -160,7 +172,9 @@ void PartitionPublisher::OnRead(absl::optional<PublishResponse> response) {
 
 void PartitionPublisher::Read() {
   AsyncRoot root;
-  if (!service_composite_.status().ok()) return;
+  if (!service_composite_.status().ok()) {
+    return OnReadEnd();
+  }
   // need lock because calling `resumable_stream_->Read()`
   std::lock_guard<std::mutex> g{mu_};
   root.get_future()
@@ -168,6 +182,20 @@ void PartitionPublisher::Read() {
       .then([this](future<absl::optional<PublishResponse>> response) {
         OnRead(response.get());
       });
+}
+
+void PartitionPublisher::OnReadStart() {
+  std::lock_guard<std::mutex> g{mu_};
+  if (!reading_) reading_.emplace();
+}
+
+void PartitionPublisher::OnReadEnd() {
+  absl::optional<promise<void>> read_done;
+  {
+    std::lock_guard<std::mutex> g{mu_};
+    read_done.swap(reading_);
+  }
+  if (read_done) read_done->set_value();
 }
 
 std::deque<PartitionPublisher::MessageWithPromise>

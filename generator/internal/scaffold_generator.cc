@@ -14,6 +14,7 @@
 
 #include "generator/internal/scaffold_generator.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
@@ -31,20 +32,64 @@
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
+
+struct ProductPath {
+  std::string prefix;
+  std::string library_name;
+  std::string service_subdirectory;
+};
+
+ProductPath ParseProductPath(std::string const& product_path) {
+  std::vector<absl::string_view> v =
+      absl::StrSplit(product_path, '/', absl::SkipEmpty());
+  if (v.empty()) return {};
+  auto make_result = [&v](auto it) -> ProductPath {
+    return {
+        absl::StrJoin(v.begin(), it, "/"),
+        std::string{*it},
+        absl::StrJoin(std::next(it), v.end(), "/"),
+    };
+  };
+  // This is the case for our production code.
+  if (v.size() > 2 && v[0] == "google" && v[1] == "cloud") {
+    return make_result(std::next(v.begin(), 2));
+  }
+  // "golden" is a special library name used in our golden testing.
+  auto it = std::find(v.begin(), v.end(), "golden");
+  if (it != v.end()) return make_result(it);
+  // Else, just assume the last element is the library.
+  return make_result(std::prev(v.end()));
+}
+
+}  // namespace
 
 auto constexpr kApiIndexFilename = "api-index-v1.json";
 
-std::string LibraryName(
-    google::cloud::cpp::generator::ServiceConfiguration const& service) {
-  auto const l = service.product_path().find_last_of('/');
-  if (l == std::string::npos) return {};
-  return service.product_path().substr(l + 1);
+std::string LibraryName(std::string const& product_path) {
+  return ParseProductPath(product_path).library_name;
+}
+
+std::string LibraryPath(std::string const& product_path) {
+  auto parsed = ParseProductPath(product_path);
+  return absl::StrCat(parsed.prefix, "/", parsed.library_name, "/");
+}
+
+std::string ServiceSubdirectory(std::string const& product_path) {
+  auto parsed = ParseProductPath(product_path);
+  if (parsed.service_subdirectory.empty()) return std::string{};
+  return absl::StrCat(parsed.service_subdirectory, "/");
+}
+
+std::string OptionsGroup(std::string const& product_path) {
+  return absl::StrCat(
+      absl::StrReplaceAll(LibraryPath(product_path), {{"/", "-"}}), "options");
 }
 
 std::string SiteRoot(
     google::cloud::cpp::generator::ServiceConfiguration const& service) {
   // TODO(#7605) - get a configurable source for this
-  return LibraryName(service);
+  return LibraryName(service.product_path());
 }
 
 std::map<std::string, std::string> ScaffoldVars(
@@ -78,9 +123,11 @@ std::map<std::string, std::string> ScaffoldVars(
     vars.emplace("description", api.value("description", ""));
     vars.emplace("directory", api.value("directory", ""));
   }
-  auto const library = LibraryName(service);
+  auto const library = LibraryName(service.product_path());
   vars["copyright_year"] = service.initial_copyright_year();
   vars["library"] = library;
+  vars["product_options_page"] = OptionsGroup(service.product_path());
+  vars["service_subdirectory"] = ServiceSubdirectory(service.product_path());
   vars["site_root"] = SiteRoot(service);
   vars["library_prefix"] = experimental ? "experimental-" : "";
   vars["doxygen_version_suffix"] = experimental ? " (Experimental)" : "";
@@ -116,6 +163,7 @@ void GenerateScaffold(
       {"BUILD.bazel", GenerateBuild},
       {"CMakeLists.txt", GenerateCMakeLists},
       {"doc/main.dox", GenerateDoxygenMainPage},
+      {"doc/options.dox", GenerateDoxygenOptionsPage},
       {"quickstart/README.md", GenerateQuickstartReadme},
       {"quickstart/quickstart.cc", GenerateQuickstartSkeleton},
       {"quickstart/CMakeLists.txt", GenerateQuickstartCMake},
@@ -127,7 +175,8 @@ void GenerateScaffold(
 
   auto const vars = ScaffoldVars(googleapis_path, service, experimental);
   MakeDirectory(output_path + "/");
-  auto const destination = output_path + "/" + service.product_path() + "/";
+  auto const destination =
+      output_path + "/" + LibraryPath(service.product_path());
   MakeDirectory(destination);
   MakeDirectory(destination + "doc/");
   MakeDirectory(destination + "quickstart/");
@@ -259,24 +308,29 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-SOURCE_GLOB = "**/*.cc"
+service_dirs = ["$service_subdirectory$"]
 
-MOCK_SOURCE_GLOB = "mocks/*.cc"
+src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
 
-HEADER_GLOB = "**/*.h"
+filegroup(
+    name = "srcs",
+    srcs = glob([d + "*.cc" for d in src_dirs]),
+)
 
-MOCK_HEADER_GLOB = "mocks/*.h"
+filegroup(
+    name = "hdrs",
+    srcs = glob([d + "*.h" for d in src_dirs]),
+)
+
+filegroup(
+    name = "mocks",
+    srcs = glob([d + "mocks/*.h" for d in service_dirs]),
+)
 
 cc_library(
     name = "google_cloud_cpp_$library$",
-    srcs = glob(
-        include = [SOURCE_GLOB],
-        exclude = [MOCK_SOURCE_GLOB],
-    ),
-    hdrs = glob(
-        include = [HEADER_GLOB],
-        exclude = [MOCK_HEADER_GLOB],
-    ),
+    srcs = [":srcs"],
+    hdrs = [":hdrs"],
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
@@ -287,18 +341,23 @@ cc_library(
 
 cc_library(
     name = "google_cloud_cpp_$library$_mocks",
-    srcs = glob(
-        include = [MOCK_SOURCE_GLOB],
-    ),
-    hdrs = glob(
-        include = [MOCK_HEADER_GLOB],
-    ),
+    hdrs = [":mocks"],
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_$library$",
         "@com_google_googletest//:gtest",
     ],
 )
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    tags = ["integration-test"],
+    deps = [
+        "//:$library$",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob([d + "samples/*.cc" for d in service_dirs])]
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
@@ -327,9 +386,20 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "$title$ C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the $title$")
 set(DOXYGEN_PROJECT_NUMBER "$${PROJECT_VERSION}$doxygen_version_suffix$")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "$library$_internal" "$library$_testing"
-                            "examples")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
 set(DOXYGEN_EXAMPLE_PATH $${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+
+unset(mocks_globs)
+unset(source_globs)
+set(service_dirs "$service_subdirectory$")
+foreach (dir IN LISTS service_dirs)
+    string(REPLACE "/" "_" ns "$${dir}")
+    list(APPEND source_globs "$${dir}*.h" "$${dir}*.cc" "$${dir}internal/*")
+    list(APPEND mocks_globs "$${dir}mocks/*.h")
+    list(APPEND DOXYGEN_EXAMPLE_PATH
+         "$${CMAKE_CURRENT_SOURCE_DIR}/$${dir}samples")
+    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "$library$_$${ns}internal")
+endforeach ()
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::$library$_protos)
@@ -360,7 +430,7 @@ target_link_libraries(google_cloud_cpp_$library$_protos PUBLIC $${proto_deps})
 
 file(GLOB source_files
      RELATIVE "$${CMAKE_CURRENT_SOURCE_DIR}"
-     "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+     $${source_globs})
 list(SORT source_files)
 add_library(google_cloud_cpp_$library$ $${source_files})
 target_include_directories(
@@ -389,7 +459,7 @@ add_library(google-cloud-cpp::$library_prefix$$library$ ALIAS google_cloud_cpp_$
 # that they need absolute paths for their sources.
 file(GLOB relative_mock_files
      RELATIVE "$${CMAKE_CURRENT_SOURCE_DIR}"
-     "mocks/*.h")
+     $${mocks_globs})
 list(SORT relative_mock_files)
 set(mock_files)
 foreach (file IN LISTS relative_mock_files)
@@ -491,6 +561,13 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 external_googleapis_install_pc("google_cloud_cpp_$library$_protos")
+
+# google-cloud-cpp::$library$ must be defined before we can add the samples.
+foreach (dir IN LISTS service_dirs)
+    if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+        google_cloud_cpp_add_samples_relative("$library$" "$${dir}samples/")
+    endif ()
+endforeach ()
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
@@ -582,6 +659,35 @@ It will return the `T` value or throw on error.
 For operations that do not return a value the library simply returns
 `google::cloud::Status`.
 
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+<!-- inject-endpoint-snippet-end -->
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+<!-- inject-service-account-snippet-start -->
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -595,6 +701,27 @@ can override the default policies.
 [github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/$library$/README%2Emd
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/$library$/quickstart/README%2Emd
 
+*/
+
+// <!-- inject-endpoint-pages-start -->
+// <!-- inject-endpoint-pages-end -->
+)""";
+  google::protobuf::io::OstreamOutputStream output(&os);
+  google::protobuf::io::Printer printer(&output, '$');
+  printer.Print(variables, kText);
+}
+
+void GenerateDoxygenOptionsPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables) {
+  auto constexpr kText = R"""(/*!
+@defgroup $product_options_page$ $title$ Configuration Options
+
+This library uses the same mechanism (`google::cloud::Options`) and the common
+[options](@ref options) as all other C++ client libraries for its configuration.
+Some `*Option` classes, which are only used in this library, are documented in
+this page.
+
+@see @ref options - for an overview of client library configuration.
 */
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
@@ -805,7 +932,7 @@ int main(int argc, char* argv[]) try {
 
   namespace $library$ = ::google::cloud::$library$;
   auto client = $library$::Client(
-      $library$::MakeConnection(/* EDIT HERE */));
+      $library$::MakeConnection());
 
   auto const project = google::cloud::Project(argv[1]);
   for (auto r : client.List/*EDIT HERE*/(project.FullName())) {
@@ -939,7 +1066,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # Fetch the Google Cloud C++ libraries.
 # NOTE: Update this version and SHA256 as needed.
 http_archive(
-    name = "com_github_googleapis_google_cloud_cpp",
+    name = "google_cloud_cpp",
     sha256 = "e8d904bbff788a26aa9cd67d6c0725f9798448fcf73ab809ec2d7b80f89a1dc5",
     strip_prefix = "google-cloud-cpp-2.2.0",
     url = "https://github.com/googleapis/google-cloud-cpp/archive/v2.2.0.tar.gz",
@@ -947,7 +1074,7 @@ http_archive(
 
 # Load indirect dependencies due to
 #     https://github.com/bazelbuild/bazel/issues/1943
-load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+load("@google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 
 google_cloud_cpp_deps()
 
@@ -996,7 +1123,7 @@ cc_binary(
         "quickstart.cc",
     ],
     deps = [
-        "@com_github_googleapis_google_cloud_cpp//:$library_prefix$$library$",
+        "@google_cloud_cpp//:$library_prefix$$library$",
     ],
 )
 )""";

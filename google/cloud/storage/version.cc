@@ -20,6 +20,7 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 std::string version_string() { return ::google::cloud::version_string(); }
 
 std::string x_goog_api_client() {

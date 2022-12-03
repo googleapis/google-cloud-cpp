@@ -150,6 +150,19 @@ TEST(RowStream, TimestampPresent) {
   EXPECT_EQ(*rows.ReadTimestamp(), timestamp);
 }
 
+TEST(RowStream, RowsModified) {
+  auto mock_source = absl::make_unique<MockResultSetSource>();
+  auto constexpr kText = R"pb(
+    row_count_exact: 42
+  )pb";
+  google::spanner::v1::ResultSetStats stats;
+  ASSERT_TRUE(TextFormat::ParseFromString(kText, &stats));
+  EXPECT_CALL(*mock_source, Stats()).WillOnce(Return(stats));
+
+  RowStream rows(std::move(mock_source));
+  EXPECT_EQ(rows.RowsModified(), 42);
+}
+
 TEST(ProfileQueryResult, TimestampPresent) {
   auto mock_source = absl::make_unique<MockResultSetSource>();
   google::spanner::v1::ResultSetMetadata transaction_with_timestamp;

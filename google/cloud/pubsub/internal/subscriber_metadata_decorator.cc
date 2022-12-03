@@ -71,6 +71,13 @@ Status SubscriberMetadata::DeleteSubscription(
   return child_->DeleteSubscription(context, request);
 }
 
+StatusOr<google::pubsub::v1::PullResponse> SubscriberMetadata::Pull(
+    grpc::ClientContext& context,
+    google::pubsub::v1::PullRequest const& request) {
+  SetMetadata(context, "subscription=" + request.subscription());
+  return child_->Pull(context, request);
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::pubsub::v1::StreamingPullRequest,
     google::pubsub::v1::StreamingPullResponse>>

@@ -42,9 +42,9 @@ SessionsClient::DetectIntent(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
-SessionsClient::AsyncStreamingDetectIntent(ExperimentalTag tag, Options opts) {
+SessionsClient::AsyncStreamingDetectIntent(Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->AsyncStreamingDetectIntent(std::move(tag));
+  return connection_->AsyncStreamingDetectIntent();
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>

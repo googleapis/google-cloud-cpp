@@ -64,15 +64,15 @@ class TenantServiceClient {
       std::shared_ptr<TenantServiceConnection> connection, Options opts = {});
   ~TenantServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   TenantServiceClient(TenantServiceClient const&) = default;
   TenantServiceClient& operator=(TenantServiceClient const&) = default;
   TenantServiceClient(TenantServiceClient&&) = default;
   TenantServiceClient& operator=(TenantServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(TenantServiceClient const& a,
                          TenantServiceClient const& b) {
@@ -82,7 +82,7 @@ class TenantServiceClient {
                          TenantServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new tenant entity.

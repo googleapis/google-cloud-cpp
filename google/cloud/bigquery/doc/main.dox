@@ -1,0 +1,311 @@
+/*!
+
+@mainpage Cloud BigQuery C++ Client Library
+
+The Cloud BigQuery C++ Client library offers types and functions to use Cloud
+BigQuery from C++11 applications.
+
+This library requires a C++14 compiler. It is supported (and tested) on multiple
+Linux distributions, macOS, and Windows.
+
+@tableofcontents{HTML:2}
+
+## Quickstart
+
+The following instructions show you how to perform basic tasks in Cloud BigQuery
+using the C++ client library.
+
+### Before you begin
+
+1. Select or create a Google Cloud Platform (GCP) project using the
+   [manage resource page][resource-link]. Make a note of the project id as you
+   will need to use it later.
+2. Make sure that [billing is enabled][billing-link] for your project.
+3. Learn about [key terms and concepts][concepts-link] for Cloud BigQuery.
+4. Setup the authentication for the examples:
+   - [Configure a service account][gcloud-authorizing],
+   - or [login with your personal account][gcloud-authorizing]
+
+## Setting up your repo
+
+In order to use the Cloud BigQuery C++ client library from your own code, you'll
+need to configure your build system to fetch and compile the Cloud C++
+client library. The Cloud BigQuery C++ client library natively supports the
+[Bazel](https://bazel.build/) and [CMake](https://cmake.org/) build systems.
+We've created a minimal, "Hello world", [quickstart repo][quickstart-link] that
+includes detailed instructions on how to compile the library for use in your
+application. You can fetch the source from [GitHub][github-link] as normal:
+
+@code{.sh}
+git clone https://github.com/googleapis/google-cloud-cpp.git
+cd google-cloud-cpp/google/cloud/bigquery/quickstart
+@endcode
+
+@par Example: Hello World
+@parblock
+The following shows the code that you'll run in the
+`google/cloud/bigquery/quickstart/` directory, which should give you a taste of
+the Cloud BigQuery C++ client library API.
+
+@include quickstart.cc
+@endparblock
+
+## Environment Variables
+
+There are several environment variables that can be set to configure certain
+behaviors in the library.
+
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_ANALYTICS_HUB_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "analyticshub.googleapis.com")
+  used by `MakeAnalyticsHubServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_BIGQUERY_READ_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquerystorage.googleapis.com")
+  used by `MakeBigQueryReadConnection()`.
+
+- `GOOGLE_CLOUD_CPP_BIGQUERY_WRITE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquerystorage.googleapis.com")
+  used by `MakeBigQueryWriteConnection()`.
+
+- `GOOGLE_CLOUD_CPP_BIGQUERY_CONNECTION_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigqueryconnection.googleapis.com")
+  used by `MakeConnection()`.
+
+- `GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquerydatatransfer.googleapis.com")
+  used by `MakeDataTransferServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_MIGRATION_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquerymigration.googleapis.com")
+  used by `MakeMigrationServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_MODEL_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquery.googleapis.com")
+  used by `MakeModelServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_RESERVATION_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigqueryreservation.googleapis.com")
+  used by `MakeReservationServiceConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
+
+- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
+  calls. The library injects an additional Stub decorator that prints each gRPC
+  request and response.  Unless you have configured you own logging backend,
+  you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
+  the program's console.
+
+- `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
+  including whether messages will be output on multiple lines, or whether
+  string/bytes fields will be truncated.
+
+- `GOOGLE_CLOUD_PROJECT=...` is used in examples and integration tests to
+  configure the GCP project.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library, basically
+  the library always "logs" but the logging infrastructure has no backend to
+  actually print anything until the application sets a backend or they set this
+  environment variable.
+
+## Error Handling
+
+This library never throws exceptions to signal errors. In general, the library
+returns a [`StatusOr<T>`][status-or-header] if an error is possible. Some
+functions return objects that are not wrapped in a `StatusOr<>` but will
+themselves return a `StatusOr<T>` to signal an error. For example, wrappers for
+asynchronous operations return `future<StatusOr<T>>`.
+
+Applications should check if the `StatusOr<T>` contains a value before using
+it, much like how you might check that a pointer is not null before
+dereferencing it. Indeed, a `StatusOr<T>` object can be used like a
+smart-pointer to `T`, with the main difference being that when it does not hold
+a `T` it will instead hold a `Status` object with extra information about the
+error.
+
+You can check that a `StatusOr<T>` contains a value by calling the `.ok()`
+method, or by using `operator bool()` (like with other smart pointers). If
+there is no value, you can access the contained `Status` object using the
+`.status()` member. If there is a value, you may access it by dereferencing
+with `operator*()` or `operator->()`. As with all smart pointers, callers must
+first check that the `StatusOr<T>` contains a value before dereferencing and
+accessing the contained value. Alternatively, callers may instead use the
+`.value()` member function which is defined to throw a `RuntimeStatusError` if
+there is no value.
+
+@note If you're compiling with exceptions disabled, calling `.value()` on a
+    `StatusOr<T>` that does not contain a value will terminate the program
+    instead of throwing.
+
+@par Example
+@snippet bigquery_read_samples.cc example-status-or
+
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `bigquery::AnalyticsHubServiceClient`:
+
+@snippet analytics_hub_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [bigquery::AnalyticsHubServiceClient](@ref bigquery::AnalyticsHubServiceClient-endpoint-snippet)
+ [bigquery::BigQueryReadClient](@ref bigquery::BigQueryReadClient-endpoint-snippet)
+ [bigquery::BigQueryWriteClient](@ref bigquery::BigQueryWriteClient-endpoint-snippet)
+ [bigquery::ConnectionServiceClient](@ref bigquery::ConnectionServiceClient-endpoint-snippet)
+ [bigquery::DataTransferServiceClient](@ref bigquery::DataTransferServiceClient-endpoint-snippet)
+ [bigquery::MigrationServiceClient](@ref bigquery::MigrationServiceClient-endpoint-snippet)
+ [bigquery::ModelServiceClient](@ref bigquery::ModelServiceClient-endpoint-snippet)
+ [bigquery::ReservationServiceClient](@ref bigquery::ReservationServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+<!-- inject-service-account-snippet-start -->
+@snippet analytics_hub_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [bigquery::AnalyticsHubServiceClient](@ref bigquery::AnalyticsHubServiceClient-service-account-snippet)
+ [bigquery::BigQueryReadClient](@ref bigquery::BigQueryReadClient-service-account-snippet)
+ [bigquery::BigQueryWriteClient](@ref bigquery::BigQueryWriteClient-service-account-snippet)
+ [bigquery::ConnectionServiceClient](@ref bigquery::ConnectionServiceClient-service-account-snippet)
+ [bigquery::DataTransferServiceClient](@ref bigquery::DataTransferServiceClient-service-account-snippet)
+ [bigquery::MigrationServiceClient](@ref bigquery::MigrationServiceClient-service-account-snippet)
+ [bigquery::ModelServiceClient](@ref bigquery::ModelServiceClient-service-account-snippet)
+ [bigquery::ReservationServiceClient](@ref bigquery::ReservationServiceClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+## Next Steps
+
+* @ref bigquery-read-mock
+
+[resource-link]: https://console.cloud.google.com/cloud-resource-manager 'Console Resource Manager'
+[billing-link]: https://cloud.google.com/billing/docs/how-to/modify-project 'How to: Modify Project'
+[concepts-link]: https://cloud.google.com/bigquery/docs/concepts 'BigQuery Concepts'
+[authentication-quickstart]: https://cloud.google.com/docs/authentication/getting-started 'Authentication Getting Started'
+[gcloud-quickstart]: https://cloud.google.com/sdk/docs/quickstarts
+[github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
+[quickstart-link]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/bigquery/quickstart
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page bigquery::AnalyticsHubServiceClient-endpoint-snippet Override bigquery::AnalyticsHubServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/analytics_hub_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquery::AnalyticsHubServiceClient-service-account-snippet Override bigquery::AnalyticsHubServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/analytics_hub_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery::BigQueryReadClient-endpoint-snippet Override bigquery::BigQueryReadClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/bigquery_read_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquery::BigQueryReadClient-service-account-snippet Override bigquery::BigQueryReadClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/bigquery_read_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery::BigQueryWriteClient-endpoint-snippet Override bigquery::BigQueryWriteClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/bigquery_write_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquery::BigQueryWriteClient-service-account-snippet Override bigquery::BigQueryWriteClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/bigquery_write_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery::ConnectionServiceClient-endpoint-snippet Override bigquery::ConnectionServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/connection_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquery::ConnectionServiceClient-service-account-snippet Override bigquery::ConnectionServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/connection_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery::DataTransferServiceClient-endpoint-snippet Override bigquery::DataTransferServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/data_transfer_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquery::DataTransferServiceClient-service-account-snippet Override bigquery::DataTransferServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/data_transfer_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery::MigrationServiceClient-endpoint-snippet Override bigquery::MigrationServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/migration_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquery::MigrationServiceClient-service-account-snippet Override bigquery::MigrationServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/migration_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery::ModelServiceClient-endpoint-snippet Override bigquery::ModelServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/model_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquery::ModelServiceClient-service-account-snippet Override bigquery::ModelServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/model_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery::ReservationServiceClient-endpoint-snippet Override bigquery::ReservationServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/reservation_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquery::ReservationServiceClient-service-account-snippet Override bigquery::ReservationServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/reservation_client_samples.cc with-service-account
+
+*/
+// <!-- inject-endpoint-pages-end -->

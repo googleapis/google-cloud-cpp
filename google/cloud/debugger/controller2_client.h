@@ -83,15 +83,15 @@ class Controller2Client {
                              Options opts = {});
   ~Controller2Client();
 
-  //@{
+  ///@{
   // @name Copy and move support
   Controller2Client(Controller2Client const&) = default;
   Controller2Client& operator=(Controller2Client const&) = default;
   Controller2Client(Controller2Client&&) = default;
   Controller2Client& operator=(Controller2Client&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(Controller2Client const& a,
                          Controller2Client const& b) {
@@ -101,7 +101,7 @@ class Controller2Client {
                          Controller2Client const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Registers the debuggee with the controller service.

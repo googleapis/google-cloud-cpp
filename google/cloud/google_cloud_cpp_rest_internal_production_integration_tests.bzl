@@ -17,5 +17,6 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_rest_internal_production_integration_tests = [
+    "internal/external_account_integration_test.cc",
     "internal/unified_rest_credentials_integration_test.cc",
 ]

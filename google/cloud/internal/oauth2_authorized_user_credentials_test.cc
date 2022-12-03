@@ -28,11 +28,10 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::rest_internal::HttpPayload;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::rest_internal::RestResponse;
 using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::MockHttpPayload;
+using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
@@ -65,14 +64,7 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([response](absl::Span<char> buffer) {
-          std::copy(response.begin(), response.end(), buffer.begin());
-          return response.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(response);
   });
 
   EXPECT_CALL(
@@ -131,28 +123,14 @@ TEST_F(AuthorizedUserCredentialsTest, Refresh) {
   EXPECT_CALL(*mock_response1, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response1), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([r1](absl::Span<char> buffer) {
-          std::copy(r1.begin(), r1.end(), buffer.begin());
-          return r1.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(r1);
   });
 
   auto mock_response2 = absl::make_unique<MockRestResponse>();
   EXPECT_CALL(*mock_response2, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response2), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([r2](absl::Span<char> buffer) {
-          std::copy(r2.begin(), r2.end(), buffer.begin());
-          return r2.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(r2);
   });
 
   EXPECT_CALL(
@@ -195,11 +173,7 @@ TEST_F(AuthorizedUserCredentialsTest, FailedRefresh) {
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kBadRequest));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read).WillOnce([](absl::Span<char>) {
-      return 0;
-    });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(std::string{});
   });
 
   EXPECT_CALL(
@@ -356,14 +330,7 @@ TEST_F(AuthorizedUserCredentialsTest,
   EXPECT_CALL(*mock_response1, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kBadRequest));
   EXPECT_CALL(std::move(*mock_response1), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([r1](absl::Span<char> buffer) {
-          std::copy(r1.begin(), r1.end(), buffer.begin());
-          return r1.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(r1);
   });
 
   auto mock_response2 = absl::make_unique<MockRestResponse>();
@@ -371,14 +338,7 @@ TEST_F(AuthorizedUserCredentialsTest,
   EXPECT_CALL(*mock_response2, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kBadRequest));
   EXPECT_CALL(std::move(*mock_response2), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([r2](absl::Span<char> buffer) {
-          std::copy(r2.begin(), r2.end(), buffer.begin());
-          return r2.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(r2);
   });
 
   auto status = ParseAuthorizedUserRefreshResponse(
@@ -394,7 +354,7 @@ TEST_F(AuthorizedUserCredentialsTest,
                        HasSubstr("Could not find all required fields")));
 }
 
-/// @test Parsing a refresh response yields a TemporaryToken.
+/// @test Parsing a refresh response yields an access token.
 TEST_F(AuthorizedUserCredentialsTest, ParseAuthorizedUserRefreshResponse) {
   std::string r1 = R"""({
     "token_type": "Type",
@@ -407,14 +367,7 @@ TEST_F(AuthorizedUserCredentialsTest, ParseAuthorizedUserRefreshResponse) {
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([r1](absl::Span<char> buffer) {
-          std::copy(r1.begin(), r1.end(), buffer.begin());
-          return r1.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(r1);
   });
 
   auto expires_in = 1000;
@@ -424,15 +377,14 @@ TEST_F(AuthorizedUserCredentialsTest, ParseAuthorizedUserRefreshResponse) {
   EXPECT_STATUS_OK(status);
   auto token = *status;
   EXPECT_EQ(
-      std::chrono::time_point_cast<std::chrono::seconds>(token.expiration_time)
+      std::chrono::time_point_cast<std::chrono::seconds>(token.expiration)
           .time_since_epoch()
           .count(),
       std::chrono::time_point_cast<std::chrono::seconds>(
           std::chrono::system_clock::from_time_t(clock_value + expires_in))
           .time_since_epoch()
           .count());
-  EXPECT_EQ(token.token, std::make_pair(std::string{"Authorization"},
-                                        std::string{"Type access-token-r1"}));
+  EXPECT_EQ(token.token, "Type access-token-r1");
 }
 
 }  // namespace

@@ -31,26 +31,48 @@ namespace cloud {
 namespace vmmigration {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-vmmigration-options
+ */
 struct VmMigrationRetryPolicyOption {
   using Type = std::shared_ptr<VmMigrationRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-vmmigration-options
+ */
 struct VmMigrationBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct VmMigrationPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-vmmigration-options
+ */
 struct VmMigrationConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<VmMigrationConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-vmmigration-options
+ */
+struct VmMigrationPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to VmMigration.
+ *
+ * @ingroup google-cloud-vmmigration-options
+ */
 using VmMigrationPolicyOptionList =
     OptionList<VmMigrationRetryPolicyOption, VmMigrationBackoffPolicyOption,
                VmMigrationPollingPolicyOption,

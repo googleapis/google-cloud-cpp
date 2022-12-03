@@ -31,21 +31,38 @@ namespace cloud {
 namespace osconfig {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-osconfig-options
+ */
 struct OsConfigServiceRetryPolicyOption {
   using Type = std::shared_ptr<OsConfigServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-osconfig-options
+ */
 struct OsConfigServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-osconfig-options
+ */
 struct OsConfigServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<OsConfigServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to OsConfigService.
+ *
+ * @ingroup google-cloud-osconfig-options
+ */
 using OsConfigServicePolicyOptionList =
     OptionList<OsConfigServiceRetryPolicyOption,
                OsConfigServiceBackoffPolicyOption,

@@ -22,16 +22,16 @@ namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::test::admin::database::v1::AppendRowsRequest,
-    google::test::admin::database::v1::AppendRowsResponse>>
-GoldenKitchenSinkConnectionImpl::AsyncAppendRows(ExperimentalTag) {
-  return stub_->AsyncAppendRows(
+    google::test::admin::database::v1::Request,
+    google::test::admin::database::v1::Response>>
+GoldenKitchenSinkConnectionImpl::AsyncStreamingReadWrite() {
+  return stub_->AsyncStreamingReadWrite(
       background_->cq(), absl::make_unique<grpc::ClientContext>());
 }
 
-void GoldenKitchenSinkTailLogEntriesStreamingUpdater(
-    ::google::test::admin::database::v1::TailLogEntriesResponse const&,
-    ::google::test::admin::database::v1::TailLogEntriesRequest&) {
+void GoldenKitchenSinkStreamingReadStreamingUpdater(
+    ::google::test::admin::database::v1::Response const&,
+    ::google::test::admin::database::v1::Request&) {
   // implementation here
 }
 

@@ -91,6 +91,49 @@ It will return the `T` value or throw on error.
 For operations that do not return a value the library simply returns
 `google::cloud::Status`.
 
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `containeranalysis::ContainerAnalysisClient`:
+
+@snippet container_analysis_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [containeranalysis::ContainerAnalysisClient](@ref containeranalysis::ContainerAnalysisClient-endpoint-snippet)
+ [containeranalysis::GrafeasClient](@ref containeranalysis::GrafeasClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+<!-- inject-service-account-snippet-start -->
+@snippet container_analysis_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [containeranalysis::ContainerAnalysisClient](@ref containeranalysis::ContainerAnalysisClient-service-account-snippet)
+ [containeranalysis::GrafeasClient](@ref containeranalysis::GrafeasClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -105,3 +148,30 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/containeranalysis/quickstart/README%2Emd
 
 */
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page containeranalysis::ContainerAnalysisClient-endpoint-snippet Override containeranalysis::ContainerAnalysisClient Endpoint Configuration
+
+@snippet google/cloud/containeranalysis/samples/container_analysis_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page containeranalysis::ContainerAnalysisClient-service-account-snippet Override containeranalysis::ContainerAnalysisClient Authentication Defaults
+
+@snippet google/cloud/containeranalysis/samples/container_analysis_client_samples.cc with-service-account
+
+*/
+
+/*! @page containeranalysis::GrafeasClient-endpoint-snippet Override containeranalysis::GrafeasClient Endpoint Configuration
+
+@snippet google/cloud/containeranalysis/samples/grafeas_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page containeranalysis::GrafeasClient-service-account-snippet Override containeranalysis::GrafeasClient Authentication Defaults
+
+@snippet google/cloud/containeranalysis/samples/grafeas_client_samples.cc with-service-account
+
+*/
+// <!-- inject-endpoint-pages-end -->

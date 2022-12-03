@@ -59,6 +59,13 @@ class ParticipantsMetadata : public ParticipantsStub {
                  google::cloud::dialogflow::v2::AnalyzeContentRequest const&
                      request) override;
 
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+  AsyncStreamingAnalyzeContent(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(grpc::ClientContext& context,
                   google::cloud::dialogflow::v2::SuggestArticlesRequest const&

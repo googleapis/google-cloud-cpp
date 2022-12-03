@@ -66,15 +66,15 @@ class AssetServiceClient {
       std::shared_ptr<AssetServiceConnection> connection, Options opts = {});
   ~AssetServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AssetServiceClient(AssetServiceClient const&) = default;
   AssetServiceClient& operator=(AssetServiceClient const&) = default;
   AssetServiceClient(AssetServiceClient&&) = default;
   AssetServiceClient& operator=(AssetServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AssetServiceClient const& a,
                          AssetServiceClient const& b) {
@@ -84,7 +84,7 @@ class AssetServiceClient {
                          AssetServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Exports assets with time and resource types to a given Cloud Storage

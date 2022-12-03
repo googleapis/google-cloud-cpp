@@ -60,9 +60,9 @@ ServiceAccountMetadata ParseMetadataServerResponse(std::string const& payload) {
   return ServiceAccountMetadata{scopes(), email()};
 }
 
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-ParseComputeEngineRefreshResponse(rest_internal::RestResponse& response,
-                                  std::chrono::system_clock::time_point now) {
+StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
+    rest_internal::RestResponse& response,
+    std::chrono::system_clock::time_point now) {
   // Response should have the attributes "access_token", "expires_in", and
   // "token_type".
   auto payload = rest_internal::ReadAll(std::move(response).ExtractPayload());
@@ -84,8 +84,7 @@ ParseComputeEngineRefreshResponse(rest_internal::RestResponse& response,
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
   auto new_expiration = now + expires_in;
 
-  return RefreshingCredentialsWrapper::TemporaryToken{
-      std::make_pair("Authorization", std::move(header_value)), new_expiration};
+  return internal::AccessToken{std::move(header_value), new_expiration};
 }
 
 ComputeEngineCredentials::ComputeEngineCredentials()
@@ -160,8 +159,7 @@ Status ComputeEngineCredentials::RetrieveServiceAccountInfo() const {
   return Status();
 }
 
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-ComputeEngineCredentials::Refresh() const {
+StatusOr<internal::AccessToken> ComputeEngineCredentials::Refresh() const {
   auto status = RetrieveServiceAccountInfo();
   if (!status.ok()) {
     return status;

@@ -184,6 +184,22 @@ AccessContextManagerConnectionIdempotencyPolicy::DeleteGcpUserAccessBinding(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
+
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency AccessContextManagerConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<AccessContextManagerConnectionIdempotencyPolicy>
 MakeDefaultAccessContextManagerConnectionIdempotencyPolicy() {
   return absl::make_unique<AccessContextManagerConnectionIdempotencyPolicy>();

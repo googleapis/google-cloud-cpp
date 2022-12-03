@@ -64,15 +64,15 @@ class ChangelogsClient {
                             Options opts = {});
   ~ChangelogsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ChangelogsClient(ChangelogsClient const&) = default;
   ChangelogsClient& operator=(ChangelogsClient const&) = default;
   ChangelogsClient(ChangelogsClient&&) = default;
   ChangelogsClient& operator=(ChangelogsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ChangelogsClient const& a, ChangelogsClient const& b) {
     return a.connection_ == b.connection_;
@@ -80,7 +80,7 @@ class ChangelogsClient {
   friend bool operator!=(ChangelogsClient const& a, ChangelogsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of Changelogs.

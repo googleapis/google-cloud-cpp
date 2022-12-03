@@ -66,15 +66,15 @@ class CloudCatalogClient {
       std::shared_ptr<CloudCatalogConnection> connection, Options opts = {});
   ~CloudCatalogClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CloudCatalogClient(CloudCatalogClient const&) = default;
   CloudCatalogClient& operator=(CloudCatalogClient const&) = default;
   CloudCatalogClient(CloudCatalogClient&&) = default;
   CloudCatalogClient& operator=(CloudCatalogClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CloudCatalogClient const& a,
                          CloudCatalogClient const& b) {
@@ -84,7 +84,7 @@ class CloudCatalogClient {
                          CloudCatalogClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all public cloud services.

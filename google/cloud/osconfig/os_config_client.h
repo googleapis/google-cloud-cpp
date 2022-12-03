@@ -67,15 +67,15 @@ class OsConfigServiceClient {
       std::shared_ptr<OsConfigServiceConnection> connection, Options opts = {});
   ~OsConfigServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   OsConfigServiceClient(OsConfigServiceClient const&) = default;
   OsConfigServiceClient& operator=(OsConfigServiceClient const&) = default;
   OsConfigServiceClient(OsConfigServiceClient&&) = default;
   OsConfigServiceClient& operator=(OsConfigServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(OsConfigServiceClient const& a,
                          OsConfigServiceClient const& b) {
@@ -85,7 +85,7 @@ class OsConfigServiceClient {
                          OsConfigServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Patch VM instances by creating and running a patch job.

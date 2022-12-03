@@ -219,6 +219,93 @@ void BatchDml(google::cloud::spanner::Client client) {
 }
 // [END spanner_postgresql_batch_dml]
 
+// [START spanner_postgresql_update_dml_returning]
+void UpdateUsingDmlReturning(google::cloud::spanner::Client client) {
+  // Update MarketingBudget column for records satisfying a particular
+  // condition and return the modified MarketingBudget column of the
+  // updated records using `RETURNING MarketingBudget`.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            UPDATE Albums SET MarketingBudget = MarketingBudget * 2
+              WHERE SingerId = 1 AND AlbumId = 1
+              RETURNING MarketingBudget
+        )""");
+        using RowType = std::tuple<absl::optional<std::int64_t>>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+          if (!row) return std::move(row).status();
+          std::cout << "MarketingBudget: ";
+          if (std::get<0>(*row).has_value()) {
+            std::cout << *std::get<0>(*row);
+          } else {
+            std::cout << "NULL";
+          }
+          std::cout << "\n";
+        }
+        std::cout << "Updated row(s) count: " << rows.RowsModified() << "\n";
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::move(commit).status();
+}
+// [END spanner_postgresql_update_dml_returning]
+
+// [START spanner_postgresql_insert_dml_returning]
+void InsertUsingDmlReturning(google::cloud::spanner::Client client) {
+  // Insert records into SINGERS table and return the generated column
+  // FullName of the inserted records using `RETURNING FullName`.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            INSERT INTO Singers (SingerId, FirstName, LastName)
+              VALUES (12, 'Melissa', 'Garcia'),
+                     (13, 'Russell', 'Morales'),
+                     (14, 'Jacqueline', 'Long'),
+                     (15, 'Dylan', 'Shaw')
+              RETURNING FullName
+        )""");
+        using RowType = std::tuple<std::string>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+          if (!row) return std::move(row).status();
+          std::cout << "FullName: " << std::get<0>(*row) << "\n";
+        }
+        std::cout << "Inserted row(s) count: " << rows.RowsModified() << "\n";
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::move(commit).status();
+}
+// [END spanner_postgresql_insert_dml_returning]
+
+// [START spanner_postgresql_delete_dml_returning]
+void DeleteUsingDmlReturning(google::cloud::spanner::Client client) {
+  // Delete records from SINGERS table satisfying a particular condition
+  // and return the SingerId and FullName column of the deleted records
+  // using `RETURNING SingerId, FullName'.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            DELETE FROM Singers
+              WHERE FirstName = 'Alice'
+              RETURNING SingerId, FullName
+        )""");
+        using RowType = std::tuple<std::int64_t, std::string>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+          if (!row) return std::move(row).status();
+          std::cout << "SingerId: " << std::get<0>(*row) << " ";
+          std::cout << "FullName: " << std::get<1>(*row) << "\n";
+        }
+        std::cout << "Deleted row(s) count: " << rows.RowsModified() << "\n";
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::move(commit).status();
+}
+// [END spanner_postgresql_delete_dml_returning]
+
 // [START spanner_postgresql_case_sensitivity]
 void CaseSensitivity(
     google::cloud::spanner_admin::DatabaseAdminClient admin_client,
@@ -274,11 +361,10 @@ void CaseSensitivity(
   commit = client.Commit(
       [&client](google::cloud::spanner::Transaction txn)
           -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
-        auto sql = google::cloud::spanner::SqlStatement(
-            R"""(
-                INSERT INTO Singers (SingerId, "FirstName", "LastName")
-                    VALUES (3, 'Alice', 'Trentor')
-            )""");
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            INSERT INTO Singers (SingerId, "FirstName", "LastName")
+                VALUES (3, 'Alice', 'Trentor')
+        )""");
         auto insert = client.ExecuteDml(std::move(txn), std::move(sql));
         if (!insert) return std::move(insert).status();
         return google::cloud::spanner::Mutations{};
@@ -382,11 +468,10 @@ void OrderNulls(google::cloud::spanner::Client client) {
   auto commit = client.Commit(
       [&client](google::cloud::spanner::Transaction txn)
           -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
-        auto sql = google::cloud::spanner::SqlStatement(
-            R"""(
-                INSERT INTO Singers (SingerId, "FirstName", "LastName")
-                    VALUES (4, 'Cher', NULL)
-            )""");
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            INSERT INTO Singers (SingerId, "FirstName", "LastName")
+                VALUES (4, 'Cher', NULL)
+        )""");
         auto insert = client.ExecuteDml(std::move(txn), std::move(sql));
         if (!insert) return std::move(insert).status();
         return google::cloud::spanner::Mutations{};
@@ -525,7 +610,7 @@ void InformationSchema(
       R"""(
         CREATE TABLE Venues (
             VenueId  BIGINT NOT NULL PRIMARY KEY,
-            Name     CHARACTER VARYING(1024) NOT NULL,
+            Name     CHARACTER VARYING(1024),
             Revenue  NUMERIC,
             Picture  BYTEA
         )
@@ -690,6 +775,81 @@ void PartitionedDml(google::cloud::spanner::Client client) {
 }
 // [END spanner_postgresql_partitioned_dml]
 
+// [START spanner_postgresql_jsonb_add_column]
+void JsonbAddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
+                    google::cloud::spanner::Database const& database) {
+  std::vector<std::string> statements = {
+      R"""(
+        ALTER TABLE Venues
+            ADD COLUMN VenueDetails JSONB
+      )""",
+  };
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
+  std::cout << "Added JSONB column to table Venues in database "
+            << database.FullName() << "\nNew DDL:\n"
+            << metadata->DebugString();
+}
+// [END spanner_postgresql_jsonb_add_column]
+
+// [START spanner_postgresql_jsonb_update_data]
+void JsonbUpdateData(google::cloud::spanner::Client client) {
+  auto venue19_details = google::cloud::spanner::JsonB(R"""(
+        {"rating": 9, "open": true}
+      )""");
+  // PG.JSONB takes the last value in the case of duplicate keys.
+  auto venue4_details = google::cloud::spanner::JsonB(R"""(
+        [
+          {"name": null, "available": true},
+          {"name": "room 2", "available": false, "name": "room 3"},
+          {
+            "main hall": {
+              "description": "this is the biggest space",
+              "size": 200
+            }
+          }
+        ]
+      )""");
+  auto venue42_details = google::cloud::spanner::JsonB(R"""(
+        {
+          "name": null,
+          "open": {"Monday": true, "Tuesday": false},
+          "tags": ["large", "airy"]
+        }
+      )""");
+  auto update_venues = google::cloud::spanner::InsertOrUpdateMutationBuilder(
+                           "Venues", {"VenueId", "VenueDetails"})
+                           .EmplaceRow(19, venue19_details)
+                           .EmplaceRow(4, venue4_details)
+                           .EmplaceRow(42, venue42_details)
+                           .Build();
+  auto commit_result =
+      client.Commit(google::cloud::spanner::Mutations{update_venues});
+  if (!commit_result) throw std::move(commit_result).status();
+  std::cout << "Updated data.\n";
+}
+// [END spanner_postgresql_jsonb_update_data]
+
+// [START spanner_postgresql_jsonb_query_parameter]
+void JsonbQueryWithParameter(google::cloud::spanner::Client client) {
+  auto sql = google::cloud::spanner::SqlStatement(
+      "SELECT VenueId, VenueDetails FROM Venues"
+      "  WHERE CAST(VenueDetails ->> 'rating' AS INTEGER) > $1",
+      {{"p1", google::cloud::spanner::Value(2)}});
+  using RowType =
+      std::tuple<std::int64_t, absl::optional<google::cloud::spanner::JsonB>>;
+  auto rows = client.ExecuteQuery(std::move(sql));
+  for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
+    std::cout << "VenueId: " << std::get<0>(*row) << ", ";
+    std::cout << "Details: " << std::string(std::get<1>(*row).value()) << "\n";
+  }
+}
+// [END spanner_postgresql_jsonb_query_parameter]
+
 void DropDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
                   google::cloud::spanner::Database const& database) {
   auto status = client.DropDatabase(database.FullName());
@@ -709,6 +869,8 @@ void CreateTables(google::cloud::spanner_admin::DatabaseAdminClient client,
             SingerId   BIGINT NOT NULL,
             FirstName  CHARACTER VARYING(1024),
             LastName   CHARACTER VARYING(1024),
+            FullName   CHARACTER VARYING(2049)
+                GENERATED ALWAYS AS (FirstName || ' ' || LastName) STORED,
             SingerInfo BYTEA,
             PRIMARY KEY(singerid)
         )
@@ -831,6 +993,9 @@ int RunOneCommand(std::vector<std::string> argv,
       {"query-with-parameter", Command(samples::QueryWithParameter)},
       {"dml-getting-started-update", Command(samples::DmlGettingStartedUpdate)},
       {"batch-dml", Command(samples::BatchDml)},
+      {"update-dml-returning", Command(samples::UpdateUsingDmlReturning)},
+      {"insert-dml-returning", Command(samples::InsertUsingDmlReturning)},
+      {"delete-dml-returning", Command(samples::DeleteUsingDmlReturning)},
       {"drop-tables", Command(helpers::DropTables)},
       {"case-sensitivity", Command(samples::CaseSensitivity)},
       {"cast-data-type", Command(samples::CastDataType)},
@@ -842,6 +1007,9 @@ int RunOneCommand(std::vector<std::string> argv,
       {"numeric-data-type", Command(samples::NumericDataType)},
       {"information-schema", Command(samples::InformationSchema)},
       {"partitioned-dml", Command(samples::PartitionedDml)},
+      {"jsonb-add-column", Command(samples::JsonbAddColumn)},
+      {"jsonb-update-data", Command(samples::JsonbUpdateData)},
+      {"jsonb-query-with-parameter", Command(samples::JsonbQueryWithParameter)},
       {"drop-database", Command(samples::DropDatabase)},
       {"help", HelpCommand(commands)},
   };
@@ -916,6 +1084,15 @@ int RunAll() {
     SampleBanner("spanner_postgresql_batch_dml");
     samples::BatchDml(client);
 
+    SampleBanner("spanner_postgresql_update_dml_returning");
+    samples::UpdateUsingDmlReturning(client);
+
+    SampleBanner("spanner_postgresql_insert_dml_returning");
+    samples::InsertUsingDmlReturning(client);
+
+    SampleBanner("spanner_postgresql_delete_dml_returning");
+    samples::DeleteUsingDmlReturning(client);
+
     helpers::DropTables(database_admin_client, database);
 
     SampleBanner("spanner_postgresql_case_sensitivity");
@@ -949,6 +1126,15 @@ int RunAll() {
 
     SampleBanner("spanner_postgresql_partitioned_dml");
     samples::PartitionedDml(client);
+
+    SampleBanner("spanner_postgresql_jsonb_add_column");
+    samples::JsonbAddColumn(database_admin_client, database);
+
+    SampleBanner("spanner_postgresql_jsonb_update_data");
+    samples::JsonbUpdateData(client);
+
+    SampleBanner("spanner_postgresql_jsonb_query_parameter");
+    samples::JsonbQueryWithParameter(client);
   } catch (...) {
     // Try to clean up after a failure.
     samples::DropDatabase(database_admin_client, database);

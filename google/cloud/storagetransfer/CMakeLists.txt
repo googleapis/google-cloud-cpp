@@ -30,7 +30,8 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Storage Transfer API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "storagetransfer_internal"
                             "storagetransfer_testing" "examples")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
+                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::storagetransfer_protos)

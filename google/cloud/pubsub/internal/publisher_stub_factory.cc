@@ -17,7 +17,7 @@
 #include "google/cloud/pubsub/internal/publisher_auth_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_logging_decorator.h"
 #include "google/cloud/pubsub/internal/publisher_metadata_decorator.h"
-#include "google/cloud/pubsub/internal/publisher_round_robin.h"
+#include "google/cloud/pubsub/internal/publisher_round_robin_decorator.h"
 #include "google/cloud/log.h"
 
 namespace google {

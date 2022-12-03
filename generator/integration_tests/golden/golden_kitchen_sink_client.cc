@@ -24,7 +24,11 @@ namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-GoldenKitchenSinkClient::GoldenKitchenSinkClient(std::shared_ptr<GoldenKitchenSinkConnection> connection, Options opts) : connection_(std::move(connection)), options_(internal::MergeOptions(std::move(opts), connection_->options())) {}
+GoldenKitchenSinkClient::GoldenKitchenSinkClient(
+    std::shared_ptr<GoldenKitchenSinkConnection> connection, Options opts)
+    : connection_(std::move(connection)),
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
 GoldenKitchenSinkClient::~GoldenKitchenSinkClient() = default;
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
@@ -90,20 +94,6 @@ GoldenKitchenSinkClient::ListLogs(google::test::admin::database::v1::ListLogsReq
   return connection_->ListLogs(std::move(request));
 }
 
-StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
-GoldenKitchenSinkClient::TailLogEntries(std::vector<std::string> const& resource_names, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::test::admin::database::v1::TailLogEntriesRequest request;
-  *request.mutable_resource_names() = {resource_names.begin(), resource_names.end()};
-  return connection_->TailLogEntries(request);
-}
-
-StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
-GoldenKitchenSinkClient::TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request, Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->TailLogEntries(request);
-}
-
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkClient::ListServiceAccountKeys(std::string const& name, std::vector<google::test::admin::database::v1::ListServiceAccountKeysRequest::KeyType> const& key_types, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -132,13 +122,27 @@ GoldenKitchenSinkClient::DoNothing(google::protobuf::Empty const& request, Optio
   return connection_->DoNothing(request);
 }
 
+StreamRange<google::test::admin::database::v1::Response>
+GoldenKitchenSinkClient::StreamingRead(std::string const& stream, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::test::admin::database::v1::Request request;
+  request.set_stream(stream);
+  return connection_->StreamingRead(request);
+}
+
+StreamRange<google::test::admin::database::v1::Response>
+GoldenKitchenSinkClient::StreamingRead(google::test::admin::database::v1::Request const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StreamingRead(request);
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::test::admin::database::v1::AppendRowsRequest,
-    google::test::admin::database::v1::AppendRowsResponse>>
-GoldenKitchenSinkClient::AsyncAppendRows(ExperimentalTag tag, Options opts) {
+    google::test::admin::database::v1::Request,
+    google::test::admin::database::v1::Response>>
+GoldenKitchenSinkClient::AsyncStreamingReadWrite(Options opts) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(opts), options_));
-  return connection_->AsyncAppendRows(std::move(tag));
+  return connection_->AsyncStreamingReadWrite();
 }
 
 Status

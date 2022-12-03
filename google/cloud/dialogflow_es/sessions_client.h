@@ -20,7 +20,6 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_DIALOGFLOW_ES_SESSIONS_CLIENT_H
 
 #include "google/cloud/dialogflow_es/sessions_connection.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/options.h"
 #include "google/cloud/polling_policy.h"
@@ -68,15 +67,15 @@ class SessionsClient {
                           Options opts = {});
   ~SessionsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   SessionsClient(SessionsClient const&) = default;
   SessionsClient& operator=(SessionsClient const&) = default;
   SessionsClient(SessionsClient&&) = default;
   SessionsClient& operator=(SessionsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(SessionsClient const& a, SessionsClient const& b) {
     return a.connection_ == b.connection_;
@@ -84,7 +83,7 @@ class SessionsClient {
   friend bool operator!=(SessionsClient const& a, SessionsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Processes a natural language query and returns structured, actionable data
@@ -189,9 +188,6 @@ class SessionsClient {
   /// See [Versions and
   /// environments](https://cloud.google.com/dialogflow/es/docs/agents-versions).
   ///
-  /// @note The presence of the `ExperimentalTag` means that this function is
-  /// experimental. It is subject to change (including removal) without notice.
-  ///
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
@@ -207,7 +203,7 @@ class SessionsClient {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
-  AsyncStreamingDetectIntent(ExperimentalTag, Options opts = {});
+  AsyncStreamingDetectIntent(Options opts = {});
 
  private:
   std::shared_ptr<SessionsConnection> connection_;

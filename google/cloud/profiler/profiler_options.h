@@ -31,21 +31,38 @@ namespace cloud {
 namespace profiler {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-profiler-options
+ */
 struct ProfilerServiceRetryPolicyOption {
   using Type = std::shared_ptr<ProfilerServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-profiler-options
+ */
 struct ProfilerServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-profiler-options
+ */
 struct ProfilerServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<ProfilerServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to ProfilerService.
+ *
+ * @ingroup google-cloud-profiler-options
+ */
 using ProfilerServicePolicyOptionList =
     OptionList<ProfilerServiceRetryPolicyOption,
                ProfilerServiceBackoffPolicyOption,

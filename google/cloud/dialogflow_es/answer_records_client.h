@@ -65,15 +65,15 @@ class AnswerRecordsClient {
       std::shared_ptr<AnswerRecordsConnection> connection, Options opts = {});
   ~AnswerRecordsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AnswerRecordsClient(AnswerRecordsClient const&) = default;
   AnswerRecordsClient& operator=(AnswerRecordsClient const&) = default;
   AnswerRecordsClient(AnswerRecordsClient&&) = default;
   AnswerRecordsClient& operator=(AnswerRecordsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AnswerRecordsClient const& a,
                          AnswerRecordsClient const& b) {
@@ -83,7 +83,7 @@ class AnswerRecordsClient {
                          AnswerRecordsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all answer records in the specified project in reverse

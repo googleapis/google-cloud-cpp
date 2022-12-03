@@ -31,26 +31,48 @@ namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup generator-integration_tests-golden-options
+ */
 struct GoldenThingAdminRetryPolicyOption {
   using Type = std::shared_ptr<GoldenThingAdminRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup generator-integration_tests-golden-options
+ */
 struct GoldenThingAdminBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct GoldenThingAdminPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup generator-integration_tests-golden-options
+ */
 struct GoldenThingAdminConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<GoldenThingAdminConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup generator-integration_tests-golden-options
+ */
+struct GoldenThingAdminPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to GoldenThingAdmin.
+ *
+ * @ingroup generator-integration_tests-golden-options
+ */
 using GoldenThingAdminPolicyOptionList =
     OptionList<GoldenThingAdminRetryPolicyOption,
                GoldenThingAdminBackoffPolicyOption,

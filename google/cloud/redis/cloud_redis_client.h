@@ -82,15 +82,15 @@ class CloudRedisClient {
                             Options opts = {});
   ~CloudRedisClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CloudRedisClient(CloudRedisClient const&) = default;
   CloudRedisClient& operator=(CloudRedisClient const&) = default;
   CloudRedisClient(CloudRedisClient&&) = default;
   CloudRedisClient& operator=(CloudRedisClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CloudRedisClient const& a, CloudRedisClient const& b) {
     return a.connection_ == b.connection_;
@@ -98,7 +98,7 @@ class CloudRedisClient {
   friend bool operator!=(CloudRedisClient const& a, CloudRedisClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all Redis instances owned by a project in either the specified

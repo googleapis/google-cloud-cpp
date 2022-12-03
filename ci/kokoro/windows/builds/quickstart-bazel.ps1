@@ -40,15 +40,13 @@ function Get-Released-Quickstarts {
 
     Push-Location "${project_root}/google/cloud/bigtable/quickstart"
     bazelisk $bazel_common_flags version | Out-Null
-    bazelisk $bazel_common_flags query --noshow_progress --noshow_loading_progress "filter(/quickstart:quickstart$, kind(cc_binary, @com_github_googleapis_google_cloud_cpp//google/...))" |
-        ForEach-Object { $_.replace("@com_github_googleapis_google_cloud_cpp//google/cloud/", "").replace("/quickstart:quickstart", "") } |
+    bazelisk $bazel_common_flags query --noshow_progress --noshow_loading_progress "filter(/quickstart:quickstart$, kind(cc_binary, @google_cloud_cpp//google/...))" |
+        ForEach-Object { $_.replace("@google_cloud_cpp//google/cloud/", "").replace("/quickstart:quickstart", "") } |
         # The following quickstarts have problems building on Windows:
         #   TODO(#8145) - asset (TRUE/FALSE macros)
-        #   TODO(#10067) - batch (awaiting non-experimental target)
-        #   TODO(#9340) - beyondcorp (long pathnames)
         #   TODO(#8125) - channel (DOMAIN macro)
         #   TODO(#8785) - storagetransfer (UID_MAX/GID_MAX macros)
-        Where-Object { -not ("asset", "batch", "beyondcorp", "channel", "storagetransfer" -contains $_) } |
+        Where-Object { -not ("asset", "channel", "storagetransfer" -contains $_) } |
         # TODO(#9923) - compiling all quickstarts on Windows is too slow
         Get-Random -Count 10
     Pop-Location

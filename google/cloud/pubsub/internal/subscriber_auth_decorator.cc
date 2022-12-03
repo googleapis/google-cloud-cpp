@@ -72,6 +72,14 @@ Status SubscriberAuth::DeleteSubscription(
   return child_->DeleteSubscription(context, request);
 }
 
+StatusOr<google::pubsub::v1::PullResponse> SubscriberAuth::Pull(
+    grpc::ClientContext& context,
+    google::pubsub::v1::PullRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->Pull(context, request);
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::pubsub::v1::StreamingPullRequest,
     google::pubsub::v1::StreamingPullResponse>>

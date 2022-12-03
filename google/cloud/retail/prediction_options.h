@@ -31,21 +31,38 @@ namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-retail-options
+ */
 struct PredictionServiceRetryPolicyOption {
   using Type = std::shared_ptr<PredictionServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-retail-options
+ */
 struct PredictionServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-retail-options
+ */
 struct PredictionServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<PredictionServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to PredictionService.
+ *
+ * @ingroup google-cloud-retail-options
+ */
 using PredictionServicePolicyOptionList =
     OptionList<PredictionServiceRetryPolicyOption,
                PredictionServiceBackoffPolicyOption,

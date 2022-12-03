@@ -15,8 +15,9 @@
 # ~~~
 
 function (spanner_client_define_samples)
-    set(spanner_client_integration_samples # cmake-format: sort
-                                           postgresql_samples.cc samples.cc)
+    set(spanner_client_integration_samples
+        # cmake-format: sort
+        client_samples.cc postgresql_samples.cc samples.cc)
     set(spanner_client_unit_samples # cmake-format: sort
                                     mock_execute_query.cc)
 
@@ -27,9 +28,18 @@ function (spanner_client_define_samples)
     export_list_to_bazel("spanner_client_unit_samples.bzl"
                          "spanner_client_unit_samples" YEAR "2019")
 
+    # Generate a target for each integration test.
+    foreach (fname ${spanner_client_integration_samples})
+        google_cloud_cpp_add_executable(target "spanner" "${fname}")
+        google_cloud_cpp_add_common_options(${target})
+        add_test(NAME ${target} COMMAND ${target})
+        target_link_libraries(
+            ${target} PRIVATE spanner_client_testing google_cloud_cpp_testing
+                              google-cloud-cpp::spanner)
+    endforeach ()
+
     # Generate a target for each unit test.
-    foreach (fname ${spanner_client_integration_samples}
-                   ${spanner_client_unit_samples})
+    foreach (fname ${spanner_client_unit_samples})
         google_cloud_cpp_add_executable(target "spanner" "${fname}")
         google_cloud_cpp_add_common_options(${target})
         add_test(NAME ${target} COMMAND ${target})

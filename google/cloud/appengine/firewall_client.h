@@ -73,15 +73,15 @@ class FirewallClient {
                           Options opts = {});
   ~FirewallClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   FirewallClient(FirewallClient const&) = default;
   FirewallClient& operator=(FirewallClient const&) = default;
   FirewallClient(FirewallClient&&) = default;
   FirewallClient& operator=(FirewallClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(FirewallClient const& a, FirewallClient const& b) {
     return a.connection_ == b.connection_;
@@ -89,7 +89,7 @@ class FirewallClient {
   friend bool operator!=(FirewallClient const& a, FirewallClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the firewall rules of an application.

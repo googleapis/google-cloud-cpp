@@ -82,7 +82,7 @@ class $mock_connection_class_name$ : public $product_namespace$::$connection_cla
   MOCK_METHOD((std::unique_ptr<
       ::google::cloud::AsyncStreamingReadWriteRpc<
           $request_type$, $response_type$>>),
-      Async$method_name$, (ExperimentalTag), (override));
+      Async$method_name$, (), (override));
 )""");
       continue;
     }

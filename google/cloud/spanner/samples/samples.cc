@@ -21,7 +21,6 @@
 #include "google/cloud/spanner/admin/instance_admin_options.h"
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/backup.h"
-#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/row.h"
 #include "google/cloud/spanner/testing/debug_log.h"  // TODO(#4758): remove
@@ -608,7 +607,9 @@ void CreateDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
           SingerId   INT64 NOT NULL,
           FirstName  STRING(1024),
           LastName   STRING(1024),
-          SingerInfo BYTES(MAX)
+          SingerInfo BYTES(MAX),
+          FullName   STRING(2049)
+              AS (ARRAY_TO_STRING([FirstName, LastName], " ")) STORED
       ) PRIMARY KEY (SingerId))""");
   request.add_extra_statements(R"""(
       CREATE TABLE Albums (
@@ -642,7 +643,9 @@ void CreateDatabaseWithVersionRetentionPeriod(
           SingerId   INT64 NOT NULL,
           FirstName  STRING(1024),
           LastName   STRING(1024),
-          SingerInfo BYTES(MAX)
+          SingerInfo BYTES(MAX),
+          FullName   STRING(2049)
+              AS (ARRAY_TO_STRING([FirstName, LastName], " ")) STORED
       ) PRIMARY KEY (SingerId))""");
   request.add_extra_statements(R"""(
       CREATE TABLE Albums (
@@ -803,8 +806,8 @@ void GetDatabaseDdl(google::cloud::spanner_admin::DatabaseAdminClient client,
 }
 //! [END spanner_get_database_ddl] [get-database-ddl]
 
-//! [START spanner_add_and_drop_database_roles]
-void AddAndDropDatabaseRoles(
+//! [START spanner_add_and_drop_database_role]
+void AddAndDropDatabaseRole(
     google::cloud::spanner_admin::DatabaseAdminClient client,
     std::string const& project_id, std::string const& instance_id,
     std::string const& database_id, std::string const& role_parent,
@@ -836,7 +839,7 @@ void AddAndDropDatabaseRoles(
   if (!metadata) throw std::move(metadata).status();
   std::cout << "Revoked privileges and dropped role " << role_child << "\n";
 }
-//! [END spanner_add_and_drop_database_roles]
+//! [END spanner_add_and_drop_database_role]
 
 //! [START spanner_read_data_with_database_role]
 void ReadDataWithDatabaseRole(std::string const& project_id,
@@ -1283,7 +1286,9 @@ void CreateDatabaseWithEncryptionKey(
           SingerId   INT64 NOT NULL,
           FirstName  STRING(1024),
           LastName   STRING(1024),
-          SingerInfo BYTES(MAX)
+          SingerInfo BYTES(MAX),
+          FullName   STRING(2049)
+              AS (ARRAY_TO_STRING([FirstName, LastName], " ")) STORED
       ) PRIMARY KEY (SingerId))""");
   request.add_extra_statements(R"""(
       CREATE TABLE Albums (
@@ -2398,7 +2403,7 @@ void SetTransactionTag(google::cloud::spanner::Client client) {
           spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
         spanner::SqlStatement update_statement(
             "UPDATE Venues SET Capacity = CAST(Capacity/4 AS INT64)"
-            " WHERE OutdoorVenue = false");
+            "  WHERE OutdoorVenue = false");
         // Sets the request tag to "app=concert,env=dev,action=update".
         // This will only be set on this request.
         auto update = client.ExecuteDml(
@@ -2767,7 +2772,7 @@ void DmlStandardUpdate(google::cloud::spanner::Client client) {
             std::move(txn),
             spanner::SqlStatement(
                 "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
-                " WHERE SingerId = 1 AND AlbumId = 1"));
+                "  WHERE SingerId = 1 AND AlbumId = 1"));
         if (!update) return std::move(update).status();
         return spanner::Mutations{};
       });
@@ -2787,7 +2792,7 @@ void CommitWithPolicies(google::cloud::spanner::Client client) {
             std::move(txn),
             spanner::SqlStatement(
                 "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
-                " WHERE SingerId = 1 AND AlbumId = 1"));
+                "  WHERE SingerId = 1 AND AlbumId = 1"));
         if (!update) return std::move(update).status();
         return spanner::Mutations{};
       },
@@ -2816,7 +2821,7 @@ void ProfileDmlStandardUpdate(google::cloud::spanner::Client client) {
             std::move(txn),
             spanner::SqlStatement(
                 "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
-                " WHERE SingerId = 1 AND AlbumId = 1"));
+                "  WHERE SingerId = 1 AND AlbumId = 1"));
         if (!update) return std::move(update).status();
         dml_result = *std::move(update);
         return spanner::Mutations{};
@@ -2843,8 +2848,8 @@ void DmlStandardUpdateWithTimestamp(google::cloud::spanner::Client client) {
         auto update = client.ExecuteDml(
             std::move(txn),
             spanner::SqlStatement(
-                "UPDATE Albums SET LastUpdateTime = PENDING_COMMIT_TIMESTAMP() "
-                "WHERE SingerId = 1"));
+                "UPDATE Albums SET LastUpdateTime = PENDING_COMMIT_TIMESTAMP()"
+                "  WHERE SingerId = 1"));
         if (!update) return std::move(update).status();
         return spanner::Mutations{};
       });
@@ -2915,7 +2920,7 @@ void DmlPartitionedUpdate(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   auto result = client.ExecutePartitionedDml(
       spanner::SqlStatement("UPDATE Albums SET MarketingBudget = 100000"
-                            " WHERE SingerId > 1"));
+                            "  WHERE SingerId > 1"));
   if (!result) throw std::move(result).status();
   std::cout << "Update was successful [spanner_dml_partitioned_update]\n";
 }
@@ -2935,7 +2940,7 @@ void DmlBatchUpdate(google::cloud::spanner::Client client) {
                                   " VALUES (1, 3, 'Test Album Title', 10000)"),
             spanner::SqlStatement("UPDATE Albums"
                                   " SET MarketingBudget = MarketingBudget * 2"
-                                  " WHERE SingerId = 1 and AlbumId = 3")};
+                                  "  WHERE SingerId = 1 and AlbumId = 3")};
         auto result = client.ExecuteBatchDml(txn, statements);
         if (!result) return std::move(result).status();
         for (std::size_t i = 0; i < result->stats.size(); ++i) {
@@ -3055,8 +3060,8 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
   auto update_budget = [&](spanner::Transaction txn, std::int64_t album_id,
                            std::int64_t singer_id, std::int64_t budget) {
     auto sql = spanner::SqlStatement(
-        "UPDATE Albums SET MarketingBudget = @AlbumBudget "
-        "WHERE SingerId = @SingerId AND AlbumId = @AlbumId",
+        "UPDATE Albums SET MarketingBudget = @AlbumBudget"
+        "  WHERE SingerId = @SingerId AND AlbumId = @AlbumId",
         {{"AlbumBudget", spanner::Value(budget)},
          {"AlbumId", spanner::Value(album_id)},
          {"SingerId", spanner::Value(singer_id)}});
@@ -3271,6 +3276,93 @@ void FieldAccessOnNestedStruct(google::cloud::spanner::Client client) {
   std::cout << "Query completed for [spanner_field_access_on_nested_struct]\n";
 }
 //! [END spanner_field_access_on_nested_struct_parameters]
+
+// [START spanner_update_dml_returning] [spanner-update-dml-returning]
+void UpdateUsingDmlReturning(google::cloud::spanner::Client client) {
+  // Update MarketingBudget column for records satisfying a particular
+  // condition and return the modified MarketingBudget column of the
+  // updated records using `THEN RETURN MarketingBudget`.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            UPDATE Albums SET MarketingBudget = MarketingBudget * 2
+              WHERE SingerId = 1 AND AlbumId = 1
+              THEN RETURN MarketingBudget
+        )""");
+        using RowType = std::tuple<absl::optional<std::int64_t>>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+          if (!row) return std::move(row).status();
+          std::cout << "MarketingBudget: ";
+          if (std::get<0>(*row).has_value()) {
+            std::cout << *std::get<0>(*row);
+          } else {
+            std::cout << "NULL";
+          }
+          std::cout << "\n";
+        }
+        std::cout << "Updated row(s) count: " << rows.RowsModified() << "\n";
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::move(commit).status();
+}
+// [END spanner_update_dml_returning] [spanner-update-dml-returning]
+
+// [START spanner_insert_dml_returning]
+void InsertUsingDmlReturning(google::cloud::spanner::Client client) {
+  // Insert records into SINGERS table and return the generated column
+  // FullName of the inserted records using `THEN RETURN FullName`.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            INSERT INTO Singers (SingerId, FirstName, LastName)
+              VALUES (12, 'Melissa', 'Garcia'),
+                     (13, 'Russell', 'Morales'),
+                     (14, 'Jacqueline', 'Long'),
+                     (15, 'Dylan', 'Shaw')
+              THEN RETURN FullName
+        )""");
+        using RowType = std::tuple<std::string>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+          if (!row) return std::move(row).status();
+          std::cout << "FullName: " << std::get<0>(*row) << "\n";
+        }
+        std::cout << "Inserted row(s) count: " << rows.RowsModified() << "\n";
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::move(commit).status();
+}
+// [END spanner_insert_dml_returning]
+
+// [START spanner_delete_dml_returning]
+void DeleteUsingDmlReturning(google::cloud::spanner::Client client) {
+  // Delete records from SINGERS table satisfying a particular condition
+  // and return the SingerId and FullName column of the deleted records
+  // using `THEN RETURN SingerId, FullName'.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            DELETE FROM Singers
+              WHERE FirstName = 'Alice'
+              THEN RETURN SingerId, FullName
+        )""");
+        using RowType = std::tuple<std::int64_t, std::string>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+          if (!row) return std::move(row).status();
+          std::cout << "SingerId: " << std::get<0>(*row) << " ";
+          std::cout << "FullName: " << std::get<1>(*row) << "\n";
+        }
+        std::cout << "Deleted row(s) count: " << rows.RowsModified() << "\n";
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::move(commit).status();
+}
+// [END spanner_delete_dml_returning]
 
 void ExampleStatusOr(google::cloud::spanner::Client client) {
   //! [example-status-or]
@@ -3494,8 +3586,9 @@ void StreamOf(google::cloud::spanner::Client client) {
 
   for (auto& row : spanner::StreamOf<RowType>(query)) {
     if (!row) throw std::move(row).status();
-    std::cout << "  FirstName: " << std::get<0>(*row)
-              << "\n  LastName: " << std::get<1>(*row) << "\n";
+    std::cout << "  SingerId: " << std::get<0>(*row) << "\n"
+              << "  FirstName: " << std::get<1>(*row) << "\n"
+              << "  LastName: " << std::get<2>(*row) << "\n";
   }
   std::cout << "end of results\n";
 }
@@ -3857,6 +3950,9 @@ int RunOneCommand(std::vector<std::string> argv) {
                          MakeInsertOrUpdateMutation),
       make_command_entry("replace-mutation-builder", ReplaceMutationBuilder),
       make_command_entry("make-replace-mutation", MakeReplaceMutation),
+      make_command_entry("delete-mutation-builder", UpdateUsingDmlReturning),
+      make_command_entry("delete-mutation-builder", InsertUsingDmlReturning),
+      make_command_entry("delete-mutation-builder", DeleteUsingDmlReturning),
       make_command_entry("delete-mutation-builder", DeleteMutationBuilder),
       make_command_entry("make-delete-mutation", MakeDeleteMutation),
       make_command_entry("query-information-schema-database-options",
@@ -4274,9 +4370,9 @@ void RunAll(bool emulator) {
   GetDatabaseDdl(database_admin_client, project_id, instance_id, database_id);
 
   if (!emulator) {
-    SampleBanner("spanner_add_and_drop_database_roles");
-    AddAndDropDatabaseRoles(database_admin_client, project_id, instance_id,
-                            database_id, "new_parent", "new_child");
+    SampleBanner("spanner_add_and_drop_database_role");
+    AddAndDropDatabaseRole(database_admin_client, project_id, instance_id,
+                           database_id, "new_parent", "new_child");
 
     SampleBanner("spanner_read_data_with_database_role");
     ReadDataWithDatabaseRole(project_id, instance_id, database_id,
@@ -4553,6 +4649,17 @@ void RunAll(bool emulator) {
 
   SampleBanner("make-replace-mutation");
   MakeReplaceMutation(client);
+
+  if (!emulator) {
+    SampleBanner("spanner_update_dml_returning");
+    UpdateUsingDmlReturning(client);
+
+    SampleBanner("spanner_insert_dml_returning");
+    InsertUsingDmlReturning(client);
+
+    SampleBanner("spanner_delete_dml_returning");
+    DeleteUsingDmlReturning(client);
+  }
 
   SampleBanner("delete-mutation-builder");
   DeleteMutationBuilder(client);

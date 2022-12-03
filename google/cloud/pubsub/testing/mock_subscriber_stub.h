@@ -61,6 +61,10 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
                google::pubsub::v1::ModifyPushConfigRequest const& request),
               (override));
 
+  MOCK_METHOD(StatusOr<google::pubsub::v1::PullResponse>, Pull,
+              (grpc::ClientContext&, google::pubsub::v1::PullRequest const&),
+              (override));
+
   using StreamingPullStream = google::cloud::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>;

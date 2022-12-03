@@ -15,6 +15,7 @@
 #include "google/cloud/pubsub/internal/subscription_session.h"
 #include "google/cloud/pubsub/ack_handler.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
+#include "google/cloud/pubsub/internal/ack_handler_wrapper.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
 #include "google/cloud/pubsub/internal/subscription_lease_management.h"
 #include "google/cloud/pubsub/internal/subscription_message_queue.h"
@@ -27,38 +28,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::pubsub::AckHandler;
 using ::google::cloud::pubsub::ExactlyOnceAckHandler;
-
-class AckHandlerWrapper : public AckHandler::Impl {
- public:
-  explicit AckHandlerWrapper(std::unique_ptr<ExactlyOnceAckHandler::Impl> impl,
-                             std::string message_id)
-      : impl_(std::move(impl)), message_id_(std::move(message_id)) {}
-  ~AckHandlerWrapper() override = default;
-
-  void ack() override {
-    (void)impl_->ack().then([id = std::move(message_id_)](auto f) {
-      auto status = f.get();
-      GCP_LOG(WARNING) << "error while trying to ack(), status=" << status
-                       << ", message_id=" << id;
-    });
-  }
-  void nack() override {
-    (void)impl_->nack().then([id = std::move(message_id_)](auto f) {
-      auto status = f.get();
-      GCP_LOG(WARNING) << "error while trying to nack(), status=" << status
-                       << ", message_id=" << id;
-    });
-  }
-  std::int32_t delivery_attempt() const override {
-    return impl_->delivery_attempt();
-  }
-
- private:
-  std::unique_ptr<ExactlyOnceAckHandler::Impl> impl_;
-  std::string message_id_;
-};
 
 class SubscriptionSessionImpl
     : public std::enable_shared_from_this<SubscriptionSessionImpl> {
@@ -222,12 +192,13 @@ class SubscriptionSessionImpl
 }  // namespace
 
 future<Status> CreateSubscriptionSession(
-    pubsub::Subscription const& subscription, Options const& opts,
-    std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
-    std::string client_id, pubsub::ApplicationCallback application_callback) {
+    Options const& opts, std::shared_ptr<SubscriberStub> const& stub,
+    CompletionQueue const& cq, std::string client_id,
+    pubsub::ApplicationCallback application_callback) {
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto batch = std::make_shared<StreamingSubscriptionBatchSource>(
-      cq, shutdown_manager, stub, subscription.FullName(), std::move(client_id),
+      cq, shutdown_manager, stub,
+      opts.get<pubsub::SubscriptionOption>().FullName(), std::move(client_id),
       opts);
   auto lease_management = SubscriptionLeaseManagement::Create(
       cq, shutdown_manager, std::move(batch),
@@ -240,13 +211,13 @@ future<Status> CreateSubscriptionSession(
 }
 
 future<Status> CreateSubscriptionSession(
-    pubsub::Subscription const& subscription, Options const& opts,
-    std::shared_ptr<SubscriberStub> const& stub, CompletionQueue const& cq,
-    std::string client_id,
+    Options const& opts, std::shared_ptr<SubscriberStub> const& stub,
+    CompletionQueue const& cq, std::string client_id,
     pubsub::ExactlyOnceApplicationCallback application_callback) {
   auto shutdown_manager = std::make_shared<SessionShutdownManager>();
   auto batch = std::make_shared<StreamingSubscriptionBatchSource>(
-      cq, shutdown_manager, stub, subscription.FullName(), std::move(client_id),
+      cq, shutdown_manager, stub,
+      opts.get<pubsub::SubscriptionOption>().FullName(), std::move(client_id),
       opts);
   auto lease_management = SubscriptionLeaseManagement::Create(
       cq, shutdown_manager, std::move(batch),

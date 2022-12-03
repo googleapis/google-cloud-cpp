@@ -40,25 +40,10 @@ endfunction ()
 
 function (google_cloud_cpp_add_common_options target)
     google_cloud_cpp_silence_warnings_in_deps(${target})
-    # Require C++ >= 14.  Unfortunately CMake can only express such requirements
-    # starting with CMake == 3.8.0. Note that this is a *minimum* requirement.
-    # It is still possible to compile the library (and its dependencies) with
-    # C++17 or higher.
-    if (NOT ("${CMAKE_VERSION}" VERSION_LESS 3.8))
-        target_compile_features(${target} PUBLIC cxx_std_14)
-    elseif (NOT CMAKE_CXX_STANDARD)
-        # CMake < 3.8 does not have a feature to express "requires C++ >= 14",
-        # but it has a way to express "I need generalized lambda captures", so
-        # we do that.  This may seem unnecessary, as the default C++ version is
-        # 14 for all the compilers we support. Unfortunately nlohmann::json
-        # sneakily adds a requirement for "ranged for loops". CMake interprets
-        # this requirement as "add the -std=c++11 flag", which disables the
-        # C++14 features.  Sigh.
-        # ~~~
-        # TODO(#9343) - remove this workaround once CMake < 3.8 is not needed
-        # ~~~
-        target_compile_features(${target} PUBLIC cxx_lambda_init_captures)
-    endif ()
+    # Require C++ >= 14.  Note that this is a *minimum* requirement. It is still
+    # possible to compile the library (and its dependencies) with C++17 or
+    # higher.
+    target_compile_features(${target} PUBLIC cxx_std_14)
     if (MSVC)
         target_compile_options(${target} PRIVATE "/W3")
         if (GOOGLE_CLOUD_CPP_ENABLE_WERROR)

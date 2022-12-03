@@ -383,12 +383,7 @@ function (google_cloud_cpp_proto_library libname)
         ${libname} SYSTEM PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
                                  $<INSTALL_INTERFACE:include>)
     google_cloud_cpp_silence_warnings_in_deps(${libname})
-    # Disable clang-tidy for generated code, note that the CXX_CLANG_TIDY
-    # property was introduced in 3.6, and we do not use clang-tidy with older
-    # versions
-    if (NOT ("${CMAKE_VERSION}" VERSION_LESS 3.6))
-        set_target_properties(${libname} PROPERTIES CXX_CLANG_TIDY "")
-    endif ()
+    set_target_properties(${libname} PROPERTIES CXX_CLANG_TIDY "")
     if (MSVC)
         # The protobuf-generated files have warnings under the default MSVC
         # settings. We are not interested in these warnings, because we cannot

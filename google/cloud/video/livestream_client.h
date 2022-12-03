@@ -71,15 +71,15 @@ class LivestreamServiceClient {
       Options opts = {});
   ~LivestreamServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   LivestreamServiceClient(LivestreamServiceClient const&) = default;
   LivestreamServiceClient& operator=(LivestreamServiceClient const&) = default;
   LivestreamServiceClient(LivestreamServiceClient&&) = default;
   LivestreamServiceClient& operator=(LivestreamServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(LivestreamServiceClient const& a,
                          LivestreamServiceClient const& b) {
@@ -89,7 +89,7 @@ class LivestreamServiceClient {
                          LivestreamServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a channel with the provided unique ID in the specified

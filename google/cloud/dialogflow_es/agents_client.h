@@ -65,15 +65,15 @@ class AgentsClient {
                         Options opts = {});
   ~AgentsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AgentsClient(AgentsClient const&) = default;
   AgentsClient& operator=(AgentsClient const&) = default;
   AgentsClient(AgentsClient&&) = default;
   AgentsClient& operator=(AgentsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AgentsClient const& a, AgentsClient const& b) {
     return a.connection_ == b.connection_;
@@ -81,7 +81,7 @@ class AgentsClient {
   friend bool operator!=(AgentsClient const& a, AgentsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Retrieves the specified agent.

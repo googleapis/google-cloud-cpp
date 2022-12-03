@@ -45,6 +45,48 @@ char const* const kHierarchy[] = {
     "/external/googleapis/protodeps/",
 };
 
+TEST(ScaffoldGeneratorTest, LibraryName) {
+  EXPECT_EQ("test", LibraryName("google/cloud/test"));
+  EXPECT_EQ("test", LibraryName("google/cloud/test/"));
+  EXPECT_EQ("test", LibraryName("google/cloud/test/v1"));
+  EXPECT_EQ("test", LibraryName("google/cloud/test/v1/"));
+  EXPECT_EQ("test", LibraryName("google/cloud/test/foo/v1"));
+  EXPECT_EQ("golden", LibraryName("blah/golden"));
+  EXPECT_EQ("golden", LibraryName("blah/golden/v1"));
+  EXPECT_EQ("service", LibraryName("foo/bar/service"));
+}
+
+TEST(ScaffoldGeneratorTest, LibraryPath) {
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test"));
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test/"));
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test/v1"));
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test/v1/"));
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test/foo/v1"));
+  EXPECT_EQ("blah/golden/", LibraryPath("blah/golden"));
+  EXPECT_EQ("blah/golden/", LibraryPath("blah/golden/v1"));
+  EXPECT_EQ("foo/bar/service/", LibraryPath("foo/bar/service"));
+}
+
+TEST(ScaffoldGeneratorTest, ServiceSubdirectory) {
+  EXPECT_EQ("", ServiceSubdirectory("google/cloud/test"));
+  EXPECT_EQ("", ServiceSubdirectory("google/cloud/test/"));
+  EXPECT_EQ("v1/", ServiceSubdirectory("google/cloud/test/v1"));
+  EXPECT_EQ("v1/", ServiceSubdirectory("google/cloud/test/v1/"));
+  EXPECT_EQ("foo/v1/", ServiceSubdirectory("google/cloud/test/foo/v1"));
+  EXPECT_EQ("", ServiceSubdirectory("blah/golden"));
+  EXPECT_EQ("v1/", ServiceSubdirectory("blah/golden/v1"));
+  EXPECT_EQ("v1/", ServiceSubdirectory("blah/golden/v1"));
+  EXPECT_EQ("", ServiceSubdirectory("foo/bar/service"));
+}
+
+TEST(ScaffoldGeneratorTest, OptionsGroup) {
+  EXPECT_EQ("google-cloud-test-options", OptionsGroup("google/cloud/test"));
+  EXPECT_EQ("google-cloud-test-options", OptionsGroup("google/cloud/test/v1"));
+  EXPECT_EQ("blah-golden-options", OptionsGroup("blah/golden"));
+  EXPECT_EQ("blah-golden-options", OptionsGroup("blah/golden/v1"));
+  EXPECT_EQ("foo-bar-service-options", OptionsGroup("foo/bar/service"));
+}
+
 class ScaffoldGenerator : public ::testing::Test {
  protected:
   ~ScaffoldGenerator() override {
@@ -98,7 +140,7 @@ class ScaffoldGenerator : public ::testing::Test {
 )""";
 
     google::cloud::cpp::generator::ServiceConfiguration service;
-    service.set_product_path("google/cloud/test");
+    service.set_product_path("google/cloud/test/v1");
     service.set_service_proto_path("google/cloud/test/v1/service.proto");
     service.set_initial_copyright_year("2034");
     service_ = std::move(service);
@@ -114,22 +156,21 @@ class ScaffoldGenerator : public ::testing::Test {
   google::cloud::cpp::generator::ServiceConfiguration service_;
 };
 
-TEST_F(ScaffoldGenerator, LibraryName) {
-  EXPECT_EQ("test", LibraryName(service()));
-}
-
 TEST_F(ScaffoldGenerator, Vars) {
   auto const ga = ScaffoldVars(path(), service(), false);
   EXPECT_THAT(
-      ga, AllOf(Contains(Pair("title", "Test Only API")),
-                Contains(Pair("description",
-                              "Provides a placeholder to write this test.")),
-                Contains(Pair("library", "test")),
-                Contains(Pair("copyright_year", "2034")),
-                Contains(Pair("library_prefix", "")),
-                Contains(Pair("doxygen_version_suffix", "")),
-                Contains(Pair("construction", "")),
-                Contains(Pair("status", HasSubstr("**GA**")))));
+      ga,
+      AllOf(Contains(Pair("title", "Test Only API")),
+            Contains(Pair("description",
+                          "Provides a placeholder to write this test.")),
+            Contains(Pair("library", "test")),
+            Contains(Pair("service_subdirectory", "v1/")),
+            Contains(Pair("product_options_page", "google-cloud-test-options")),
+            Contains(Pair("copyright_year", "2034")),
+            Contains(Pair("library_prefix", "")),
+            Contains(Pair("doxygen_version_suffix", "")),
+            Contains(Pair("construction", "")),
+            Contains(Pair("status", HasSubstr("**GA**")))));
 
   auto const experimental = ScaffoldVars(path(), service(), true);
   EXPECT_THAT(
@@ -138,6 +179,8 @@ TEST_F(ScaffoldGenerator, Vars) {
             Contains(Pair("description",
                           "Provides a placeholder to write this test.")),
             Contains(Pair("library", "test")),
+            Contains(Pair("service_subdirectory", "v1/")),
+            Contains(Pair("product_options_page", "google-cloud-test-options")),
             Contains(Pair("copyright_year", "2034")),
             Contains(Pair("library_prefix", "experimental-")),
             Contains(Pair("doxygen_version_suffix", " (Experimental)")),
@@ -230,6 +273,16 @@ to Provides a placeholder to write this test.
 )"""));
   EXPECT_THAT(actual, Not(HasSubstr("$status$")));
   EXPECT_THAT(actual, HasSubstr("**GA**"));
+}
+
+TEST_F(ScaffoldGenerator, DoxygenOptionsPage) {
+  auto const vars = ScaffoldVars(path(), service(), false);
+  std::ostringstream os;
+  GenerateDoxygenOptionsPage(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr(R"""(
+@defgroup google-cloud-test-options Test Only API Configuration Options
+)"""));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartReadme) {

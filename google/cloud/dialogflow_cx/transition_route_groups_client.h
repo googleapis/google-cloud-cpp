@@ -66,7 +66,7 @@ class TransitionRouteGroupsClient {
       Options opts = {});
   ~TransitionRouteGroupsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   TransitionRouteGroupsClient(TransitionRouteGroupsClient const&) = default;
   TransitionRouteGroupsClient& operator=(TransitionRouteGroupsClient const&) =
@@ -74,9 +74,9 @@ class TransitionRouteGroupsClient {
   TransitionRouteGroupsClient(TransitionRouteGroupsClient&&) = default;
   TransitionRouteGroupsClient& operator=(TransitionRouteGroupsClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(TransitionRouteGroupsClient const& a,
                          TransitionRouteGroupsClient const& b) {
@@ -86,7 +86,7 @@ class TransitionRouteGroupsClient {
                          TransitionRouteGroupsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all transition route groups in the specified flow.

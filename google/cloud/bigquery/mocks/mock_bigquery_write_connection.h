@@ -56,7 +56,7 @@ class MockBigQueryWriteConnection : public bigquery::BigQueryWriteConnection {
   MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    google::cloud::bigquery::storage::v1::AppendRowsRequest,
                    google::cloud::bigquery::storage::v1::AppendRowsResponse>>),
-              AsyncAppendRows, (ExperimentalTag), (override));
+              AsyncAppendRows, (), (override));
 
   MOCK_METHOD(
       StatusOr<google::cloud::bigquery::storage::v1::WriteStream>,

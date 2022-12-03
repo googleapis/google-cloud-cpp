@@ -31,21 +31,38 @@ namespace cloud {
 namespace iam {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-iam-options
+ */
 struct IAMPolicyRetryPolicyOption {
   using Type = std::shared_ptr<IAMPolicyRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-iam-options
+ */
 struct IAMPolicyBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-iam-options
+ */
 struct IAMPolicyConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<IAMPolicyConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to IAMPolicy.
+ *
+ * @ingroup google-cloud-iam-options
+ */
 using IAMPolicyPolicyOptionList =
     OptionList<IAMPolicyRetryPolicyOption, IAMPolicyBackoffPolicyOption,
                IAMPolicyConnectionIdempotencyPolicyOption>;

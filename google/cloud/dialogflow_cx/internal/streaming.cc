@@ -22,7 +22,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
     google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
-SessionsConnectionImpl::AsyncStreamingDetectIntent(ExperimentalTag) {
+SessionsConnectionImpl::AsyncStreamingDetectIntent() {
   return stub_->AsyncStreamingDetectIntent(
       background_->cq(), absl::make_unique<grpc::ClientContext>());
 }

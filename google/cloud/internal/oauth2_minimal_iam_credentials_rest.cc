@@ -21,7 +21,6 @@
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/rest_client.h"
-#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"

@@ -18,8 +18,10 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
-                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXAMPLE_PATH
+    ${CMAKE_CURRENT_SOURCE_DIR}/samples
+    ${CMAKE_CURRENT_SOURCE_DIR}/admin/samples
+    ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "spanner_admin_internal"
                             "spanner_internal" "spanner_testing" "examples")
 
@@ -401,7 +403,7 @@ endfunction ()
 
 # Define the benchmarks in a function so we have a new scope for variable names.
 function (spanner_client_define_benchmarks)
-    find_package(benchmark CONFIG REQUIRED)
+    include(FindBenchmarkWithWorkarounds)
 
     set(spanner_client_benchmarks
         # cmake-format: sort
@@ -438,6 +440,7 @@ if (BUILD_TESTING)
     spanner_client_define_benchmarks()
     add_subdirectory(integration_tests)
     add_subdirectory(admin/integration_tests)
+    add_subdirectory(admin/samples)
     add_subdirectory(benchmarks) # macro benchmarks
 endif (BUILD_TESTING)
 

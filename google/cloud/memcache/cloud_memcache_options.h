@@ -31,26 +31,48 @@ namespace cloud {
 namespace memcache {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-memcache-options
+ */
 struct CloudMemcacheRetryPolicyOption {
   using Type = std::shared_ptr<CloudMemcacheRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-memcache-options
+ */
 struct CloudMemcacheBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct CloudMemcachePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-memcache-options
+ */
 struct CloudMemcacheConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<CloudMemcacheConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-memcache-options
+ */
+struct CloudMemcachePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to CloudMemcache.
+ *
+ * @ingroup google-cloud-memcache-options
+ */
 using CloudMemcachePolicyOptionList =
     OptionList<CloudMemcacheRetryPolicyOption, CloudMemcacheBackoffPolicyOption,
                CloudMemcachePollingPolicyOption,

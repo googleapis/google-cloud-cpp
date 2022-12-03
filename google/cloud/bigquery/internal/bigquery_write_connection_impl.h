@@ -55,7 +55,7 @@ class BigQueryWriteConnectionImpl : public bigquery::BigQueryWriteConnection {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
       google::cloud::bigquery::storage::v1::AppendRowsResponse>>
-      AsyncAppendRows(ExperimentalTag) override;
+  AsyncAppendRows() override;
 
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
       google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&

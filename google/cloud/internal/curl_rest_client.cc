@@ -23,7 +23,6 @@
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/curl_rest_response.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
-#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
@@ -111,7 +110,7 @@ StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
   auto impl =
       absl::make_unique<CurlImpl>(std::move(handle), handle_factory_, options_);
   if (credentials_) {
-    auto auth_header = credentials_->AuthorizationHeader();
+    auto auth_header = oauth2_internal::AuthorizationHeader(*credentials_);
     if (!auth_header.ok()) return std::move(auth_header).status();
     impl->SetHeader(auth_header.value());
   }

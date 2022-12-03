@@ -119,6 +119,16 @@ class EventarcConnection {
   DeleteChannelConnection(
       google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
           request);
+
+  virtual StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+  GetGoogleChannelConfig(
+      google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+  UpdateGoogleChannelConfig(
+      google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+          request);
 };
 
 /**

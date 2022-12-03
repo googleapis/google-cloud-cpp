@@ -65,15 +65,15 @@ class CloudBillingClient {
       std::shared_ptr<CloudBillingConnection> connection, Options opts = {});
   ~CloudBillingClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CloudBillingClient(CloudBillingClient const&) = default;
   CloudBillingClient& operator=(CloudBillingClient const&) = default;
   CloudBillingClient(CloudBillingClient&&) = default;
   CloudBillingClient& operator=(CloudBillingClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CloudBillingClient const& a,
                          CloudBillingClient const& b) {
@@ -83,7 +83,7 @@ class CloudBillingClient {
                          CloudBillingClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Gets information about a billing account. The current authenticated user

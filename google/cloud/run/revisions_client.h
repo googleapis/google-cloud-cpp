@@ -66,15 +66,15 @@ class RevisionsClient {
                            Options opts = {});
   ~RevisionsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   RevisionsClient(RevisionsClient const&) = default;
   RevisionsClient& operator=(RevisionsClient const&) = default;
   RevisionsClient(RevisionsClient&&) = default;
   RevisionsClient& operator=(RevisionsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(RevisionsClient const& a, RevisionsClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class RevisionsClient {
   friend bool operator!=(RevisionsClient const& a, RevisionsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Gets information about a Revision.
@@ -123,7 +123,7 @@ class RevisionsClient {
       Options opts = {});
 
   ///
-  /// List Revisions from a given Service, or from a given location.
+  /// Lists Revisions from a given Service, or from a given location.
   ///
   /// @param parent  Required. The Service from which the Revisions should be
   /// listed.
@@ -144,7 +144,7 @@ class RevisionsClient {
       std::string const& parent, Options opts = {});
 
   ///
-  /// List Revisions from a given Service, or from a given location.
+  /// Lists Revisions from a given Service, or from a given location.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::run::v2::ListRevisionsRequest,google/cloud/run/v2/revision.proto#L103}
@@ -162,7 +162,7 @@ class RevisionsClient {
       google::cloud::run::v2::ListRevisionsRequest request, Options opts = {});
 
   ///
-  /// Delete a Revision.
+  /// Deletes a Revision.
   ///
   /// @param name  Required. The name of the Revision to delete.
   ///  Format:
@@ -181,7 +181,7 @@ class RevisionsClient {
       std::string const& name, Options opts = {});
 
   ///
-  /// Delete a Revision.
+  /// Deletes a Revision.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::run::v2::DeleteRevisionRequest,google/cloud/run/v2/revision.proto#L139}

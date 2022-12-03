@@ -68,15 +68,15 @@ class VpcAccessServiceClient {
       Options opts = {});
   ~VpcAccessServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   VpcAccessServiceClient(VpcAccessServiceClient const&) = default;
   VpcAccessServiceClient& operator=(VpcAccessServiceClient const&) = default;
   VpcAccessServiceClient(VpcAccessServiceClient&&) = default;
   VpcAccessServiceClient& operator=(VpcAccessServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(VpcAccessServiceClient const& a,
                          VpcAccessServiceClient const& b) {
@@ -86,7 +86,7 @@ class VpcAccessServiceClient {
                          VpcAccessServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a Serverless VPC Access connector, returns an operation.

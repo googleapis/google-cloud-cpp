@@ -67,7 +67,7 @@ class GameServerConfigsServiceClient {
       Options opts = {});
   ~GameServerConfigsServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   GameServerConfigsServiceClient(GameServerConfigsServiceClient const&) =
       default;
@@ -76,9 +76,9 @@ class GameServerConfigsServiceClient {
   GameServerConfigsServiceClient(GameServerConfigsServiceClient&&) = default;
   GameServerConfigsServiceClient& operator=(GameServerConfigsServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(GameServerConfigsServiceClient const& a,
                          GameServerConfigsServiceClient const& b) {
@@ -88,7 +88,7 @@ class GameServerConfigsServiceClient {
                          GameServerConfigsServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists game server configs in a given project, location, and game server

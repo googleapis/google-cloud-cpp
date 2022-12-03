@@ -31,21 +31,38 @@ namespace cloud {
 namespace dialogflow_cx {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-dialogflow_cx-options
+ */
 struct PagesRetryPolicyOption {
   using Type = std::shared_ptr<PagesRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-dialogflow_cx-options
+ */
 struct PagesBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-dialogflow_cx-options
+ */
 struct PagesConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<PagesConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to Pages.
+ *
+ * @ingroup google-cloud-dialogflow_cx-options
+ */
 using PagesPolicyOptionList =
     OptionList<PagesRetryPolicyOption, PagesBackoffPolicyOption,
                PagesConnectionIdempotencyPolicyOption>;

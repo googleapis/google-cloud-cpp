@@ -65,15 +65,15 @@ class KnowledgeBasesClient {
       std::shared_ptr<KnowledgeBasesConnection> connection, Options opts = {});
   ~KnowledgeBasesClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   KnowledgeBasesClient(KnowledgeBasesClient const&) = default;
   KnowledgeBasesClient& operator=(KnowledgeBasesClient const&) = default;
   KnowledgeBasesClient(KnowledgeBasesClient&&) = default;
   KnowledgeBasesClient& operator=(KnowledgeBasesClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(KnowledgeBasesClient const& a,
                          KnowledgeBasesClient const& b) {
@@ -83,7 +83,7 @@ class KnowledgeBasesClient {
                          KnowledgeBasesClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all knowledge bases of the specified agent.

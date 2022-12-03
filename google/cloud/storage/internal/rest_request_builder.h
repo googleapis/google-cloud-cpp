@@ -28,7 +28,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 /**
- * Implements a storage request Option aware Builder pattern wrapper around
+ * Implements a storage request Option aware Build pattern wrapper around
  * google::cloud::rest_internal::RestRequest.
  */
 class RestRequestBuilder {

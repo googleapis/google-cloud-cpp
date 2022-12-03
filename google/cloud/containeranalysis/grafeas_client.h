@@ -78,15 +78,15 @@ class GrafeasClient {
                          Options opts = {});
   ~GrafeasClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   GrafeasClient(GrafeasClient const&) = default;
   GrafeasClient& operator=(GrafeasClient const&) = default;
   GrafeasClient(GrafeasClient&&) = default;
   GrafeasClient& operator=(GrafeasClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(GrafeasClient const& a, GrafeasClient const& b) {
     return a.connection_ == b.connection_;
@@ -94,7 +94,7 @@ class GrafeasClient {
   friend bool operator!=(GrafeasClient const& a, GrafeasClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Gets the specified occurrence.

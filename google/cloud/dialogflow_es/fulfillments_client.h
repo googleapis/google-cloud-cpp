@@ -64,15 +64,15 @@ class FulfillmentsClient {
       std::shared_ptr<FulfillmentsConnection> connection, Options opts = {});
   ~FulfillmentsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   FulfillmentsClient(FulfillmentsClient const&) = default;
   FulfillmentsClient& operator=(FulfillmentsClient const&) = default;
   FulfillmentsClient(FulfillmentsClient&&) = default;
   FulfillmentsClient& operator=(FulfillmentsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(FulfillmentsClient const& a,
                          FulfillmentsClient const& b) {
@@ -82,7 +82,7 @@ class FulfillmentsClient {
                          FulfillmentsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Retrieves the fulfillment.

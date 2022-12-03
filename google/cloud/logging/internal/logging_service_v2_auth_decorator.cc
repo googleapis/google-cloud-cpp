@@ -93,6 +93,25 @@ LoggingServiceV2Auth::AsyncTailLogEntries(
       std::move(context), auth_, StreamAuth::StreamFactory(std::move(call)));
 }
 
+future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+LoggingServiceV2Auth::AsyncWriteLogEntries(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::logging::v2::WriteLogEntriesRequest const& request) {
+  using ReturnType = StatusOr<google::logging::v2::WriteLogEntriesResponse>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncWriteLogEntries(cq, *std::move(context), request);
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal
 }  // namespace cloud

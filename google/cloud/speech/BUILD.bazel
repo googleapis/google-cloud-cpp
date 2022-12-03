@@ -16,43 +16,62 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-SOURCE_GLOB = "**/*.cc"
+service_dirs = [
+    "",
+    "v2/",
+]
 
-MOCK_SOURCE_GLOB = "mocks/*.cc"
+internal_dirs = [
+    "",
+    "internal/",
+]
 
-HEADER_GLOB = "**/*.h"
+src_dirs = [s + i for s in service_dirs for i in internal_dirs]
 
-MOCK_HEADER_GLOB = "mocks/*.h"
+filegroup(
+    name = "srcs",
+    srcs = glob([d + "*.cc" for d in src_dirs]),
+)
+
+filegroup(
+    name = "hdrs",
+    srcs = glob([d + "*.h" for d in src_dirs]),
+)
+
+filegroup(
+    name = "mocks",
+    srcs = glob([s + "mocks/*.h" for s in service_dirs]),
+)
 
 cc_library(
     name = "google_cloud_cpp_speech",
-    srcs = glob(
-        include = [SOURCE_GLOB],
-        exclude = [MOCK_SOURCE_GLOB],
-    ),
-    hdrs = glob(
-        include = [HEADER_GLOB],
-        exclude = [MOCK_HEADER_GLOB],
-    ),
+    srcs = [":srcs"],
+    hdrs = [":hdrs"],
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
         "//:grpc_utils",
         "@com_google_googleapis//google/cloud/speech/v1:speech_cc_grpc",
+        "@com_google_googleapis//google/cloud/speech/v2:speech_cc_grpc",
     ],
 )
 
 cc_library(
     name = "google_cloud_cpp_speech_mocks",
-    srcs = glob(
-        include = [MOCK_SOURCE_GLOB],
-    ),
-    hdrs = glob(
-        include = [MOCK_HEADER_GLOB],
-    ),
+    hdrs = [":mocks"],
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_speech",
         "@com_google_googletest//:gtest",
     ],
 )
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    tags = ["integration-test"],
+    deps = [
+        "//:speech",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob([s + "samples/*.cc" for s in service_dirs])]

@@ -65,16 +65,16 @@ class AgentEndpointServiceClient {
       Options opts = {});
   ~AgentEndpointServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AgentEndpointServiceClient(AgentEndpointServiceClient const&) = default;
   AgentEndpointServiceClient& operator=(AgentEndpointServiceClient const&) =
       default;
   AgentEndpointServiceClient(AgentEndpointServiceClient&&) = default;
   AgentEndpointServiceClient& operator=(AgentEndpointServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AgentEndpointServiceClient const& a,
                          AgentEndpointServiceClient const& b) {
@@ -84,7 +84,7 @@ class AgentEndpointServiceClient {
                          AgentEndpointServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Stream established by client to receive Task notifications.

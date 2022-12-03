@@ -53,5 +53,4 @@ install_vcpkg() {
   io::run rm -fr "${HOME}/.cache/vcpkg"
 
   ci/retry-command.sh 3 120 "${vcpkg_dir}/bootstrap-vcpkg.sh"
-  "${vcpkg_dir}/vcpkg" --feature-flags=-manifests remove --outdated --recurse
 }

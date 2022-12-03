@@ -21,8 +21,13 @@ set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 
 project(
     google-cloud-cpp
-    VERSION 2.4.0
+    VERSION 2.6.0
     LANGUAGES CXX)
+set(PROJECT_VERSION_PRE_RELEASE "rc")
+
+if (NOT "${PROJECT_VERSION_PRE_RELEASE}" STREQUAL "")
+    set(PROJECT_VERSION "${PROJECT_VERSION}-${PROJECT_VERSION_PRE_RELEASE}")
+endif ()
 
 if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
     # AppleClang defaults to C++98, so we bump it to C++14.
@@ -183,7 +188,7 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_IAM)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_LOGGING)
-mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GENERATOR)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
 
 set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT OFF)
 if (experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
@@ -275,7 +280,7 @@ add_custom_target(doxygen-docs)
 find_package(absl CONFIG REQUIRED)
 if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
     find_package(gRPC REQUIRED QUIET)
-    find_package(ProtobufWithTargets REQUIRED QUIET)
+    find_package(Protobuf REQUIRED QUIET)
     add_subdirectory(external/googleapis)
 endif ()
 
@@ -283,7 +288,8 @@ endif ()
 # with REST interfaces.
 set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION ON)
 if (NOT storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE
-    AND NOT experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    AND NOT experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE
+    AND NOT generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION OFF)
 endif ()
 cmake_dependent_option(
@@ -353,6 +359,8 @@ function (google_cloud_cpp_enable_features)
             if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
                 AND IS_DIRECTORY
                     "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}/samples"
+                AND EXISTS
+                    "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}/samples/CMakeLists.txt"
             )
                 add_subdirectory(google/cloud/${feature}/samples)
             endif ()

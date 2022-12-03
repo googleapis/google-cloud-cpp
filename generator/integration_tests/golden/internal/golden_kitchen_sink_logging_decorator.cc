@@ -87,27 +87,6 @@ GoldenKitchenSinkLogging::ListLogs(
       context, request, __func__, tracing_options_);
 }
 
-std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::TailLogEntriesResponse>>
-GoldenKitchenSinkLogging::TailLogEntries(
-    std::unique_ptr<grpc::ClientContext> context,
-    google::test::admin::database::v1::TailLogEntriesRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](std::unique_ptr<grpc::ClientContext> context,
-             google::test::admin::database::v1::TailLogEntriesRequest const& request) ->
-      std::unique_ptr<google::cloud::internal::StreamingReadRpc<
-          google::test::admin::database::v1::TailLogEntriesResponse>> {
-        auto stream = child_->TailLogEntries(std::move(context), request);
-        if (components_.count("rpc-streams") > 0) {
-          stream = absl::make_unique<google::cloud::internal::StreamingReadRpcLogging<
-             google::test::admin::database::v1::TailLogEntriesResponse>>(
-               std::move(stream), tracing_options_,
-               google::cloud::internal::RequestIdForLogging());
-        }
-        return stream;
-      },
-      std::move(context), request, __func__, tracing_options_);
-}
-
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkLogging::ListServiceAccountKeys(
     grpc::ClientContext& context,
@@ -132,18 +111,38 @@ GoldenKitchenSinkLogging::DoNothing(
       context, request, __func__, tracing_options_);
 }
 
-std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-    google::test::admin::database::v1::AppendRowsRequest,
-    google::test::admin::database::v1::AppendRowsResponse>>
-GoldenKitchenSinkLogging::AsyncAppendRows(
-    google::cloud::CompletionQueue const& cq,
+std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
+GoldenKitchenSinkLogging::StreamingRead(
+    std::unique_ptr<grpc::ClientContext> context,
+    google::test::admin::database::v1::Request const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](std::unique_ptr<grpc::ClientContext> context,
+             google::test::admin::database::v1::Request const& request) ->
+      std::unique_ptr<google::cloud::internal::StreamingReadRpc<
+          google::test::admin::database::v1::Response>> {
+        auto stream = child_->StreamingRead(std::move(context), request);
+        if (components_.count("rpc-streams") > 0) {
+          stream = absl::make_unique<google::cloud::internal::StreamingReadRpcLogging<
+             google::test::admin::database::v1::Response>>(
+               std::move(stream), tracing_options_,
+               google::cloud::internal::RequestIdForLogging());
+        }
+        return stream;
+      },
+      std::move(context), request, __func__, tracing_options_);
+}
+
+std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
+    google::test::admin::database::v1::Request,
+    google::test::admin::database::v1::Response>>
+GoldenKitchenSinkLogging::StreamingWrite(
     std::unique_ptr<grpc::ClientContext> context) {
-  using LoggingStream =
-     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>;
+  using LoggingStream = ::google::cloud::internal::StreamingWriteRpcLogging<
+      google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncAppendRows(cq, std::move(context));
+  auto stream = child_->StreamingWrite(std::move(context));
   if (components_.count("rpc-streams") > 0) {
     stream = absl::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -151,17 +150,18 @@ GoldenKitchenSinkLogging::AsyncAppendRows(
   return stream;
 }
 
-std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
-    google::test::admin::database::v1::WriteObjectRequest,
-    google::test::admin::database::v1::WriteObjectResponse>>
-GoldenKitchenSinkLogging::WriteObject(
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::test::admin::database::v1::Request,
+    google::test::admin::database::v1::Response>>
+GoldenKitchenSinkLogging::AsyncStreamingReadWrite(
+    google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
-  using LoggingStream = ::google::cloud::internal::StreamingWriteRpcLogging<
-      google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>;
+  using LoggingStream =
+     ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->WriteObject(std::move(context));
+  auto stream = child_->AsyncStreamingReadWrite(cq, std::move(context));
   if (components_.count("rpc-streams") > 0) {
     stream = absl::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -194,17 +194,17 @@ GoldenKitchenSinkLogging::ExplicitRouting2(
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
-    google::test::admin::database::v1::TailLogEntriesResponse>>
-GoldenKitchenSinkLogging::AsyncTailLogEntries(
+    google::test::admin::database::v1::Response>>
+GoldenKitchenSinkLogging::AsyncStreamingRead(
     google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    google::test::admin::database::v1::TailLogEntriesRequest const& request) {
+    google::test::admin::database::v1::Request const& request) {
   using LoggingStream =
-     ::google::cloud::internal::AsyncStreamingReadRpcLogging<google::test::admin::database::v1::TailLogEntriesResponse>;
+     ::google::cloud::internal::AsyncStreamingReadRpcLogging<google::test::admin::database::v1::Response>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncTailLogEntries(cq, std::move(context), request);
+  auto stream = child_->AsyncStreamingRead(cq, std::move(context), request);
   if (components_.count("rpc-streams") > 0) {
     stream = absl::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));
@@ -213,16 +213,16 @@ GoldenKitchenSinkLogging::AsyncTailLogEntries(
 }
 
 std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
-    google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>>
-GoldenKitchenSinkLogging::AsyncWriteObject(
+    google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>>
+GoldenKitchenSinkLogging::AsyncStreamingWrite(
     google::cloud::CompletionQueue const& cq,
     std::unique_ptr<grpc::ClientContext> context) {
   using LoggingStream = ::google::cloud::internal::AsyncStreamingWriteRpcLogging<
-      google::test::admin::database::v1::WriteObjectRequest, google::test::admin::database::v1::WriteObjectResponse>;
+      google::test::admin::database::v1::Request, google::test::admin::database::v1::Response>;
 
   auto request_id = google::cloud::internal::RequestIdForLogging();
   GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
-  auto stream = child_->AsyncWriteObject(cq, std::move(context));
+  auto stream = child_->AsyncStreamingWrite(cq, std::move(context));
   if (components_.count("rpc-streams") > 0) {
     stream = absl::make_unique<LoggingStream>(
         std::move(stream), tracing_options_, std::move(request_id));

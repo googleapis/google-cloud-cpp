@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_credentials.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -23,6 +24,25 @@ StatusOr<std::vector<std::uint8_t>> Credentials::SignBlob(
     absl::optional<std::string> const&, std::string const&) const {
   return Status(StatusCode::kUnimplemented,
                 "The current credentials cannot sign blobs locally");
+}
+
+StatusOr<internal::AccessToken> Credentials::GetToken(
+    std::chrono::system_clock::time_point /*tp*/) {
+  return internal::UnimplementedError(
+      "WIP(#10316) - use decorator for credentials", GCP_ERROR_INFO());
+}
+
+StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(
+    Credentials& credentials, std::chrono::system_clock::time_point /*tp*/) {
+  return credentials.AuthorizationHeader();
+}
+
+StatusOr<std::string> AuthorizationHeaderJoined(
+    Credentials& credentials, std::chrono::system_clock::time_point /*tp*/) {
+  auto header = credentials.AuthorizationHeader();
+  if (!header) return std::move(header).status();
+  if (header->first.empty() || header->second.empty()) return std::string{};
+  return header->first + ": " + header->second;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

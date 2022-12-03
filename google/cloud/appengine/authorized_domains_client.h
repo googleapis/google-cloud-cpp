@@ -67,15 +67,15 @@ class AuthorizedDomainsClient {
       Options opts = {});
   ~AuthorizedDomainsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AuthorizedDomainsClient(AuthorizedDomainsClient const&) = default;
   AuthorizedDomainsClient& operator=(AuthorizedDomainsClient const&) = default;
   AuthorizedDomainsClient(AuthorizedDomainsClient&&) = default;
   AuthorizedDomainsClient& operator=(AuthorizedDomainsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AuthorizedDomainsClient const& a,
                          AuthorizedDomainsClient const& b) {
@@ -85,7 +85,7 @@ class AuthorizedDomainsClient {
                          AuthorizedDomainsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all domains the user is authorized to administer.

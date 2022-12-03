@@ -43,6 +43,7 @@ namespace cloud {
  */
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Returns the Google Cloud Storage C++ Client major version.
  *
@@ -64,10 +65,19 @@ int constexpr version_minor() { return google::cloud::version_minor(); }
  */
 int constexpr version_patch() { return google::cloud::version_patch(); }
 
+/**
+ * Returns the Google Cloud Storage C++ Client pre-release version.
+ *
+ * @see https://semver.org/spec/v2.0.0.html for details.
+ */
+constexpr char const* version_pre_release() {
+  return google::cloud::version_pre_release();
+}
+
 /// Returns a single integer representing the Major/Minor/Patch version.
 int constexpr version() { return google::cloud::version(); }
 
-/// Returns the version as a string, in MAJOR.MINOR.PATCH+gitrev format.
+/// Returns the version as a string, in MAJOR.MINOR.PATCH[-PRE][+gitrev] format.
 std::string version_string();
 
 /// Returns the value for `x-goog-api-client` header.

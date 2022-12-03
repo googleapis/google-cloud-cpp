@@ -31,7 +31,6 @@ load(":bigquery_client_samples.bzl", "bigquery_client_samples")
         "//:bigquery",
         "//:common",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
-        "@com_google_googletest//:gtest_main",
     ],
 ) for test in bigquery_client_samples]
 

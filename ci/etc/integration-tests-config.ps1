@@ -23,6 +23,11 @@ $env:GOOGLE_CLOUD_CPP_TEST_REGION="us-central1"
 # Some quickstart programs require a zone.
 $env:GOOGLE_CLOUD_CPP_TEST_ZONE="us-central1-a"
 
+# This file contains an invalidated service account key.  That is, the file is
+# in the right format for a service account, but it is not associated with a
+# valid service account or service account key.
+$env:GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE="${env:PROJECT_ROOT}/ci/etc/invalidated-keyfile.json"
+
 # Enable the self-test for the sample programs. Normally the example drivers
 # require the name of the example to run as a command-line argument, with this
 # environment variable the sample drivers run all the examples.

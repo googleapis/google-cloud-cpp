@@ -256,7 +256,7 @@ target_link_libraries(
            absl::time
            absl::variant
            google-cloud-cpp::common
-           google-cloud-cpp::rest-internal
+           google-cloud-cpp::rest_internal
            nlohmann_json::nlohmann_json
            Crc32c::crc32c
            CURL::libcurl
@@ -554,7 +554,7 @@ if (BUILD_TESTING)
     export_list_to_bazel("storage_client_unit_tests.bzl"
                          "storage_client_unit_tests" YEAR "2018")
 
-    find_package(benchmark CONFIG REQUIRED)
+    include(FindBenchmarkWithWorkarounds)
 
     set(google_cloud_cpp_storage_benchmarks
         # cmake-format: sort

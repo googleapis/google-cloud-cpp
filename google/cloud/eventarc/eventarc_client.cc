@@ -305,6 +305,43 @@ EventarcClient::DeleteChannelConnection(
   return connection_->DeleteChannelConnection(request);
 }
 
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcClient::GetGoogleChannelConfig(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::eventarc::v1::GetGoogleChannelConfigRequest request;
+  request.set_name(name);
+  return connection_->GetGoogleChannelConfig(request);
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcClient::GetGoogleChannelConfig(
+    google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetGoogleChannelConfig(request);
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcClient::UpdateGoogleChannelConfig(
+    google::cloud::eventarc::v1::GoogleChannelConfig const&
+        google_channel_config,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest request;
+  *request.mutable_google_channel_config() = google_channel_config;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateGoogleChannelConfig(request);
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcClient::UpdateGoogleChannelConfig(
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateGoogleChannelConfig(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc
 }  // namespace cloud

@@ -67,16 +67,16 @@ class ConversationProfilesClient {
       Options opts = {});
   ~ConversationProfilesClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ConversationProfilesClient(ConversationProfilesClient const&) = default;
   ConversationProfilesClient& operator=(ConversationProfilesClient const&) =
       default;
   ConversationProfilesClient(ConversationProfilesClient&&) = default;
   ConversationProfilesClient& operator=(ConversationProfilesClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ConversationProfilesClient const& a,
                          ConversationProfilesClient const& b) {
@@ -86,7 +86,7 @@ class ConversationProfilesClient {
                          ConversationProfilesClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all conversation profiles in the specified project.

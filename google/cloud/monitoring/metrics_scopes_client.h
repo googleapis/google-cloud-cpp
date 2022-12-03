@@ -66,15 +66,15 @@ class MetricsScopesClient {
       std::shared_ptr<MetricsScopesConnection> connection, Options opts = {});
   ~MetricsScopesClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   MetricsScopesClient(MetricsScopesClient const&) = default;
   MetricsScopesClient& operator=(MetricsScopesClient const&) = default;
   MetricsScopesClient(MetricsScopesClient&&) = default;
   MetricsScopesClient& operator=(MetricsScopesClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(MetricsScopesClient const& a,
                          MetricsScopesClient const& b) {
@@ -84,7 +84,7 @@ class MetricsScopesClient {
                          MetricsScopesClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns a specific `Metrics Scope`.

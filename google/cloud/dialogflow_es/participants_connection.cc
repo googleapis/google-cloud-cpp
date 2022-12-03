@@ -67,6 +67,17 @@ ParticipantsConnection::AnalyzeContent(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+ParticipantsConnection::AsyncStreamingAnalyzeContent() {
+  return absl::make_unique<
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
+          google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+          google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsConnection::SuggestArticles(
     google::cloud::dialogflow::v2::SuggestArticlesRequest const&) {

@@ -67,15 +67,15 @@ class RealmsServiceClient {
       std::shared_ptr<RealmsServiceConnection> connection, Options opts = {});
   ~RealmsServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   RealmsServiceClient(RealmsServiceClient const&) = default;
   RealmsServiceClient& operator=(RealmsServiceClient const&) = default;
   RealmsServiceClient(RealmsServiceClient&&) = default;
   RealmsServiceClient& operator=(RealmsServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(RealmsServiceClient const& a,
                          RealmsServiceClient const& b) {
@@ -85,7 +85,7 @@ class RealmsServiceClient {
                          RealmsServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists realms in a given project and location.

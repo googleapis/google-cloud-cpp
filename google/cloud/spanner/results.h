@@ -91,6 +91,9 @@ class RowStream {
   // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   RowStreamIterator end() { return {}; }
 
+  /// Returns the number of rows modified by a DML statement.
+  std::int64_t RowsModified() const;
+
   /**
    * Retrieves the timestamp at which the read occurred.
    *

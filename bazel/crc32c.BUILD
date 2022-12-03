@@ -89,7 +89,7 @@ sse42_enabled = select({
     "//conditions:default": "0",
 })
 
-load("@com_github_googleapis_google_cloud_cpp//bazel:configure_template.bzl", "configure_template")
+load(":configure_template.bzl", "configure_template")
 
 configure_template(
     name = "generate_config",

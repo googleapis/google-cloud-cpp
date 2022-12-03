@@ -31,21 +31,38 @@ namespace cloud {
 namespace secretmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-secretmanager-options
+ */
 struct SecretManagerServiceRetryPolicyOption {
   using Type = std::shared_ptr<SecretManagerServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-secretmanager-options
+ */
 struct SecretManagerServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-secretmanager-options
+ */
 struct SecretManagerServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<SecretManagerServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to SecretManagerService.
+ *
+ * @ingroup google-cloud-secretmanager-options
+ */
 using SecretManagerServicePolicyOptionList =
     OptionList<SecretManagerServiceRetryPolicyOption,
                SecretManagerServiceBackoffPolicyOption,

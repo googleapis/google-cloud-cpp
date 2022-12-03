@@ -24,6 +24,7 @@
 #include "google/cloud/dialogflow_es/participants_connection.h"
 #include "google/cloud/dialogflow_es/participants_connection_idempotency_policy.h"
 #include "google/cloud/dialogflow_es/participants_options.h"
+#include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
@@ -67,6 +68,11 @@ class ParticipantsConnectionImpl
   StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
   AnalyzeContent(google::cloud::dialogflow::v2::AnalyzeContentRequest const&
                      request) override;
+
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+      google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+  AsyncStreamingAnalyzeContent() override;
 
   StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
   SuggestArticles(google::cloud::dialogflow::v2::SuggestArticlesRequest const&

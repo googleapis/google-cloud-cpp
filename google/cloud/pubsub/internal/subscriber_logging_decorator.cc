@@ -93,6 +93,17 @@ Status SubscriberLogging::DeleteSubscription(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::pubsub::v1::PullResponse> SubscriberLogging::Pull(
+    grpc::ClientContext& context,
+    google::pubsub::v1::PullRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::PullRequest const& request) {
+        return child_->Pull(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::pubsub::v1::StreamingPullRequest,
     google::pubsub::v1::StreamingPullResponse>>

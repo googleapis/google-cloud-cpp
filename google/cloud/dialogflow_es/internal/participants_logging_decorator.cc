@@ -17,6 +17,7 @@
 // source: google/cloud/dialogflow/v2/participant.proto
 
 #include "google/cloud/dialogflow_es/internal/participants_logging_decorator.h"
+#include "google/cloud/internal/async_read_write_stream_logging.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/dialogflow/v2/participant.grpc.pb.h>
@@ -97,6 +98,27 @@ ParticipantsLogging::AnalyzeContent(
         return child_->AnalyzeContent(context, request);
       },
       context, request, __func__, tracing_options_);
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+ParticipantsLogging::AsyncStreamingAnalyzeContent(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  using LoggingStream =
+      ::google::cloud::internal::AsyncStreamingReadWriteRpcLogging<
+          google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+          google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>;
+
+  auto request_id = google::cloud::internal::RequestIdForLogging();
+  GCP_LOG(DEBUG) << __func__ << "(" << request_id << ")";
+  auto stream = child_->AsyncStreamingAnalyzeContent(cq, std::move(context));
+  if (components_.count("rpc-streams") > 0) {
+    stream = absl::make_unique<LoggingStream>(
+        std::move(stream), tracing_options_, std::move(request_id));
+  }
+  return stream;
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>

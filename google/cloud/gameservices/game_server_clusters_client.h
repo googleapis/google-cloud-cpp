@@ -68,7 +68,7 @@ class GameServerClustersServiceClient {
       Options opts = {});
   ~GameServerClustersServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   GameServerClustersServiceClient(GameServerClustersServiceClient const&) =
       default;
@@ -77,9 +77,9 @@ class GameServerClustersServiceClient {
   GameServerClustersServiceClient(GameServerClustersServiceClient&&) = default;
   GameServerClustersServiceClient& operator=(
       GameServerClustersServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(GameServerClustersServiceClient const& a,
                          GameServerClustersServiceClient const& b) {
@@ -89,7 +89,7 @@ class GameServerClustersServiceClient {
                          GameServerClustersServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists game server clusters in a given project and location.

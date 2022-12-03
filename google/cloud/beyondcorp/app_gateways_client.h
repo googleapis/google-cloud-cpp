@@ -80,16 +80,16 @@ class AppGatewaysServiceClient {
       Options opts = {});
   ~AppGatewaysServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AppGatewaysServiceClient(AppGatewaysServiceClient const&) = default;
   AppGatewaysServiceClient& operator=(AppGatewaysServiceClient const&) =
       default;
   AppGatewaysServiceClient(AppGatewaysServiceClient&&) = default;
   AppGatewaysServiceClient& operator=(AppGatewaysServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AppGatewaysServiceClient const& a,
                          AppGatewaysServiceClient const& b) {
@@ -99,7 +99,7 @@ class AppGatewaysServiceClient {
                          AppGatewaysServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists AppGateways in a given project and location.

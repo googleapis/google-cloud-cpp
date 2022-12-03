@@ -79,15 +79,15 @@ class GkeHubClient {
                         Options opts = {});
   ~GkeHubClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   GkeHubClient(GkeHubClient const&) = default;
   GkeHubClient& operator=(GkeHubClient const&) = default;
   GkeHubClient(GkeHubClient&&) = default;
   GkeHubClient& operator=(GkeHubClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(GkeHubClient const& a, GkeHubClient const& b) {
     return a.connection_ == b.connection_;
@@ -95,7 +95,7 @@ class GkeHubClient {
   friend bool operator!=(GkeHubClient const& a, GkeHubClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists Memberships in a given project and location.

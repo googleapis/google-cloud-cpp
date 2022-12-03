@@ -853,6 +853,53 @@ TEST(ConnectionImplTest, ExecuteQueryPgNumericResult) {
   EXPECT_EQ(row_number, expected.size());
 }
 
+TEST(ConnectionImplTest, ExecuteQueryJsonBResult) {
+  auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
+  auto db = spanner::Database("placeholder_project", "placeholder_instance",
+                              "placeholder_database_id");
+  EXPECT_CALL(*mock, BatchCreateSessions(_, HasDatabase(db)))
+      .WillOnce(Return(MakeSessionsResponse({"test-session-name"})));
+  auto constexpr kText = R"pb(
+    metadata: {
+      row_type: {
+        fields: {
+          name: "ColumnA",
+          type: { code: JSON type_annotation: PG_JSONB }
+        }
+        fields: {
+          name: "ColumnB",
+          type: { code: JSON type_annotation: PG_JSONB }
+        }
+      }
+    }
+    values: { string_value: "42" }
+    values: { null_value: NULL_VALUE }
+    values: { string_value: "[null, null]" }
+    values: { string_value: "{\"a\": 1, \"b\": 2}" }
+  )pb";
+  EXPECT_CALL(*mock, ExecuteStreamingSql)
+      .WillOnce(Return(ByMove(MakeReader({kText}))));
+
+  auto conn = MakeConnectionImpl(db, mock);
+  internal::OptionsSpan span(MakeLimitedTimeOptions());
+  auto rows = conn->ExecuteQuery(
+      {MakeSingleUseTransaction(spanner::Transaction::ReadOnlyOptions()),
+       spanner::SqlStatement("SELECT * FROM Table")});
+  using RowType = std::tuple<spanner::JsonB, absl::optional<spanner::JsonB>>;
+  auto expected = std::vector<RowType>{
+      RowType(spanner::JsonB("42"), absl::nullopt),
+      RowType(spanner::JsonB("[null, null]"),
+              spanner::JsonB(R"({"a": 1, "b": 2})")),
+  };
+  int row_number = 0;
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    EXPECT_STATUS_OK(row);
+    EXPECT_EQ(*row, expected[row_number]);
+    ++row_number;
+  }
+  EXPECT_EQ(row_number, expected.size());
+}
+
 TEST(ConnectionImplTest, ExecuteQueryNumericParameter) {
   auto mock = std::make_shared<spanner_testing::MockSpannerStub>();
   auto db = spanner::Database("placeholder_project", "placeholder_instance",

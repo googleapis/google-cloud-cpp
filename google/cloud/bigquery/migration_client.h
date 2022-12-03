@@ -66,15 +66,15 @@ class MigrationServiceClient {
       Options opts = {});
   ~MigrationServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   MigrationServiceClient(MigrationServiceClient const&) = default;
   MigrationServiceClient& operator=(MigrationServiceClient const&) = default;
   MigrationServiceClient(MigrationServiceClient&&) = default;
   MigrationServiceClient& operator=(MigrationServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(MigrationServiceClient const& a,
                          MigrationServiceClient const& b) {
@@ -84,7 +84,7 @@ class MigrationServiceClient {
                          MigrationServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a migration workflow.

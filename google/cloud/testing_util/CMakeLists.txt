@@ -24,6 +24,7 @@ add_library(
     async_sequencer.h
     check_predicate_becomes_false.h
     chrono_literals.h
+    chrono_output.h
     command_line_parsing.cc
     command_line_parsing.h
     contains_once.h
@@ -73,6 +74,7 @@ create_bazel_config(google_cloud_cpp_testing YEAR 2019)
 set(google_cloud_cpp_testing_unit_tests
     # cmake-format: sort
     async_sequencer_test.cc
+    chrono_output_test.cc
     command_line_parsing_test.cc
     contains_once_test.cc
     example_driver_test.cc

@@ -32,7 +32,7 @@ bool IsSessionNotFound(google::cloud::Status const& status) {
   // type from the `ResourceInfo` details in the original gRPC proto.
   google::rpc::Status proto;
   auto payload =
-      internal::GetPayload(status, internal::kStatusPayloadGrpcProto);
+      internal::GetPayload(status, internal::StatusPayloadGrpcProto());
   if (payload && proto.ParseFromString(*payload)) {
     google::rpc::ResourceInfo resource_info;
     for (google::protobuf::Any const& any : proto.details()) {

@@ -46,6 +46,10 @@ ABSL_FLAG(bool, update_ci, true, "Update the CI support files.");
 
 namespace {
 
+using google::cloud::generator_internal::GenerateScaffold;
+using google::cloud::generator_internal::LibraryName;
+using google::cloud::generator_internal::LibraryPath;
+
 google::cloud::StatusOr<google::cloud::cpp::generator::GeneratorConfiguration>
 GetConfig(std::string const& filepath) {
   std::ifstream input(filepath);
@@ -108,13 +112,11 @@ int WriteInstallDirectories(
          Parents("./include/" + Dirname(service.service_proto_path()))) {
       install_directories.push_back(p);
     }
-    auto const lib = google::cloud::generator_internal::LibraryName(service);
-    // Bigtable and Spanner use a custom path for generated code.
-    if (lib == "admin") continue;
     // Services without a connection do not create mocks.
     if (!service.omit_connection()) {
       install_directories.push_back("./include/" + product_path + "/mocks");
     }
+    auto const lib = LibraryName(product_path);
     install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib);
   }
   std::sort(install_directories.begin(), install_directories.end());
@@ -136,10 +138,7 @@ int WriteFeatureList(
                      << service.DebugString() << "\n";
       return 1;
     }
-    auto feature = google::cloud::generator_internal::LibraryName(service);
-    // Spanner and Bigtable use a custom directory for generated files
-    if (feature == "admin") continue;
-    features.push_back(std::move(feature));
+    features.push_back(LibraryName(service.product_path()));
   }
   std::sort(features.begin(), features.end());
   auto const end = std::unique(features.begin(), features.end());
@@ -195,9 +194,9 @@ int main(int argc, char** argv) {
 
   std::vector<std::future<google::cloud::Status>> tasks;
   for (auto const& service : config->service()) {
-    if (service.product_path() == scaffold) {
-      google::cloud::generator_internal::GenerateScaffold(
-          googleapis_path, output_path, service, experimental_scaffold);
+    if (LibraryPath(service.product_path()) == scaffold) {
+      GenerateScaffold(googleapis_path, output_path, service,
+                       experimental_scaffold);
     }
     std::vector<std::string> args;
     // empty arg prevents first real arg from being ignored.
@@ -234,6 +233,10 @@ int main(int argc, char** argv) {
     if (service.omit_stub_factory()) {
       args.emplace_back("--cpp_codegen_opt=omit_stub_factory=true");
     }
+    if (service.generate_round_robin_decorator()) {
+      args.emplace_back(
+          "--cpp_codegen_opt=generate_round_robin_decorator=true");
+    }
     args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
                       service.service_endpoint_env_var());
     args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +
@@ -249,9 +252,15 @@ int main(int argc, char** argv) {
       args.emplace_back("--cpp_codegen_opt=additional_proto_file=" +
                         additional_proto_file);
     }
+    if (service.generate_rest_transport()) {
+      args.emplace_back("--cpp_codegen_opt=generate_rest_transport=true");
+    }
     args.emplace_back(service.service_proto_path());
     for (auto const& additional_proto_file : service.additional_proto_files()) {
       args.emplace_back(additional_proto_file);
+    }
+    if (service.experimental()) {
+      args.emplace_back("--cpp_codegen_opt=experimental=true");
     }
 
     GCP_LOG(INFO) << "Generating service code using: "

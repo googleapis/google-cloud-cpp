@@ -68,15 +68,15 @@ class ServiceControllerClient {
       Options opts = {});
   ~ServiceControllerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ServiceControllerClient(ServiceControllerClient const&) = default;
   ServiceControllerClient& operator=(ServiceControllerClient const&) = default;
   ServiceControllerClient(ServiceControllerClient&&) = default;
   ServiceControllerClient& operator=(ServiceControllerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ServiceControllerClient const& a,
                          ServiceControllerClient const& b) {
@@ -86,7 +86,7 @@ class ServiceControllerClient {
                          ServiceControllerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Checks whether an operation on a service should be allowed to proceed

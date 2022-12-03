@@ -72,15 +72,15 @@ class DatabaseAdminClient {
       std::shared_ptr<DatabaseAdminConnection> connection, Options opts = {});
   ~DatabaseAdminClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DatabaseAdminClient(DatabaseAdminClient const&) = default;
   DatabaseAdminClient& operator=(DatabaseAdminClient const&) = default;
   DatabaseAdminClient(DatabaseAdminClient&&) = default;
   DatabaseAdminClient& operator=(DatabaseAdminClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DatabaseAdminClient const& a,
                          DatabaseAdminClient const& b) {
@@ -90,7 +90,7 @@ class DatabaseAdminClient {
                          DatabaseAdminClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists Cloud Spanner databases.

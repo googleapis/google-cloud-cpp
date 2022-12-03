@@ -31,21 +31,38 @@ namespace cloud {
 namespace monitoring {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-monitoring-options
+ */
 struct DashboardsServiceRetryPolicyOption {
   using Type = std::shared_ptr<DashboardsServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-monitoring-options
+ */
 struct DashboardsServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-monitoring-options
+ */
 struct DashboardsServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<DashboardsServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to DashboardsService.
+ *
+ * @ingroup google-cloud-monitoring-options
+ */
 using DashboardsServicePolicyOptionList =
     OptionList<DashboardsServiceRetryPolicyOption,
                DashboardsServiceBackoffPolicyOption,

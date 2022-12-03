@@ -92,6 +92,21 @@ message ServiceConfiguration {
     LOCATION_DEPENDENT_COMPAT = 2;
   }
   EndpointLocationStyle endpoint_location_style = 15;
+
+  // Control whether round-robin decorator is generated.
+  bool generate_round_robin_decorator = 16;
+
+  // While most services default to gRPC, a handful are REST only. Additionally,
+  // most gRPC services can also support REST via gRPC/HTTP transcoding
+  // https://cloud.google.com/endpoints/docs/grpc/transcoding.
+  bool generate_rest_transport = 17;
+
+  // Sometimes we want to add a non-GA client to an already-GA library, (e.g. if
+  // the service itself is in Private Preview).
+  //
+  // If set, this flag will add an `ExperimentalTag` parameter to the client
+  // constructor and the connection factory function.
+  bool experimental = 18;
 }
 
 message GeneratorConfiguration {

@@ -66,15 +66,15 @@ class ProjectsClient {
                           Options opts = {});
   ~ProjectsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ProjectsClient(ProjectsClient const&) = default;
   ProjectsClient& operator=(ProjectsClient const&) = default;
   ProjectsClient(ProjectsClient&&) = default;
   ProjectsClient& operator=(ProjectsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ProjectsClient const& a, ProjectsClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class ProjectsClient {
   friend bool operator!=(ProjectsClient const& a, ProjectsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Retrieves the project identified by the specified `name` (for example,

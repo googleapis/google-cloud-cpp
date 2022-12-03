@@ -67,16 +67,16 @@ class TranslationServiceClient {
       Options opts = {});
   ~TranslationServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   TranslationServiceClient(TranslationServiceClient const&) = default;
   TranslationServiceClient& operator=(TranslationServiceClient const&) =
       default;
   TranslationServiceClient(TranslationServiceClient&&) = default;
   TranslationServiceClient& operator=(TranslationServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(TranslationServiceClient const& a,
                          TranslationServiceClient const& b) {
@@ -86,7 +86,7 @@ class TranslationServiceClient {
                          TranslationServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Translates input text and returns translated text.

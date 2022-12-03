@@ -19,6 +19,7 @@ certificatemanager
 channel
 cloudbuild
 composer
+connectors
 contactcenterinsights
 container
 containeranalysis
@@ -75,6 +76,7 @@ servicedirectory
 servicemanagement
 serviceusage
 shell
+spanner
 speech
 storage
 storagetransfer
@@ -88,6 +90,7 @@ video
 videointelligence
 vision
 vmmigration
+vmwareengine
 vpcaccess
 webrisk
 websecurityscanner

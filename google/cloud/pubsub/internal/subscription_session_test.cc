@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/subscription_session.h"
+#include "google/cloud/pubsub/ack_handler.h"
 #include "google/cloud/pubsub/application_callback.h"
 #include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/internal/defaults.h"
@@ -20,7 +21,6 @@
 #include "google/cloud/pubsub/testing/fake_streaming_pull.h"
 #include "google/cloud/pubsub/testing/mock_subscriber_stub.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
-#include "google/cloud/log.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/scoped_log.h"
@@ -50,20 +50,22 @@ future<Status> CreateTestSubscriptionSession(
     pubsub::Subscription const& subscription, Options opts,
     std::shared_ptr<SubscriberStub> const& mock, CompletionQueue const& cq,
     pubsub::SubscriberConnection::SubscribeParams p) {
+  opts.set<pubsub::SubscriptionOption>(subscription);
   opts = DefaultSubscriberOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
-  return CreateSubscriptionSession(subscription, std::move(opts), mock, cq,
-                                   "test-client-id", std::move(p.callback));
+  return CreateSubscriptionSession(std::move(opts), mock, cq, "test-client-id",
+                                   std::move(p.callback));
 }
 
 future<Status> CreateTestSubscriptionSession(
     pubsub::Subscription const& subscription, Options opts,
     std::shared_ptr<SubscriberStub> const& mock, CompletionQueue const& cq,
     pubsub::ExactlyOnceApplicationCallback callback) {
+  opts.set<pubsub::SubscriptionOption>(subscription);
   opts = DefaultSubscriberOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
-  return CreateSubscriptionSession(subscription, std::move(opts), mock, cq,
-                                   "test-client-id", std::move(callback));
+  return CreateSubscriptionSession(std::move(opts), mock, cq, "test-client-id",
+                                   std::move(callback));
 }
 
 /// @test Verify callbacks are scheduled in the background threads.

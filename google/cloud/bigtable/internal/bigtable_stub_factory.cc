@@ -17,7 +17,7 @@
 #include "google/cloud/bigtable/internal/bigtable_channel_refresh.h"
 #include "google/cloud/bigtable/internal/bigtable_logging_decorator.h"
 #include "google/cloud/bigtable/internal/bigtable_metadata_decorator.h"
-#include "google/cloud/bigtable/internal/bigtable_round_robin.h"
+#include "google/cloud/bigtable/internal/bigtable_round_robin_decorator.h"
 #include "google/cloud/bigtable/internal/connection_refresh_state.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"

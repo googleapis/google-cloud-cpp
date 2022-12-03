@@ -38,9 +38,9 @@ namespace cloud {
 namespace golden_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-void GoldenKitchenSinkTailLogEntriesStreamingUpdater(
-    google::test::admin::database::v1::TailLogEntriesResponse const& response,
-    google::test::admin::database::v1::TailLogEntriesRequest& request);
+void GoldenKitchenSinkStreamingReadStreamingUpdater(
+    google::test::admin::database::v1::Response const& response,
+    google::test::admin::database::v1::Request& request);
 
 class GoldenKitchenSinkConnectionImpl
     : public golden::GoldenKitchenSinkConnection {
@@ -66,19 +66,19 @@ class GoldenKitchenSinkConnectionImpl
   StreamRange<std::string>
   ListLogs(google::test::admin::database::v1::ListLogsRequest request) override;
 
-  StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
-  TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request) override;
-
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
   ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
 
   Status
   DoNothing(google::protobuf::Empty const& request) override;
 
+  StreamRange<google::test::admin::database::v1::Response>
+  StreamingRead(google::test::admin::database::v1::Request const& request) override;
+
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::test::admin::database::v1::AppendRowsRequest,
-      google::test::admin::database::v1::AppendRowsResponse>>
-  AsyncAppendRows(ExperimentalTag) override;
+      google::test::admin::database::v1::Request,
+      google::test::admin::database::v1::Response>>
+  AsyncStreamingReadWrite() override;
 
   Status
   ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;

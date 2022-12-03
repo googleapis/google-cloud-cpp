@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/dialogflow_es/internal/participants_connection_impl.h"
 #include "google/cloud/dialogflow_es/internal/sessions_connection_impl.h"
 
 namespace google {
@@ -22,8 +23,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
     google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
-SessionsConnectionImpl::AsyncStreamingDetectIntent(ExperimentalTag) {
+SessionsConnectionImpl::AsyncStreamingDetectIntent() {
   return stub_->AsyncStreamingDetectIntent(
+      background_->cq(), absl::make_unique<grpc::ClientContext>());
+}
+
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+ParticipantsConnectionImpl::AsyncStreamingAnalyzeContent() {
+  return stub_->AsyncStreamingAnalyzeContent(
       background_->cq(), absl::make_unique<grpc::ClientContext>());
 }
 

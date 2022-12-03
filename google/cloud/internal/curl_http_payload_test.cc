@@ -23,44 +23,34 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockHttpPayload;
 using ::testing::Eq;
 
-class HttpPayloadTest : public ::testing::Test {
- protected:
-  void SetUp() override { payload_ = absl::make_unique<MockHttpPayload>(); }
-
-  std::unique_ptr<MockHttpPayload> payload_;
-};
-
-TEST_F(HttpPayloadTest, ReadAllEmpty) {
-  EXPECT_CALL(*payload_, Read).WillOnce([](absl::Span<char> const&) {
+TEST(HttpPayloadTest, ReadAllEmpty) {
+  auto payload = absl::make_unique<MockHttpPayload>();
+  EXPECT_CALL(*payload, Read).WillOnce([](absl::Span<char> const&) {
     return 0;
   });
-  auto result = ReadAll(std::move(payload_));
+  auto result = ReadAll(std::move(payload));
   EXPECT_STATUS_OK(result);
   EXPECT_TRUE(result->empty());
 }
 
-TEST_F(HttpPayloadTest, ReadAllOneReadCall) {
+TEST(HttpPayloadTest, ReadAllOneReadCall) {
   std::string response = "Hello World!";
+  auto payload = MakeMockHttpPayloadSuccess(response);
 
-  EXPECT_CALL(*payload_, Read)
-      .WillOnce([&](absl::Span<char> buffer) {
-        std::copy(response.begin(), response.end(), buffer.begin());
-        return response.size();
-      })
-      .WillOnce([](absl::Span<char> const&) { return 0; });
-
-  auto result = ReadAll(std::move(payload_));
+  auto result = ReadAll(std::move(payload));
   EXPECT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(response));
 }
 
-TEST_F(HttpPayloadTest, ReadAllMultipleReadCalls) {
+TEST(HttpPayloadTest, ReadAllMultipleReadCalls) {
   std::string response = "Hello World!";
   std::size_t read_size = 5;
-  EXPECT_CALL(*payload_, Read)
+  auto payload = absl::make_unique<MockHttpPayload>();
+  EXPECT_CALL(*payload, Read)
       .WillOnce([&](absl::Span<char> buffer) {
         std::copy(response.begin(), response.begin() + read_size,
                   buffer.begin());
@@ -78,16 +68,17 @@ TEST_F(HttpPayloadTest, ReadAllMultipleReadCalls) {
       })
       .WillOnce([](absl::Span<char> const&) { return 0; });
 
-  auto result = ReadAll(std::move(payload_), read_size);
+  auto result = ReadAll(std::move(payload), read_size);
   EXPECT_STATUS_OK(result);
   EXPECT_THAT(*result, Eq(response));
 }
 
-TEST_F(HttpPayloadTest, ReadAllReadError) {
-  EXPECT_CALL(*payload_, Read).WillOnce([](absl::Span<char> const&) {
+TEST(HttpPayloadTest, ReadAllReadError) {
+  auto payload = absl::make_unique<MockHttpPayload>();
+  EXPECT_CALL(*payload, Read).WillOnce([](absl::Span<char> const&) {
     return Status{StatusCode::kAborted, "error", {}};
   });
-  auto result = ReadAll(std::move(payload_));
+  auto result = ReadAll(std::move(payload));
   EXPECT_THAT(result.status().code(), Eq(StatusCode::kAborted));
   EXPECT_THAT(result.status().message(), Eq("error"));
 }

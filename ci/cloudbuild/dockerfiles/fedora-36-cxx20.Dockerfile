@@ -20,13 +20,13 @@ ARG ARCH=amd64
 # for `google-cloud-cpp`. Install these packages and additional development
 # tools to compile the dependencies:
 RUN dnf makecache && \
-    dnf install -y abi-compliance-checker autoconf automake \
+    dnf install -y autoconf automake \
         ccache clang clang-analyzer clang-tools-extra \
         cmake diffutils doxygen findutils gcc-c++ git \
         lcov libcxx-devel libcxxabi-devel \
         libasan libubsan libtsan libcurl-devel make ninja-build \
         openssl-devel patch python python3 \
-        python-pip tar unzip w3m wget which zip zlib-devel
+        python-pip tar unzip wget which zip zlib-devel
 
 # Sets root's password to the empty string to enable users to get a root shell
 # inside the container with `su -` and no password. Sudo would not work because
@@ -127,7 +127,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.8.tar.gz | \
+RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.10.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_CXX_STANDARD=20 \
@@ -161,34 +161,6 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.49.1.tar.gz | \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
-# Install ctcache to speed up our clang-tidy build
-WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/matus-chochlik/ctcache/archive/0ad2e227e8a981a9c1a6060ee6c8ec144bb976c6.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    cp clang-tidy /usr/local/bin/clang-tidy-wrapper && \
-    cp clang-tidy-cache /usr/local/bin/clang-tidy-cache && \
-    cd /var/tmp && rm -fr build
-
-# Installs Universal Ctags (which is different than the default "Exuberant
-# Ctags"), which is needed by the ABI checker. See https://ctags.io/
-WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/universal-ctags/ctags/archive/refs/tags/p5.9.20210418.0.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    ./autogen.sh && \
-    ./configure --prefix=/usr/local && \
-    make && \
-    make install && \
-    cd /var/tmp && rm -fr build
-
-# Installs the abi-dumper with the integer overflow fix from
-# https://github.com/lvc/abi-dumper/pull/29. We can switch back to `dnf install
-# abi-dumper` once it has the fix.
-WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/lvc/abi-dumper/archive/814effec0f20a9613441dfa033aa0a0bc2a96a87.tar.gz | \
-    tar -xzf - --strip-components=1 && \
-    mv abi-dumper.pl /usr/local/bin/abi-dumper && \
-    chmod +x /usr/local/bin/abi-dumper
-
 # Install the Cloud SDK and some of the emulators. We use the emulators to run
 # integration tests for the client libraries.
 COPY . /var/tmp/ci
@@ -205,6 +177,6 @@ RUN dnf makecache && dnf install -y java-latest-openjdk-devel
 # those library directories will be found.
 RUN ldconfig /usr/local/lib*
 
-RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.14.0/bazelisk-linux-${ARCH}" && \
+RUN curl -o /usr/bin/bazelisk -sSL "https://github.com/bazelbuild/bazelisk/releases/download/v1.15.0/bazelisk-linux-${ARCH}" && \
     chmod +x /usr/bin/bazelisk && \
     ln -s /usr/bin/bazelisk /usr/bin/bazel

@@ -31,26 +31,48 @@ namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-retail-options
+ */
 struct CompletionServiceRetryPolicyOption {
   using Type = std::shared_ptr<CompletionServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-retail-options
+ */
 struct CompletionServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct CompletionServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-retail-options
+ */
 struct CompletionServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<CompletionServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-retail-options
+ */
+struct CompletionServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to CompletionService.
+ *
+ * @ingroup google-cloud-retail-options
+ */
 using CompletionServicePolicyOptionList =
     OptionList<CompletionServiceRetryPolicyOption,
                CompletionServiceBackoffPolicyOption,

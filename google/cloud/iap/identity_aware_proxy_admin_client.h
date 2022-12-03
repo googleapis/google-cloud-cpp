@@ -65,7 +65,7 @@ class IdentityAwareProxyAdminServiceClient {
       Options opts = {});
   ~IdentityAwareProxyAdminServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   IdentityAwareProxyAdminServiceClient(
       IdentityAwareProxyAdminServiceClient const&) = default;
@@ -75,9 +75,9 @@ class IdentityAwareProxyAdminServiceClient {
       default;
   IdentityAwareProxyAdminServiceClient& operator=(
       IdentityAwareProxyAdminServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(IdentityAwareProxyAdminServiceClient const& a,
                          IdentityAwareProxyAdminServiceClient const& b) {
@@ -87,7 +87,7 @@ class IdentityAwareProxyAdminServiceClient {
                          IdentityAwareProxyAdminServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Sets the access control policy for an Identity-Aware Proxy protected

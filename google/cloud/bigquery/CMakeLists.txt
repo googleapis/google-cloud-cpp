@@ -90,7 +90,6 @@ target_include_directories(
 target_compile_options(google_cloud_cpp_bigquery_mocks
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_subdirectory(integration_tests)
 # Examples are enabled if possible, but package maintainers may want to disable
 # compilation to speed up their builds.
 if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES)

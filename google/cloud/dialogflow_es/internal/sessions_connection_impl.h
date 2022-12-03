@@ -55,7 +55,7 @@ class SessionsConnectionImpl : public dialogflow_es::SessionsConnection {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,
       google::cloud::dialogflow::v2::StreamingDetectIntentResponse>>
-      AsyncStreamingDetectIntent(ExperimentalTag) override;
+  AsyncStreamingDetectIntent() override;
 
  private:
   std::unique_ptr<dialogflow_es::SessionsRetryPolicy> retry_policy() {

@@ -65,15 +65,15 @@ class DomainMappingsClient {
       std::shared_ptr<DomainMappingsConnection> connection, Options opts = {});
   ~DomainMappingsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DomainMappingsClient(DomainMappingsClient const&) = default;
   DomainMappingsClient& operator=(DomainMappingsClient const&) = default;
   DomainMappingsClient(DomainMappingsClient&&) = default;
   DomainMappingsClient& operator=(DomainMappingsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DomainMappingsClient const& a,
                          DomainMappingsClient const& b) {
@@ -83,7 +83,7 @@ class DomainMappingsClient {
                          DomainMappingsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the domain mappings on an application.

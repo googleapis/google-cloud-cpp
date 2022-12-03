@@ -58,6 +58,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Option for `google::cloud::Options` to set a `spanner::RetryPolicy`.
+ *
+ * @ingroup spanner-options
  */
 struct SpannerRetryPolicyOption {
   using Type = std::shared_ptr<spanner::RetryPolicy>;
@@ -65,6 +67,8 @@ struct SpannerRetryPolicyOption {
 
 /**
  * Option for `google::cloud::Options` to set a `spanner::BackoffPolicy`.
+ *
+ * @ingroup spanner-options
  */
 struct SpannerBackoffPolicyOption {
   using Type = std::shared_ptr<spanner::BackoffPolicy>;
@@ -72,6 +76,8 @@ struct SpannerBackoffPolicyOption {
 
 /**
  * Option for `google::cloud::Options` to set a `spanner::PollingPolicy`.
+ *
+ * @ingroup spanner-options
  */
 struct SpannerPollingPolicyOption {
   using Type = std::shared_ptr<spanner::PollingPolicy>;
@@ -87,6 +93,8 @@ using SpannerPolicyOptionList =
 /**
  * Option for `google::cloud::Options` to set the database role used for
  * session creation.
+ *
+ * @ingroup spanner-options
  */
 struct SessionCreatorRoleOption {
   using Type = std::string;
@@ -99,6 +107,8 @@ struct SessionCreatorRoleOption {
  * Values <= 0 are treated as 0.
  * This value will effectively be reduced if it exceeds the overall limit on
  * the number of sessions (`max_sessions_per_channel` * number of channels).
+ *
+ * @ingroup spanner-options
  */
 struct SessionPoolMinSessionsOption {
   using Type = int;
@@ -109,6 +119,8 @@ struct SessionPoolMinSessionsOption {
  * create on each channel.
  *
  * Values <= 1 are treated as 1.
+ *
+ * @ingroup spanner-options
  */
 struct SessionPoolMaxSessionsPerChannelOption {
   using Type = int;
@@ -119,6 +131,8 @@ struct SessionPoolMaxSessionsPerChannelOption {
  * keep in the pool in an idle state.
  *
  * Values <= 0 are treated as 0.
+ *
+ * @ingroup spanner-options
  */
 struct SessionPoolMaxIdleSessionsOption {
   using Type = int;
@@ -129,6 +143,8 @@ enum class ActionOnExhaustion { kBlock, kFail };
 /**
  * Option for `google::cloud::Options` to set the action to take when
  * attempting to allocate a session when the pool is exhausted.
+ *
+ * @ingroup spanner-options
  */
 struct SessionPoolActionOnExhaustionOption {
   using Type = spanner::ActionOnExhaustion;
@@ -141,6 +157,8 @@ struct SessionPoolActionOnExhaustionOption {
  * The GC collects objects older than 60 minutes, so any duration
  * below that (less some slack to allow the calls to be made to refresh the
  * sessions) should suffice.
+ *
+ * @ingroup spanner-options
  */
 struct SessionPoolKeepAliveIntervalOption {
   using Type = std::chrono::seconds;
@@ -153,6 +171,8 @@ struct SessionPoolKeepAliveIntervalOption {
  *  * Label keys must match `[a-z]([-a-z0-9]{0,61}[a-z0-9])?`.
  *  * Label values must match `([a-z]([-a-z0-9]{0,61}[a-z0-9])?)?`.
  *  * The maximum number of labels is 64.
+ *
+ * @ingroup spanner-options
  */
 struct SessionPoolLabelsOption {
   using Type = std::map<std::string, std::string>;
@@ -171,6 +191,8 @@ using SessionPoolOptionList =
 /**
  * Option for `google::cloud::Options` to set the optimizer version used in an
  * SQL query.
+ *
+ * @ingroup spanner-options
  */
 struct QueryOptimizerVersionOption {
   using Type = std::string;
@@ -179,6 +201,8 @@ struct QueryOptimizerVersionOption {
 /**
  * Option for `google::cloud::Options` to set the optimizer statistics package
  * used in an SQL query.
+ *
+ * @ingroup spanner-options
  */
 struct QueryOptimizerStatisticsPackageOption {
   using Type = std::string;
@@ -186,6 +210,8 @@ struct QueryOptimizerStatisticsPackageOption {
 
 /**
  * Option for `google::cloud::Options` to set a `spanner::RequestPriority`.
+ *
+ * @ingroup spanner-options
  */
 struct RequestPriorityOption {
   using Type = spanner::RequestPriority;
@@ -193,6 +219,8 @@ struct RequestPriorityOption {
 
 /**
  * Option for `google::cloud::Options` to set a per-request tag.
+ *
+ * @ingroup spanner-options
  */
 struct RequestTagOption {
   using Type = std::string;
@@ -202,6 +230,8 @@ struct RequestTagOption {
  * Option for `google::cloud::Options` to set the name of an index on a
  * database table. This index is used instead of the table primary key when
  * interpreting the `KeySet` and sorting result rows.
+ *
+ * @ingroup spanner-options
  */
 struct ReadIndexNameOption {
   using Type = std::string;
@@ -211,6 +241,8 @@ struct ReadIndexNameOption {
  * Option for `google::cloud::Options` to set a limit on the number of rows
  * to yield from `Client::Read()`. There is no limit when the option is unset,
  * or when it is set to 0.
+ *
+ * @ingroup spanner-options
  */
 struct ReadRowLimitOption {
   using Type = std::int64_t;
@@ -221,6 +253,8 @@ struct ReadRowLimitOption {
  * be buffered to guarantee resumability of a streaming read or SQL query.
  * If the limit is exceeded, and the stream is subsequently interrupted before
  * a new resumption point can be established, the read/query will fail.
+ *
+ * @ingroup spanner-options
  */
 struct StreamingResumabilityBufferSizeOption {
   using Type = std::size_t;
@@ -232,6 +266,8 @@ struct StreamingResumabilityBufferSizeOption {
  *
  * The default for this option is currently 1 GiB. This is only a hint. The
  * actual size of each partition may be smaller or larger than this request.
+ *
+ * @ingroup spanner-options
  */
 struct PartitionSizeOption {
   using Type = std::int64_t;
@@ -245,6 +281,8 @@ struct PartitionSizeOption {
  * default for this option is currently 10,000. The maximum value is
  * currently 200,000. This is only a hint. The actual number of partitions
  * returned may be smaller or larger than this request.
+ *
+ * @ingroup spanner-options
  */
 struct PartitionsMaximumOption {
   using Type = std::int64_t;
@@ -252,6 +290,8 @@ struct PartitionsMaximumOption {
 
 /**
  * Option for `google::cloud::Options` to set a per-transaction tag.
+ *
+ * @ingroup spanner-options
  */
 struct TransactionTagOption {
   using Type = std::string;
@@ -260,6 +300,8 @@ struct TransactionTagOption {
 /**
  * Option for `google::cloud::Options` to return additional statistics
  * about the committed transaction in a `spanner::CommitResult`.
+ *
+ * @ingroup spanner-options
  */
 struct CommitReturnStatsOption {
   using Type = bool;

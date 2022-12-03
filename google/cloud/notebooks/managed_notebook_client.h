@@ -66,7 +66,7 @@ class ManagedNotebookServiceClient {
       Options opts = {});
   ~ManagedNotebookServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ManagedNotebookServiceClient(ManagedNotebookServiceClient const&) = default;
   ManagedNotebookServiceClient& operator=(ManagedNotebookServiceClient const&) =
@@ -74,9 +74,9 @@ class ManagedNotebookServiceClient {
   ManagedNotebookServiceClient(ManagedNotebookServiceClient&&) = default;
   ManagedNotebookServiceClient& operator=(ManagedNotebookServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ManagedNotebookServiceClient const& a,
                          ManagedNotebookServiceClient const& b) {
@@ -86,7 +86,7 @@ class ManagedNotebookServiceClient {
                          ManagedNotebookServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists Runtimes in a given project and location.

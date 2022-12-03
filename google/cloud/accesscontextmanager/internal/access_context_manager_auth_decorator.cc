@@ -420,6 +420,31 @@ AccessContextManagerAuth::AsyncDeleteGcpUserAccessBinding(
       });
 }
 
+StatusOr<google::iam::v1::Policy> AccessContextManagerAuth::SetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->SetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::Policy> AccessContextManagerAuth::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AccessContextManagerAuth::TestIamPermissions(
+    grpc::ClientContext& context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->TestIamPermissions(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

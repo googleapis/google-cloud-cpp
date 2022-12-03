@@ -15,7 +15,10 @@ extend-exclude = [
     "google/cloud/managedidentities/managed_identities_client.h",
     "google/cloud/resourcemanager/projects_client.h",
     "google/cloud/storagetransfer/storage_transfer_client.h",
-    # Files with crypto-keys in them
+    # Files with binary blobs in base64 format. These are usually invalidated
+    # keyfiles (or private keys) and contain character sequences that almost
+    # look like words.
+    "ci/etc/invalidated-keyfile.json",
     "google/cloud/internal/rest_client_integration_test.cc",
     "google/cloud/internal/grpc_service_account_authentication_test.cc",
     "google/cloud/internal/oauth2_google_credentials_test.cc",
@@ -27,7 +30,6 @@ extend-exclude = [
     "google/cloud/storage/oauth2/google_credentials_test.cc",
     "google/cloud/storage/oauth2/service_account_credentials_test.cc",
     "google/cloud/storage/testing/constants.h",
-    "google/cloud/storage/tests/test_service_account.not-a-test.json",
     "google/cloud/storage/tests/unified_credentials_integration_test.cc",
     "google/cloud/storage/tools/make_jwt_assertion_for_test_data.py",
 ]

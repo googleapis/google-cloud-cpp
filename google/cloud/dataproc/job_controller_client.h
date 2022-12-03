@@ -66,15 +66,15 @@ class JobControllerClient {
       std::shared_ptr<JobControllerConnection> connection, Options opts = {});
   ~JobControllerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   JobControllerClient(JobControllerClient const&) = default;
   JobControllerClient& operator=(JobControllerClient const&) = default;
   JobControllerClient(JobControllerClient&&) = default;
   JobControllerClient& operator=(JobControllerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(JobControllerClient const& a,
                          JobControllerClient const& b) {
@@ -84,7 +84,7 @@ class JobControllerClient {
                          JobControllerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Submits a job to a cluster.

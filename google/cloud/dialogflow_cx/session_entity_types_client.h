@@ -66,16 +66,16 @@ class SessionEntityTypesClient {
       Options opts = {});
   ~SessionEntityTypesClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   SessionEntityTypesClient(SessionEntityTypesClient const&) = default;
   SessionEntityTypesClient& operator=(SessionEntityTypesClient const&) =
       default;
   SessionEntityTypesClient(SessionEntityTypesClient&&) = default;
   SessionEntityTypesClient& operator=(SessionEntityTypesClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(SessionEntityTypesClient const& a,
                          SessionEntityTypesClient const& b) {
@@ -85,7 +85,7 @@ class SessionEntityTypesClient {
                          SessionEntityTypesClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all session entity types in the specified session.

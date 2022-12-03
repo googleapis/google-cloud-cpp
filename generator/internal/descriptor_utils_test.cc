@@ -36,7 +36,10 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
+using ::google::protobuf::MethodDescriptor;
+using ::testing::_;
 using ::testing::AllOf;
+using ::testing::Contains;
 using ::testing::ElementsAre;
 using ::testing::Eq;
 using ::testing::Field;
@@ -209,6 +212,7 @@ TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
 INSTANTIATE_TEST_SUITE_P(
     ServiceVars, CreateServiceVarsTest,
     testing::Values(
+        std::make_pair("product_options_page", "google-cloud-frobber-options"),
         std::make_pair("additional_pb_header_paths",
                        "google/cloud/add1.pb.h,google/cloud/add2.pb.h"),
         std::make_pair("class_comment_block",
@@ -480,6 +484,20 @@ char const* const kServiceProto =
     "    };\n"
     "    option (google.api.method_signature) = \"namespace\";\n"
     "  }\n"
+    "  // Leading comments about rpc Method9.\n"
+    "  rpc Method9(PaginatedInput) returns (PaginatedOutput) {\n"
+    "    option (google.api.http) = {\n"
+    "       get: \"/v1/foo\"\n"
+    "       body: \"*\"\n"
+    "    };\n"
+    "  }\n"
+    "  // Leading comments about rpc Method10.\n"
+    "  rpc Method10(Bar) returns (Empty) {\n"
+    "    option (google.api.method_signature) = \"name\";\n"
+    "    option (google.api.method_signature) = \"parent\";\n"
+    "    option (google.api.method_signature) = \"name,parent,number\";\n"
+    "    option (google.api.method_signature) = \"name,title,number\";\n"
+    "  }\n"
     "}\n";
 
 struct MethodVarsTestValues {
@@ -586,14 +604,72 @@ TEST_F(CreateMethodVarsTest, SkipMethodsWithDeprecatedFields) {
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_vars = vars_.find("google.protobuf.Service.Method6");
   ASSERT_NE(method_vars, vars_.end());
-  EXPECT_EQ(method_vars->second.find("method_signature0"),
-            method_vars->second.end());
-  EXPECT_NE(method_vars->second.find("method_signature1"),
-            method_vars->second.end());
-  EXPECT_EQ(method_vars->second.find("method_signature2"),
-            method_vars->second.end());
-  EXPECT_NE(method_vars->second.find("method_signature3"),
-            method_vars->second.end());
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature0", _))));
+  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature1", _)));
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature2", _))));
+  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature3", _)));
+}
+
+TEST_F(CreateMethodVarsTest, SkipMethodOverloadsWithDuplicateSignatures) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
+  auto method_vars = vars_.find("google.protobuf.Service.Method10");
+  ASSERT_NE(method_vars, vars_.end());
+  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature0", _)));
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature1", _))));
+  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature2", _)));
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature3", _))));
+}
+
+TEST_F(CreateMethodVarsTest, ParseHttpExtensionWithPrefixAndSuffix) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(5);
+  auto info = ParseHttpExtension(*method);
+  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
+  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  EXPECT_THAT(extension_info.url_path,
+              Eq("/v1/{parent=projects/*/instances/*}/databases"));
+  EXPECT_THAT(extension_info.request_field_name, Eq("parent"));
+  EXPECT_THAT(extension_info.url_substitution, Eq("projects/*/instances/*"));
+  EXPECT_THAT(extension_info.body, Eq("*"));
+  EXPECT_THAT(extension_info.http_verb, Eq("Post"));
+  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/"));
+  EXPECT_THAT(extension_info.path_suffix, Eq("/databases"));
+}
+
+TEST_F(CreateMethodVarsTest, ParseHttpExtensionWithOnlyPrefix) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(1);
+  auto info = ParseHttpExtension(*method);
+  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
+  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  EXPECT_THAT(extension_info.url_path,
+              Eq("/v1/{name=projects/*/instances/*/backups/*}"));
+  EXPECT_THAT(extension_info.request_field_name, Eq("name"));
+  EXPECT_THAT(extension_info.url_substitution,
+              Eq("projects/*/instances/*/backups/*"));
+  EXPECT_THAT(extension_info.body, Eq(""));
+  EXPECT_THAT(extension_info.http_verb, Eq("Delete"));
+  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/"));
+  EXPECT_THAT(extension_info.path_suffix, Eq(""));
+}
+
+TEST_F(CreateMethodVarsTest, ParseHttpExtensionSimpleInfo) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(9);
+  auto info = ParseHttpExtension(*method);
+  ASSERT_TRUE(absl::holds_alternative<HttpSimpleInfo>(info));
+  auto extension_info = absl::get<HttpSimpleInfo>(info);
+  EXPECT_THAT(extension_info.url_path, Eq("/v1/foo"));
+  EXPECT_THAT(extension_info.body, Eq("*"));
+  EXPECT_THAT(extension_info.http_verb, Eq("Get"));
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
@@ -601,9 +677,9 @@ TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
       pool_.FindFileByName("google/foo/v1/service.proto");
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_iter = vars_.find(GetParam().method);
-  EXPECT_TRUE(method_iter != vars_.end());
-  auto iter = method_iter->second.find(GetParam().vars_key);
-  EXPECT_EQ(iter->second, GetParam().expected_value);
+  ASSERT_TRUE(method_iter != vars_.end());
+  EXPECT_THAT(method_iter->second,
+              Contains(Pair(GetParam().vars_key, GetParam().expected_value)));
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -626,6 +702,9 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Empty,google/"
                              "foo/v1/service.proto#L31}"),
+        MethodVarsTestValues("google.protobuf.Service.Method0",
+                             "method_http_query_parameters",
+                             "google.protobuf.Service.Method0"),
         // Method1
         MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
                              "Method1"),
@@ -639,6 +718,8 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
                              "foo/v1/service.proto#L16}"),
+        MethodVarsTestValues("google.protobuf.Service.Method1",
+                             "method_http_query_parameters", ""),
         // Method2
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "longrunning_metadata_type",
@@ -668,6 +749,8 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_longrunning_deduced_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
                              "foo/v1/service.proto#L16}"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "method_http_query_parameters", ""),
         // Method3
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_metadata_type",
@@ -751,6 +834,9 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_request_body", "*"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "default_idempotency", "kNonIdempotent"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method5", "method_rest_path",
+            "absl::StrCat(\"/v1/\", request.parent(), \"/databases\")"),
         // Method6
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "method_request_param_key", "name"),
@@ -770,6 +856,10 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues(
             "google.protobuf.Service.Method6", "method_request_setters1",
             "  *request.mutable_labels() = {labels.begin(), labels.end()};\n"),
+        MethodVarsTestValues("google.protobuf.Service.Method6",
+                             "method_http_query_parameters",
+                             R"""(,
+      {std::make_pair("not_used_anymore", request.not_used_anymore())})"""),
         // Method7
         MethodVarsTestValues("google.protobuf.Service.Method7",
                              "longrunning_metadata_type",
@@ -798,7 +888,17 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_request_param_key", "namespace.name"),
         MethodVarsTestValues("google.protobuf.Service.Method8",
                              "method_request_param_value",
-                             "namespace_().name()")),
+                             "namespace_().name()"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method8", "method_rest_path",
+            "absl::StrCat(\"/v1/\", request.namespace_().name(), \"\")"),
+        // Method9
+        MethodVarsTestValues("google.protobuf.Service.Method9",
+                             "method_http_query_parameters",
+                             R"""(,
+      {std::make_pair("page_size", std::to_string(request.page_size())),
+       std::make_pair("page_token", request.page_token()),
+       std::make_pair("name", request.name())})""")),
     [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;

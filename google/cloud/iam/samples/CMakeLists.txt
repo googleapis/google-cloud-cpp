@@ -26,9 +26,8 @@ function (iam_client_define_samples)
     foreach (fname ${iam_client_samples})
         google_cloud_cpp_add_executable(target "iam" "${fname}")
         add_test(NAME ${target} COMMAND ${target})
-        target_link_libraries(
-            ${target} PRIVATE google_cloud_cpp_testing google-cloud-cpp::iam
-                              GTest::gmock_main GTest::gmock GTest::gtest)
+        target_link_libraries(${target} PRIVATE google_cloud_cpp_testing
+                                                google-cloud-cpp::iam)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 

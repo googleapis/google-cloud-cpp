@@ -80,16 +80,16 @@ class RegistrationServiceClient {
       Options opts = {});
   ~RegistrationServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   RegistrationServiceClient(RegistrationServiceClient const&) = default;
   RegistrationServiceClient& operator=(RegistrationServiceClient const&) =
       default;
   RegistrationServiceClient(RegistrationServiceClient&&) = default;
   RegistrationServiceClient& operator=(RegistrationServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(RegistrationServiceClient const& a,
                          RegistrationServiceClient const& b) {
@@ -99,7 +99,7 @@ class RegistrationServiceClient {
                          RegistrationServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a namespace, and returns the new Namespace.

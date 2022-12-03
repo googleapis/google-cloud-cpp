@@ -64,15 +64,15 @@ class OrganizationsClient {
       std::shared_ptr<OrganizationsConnection> connection, Options opts = {});
   ~OrganizationsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   OrganizationsClient(OrganizationsClient const&) = default;
   OrganizationsClient& operator=(OrganizationsClient const&) = default;
   OrganizationsClient(OrganizationsClient&&) = default;
   OrganizationsClient& operator=(OrganizationsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(OrganizationsClient const& a,
                          OrganizationsClient const& b) {
@@ -82,7 +82,7 @@ class OrganizationsClient {
                          OrganizationsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Fetches an organization resource identified by the specified resource

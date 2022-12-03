@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_CONNECTION_H
 
-#include "google/cloud/pubsub/ack_handler.h"
 #include "google/cloud/pubsub/application_callback.h"
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/message.h"
+#include "google/cloud/pubsub/pull_response.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/subscriber_options.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -78,6 +78,8 @@ class SubscriberConnection {
    * simplify the use of mocks.
    */
   virtual future<Status> ExactlyOnceSubscribe(ExactlyOnceSubscribeParams p);
+
+  virtual StatusOr<PullResponse> Pull();
 
   /// Returns the configuration parameters for this object
   virtual Options options() { return Options{}; }

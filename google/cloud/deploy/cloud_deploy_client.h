@@ -67,15 +67,15 @@ class CloudDeployClient {
                              Options opts = {});
   ~CloudDeployClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CloudDeployClient(CloudDeployClient const&) = default;
   CloudDeployClient& operator=(CloudDeployClient const&) = default;
   CloudDeployClient(CloudDeployClient&&) = default;
   CloudDeployClient& operator=(CloudDeployClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CloudDeployClient const& a,
                          CloudDeployClient const& b) {
@@ -85,7 +85,7 @@ class CloudDeployClient {
                          CloudDeployClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists DeliveryPipelines in a given project and location.
