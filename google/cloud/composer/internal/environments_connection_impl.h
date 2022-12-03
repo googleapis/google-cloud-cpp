@@ -74,6 +74,16 @@ class EnvironmentsConnectionImpl : public composer::EnvironmentsConnection {
   DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
                         DeleteEnvironmentRequest const& request) override;
 
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+  SaveSnapshot(google::cloud::orchestration::airflow::service::v1::
+                   SaveSnapshotRequest const& request) override;
+
+  future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+  LoadSnapshot(google::cloud::orchestration::airflow::service::v1::
+                   LoadSnapshotRequest const& request) override;
+
  private:
   std::unique_ptr<composer::EnvironmentsRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

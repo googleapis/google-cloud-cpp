@@ -35,6 +35,11 @@ OsLoginServiceConnectionIdempotencyPolicy::clone() const {
   return absl::make_unique<OsLoginServiceConnectionIdempotencyPolicy>(*this);
 }
 
+Idempotency OsLoginServiceConnectionIdempotencyPolicy::CreateSshPublicKey(
+    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency OsLoginServiceConnectionIdempotencyPolicy::DeletePosixAccount(
     google::cloud::oslogin::v1::DeletePosixAccountRequest const&) {
   return Idempotency::kNonIdempotent;

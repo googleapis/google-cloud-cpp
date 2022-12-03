@@ -251,7 +251,7 @@ class TpuClient {
       Options opts = {});
 
   ///
-  /// Stops a node.
+  /// Stops a node, this operation is only available with single TPU nodes.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tpu::v1::StopNodeRequest,google/cloud/tpu/v1/cloud_tpu.proto#L422}

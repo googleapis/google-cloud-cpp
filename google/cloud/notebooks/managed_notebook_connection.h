@@ -77,6 +77,9 @@ class ManagedNotebookServiceConnection {
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> CreateRuntime(
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request);
 
+  virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpdateRuntime(
+      google::cloud::notebooks::v1::UpdateRuntimeRequest const& request);
+
   virtual future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
   DeleteRuntime(
       google::cloud::notebooks::v1::DeleteRuntimeRequest const& request);
@@ -94,6 +97,10 @@ class ManagedNotebookServiceConnection {
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+  UpgradeRuntime(
+      google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>>
   ReportRuntimeEvent(
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request);
 
@@ -102,6 +109,10 @@ class ManagedNotebookServiceConnection {
   RefreshRuntimeTokenInternal(
       google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
           request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+  DiagnoseRuntime(
+      google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request);
 };
 
 /**

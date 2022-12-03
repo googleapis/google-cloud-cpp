@@ -70,6 +70,11 @@ Idempotency CloudMemcacheConnectionIdempotencyPolicy::ApplyParameters(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency CloudMemcacheConnectionIdempotencyPolicy::RescheduleMaintenance(
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<CloudMemcacheConnectionIdempotencyPolicy>
 MakeDefaultCloudMemcacheConnectionIdempotencyPolicy() {
   return absl::make_unique<CloudMemcacheConnectionIdempotencyPolicy>();

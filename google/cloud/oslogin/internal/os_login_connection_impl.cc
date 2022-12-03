@@ -37,6 +37,20 @@ OsLoginServiceConnectionImpl::OsLoginServiceConnectionImpl(
       options_(internal::MergeOptions(std::move(options),
                                       OsLoginServiceConnection::options())) {}
 
+StatusOr<google::cloud::oslogin::common::SshPublicKey>
+OsLoginServiceConnectionImpl::CreateSshPublicKey(
+    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateSshPublicKey(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::oslogin::v1::CreateSshPublicKeyRequest const&
+                 request) {
+        return stub_->CreateSshPublicKey(context, request);
+      },
+      request, __func__);
+}
+
 Status OsLoginServiceConnectionImpl::DeletePosixAccount(
     google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
   return google::cloud::internal::RetryLoop(

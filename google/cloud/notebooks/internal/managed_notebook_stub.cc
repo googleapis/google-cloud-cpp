@@ -69,6 +69,20 @@ DefaultManagedNotebookServiceStub::AsyncCreateRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultManagedNotebookServiceStub::AsyncUpdateRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::notebooks::v1::UpdateRuntimeRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpdateRuntime(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultManagedNotebookServiceStub::AsyncDeleteRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -139,6 +153,20 @@ DefaultManagedNotebookServiceStub::AsyncResetRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultManagedNotebookServiceStub::AsyncUpgradeRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncUpgradeRuntime(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultManagedNotebookServiceStub::AsyncReportRuntimeEvent(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -165,6 +193,21 @@ DefaultManagedNotebookServiceStub::RefreshRuntimeTokenInternal(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultManagedNotebookServiceStub::AsyncDiagnoseRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDiagnoseRuntime(context, request, cq);
+      },
+      request, std::move(context));
 }
 
 future<StatusOr<google::longrunning::Operation>>

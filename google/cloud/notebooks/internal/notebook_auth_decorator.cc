@@ -350,6 +350,25 @@ NotebookServiceAuth::AsyncRollbackInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NotebookServiceAuth::AsyncDiagnoseInstance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDiagnoseInstance(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncUpgradeInstanceInternal(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

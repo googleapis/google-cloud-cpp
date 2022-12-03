@@ -62,6 +62,10 @@ class ManagedNotebookServiceConnectionImpl
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpdateRuntime(
+      google::cloud::notebooks::v1::UpdateRuntimeRequest const& request)
+      override;
+
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
   DeleteRuntime(google::cloud::notebooks::v1::DeleteRuntimeRequest const&
                     request) override;
@@ -81,6 +85,10 @@ class ManagedNotebookServiceConnectionImpl
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpgradeRuntime(
+      google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request)
+      override;
+
   future<StatusOr<google::cloud::notebooks::v1::Runtime>> ReportRuntimeEvent(
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request)
       override;
@@ -89,6 +97,10 @@ class ManagedNotebookServiceConnectionImpl
   RefreshRuntimeTokenInternal(
       google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
           request) override;
+
+  future<StatusOr<google::cloud::notebooks::v1::Runtime>> DiagnoseRuntime(
+      google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request)
+      override;
 
  private:
   std::unique_ptr<notebooks::ManagedNotebookServiceRetryPolicy> retry_policy() {

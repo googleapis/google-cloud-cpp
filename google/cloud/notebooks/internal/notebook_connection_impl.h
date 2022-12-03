@@ -132,6 +132,10 @@ class NotebookServiceConnectionImpl
       google::cloud::notebooks::v1::RollbackInstanceRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::notebooks::v1::Instance>> DiagnoseInstance(
+      google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::cloud::notebooks::v1::Instance>>
   UpgradeInstanceInternal(
       google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&

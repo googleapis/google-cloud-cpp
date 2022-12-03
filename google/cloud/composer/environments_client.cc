@@ -138,6 +138,26 @@ EnvironmentsClient::DeleteEnvironment(
   return connection_->DeleteEnvironment(request);
 }
 
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+EnvironmentsClient::SaveSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SaveSnapshot(request);
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+EnvironmentsClient::LoadSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->LoadSnapshot(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer
 }  // namespace cloud

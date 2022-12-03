@@ -180,6 +180,14 @@ NotebookServiceConnection::RollbackInstance(
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
+NotebookServiceConnection::DiagnoseInstance(
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::notebooks::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::UpgradeInstanceInternal(
     google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&) {
   return google::cloud::make_ready_future<

@@ -83,6 +83,20 @@ class MockEnvironmentsConnection : public composer::EnvironmentsConnection {
               (google::cloud::orchestration::airflow::service::v1::
                    DeleteEnvironmentRequest const& request),
               (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
+                                  v1::SaveSnapshotResponse>>,
+              SaveSnapshot,
+              (google::cloud::orchestration::airflow::service::v1::
+                   SaveSnapshotRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::orchestration::airflow::service::
+                                  v1::LoadSnapshotResponse>>,
+              LoadSnapshot,
+              (google::cloud::orchestration::airflow::service::v1::
+                   LoadSnapshotRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

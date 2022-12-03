@@ -57,6 +57,14 @@ ManagedNotebookServiceConnection::CreateRuntime(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnection::UpdateRuntime(
+    google::cloud::notebooks::v1::UpdateRuntimeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::notebooks::v1::Runtime>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 ManagedNotebookServiceConnection::DeleteRuntime(
     google::cloud::notebooks::v1::DeleteRuntimeRequest const&) {
@@ -98,6 +106,14 @@ ManagedNotebookServiceConnection::ResetRuntime(
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnection::UpgradeRuntime(
+    google::cloud::notebooks::v1::UpgradeRuntimeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::notebooks::v1::Runtime>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnection::ReportRuntimeEvent(
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const&) {
   return google::cloud::make_ready_future<
@@ -109,6 +125,14 @@ StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
 ManagedNotebookServiceConnection::RefreshRuntimeTokenInternal(
     google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnection::DiagnoseRuntime(
+    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::notebooks::v1::Runtime>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 std::shared_ptr<ManagedNotebookServiceConnection>
