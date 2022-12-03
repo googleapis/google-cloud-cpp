@@ -225,6 +225,7 @@ set(PROTO_FILES_WITH_DEPENDENCIES
     "google/api/annotations.proto"
     "google/api/auth.proto"
     "google/api/billing.proto"
+    "google/api/client.proto"
     "google/api/distribution.proto"
     "google/api/endpoint.proto"
     "google/api/log.proto"
@@ -256,6 +257,8 @@ endforeach ()
 # Out of order because they have dependencies.
 external_googleapis_add_library("google/api/annotations.proto" api_http_protos)
 external_googleapis_add_library("google/api/auth.proto" api_annotations_protos)
+external_googleapis_add_library("google/api/client.proto"
+                                api_launch_stage_protos)
 external_googleapis_add_library("google/api/metric.proto"
                                 api_launch_stage_protos api_label_protos)
 external_googleapis_add_library("google/api/billing.proto"
@@ -280,6 +283,7 @@ external_googleapis_add_library(
     api_auth_protos
     api_backend_protos
     api_billing_protos
+    api_client_protos
     api_context_protos
     api_control_protos
     api_documentation_protos
