@@ -151,17 +151,10 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
             .WithMetadata("token_type", *token_type)
             .WithMetadata("issued_token_type", *issued_token_type));
   }
-  auto it = access.find("expires_in");
-  if (it == access.end() || !it->is_number_integer()) {
-    return InvalidArgumentError(
-        "expected a numeric `expires_in` field in the token exchange response",
-        GCP_ERROR_INFO()
-            .WithContext(std::move(ec))
-            .WithMetadata("expires_in",
-                          it == access.end() ? "not-found" : it->type_name()));
-  }
-  return internal::AccessToken{
-      *token, tp + std::chrono::seconds(it->get<std::int32_t>())};
+  auto expires_in =
+      ValidateIntField(access, "expires_in", "token-exchange-response", ec);
+  if (!expires_in) return std::move(expires_in).status();
+  return internal::AccessToken{*token, tp + std::chrono::seconds(*expires_in)};
 }
 
 StatusOr<std::pair<std::string, std::string>>

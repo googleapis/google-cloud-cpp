@@ -26,16 +26,8 @@ StatusOr<std::string> ValidateStringField(nlohmann::json const& json,
                                           absl::string_view object_name,
                                           internal::ErrorContext const& ec) {
   auto it = json.find(std::string{name});
-  if (it == json.end()) {
-    return InvalidArgumentError(
-        absl::StrCat("cannot find `", name, "` field in `", object_name, "`"),
-        GCP_ERROR_INFO().WithContext(ec));
-  }
-  if (!it->is_string()) {
-    return InvalidArgumentError(absl::StrCat("invalid type for `", name,
-                                             "` field in `", object_name, "`"),
-                                GCP_ERROR_INFO().WithContext(ec));
-  }
+  if (it == json.end()) return MissingFieldError(name, object_name, ec);
+  if (!it->is_string()) return InvalidTypeError(name, object_name, ec);
   return it->get<std::string>();
 }
 
@@ -46,12 +38,43 @@ StatusOr<std::string> ValidateStringField(nlohmann::json const& json,
                                           internal::ErrorContext const& ec) {
   auto it = json.find(std::string{name});
   if (it == json.end()) return std::string{default_value};
-  if (!it->is_string()) {
-    return InvalidArgumentError(absl::StrCat("invalid type for `", name,
-                                             "` field in `", object_name, "`"),
-                                GCP_ERROR_INFO().WithContext(ec));
-  }
+  if (!it->is_string()) return InvalidTypeError(name, object_name, ec);
   return it->get<std::string>();
+}
+
+StatusOr<std::int32_t> ValidateIntField(nlohmann::json const& json,
+                                        absl::string_view name,
+                                        absl::string_view object_name,
+                                        internal::ErrorContext const& ec) {
+  auto it = json.find(std::string{name});
+  if (it == json.end()) return MissingFieldError(name, object_name, ec);
+  if (!it->is_number_integer()) return InvalidTypeError(name, object_name, ec);
+  return it->get<std::int32_t>();
+}
+
+StatusOr<std::int32_t> ValidateIntField(nlohmann::json const& json,
+                                        absl::string_view name,
+                                        absl::string_view object_name,
+                                        std::int32_t default_value,
+                                        internal::ErrorContext const& ec) {
+  auto it = json.find(std::string{name});
+  if (it == json.end()) return default_value;
+  if (!it->is_number_integer()) return InvalidTypeError(name, object_name, ec);
+  return it->get<std::int32_t>();
+}
+
+Status MissingFieldError(absl::string_view name, absl::string_view object_name,
+                         internal::ErrorContext const& ec) {
+  return InvalidArgumentError(
+      absl::StrCat("cannot find `", name, "` field in `", object_name, "`"),
+      GCP_ERROR_INFO().WithContext(ec));
+}
+
+Status InvalidTypeError(absl::string_view name, absl::string_view object_name,
+                        internal::ErrorContext const& ec) {
+  return InvalidArgumentError(absl::StrCat("invalid type for `", name,
+                                           "` field in `", object_name, "`"),
+                              GCP_ERROR_INFO().WithContext(ec));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

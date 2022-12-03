@@ -99,6 +99,77 @@ TEST(ExternalAccountParsing, ValidateStringFieldDefaultNotString) {
               Contains(Pair("origin", "test")));
 }
 
+TEST(ExternalAccountParsing, ValidateIntFieldSuccess) {
+  auto const json = nlohmann::json{{"someField", 42}};
+  auto actual = ValidateIntField(
+      json, "someField", "test-object",
+      internal::ErrorContext({{"origin", "test"}, {"filename", "/dev/null"}}));
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(*actual, 42);
+}
+
+TEST(ExternalAccountParsing, ValidateIntFieldMissing) {
+  auto const json = nlohmann::json{{"some-field", 42}};
+  auto actual = ValidateIntField(
+      json, "missingField", "test-object",
+      internal::ErrorContext({{"origin", "test"}, {"filename", "/dev/null"}}));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               AllOf(HasSubstr("missingField"),
+                                     HasSubstr("test-object"))));
+  EXPECT_THAT(actual.status().error_info().metadata(),
+              Contains(Pair("filename", "/dev/null")));
+  EXPECT_THAT(actual.status().error_info().metadata(),
+              Contains(Pair("origin", "test")));
+}
+
+TEST(ExternalAccountParsing, ValidateIntFieldNotString) {
+  auto const json =
+      nlohmann::json{{"some-field", "value"}, {"wrongType", true}};
+  auto actual = ValidateIntField(
+      json, "wrongType", "test-object",
+      internal::ErrorContext({{"origin", "test"}, {"filename", "/dev/null"}}));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               AllOf(HasSubstr("wrongType"),
+                                     HasSubstr("test-object"))));
+  EXPECT_THAT(actual.status().error_info().metadata(),
+              Contains(Pair("filename", "/dev/null")));
+  EXPECT_THAT(actual.status().error_info().metadata(),
+              Contains(Pair("origin", "test")));
+}
+
+TEST(ExternalAccountParsing, ValidateIntFieldDefaultSuccess) {
+  auto const json = nlohmann::json{{"someField", 42}};
+  auto actual = ValidateIntField(
+      json, "someField", "test-object", 42,
+      internal::ErrorContext({{"origin", "test"}, {"filename", "/dev/null"}}));
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(*actual, 42);
+}
+
+TEST(ExternalAccountParsing, ValidateIntFieldDefaultMissing) {
+  auto const json = nlohmann::json{{"anotherField", "value"}};
+  auto actual = ValidateIntField(
+      json, "someField", "test-object", 42,
+      internal::ErrorContext({{"origin", "test"}, {"filename", "/dev/null"}}));
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(*actual, 42);
+}
+
+TEST(ExternalAccountParsing, ValidateIntFieldDefaultNotString) {
+  auto const json =
+      nlohmann::json{{"some-field", "value"}, {"wrongType", true}};
+  auto actual = ValidateIntField(
+      json, "wrongType", "test-object", 42,
+      internal::ErrorContext({{"origin", "test"}, {"filename", "/dev/null"}}));
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInvalidArgument,
+                               AllOf(HasSubstr("wrongType"),
+                                     HasSubstr("test-object"))));
+  EXPECT_THAT(actual.status().error_info().metadata(),
+              Contains(Pair("filename", "/dev/null")));
+  EXPECT_THAT(actual.status().error_info().metadata(),
+              Contains(Pair("origin", "test")));
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
