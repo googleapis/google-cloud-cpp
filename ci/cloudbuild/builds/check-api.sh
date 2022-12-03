@@ -114,6 +114,12 @@ function check_abi() {
       # by some other number indicating the length of the symbol within the
       # "internal" namespace. See: https://en.wikipedia.org/wiki/Name_mangling
       -skip-internal-symbols "(8internal|_internal)\d"
+      # We also ignore the raw gRPC Stub class. The generated gRPC headers that
+      # contain these classes are installed alongside our headers. When a new
+      # RPC is added to a service, these classes gain a pure virtual method. Our
+      # customers do not use these classes directly, so this should not
+      # constitute a breaking change.
+      -skip-internal-types "::StubInterface"
       # The library to compare
       -l "${library}"
       # Compared the saved baseline vs. the dump for the current version
@@ -131,7 +137,7 @@ export -f check_abi # enables this function to be called from a subshell
 
 mapfile -t libraries < <(printf "google_cloud_cpp_%s\n" "${feature_list[@]}")
 
-# Run the check_abi function for each library in parallel since its slow.
+# Run the check_abi function for each library in parallel since it is slow.
 echo "${libraries[@]}" | xargs -P "$(nproc)" -n 1 \
   bash -c "TIMEFORMAT=\"\${0#google_cloud_cpp_} completed in %0lR\";
            time check_abi \${0} ${INSTALL_PREFIX} ${PROJECT_ROOT}"
