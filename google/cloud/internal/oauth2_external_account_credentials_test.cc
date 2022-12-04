@@ -848,7 +848,7 @@ TEST(ExternalAccount, MissingExpiresIn) {
   auto access_token = credentials.GetToken(now);
   EXPECT_THAT(access_token,
               StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("expected a numeric `expires_in`")));
+                       HasSubstr("cannot find `expires_in` field")));
   EXPECT_THAT(access_token.status().error_info().domain(), "gcloud-cpp");
 }
 
@@ -887,7 +887,7 @@ TEST(ExternalAccount, InvalidExpiresIn) {
   auto access_token = credentials.GetToken(now);
   EXPECT_THAT(access_token,
               StatusIs(StatusCode::kInvalidArgument,
-                       HasSubstr("expected a numeric `expires_in`")));
+                       HasSubstr("invalid type for `expires_in` field")));
   EXPECT_THAT(access_token.status().error_info().domain(), "gcloud-cpp");
 }
 
