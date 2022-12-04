@@ -84,7 +84,7 @@ TEST(ExternalAccountParsing, ValidateStringFieldDefaultMissing) {
   EXPECT_EQ(*actual, "default-value");
 }
 
-TEST(ExternalAccountParsing, ValidateStringFieldDefaultNotString) {
+TEST(ExternalAccountParsing, ValidateStringFieldDefaultNotInt) {
   auto const json =
       nlohmann::json{{"some-field", "value"}, {"wrongType", true}};
   auto actual = ValidateStringField(
