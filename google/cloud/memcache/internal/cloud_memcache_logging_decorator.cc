@@ -134,6 +134,22 @@ CloudMemcacheLogging::AsyncApplyParameters(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+CloudMemcacheLogging::AsyncRescheduleMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return child_->AsyncRescheduleMaintenance(cq, std::move(context),
+                                                  request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

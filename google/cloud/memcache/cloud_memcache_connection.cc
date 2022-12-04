@@ -89,6 +89,14 @@ CloudMemcacheConnection::ApplyParameters(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnection::RescheduleMaintenance(
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memcache::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<CloudMemcacheConnection> MakeCloudMemcacheConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

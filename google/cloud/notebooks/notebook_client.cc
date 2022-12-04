@@ -231,6 +231,26 @@ NotebookServiceClient::RollbackInstance(
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
+NotebookServiceClient::DiagnoseInstance(
+    std::string const& name,
+    google::cloud::notebooks::v1::DiagnosticConfig const& diagnostic_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::notebooks::v1::DiagnoseInstanceRequest request;
+  request.set_name(name);
+  *request.mutable_diagnostic_config() = diagnostic_config;
+  return connection_->DiagnoseInstance(request);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Instance>>
+NotebookServiceClient::DiagnoseInstance(
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DiagnoseInstance(request);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceClient::UpgradeInstanceInternal(
     google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const& request,
     Options opts) {

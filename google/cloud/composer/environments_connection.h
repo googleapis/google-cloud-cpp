@@ -91,6 +91,16 @@ class EnvironmentsConnection {
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>>
   DeleteEnvironment(google::cloud::orchestration::airflow::service::v1::
                         DeleteEnvironmentRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+  SaveSnapshot(google::cloud::orchestration::airflow::service::v1::
+                   SaveSnapshotRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+  LoadSnapshot(google::cloud::orchestration::airflow::service::v1::
+                   LoadSnapshotRequest const& request);
 };
 
 /**

@@ -96,6 +96,15 @@ CloudMemcacheMetadata::AsyncApplyParameters(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+CloudMemcacheMetadata::AsyncRescheduleMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  SetMetadata(*context, "instance=" + request.instance());
+  return child_->AsyncRescheduleMaintenance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

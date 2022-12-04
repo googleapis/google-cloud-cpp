@@ -112,12 +112,12 @@ class CloudMemcacheClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   /// [google.cloud.memcache.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L299}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L409}
   /// [google.cloud.memcache.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   StreamRange<google::cloud::memcache::v1::Instance> ListInstances(
       std::string const& parent, Options opts = {});
@@ -126,16 +126,16 @@ class CloudMemcacheClient {
   /// Lists Instances in a given location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::memcache::v1::ListInstancesRequest,google/cloud/memcache/v1/cloud_memcache.proto#L299}
+  /// @googleapis_link{google::cloud::memcache::v1::ListInstancesRequest,google/cloud/memcache/v1/cloud_memcache.proto#L409}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   /// [google.cloud.memcache.v1.ListInstancesRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L299}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L409}
   /// [google.cloud.memcache.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   StreamRange<google::cloud::memcache::v1::Instance> ListInstances(
       google::cloud::memcache::v1::ListInstancesRequest request,
@@ -150,12 +150,12 @@ class CloudMemcacheClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   /// [google.cloud.memcache.v1.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L349}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L458}
   /// [google.cloud.memcache.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   StatusOr<google::cloud::memcache::v1::Instance> GetInstance(
       std::string const& name, Options opts = {});
@@ -164,16 +164,16 @@ class CloudMemcacheClient {
   /// Gets details of a single Instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::memcache::v1::GetInstanceRequest,google/cloud/memcache/v1/cloud_memcache.proto#L349}
+  /// @googleapis_link{google::cloud::memcache::v1::GetInstanceRequest,google/cloud/memcache/v1/cloud_memcache.proto#L458}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   /// [google.cloud.memcache.v1.GetInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L349}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L458}
   /// [google.cloud.memcache.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   StatusOr<google::cloud::memcache::v1::Instance> GetInstance(
       google::cloud::memcache::v1::GetInstanceRequest const& request,
@@ -194,17 +194,18 @@ class CloudMemcacheClient {
   ///  * Must start with a letter.
   ///  * Must be between 1-40 characters.
   ///  * Must end with a number or a letter.
-  ///  * Must be unique within the user project / location
-  ///  If any of the above are not met, will raise an invalid argument error.
+  ///  * Must be unique within the user project / location.
+  ///  If any of the above are not met, the API raises an invalid argument
+  ///  error.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   /// [google.cloud.memcache.v1.CreateInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L362}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L471}
   /// [google.cloud.memcache.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> CreateInstance(
       std::string const& parent,
@@ -215,16 +216,16 @@ class CloudMemcacheClient {
   /// Creates a new Instance in a given location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::memcache::v1::CreateInstanceRequest,google/cloud/memcache/v1/cloud_memcache.proto#L362}
+  /// @googleapis_link{google::cloud::memcache::v1::CreateInstanceRequest,google/cloud/memcache/v1/cloud_memcache.proto#L471}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   /// [google.cloud.memcache.v1.CreateInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L362}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L471}
   /// [google.cloud.memcache.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> CreateInstance(
       google::cloud::memcache::v1::CreateInstanceRequest const& request,
@@ -240,12 +241,12 @@ class CloudMemcacheClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   /// [google.cloud.memcache.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L390}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L499}
   /// [google.cloud.memcache.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateInstance(
       google::cloud::memcache::v1::Instance const& instance,
@@ -255,26 +256,26 @@ class CloudMemcacheClient {
   /// Updates an existing Instance in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::memcache::v1::UpdateInstanceRequest,google/cloud/memcache/v1/cloud_memcache.proto#L390}
+  /// @googleapis_link{google::cloud::memcache::v1::UpdateInstanceRequest,google/cloud/memcache/v1/cloud_memcache.proto#L499}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   /// [google.cloud.memcache.v1.UpdateInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L390}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L499}
   /// [google.cloud.memcache.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateInstance(
       google::cloud::memcache::v1::UpdateInstanceRequest const& request,
       Options opts = {});
 
   ///
-  /// Updates the defined Memcached Parameters for an existing Instance.
+  /// Updates the defined Memcached parameters for an existing instance.
   /// This method only stages the parameters, it must be followed by
-  /// ApplyParameters to apply the parameters to nodes of the Memcached
-  /// Instance.
+  /// `ApplyParameters` to apply the parameters to nodes of the Memcached
+  /// instance.
   ///
   /// @param name  Required. Resource name of the Memcached instance for which
   /// the parameters should be
@@ -284,12 +285,12 @@ class CloudMemcacheClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   /// [google.cloud.memcache.v1.UpdateParametersRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L434}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L544}
   /// [google.cloud.memcache.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateParameters(
       std::string const& name, google::protobuf::FieldMask const& update_mask,
@@ -297,22 +298,22 @@ class CloudMemcacheClient {
       Options opts = {});
 
   ///
-  /// Updates the defined Memcached Parameters for an existing Instance.
+  /// Updates the defined Memcached parameters for an existing instance.
   /// This method only stages the parameters, it must be followed by
-  /// ApplyParameters to apply the parameters to nodes of the Memcached
-  /// Instance.
+  /// `ApplyParameters` to apply the parameters to nodes of the Memcached
+  /// instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::memcache::v1::UpdateParametersRequest,google/cloud/memcache/v1/cloud_memcache.proto#L434}
+  /// @googleapis_link{google::cloud::memcache::v1::UpdateParametersRequest,google/cloud/memcache/v1/cloud_memcache.proto#L544}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   /// [google.cloud.memcache.v1.UpdateParametersRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L434}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L544}
   /// [google.cloud.memcache.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> UpdateParameters(
       google::cloud::memcache::v1::UpdateParametersRequest const& request,
@@ -327,12 +328,12 @@ class CloudMemcacheClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::OperationMetadata,google/cloud/memcache/v1/cloud_memcache.proto#L463}
+  /// @googleapis_link{google::cloud::memcache::v1::OperationMetadata,google/cloud/memcache/v1/cloud_memcache.proto#L582}
   ///
   /// [google.cloud.memcache.v1.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L401}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L511}
   /// [google.cloud.memcache.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L463}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L582}
   ///
   future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
   DeleteInstance(std::string const& name, Options opts = {});
@@ -341,16 +342,16 @@ class CloudMemcacheClient {
   /// Deletes a single Instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::memcache::v1::DeleteInstanceRequest,google/cloud/memcache/v1/cloud_memcache.proto#L401}
+  /// @googleapis_link{google::cloud::memcache::v1::DeleteInstanceRequest,google/cloud/memcache/v1/cloud_memcache.proto#L511}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::OperationMetadata,google/cloud/memcache/v1/cloud_memcache.proto#L463}
+  /// @googleapis_link{google::cloud::memcache::v1::OperationMetadata,google/cloud/memcache/v1/cloud_memcache.proto#L582}
   ///
   /// [google.cloud.memcache.v1.DeleteInstanceRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L401}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L511}
   /// [google.cloud.memcache.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L463}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L582}
   ///
   future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
   DeleteInstance(
@@ -358,50 +359,97 @@ class CloudMemcacheClient {
       Options opts = {});
 
   ///
-  /// ApplyParameters will restart the set of specified nodes in order to update
+  /// `ApplyParameters` restarts the set of specified nodes in order to update
   /// them to the current set of parameters for the Memcached Instance.
   ///
   /// @param name  Required. Resource name of the Memcached instance for which
   /// parameter group updates
   ///  should be applied.
-  /// @param node_ids  Nodes to which we should apply the instance-level
-  /// parameter group.
+  /// @param node_ids  Nodes to which the instance-level parameter group is
+  /// applied.
   /// @param apply_all  Whether to apply instance-level parameter group to all
   /// nodes. If set to
-  ///  true, will explicitly restrict users from specifying any nodes, and apply
-  ///  parameter group updates to all nodes within the instance.
+  ///  true, users are restricted from specifying individual nodes, and
+  ///  `ApplyParameters` updates all nodes within the instance.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   /// [google.cloud.memcache.v1.ApplyParametersRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L414}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L524}
   /// [google.cloud.memcache.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> ApplyParameters(
       std::string const& name, std::vector<std::string> const& node_ids,
       bool apply_all, Options opts = {});
 
   ///
-  /// ApplyParameters will restart the set of specified nodes in order to update
+  /// `ApplyParameters` restarts the set of specified nodes in order to update
   /// them to the current set of parameters for the Memcached Instance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::memcache::v1::ApplyParametersRequest,google/cloud/memcache/v1/cloud_memcache.proto#L414}
+  /// @googleapis_link{google::cloud::memcache::v1::ApplyParametersRequest,google/cloud/memcache/v1/cloud_memcache.proto#L524}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   /// [google.cloud.memcache.v1.ApplyParametersRequest]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L414}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L524}
   /// [google.cloud.memcache.v1.Instance]:
-  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L135}
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
   ///
   future<StatusOr<google::cloud::memcache::v1::Instance>> ApplyParameters(
       google::cloud::memcache::v1::ApplyParametersRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Reschedules upcoming maintenance event.
+  ///
+  /// @param instance  Required. Memcache instance resource name using the form:
+  ///      `projects/{project_id}/locations/{location_id}/instances/{instance_id}`
+  ///  where `location_id` refers to a GCP region.
+  /// @param reschedule_type  Required. If reschedule type is SPECIFIC_TIME,
+  /// must set up schedule_time as well.
+  /// @param schedule_time  Timestamp when the maintenance shall be rescheduled
+  /// to if
+  ///  reschedule_type=SPECIFIC_TIME, in RFC 3339 format, for
+  ///  example `2012-11-15T16:19:00.094Z`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
+  ///
+  /// [google.cloud.memcache.v1.RescheduleMaintenanceRequest]:
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L372}
+  /// [google.cloud.memcache.v1.Instance]:
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
+  ///
+  future<StatusOr<google::cloud::memcache::v1::Instance>> RescheduleMaintenance(
+      std::string const& instance,
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest::RescheduleType
+          reschedule_type,
+      google::protobuf::Timestamp const& schedule_time, Options opts = {});
+
+  ///
+  /// Reschedules upcoming maintenance event.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::memcache::v1::RescheduleMaintenanceRequest,google/cloud/memcache/v1/cloud_memcache.proto#L372}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::memcache::v1::Instance,google/cloud/memcache/v1/cloud_memcache.proto#L153}
+  ///
+  /// [google.cloud.memcache.v1.RescheduleMaintenanceRequest]:
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L372}
+  /// [google.cloud.memcache.v1.Instance]:
+  /// @googleapis_reference_link{google/cloud/memcache/v1/cloud_memcache.proto#L153}
+  ///
+  future<StatusOr<google::cloud::memcache::v1::Instance>> RescheduleMaintenance(
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request,
       Options opts = {});
 
  private:

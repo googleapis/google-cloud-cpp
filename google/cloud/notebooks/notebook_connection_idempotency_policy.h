@@ -100,6 +100,9 @@ class NotebookServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency RollbackInstance(
       google::cloud::notebooks::v1::RollbackInstanceRequest const& request);
 
+  virtual google::cloud::Idempotency DiagnoseInstance(
+      google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request);
+
   virtual google::cloud::Idempotency UpgradeInstanceInternal(
       google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
           request);

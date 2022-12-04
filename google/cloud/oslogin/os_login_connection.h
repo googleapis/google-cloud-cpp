@@ -63,6 +63,10 @@ class OsLoginServiceConnection {
 
   virtual Options options() { return Options{}; }
 
+  virtual StatusOr<google::cloud::oslogin::common::SshPublicKey>
+  CreateSshPublicKey(
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request);
+
   virtual Status DeletePosixAccount(
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request);
 

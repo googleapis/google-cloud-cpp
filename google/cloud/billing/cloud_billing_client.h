@@ -34,7 +34,8 @@ namespace billing {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// Retrieves GCP Console billing accounts and associates them with projects.
+/// Retrieves the Google Cloud Console billing accounts and associates them with
+/// projects.
 ///
 /// @par Equality
 ///
@@ -96,12 +97,12 @@ class CloudBillingClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   /// [google.cloud.billing.v1.GetBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L242}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L255}
   /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
       std::string const& name, Options opts = {});
@@ -112,16 +113,16 @@ class CloudBillingClient {
   /// account](https://cloud.google.com/billing/docs/how-to/billing-access).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::GetBillingAccountRequest,google/cloud/billing/v1/cloud_billing.proto#L242}
+  /// @googleapis_link{google::cloud::billing::v1::GetBillingAccountRequest,google/cloud/billing/v1/cloud_billing.proto#L255}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   /// [google.cloud.billing.v1.GetBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L242}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L255}
   /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   StatusOr<google::cloud::billing::v1::BillingAccount> GetBillingAccount(
       google::cloud::billing::v1::GetBillingAccountRequest const& request,
@@ -135,12 +136,12 @@ class CloudBillingClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   /// [google.cloud.billing.v1.ListBillingAccountsRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L254}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L267}
   /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   StreamRange<google::cloud::billing::v1::BillingAccount> ListBillingAccounts(
       Options opts = {});
@@ -151,16 +152,16 @@ class CloudBillingClient {
   /// [view](https://cloud.google.com/billing/docs/how-to/billing-access).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::ListBillingAccountsRequest,google/cloud/billing/v1/cloud_billing.proto#L254}
+  /// @googleapis_link{google::cloud::billing::v1::ListBillingAccountsRequest,google/cloud/billing/v1/cloud_billing.proto#L267}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   /// [google.cloud.billing.v1.ListBillingAccountsRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L254}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L267}
   /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   StreamRange<google::cloud::billing::v1::BillingAccount> ListBillingAccounts(
       google::cloud::billing::v1::ListBillingAccountsRequest request,
@@ -181,12 +182,12 @@ class CloudBillingClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   /// [google.cloud.billing.v1.UpdateBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L294}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L307}
   /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
       std::string const& name,
@@ -202,74 +203,84 @@ class CloudBillingClient {
   /// of the billing account.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::UpdateBillingAccountRequest,google/cloud/billing/v1/cloud_billing.proto#L294}
+  /// @googleapis_link{google::cloud::billing::v1::UpdateBillingAccountRequest,google/cloud/billing/v1/cloud_billing.proto#L307}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   /// [google.cloud.billing.v1.UpdateBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L294}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L307}
   /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   StatusOr<google::cloud::billing::v1::BillingAccount> UpdateBillingAccount(
       google::cloud::billing::v1::UpdateBillingAccountRequest const& request,
       Options opts = {});
 
   ///
-  /// Creates a billing account.
-  /// This method can only be used to create
-  /// [billing subaccounts](https://cloud.google.com/billing/docs/concepts)
-  /// by GCP resellers.
+  /// This method creates [billing
+  /// subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts).
+  ///
+  /// Google Cloud resellers should use the
+  /// Channel Services APIs,
+  /// [accounts.customers.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create)
+  /// and
+  /// [accounts.customers.entitlements.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create).
+  ///
   /// When creating a subaccount, the current authenticated user must have the
-  /// `billing.accounts.update` IAM permission on the master account, which is
+  /// `billing.accounts.update` IAM permission on the parent account, which is
   /// typically given to billing account
   /// [administrators](https://cloud.google.com/billing/docs/how-to/billing-access).
-  /// This method will return an error if the master account has not been
+  /// This method will return an error if the parent account has not been
   /// provisioned as a reseller account.
   ///
   /// @param billing_account  Required. The billing account resource to create.
   ///  Currently CreateBillingAccount only supports subaccount creation, so
-  ///  any created billing accounts must be under a provided master billing
+  ///  any created billing accounts must be under a provided parent billing
   ///  account.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   /// [google.cloud.billing.v1.CreateBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L285}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L298}
   /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
       google::cloud::billing::v1::BillingAccount const& billing_account,
       Options opts = {});
 
   ///
-  /// Creates a billing account.
-  /// This method can only be used to create
-  /// [billing subaccounts](https://cloud.google.com/billing/docs/concepts)
-  /// by GCP resellers.
+  /// This method creates [billing
+  /// subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts).
+  ///
+  /// Google Cloud resellers should use the
+  /// Channel Services APIs,
+  /// [accounts.customers.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create)
+  /// and
+  /// [accounts.customers.entitlements.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create).
+  ///
   /// When creating a subaccount, the current authenticated user must have the
-  /// `billing.accounts.update` IAM permission on the master account, which is
+  /// `billing.accounts.update` IAM permission on the parent account, which is
   /// typically given to billing account
   /// [administrators](https://cloud.google.com/billing/docs/how-to/billing-access).
-  /// This method will return an error if the master account has not been
+  /// This method will return an error if the parent account has not been
   /// provisioned as a reseller account.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::CreateBillingAccountRequest,google/cloud/billing/v1/cloud_billing.proto#L285}
+  /// @googleapis_link{google::cloud::billing::v1::CreateBillingAccountRequest,google/cloud/billing/v1/cloud_billing.proto#L298}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_link{google::cloud::billing::v1::BillingAccount,google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   /// [google.cloud.billing.v1.CreateBillingAccountRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L285}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L298}
   /// [google.cloud.billing.v1.BillingAccount]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L189}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L199}
   ///
   StatusOr<google::cloud::billing::v1::BillingAccount> CreateBillingAccount(
       google::cloud::billing::v1::CreateBillingAccountRequest const& request,
@@ -287,12 +298,12 @@ class CloudBillingClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L218}
+  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
   /// [google.cloud.billing.v1.ListProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L312}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L325}
   /// [google.cloud.billing.v1.ProjectBillingInfo]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L218}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
   StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
   ListProjectBillingInfo(std::string const& name, Options opts = {});
@@ -304,16 +315,16 @@ class CloudBillingClient {
   /// [viewers](https://cloud.google.com/billing/docs/how-to/billing-access).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::ListProjectBillingInfoRequest,google/cloud/billing/v1/cloud_billing.proto#L312}
+  /// @googleapis_link{google::cloud::billing::v1::ListProjectBillingInfoRequest,google/cloud/billing/v1/cloud_billing.proto#L325}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L218}
+  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
   /// [google.cloud.billing.v1.ListProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L312}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L325}
   /// [google.cloud.billing.v1.ProjectBillingInfo]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L218}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
   StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
   ListProjectBillingInfo(
@@ -322,9 +333,10 @@ class CloudBillingClient {
 
   ///
   /// Gets the billing information for a project. The current authenticated user
-  /// must have [permission to view the
-  /// project](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo
-  /// ).
+  /// must have the `resourcemanager.projects.get` permission for the project,
+  /// which can be granted by assigning the [Project
+  /// Viewer](https://cloud.google.com/iam/docs/understanding-roles#predefined_roles)
+  /// role.
   ///
   /// @param name  Required. The resource name of the project for which billing
   /// information is
@@ -332,33 +344,34 @@ class CloudBillingClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L218}
+  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
   /// [google.cloud.billing.v1.GetProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L345}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L358}
   /// [google.cloud.billing.v1.ProjectBillingInfo]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L218}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   GetProjectBillingInfo(std::string const& name, Options opts = {});
 
   ///
   /// Gets the billing information for a project. The current authenticated user
-  /// must have [permission to view the
-  /// project](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo
-  /// ).
+  /// must have the `resourcemanager.projects.get` permission for the project,
+  /// which can be granted by assigning the [Project
+  /// Viewer](https://cloud.google.com/iam/docs/understanding-roles#predefined_roles)
+  /// role.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::GetProjectBillingInfoRequest,google/cloud/billing/v1/cloud_billing.proto#L345}
+  /// @googleapis_link{google::cloud::billing::v1::GetProjectBillingInfoRequest,google/cloud/billing/v1/cloud_billing.proto#L358}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L218}
+  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
   /// [google.cloud.billing.v1.GetProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L345}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L358}
   /// [google.cloud.billing.v1.ProjectBillingInfo]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L218}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   GetProjectBillingInfo(
@@ -375,9 +388,9 @@ class CloudBillingClient {
   /// resource usage charges.
   ///
   /// *Note:* Incurred charges that have not yet been reported in the
-  /// transaction history of the GCP Console might be billed to the new billing
-  /// account, even if the charge occurred before the new billing account was
-  /// assigned to the project.
+  /// transaction history of the Google Cloud Console might be billed to the new
+  /// billing account, even if the charge occurred before the new billing
+  /// account was assigned to the project.
   ///
   /// The current authenticated user must have ownership privileges for both the
   /// [project](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo
@@ -407,12 +420,12 @@ class CloudBillingClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L218}
+  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
   /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L352}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L365}
   /// [google.cloud.billing.v1.ProjectBillingInfo]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L218}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   UpdateProjectBillingInfo(std::string const& name,
@@ -430,9 +443,9 @@ class CloudBillingClient {
   /// resource usage charges.
   ///
   /// *Note:* Incurred charges that have not yet been reported in the
-  /// transaction history of the GCP Console might be billed to the new billing
-  /// account, even if the charge occurred before the new billing account was
-  /// assigned to the project.
+  /// transaction history of the Google Cloud Console might be billed to the new
+  /// billing account, even if the charge occurred before the new billing
+  /// account was assigned to the project.
   ///
   /// The current authenticated user must have ownership privileges for both the
   /// [project](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo
@@ -454,16 +467,16 @@ class CloudBillingClient {
   /// *open* billing account.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::UpdateProjectBillingInfoRequest,google/cloud/billing/v1/cloud_billing.proto#L352}
+  /// @googleapis_link{google::cloud::billing::v1::UpdateProjectBillingInfoRequest,google/cloud/billing/v1/cloud_billing.proto#L365}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L218}
+  /// @googleapis_link{google::cloud::billing::v1::ProjectBillingInfo,google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
   /// [google.cloud.billing.v1.UpdateProjectBillingInfoRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L352}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L365}
   /// [google.cloud.billing.v1.ProjectBillingInfo]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L218}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_billing.proto#L231}
   ///
   StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
   UpdateProjectBillingInfo(

@@ -161,6 +161,12 @@ class MockNotebookServiceConnection
 
   MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::Instance>>,
+      DiagnoseInstance,
+      (google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::notebooks::v1::Instance>>,
       UpgradeInstanceInternal,
       (google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
            request),

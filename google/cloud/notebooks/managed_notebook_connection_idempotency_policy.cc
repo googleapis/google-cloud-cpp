@@ -51,6 +51,11 @@ Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::CreateRuntime(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::UpdateRuntime(
+    google::cloud::notebooks::v1::UpdateRuntimeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::DeleteRuntime(
     google::cloud::notebooks::v1::DeleteRuntimeRequest const&) {
   return Idempotency::kNonIdempotent;
@@ -76,6 +81,11 @@ Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::ResetRuntime(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::UpgradeRuntime(
+    google::cloud::notebooks::v1::UpgradeRuntimeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency
 ManagedNotebookServiceConnectionIdempotencyPolicy::ReportRuntimeEvent(
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const&) {
@@ -85,6 +95,11 @@ ManagedNotebookServiceConnectionIdempotencyPolicy::ReportRuntimeEvent(
 Idempotency
 ManagedNotebookServiceConnectionIdempotencyPolicy::RefreshRuntimeTokenInternal(
     google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ManagedNotebookServiceConnectionIdempotencyPolicy::DiagnoseRuntime(
+    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

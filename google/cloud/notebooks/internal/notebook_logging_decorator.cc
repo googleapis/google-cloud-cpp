@@ -316,6 +316,21 @@ NotebookServiceLogging::AsyncRollbackInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NotebookServiceLogging::AsyncDiagnoseInstance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::notebooks::v1::DiagnoseInstanceRequest const&
+                 request) {
+        return child_->AsyncDiagnoseInstance(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NotebookServiceLogging::AsyncUpgradeInstanceInternal(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

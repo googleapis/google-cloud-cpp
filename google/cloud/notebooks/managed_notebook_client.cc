@@ -84,6 +84,25 @@ ManagedNotebookServiceClient::CreateRuntime(
   return connection_->CreateRuntime(request);
 }
 
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceClient::UpdateRuntime(
+    google::cloud::notebooks::v1::Runtime const& runtime,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::notebooks::v1::UpdateRuntimeRequest request;
+  *request.mutable_runtime() = runtime;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateRuntime(request);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceClient::UpdateRuntime(
+    google::cloud::notebooks::v1::UpdateRuntimeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateRuntime(request);
+}
+
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 ManagedNotebookServiceClient::DeleteRuntime(std::string const& name,
                                             Options opts) {
@@ -170,6 +189,23 @@ ManagedNotebookServiceClient::ResetRuntime(
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceClient::UpgradeRuntime(std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::notebooks::v1::UpgradeRuntimeRequest request;
+  request.set_name(name);
+  return connection_->UpgradeRuntime(request);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceClient::UpgradeRuntime(
+    google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpgradeRuntime(request);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceClient::ReportRuntimeEvent(std::string const& name,
                                                  Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -203,6 +239,26 @@ ManagedNotebookServiceClient::RefreshRuntimeTokenInternal(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RefreshRuntimeTokenInternal(request);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceClient::DiagnoseRuntime(
+    std::string const& name,
+    google::cloud::notebooks::v1::DiagnosticConfig const& diagnostic_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::notebooks::v1::DiagnoseRuntimeRequest request;
+  request.set_name(name);
+  *request.mutable_diagnostic_config() = diagnostic_config;
+  return connection_->DiagnoseRuntime(request);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceClient::DiagnoseRuntime(
+    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DiagnoseRuntime(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

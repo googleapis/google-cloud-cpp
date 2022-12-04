@@ -36,12 +36,12 @@ namespace beyondcorp {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
-/// ## API Overview
+/// API Overview:
 ///
 /// The `beyondcorp.googleapis.com` service implements the Google Cloud
 /// BeyondCorp API.
 ///
-/// ## Data Model
+/// Data Model:
 ///
 /// The AppConnectionsService exposes the following resources:
 ///

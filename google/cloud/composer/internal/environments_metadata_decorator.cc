@@ -84,6 +84,26 @@ EnvironmentsMetadata::AsyncDeleteEnvironment(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+EnvironmentsMetadata::AsyncSaveSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const& request) {
+  SetMetadata(*context, "environment=" + request.environment());
+  return child_->AsyncSaveSnapshot(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EnvironmentsMetadata::AsyncLoadSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const& request) {
+  SetMetadata(*context, "environment=" + request.environment());
+  return child_->AsyncLoadSnapshot(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 EnvironmentsMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

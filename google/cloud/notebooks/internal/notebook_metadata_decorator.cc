@@ -206,6 +206,15 @@ NotebookServiceMetadata::AsyncRollbackInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NotebookServiceMetadata::AsyncDiagnoseInstance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDiagnoseInstance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncUpgradeInstanceInternal(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

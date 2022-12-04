@@ -304,6 +304,21 @@ DefaultNotebookServiceStub::AsyncRollbackInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultNotebookServiceStub::AsyncDiagnoseInstance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDiagnoseInstance(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncUpgradeInstanceInternal(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

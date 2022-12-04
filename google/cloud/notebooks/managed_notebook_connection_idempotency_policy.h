@@ -47,6 +47,9 @@ class ManagedNotebookServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency CreateRuntime(
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request);
 
+  virtual google::cloud::Idempotency UpdateRuntime(
+      google::cloud::notebooks::v1::UpdateRuntimeRequest const& request);
+
   virtual google::cloud::Idempotency DeleteRuntime(
       google::cloud::notebooks::v1::DeleteRuntimeRequest const& request);
 
@@ -62,12 +65,18 @@ class ManagedNotebookServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency ResetRuntime(
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request);
 
+  virtual google::cloud::Idempotency UpgradeRuntime(
+      google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request);
+
   virtual google::cloud::Idempotency ReportRuntimeEvent(
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request);
 
   virtual google::cloud::Idempotency RefreshRuntimeTokenInternal(
       google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
           request);
+
+  virtual google::cloud::Idempotency DiagnoseRuntime(
+      google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request);
 };
 
 std::unique_ptr<ManagedNotebookServiceConnectionIdempotencyPolicy>
