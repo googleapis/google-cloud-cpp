@@ -254,7 +254,7 @@ TEST(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
   EXPECT_EQ(actual, alias);
   // Response 2
   actual = credentials.AccountEmail();
-  EXPECT_THAT(actual, alias);
+  EXPECT_EQ(actual, alias);
 }
 
 /// @test Mock a failed refresh response.
