@@ -110,10 +110,7 @@ StatusOr<internal::AccessToken> ComputeEngineCredentials::GetToken(
       "computeMetadata/v1/instance/service-accounts/" + email + "/token",
       false);
   if (!response) return std::move(response).status();
-  if ((*response)->StatusCode() >= 300) {
-    return AsStatus(std::move(**response));
-  }
-
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
   return ParseComputeEngineRefreshResponse(**response, tp);
 }
 
@@ -157,9 +154,7 @@ std::string ComputeEngineCredentials::RetrieveServiceAccountInfo(
       "computeMetadata/v1/instance/service-accounts/" + service_account_email_ +
           "/",
       true);
-  if (!response || (*response)->StatusCode() >= 300) {
-    return service_account_email_;
-  }
+  if (!response || IsHttpError(**response)) return service_account_email_;
   auto metadata = ParseMetadataServerResponse(**response);
   if (!metadata) return service_account_email_;
   service_account_email_ = std::move(metadata->email);

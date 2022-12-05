@@ -89,9 +89,7 @@ auto CheckedFromString(StatusOr<std::unique_ptr<rest::RestResponse>> response)
   if (!response.ok()) {
     return std::move(response).status();
   }
-  if ((*response)->StatusCode() >= rest::kMinNotSuccess) {
-    return rest::AsStatus(std::move(**response));
-  }
+  if (IsHttpError(**response)) return rest::AsStatus(std::move(**response));
   auto payload = rest::ReadAll(std::move(**response).ExtractPayload());
   if (!payload.ok()) return std::move(payload).status();
   return Parser::FromString(*payload);
@@ -114,9 +112,7 @@ template <typename ReturnType>
 StatusOr<ReturnType> CreateFromJson(
     StatusOr<std::unique_ptr<rest::RestResponse>> response) {
   if (!response.ok()) return std::move(response).status();
-  if ((*response)->StatusCode() >= rest::kMinNotSuccess) {
-    return rest::AsStatus(std::move(**response));
-  }
+  if (IsHttpError(**response)) return rest::AsStatus(std::move(**response));
   auto payload = rest::ReadAll(std::move(**response).ExtractPayload());
   if (!payload.ok()) return std::move(payload).status();
   return ReturnType::CreateFromJson(*payload);
@@ -494,9 +490,7 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaXml(
       storage_rest_client_->Put(std::move(builder).BuildRequest(),
                                 {absl::MakeConstSpan(request.contents())});
   if (!response.ok()) return std::move(response).status();
-  if ((*response)->StatusCode() >= rest::kMinNotSuccess) {
-    return rest::AsStatus(std::move(**response));
-  }
+  if (IsHttpError(**response)) return rest::AsStatus(std::move(**response));
   auto payload = rest::ReadAll(std::move(**response).ExtractPayload());
   if (!payload.ok()) return std::move(payload).status();
   return internal::ObjectMetadataParser::FromJson(nlohmann::json{
@@ -634,9 +628,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObjectXml(
 
   auto response = storage_rest_client_->Get(std::move(builder).BuildRequest());
   if (!response.ok()) return std::move(response).status();
-  if (IsHttpError((*response)->StatusCode())) {
-    return rest::AsStatus(std::move(**response));
-  }
+  if (IsHttpError(**response)) return rest::AsStatus(std::move(**response));
   return std::unique_ptr<ObjectReadSource>(
       new RestObjectReadSource(*std::move(response)));
 }
@@ -669,10 +661,7 @@ StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObject(
 
   auto response = storage_rest_client_->Get(std::move(builder).BuildRequest());
   if (!response.ok()) return response.status();
-  if (IsHttpError((*response)->StatusCode())) {
-    return rest::AsStatus(std::move(**response));
-  }
-
+  if (IsHttpError(**response)) return rest::AsStatus(std::move(**response));
   return std::unique_ptr<ObjectReadSource>(
       new RestObjectReadSource(*std::move(response)));
 }

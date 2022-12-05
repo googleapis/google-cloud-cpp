@@ -28,11 +28,6 @@ namespace {
 // Represent the headers in the credentials configuration file.
 using Headers = std::map<std::string, std::string>;
 
-bool IsSuccess(rest_internal::HttpStatusCode code) {
-  return rest_internal::HttpStatusCode::kMinSuccess <= code &&
-         code <= rest_internal::kMinRedirects;
-}
-
 Status DecorateHttpError(Status const& status,
                          internal::ErrorContext const& ec) {
   auto builder = GCP_ERROR_INFO().WithContext(ec).WithReason("HTTP REQUEST");
@@ -53,7 +48,7 @@ StatusOr<std::string> FetchContents(HttpClientFactory const& client_factory,
   auto status = client->Get(request);
   if (!status) return DecorateHttpError(std::move(status).status(), ec);
   auto response = *std::move(status);
-  if (!IsSuccess(response->StatusCode())) {
+  if (IsHttpError(*response)) {
     return DecorateHttpError(rest_internal::AsStatus(std::move(*response)), ec);
   }
   auto payload = std::move(*response).ExtractPayload();

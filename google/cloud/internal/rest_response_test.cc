@@ -26,6 +26,7 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
+using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::ByMove;
 using ::testing::Contains;
@@ -87,6 +88,30 @@ INSTANTIATE_TEST_SUITE_P(
     [](testing::TestParamInfo<MapHttpCodeToStatusTest::ParamType> const& info) {
       return std::to_string(std::get<0>(info.param));
     });
+
+TEST(RestResponse, IsHttpSuccessVsError) {
+  struct TestCase {
+    HttpStatusCode code;
+    bool expected;
+  } const cases[] = {
+      {HttpStatusCode::kOk, true},
+      {HttpStatusCode::kCreated, true},
+      {HttpStatusCode::kContinue, false},
+      {HttpStatusCode::kMinNotSuccess, false},
+      {HttpStatusCode::kForbidden, false},
+      {HttpStatusCode::kNotModified, false},
+  };
+
+  for (auto const test : cases) {
+    SCOPED_TRACE("Testing with " + std::to_string(test.code));
+    MockRestResponse mock;
+    EXPECT_CALL(mock, StatusCode).WillRepeatedly(Return(test.code));
+    auto const is_success = IsHttpSuccess(mock);
+    auto const is_error = IsHttpError(mock);
+    EXPECT_EQ(is_success, test.expected);
+    EXPECT_EQ(is_error, !test.expected);
+  }
+}
 
 TEST(AsStatus, RestResponseIsOk) {
   auto response = absl::make_unique<testing_util::MockRestResponse>();

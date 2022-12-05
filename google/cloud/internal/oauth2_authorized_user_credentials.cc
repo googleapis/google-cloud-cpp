@@ -108,9 +108,7 @@ StatusOr<internal::AccessToken> AuthorizedUserCredentials::GetToken(
   if (!response.ok()) return std::move(response).status();
   std::unique_ptr<rest_internal::RestResponse> real_response =
       std::move(response.value());
-  if (real_response->StatusCode() >= 300) {
-    return AsStatus(std::move(*real_response));
-  }
+  if (IsHttpError(*real_response)) return AsStatus(std::move(*real_response));
   return ParseAuthorizedUserRefreshResponse(*real_response, tp);
 }
 
