@@ -133,8 +133,10 @@ namespace internal {
 oauth2_internal::ServiceAccountCredentialsInfo MapServiceAccountCredentialsInfo(
     oauth2::ServiceAccountCredentialsInfo info) {
   // Storage has more stringent requirements w.r.t. self-signed JWTs
-  // than most services (which the base class
-  // Disable them in the implementation class
+  // than most services. Any scope makes the self-signed JWTs unusable with
+  // storage, but they remain usable with other services. We need to disable
+  // self-signed JWTs in the implementation class as it is unaware of the
+  // storage service limitations.
   auto enable_self_signed_jwt = !ServiceAccountUseOAuth(info);
   return {std::move(info.client_email), std::move(info.private_key_id),
           std::move(info.private_key),  std::move(info.token_uri),
