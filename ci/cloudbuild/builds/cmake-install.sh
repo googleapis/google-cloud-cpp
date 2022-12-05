@@ -164,8 +164,9 @@ env -C "${out_dir}" ctest "${ctest_args[@]}"
 
 # Tests the installed artifacts by building and running the quickstarts.
 # shellcheck disable=SC2046
-libraries="$(printf ";%s" $(features::list_full | grep -v grafeas))"
-libraries="${libraries:1}"
+libraries="$(printf "%s;" $(features::libraries))"
+# GCS+gRPC is not a library, but it has a quickstart.
+libraries="${libraries}experimental-storage-grpc"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
@@ -178,6 +179,7 @@ cmake --build "${PROJECT_ROOT}/cmake-out/quickstart"
 rm -rf "${INSTALL_PREFIX:?}"/{include,lib64}
 cmake --install cmake-out --component google_cloud_cpp_runtime
 quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
+quickstart::run_gcs_grpc_quickstart "${INSTALL_PREFIX}"
 
 # Be a little more explicit because we often run this manually
 io::log_h1 "SUCCESS"
