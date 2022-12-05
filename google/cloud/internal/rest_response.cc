@@ -139,7 +139,7 @@ StatusCode MapHttpCodeToStatus(std::int32_t code) {
 bool IsHttpSuccess(RestResponse const& response) {
   static_assert(HttpStatusCode::kMinSuccess < HttpStatusCode::kMinNotSuccess,
                 "Invalid HTTP code success range");
-  return response.StatusCode() <= HttpStatusCode::kMinNotSuccess &&
+  return response.StatusCode() < HttpStatusCode::kMinNotSuccess &&
          response.StatusCode() >= HttpStatusCode::kMinSuccess;
 }
 

@@ -97,6 +97,7 @@ TEST(RestResponse, IsHttpSuccessVsError) {
       {HttpStatusCode::kOk, true},
       {HttpStatusCode::kCreated, true},
       {HttpStatusCode::kContinue, false},
+      {HttpStatusCode::kMinNotSuccess, false},
       {HttpStatusCode::kForbidden, false},
       {HttpStatusCode::kNotModified, false},
   };
