@@ -169,17 +169,13 @@ TEST(ComputeEngineCredentialsTest, ParseComputeEngineRefreshResponse) {
   EXPECT_CALL(std::move(*mock_response), ExtractPayload)
       .WillOnce(Return(ByMove(std::move(mock_http_payload))));
 
-  auto expires_in = 3600;
-  auto clock_value = 2000;
+  auto const now = std::chrono::system_clock::now();
+  auto const expires_in = std::chrono::seconds(3600);
 
-  auto status = ParseComputeEngineRefreshResponse(
-      *mock_response, std::chrono::system_clock::from_time_t(clock_value));
+  auto status = ParseComputeEngineRefreshResponse(*mock_response, now);
   EXPECT_STATUS_OK(status);
   auto token = *status;
-  EXPECT_EQ(std::chrono::time_point_cast<std::chrono::seconds>(token.expiration)
-                .time_since_epoch()
-                .count(),
-            clock_value + expires_in);
+  EXPECT_EQ(token.expiration, now + expires_in);
   EXPECT_EQ(token.token, "mysupersecrettoken");
 }
 

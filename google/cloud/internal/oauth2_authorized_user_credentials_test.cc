@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
@@ -263,20 +264,12 @@ TEST_F(AuthorizedUserCredentialsTest, ParseAuthorizedUserRefreshResponse) {
     return MakeMockHttpPayloadSuccess(r1);
   });
 
-  auto expires_in = 1000;
-  auto clock_value = 2000;
-  auto status = ParseAuthorizedUserRefreshResponse(
-      *mock_response, std::chrono::system_clock::from_time_t(clock_value));
+  auto const now = std::chrono::system_clock::now();
+  auto const expires_in = std::chrono::seconds(1000);
+  auto status = ParseAuthorizedUserRefreshResponse(*mock_response, now);
   EXPECT_STATUS_OK(status);
   auto token = *status;
-  EXPECT_EQ(
-      std::chrono::time_point_cast<std::chrono::seconds>(token.expiration)
-          .time_since_epoch()
-          .count(),
-      std::chrono::time_point_cast<std::chrono::seconds>(
-          std::chrono::system_clock::from_time_t(clock_value + expires_in))
-          .time_since_epoch()
-          .count());
+  EXPECT_EQ(token.expiration, now + expires_in);
   EXPECT_EQ(token.token, "access-token-r1");
 }
 

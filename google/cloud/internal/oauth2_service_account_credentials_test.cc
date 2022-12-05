@@ -686,7 +686,7 @@ TEST(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
   ScopedEnvironment disable_self_signed_jwt(
       "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
 
-  auto const expires_in = 1000;
+  auto const expires_in = std::chrono::seconds(1000);
   std::string r1 = R"""({
     "token_type": "Type",
     "access_token": "access-token-r1",
@@ -703,7 +703,7 @@ TEST(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
   auto status = ParseServiceAccountRefreshResponse(*mock_response1, now);
   EXPECT_STATUS_OK(status);
   auto token = *status;
-  EXPECT_EQ(token.expiration, now + std::chrono::seconds(expires_in));
+  EXPECT_EQ(token.expiration, now + expires_in);
   EXPECT_EQ(token.token, "access-token-r1");
 }
 
