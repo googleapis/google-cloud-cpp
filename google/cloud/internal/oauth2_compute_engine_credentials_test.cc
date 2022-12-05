@@ -110,9 +110,10 @@ TEST(ComputeEngineCredentialsTest,
   ComputeEngineCredentials credentials(alias, Options{},
                                        std::move(mock_rest_client));
   // Calls Refresh to obtain the access token for our authorization header.
-  EXPECT_EQ(std::make_pair(std::string{"Authorization"},
-                           std::string{"tokentype mysupersecrettoken"}),
-            credentials.AuthorizationHeader().value());
+  auto const now = std::chrono::system_clock::now();
+  auto const expected_token = internal::AccessToken{
+      "mysupersecrettoken", now + std::chrono::seconds(3600)};
+  EXPECT_EQ(expected_token, credentials.GetToken(now).value());
   // Make sure we obtain the scopes and email from the metadata server.
   EXPECT_EQ(email, credentials.service_account_email());
   EXPECT_THAT(credentials.scopes(), UnorderedElementsAre("scope1", "scope2"));
@@ -168,18 +169,14 @@ TEST(ComputeEngineCredentialsTest, ParseComputeEngineRefreshResponse) {
   EXPECT_CALL(std::move(*mock_response), ExtractPayload)
       .WillOnce(Return(ByMove(std::move(mock_http_payload))));
 
-  auto expires_in = 3600;
-  auto clock_value = 2000;
+  auto const now = std::chrono::system_clock::now();
+  auto const expires_in = std::chrono::seconds(3600);
 
-  auto status = ParseComputeEngineRefreshResponse(
-      *mock_response, std::chrono::system_clock::from_time_t(clock_value));
+  auto status = ParseComputeEngineRefreshResponse(*mock_response, now);
   EXPECT_STATUS_OK(status);
   auto token = *status;
-  EXPECT_EQ(std::chrono::time_point_cast<std::chrono::seconds>(token.expiration)
-                .time_since_epoch()
-                .count(),
-            clock_value + expires_in);
-  EXPECT_EQ(token.token, "tokentype mysupersecrettoken");
+  EXPECT_EQ(token.expiration, now + expires_in);
+  EXPECT_EQ(token.token, "mysupersecrettoken");
 }
 
 /// @test Parsing a metadata server response yields a ServiceAccountMetadata.
@@ -329,12 +326,13 @@ TEST(ComputeEngineCredentialsTest, FailedRefresh) {
   }
   ComputeEngineCredentials credentials(alias, Options{},
                                        std::move(mock_rest_client));
-  auto status = credentials.AuthorizationHeader();
+  auto const now = std::chrono::system_clock::now();
+  auto status = credentials.GetToken(now);
   EXPECT_THAT(status, StatusIs(StatusCode::kAborted,
                                HasSubstr("Fake Curl error / token")));
-  status = credentials.AuthorizationHeader();
+  status = credentials.GetToken(now);
   EXPECT_THAT(status, Not(IsOk()));
-  status = credentials.AuthorizationHeader();
+  status = credentials.GetToken(now);
   EXPECT_THAT(status,
               StatusIs(Not(StatusCode::kOk),
                        HasSubstr("Could not find all required fields")));

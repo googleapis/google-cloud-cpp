@@ -158,14 +158,9 @@ StatusOr<internal::AccessToken> ParseServiceAccountRefreshResponse(
     return AsStatus(status_code, error_payload);
   }
 
-  // Response should have the attributes "access_token", "expires_in", and
-  // "token_type".
-  std::string header_value = access_token.value("token_type", "");
-  header_value += ' ';
-  header_value += access_token.value("access_token", "");
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
-  auto new_expiration = now + expires_in;
-  return internal::AccessToken{std::move(header_value), new_expiration};
+  return internal::AccessToken{access_token.value("access_token", ""),
+                               now + expires_in};
 }
 
 StatusOr<std::string> MakeSelfSignedJWT(
@@ -202,10 +197,8 @@ StatusOr<std::string> MakeSelfSignedJWT(
 
 ServiceAccountCredentials::ServiceAccountCredentials(
     ServiceAccountCredentialsInfo info, Options options,
-    std::unique_ptr<rest_internal::RestClient> rest_client,
-    CurrentTimeFn current_time_fn)
+    std::unique_ptr<rest_internal::RestClient> rest_client)
     : info_(std::move(info)),
-      current_time_fn_(std::move(current_time_fn)),
       rest_client_(std::move(rest_client)),
       options_(internal::MergeOptions(
           std::move(options),
@@ -217,10 +210,10 @@ ServiceAccountCredentials::ServiceAccountCredentials(
   }
 }
 
-StatusOr<std::pair<std::string, std::string>>
-ServiceAccountCredentials::AuthorizationHeader() {
-  std::unique_lock<std::mutex> lock(mu_);
-  return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
+StatusOr<internal::AccessToken> ServiceAccountCredentials::GetToken(
+    std::chrono::system_clock::time_point tp) {
+  if (UseOAuth()) return GetTokenOAuth(tp);
+  return GetTokenSelfSigned(tp);
 }
 
 StatusOr<std::vector<std::uint8_t>> ServiceAccountCredentials::SignBlob(
@@ -355,15 +348,10 @@ bool ServiceAccountCredentials::UseOAuth() {
   return ServiceAccountUseOAuth(info_);
 }
 
-StatusOr<internal::AccessToken> ServiceAccountCredentials::Refresh() {
-  if (UseOAuth()) return RefreshOAuth();
-  return RefreshSelfSigned();
-}
-
-StatusOr<internal::AccessToken> ServiceAccountCredentials::RefreshOAuth()
-    const {
+StatusOr<internal::AccessToken> ServiceAccountCredentials::GetTokenOAuth(
+    std::chrono::system_clock::time_point tp) const {
   rest_internal::RestRequest request;
-  auto payload = CreateServiceAccountRefreshPayload(info_, current_time_fn_());
+  auto payload = CreateServiceAccountRefreshPayload(info_, tp);
   StatusOr<std::unique_ptr<rest_internal::RestResponse>> response =
       rest_client_->Post(request, payload);
   if (!response.ok()) return std::move(response).status();
@@ -371,16 +359,14 @@ StatusOr<internal::AccessToken> ServiceAccountCredentials::RefreshOAuth()
       std::move(response.value());
   if (real_response->StatusCode() >= 300)
     return AsStatus(std::move(*real_response));
-  return ParseServiceAccountRefreshResponse(*real_response, current_time_fn_());
+  return ParseServiceAccountRefreshResponse(*real_response, tp);
 }
 
-StatusOr<internal::AccessToken> ServiceAccountCredentials::RefreshSelfSigned()
-    const {
-  auto const tp = current_time_fn_();
+StatusOr<internal::AccessToken> ServiceAccountCredentials::GetTokenSelfSigned(
+    std::chrono::system_clock::time_point tp) const {
   auto token = MakeSelfSignedJWT(info_, tp);
   if (!token) return std::move(token).status();
-  return internal::AccessToken{"Bearer " + *token,
-                               tp + GoogleOAuthAccessTokenLifetime()};
+  return internal::AccessToken{*token, tp + GoogleOAuthAccessTokenLifetime()};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
