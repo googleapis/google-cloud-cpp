@@ -102,22 +102,6 @@ function (_grpc_fix_grpc_cpp_plugin_target)
     endif ()
 endfunction ()
 
-# The gRPC::* targets sometimes lack the right definitions to compile cleanly on
-# WIN32
-function (_grpc_fix_grpc_target_definitions)
-    # Including gRPC headers without this definition results in a build error.
-    if (WIN32)
-        set_property(
-            TARGET gRPC::grpc
-            APPEND
-            PROPERTY INTERFACE_COMPILE_DEFINITIONS _WIN32_WINNT=0x600)
-        set_property(
-            TARGET gRPC::grpc++
-            APPEND
-            PROPERTY INTERFACE_COMPILE_DEFINITIONS _WIN32_WINNT=0x600)
-    endif ()
-endfunction ()
-
 # First try to use the `gRPCConfig.cmake` or `grpc-config.cmake` file if it was
 # installed. This is common on systems (or package managers) where gRPC was
 # compiled and installed with `CMake`.
@@ -131,7 +115,6 @@ endif ()
 
 if (gRPC_FOUND)
     _grpc_fix_grpc_cpp_plugin_target()
-    _grpc_fix_grpc_target_definitions()
     return()
 endif ()
 
