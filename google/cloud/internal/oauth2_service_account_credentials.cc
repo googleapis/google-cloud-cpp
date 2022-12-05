@@ -80,8 +80,9 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
       // "token_uri" attribute in the JSON object.  In this case, we try using
       // the default value.
       credentials.value(token_uri_key, default_token_uri),
-      /*scopes*/ {},
-      /*subject*/ {}};
+      /*scopes=*/absl::nullopt,
+      /*subject=*/absl::nullopt,
+      /*enable_self_signed_jwt=*/true};
 }
 
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
@@ -332,13 +333,17 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
                                        kP12PrivateKeyIdMarker,
                                        std::move(private_key),
                                        GoogleOAuthRefreshEndpoint(),
-                                       /*scopes*/ {},
-                                       /*subject*/ {}};
+                                       /*scopes=*/{},
+                                       /*subject=*/{},
+                                       /*enable_self_signed_jwt=*/false};
 }
 #include "google/cloud/internal/diagnostics_pop.inc"
 
 bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {
-  if (info.private_key_id == kP12PrivateKeyIdMarker) return true;
+  if (info.private_key_id == kP12PrivateKeyIdMarker ||
+      !info.enable_self_signed_jwt) {
+    return true;
+  }
   auto disable_jwt = google::cloud::internal::GetEnv(
       "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT");
   return disable_jwt.has_value();

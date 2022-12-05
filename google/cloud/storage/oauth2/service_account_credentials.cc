@@ -56,10 +56,7 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
     std::chrono::system_clock::time_point now) {
   return oauth2_internal::AssertionComponentsFromInfo(
-      oauth2_internal::ServiceAccountCredentialsInfo{
-          info.client_email, info.private_key_id, info.private_key,
-          info.token_uri, info.scopes, info.subject},
-      now);
+      internal::MapServiceAccountCredentialsInfo(info), now);
 }
 
 std::string MakeJWTAssertion(std::string const& header,
@@ -73,10 +70,7 @@ std::string CreateServiceAccountRefreshPayload(
     ServiceAccountCredentialsInfo const& info, std::string const&,
     std::chrono::system_clock::time_point now) {
   auto params = oauth2_internal::CreateServiceAccountRefreshPayload(
-      oauth2_internal::ServiceAccountCredentialsInfo{
-          info.client_email, info.private_key_id, info.private_key,
-          info.token_uri, info.scopes, info.subject},
-      now);
+      internal::MapServiceAccountCredentialsInfo(info), now);
   return absl::StrJoin(params, "&", absl::PairFormatter("="));
 }
 
@@ -111,26 +105,46 @@ ParseServiceAccountRefreshResponse(
 StatusOr<std::string> MakeSelfSignedJWT(
     ServiceAccountCredentialsInfo const& info,
     std::chrono::system_clock::time_point tp) {
-  // This only runs about once an hour, the copies are ugly, but should be
-  // harmless.
-  oauth2_internal::ServiceAccountCredentialsInfo mapped;
-  mapped.client_email = info.client_email;
-  mapped.private_key_id = info.private_key_id;
-  mapped.private_key = info.private_key;
-  mapped.token_uri = info.token_uri;
-  mapped.scopes = info.scopes;
-  mapped.subject = info.subject;
+  auto mapped = internal::MapServiceAccountCredentialsInfo(info);
   return ::google::cloud::oauth2_internal::MakeSelfSignedJWT(mapped, tp);
 }
 
 bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info) {
   if (info.private_key_id == kP12PrivateKeyIdMarker) return true;
+  // Self-signed JWTs do not work in GCS if they have scopes.
+  if (info.scopes.has_value()) return true;
   auto disable_jwt = google::cloud::internal::GetEnv(
       "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT");
   return disable_jwt.has_value();
 }
 
+ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
+                          std::chrono::system_clock>::
+    ServiceAccountCredentials(ServiceAccountCredentialsInfo info,
+                              ChannelOptions const& options)
+    : impl_(absl::make_unique<oauth2_internal::ServiceAccountCredentials>(
+          internal::MapServiceAccountCredentialsInfo(std::move(info)),
+          Options{}.set<CARootsFilePathOption>(options.ssl_root_path()))) {}
+
 }  // namespace oauth2
+
+namespace internal {
+
+oauth2_internal::ServiceAccountCredentialsInfo MapServiceAccountCredentialsInfo(
+    oauth2::ServiceAccountCredentialsInfo info) {
+  // Storage has more stringent requirements w.r.t. self-signed JWTs
+  // than most services. Any scope makes the self-signed JWTs unusable with
+  // storage, but they remain usable with other services. We need to disable
+  // self-signed JWTs in the implementation class as it is unaware of the
+  // storage service limitations.
+  auto enable_self_signed_jwt = !ServiceAccountUseOAuth(info);
+  return {std::move(info.client_email), std::move(info.private_key_id),
+          std::move(info.private_key),  std::move(info.token_uri),
+          std::move(info.scopes),       std::move(info.subject),
+          enable_self_signed_jwt};
+}
+
+}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
