@@ -113,9 +113,7 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
   auto client = client_factory_(options_);
   auto response = client->Post(request, form_data);
   if (!response) return std::move(response).status();
-  if (MapHttpCodeToStatus((*response)->StatusCode()) != StatusCode::kOk) {
-    return AsStatus(std::move(**response));
-  }
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
   auto payload = rest_internal::ReadAll(std::move(**response).ExtractPayload());
   if (!payload) return std::move(payload.status());
 

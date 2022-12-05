@@ -64,12 +64,8 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
   };
 
   auto response = rest_client_->Post(rest_request, {payload.dump()});
-
   if (!response) return std::move(response).status();
-  if ((*response)->StatusCode() >=
-      rest_internal::HttpStatusCode::kMinNotSuccess) {
-    return AsStatus(std::move(**response));
-  }
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
   auto response_payload =
       rest_internal::ReadAll(std::move(**response).ExtractPayload());
   if (!response_payload.ok()) return response_payload.status();
