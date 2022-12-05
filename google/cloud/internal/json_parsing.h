@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_JSON_PARSING_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_JSON_PARSING_H
 
-#include "google/cloud/internal/error_metadata.h"
+#include "google/cloud/internal/error_context.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/strings/string_view.h"
