@@ -15,5 +15,5 @@
 # gRPC may leak threads created in this function. This bug is marked as fixed,
 # but the problem is basically the same:
 #   https://github.com/grpc/grpc/issues/22479
-# inside Google b/256167587 has more details.
+# Inside Google, b/256167587 has more details.
 thread:ThreadInternalsPosix
