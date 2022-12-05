@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_EXTERNAL_ACCOUNT_TOKEN_SOURCE_URL_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_EXTERNAL_ACCOUNT_TOKEN_SOURCE_URL_H
 
-#include "google/cloud/internal/error_metadata.h"
+#include "google/cloud/internal/error_context.h"
 #include "google/cloud/internal/oauth2_external_account_token_source.h"
 #include "google/cloud/version.h"
 #include <nlohmann/json.hpp>

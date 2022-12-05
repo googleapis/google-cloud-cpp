@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_EXTERNAL_ACCOUNT_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_EXTERNAL_ACCOUNT_CREDENTIALS_H
 
-#include "google/cloud/internal/error_metadata.h"
+#include "google/cloud/internal/error_context.h"
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/oauth2_external_account_token_source.h"
 #include "google/cloud/internal/rest_client.h"

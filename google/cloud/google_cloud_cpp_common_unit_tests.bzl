@@ -32,7 +32,7 @@ google_cloud_cpp_common_unit_tests = [
     "internal/compiler_info_test.cc",
     "internal/compute_engine_util_test.cc",
     "internal/credentials_impl_test.cc",
-    "internal/error_metadata_test.cc",
+    "internal/error_context_test.cc",
     "internal/filesystem_test.cc",
     "internal/format_time_point_test.cc",
     "internal/future_impl_test.cc",
