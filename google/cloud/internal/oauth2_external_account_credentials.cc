@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
-#include "google/cloud/internal/external_account_parsing.h"
 #include "google/cloud/internal/external_account_token_source_file.h"
 #include "google/cloud/internal/external_account_token_source_url.h"
+#include "google/cloud/internal/json_parsing.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
 #include <nlohmann/json.hpp>

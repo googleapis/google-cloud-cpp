@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/external_account_token_source_url.h"
-#include "google/cloud/internal/external_account_parsing.h"
 #include "google/cloud/internal/external_account_source_format.h"
+#include "google/cloud/internal/json_parsing.h"
 #include "google/cloud/internal/make_status.h"
 #include <map>
 #include <string>
