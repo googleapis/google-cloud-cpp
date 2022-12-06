@@ -19,10 +19,13 @@ set -euo pipefail
 source "$(dirname "$0")/../../lib/init.sh"
 source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/integration.sh
+source module ci/cloudbuild/builds/lib/features.sh
 
 export CC=clang
 export CXX=clang++
 export CTCACHE_DIR=~/.cache/ctcache
+read -r ENABLED_FEATURES < <(features::always_build_cmake)
+ENABLED_FEATURES="${ENABLED_FEATURES},experimental-storage-grpc,generator"
 mapfile -t cmake_args < <(cmake::common_args)
 
 # See https://github.com/matus-chochlik/ctcache for docs about the clang-tidy-cache
@@ -31,8 +34,7 @@ mapfile -t cmake_args < <(cmake::common_args)
 cmake "${cmake_args[@]}" \
   -DCMAKE_CXX_CLANG_TIDY=/usr/local/bin/clang-tidy-wrapper \
   -DCMAKE_CXX_STANDARD=14 \
-  -DGOOGLE_CLOUD_CPP_ENABLE="bigtable;bigquery;generator;iam;logging;pubsub;pubsublite;spanner;storage" \
-  -DGOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC=ON
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 cmake --build cmake-out
 
 mapfile -t ctest_args < <(ctest::common_args)
