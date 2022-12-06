@@ -94,40 +94,6 @@ struct RestVisitor : public CredentialsVisitor {
   }
 };
 
-struct LegacyVisitor : public CredentialsVisitor {
-  std::shared_ptr<oauth2::Credentials> result;
-
-  void visit(InsecureCredentialsConfig&) override {
-    result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
-  }
-  void visit(GoogleDefaultCredentialsConfig&) override {
-    auto credentials =
-        google::cloud::storage::oauth2::GoogleDefaultCredentials();
-    if (credentials) {
-      result = *std::move(credentials);
-      return;
-    }
-    result =
-        std::make_shared<ErrorCredentials>(std::move(credentials).status());
-  }
-  void visit(AccessTokenConfig& config) override {
-    result = std::make_shared<AccessTokenCredentials>(config.access_token());
-  }
-  void visit(ImpersonateServiceAccountConfig& config) override {
-    result = std::make_shared<ImpersonateServiceAccountCredentials>(config);
-  }
-  void visit(ServiceAccountConfig& cfg) override {
-    auto credentials = google::cloud::storage::oauth2::
-        CreateServiceAccountCredentialsFromJsonContents(cfg.json_object());
-    if (credentials) {
-      result = *std::move(credentials);
-      return;
-    }
-    result =
-        std::make_shared<ErrorCredentials>(std::move(credentials).status());
-  }
-};
-
 }  // namespace
 
 std::shared_ptr<oauth2::Credentials> MapCredentials(
