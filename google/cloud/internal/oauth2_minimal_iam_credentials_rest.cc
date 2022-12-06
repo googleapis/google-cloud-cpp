@@ -115,7 +115,7 @@ StatusOr<internal::AccessToken> ParseGenerateAccessTokenResponse(
   if (IsHttpError(response)) return AsStatus(std::move(response));
   auto response_payload =
       rest_internal::ReadAll(std::move(response).ExtractPayload());
-  if (!response_payload.ok()) return response_payload.status();
+  if (!response_payload.ok()) return std::move(response_payload).status();
   auto parsed = nlohmann::json::parse(*response_payload, nullptr, false);
   if (!parsed.is_object()) {
     return InvalidArgumentError("cannot parse response as a JSON object",
