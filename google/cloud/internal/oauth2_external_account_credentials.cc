@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/external_account_token_source_file.h"
 #include "google/cloud/internal/external_account_token_source_url.h"
 #include "google/cloud/internal/json_parsing.h"
@@ -195,7 +196,7 @@ StatusOr<internal::AccessToken>
 ExternalAccountCredentials::GetTokenImpersonation(
     std::string const& access_token, internal::ErrorContext const& ec) {
   auto request = rest_internal::RestRequest(info_.impersonation_config->url);
-  request.AddHeader("Authorization", "Bearer " + access_token);
+  request.AddHeader("Authorization", absl::StrCat("Bearer ", access_token));
   request.AddHeader("Content-Type", "application/json");
   auto const lifetime = info_.impersonation_config->token_lifetime;
   auto request_payload = nlohmann::json{

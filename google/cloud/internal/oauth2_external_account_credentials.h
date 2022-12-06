@@ -32,12 +32,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * The (optional) configuration for service account impersonation.
  *
- * External accounts may require a call tt ohe IAM credentials service to
+ * External accounts may require a call to the IAM Credentials service to
  * convert the initial access token to a specific service account access token.
  * Yes, this means up to 3 tokens may be involved:
- * - First the subject token obtained from a file, URL or external program.
+ * - First the subject token obtained from a file, URL, or external program.
  * - Then the access token exchanged from the subject token via Google's
- *   Secure Token Service (STS)
+ *   Secure Token Service (STS).
  * - And then the access token exchanged from the initial access token to a
  *   different service account via IAM credentials.
  *
