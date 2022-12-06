@@ -79,7 +79,7 @@ class Example {
   int Run(int argc, char const* const argv[]);
 
  private:
-  void PrintUsage(std::string const& cmd, std::string const& msg);
+  void PrintUsage(std::string const& cmd, std::string const& msg, int const& printFullUsage);
 
   std::map<std::string, CommandType> commands_;
   std::string full_usage_;
@@ -95,3 +95,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 #endif  // GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_EXAMPLE_DRIVER_H
+

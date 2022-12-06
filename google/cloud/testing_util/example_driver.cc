@@ -41,13 +41,18 @@ Example::Example(std::map<std::string, CommandType> commands)
 }
 
 int Example::Run(int argc, char const* const argv[]) try {
+
+  std::vector<std::string> commandLineArgs(argc-1);
+  for(int i=0;i<argc-1;i++) {
+    commandLineArgs[i] = argv[i+1];
+  }
   bool auto_run =
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES")
           .value_or("") == "yes";
   if (argc == 1 && auto_run) {
     auto entry = commands_.find("auto");
     if (entry == commands_.end()) {
-      PrintUsage(argv[0], "Requested auto run but there is no 'auto' command");
+      PrintUsage(argv[0], "Requested auto run but there is no 'auto' command",1);
       return 1;
     }
     entry->second({});
@@ -55,26 +60,47 @@ int Example::Run(int argc, char const* const argv[]) try {
   }
 
   if (argc < 2) {
-    PrintUsage(argv[0], "Missing command");
+    PrintUsage(argv[0], "Missing command",1);
     return 1;
   }
 
-  std::string const command_name = argv[1];
-  auto command = commands_.find(command_name);
-    if (commands_.end() == command) {
-        if (command_name == "--help") {
-            PrintUsage(argv[0], "");
-            return 0;
-        }
-        PrintUsage(argv[0], "Unknown command: " + command_name);
-        return 1;
-    }
+int flagIndex = -1;
+int cmdIndex = -1;
+for(int i=0;i<commandLineArgs.size();i++) {
+  if(commandLineArgs[i] == "--help"){
+      flagIndex = i;
+      break;
+  }
+}
+for(int i=0;i<commandLineArgs.size();i++) {
+  if(commands_.find(commandLineArgs[i]) != commands_.end()) {
+    cmdIndex = i;
+    break;
+  }  
+}
 
-  command->second({argv + 2, argv + argc});
+if(flagIndex == -1 and cmdIndex != -1) {
+  PrintUsage(commandLineArgs[cmdIndex], "",0);
+  return 1;
+}
 
+if(flagIndex != -1 and cmdIndex != -1){
+  PrintUsage(commandLineArgs[cmdIndex],"",0);
   return 0;
+}
+
+if(flagIndex == -1 and cmdIndex == -1) {
+  PrintUsage(argv[0], "",1);
+  return 1;
+}
+
+if(flagIndex != -1 and cmdIndex == -1) {
+  PrintUsage(argv[0], "",1);
+  return 0;
+}
+
 } catch (Usage const& u) {
-  PrintUsage(argv[0], u.what());
+  PrintUsage(argv[0], u.what(),1);
   return 0;
 } catch (google::cloud::Status const& status) {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
@@ -86,12 +112,18 @@ int Example::Run(int argc, char const* const argv[]) try {
   throw;
 }
 
-void Example::PrintUsage(std::string const& cmd, std::string const& msg) {
+void Example::PrintUsage(std::string const& cmd, std::string const& msg, int const& printFullUsage) {
   auto last_slash = cmd.find_last_of('/');
   auto program = cmd.substr(last_slash + 1);
   if (!msg.empty()) std::cerr << msg << "\n";
+  if(printFullUsage){
   std::cerr << "Usage: " << program << " <command> [arguments]\n\n"
             << "Commands:\n" << full_usage_;
+  }
+  else {
+    std::cerr << "Usage: " << program << " <command> [arguments]\n\n";
+  }
+
 }
 
 void CheckEnvironmentVariablesAreSet(std::vector<std::string> const& vars) {
