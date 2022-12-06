@@ -85,11 +85,11 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/67b2d7c2fb11188776bc398f02c67fccd8187502.tar.gz",
-                "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/67b2d7c2fb11188776bc398f02c67fccd8187502.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/83c3605afb5a39952bf0a0809875d41cf2a558ca.tar.gz",
+                "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/83c3605afb5a39952bf0a0809875d41cf2a558ca.tar.gz",
             ],
-            strip_prefix = "googleapis-67b2d7c2fb11188776bc398f02c67fccd8187502",
-            sha256 = "bddf2643977d1a061cb321d5c30ea92da6f3feb6e5d2e204182855b6240de81a",
+            strip_prefix = "googleapis-83c3605afb5a39952bf0a0809875d41cf2a558ca",
+            sha256 = "91c6014e4dd039b01652e084a1f13105dc37346e9a3ded70438bdbc01eeb07e9",
             build_file = Label("//bazel:googleapis.BUILD"),
             # Scaffolding for patching googleapis after download. For example:
             #   patches = ["googleapis.patch"]
@@ -130,11 +130,11 @@ def google_cloud_cpp_deps():
     if "com_github_grpc_grpc" not in native.existing_rules():
         http_archive(
             name = "com_github_grpc_grpc",
-            strip_prefix = "grpc-1.49.1",
+            strip_prefix = "grpc-1.51.1",
             urls = [
-                "https://github.com/grpc/grpc/archive/v1.49.1.tar.gz",
+                "https://github.com/grpc/grpc/archive/v1.51.1.tar.gz",
             ],
-            sha256 = "5071b630e2a14707ad060636990f1b25b0984bd168c7ea1ab95e48a3bdc0081f",
+            sha256 = "b55696fb249669744de3e71acc54a9382bea0dce7cd5ba379b356b12b82d4229",
         )
 
     # We use the cc_proto_library() rule from @com_google_protobuf, which
@@ -191,9 +191,9 @@ def google_cloud_cpp_deps():
     if "io_opentelemetry_cpp" not in native.existing_rules():
         http_archive(
             name = "io_opentelemetry_cpp",
-            strip_prefix = "opentelemetry-cpp-1.8.0",
+            strip_prefix = "opentelemetry-cpp-1.8.1",
             urls = [
-                "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.0.tar.gz",
+                "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.1.tar.gz",
             ],
-            sha256 = "8eddcbeae191a58d2d2a19305ed0a60776e43999eb29b64536566ba24506a6c1",
+            sha256 = "3d640201594b07f08dade9cd1017bd0b59674daca26223b560b9bb6bf56264c2",
         )

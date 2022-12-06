@@ -74,6 +74,21 @@ ManagedNotebookServiceLogging::AsyncCreateRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ManagedNotebookServiceLogging::AsyncUpdateRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::unique_ptr<grpc::ClientContext> context,
+          google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
+        return child_->AsyncUpdateRuntime(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceLogging::AsyncDeleteRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -146,6 +161,21 @@ ManagedNotebookServiceLogging::AsyncResetRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ManagedNotebookServiceLogging::AsyncUpgradeRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::unique_ptr<grpc::ClientContext> context,
+          google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
+        return child_->AsyncUpgradeRuntime(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceLogging::AsyncReportRuntimeEvent(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -172,6 +202,21 @@ ManagedNotebookServiceLogging::RefreshRuntimeTokenInternal(
         return child_->RefreshRuntimeTokenInternal(context, request);
       },
       context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ManagedNotebookServiceLogging::AsyncDiagnoseRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::unique_ptr<grpc::ClientContext> context,
+          google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
+        return child_->AsyncDiagnoseRuntime(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
 }
 
 future<StatusOr<google::longrunning::Operation>>

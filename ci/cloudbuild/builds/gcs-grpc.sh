@@ -31,6 +31,7 @@ excluded_rules=(
 
 mapfile -t args < <(bazel::common_args)
 # Run as many of the integration tests as possible using production and gRPC.
-readonly GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=media
+# TODO(#10379) - restore the media integration tests
+readonly GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=none
 mapfile -t integration_args < <(integration::bazel_args)
 bazel test "${args[@]}" "${integration_args[@]}" -- //google/cloud/storage/... "${excluded_rules[@]}"

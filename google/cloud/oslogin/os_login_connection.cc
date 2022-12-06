@@ -34,6 +34,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OsLoginServiceConnection::~OsLoginServiceConnection() = default;
 
+StatusOr<google::cloud::oslogin::common::SshPublicKey>
+OsLoginServiceConnection::CreateSshPublicKey(
+    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 Status OsLoginServiceConnection::DeletePosixAccount(
     google::cloud::oslogin::v1::DeletePosixAccountRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");

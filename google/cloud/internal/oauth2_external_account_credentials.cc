@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
-#include "google/cloud/internal/external_account_parsing.h"
 #include "google/cloud/internal/external_account_token_source_file.h"
 #include "google/cloud/internal/external_account_token_source_url.h"
+#include "google/cloud/internal/json_parsing.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/rest_client.h"
 #include <nlohmann/json.hpp>
@@ -113,9 +113,7 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
   auto client = client_factory_(options_);
   auto response = client->Post(request, form_data);
   if (!response) return std::move(response).status();
-  if (MapHttpCodeToStatus((*response)->StatusCode()) != StatusCode::kOk) {
-    return AsStatus(std::move(**response));
-  }
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
   auto payload = rest_internal::ReadAll(std::move(**response).ExtractPayload());
   if (!payload) return std::move(payload.status());
 
@@ -151,23 +149,10 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
             .WithMetadata("token_type", *token_type)
             .WithMetadata("issued_token_type", *issued_token_type));
   }
-  auto it = access.find("expires_in");
-  if (it == access.end() || !it->is_number_integer()) {
-    return InvalidArgumentError(
-        "expected a numeric `expires_in` field in the token exchange response",
-        GCP_ERROR_INFO()
-            .WithContext(std::move(ec))
-            .WithMetadata("expires_in",
-                          it == access.end() ? "not-found" : it->type_name()));
-  }
-  return internal::AccessToken{
-      *token, tp + std::chrono::seconds(it->get<std::int32_t>())};
-}
-
-StatusOr<std::pair<std::string, std::string>>
-ExternalAccountCredentials::AuthorizationHeader() {
-  return internal::UnimplementedError(
-      "WIP(#10316) - use decorator for credentials", GCP_ERROR_INFO());
+  auto expires_in =
+      ValidateIntField(access, "expires_in", "token-exchange-response", ec);
+  if (!expires_in) return std::move(expires_in).status();
+  return internal::AccessToken{*token, tp + std::chrono::seconds(*expires_in)};
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

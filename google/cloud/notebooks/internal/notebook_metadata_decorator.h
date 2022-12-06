@@ -147,6 +147,12 @@ class NotebookServiceMetadata : public NotebookServiceStub {
       google::cloud::notebooks::v1::RollbackInstanceRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncDiagnoseInstance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncUpgradeInstanceInternal(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

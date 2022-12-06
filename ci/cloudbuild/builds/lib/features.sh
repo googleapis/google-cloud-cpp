@@ -32,7 +32,7 @@ function features::always_build() {
     pubsub
     pubsublite
     # While these libraries are automatically generated, they contain
-    # hand-crafted tests
+    # hand-crafted tests.
     bigquery
     iam
     logging
@@ -50,8 +50,7 @@ function features::always_build_cmake() {
 function features::libraries() {
   local feature_list
   mapfile -t feature_list <ci/etc/full_feature_list
-  mapfile -t always < <(features::always_build)
-  printf "%s\n" "${feature_list[@]}" "${always[@]}" | sort -u
+  printf "%s\n" "${feature_list[@]}" | sort -u
 }
 
 function features::list_full() {

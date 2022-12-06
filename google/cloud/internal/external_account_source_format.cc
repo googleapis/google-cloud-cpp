@@ -14,7 +14,7 @@
 
 #include "google/cloud/internal/external_account_source_format.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/external_account_parsing.h"
+#include "google/cloud/internal/json_parsing.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {

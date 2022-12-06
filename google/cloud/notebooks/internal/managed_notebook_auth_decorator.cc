@@ -68,6 +68,25 @@ ManagedNotebookServiceAuth::AsyncCreateRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ManagedNotebookServiceAuth::AsyncUpdateRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateRuntime(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceAuth::AsyncDeleteRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -163,6 +182,25 @@ ManagedNotebookServiceAuth::AsyncResetRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ManagedNotebookServiceAuth::AsyncUpgradeRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpgradeRuntime(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceAuth::AsyncReportRuntimeEvent(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -189,6 +227,25 @@ ManagedNotebookServiceAuth::RefreshRuntimeTokenInternal(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->RefreshRuntimeTokenInternal(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ManagedNotebookServiceAuth::AsyncDiagnoseRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDiagnoseRuntime(cq, *std::move(context), request);
+      });
 }
 
 future<StatusOr<google::longrunning::Operation>>

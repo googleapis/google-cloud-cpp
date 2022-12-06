@@ -17,6 +17,7 @@
 
 #include "google/cloud//version.h"
 #include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/internal/error_context.h"
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/options.h"
@@ -36,6 +37,11 @@ struct GenerateAccessTokenRequest {
   std::vector<std::string> scopes;
   std::vector<std::string> delegates;
 };
+
+/// Parse the HTTP response from a `GenerateAccessToken()` call.
+StatusOr<google::cloud::internal::AccessToken> ParseGenerateAccessTokenResponse(
+    rest_internal::RestResponse& response,
+    google::cloud::internal::ErrorContext const& ec);
 
 /**
  * Wrapper for IAM Credentials intended for use with

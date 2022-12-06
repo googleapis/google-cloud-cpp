@@ -266,7 +266,7 @@ absl::optional<std::string> GetMetadata(RestClient& metadata_server,
   auto response = *std::move(response_status);
   auto const status_code = response->StatusCode();
   auto contents = ReadAll(std::move(*response).ExtractPayload());
-  if (status_code != 200) return absl::nullopt;
+  if (status_code != rest_internal::HttpStatusCode::kOk) return absl::nullopt;
   if (!contents) return absl::nullopt;
   // A lot of metadata attributes have the full resource name (e.e.,
   // projects/.../zones/..), we just want the last portion.

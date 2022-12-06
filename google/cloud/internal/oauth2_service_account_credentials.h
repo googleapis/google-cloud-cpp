@@ -17,14 +17,12 @@
 
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/oauth2_credentials.h"
-#include "google/cloud/internal/oauth2_refreshing_credentials_wrapper.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include "absl/types/optional.h"
 #include <chrono>
-#include <mutex>
 #include <string>
 #include <vector>
 
@@ -51,6 +49,7 @@ struct ServiceAccountCredentialsInfo {
   absl::optional<std::set<std::string>> scopes;
   // See https://developers.google.com/identity/protocols/OAuth2ServiceAccount.
   absl::optional<std::string> subject;
+  bool enable_self_signed_jwt;
 };
 
 /// Indicates whether or not to use a self-signed JWT or issue a request to
@@ -193,9 +192,6 @@ StatusOr<std::string> MakeSelfSignedJWT(
  */
 class ServiceAccountCredentials : public oauth2_internal::Credentials {
  public:
-  using CurrentTimeFn =
-      std::function<std::chrono::time_point<std::chrono::system_clock>()>;
-
   /**
    * Creates an instance of ServiceAccountCredentials.
    *
@@ -207,13 +203,13 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
    */
   explicit ServiceAccountCredentials(
       ServiceAccountCredentialsInfo info, Options options = {},
-      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr,
-      CurrentTimeFn current_time_fn = std::chrono::system_clock::now);
+      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr);
 
   /**
    * Returns a key value pair for an "Authorization" header.
    */
-  StatusOr<std::pair<std::string, std::string>> AuthorizationHeader() override;
+  StatusOr<internal::AccessToken> GetToken(
+      std::chrono::system_clock::time_point tp) override;
 
   /**
    * Create a RSA SHA256 signature of the blob using the Credential object.
@@ -236,16 +232,14 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
 
  private:
   bool UseOAuth();
-  StatusOr<internal::AccessToken> Refresh();
-  StatusOr<internal::AccessToken> RefreshOAuth() const;
-  StatusOr<internal::AccessToken> RefreshSelfSigned() const;
+  StatusOr<internal::AccessToken> GetTokenOAuth(
+      std::chrono::system_clock::time_point tp) const;
+  StatusOr<internal::AccessToken> GetTokenSelfSigned(
+      std::chrono::system_clock::time_point tp) const;
 
   ServiceAccountCredentialsInfo info_;
-  CurrentTimeFn current_time_fn_;
   std::unique_ptr<rest_internal::RestClient> rest_client_;
   Options options_;
-  mutable std::mutex mu_;
-  RefreshingCredentialsWrapper refreshing_creds_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

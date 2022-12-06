@@ -79,6 +79,12 @@ class MockCloudMemcacheConnection : public memcache::CloudMemcacheConnection {
       future<StatusOr<google::cloud::memcache::v1::Instance>>, ApplyParameters,
       (google::cloud::memcache::v1::ApplyParametersRequest const& request),
       (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
+              RescheduleMaintenance,
+              (google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
+                   request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

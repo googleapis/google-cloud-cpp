@@ -58,6 +58,9 @@ class CloudMemcacheConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ApplyParameters(
       google::cloud::memcache::v1::ApplyParametersRequest const& request);
+
+  virtual google::cloud::Idempotency RescheduleMaintenance(
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request);
 };
 
 std::unique_ptr<CloudMemcacheConnectionIdempotencyPolicy>

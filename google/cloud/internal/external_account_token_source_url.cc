@@ -13,8 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/internal/external_account_token_source_url.h"
-#include "google/cloud/internal/external_account_parsing.h"
 #include "google/cloud/internal/external_account_source_format.h"
+#include "google/cloud/internal/json_parsing.h"
 #include "google/cloud/internal/make_status.h"
 #include <map>
 #include <string>
@@ -27,11 +27,6 @@ namespace {
 
 // Represent the headers in the credentials configuration file.
 using Headers = std::map<std::string, std::string>;
-
-bool IsSuccess(rest_internal::HttpStatusCode code) {
-  return rest_internal::HttpStatusCode::kMinSuccess <= code &&
-         code <= rest_internal::kMinRedirects;
-}
 
 Status DecorateHttpError(Status const& status,
                          internal::ErrorContext const& ec) {
@@ -53,7 +48,7 @@ StatusOr<std::string> FetchContents(HttpClientFactory const& client_factory,
   auto status = client->Get(request);
   if (!status) return DecorateHttpError(std::move(status).status(), ec);
   auto response = *std::move(status);
-  if (!IsSuccess(response->StatusCode())) {
+  if (IsHttpError(*response)) {
     return DecorateHttpError(rest_internal::AsStatus(std::move(*response)), ec);
   }
   auto payload = std::move(*response).ExtractPayload();

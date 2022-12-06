@@ -112,6 +112,38 @@ EnvironmentsLogging::AsyncDeleteEnvironment(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+EnvironmentsLogging::AsyncSaveSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::orchestration::airflow::service::v1::
+                 SaveSnapshotRequest const& request) {
+        return child_->AsyncSaveSnapshot(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EnvironmentsLogging::AsyncLoadSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::orchestration::airflow::service::v1::
+                 LoadSnapshotRequest const& request) {
+        return child_->AsyncLoadSnapshot(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 EnvironmentsLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

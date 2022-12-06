@@ -136,6 +136,17 @@ StatusCode MapHttpCodeToStatus(std::int32_t code) {
   return StatusCode::kUnknown;
 }
 
+bool IsHttpSuccess(RestResponse const& response) {
+  static_assert(HttpStatusCode::kMinSuccess < HttpStatusCode::kMinNotSuccess,
+                "Invalid HTTP code success range");
+  return response.StatusCode() < HttpStatusCode::kMinNotSuccess &&
+         response.StatusCode() >= HttpStatusCode::kMinSuccess;
+}
+
+bool IsHttpError(RestResponse const& response) {
+  return !IsHttpSuccess(response);
+}
+
 Status AsStatus(HttpStatusCode http_status_code, std::string payload) {
   auto const status_code = MapHttpCodeToStatus(http_status_code);
   if (status_code == StatusCode::kOk) return {};

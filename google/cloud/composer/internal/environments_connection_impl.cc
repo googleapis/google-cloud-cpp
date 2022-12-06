@@ -188,6 +188,70 @@ EnvironmentsConnectionImpl::DeleteEnvironment(
       __func__);
 }
 
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+EnvironmentsConnectionImpl::SaveSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::orchestration::airflow::service::v1::
+                 SaveSnapshotRequest const& request) {
+        return stub->AsyncSaveSnapshot(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::orchestration::airflow::service::v1::
+              SaveSnapshotResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->SaveSnapshot(request), polling_policy(), __func__);
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+EnvironmentsConnectionImpl::LoadSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::orchestration::airflow::service::v1::
+                 LoadSnapshotRequest const& request) {
+        return stub->AsyncLoadSnapshot(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::orchestration::airflow::service::v1::
+              LoadSnapshotResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->LoadSnapshot(request), polling_policy(), __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer_internal
 }  // namespace cloud

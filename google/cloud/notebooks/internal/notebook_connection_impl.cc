@@ -552,6 +552,36 @@ NotebookServiceConnectionImpl::RollbackInstance(
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
+NotebookServiceConnectionImpl::DiagnoseInstance(
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::notebooks::v1::Instance>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::notebooks::v1::DiagnoseInstanceRequest const&
+                 request) {
+        return stub->AsyncDiagnoseInstance(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::notebooks::v1::Instance>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DiagnoseInstance(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnectionImpl::UpgradeInstanceInternal(
     google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
         request) {

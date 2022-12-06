@@ -45,7 +45,6 @@ class CachedCredentials : public Credentials {
 
   StatusOr<internal::AccessToken> GetToken(
       std::chrono::system_clock::time_point now) override;
-  StatusOr<std::pair<std::string, std::string>> AuthorizationHeader() override;
   StatusOr<std::vector<std::uint8_t>> SignBlob(
       absl::optional<std::string> const& signing_service_account,
       std::string const& string_to_sign) const override;

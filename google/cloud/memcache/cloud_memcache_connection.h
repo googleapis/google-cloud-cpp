@@ -92,6 +92,10 @@ class CloudMemcacheConnection {
   virtual future<StatusOr<google::cloud::memcache::v1::Instance>>
   ApplyParameters(
       google::cloud::memcache::v1::ApplyParametersRequest const& request);
+
+  virtual future<StatusOr<google::cloud::memcache::v1::Instance>>
+  RescheduleMaintenance(
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request);
 };
 
 /**

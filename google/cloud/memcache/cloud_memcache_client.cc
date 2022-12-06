@@ -159,6 +159,28 @@ CloudMemcacheClient::ApplyParameters(
   return connection_->ApplyParameters(request);
 }
 
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheClient::RescheduleMaintenance(
+    std::string const& instance,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest::RescheduleType
+        reschedule_type,
+    google::protobuf::Timestamp const& schedule_time, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memcache::v1::RescheduleMaintenanceRequest request;
+  request.set_instance(instance);
+  request.set_reschedule_type(reschedule_type);
+  *request.mutable_schedule_time() = schedule_time;
+  return connection_->RescheduleMaintenance(request);
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheClient::RescheduleMaintenance(
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RescheduleMaintenance(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache
 }  // namespace cloud

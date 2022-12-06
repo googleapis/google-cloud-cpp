@@ -80,6 +80,28 @@ EnvironmentsConnection::DeleteEnvironment(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+EnvironmentsConnection::SaveSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::
+                   SaveSnapshotResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+EnvironmentsConnection::LoadSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::
+                   LoadSnapshotResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

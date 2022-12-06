@@ -38,6 +38,11 @@ class OsLoginServiceLogging : public OsLoginServiceStub {
                         TracingOptions tracing_options,
                         std::set<std::string> components);
 
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
+      grpc::ClientContext& context,
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request)
+      override;
+
   Status DeletePosixAccount(
       grpc::ClientContext& context,
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request)

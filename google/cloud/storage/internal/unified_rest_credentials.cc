@@ -61,18 +61,6 @@ class WrapRestCredentials : public oauth2::Credentials {
   std::shared_ptr<oauth2_internal::Credentials> impl_;
 };
 
-oauth2_internal::ServiceAccountCredentialsInfo MapInfo(
-    oauth2::ServiceAccountCredentialsInfo info) {
-  oauth2_internal::ServiceAccountCredentialsInfo result;
-  result.client_email = std::move(info.client_email);
-  result.private_key_id = std::move(info.private_key_id);
-  result.private_key = std::move(info.private_key);
-  result.token_uri = std::move(info.token_uri);
-  result.scopes = std::move(info.scopes);
-  result.subject = std::move(info.subject);
-  return result;
-}
-
 struct RestVisitor : public CredentialsVisitor {
   std::shared_ptr<oauth2::Credentials> result;
 
@@ -102,7 +90,7 @@ struct RestVisitor : public CredentialsVisitor {
     }
     result = std::make_shared<WrapRestCredentials>(
         std::make_shared<oauth2_internal::ServiceAccountCredentials>(
-            MapInfo(*std::move(info))));
+            internal::MapServiceAccountCredentialsInfo(*std::move(info))));
   }
 };
 

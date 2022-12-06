@@ -96,12 +96,12 @@ class DataTransferServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L315}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L317}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L425}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L427}
   /// [google.cloud.bigquery.datatransfer.v1.DataSource]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L315}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L317}
   ///
   StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
       std::string const& name, Options opts = {});
@@ -110,16 +110,16 @@ class DataTransferServiceClient {
   /// Retrieves a supported data source and returns its settings.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L425}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L427}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L315}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L317}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.GetDataSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L425}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L427}
   /// [google.cloud.bigquery.datatransfer.v1.DataSource]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L315}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L317}
   ///
   StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource> GetDataSource(
       google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
@@ -132,16 +132,16 @@ class DataTransferServiceClient {
   /// @param parent  Required. The BigQuery project id for which data sources
   /// should be returned.
   ///  Must be in the form: `projects/{project_id}` or
-  ///  `projects/{project_id}/locations/{location_id}
+  ///  `projects/{project_id}/locations/{location_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L315}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L317}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.ListDataSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L438}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L440}
   /// [google.cloud.bigquery.datatransfer.v1.DataSource]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L315}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L317}
   ///
   StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
   ListDataSources(std::string const& parent, Options opts = {});
@@ -150,16 +150,16 @@ class DataTransferServiceClient {
   /// Lists supported data sources and returns their settings.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L438}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ListDataSourcesRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L440}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L315}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DataSource,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L317}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.ListDataSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L438}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L440}
   /// [google.cloud.bigquery.datatransfer.v1.DataSource]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L315}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L317}
   ///
   StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
   ListDataSources(
@@ -181,7 +181,7 @@ class DataTransferServiceClient {
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.CreateTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L478}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L480}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
@@ -196,14 +196,14 @@ class DataTransferServiceClient {
   /// Creates a new data transfer configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L478}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::CreateTransferConfigRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L480}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.CreateTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L478}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L480}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
@@ -225,7 +225,7 @@ class DataTransferServiceClient {
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L528}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L541}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
@@ -240,14 +240,14 @@ class DataTransferServiceClient {
   /// All fields must be set, even if they are not updated.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L528}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::UpdateTransferConfigRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L541}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.UpdateTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L528}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L541}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
@@ -268,7 +268,7 @@ class DataTransferServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L584}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L607}
   ///
   Status DeleteTransferConfig(std::string const& name, Options opts = {});
 
@@ -277,12 +277,12 @@ class DataTransferServiceClient {
   /// runs and logs.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L584}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DeleteTransferConfigRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L607}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L584}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L607}
   ///
   Status DeleteTransferConfig(google::cloud::bigquery::datatransfer::v1::
                                   DeleteTransferConfigRequest const& request,
@@ -301,7 +301,7 @@ class DataTransferServiceClient {
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.GetTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L570}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L593}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
@@ -312,14 +312,14 @@ class DataTransferServiceClient {
   /// Returns information about a data transfer config.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L570}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L593}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.GetTransferConfigRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L570}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L593}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
@@ -333,7 +333,8 @@ class DataTransferServiceClient {
   /// Returns information about all transfer configs owned by a project in the
   /// specified location.
   ///
-  /// @param parent  Required. The BigQuery project id for which data sources
+  /// @param parent  Required. The BigQuery project id for which transfer
+  /// configs
   ///  should be returned: `projects/{project_id}` or
   ///  `projects/{project_id}/locations/{location_id}`
   /// @param opts Optional. Override the class-level options, such as retry and
@@ -342,7 +343,7 @@ class DataTransferServiceClient {
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.ListTransferConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L623}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L646}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
@@ -354,14 +355,14 @@ class DataTransferServiceClient {
   /// specified location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L623}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ListTransferConfigsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L646}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferConfig,google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.ListTransferConfigsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L623}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L646}
   /// [google.cloud.bigquery.datatransfer.v1.TransferConfig]:
   /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L112}
   ///
@@ -390,12 +391,12 @@ class DataTransferServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L796}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L819}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L775}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L798}
   /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L796}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L819}
   ///
   StatusOr<
       google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
@@ -412,16 +413,16 @@ class DataTransferServiceClient {
   /// DEPRECATED: use StartManualTransferRuns instead.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L775}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L798}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L796}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L819}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L775}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L798}
   /// [google.cloud.bigquery.datatransfer.v1.ScheduleTransferRunsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L796}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L819}
   ///
   StatusOr<
       google::cloud::bigquery::datatransfer::v1::ScheduleTransferRunsResponse>
@@ -436,16 +437,16 @@ class DataTransferServiceClient {
   /// for a specific run_time.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L802}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L825}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L839}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::StartManualTransferRunsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L862}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L802}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L825}
   /// [google.cloud.bigquery.datatransfer.v1.StartManualTransferRunsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L839}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L862}
   ///
   StatusOr<google::cloud::bigquery::datatransfer::v1::
                StartManualTransferRunsResponse>
@@ -463,12 +464,12 @@ class DataTransferServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferRun,google/cloud/bigquery/datatransfer/v1/transfer.proto#L209}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferRun,google/cloud/bigquery/datatransfer/v1/transfer.proto#L211}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.GetTransferRunRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L597}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L620}
   /// [google.cloud.bigquery.datatransfer.v1.TransferRun]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L209}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L211}
   ///
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
   GetTransferRun(std::string const& name, Options opts = {});
@@ -477,16 +478,16 @@ class DataTransferServiceClient {
   /// Returns information about the particular transfer run.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L597}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L620}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferRun,google/cloud/bigquery/datatransfer/v1/transfer.proto#L209}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferRun,google/cloud/bigquery/datatransfer/v1/transfer.proto#L211}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.GetTransferRunRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L597}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L620}
   /// [google.cloud.bigquery.datatransfer.v1.TransferRun]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L209}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L211}
   ///
   StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
   GetTransferRun(
@@ -505,7 +506,7 @@ class DataTransferServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L610}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L633}
   ///
   Status DeleteTransferRun(std::string const& name, Options opts = {});
 
@@ -513,12 +514,12 @@ class DataTransferServiceClient {
   /// Deletes the specified transfer run.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L610}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L633}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.datatransfer.v1.DeleteTransferRunRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L610}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L633}
   ///
   Status DeleteTransferRun(
       google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
@@ -536,12 +537,12 @@ class DataTransferServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferRun,google/cloud/bigquery/datatransfer/v1/transfer.proto#L209}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferRun,google/cloud/bigquery/datatransfer/v1/transfer.proto#L211}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.ListTransferRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L661}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L684}
   /// [google.cloud.bigquery.datatransfer.v1.TransferRun]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L209}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L211}
   ///
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>
   ListTransferRuns(std::string const& parent, Options opts = {});
@@ -550,16 +551,16 @@ class DataTransferServiceClient {
   /// Returns information about running and completed transfer runs.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L661}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ListTransferRunsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L684}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferRun,google/cloud/bigquery/datatransfer/v1/transfer.proto#L209}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferRun,google/cloud/bigquery/datatransfer/v1/transfer.proto#L211}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.ListTransferRunsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L661}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L684}
   /// [google.cloud.bigquery.datatransfer.v1.TransferRun]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L209}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L211}
   ///
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>
   ListTransferRuns(
@@ -576,12 +577,12 @@ class DataTransferServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferMessage,google/cloud/bigquery/datatransfer/v1/transfer.proto#L285}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferMessage,google/cloud/bigquery/datatransfer/v1/transfer.proto#L287}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.ListTransferLogsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L712}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L735}
   /// [google.cloud.bigquery.datatransfer.v1.TransferMessage]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L285}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L287}
   ///
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>
   ListTransferLogs(std::string const& parent, Options opts = {});
@@ -590,16 +591,16 @@ class DataTransferServiceClient {
   /// Returns log messages for the transfer run.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L712}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::ListTransferLogsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L735}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferMessage,google/cloud/bigquery/datatransfer/v1/transfer.proto#L285}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::TransferMessage,google/cloud/bigquery/datatransfer/v1/transfer.proto#L287}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.ListTransferLogsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L712}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L735}
   /// [google.cloud.bigquery.datatransfer.v1.TransferMessage]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L285}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/transfer.proto#L287}
   ///
   StreamRange<google::cloud::bigquery::datatransfer::v1::TransferMessage>
   ListTransferLogs(
@@ -617,12 +618,12 @@ class DataTransferServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L769}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L792}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L756}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L779}
   /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L769}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L792}
   ///
   StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
   CheckValidCreds(std::string const& name, Options opts = {});
@@ -632,16 +633,16 @@ class DataTransferServiceClient {
   /// requesting user.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L756}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L779}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L769}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L792}
   ///
   /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L756}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L779}
   /// [google.cloud.bigquery.datatransfer.v1.CheckValidCredsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L769}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L792}
   ///
   StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
   CheckValidCreds(
@@ -652,18 +653,19 @@ class DataTransferServiceClient {
   ///
   /// Enroll data sources in a user project. This allows users to create
   /// transfer configurations for these data sources. They will also appear in
-  /// the ListDataSources RPC and as such, will appear in the BigQuery UI
-  /// 'https://bigquery.cloud.google.com' (and the documents can be found at
-  /// https://cloud.google.com/bigquery/bigquery-web-ui and
-  /// https://cloud.google.com/bigquery/docs/working-with-transfers).
+  /// the ListDataSources RPC and as such, will appear in the [BigQuery
+  /// UI](https://console.cloud.google.com/bigquery), and the documents can be
+  /// found in the public guide for [BigQuery Web
+  /// UI](https://cloud.google.com/bigquery/bigquery-web-ui) and [Data Transfer
+  /// Service](https://cloud.google.com/bigquery/docs/working-with-transfers).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L846}
+  /// @googleapis_link{google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest,google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L869}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.bigquery.datatransfer.v1.EnrollDataSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L846}
+  /// @googleapis_reference_link{google/cloud/bigquery/datatransfer/v1/datatransfer.proto#L869}
   ///
   Status EnrollDataSources(
       google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
