@@ -31,21 +31,38 @@ namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-talent-options
+ */
 struct EventServiceRetryPolicyOption {
   using Type = std::shared_ptr<EventServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-talent-options
+ */
 struct EventServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-talent-options
+ */
 struct EventServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<EventServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to EventService.
+ *
+ * @ingroup google-cloud-talent-options
+ */
 using EventServicePolicyOptionList =
     OptionList<EventServiceRetryPolicyOption, EventServiceBackoffPolicyOption,
                EventServiceConnectionIdempotencyPolicyOption>;

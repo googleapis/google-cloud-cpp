@@ -65,15 +65,15 @@ class ExperimentsClient {
                              Options opts = {});
   ~ExperimentsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ExperimentsClient(ExperimentsClient const&) = default;
   ExperimentsClient& operator=(ExperimentsClient const&) = default;
   ExperimentsClient(ExperimentsClient&&) = default;
   ExperimentsClient& operator=(ExperimentsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ExperimentsClient const& a,
                          ExperimentsClient const& b) {
@@ -83,7 +83,7 @@ class ExperimentsClient {
                          ExperimentsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all experiments in the specified

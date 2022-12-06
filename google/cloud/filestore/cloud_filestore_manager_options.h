@@ -31,27 +31,49 @@ namespace cloud {
 namespace filestore {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-filestore-options
+ */
 struct CloudFilestoreManagerRetryPolicyOption {
   using Type = std::shared_ptr<CloudFilestoreManagerRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-filestore-options
+ */
 struct CloudFilestoreManagerBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct CloudFilestoreManagerPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-filestore-options
+ */
 struct CloudFilestoreManagerConnectionIdempotencyPolicyOption {
   using Type =
       std::shared_ptr<CloudFilestoreManagerConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-filestore-options
+ */
+struct CloudFilestoreManagerPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to CloudFilestoreManager.
+ *
+ * @ingroup google-cloud-filestore-options
+ */
 using CloudFilestoreManagerPolicyOptionList =
     OptionList<CloudFilestoreManagerRetryPolicyOption,
                CloudFilestoreManagerBackoffPolicyOption,

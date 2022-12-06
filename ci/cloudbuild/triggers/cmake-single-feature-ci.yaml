@@ -7,7 +7,7 @@ github:
 name: cmake-single-feature-ci
 substitutions:
   _BUILD_NAME: cmake-single-feature
-  _DISTRO: fedora-36
+  _DISTRO: fedora-36-cmake
   _TRIGGER_TYPE: ci
 tags:
 - ci

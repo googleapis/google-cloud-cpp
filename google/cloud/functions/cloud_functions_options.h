@@ -31,27 +31,49 @@ namespace cloud {
 namespace functions {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-functions-options
+ */
 struct CloudFunctionsServiceRetryPolicyOption {
   using Type = std::shared_ptr<CloudFunctionsServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-functions-options
+ */
 struct CloudFunctionsServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct CloudFunctionsServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-functions-options
+ */
 struct CloudFunctionsServiceConnectionIdempotencyPolicyOption {
   using Type =
       std::shared_ptr<CloudFunctionsServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-functions-options
+ */
+struct CloudFunctionsServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to CloudFunctionsService.
+ *
+ * @ingroup google-cloud-functions-options
+ */
 using CloudFunctionsServicePolicyOptionList =
     OptionList<CloudFunctionsServiceRetryPolicyOption,
                CloudFunctionsServiceBackoffPolicyOption,

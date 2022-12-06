@@ -130,8 +130,14 @@ bool IsLongrunningMetadataTypeUsedAsResponse(MethodDescriptor const& method) {
 }
 
 bool HasRoutingHeader(MethodDescriptor const& method) {
-  auto result = ParseResourceRoutingHeader(method);
-  return result.has_value();
+  auto result = ParseHttpExtension(method);
+  return absl::holds_alternative<HttpExtensionInfo>(result);
+}
+
+bool HasHttpAnnotation(google::protobuf::MethodDescriptor const& method) {
+  auto result = ParseHttpExtension(method);
+  return absl::holds_alternative<HttpExtensionInfo>(result) ||
+         absl::holds_alternative<HttpSimpleInfo>(result);
 }
 
 }  // namespace generator_internal

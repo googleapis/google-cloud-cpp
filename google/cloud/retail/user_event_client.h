@@ -67,15 +67,15 @@ class UserEventServiceClient {
       Options opts = {});
   ~UserEventServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   UserEventServiceClient(UserEventServiceClient const&) = default;
   UserEventServiceClient& operator=(UserEventServiceClient const&) = default;
   UserEventServiceClient(UserEventServiceClient&&) = default;
   UserEventServiceClient& operator=(UserEventServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(UserEventServiceClient const& a,
                          UserEventServiceClient const& b) {
@@ -85,7 +85,7 @@ class UserEventServiceClient {
                          UserEventServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Writes a single user event.

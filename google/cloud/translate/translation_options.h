@@ -31,26 +31,48 @@ namespace cloud {
 namespace translate {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-translate-options
+ */
 struct TranslationServiceRetryPolicyOption {
   using Type = std::shared_ptr<TranslationServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-translate-options
+ */
 struct TranslationServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct TranslationServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-translate-options
+ */
 struct TranslationServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<TranslationServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-translate-options
+ */
+struct TranslationServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to TranslationService.
+ *
+ * @ingroup google-cloud-translate-options
+ */
 using TranslationServicePolicyOptionList =
     OptionList<TranslationServiceRetryPolicyOption,
                TranslationServiceBackoffPolicyOption,

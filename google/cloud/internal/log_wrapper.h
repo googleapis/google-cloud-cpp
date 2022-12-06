@@ -55,27 +55,25 @@ template <>
 struct IsFutureStatus<future<Status>> : public std::true_type {};
 
 template <
-    typename Functor, typename Request,
+    typename Functor, typename Request, typename Context,
     typename Result = google::cloud::internal::invoke_result_t<
-        Functor, grpc::ClientContext&, Request const&>,
+        Functor, Context&, Request const&>,
     typename std::enable_if<std::is_same<Result, google::cloud::Status>::value,
                             int>::type = 0>
-Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
-                  Request const& request, char const* where,
-                  TracingOptions const& options) {
+Result LogWrapper(Functor&& functor, Context& context, Request const& request,
+                  char const* where, TracingOptions const& options) {
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
   auto response = functor(context, request);
   GCP_LOG(DEBUG) << where << "() >> status=" << DebugString(response, options);
   return response;
 }
 
-template <typename Functor, typename Request,
+template <typename Functor, typename Request, typename Context,
           typename Result = google::cloud::internal::invoke_result_t<
-              Functor, grpc::ClientContext&, Request const&>,
+              Functor, Context&, Request const&>,
           typename std::enable_if<IsStatusOr<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
-                  Request const& request, char const* where,
-                  TracingOptions const& options) {
+Result LogWrapper(Functor&& functor, Context& context, Request const& request,
+                  char const* where, TracingOptions const& options) {
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
   auto response = functor(context, request);
   if (!response) {

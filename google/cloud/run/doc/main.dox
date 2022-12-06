@@ -14,8 +14,7 @@ actually deploy a C++ function to Cloud Run, see the
 [hello-world]: https://github.com/GoogleCloudPlatform/cpp-samples/tree/main/cloud-run-hello-world
 [functions-framework]: https://github.com/GoogleCloudPlatform/functions-framework-cpp
 
-While this library is **GA**, please note Google Cloud C++ client libraries do
-**not** follow [Semantic Versioning](https://semver.org/).
+While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
 This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
@@ -99,6 +98,49 @@ It will return the `T` value or throw on error.
 For operations that do not return a value the library simply returns
 `google::cloud::Status`.
 
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `run::RevisionsClient`:
+
+@snippet revisions_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [run::RevisionsClient](@ref run::RevisionsClient-endpoint-snippet)
+ [run::ServicesClient](@ref run::ServicesClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+<!-- inject-service-account-snippet-start -->
+@snippet revisions_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [run::RevisionsClient](@ref run::RevisionsClient-service-account-snippet)
+ [run::ServicesClient](@ref run::ServicesClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -113,3 +155,30 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/run/quickstart/README%2Emd
 
 */
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page run::RevisionsClient-endpoint-snippet Override run::RevisionsClient Endpoint Configuration
+
+@snippet google/cloud/run/samples/revisions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page run::RevisionsClient-service-account-snippet Override run::RevisionsClient Authentication Defaults
+
+@snippet google/cloud/run/samples/revisions_client_samples.cc with-service-account
+
+*/
+
+/*! @page run::ServicesClient-endpoint-snippet Override run::ServicesClient Endpoint Configuration
+
+@snippet google/cloud/run/samples/services_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page run::ServicesClient-service-account-snippet Override run::ServicesClient Authentication Defaults
+
+@snippet google/cloud/run/samples/services_client_samples.cc with-service-account
+
+*/
+// <!-- inject-endpoint-pages-end -->

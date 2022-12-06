@@ -65,15 +65,15 @@ class EntityTypesClient {
                              Options opts = {});
   ~EntityTypesClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   EntityTypesClient(EntityTypesClient const&) = default;
   EntityTypesClient& operator=(EntityTypesClient const&) = default;
   EntityTypesClient(EntityTypesClient&&) = default;
   EntityTypesClient& operator=(EntityTypesClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(EntityTypesClient const& a,
                          EntityTypesClient const& b) {
@@ -83,7 +83,7 @@ class EntityTypesClient {
                          EntityTypesClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all entity types in the specified agent.

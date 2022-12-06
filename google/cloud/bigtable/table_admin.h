@@ -560,8 +560,6 @@ class TableAdmin {
    * Parameters for `ListBackups`.
    */
   struct ListBackupsParams {
-    ListBackupsParams() = default;
-
     /**
      * Sets the cluster_id.
      *

@@ -69,16 +69,16 @@ class ConversationDatasetsClient {
       Options opts = {});
   ~ConversationDatasetsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ConversationDatasetsClient(ConversationDatasetsClient const&) = default;
   ConversationDatasetsClient& operator=(ConversationDatasetsClient const&) =
       default;
   ConversationDatasetsClient(ConversationDatasetsClient&&) = default;
   ConversationDatasetsClient& operator=(ConversationDatasetsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ConversationDatasetsClient const& a,
                          ConversationDatasetsClient const& b) {
@@ -88,7 +88,7 @@ class ConversationDatasetsClient {
                          ConversationDatasetsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new conversation dataset.

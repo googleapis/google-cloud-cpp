@@ -92,6 +92,49 @@ It will return the `T` value or throw on error.
 For operations that do not return a value the library simply returns
 `google::cloud::Status`.
 
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `pubsublite::AdminServiceClient`:
+
+@snippet admin_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [pubsublite::AdminServiceClient](@ref pubsublite::AdminServiceClient-endpoint-snippet)
+ [pubsublite::TopicStatsServiceClient](@ref pubsublite::TopicStatsServiceClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+<!-- inject-service-account-snippet-start -->
+@snippet admin_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [pubsublite::AdminServiceClient](@ref pubsublite::AdminServiceClient-service-account-snippet)
+ [pubsublite::TopicStatsServiceClient](@ref pubsublite::TopicStatsServiceClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -105,3 +148,30 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/pubsublite/quickstart/README%2Emd
 
 */
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page pubsublite::AdminServiceClient-endpoint-snippet Override pubsublite::AdminServiceClient Endpoint Configuration
+
+@snippet google/cloud/pubsublite/samples/admin_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page pubsublite::AdminServiceClient-service-account-snippet Override pubsublite::AdminServiceClient Authentication Defaults
+
+@snippet google/cloud/pubsublite/samples/admin_client_samples.cc with-service-account
+
+*/
+
+/*! @page pubsublite::TopicStatsServiceClient-endpoint-snippet Override pubsublite::TopicStatsServiceClient Endpoint Configuration
+
+@snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page pubsublite::TopicStatsServiceClient-service-account-snippet Override pubsublite::TopicStatsServiceClient Authentication Defaults
+
+@snippet google/cloud/pubsublite/samples/topic_stats_client_samples.cc with-service-account
+
+*/
+// <!-- inject-endpoint-pages-end -->

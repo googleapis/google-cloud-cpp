@@ -67,7 +67,7 @@ class IdentityAwareProxyOAuthServiceClient {
       Options opts = {});
   ~IdentityAwareProxyOAuthServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   IdentityAwareProxyOAuthServiceClient(
       IdentityAwareProxyOAuthServiceClient const&) = default;
@@ -77,9 +77,9 @@ class IdentityAwareProxyOAuthServiceClient {
       default;
   IdentityAwareProxyOAuthServiceClient& operator=(
       IdentityAwareProxyOAuthServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(IdentityAwareProxyOAuthServiceClient const& a,
                          IdentityAwareProxyOAuthServiceClient const& b) {
@@ -89,7 +89,7 @@ class IdentityAwareProxyOAuthServiceClient {
                          IdentityAwareProxyOAuthServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the existing brands for the project.

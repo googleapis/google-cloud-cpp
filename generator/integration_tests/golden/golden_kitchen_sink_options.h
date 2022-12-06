@@ -31,21 +31,38 @@ namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup generator-integration_tests-golden-options
+ */
 struct GoldenKitchenSinkRetryPolicyOption {
   using Type = std::shared_ptr<GoldenKitchenSinkRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup generator-integration_tests-golden-options
+ */
 struct GoldenKitchenSinkBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup generator-integration_tests-golden-options
+ */
 struct GoldenKitchenSinkConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to GoldenKitchenSink.
+ *
+ * @ingroup generator-integration_tests-golden-options
+ */
 using GoldenKitchenSinkPolicyOptionList =
     OptionList<GoldenKitchenSinkRetryPolicyOption,
                GoldenKitchenSinkBackoffPolicyOption,

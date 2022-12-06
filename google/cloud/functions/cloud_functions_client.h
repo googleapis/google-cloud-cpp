@@ -67,7 +67,7 @@ class CloudFunctionsServiceClient {
       Options opts = {});
   ~CloudFunctionsServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CloudFunctionsServiceClient(CloudFunctionsServiceClient const&) = default;
   CloudFunctionsServiceClient& operator=(CloudFunctionsServiceClient const&) =
@@ -75,9 +75,9 @@ class CloudFunctionsServiceClient {
   CloudFunctionsServiceClient(CloudFunctionsServiceClient&&) = default;
   CloudFunctionsServiceClient& operator=(CloudFunctionsServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CloudFunctionsServiceClient const& a,
                          CloudFunctionsServiceClient const& b) {
@@ -87,7 +87,7 @@ class CloudFunctionsServiceClient {
                          CloudFunctionsServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns a list of functions that belong to the requested project.

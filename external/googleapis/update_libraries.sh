@@ -77,6 +77,7 @@ declare -A -r LIBRARIES=(
   ["cloudbuild"]="@com_google_googleapis//google/devtools/cloudbuild/v1:cloudbuild_cc_grpc"
   ["common"]="@com_google_googleapis//google/cloud/common:common_cc_grpc"
   ["composer"]="@com_google_googleapis//google/cloud/orchestration/airflow/service/v1:service_cc_grpc"
+  ["connectors"]="@com_google_googleapis//google/cloud/connectors/v1:connectors_cc_grpc"
   ["contactcenterinsights"]="@com_google_googleapis//google/cloud/contactcenterinsights/v1:contactcenterinsights_cc_grpc"
   ["container"]="@com_google_googleapis//google/container/v1:container_cc_grpc"
   ["containeranalysis"]="@com_google_googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc"
@@ -188,7 +189,11 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/spanner/admin/instance/v1:instance_cc_grpc" \
       "@com_google_googleapis//google/spanner/admin/database/v1:database_cc_grpc"
   )"
-  ["speech"]="@com_google_googleapis//google/cloud/speech/v1:speech_cc_grpc"
+  ["speech"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/speech/v1:speech_cc_grpc" \
+      "@com_google_googleapis//google/cloud/speech/v2:speech_cc_grpc"
+  )"
   ["storage"]="@com_google_googleapis//google/storage/v2:storage_cc_grpc"
   ["storagetransfer"]="@com_google_googleapis//google/storagetransfer/v1:storagetransfer_cc_grpc"
   ["talent"]="@com_google_googleapis//google/cloud/talent/v4:talent_cc_grpc"
@@ -206,6 +211,7 @@ declare -A -r LIBRARIES=(
   ["videointelligence"]="@com_google_googleapis//google/cloud/videointelligence/v1:videointelligence_cc_grpc"
   ["vision"]="@com_google_googleapis//google/cloud/vision/v1:vision_cc_grpc"
   ["vmmigration"]="@com_google_googleapis//google/cloud/vmmigration/v1:vmmigration_cc_grpc"
+  ["vmwareengine"]="@com_google_googleapis//google/cloud/vmwareengine/v1:vmwareengine_cc_grpc"
   ["vpcaccess"]="@com_google_googleapis//google/cloud/vpcaccess/v1:vpcaccess_cc_grpc"
   ["webrisk"]="@com_google_googleapis//google/cloud/webrisk/v1:webrisk_cc_grpc"
   ["websecurityscanner"]="@com_google_googleapis//google/cloud/websecurityscanner/v1:websecurityscanner_cc_grpc"

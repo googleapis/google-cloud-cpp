@@ -226,6 +226,7 @@ service {
   omit_client: true
   omit_connection: true
   omit_stub_factory: true
+  generate_round_robin_decorator: true
   gen_async_rpcs: [
     "CheckAndMutateRow",
     "MutateRow",
@@ -344,6 +345,14 @@ service {
 service {
   service_proto_path: "google/cloud/orchestration/airflow/service/v1/image_versions.proto"
   product_path: "google/cloud/composer"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# Connectors
+service {
+  service_proto_path: "google/cloud/connectors/v1/connectors_service.proto"
+  product_path: "google/cloud/connectors"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }
@@ -940,6 +949,7 @@ service {
   service_proto_path: "google/logging/v2/logging.proto"
   product_path: "google/cloud/logging"
   initial_copyright_year: "2021"
+  gen_async_rpcs: ["WriteLogEntries"]
   retryable_status_codes: ["kInternal", "kUnavailable"]
 }
 
@@ -1106,8 +1116,8 @@ service {
   omit_client: true
   omit_connection: true
   omit_stub_factory: true
+  generate_round_robin_decorator: true
   omitted_rpcs: [
-    "Pull",
     "Acknowledge",
     "ModifyAckDeadline"
   ],
@@ -1382,6 +1392,15 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/cloud/speech/v2/cloud_speech.proto"
+  product_path: "google/cloud/speech/v2"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+  #TODO(#10264): Remove experimental when service goes GA.
+  experimental: true
+}
+
 # Storage
 service {
   service_proto_path: "google/storage/v2/storage.proto"
@@ -1532,6 +1551,14 @@ service {
 service {
   service_proto_path: "google/cloud/vmmigration/v1/vmmigration.proto"
   product_path: "google/cloud/vmmigration"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
+# VMware Engine
+service {
+  service_proto_path: "google/cloud/vmwareengine/v1/vmwareengine.proto"
+  product_path: "google/cloud/vmwareengine/v1"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
 }

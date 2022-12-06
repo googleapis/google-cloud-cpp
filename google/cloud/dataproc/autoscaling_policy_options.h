@@ -31,22 +31,39 @@ namespace cloud {
 namespace dataproc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-dataproc-options
+ */
 struct AutoscalingPolicyServiceRetryPolicyOption {
   using Type = std::shared_ptr<AutoscalingPolicyServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-dataproc-options
+ */
 struct AutoscalingPolicyServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-dataproc-options
+ */
 struct AutoscalingPolicyServiceConnectionIdempotencyPolicyOption {
   using Type =
       std::shared_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to AutoscalingPolicyService.
+ *
+ * @ingroup google-cloud-dataproc-options
+ */
 using AutoscalingPolicyServicePolicyOptionList =
     OptionList<AutoscalingPolicyServiceRetryPolicyOption,
                AutoscalingPolicyServiceBackoffPolicyOption,

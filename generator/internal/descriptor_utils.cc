@@ -27,19 +27,27 @@
 #include "generator/internal/connection_impl_generator.h"
 #include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
+#include "generator/internal/logging_decorator_rest_generator.h"
 #include "generator/internal/metadata_decorator_generator.h"
+#include "generator/internal/metadata_decorator_rest_generator.h"
 #include "generator/internal/mock_connection_generator.h"
 #include "generator/internal/option_defaults_generator.h"
 #include "generator/internal/options_generator.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/retry_traits_generator.h"
+#include "generator/internal/round_robin_decorator_generator.h"
+#include "generator/internal/sample_generator.h"
+#include "generator/internal/scaffold_generator.h"
 #include "generator/internal/stub_factory_generator.h"
+#include "generator/internal/stub_factory_rest_generator.h"
 #include "generator/internal/stub_generator.h"
+#include "generator/internal/stub_rest_generator.h"
 #include <google/api/routing.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/compiler/cpp/names.h>
 #include <regex>
+#include <set>
 #include <string>
 
 using ::google::protobuf::FieldDescriptor;
@@ -179,12 +187,14 @@ void SetMethodSignatureMethodVars(
     VarsDictionary& method_vars) {
   auto method_signature_extension =
       method.options().GetRepeatedExtension(google::api::method_signature);
+  std::set<std::string> method_signature_uids;
   for (int i = 0; i < method_signature_extension.size(); ++i) {
     google::protobuf::Descriptor const* input_type = method.input_type();
     std::vector<std::string> parameters =
         absl::StrSplit(method_signature_extension[i], ',', absl::SkipEmpty());
     std::string method_signature;
     std::string method_request_setters;
+    std::string method_signature_uid;
     bool field_deprecated = false;
     for (auto& parameter : parameters) {
       absl::StripAsciiWhitespace(&parameter);
@@ -196,45 +206,49 @@ void SetMethodSignatureMethodVars(
         break;
       }
       auto const parameter_name = FieldName(parameter_descriptor);
+      std::string cpp_type;
       if (parameter_descriptor->is_map()) {
-        method_signature += absl::StrFormat(
-            "std::map<%s, %s> const& %s",
+        cpp_type = absl::StrFormat(
+            "std::map<%s, %s> const&",
             CppTypeToString(parameter_descriptor->message_type()->map_key()),
-            CppTypeToString(parameter_descriptor->message_type()->map_value()),
-            parameter_name);
+            CppTypeToString(parameter_descriptor->message_type()->map_value()));
         method_request_setters += absl::StrFormat(
             "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
             parameter_name, parameter_name, parameter_name);
       } else if (parameter_descriptor->is_repeated()) {
-        method_signature += absl::StrFormat(
-            "std::vector<%s> const& %s", CppTypeToString(parameter_descriptor),
-            parameter_name);
+        cpp_type = absl::StrFormat("std::vector<%s> const&",
+                                   CppTypeToString(parameter_descriptor));
         method_request_setters += absl::StrFormat(
             "  *request.mutable_%s() = {%s.begin(), %s.end()};\n",
             parameter_name, parameter_name, parameter_name);
       } else if (parameter_descriptor->type() ==
                  FieldDescriptor::TYPE_MESSAGE) {
-        method_signature += absl::StrFormat(
-            "%s const& %s", CppTypeToString(parameter_descriptor),
-            parameter_name);
+        cpp_type =
+            absl::StrFormat("%s const&", CppTypeToString(parameter_descriptor));
         method_request_setters += absl::StrFormat(
             "  *request.mutable_%s() = %s;\n", parameter_name, parameter_name);
       } else {
         switch (parameter_descriptor->cpp_type()) {
           case FieldDescriptor::CPPTYPE_STRING:
-            method_signature += absl::StrFormat(
-                "%s const& %s", CppTypeToString(parameter_descriptor),
-                parameter_name);
+            cpp_type = absl::StrFormat("%s const&",
+                                       CppTypeToString(parameter_descriptor));
             break;
           default:
-            method_signature += absl::StrFormat(
-                "%s %s", CppTypeToString(parameter_descriptor), parameter_name);
+            cpp_type = CppTypeToString(parameter_descriptor);
         }
         method_request_setters += absl::StrFormat(
             "  request.set_%s(%s);\n", parameter_name, parameter_name);
       }
-      method_signature += ", ";
+      method_signature += absl::StrFormat("%s %s, ", cpp_type, parameter_name);
+      method_signature_uid += absl::StrFormat("%s,", cpp_type);
     }
+    // If method signatures conflict (because the parameters are of identical
+    // types), we should generate the first signature in the conflict set and
+    // drop the rest.
+    //
+    // See: https://google.aip.dev/client-libraries/4232#method-signatures_1
+    auto p = method_signature_uids.insert(method_signature_uid);
+    if (!p.second) continue;
     if (field_deprecated) continue;
     std::string key = "method_signature" + std::to_string(i);
     method_vars[key] = method_signature;
@@ -243,27 +257,165 @@ void SetMethodSignatureMethodVars(
   }
 }
 
-void SetResourceRoutingMethodVars(
+std::string FormatFieldAccessorCall(
+    google::protobuf::MethodDescriptor const& method,
+    std::string const& field_name) {
+  std::vector<std::string> chunks;
+  auto const* input_type = method.input_type();
+  for (auto const& sv : absl::StrSplit(field_name, '.')) {
+    auto const chunk = std::string(sv);
+    auto const* chunk_descriptor = input_type->FindFieldByName(chunk);
+    chunks.push_back(FieldName(chunk_descriptor));
+    input_type = chunk_descriptor->message_type();
+  }
+  return absl::StrJoin(chunks, "().");
+}
+
+void SetHttpResourceRoutingMethodVars(
+    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
+        parsed_http_info,
     google::protobuf::MethodDescriptor const& method,
     VarsDictionary& method_vars) {
-  auto result = ParseResourceRoutingHeader(method);
-  if (result.has_value()) {
-    method_vars["method_request_url_path"] = result->url_path;
-    method_vars["method_request_url_substitution"] = result->url_substitution;
-    std::string param = result->param_key;
-    method_vars["method_request_param_key"] = param;
-    std::vector<std::string> chunks;
-    auto const* input_type = method.input_type();
-    for (auto const& sv : absl::StrSplit(param, '.')) {
-      auto const chunk = std::string(sv);
-      auto const* chunk_descriptor = input_type->FindFieldByName(chunk);
-      chunks.push_back(FieldName(chunk_descriptor));
-      input_type = chunk_descriptor->message_type();
+  struct HttpInfoVisitor {
+    HttpInfoVisitor(google::protobuf::MethodDescriptor const& method,
+                    VarsDictionary& method_vars)
+        : method(method), method_vars(method_vars) {}
+
+    // This visitor handles the case where the url field contains a token
+    // surrounded by curly braces:
+    //   patch: "/v1/{parent=projects/*/instances/*}/databases\"
+    // In this case 'parent' is expected to be found as a field in the protobuf
+    // request message whose value matches the pattern 'projects/*/instances/*'.
+    // The request protobuf field can sometimes be nested a la:
+    //   post: "/v1/{instance.name=projects/*/locations/*/instances/*}"
+    // The emitted code needs to access the value via `request.parent()' and
+    // 'request.instance().name()`, respectively.
+    void operator()(HttpExtensionInfo const& info) {
+      method_vars["method_request_url_path"] = info.url_path;
+      method_vars["method_request_url_substitution"] = info.url_substitution;
+      std::string param = info.request_field_name;
+      method_vars["method_request_param_key"] = param;
+      method_vars["method_request_param_value"] =
+          FormatFieldAccessorCall(method, param) + "()";
+      method_vars["method_request_body"] = info.body;
+      method_vars["method_http_verb"] = info.http_verb;
+      method_vars["method_rest_path"] =
+          absl::StrCat("absl::StrCat(\"", info.path_prefix, "\", request.",
+                       method_vars["method_request_param_value"], ", \"",
+                       info.path_suffix, "\")");
     }
-    method_vars["method_request_param_value"] =
-        absl::StrJoin(chunks, "().") + "()";
-    method_vars["method_request_body"] = result->body;
-  }
+
+    // This visitor handles the case where no request field is specified in the
+    // url:
+    //   get: "/v1/foo/bar"
+    void operator()(HttpSimpleInfo const& info) {
+      method_vars["method_http_verb"] = info.http_verb;
+      method_vars["method_request_param_value"] = method.full_name();
+      method_vars["method_rest_path"] = absl::StrCat("\"", info.url_path, "\"");
+    }
+
+    // This visitor is an error diagnostic, in case we encounter an url that the
+    // generator does not currently parse. Emitting the method name causes code
+    // generation that does not compile and points to the proto location to be
+    // investigated.
+    void operator()(absl::monostate) {
+      method_vars["method_http_verb"] = method.full_name();
+      method_vars["method_request_param_value"] = method.full_name();
+      method_vars["method_rest_path"] = method.full_name();
+    }
+    google::protobuf::MethodDescriptor const& method;
+    VarsDictionary& method_vars;
+  };
+
+  absl::visit(HttpInfoVisitor(method, method_vars), parsed_http_info);
+}
+
+// RestClient::Get does not use request body, so per
+// https://cloud.google.com/apis/design/standard_methods, for HTTP transcoding
+// we need to turn the request fields into query parameters.
+// TODO(#10176): Consider adding support for repeated simple fields.
+void SetHttpGetQueryParameters(
+    absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
+        parsed_http_info,
+    google::protobuf::MethodDescriptor const& method,
+    VarsDictionary& method_vars) {
+  struct HttpInfoVisitor {
+    HttpInfoVisitor(google::protobuf::MethodDescriptor const& method,
+                    VarsDictionary& method_vars)
+        : method(method), method_vars(method_vars) {}
+    void FormatQueryParameterCode(
+        std::string const& http_verb,
+        absl::optional<std::string> const& param_field_name) {
+      if (http_verb == "Get") {
+        std::vector<std::pair<std::string, protobuf::FieldDescriptor::CppType>>
+            remaining_request_fields;
+        auto const* request = method.input_type();
+        for (int i = 0; i < request->field_count(); ++i) {
+          auto const* field = request->field(i);
+          // Only attempt to make non-repeated, simple fields query parameters.
+          if (!field->is_repeated() &&
+              field->cpp_type() != protobuf::FieldDescriptor::CPPTYPE_MESSAGE) {
+            if (!param_field_name || field->name() != *param_field_name) {
+              remaining_request_fields.emplace_back(
+                  std::make_pair(field->name(), field->cpp_type()));
+            }
+          }
+        }
+        auto format = [](auto* out, auto const& i) {
+          if (i.second == protobuf::FieldDescriptor::CPPTYPE_STRING) {
+            out->append(absl::StrFormat("std::make_pair(\"%s\", request.%s())",
+                                        i.first, i.first));
+            return;
+          }
+          out->append(absl::StrFormat(
+              "std::make_pair(\"%s\", std::to_string(request.%s()))", i.first,
+              i.first));
+        };
+        if (remaining_request_fields.empty()) {
+          method_vars["method_http_query_parameters"] = ", {}";
+        } else {
+          method_vars["method_http_query_parameters"] = absl::StrCat(
+              ",\n      {",
+              absl::StrJoin(remaining_request_fields, ",\n       ", format),
+              "}");
+        }
+      }
+    }
+
+    // This visitor handles the case where the url field contains a token
+    // surrounded by curly braces:
+    //   patch: "/v1/{parent=projects/*/instances/*}/databases\"
+    // In this case 'parent' is expected to be found as a field in the protobuf
+    // request message and is already included in the url. No need to duplicate
+    // it as a query parameter.
+    void operator()(HttpExtensionInfo const& info) {
+      FormatQueryParameterCode(
+          info.http_verb,
+          FormatFieldAccessorCall(method, info.request_field_name));
+    }
+
+    // This visitor handles the case where no request field is specified in the
+    // url:
+    //   get: "/v1/foo/bar"
+    // In this case, all non-repeated, simple fields should be query parameters.
+    void operator()(HttpSimpleInfo const& info) {
+      FormatQueryParameterCode(info.http_verb, {});
+    }
+
+    // This visitor is an error diagnostic, in case we encounter an url that the
+    // generator does not currently parse. Emitting the method name causes code
+    // generation that does not compile and points to the proto location to be
+    // investigated.
+    void operator()(absl::monostate) {
+      method_vars["method_http_query_parameters"] = method.full_name();
+    }
+
+    google::protobuf::MethodDescriptor const& method;
+    VarsDictionary& method_vars;
+  };
+
+  method_vars["method_http_query_parameters"] = "";
+  absl::visit(HttpInfoVisitor(method, method_vars), parsed_http_info);
 }
 
 std::string DefaultIdempotencyFromHttpOperation(
@@ -519,27 +671,33 @@ std::string FormatAdditionalPbHeaderPaths(VarsDictionary& vars) {
 
 }  // namespace
 
-absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
-    google::protobuf::MethodDescriptor const& method) {
+absl::variant<absl::monostate, HttpSimpleInfo, HttpExtensionInfo>
+ParseHttpExtension(google::protobuf::MethodDescriptor const& method) {
   if (!method.options().HasExtension(google::api::http)) return {};
+  HttpExtensionInfo info;
   google::api::HttpRule http_rule =
       method.options().GetExtension(google::api::http);
 
   std::string url_pattern;
   switch (http_rule.pattern_case()) {
     case google::api::HttpRule::kGet:
+      info.http_verb = "Get";
       url_pattern = http_rule.get();
       break;
     case google::api::HttpRule::kPut:
+      info.http_verb = "Put";
       url_pattern = http_rule.put();
       break;
     case google::api::HttpRule::kPost:
+      info.http_verb = "Post";
       url_pattern = http_rule.post();
       break;
     case google::api::HttpRule::kDelete:
+      info.http_verb = "Delete";
       url_pattern = http_rule.delete_();
       break;
     case google::api::HttpRule::kPatch:
+      info.http_verb = "Patch";
       url_pattern = http_rule.patch();
       break;
     default:
@@ -547,10 +705,18 @@ absl::optional<ResourceRoutingInfo> ParseResourceRoutingHeader(
                      << ": google::api::HttpRule not handled";
   }
 
-  static std::regex const kUrlPatternRegex(R"(.*\{(.*)=(.*)\}.*)");
+  static std::regex const kUrlPatternRegex(R"((.*)\{(.*)=(.*)\}(.*))");
   std::smatch match;
-  if (!std::regex_match(url_pattern, match, kUrlPatternRegex)) return {};
-  return ResourceRoutingInfo{match[0], match[1], match[2], http_rule.body()};
+  if (!std::regex_match(url_pattern, match, kUrlPatternRegex)) {
+    return HttpSimpleInfo{info.http_verb, url_pattern, http_rule.body()};
+  }
+  info.url_path = match[0];
+  info.request_field_name = match[2];
+  info.url_substitution = match[3];
+  info.body = http_rule.body();
+  info.path_prefix = match[1];
+  info.path_suffix = match[4];
+  return info;
 }
 
 ExplicitRoutingInfo ParseExplicitRoutingHeader(
@@ -685,6 +851,7 @@ VarsDictionary CreateServiceVars(
     google::protobuf::ServiceDescriptor const& descriptor,
     std::vector<std::pair<std::string, std::string>> const& initial_values) {
   VarsDictionary vars(initial_values.begin(), initial_values.end());
+  vars["product_options_page"] = OptionsGroup(vars["product_path"]);
   vars["additional_pb_header_paths"] = FormatAdditionalPbHeaderPaths(vars);
   vars["class_comment_block"] =
       FormatClassCommentsFromServiceComments(descriptor);
@@ -695,6 +862,11 @@ VarsDictionary CreateServiceVars(
   vars["client_header_path"] =
       absl::StrCat(vars["product_path"],
                    ServiceNameToFilePath(descriptor.name()), "_client.h");
+
+  vars["client_samples_cc_path"] = absl::StrCat(
+      vars["product_path"], "samples/",
+      ServiceNameToFilePath(descriptor.name()), "_client_samples.cc");
+
   vars["connection_class_name"] = absl::StrCat(descriptor.name(), "Connection");
   vars["connection_cc_path"] =
       absl::StrCat(vars["product_path"],
@@ -739,6 +911,14 @@ VarsDictionary CreateServiceVars(
   vars["logging_header_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_logging_decorator.h");
+  vars["logging_rest_class_name"] =
+      absl::StrCat(descriptor.name(), "RestLogging");
+  vars["logging_rest_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_logging_decorator.cc");
+  vars["logging_rest_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_logging_decorator.h");
   vars["metadata_class_name"] = absl::StrCat(descriptor.name(), "Metadata");
   vars["metadata_cc_path"] = absl::StrCat(
       vars["product_path"], "internal/",
@@ -746,6 +926,14 @@ VarsDictionary CreateServiceVars(
   vars["metadata_header_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_metadata_decorator.h");
+  vars["metadata_rest_class_name"] =
+      absl::StrCat(descriptor.name(), "RestMetadata");
+  vars["metadata_rest_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_metadata_decorator.cc");
+  vars["metadata_rest_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_metadata_decorator.h");
   vars["mock_connection_class_name"] =
       absl::StrCat("Mock", descriptor.name(), "Connection");
   vars["mock_connection_header_path"] =
@@ -766,11 +954,21 @@ VarsDictionary CreateServiceVars(
   vars["proto_file_name"] = descriptor.file()->name();
   vars["proto_grpc_header_path"] = absl::StrCat(
       absl::StripSuffix(descriptor.file()->name(), ".proto"), ".grpc.pb.h");
+  vars["proto_header_path"] = absl::StrCat(
+      absl::StripSuffix(descriptor.file()->name(), ".proto"), ".pb.h");
   vars["retry_policy_name"] = absl::StrCat(descriptor.name(), "RetryPolicy");
   vars["retry_traits_name"] = absl::StrCat(descriptor.name(), "RetryTraits");
   vars["retry_traits_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_retry_traits.h");
+  vars["round_robin_class_name"] =
+      absl::StrCat(descriptor.name(), "RoundRobin");
+  vars["round_robin_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_round_robin_decorator.cc");
+  vars["round_robin_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_round_robin_decorator.h");
   vars["service_endpoint"] =
       descriptor.options().GetExtension(google::api::default_host);
   auto& service_endpoint_env_var = vars["service_endpoint_env_var"];
@@ -799,12 +997,25 @@ VarsDictionary CreateServiceVars(
   vars["stub_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_stub.h");
+  vars["stub_rest_class_name"] = absl::StrCat(descriptor.name(), "RestStub");
+  vars["stub_rest_cc_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_rest_stub.cc");
+  vars["stub_rest_header_path"] =
+      absl::StrCat(vars["product_path"], "internal/",
+                   ServiceNameToFilePath(descriptor.name()), "_rest_stub.h");
   vars["stub_factory_cc_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_stub_factory.cc");
   vars["stub_factory_header_path"] =
       absl::StrCat(vars["product_path"], "internal/",
                    ServiceNameToFilePath(descriptor.name()), "_stub_factory.h");
+  vars["stub_factory_rest_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_stub_factory.cc");
+  vars["stub_factory_rest_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_rest_stub_factory.h");
   SetRetryStatusCodeExpression(vars);
   return vars;
 }
@@ -844,7 +1055,9 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
       }
     }
     SetMethodSignatureMethodVars(method, method_vars);
-    SetResourceRoutingMethodVars(method, method_vars);
+    auto parsed_http_info = ParseHttpExtension(method);
+    SetHttpResourceRoutingMethodVars(parsed_http_info, method, method_vars);
+    SetHttpGetQueryParameters(parsed_http_info, method, method_vars);
     service_methods_vars[method.full_name()] = method_vars;
   }
   return service_methods_vars;
@@ -860,6 +1073,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   auto const omit_client = service_vars.find("omit_client");
   if (omit_client == service_vars.end() || omit_client->second != "true") {
     code_generators.push_back(absl::make_unique<ClientGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(absl::make_unique<SampleGenerator>(
         service, service_vars, method_vars, context));
   }
   auto const omit_connection = service_vars.find("omit_connection");
@@ -897,6 +1112,29 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       service, service_vars, method_vars, context));
   code_generators.push_back(absl::make_unique<StubGenerator>(
       service, service_vars, method_vars, context));
+
+  auto const generate_round_robin_generator =
+      service_vars.find("generate_round_robin_decorator");
+  if (generate_round_robin_generator != service_vars.end() &&
+      generate_round_robin_generator->second == "true") {
+    code_generators.push_back(absl::make_unique<RoundRobinDecoratorGenerator>(
+        service, service_vars, method_vars, context));
+  }
+
+  auto const generate_rest_transport =
+      service_vars.find("generate_rest_transport");
+  if (generate_rest_transport != service_vars.end() &&
+      generate_rest_transport->second == "true") {
+    code_generators.push_back(absl::make_unique<LoggingDecoratorRestGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(absl::make_unique<MetadataDecoratorRestGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(absl::make_unique<StubFactoryRestGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(absl::make_unique<StubRestGenerator>(
+        service, service_vars, method_vars, context));
+  }
+
   return code_generators;
 }
 

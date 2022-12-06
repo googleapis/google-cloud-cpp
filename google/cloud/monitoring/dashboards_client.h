@@ -67,15 +67,15 @@ class DashboardsServiceClient {
       Options opts = {});
   ~DashboardsServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DashboardsServiceClient(DashboardsServiceClient const&) = default;
   DashboardsServiceClient& operator=(DashboardsServiceClient const&) = default;
   DashboardsServiceClient(DashboardsServiceClient&&) = default;
   DashboardsServiceClient& operator=(DashboardsServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DashboardsServiceClient const& a,
                          DashboardsServiceClient const& b) {
@@ -85,7 +85,7 @@ class DashboardsServiceClient {
                          DashboardsServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new custom dashboard. For examples on how you can use this API

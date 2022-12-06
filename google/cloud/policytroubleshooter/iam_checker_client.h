@@ -67,15 +67,15 @@ class IamCheckerClient {
                             Options opts = {});
   ~IamCheckerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   IamCheckerClient(IamCheckerClient const&) = default;
   IamCheckerClient& operator=(IamCheckerClient const&) = default;
   IamCheckerClient(IamCheckerClient&&) = default;
   IamCheckerClient& operator=(IamCheckerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(IamCheckerClient const& a, IamCheckerClient const& b) {
     return a.connection_ == b.connection_;
@@ -83,7 +83,7 @@ class IamCheckerClient {
   friend bool operator!=(IamCheckerClient const& a, IamCheckerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Checks whether a member has a specific permission for a specific resource,

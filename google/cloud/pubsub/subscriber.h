@@ -157,6 +157,30 @@ class Subscriber {
   future<Status> Subscribe(ExactlyOnceApplicationCallback cb,
                            Options opts = {});
 
+  /**
+   * Pulls one message from @p subscription.
+   *
+   * @par Idempotency
+   * @parblock
+   * This is an idempotent operation; it only reads messages from the service.
+   * It will make multiple attempts to pull a message from the service, subject
+   * to the retry policies configured in the `SubscriberConnection`.
+   *
+   * Note that calling `PullAckHandler::ack()` and/or `PullAckHandler::nack()`
+   * have their own rules with respect to retrying.
+   * @endparblock
+   *
+   * @par Example
+   * @snippet samples.cc pull
+   *
+   * @param opts any option overrides to use in this call.  These options take
+   *   precedence over the options passed in the constructor, and over any
+   *   options provided in the `PublisherConnection` initialization.
+   * @return a response including the message and a `PullAckHandler` to notify
+   *     the library when the message has been successfully handled.
+   */
+  StatusOr<PullResponse> Pull(Options opts = {});
+
  private:
   std::shared_ptr<SubscriberConnection> connection_;
   google::cloud::Options options_;

@@ -234,7 +234,7 @@ std::string ConnectionImplGenerator::MethodDeclaration(
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
-  Async$method_name$(ExperimentalTag) override;
+  Async$method_name$() override;
 )""";
   }
 

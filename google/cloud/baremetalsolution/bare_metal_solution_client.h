@@ -74,15 +74,15 @@ class BareMetalSolutionClient {
       Options opts = {});
   ~BareMetalSolutionClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   BareMetalSolutionClient(BareMetalSolutionClient const&) = default;
   BareMetalSolutionClient& operator=(BareMetalSolutionClient const&) = default;
   BareMetalSolutionClient(BareMetalSolutionClient&&) = default;
   BareMetalSolutionClient& operator=(BareMetalSolutionClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(BareMetalSolutionClient const& a,
                          BareMetalSolutionClient const& b) {
@@ -92,7 +92,7 @@ class BareMetalSolutionClient {
                          BareMetalSolutionClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// List servers in a given project and location.

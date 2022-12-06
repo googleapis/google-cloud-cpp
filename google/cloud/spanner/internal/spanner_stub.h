@@ -15,7 +15,6 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_SPANNER_INTERNAL_SPANNER_STUB_H
 
-#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/completion_queue.h"

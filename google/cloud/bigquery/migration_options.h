@@ -31,21 +31,38 @@ namespace cloud {
 namespace bigquery {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-bigquery-options
+ */
 struct MigrationServiceRetryPolicyOption {
   using Type = std::shared_ptr<MigrationServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-bigquery-options
+ */
 struct MigrationServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-bigquery-options
+ */
 struct MigrationServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<MigrationServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to MigrationService.
+ *
+ * @ingroup google-cloud-bigquery-options
+ */
 using MigrationServicePolicyOptionList =
     OptionList<MigrationServiceRetryPolicyOption,
                MigrationServiceBackoffPolicyOption,

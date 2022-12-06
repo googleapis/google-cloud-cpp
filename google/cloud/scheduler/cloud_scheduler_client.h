@@ -65,15 +65,15 @@ class CloudSchedulerClient {
       std::shared_ptr<CloudSchedulerConnection> connection, Options opts = {});
   ~CloudSchedulerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CloudSchedulerClient(CloudSchedulerClient const&) = default;
   CloudSchedulerClient& operator=(CloudSchedulerClient const&) = default;
   CloudSchedulerClient(CloudSchedulerClient&&) = default;
   CloudSchedulerClient& operator=(CloudSchedulerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CloudSchedulerClient const& a,
                          CloudSchedulerClient const& b) {
@@ -83,7 +83,7 @@ class CloudSchedulerClient {
                          CloudSchedulerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists jobs.

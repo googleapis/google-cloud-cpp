@@ -116,7 +116,74 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 </details>
 
-## v2.4.0 - TBD
+## v2.6.0 - TBD
+
+## v2.5.0 - 2022-12
+
+**NOTE**
+
+- feat!: We have dropped the experimental marker from bidirectional streaming APIs ([#10340](https://github.com/googleapis/google-cloud-cpp/pull/10340)). The APIs in question are:
+  - `bigquery::BigQueryWriteClient::AsyncAppendRows()`
+  - `dialogflow_cx::SessionsClient::AsyncStreamingDetectIntent()`
+  - `dialogflow_es::ParticipantsClient::AsyncStreamingAnalyzeContent()`
+  - `dialogflow_es::SessionsClient::AsyncStreamingDetectIntent()`
+  - `logging::LoggingServiceV2Client::AsyncTailLogEntries()`
+  - `speech::SpeechClient::AsyncStreamingRecognize()`
+
+If you use any of these APIs, you must drop the `ExperimentalTag` in your code, accordingly.
+
+### New Libraries
+
+We are happy to announce the following GA library.  Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Connectors API](/google/cloud/connectors/README.md)
+- [VMware Engine API](/google/cloud/vmwareengine/README.md)
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- samples(bigtable): build admin samples with cmake ([#10246](https://github.com/googleapis/google-cloud-cpp/pull/10246))
+- doc(bigtable): create page for configuration options ([#10197](https://github.com/googleapis/google-cloud-cpp/pull/10197))
+
+### [Logging](/google/cloud/logging/README.md)
+
+- feat(logging): generate `AsyncWriteLogEntries()` ([#10194](https://github.com/googleapis/google-cloud-cpp/pull/10194))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- feat(pubsub): add option to override subscription ([#10327](https://github.com/googleapis/google-cloud-cpp/pull/10327))
+- feat(pubsub): blocking pulls ([#10317](https://github.com/googleapis/google-cloud-cpp/pull/10317))
+- doc(pubsub): create page for configuration options ([#10198](https://github.com/googleapis/google-cloud-cpp/pull/10198))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- doc(spanner): deprecate old MakeConnection() overloads ([#10284](https://github.com/googleapis/google-cloud-cpp/pull/10284))
+- fix(spanner): tweak the tag name of a FGAC sample ([#10266](https://github.com/googleapis/google-cloud-cpp/pull/10266))
+- samples(spanner): build admin samples with cmake ([#10247](https://github.com/googleapis/google-cloud-cpp/pull/10247))
+- feat(spanner): tests and samples for DML RETURNING ([#10233](https://github.com/googleapis/google-cloud-cpp/pull/10233))
+- doc(spanner): create page for configuration options ([#10199](https://github.com/googleapis/google-cloud-cpp/pull/10199))
+
+### [Speech](/google/cloud/speech/README.md)
+
+- feat(speech): generate speech v2 ([#10228](https://github.com/googleapis/google-cloud-cpp/pull/10228))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- doc(storage): create page for configuration options ([#10200](https://github.com/googleapis/google-cloud-cpp/pull/10200))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- doc: another pass on authentication components ([#10300](https://github.com/googleapis/google-cloud-cpp/pull/10300))
+- fix(common): create default gRPC credentials only if needed ([#10280](https://github.com/googleapis/google-cloud-cpp/pull/10280))
+- doc: group client functions ([#10268](https://github.com/googleapis/google-cloud-cpp/pull/10268))
+- doc: use qualified client name in samples ([#10241](https://github.com/googleapis/google-cloud-cpp/pull/10241))
+- fix(common): avoid globals for easier DLLs ([#10212](https://github.com/googleapis/google-cloud-cpp/pull/10212))
+- feat: support a pre-release component of the version string ([#10181](https://github.com/googleapis/google-cloud-cpp/pull/10181))
+- doc(common): add Doxygen group for common options ([#10192](https://github.com/googleapis/google-cloud-cpp/pull/10192))
+- doc(common): add overview section ([#10193](https://github.com/googleapis/google-cloud-cpp/pull/10193))
+- doc: better guidance for authentication samples ([#10184](https://github.com/googleapis/google-cloud-cpp/pull/10184))
+
+## v2.4.0 - 2022-11
 
 ### New Libraries
 
@@ -130,6 +197,57 @@ the APIs in these libraries are stable, and are ready for production use.
 In addition, these existing libraries are now GA:
 
 - [Cloud Batch](/google/cloud/batch/README.md)
+
+### [BigQuery](/google/cloud/bigquery/README.md)
+
+- doc: add endpoint override snippets to generated libs ([#10129](https://github.com/googleapis/google-cloud-cpp/pull/10129))
+- feat(bigquery): add migration service ([#10034](https://github.com/googleapis/google-cloud-cpp/pull/10034))
+
+### [Bigtable](/google/cloud/bigtable/README.md)
+
+- doc(bigtable): add `*Client` samples ([#10149](https://github.com/googleapis/google-cloud-cpp/pull/10149))
+- feat(bigtable): support `GOOGLE_CLOUD_ENABLE_DIRECT_PATH` ([#9978](https://github.com/googleapis/google-cloud-cpp/pull/9978))
+
+### [IAM](/google/cloud/iam/README.md)
+
+- doc: add endpoint override snippets to generated libs ([#10129](https://github.com/googleapis/google-cloud-cpp/pull/10129))
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- doc(pubsub): samples for endpoint and auth ([#10136](https://github.com/googleapis/google-cloud-cpp/pull/10136))
+- feat(pubsub): install pubsub_mocks pkg ([#10008](https://github.com/googleapis/google-cloud-cpp/pull/10008))
+- feat(pubsub): implement blocking publisher ([#10055](https://github.com/googleapis/google-cloud-cpp/pull/10055))
+- feat(pubsub): implement per-call options for `Subscriber` ([#10043](https://github.com/googleapis/google-cloud-cpp/pull/10043))
+- fix(pubsub): limit `ModifyAckDeadlineRequest` size ([#10032](https://github.com/googleapis/google-cloud-cpp/pull/10032))
+- fix(pubsub): faster shutdowns for `Publisher` ([#9991](https://github.com/googleapis/google-cloud-cpp/pull/9991))
+
+### [Spanner](/google/cloud/spanner/README.md)
+
+- doc(spanner): add `*Client` samples ([#10145](https://github.com/googleapis/google-cloud-cpp/pull/10145))
+- feat(spanner): add support for RowStream::RowsModified() ([#10102](https://github.com/googleapis/google-cloud-cpp/pull/10102))
+- feat(spanner): support for the PG.JSONB data type ([#10098](https://github.com/googleapis/google-cloud-cpp/pull/10098))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- doc(storage): common initialization examples ([#10107](https://github.com/googleapis/google-cloud-cpp/pull/10107))
+- fix(rest): too many debug headers ([#10054](https://github.com/googleapis/google-cloud-cpp/pull/10054))
+- fix(rest): return complete payloads for errors ([#10051](https://github.com/googleapis/google-cloud-cpp/pull/10051))
+- feat(storage): support `Autoclass` feature ([#10003](https://github.com/googleapis/google-cloud-cpp/pull/10003))
+- feat(storage): faster `InsertObject()` uploads ([#9997](https://github.com/googleapis/google-cloud-cpp/pull/9997))
+- fix(storage): respect MIME message boundary size limits ([#9965](https://github.com/googleapis/google-cloud-cpp/pull/9965))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- feat(generator): generate authentication example ([#10138](https://github.com/googleapis/google-cloud-cpp/pull/10138))
+- doc: workaround Doxygen formatting quirk ([#10137](https://github.com/googleapis/google-cloud-cpp/pull/10137))
+- doc: add endpoint override snippets to generated libs ([#10129](https://github.com/googleapis/google-cloud-cpp/pull/10129))
+- feat(generator): generate simple samples for `*Client` ([#10118](https://github.com/googleapis/google-cloud-cpp/pull/10118))
+- feat: add mock library w/ StreamRange ([#9998](https://github.com/googleapis/google-cloud-cpp/pull/9998))
+- doc(common): make authentication docs easier to find ([#10110](https://github.com/googleapis/google-cloud-cpp/pull/10110))
+- fix: configure context in async retries ([#10100](https://github.com/googleapis/google-cloud-cpp/pull/10100))
+- doc: document when GrpcNumChannelsOption applies ([#10000](https://github.com/googleapis/google-cloud-cpp/pull/10000))
+- feat(generator): make idempotency policy non-abstract ([#9981](https://github.com/googleapis/google-cloud-cpp/pull/9981))
+- fix(common): preserve `ErrorInfo` on retry errors ([#9971](https://github.com/googleapis/google-cloud-cpp/pull/9971))
 
 ## v2.3.0 - 2022-10
 

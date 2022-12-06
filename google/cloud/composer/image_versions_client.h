@@ -64,15 +64,15 @@ class ImageVersionsClient {
       std::shared_ptr<ImageVersionsConnection> connection, Options opts = {});
   ~ImageVersionsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ImageVersionsClient(ImageVersionsClient const&) = default;
   ImageVersionsClient& operator=(ImageVersionsClient const&) = default;
   ImageVersionsClient(ImageVersionsClient&&) = default;
   ImageVersionsClient& operator=(ImageVersionsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ImageVersionsClient const& a,
                          ImageVersionsClient const& b) {
@@ -82,7 +82,7 @@ class ImageVersionsClient {
                          ImageVersionsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// List ImageVersions for provided location.

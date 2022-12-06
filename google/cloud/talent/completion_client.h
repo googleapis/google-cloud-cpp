@@ -64,15 +64,15 @@ class CompletionClient {
                             Options opts = {});
   ~CompletionClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CompletionClient(CompletionClient const&) = default;
   CompletionClient& operator=(CompletionClient const&) = default;
   CompletionClient(CompletionClient&&) = default;
   CompletionClient& operator=(CompletionClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CompletionClient const& a, CompletionClient const& b) {
     return a.connection_ == b.connection_;
@@ -80,7 +80,7 @@ class CompletionClient {
   friend bool operator!=(CompletionClient const& a, CompletionClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Completes the specified prefix with keyword suggestions.

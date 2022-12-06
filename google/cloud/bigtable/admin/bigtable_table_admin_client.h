@@ -72,16 +72,16 @@ class BigtableTableAdminClient {
       Options opts = {});
   ~BigtableTableAdminClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   BigtableTableAdminClient(BigtableTableAdminClient const&) = default;
   BigtableTableAdminClient& operator=(BigtableTableAdminClient const&) =
       default;
   BigtableTableAdminClient(BigtableTableAdminClient&&) = default;
   BigtableTableAdminClient& operator=(BigtableTableAdminClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(BigtableTableAdminClient const& a,
                          BigtableTableAdminClient const& b) {
@@ -91,7 +91,7 @@ class BigtableTableAdminClient {
                          BigtableTableAdminClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new table in the specified instance.

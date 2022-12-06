@@ -26,7 +26,13 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+/**
+ * Authentication components for Google Cloud Storage.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 namespace oauth2 {
+
 /**
  * Interface for OAuth 2.0 credentials used to access Google Cloud services.
  *
@@ -35,6 +41,8 @@ namespace oauth2 {
  *
  * @see https://cloud.google.com/docs/authentication/ for an overview of
  * authenticating to Google Cloud Platform APIs.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 class Credentials {
  public:
@@ -48,6 +56,8 @@ class Credentials {
    * underlying `Status` will indicate failure details from the refresh HTTP
    * request. Otherwise, the returned value will contain the Authorization
    * header to be used in HTTP requests.
+   *
+   * @deprecated Prefer using the unified credentials documented in @ref guac
    */
   virtual StatusOr<std::string> AuthorizationHeader() = 0;
 
@@ -58,15 +68,25 @@ class Credentials {
    * of an specific service account. This function returns an error if the
    * credentials cannot sign the blob at all, or if the service account is a
    * mismatch.
+   *
+   * @deprecated Prefer using the unified credentials documented in @ref guac
    */
   virtual StatusOr<std::vector<std::uint8_t>> SignBlob(
       SigningAccount const& service_account,
       std::string const& string_to_sign) const;
 
-  /// Return the account's email associated with these credentials, if any.
+  /**
+   * Return the account's email associated with these credentials, if any.
+   *
+   * @deprecated Prefer using the unified credentials documented in @ref guac
+   */
   virtual std::string AccountEmail() const { return std::string{}; }
 
-  /// Return the account's key_id associated with these credentials, if any.
+  /**
+   * Return the account's key_id associated with these credentials, if any.
+   *
+   * @deprecated Prefer using the unified credentials documented in @ref guac
+   */
   virtual std::string KeyId() const { return std::string{}; }
 };
 

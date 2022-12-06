@@ -99,7 +99,7 @@ class ManagedIdentitiesServiceClient {
       Options opts = {});
   ~ManagedIdentitiesServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ManagedIdentitiesServiceClient(ManagedIdentitiesServiceClient const&) =
       default;
@@ -108,9 +108,9 @@ class ManagedIdentitiesServiceClient {
   ManagedIdentitiesServiceClient(ManagedIdentitiesServiceClient&&) = default;
   ManagedIdentitiesServiceClient& operator=(ManagedIdentitiesServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ManagedIdentitiesServiceClient const& a,
                          ManagedIdentitiesServiceClient const& b) {
@@ -120,7 +120,7 @@ class ManagedIdentitiesServiceClient {
                          ManagedIdentitiesServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a Microsoft AD domain.

@@ -57,6 +57,10 @@ class SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) = 0;
 
+  virtual StatusOr<google::pubsub::v1::PullResponse> Pull(
+      grpc::ClientContext& context,
+      google::pubsub::v1::PullRequest const& request) = 0;
+
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>>
@@ -127,6 +131,10 @@ class DefaultSubscriberStub : public SubscriberStub {
   Status DeleteSubscription(
       grpc::ClientContext& client_context,
       google::pubsub::v1::DeleteSubscriptionRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::PullResponse> Pull(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::PullRequest const& request) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,

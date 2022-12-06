@@ -76,7 +76,7 @@ RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.1.tar.gz | \
     ldconfig && cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.8.tar.gz | \
+RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.10.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -143,7 +143,7 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
 # Install googletest, remove the downloaded files and the temporary artifacts
 # after a successful build to keep the image smaller (and with fewer layers)
 WORKDIR /var/tmp/build
-RUN curl -sSL https://github.com/google/googletest/archive/release-1.11.0.tar.gz | \
+RUN curl -sSL https://github.com/google/googletest/archive/release-1.12.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \

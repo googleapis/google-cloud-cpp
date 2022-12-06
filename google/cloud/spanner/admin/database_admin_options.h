@@ -31,26 +31,48 @@ namespace cloud {
 namespace spanner_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-spanner-options
+ */
 struct DatabaseAdminRetryPolicyOption {
   using Type = std::shared_ptr<DatabaseAdminRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-spanner-options
+ */
 struct DatabaseAdminBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct DatabaseAdminPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-spanner-options
+ */
 struct DatabaseAdminConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<DatabaseAdminConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-spanner-options
+ */
+struct DatabaseAdminPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to DatabaseAdmin.
+ *
+ * @ingroup google-cloud-spanner-options
+ */
 using DatabaseAdminPolicyOptionList =
     OptionList<DatabaseAdminRetryPolicyOption, DatabaseAdminBackoffPolicyOption,
                DatabaseAdminPollingPolicyOption,

@@ -68,15 +68,15 @@ class FoldersClient {
                          Options opts = {});
   ~FoldersClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   FoldersClient(FoldersClient const&) = default;
   FoldersClient& operator=(FoldersClient const&) = default;
   FoldersClient(FoldersClient&&) = default;
   FoldersClient& operator=(FoldersClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(FoldersClient const& a, FoldersClient const& b) {
     return a.connection_ == b.connection_;
@@ -84,7 +84,7 @@ class FoldersClient {
   friend bool operator!=(FoldersClient const& a, FoldersClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Retrieves a folder identified by the supplied resource name.

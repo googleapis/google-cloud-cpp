@@ -65,15 +65,15 @@ class MetricServiceClient {
       std::shared_ptr<MetricServiceConnection> connection, Options opts = {});
   ~MetricServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   MetricServiceClient(MetricServiceClient const&) = default;
   MetricServiceClient& operator=(MetricServiceClient const&) = default;
   MetricServiceClient(MetricServiceClient&&) = default;
   MetricServiceClient& operator=(MetricServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(MetricServiceClient const& a,
                          MetricServiceClient const& b) {
@@ -83,7 +83,7 @@ class MetricServiceClient {
                          MetricServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists monitored resource descriptors that match a filter. This method does

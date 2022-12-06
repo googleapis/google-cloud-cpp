@@ -73,7 +73,7 @@ Status ClientGenerator::GenerateHeader() {
   HeaderPrint("\n");
   HeaderLocalIncludes(
       {vars("connection_header_path"),
-       HasBidirStreamingMethod() ? "google/cloud/experimental_tag.h" : "",
+       IsExperimental() ? "google/cloud/experimental_tag.h" : "",
        "google/cloud/future.h", "google/cloud/options.h",
        "google/cloud/polling_policy.h", "google/cloud/status_or.h",
        "google/cloud/version.h"});
@@ -89,50 +89,47 @@ Status ClientGenerator::GenerateHeader() {
   if (!result.ok()) return result;
 
   // Client Class
-  HeaderPrint(  // clang-format off
-    "\n"
-    "$class_comment_block$\n"
-    "class $client_class_name$ {\n"
-    " public:\n"
-    "  explicit $client_class_name$(std::shared_ptr<$connection_class_name$> connection, Options opts = {});\n"
-    "  ~$client_class_name$();\n"
-    "\n"
-    "  //@{\n"
-    "  // @name Copy and move support\n"
-    "  $client_class_name$($client_class_name$ const&) = default;\n"
-    "  $client_class_name$& operator=($client_class_name$ const&) = default;\n"
-    "  $client_class_name$($client_class_name$&&) = default;\n"
-    "  $client_class_name$& operator=($client_class_name$&&) = default;\n"
-    "  //@}\n"
-    "\n"
-    "  //@{\n"
-    "  // @name Equality\n"
-    "  friend bool operator==($client_class_name$ const& a, $client_class_name$ const& b) {\n"
-    "    return a.connection_ == b.connection_;\n"
-    "  }\n"
-    "  friend bool operator!=($client_class_name$ const& a, $client_class_name$ const& b) {\n"
-    "    return !(a == b);\n"
-    "  }\n"
-    "  //@}\n");
-  // clang-format on
+  HeaderPrint(
+      R"""(
+$class_comment_block$
+class $client_class_name$ {
+ public:
+  explicit $client_class_name$()""");
+  if (IsExperimental()) HeaderPrint("ExperimentalTag, ");
+  HeaderPrint(
+      R"""(std::shared_ptr<$connection_class_name$> connection, Options opts = {});
+  ~$client_class_name$();
+
+  ///@{
+  // @name Copy and move support
+  $client_class_name$($client_class_name$ const&) = default;
+  $client_class_name$& operator=($client_class_name$ const&) = default;
+  $client_class_name$($client_class_name$&&) = default;
+  $client_class_name$& operator=($client_class_name$&&) = default;
+  ///@}
+
+  ///@{
+  // @name Equality
+  friend bool operator==($client_class_name$ const& a, $client_class_name$ const& b) {
+    return a.connection_ == b.connection_;
+  }
+  friend bool operator!=($client_class_name$ const& a, $client_class_name$ const& b) {
+    return !(a == b);
+  }
+  ///@}
+)""");
 
   for (google::protobuf::MethodDescriptor const& method : methods()) {
     if (IsBidirStreaming(method)) {
       HeaderPrintMethod(
           method, __FILE__, __LINE__,
           absl::StrCat(
-              "\n",
-              FormatMethodComments(
-                  method,
-                  // clang-format off
-R"""(  /// @note The presence of the `ExperimentalTag` means that this function is
-  /// experimental. It is subject to change (including removal) without notice.
-  ///
-)"""),
+              "\n", FormatMethodComments(method, ""),
+              // clang-format off
 R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
-  Async$method_name$(ExperimentalTag, Options opts = {});
+  Async$method_name$(Options opts = {});
 )"""));
       // clang-format on
       continue;
@@ -140,7 +137,7 @@ R"""(  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
-      if (IsDeprecatedMethodSignature(method, i)) continue;
+      if (OmitMethodSignature(method, i)) continue;
       std::string const method_string = absl::StrCat(
           "  $method_name$($method_signature", i, "$Options opts = {});\n");
       std::string const signature = method_signature_extension[i];
@@ -352,16 +349,16 @@ Status ClientGenerator::GenerateCc() {
   auto result = CcOpenNamespaces();
   if (!result.ok()) return result;
 
-  CcPrint(  // clang-format off
-    "\n"
-    "$client_class_name$::$client_class_name$(std::shared_ptr<$connection_class_name$> connection, Options opts)"
-    " : connection_(std::move(connection)),"
-    " options_(internal::MergeOptions(std::move(opts),"
-    " connection_->options())) {}\n");
-  // clang-format on
-
-  CcPrint(  // clang-format off
-    "$client_class_name$::~$client_class_name$() = default;\n");
+  CcPrint(R"""(
+$client_class_name$::$client_class_name$()""");
+  if (IsExperimental()) CcPrint("ExperimentalTag,");
+  CcPrint(R"""(
+    std::shared_ptr<$connection_class_name$> connection, Options opts)
+    : connection_(std::move(connection)),
+      options_(internal::MergeOptions(std::move(opts),
+      connection_->options())) {}
+$client_class_name$::~$client_class_name$() = default;
+)""");
   // clang-format on
 
   for (google::protobuf::MethodDescriptor const& method : methods()) {
@@ -371,10 +368,10 @@ Status ClientGenerator::GenerateCc() {
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $request_type$,
     $response_type$>>
-$client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
+$client_class_name$::Async$method_name$(Options opts) {
   internal::OptionsSpan span(
       internal::MergeOptions(std::move(opts), options_));
-  return connection_->Async$method_name$(std::move(tag));
+  return connection_->Async$method_name$();
 }
 )""");
       continue;
@@ -382,7 +379,7 @@ $client_class_name$::Async$method_name$(ExperimentalTag tag, Options opts) {
     auto method_signature_extension =
         method.options().GetRepeatedExtension(google::api::method_signature);
     for (int i = 0; i < method_signature_extension.size(); ++i) {
-      if (IsDeprecatedMethodSignature(method, i)) continue;
+      if (OmitMethodSignature(method, i)) continue;
       std::string method_string =
           absl::StrCat("$client_class_name$::$method_name$($method_signature",
                        i, "$Options opts) {\n");

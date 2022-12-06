@@ -31,22 +31,39 @@ namespace cloud {
 namespace datacatalog {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-datacatalog-options
+ */
 struct PolicyTagManagerSerializationRetryPolicyOption {
   using Type = std::shared_ptr<PolicyTagManagerSerializationRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-datacatalog-options
+ */
 struct PolicyTagManagerSerializationBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-datacatalog-options
+ */
 struct PolicyTagManagerSerializationConnectionIdempotencyPolicyOption {
   using Type =
       std::shared_ptr<PolicyTagManagerSerializationConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to PolicyTagManagerSerialization.
+ *
+ * @ingroup google-cloud-datacatalog-options
+ */
 using PolicyTagManagerSerializationPolicyOptionList =
     OptionList<PolicyTagManagerSerializationRetryPolicyOption,
                PolicyTagManagerSerializationBackoffPolicyOption,

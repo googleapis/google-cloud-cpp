@@ -68,7 +68,7 @@ class WorkflowTemplateServiceClient {
       Options opts = {});
   ~WorkflowTemplateServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   WorkflowTemplateServiceClient(WorkflowTemplateServiceClient const&) = default;
   WorkflowTemplateServiceClient& operator=(
@@ -76,9 +76,9 @@ class WorkflowTemplateServiceClient {
   WorkflowTemplateServiceClient(WorkflowTemplateServiceClient&&) = default;
   WorkflowTemplateServiceClient& operator=(WorkflowTemplateServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(WorkflowTemplateServiceClient const& a,
                          WorkflowTemplateServiceClient const& b) {
@@ -88,7 +88,7 @@ class WorkflowTemplateServiceClient {
                          WorkflowTemplateServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates new workflow template.

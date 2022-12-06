@@ -41,6 +41,8 @@ add_library(
     internal/absl_str_cat_quiet.h
     internal/absl_str_join_quiet.h
     internal/absl_str_replace_quiet.h
+    internal/access_token.cc
+    internal/access_token.h
     internal/algorithm.h
     internal/api_client_header.cc
     internal/api_client_header.h
@@ -63,6 +65,8 @@ add_library(
     internal/diagnostics_push.inc
     internal/disable_deprecation_warnings.inc
     internal/disable_msvc_crt_secure_warnings.inc
+    internal/error_metadata.cc
+    internal/error_metadata.h
     internal/filesystem.cc
     internal/filesystem.h
     internal/format_time_point.cc
@@ -81,6 +85,8 @@ add_library(
     internal/ios_flags_saver.h
     internal/log_impl.cc
     internal/log_impl.h
+    internal/make_status.cc
+    internal/make_status.h
     internal/non_constructible.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
@@ -100,6 +106,8 @@ add_library(
     internal/status_payload_keys.h
     internal/strerror.cc
     internal/strerror.h
+    internal/subject_token.cc
+    internal/subject_token.h
     internal/throw_delegate.cc
     internal/throw_delegate.h
     internal/tuple.h
@@ -214,8 +222,65 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_common"
     COMPONENT google_cloud_cpp_development)
 
+# Create a header-only library for the mocks. We use a CMake `INTERFACE` library
+# for these, a regular library would not work on macOS (where the library needs
+# at least one .o file).
+add_library(google_cloud_cpp_mocks INTERFACE)
+set(google_cloud_cpp_mocks_hdrs # cmake-format: sort
+                                mocks/mock_stream_range.h)
+export_list_to_bazel("google_cloud_cpp_mocks.bzl" "google_cloud_cpp_mocks_hdrs"
+                     YEAR "2022")
+target_link_libraries(
+    google_cloud_cpp_mocks INTERFACE google-cloud-cpp::common GTest::gmock_main
+                                     GTest::gmock GTest::gtest)
+set_target_properties(google_cloud_cpp_mocks PROPERTIES EXPORT_NAME
+                                                        google-cloud-cpp::mocks)
+target_include_directories(
+    google_cloud_cpp_mocks
+    INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
+              $<BUILD_INTERFACE:${PROJECT_BINARY_DIR}>
+              $<INSTALL_INTERFACE:include>)
+target_compile_options(google_cloud_cpp_mocks
+                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+add_library(google-cloud-cpp::mocks ALIAS google_cloud_cpp_mocks)
+
+# Export the CMake targets to make it easy to create configuration files.
+install(
+    EXPORT google_cloud_cpp_mocks-targets
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_mocks"
+    COMPONENT google_cloud_cpp_development)
+
+install(
+    TARGETS google_cloud_cpp_mocks
+    EXPORT google_cloud_cpp_mocks-targets
+    COMPONENT google_cloud_cpp_development)
+install(
+    FILES ${google_cloud_cpp_mocks_hdrs}
+    DESTINATION "include/google/cloud/mocks"
+    COMPONENT google_cloud_cpp_development)
+
+google_cloud_cpp_add_pkgconfig_interface(
+    "mocks" "Google Cloud C++ Testing Library"
+    "Helpers for testing the Google Cloud C++ Client Libraries"
+    "google_cloud_cpp_common" " gmock_main")
+
+# Create and install the CMake configuration files.
+configure_file("mocks-config.cmake.in" "google_cloud_cpp_mocks-config.cmake"
+               @ONLY)
+write_basic_package_version_file(
+    "google_cloud_cpp_mocks-config-version.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY ExactVersion)
+
+install(
+    FILES
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_mocks-config.cmake"
+        "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_mocks-config-version.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_mocks"
+    COMPONENT google_cloud_cpp_development)
+
 if (BUILD_TESTING)
-    find_package(benchmark CONFIG REQUIRED)
+    include(FindBenchmarkWithWorkarounds)
 
     set(google_cloud_cpp_common_unit_tests
         # cmake-format: sort
@@ -225,6 +290,7 @@ if (BUILD_TESTING)
         future_generic_then_test.cc
         future_void_test.cc
         future_void_then_test.cc
+        internal/access_token_test.cc
         internal/algorithm_test.cc
         internal/api_client_header_test.cc
         internal/backoff_policy_test.cc
@@ -233,12 +299,14 @@ if (BUILD_TESTING)
         internal/compiler_info_test.cc
         internal/compute_engine_util_test.cc
         internal/credentials_impl_test.cc
+        internal/error_metadata_test.cc
         internal/filesystem_test.cc
         internal/format_time_point_test.cc
         internal/future_impl_test.cc
         internal/group_options_test.cc
         internal/invoke_result_test.cc
         internal/log_impl_test.cc
+        internal/make_status_test.cc
         internal/pagination_range_test.cc
         internal/parse_rfc3339_test.cc
         internal/populate_common_options_test.cc
@@ -248,6 +316,7 @@ if (BUILD_TESTING)
         internal/sha256_hash_test.cc
         internal/status_payload_keys_test.cc
         internal/strerror_test.cc
+        internal/subject_token_test.cc
         internal/throw_delegate_test.cc
         internal/tuple_test.cc
         internal/type_list_test.cc
@@ -255,6 +324,7 @@ if (BUILD_TESTING)
         internal/utility_test.cc
         kms_key_name_test.cc
         log_test.cc
+        mocks/mock_stream_range_test.cc
         options_test.cc
         polling_policy_test.cc
         project_test.cc
@@ -272,8 +342,13 @@ if (BUILD_TESTING)
         google_cloud_cpp_add_executable(target "common" "${fname}")
         target_link_libraries(
             ${target}
-            PRIVATE google_cloud_cpp_testing google-cloud-cpp::common
-                    absl::variant GTest::gmock_main GTest::gmock GTest::gtest)
+            PRIVATE google_cloud_cpp_testing
+                    google-cloud-cpp::common
+                    google-cloud-cpp::mocks
+                    absl::variant
+                    GTest::gmock_main
+                    GTest::gmock
+                    GTest::gtest)
         google_cloud_cpp_add_common_options(${target})
         if (MSVC)
             target_compile_options(${target} PRIVATE "/bigobj")

@@ -31,26 +31,48 @@ namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-appengine-options
+ */
 struct InstancesRetryPolicyOption {
   using Type = std::shared_ptr<InstancesRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-appengine-options
+ */
 struct InstancesBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct InstancesPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-appengine-options
+ */
 struct InstancesConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<InstancesConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-appengine-options
+ */
+struct InstancesPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to Instances.
+ *
+ * @ingroup google-cloud-appengine-options
+ */
 using InstancesPolicyOptionList =
     OptionList<InstancesRetryPolicyOption, InstancesBackoffPolicyOption,
                InstancesPollingPolicyOption,

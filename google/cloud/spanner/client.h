@@ -341,11 +341,17 @@ class Client {
    * returned/ignored, and the column order is known. This enables more
    * efficient and simpler code.
    *
+   * Can also execute a DML statement with a returning clause in a read/write
+   * transaction.
+   *
    * @par Example with explicitly selected columns.
    * @snippet samples.cc spanner-query-data
    *
-   * @par Example using SELECT *
+   * @par Example using `SELECT *`.
    * @snippet samples.cc spanner-query-data-select-star
+   *
+   * @par Example using a DML statement with `THEN RETURN`.
+   * @snippet samples.cc spanner-update-dml-returning
    *
    * @param statement The SQL statement to execute.
    * @param opts (optional) The `Options` to use for this call. If given,
@@ -955,8 +961,8 @@ std::shared_ptr<spanner::Connection> MakeConnection(spanner::Database const& db,
  * The returned connection object should not be used directly, rather it should
  * be given to a `Client` instance, and methods should be invoked on `Client`.
  *
- * @note Prefer using the `MakeConnection()` overload that accepts
- *     `google::cloud::Options`.
+ * @deprecated Please use the `MakeConnection()` overload that accepts
+ *     `google::cloud::Options` instead.
  *
  * @see `Connection`
  *
@@ -973,8 +979,8 @@ std::shared_ptr<Connection> MakeConnection(
 /**
  * @copydoc MakeConnection(Database const&, ConnectionOptions const&, SessionPoolOptions)
  *
- * @note Prefer using the `MakeConnection()` overload that accepts
- *     `google::cloud::Options`.
+ * @deprecated Please use the `MakeConnection()` overload that accepts
+ *     `google::cloud::Options` instead.
  *
  * @param retry_policy override the default `RetryPolicy`, controls how long
  *     the returned `Connection` object retries requests on transient

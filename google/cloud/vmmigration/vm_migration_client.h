@@ -66,15 +66,15 @@ class VmMigrationClient {
                              Options opts = {});
   ~VmMigrationClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   VmMigrationClient(VmMigrationClient const&) = default;
   VmMigrationClient& operator=(VmMigrationClient const&) = default;
   VmMigrationClient(VmMigrationClient&&) = default;
   VmMigrationClient& operator=(VmMigrationClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(VmMigrationClient const& a,
                          VmMigrationClient const& b) {
@@ -84,7 +84,7 @@ class VmMigrationClient {
                          VmMigrationClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists Sources in a given project and location.

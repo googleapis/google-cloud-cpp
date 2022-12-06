@@ -212,7 +212,7 @@ function (google_cloud_cpp_grpc_utils_add_test fname labels)
 endfunction ()
 
 if (BUILD_TESTING)
-    find_package(benchmark CONFIG REQUIRED)
+    include(FindBenchmarkWithWorkarounds)
 
     # List the unit tests, then setup the targets and dependencies.
     set(google_cloud_cpp_grpc_utils_unit_tests

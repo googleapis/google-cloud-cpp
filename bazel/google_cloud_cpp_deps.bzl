@@ -62,11 +62,11 @@ def google_cloud_cpp_deps():
     if "com_google_googletest" not in native.existing_rules():
         http_archive(
             name = "com_google_googletest",
-            strip_prefix = "googletest-release-1.11.0",
+            strip_prefix = "googletest-release-1.12.1",
             urls = [
-                "https://github.com/google/googletest/archive/release-1.11.0.tar.gz",
+                "https://github.com/google/googletest/archive/release-1.12.1.tar.gz",
             ],
-            sha256 = "b4870bf121ff7795ba20d20bcdd8627b8e088f2d1dab299a031c1034eddc93d5",
+            sha256 = "81964fe578e9bd7c94dfdb09c8e4d6e6759e19967e397dbea48d1c10e45d0df2",
         )
 
     # Load a version of benchmark that we know works.
@@ -85,11 +85,11 @@ def google_cloud_cpp_deps():
         http_archive(
             name = "com_google_googleapis",
             urls = [
-                "https://github.com/googleapis/googleapis/archive/13d5b3f3f9412f38427c8ad48068f04ad1ee9808.tar.gz",
-                "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/13d5b3f3f9412f38427c8ad48068f04ad1ee9808.tar.gz",
+                "https://github.com/googleapis/googleapis/archive/67b2d7c2fb11188776bc398f02c67fccd8187502.tar.gz",
+                "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/67b2d7c2fb11188776bc398f02c67fccd8187502.tar.gz",
             ],
-            strip_prefix = "googleapis-13d5b3f3f9412f38427c8ad48068f04ad1ee9808",
-            sha256 = "0f17eaefcf016b23fd715a1a2dc69a3aa5004415a65473e37d4dafa63dde9260",
+            strip_prefix = "googleapis-67b2d7c2fb11188776bc398f02c67fccd8187502",
+            sha256 = "bddf2643977d1a061cb321d5c30ea92da6f3feb6e5d2e204182855b6240de81a",
             build_file = Label("//bazel:googleapis.BUILD"),
             # Scaffolding for patching googleapis after download. For example:
             #   patches = ["googleapis.patch"]
@@ -105,11 +105,11 @@ def google_cloud_cpp_deps():
     if "com_google_protobuf" not in native.existing_rules():
         http_archive(
             name = "com_google_protobuf",
-            strip_prefix = "protobuf-21.8",
+            strip_prefix = "protobuf-21.10",
             urls = [
-                "https://github.com/protocolbuffers/protobuf/archive/v21.8.tar.gz",
+                "https://github.com/protocolbuffers/protobuf/archive/v21.10.tar.gz",
             ],
-            sha256 = "032ef6fbb5b2ce2147e913b053003c7881fe53861571079b4351c006d6a822c1",
+            sha256 = "f3f9ce6dc288f2f939bdc9d277ebdfbc8dbcd51741071f93da70e0e62919f57f",
         )
 
     # Load BoringSSL, this is used by gRPC, but as I write this (2021-06-03, circa gRPC-1.37.1), the version used by
@@ -182,4 +182,18 @@ def google_cloud_cpp_deps():
             ],
             sha256 = "ac07840513072b7fcebda6e821068aa04889018f24e10e46181068fb214d7e56",
             build_file = Label("//bazel:crc32c.BUILD"),
+            patch_tool = "patch",
+            patch_args = ["-p1"],
+            patches = [Label("//bazel:configure_template.bzl.patch")],
+        )
+
+    # Open Telemetry
+    if "io_opentelemetry_cpp" not in native.existing_rules():
+        http_archive(
+            name = "io_opentelemetry_cpp",
+            strip_prefix = "opentelemetry-cpp-1.8.0",
+            urls = [
+                "https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.0.tar.gz",
+            ],
+            sha256 = "8eddcbeae191a58d2d2a19305ed0a60776e43999eb29b64536566ba24506a6c1",
         )

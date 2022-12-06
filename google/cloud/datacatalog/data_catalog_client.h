@@ -67,15 +67,15 @@ class DataCatalogClient {
                              Options opts = {});
   ~DataCatalogClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DataCatalogClient(DataCatalogClient const&) = default;
   DataCatalogClient& operator=(DataCatalogClient const&) = default;
   DataCatalogClient(DataCatalogClient&&) = default;
   DataCatalogClient& operator=(DataCatalogClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DataCatalogClient const& a,
                          DataCatalogClient const& b) {
@@ -85,7 +85,7 @@ class DataCatalogClient {
                          DataCatalogClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Searches Data Catalog for multiple resources like entries and tags that
@@ -208,12 +208,12 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   /// [google.cloud.datacatalog.v1.CreateEntryGroupRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L682}
   /// [google.cloud.datacatalog.v1.EntryGroup]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
       std::string const& parent, std::string const& entry_group_id,
@@ -254,12 +254,12 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   /// [google.cloud.datacatalog.v1.CreateEntryGroupRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L682}
   /// [google.cloud.datacatalog.v1.EntryGroup]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> CreateEntryGroup(
       google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request,
@@ -272,12 +272,12 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L721}
   /// [google.cloud.datacatalog.v1.EntryGroup]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
       std::string const& name, Options opts = {});
@@ -291,12 +291,12 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L721}
   /// [google.cloud.datacatalog.v1.EntryGroup]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
       std::string const& name, google::protobuf::FieldMask const& read_mask,
@@ -310,12 +310,12 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   /// [google.cloud.datacatalog.v1.GetEntryGroupRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L721}
   /// [google.cloud.datacatalog.v1.EntryGroup]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> GetEntryGroup(
       google::cloud::datacatalog::v1::GetEntryGroupRequest const& request,
@@ -334,12 +334,12 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L707}
   /// [google.cloud.datacatalog.v1.EntryGroup]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
       google::cloud::datacatalog::v1::EntryGroup const& entry_group,
@@ -363,12 +363,12 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L707}
   /// [google.cloud.datacatalog.v1.EntryGroup]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
       google::cloud::datacatalog::v1::EntryGroup const& entry_group,
@@ -387,12 +387,12 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   /// [google.cloud.datacatalog.v1.UpdateEntryGroupRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L707}
   /// [google.cloud.datacatalog.v1.EntryGroup]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryGroup> UpdateEntryGroup(
       google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request,
@@ -444,12 +444,12 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   /// [google.cloud.datacatalog.v1.ListEntryGroupsRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L751}
   /// [google.cloud.datacatalog.v1.EntryGroup]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   StreamRange<google::cloud::datacatalog::v1::EntryGroup> ListEntryGroups(
       std::string const& parent, Options opts = {});
@@ -462,12 +462,12 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_link{google::cloud::datacatalog::v1::EntryGroup,google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   /// [google.cloud.datacatalog.v1.ListEntryGroupsRequest]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L751}
   /// [google.cloud.datacatalog.v1.EntryGroup]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1273}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1275}
   ///
   StreamRange<google::cloud::datacatalog::v1::EntryGroup> ListEntryGroups(
       google::cloud::datacatalog::v1::ListEntryGroupsRequest request,
@@ -748,7 +748,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L931}
   ///
   /// [google.cloud.datacatalog.v1.ListEntriesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1558}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1560}
   /// [google.cloud.datacatalog.v1.Entry]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
   ///
@@ -763,14 +763,14 @@ class DataCatalogClient {
   /// [SearchCatalog][google.cloud.datacatalog.v1.DataCatalog.SearchCatalog].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ListEntriesRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1558}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ListEntriesRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1560}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Entry,google/cloud/datacatalog/v1/datacatalog.proto#L931}
   ///
   /// [google.cloud.datacatalog.v1.ListEntriesRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1558}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1560}
   /// [google.cloud.datacatalog.v1.Entry]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L931}
   ///
@@ -787,16 +787,16 @@ class DataCatalogClient {
   /// project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ModifyEntryOverviewRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1636}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ModifyEntryOverviewRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1638}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::EntryOverview,google/cloud/datacatalog/v1/datacatalog.proto#L1242}
+  /// @googleapis_link{google::cloud::datacatalog::v1::EntryOverview,google/cloud/datacatalog/v1/datacatalog.proto#L1244}
   ///
   /// [google.cloud.datacatalog.v1.ModifyEntryOverviewRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1636}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1638}
   /// [google.cloud.datacatalog.v1.EntryOverview]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1242}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1244}
   ///
   StatusOr<google::cloud::datacatalog::v1::EntryOverview> ModifyEntryOverview(
       google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request,
@@ -811,16 +811,16 @@ class DataCatalogClient {
   /// project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ModifyEntryContactsRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1651}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ModifyEntryContactsRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1653}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::Contacts,google/cloud/datacatalog/v1/datacatalog.proto#L1254}
+  /// @googleapis_link{google::cloud::datacatalog::v1::Contacts,google/cloud/datacatalog/v1/datacatalog.proto#L1256}
   ///
   /// [google.cloud.datacatalog.v1.ModifyEntryContactsRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1651}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1653}
   /// [google.cloud.datacatalog.v1.Contacts]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1254}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1256}
   ///
   StatusOr<google::cloud::datacatalog::v1::Contacts> ModifyEntryContacts(
       google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request,
@@ -847,7 +847,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
   /// [google.cloud.datacatalog.v1.CreateTagTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1300}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1302}
   /// [google.cloud.datacatalog.v1.TagTemplate]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -865,14 +865,14 @@ class DataCatalogClient {
   /// (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::CreateTagTemplateRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1300}
+  /// @googleapis_link{google::cloud::datacatalog::v1::CreateTagTemplateRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1302}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
   /// [google.cloud.datacatalog.v1.CreateTagTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1300}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1302}
   /// [google.cloud.datacatalog.v1.TagTemplate]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -890,7 +890,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
   /// [google.cloud.datacatalog.v1.GetTagTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1323}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1325}
   /// [google.cloud.datacatalog.v1.TagTemplate]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -901,14 +901,14 @@ class DataCatalogClient {
   /// Gets a tag template.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::GetTagTemplateRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1323}
+  /// @googleapis_link{google::cloud::datacatalog::v1::GetTagTemplateRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1325}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
   /// [google.cloud.datacatalog.v1.GetTagTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1323}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1325}
   /// [google.cloud.datacatalog.v1.TagTemplate]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -935,7 +935,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
   /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1335}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1337}
   /// [google.cloud.datacatalog.v1.TagTemplate]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -970,7 +970,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
   /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1335}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1337}
   /// [google.cloud.datacatalog.v1.TagTemplate]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -990,14 +990,14 @@ class DataCatalogClient {
   /// project](https://cloud.google.com/data-catalog/docs/concepts/resource-project).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTagTemplateRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1335}
+  /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTagTemplateRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1337}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplate,google/cloud/datacatalog/v1/tags.proto#L143}
   ///
   /// [google.cloud.datacatalog.v1.UpdateTagTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1335}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1337}
   /// [google.cloud.datacatalog.v1.TagTemplate]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L143}
   ///
@@ -1019,7 +1019,7 @@ class DataCatalogClient {
   ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1353}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1355}
   ///
   Status DeleteTagTemplate(std::string const& name, bool force,
                            Options opts = {});
@@ -1032,12 +1032,12 @@ class DataCatalogClient {
   /// project](https://cloud.google.com/data-catalog/docs/concepts/resource-project).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTagTemplateRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1353}
+  /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTagTemplateRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1355}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTagTemplateRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1353}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1355}
   ///
   Status DeleteTagTemplate(
       google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request,
@@ -1066,7 +1066,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L185}
   ///
   /// [google.cloud.datacatalog.v1.CreateTagTemplateFieldRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1418}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1420}
   /// [google.cloud.datacatalog.v1.TagTemplateField]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L185}
   ///
@@ -1085,14 +1085,14 @@ class DataCatalogClient {
   /// project](https://cloud.google.com/data-catalog/docs/concepts/resource-project).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1418}
+  /// @googleapis_link{google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1420}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L185}
   ///
   /// [google.cloud.datacatalog.v1.CreateTagTemplateFieldRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1418}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1420}
   /// [google.cloud.datacatalog.v1.TagTemplateField]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L185}
   ///
@@ -1120,7 +1120,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L185}
   ///
   /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1444}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1446}
   /// [google.cloud.datacatalog.v1.TagTemplateField]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L185}
   ///
@@ -1161,7 +1161,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L185}
   ///
   /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1444}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1446}
   /// [google.cloud.datacatalog.v1.TagTemplateField]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L185}
   ///
@@ -1183,14 +1183,14 @@ class DataCatalogClient {
   /// project](https://cloud.google.com/data-catalog/docs/concepts/resource-project).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1444}
+  /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1446}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L185}
   ///
   /// [google.cloud.datacatalog.v1.UpdateTagTemplateFieldRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1444}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1446}
   /// [google.cloud.datacatalog.v1.TagTemplateField]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L185}
   ///
@@ -1217,7 +1217,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L185}
   ///
   /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1477}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1479}
   /// [google.cloud.datacatalog.v1.TagTemplateField]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L185}
   ///
@@ -1235,14 +1235,14 @@ class DataCatalogClient {
   /// (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1477}
+  /// @googleapis_link{google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1479}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L185}
   ///
   /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1477}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1479}
   /// [google.cloud.datacatalog.v1.TagTemplateField]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L185}
   ///
@@ -1266,7 +1266,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L185}
   ///
   /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldEnumValueRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1492}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1494}
   /// [google.cloud.datacatalog.v1.TagTemplateField]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L185}
   ///
@@ -1281,14 +1281,14 @@ class DataCatalogClient {
   /// Within a single enum field, enum values must be unique.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1492}
+  /// @googleapis_link{google::cloud::datacatalog::v1::RenameTagTemplateFieldEnumValueRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1494}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::TagTemplateField,google/cloud/datacatalog/v1/tags.proto#L185}
   ///
   /// [google.cloud.datacatalog.v1.RenameTagTemplateFieldEnumValueRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1492}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1494}
   /// [google.cloud.datacatalog.v1.TagTemplateField]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L185}
   ///
@@ -1314,7 +1314,7 @@ class DataCatalogClient {
   ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1507}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1509}
   ///
   Status DeleteTagTemplateField(std::string const& name, bool force,
                                 Options opts = {});
@@ -1328,12 +1328,12 @@ class DataCatalogClient {
   /// project](https://cloud.google.com/data-catalog/docs/concepts/resource-project).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1507}
+  /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1509}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTagTemplateFieldRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1507}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1509}
   ///
   Status DeleteTagTemplateField(
       google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
@@ -1366,7 +1366,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
   /// [google.cloud.datacatalog.v1.CreateTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1370}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1372}
   /// [google.cloud.datacatalog.v1.Tag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1389,14 +1389,14 @@ class DataCatalogClient {
   /// used to create the tag must be in the same organization.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::CreateTagRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1370}
+  /// @googleapis_link{google::cloud::datacatalog::v1::CreateTagRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1372}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
   /// [google.cloud.datacatalog.v1.CreateTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1370}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1372}
   /// [google.cloud.datacatalog.v1.Tag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1414,7 +1414,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
   /// [google.cloud.datacatalog.v1.UpdateTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1391}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1393}
   /// [google.cloud.datacatalog.v1.Tag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1437,7 +1437,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
   /// [google.cloud.datacatalog.v1.UpdateTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1391}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1393}
   /// [google.cloud.datacatalog.v1.Tag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1449,14 +1449,14 @@ class DataCatalogClient {
   /// Updates an existing tag.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTagRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1391}
+  /// @googleapis_link{google::cloud::datacatalog::v1::UpdateTagRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1393}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
   /// [google.cloud.datacatalog.v1.UpdateTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1391}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1393}
   /// [google.cloud.datacatalog.v1.Tag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1472,7 +1472,7 @@ class DataCatalogClient {
   ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1406}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1408}
   ///
   Status DeleteTag(std::string const& name, Options opts = {});
 
@@ -1480,12 +1480,12 @@ class DataCatalogClient {
   /// Deletes a tag.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTagRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1406}
+  /// @googleapis_link{google::cloud::datacatalog::v1::DeleteTagRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1408}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.datacatalog.v1.DeleteTagRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1406}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1408}
   ///
   Status DeleteTag(
       google::cloud::datacatalog::v1::DeleteTagRequest const& request,
@@ -1507,7 +1507,7 @@ class DataCatalogClient {
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
   /// [google.cloud.datacatalog.v1.ListTagsRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1524}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1526}
   /// [google.cloud.datacatalog.v1.Tag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1520,14 +1520,14 @@ class DataCatalogClient {
   /// lowercased.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::ListTagsRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1524}
+  /// @googleapis_link{google::cloud::datacatalog::v1::ListTagsRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1526}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::datacatalog::v1::Tag,google/cloud/datacatalog/v1/tags.proto#L37}
   ///
   /// [google.cloud.datacatalog.v1.ListTagsRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1524}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1526}
   /// [google.cloud.datacatalog.v1.Tag]:
   /// @googleapis_reference_link{google/cloud/datacatalog/v1/tags.proto#L37}
   ///
@@ -1543,12 +1543,12 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::StarEntryResponse,google/cloud/datacatalog/v1/datacatalog.proto#L1611}
+  /// @googleapis_link{google::cloud::datacatalog::v1::StarEntryResponse,google/cloud/datacatalog/v1/datacatalog.proto#L1613}
   ///
   /// [google.cloud.datacatalog.v1.StarEntryRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1598}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1600}
   /// [google.cloud.datacatalog.v1.StarEntryResponse]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1611}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1613}
   ///
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
       std::string const& name, Options opts = {});
@@ -1558,16 +1558,16 @@ class DataCatalogClient {
   /// the current user. Starring information is private to each user.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::StarEntryRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1598}
+  /// @googleapis_link{google::cloud::datacatalog::v1::StarEntryRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1600}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::StarEntryResponse,google/cloud/datacatalog/v1/datacatalog.proto#L1611}
+  /// @googleapis_link{google::cloud::datacatalog::v1::StarEntryResponse,google/cloud/datacatalog/v1/datacatalog.proto#L1613}
   ///
   /// [google.cloud.datacatalog.v1.StarEntryRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1598}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1600}
   /// [google.cloud.datacatalog.v1.StarEntryResponse]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1611}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1613}
   ///
   StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
       google::cloud::datacatalog::v1::StarEntryRequest const& request,
@@ -1581,12 +1581,12 @@ class DataCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::UnstarEntryResponse,google/cloud/datacatalog/v1/datacatalog.proto#L1630}
+  /// @googleapis_link{google::cloud::datacatalog::v1::UnstarEntryResponse,google/cloud/datacatalog/v1/datacatalog.proto#L1632}
   ///
   /// [google.cloud.datacatalog.v1.UnstarEntryRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1617}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1619}
   /// [google.cloud.datacatalog.v1.UnstarEntryResponse]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1630}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1632}
   ///
   StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse> UnstarEntry(
       std::string const& name, Options opts = {});
@@ -1596,16 +1596,16 @@ class DataCatalogClient {
   /// the current user. Starring information is private to each user.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::datacatalog::v1::UnstarEntryRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1617}
+  /// @googleapis_link{google::cloud::datacatalog::v1::UnstarEntryRequest,google/cloud/datacatalog/v1/datacatalog.proto#L1619}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::datacatalog::v1::UnstarEntryResponse,google/cloud/datacatalog/v1/datacatalog.proto#L1630}
+  /// @googleapis_link{google::cloud::datacatalog::v1::UnstarEntryResponse,google/cloud/datacatalog/v1/datacatalog.proto#L1632}
   ///
   /// [google.cloud.datacatalog.v1.UnstarEntryRequest]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1617}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1619}
   /// [google.cloud.datacatalog.v1.UnstarEntryResponse]:
-  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1630}
+  /// @googleapis_reference_link{google/cloud/datacatalog/v1/datacatalog.proto#L1632}
   ///
   StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse> UnstarEntry(
       google::cloud::datacatalog::v1::UnstarEntryRequest const& request,

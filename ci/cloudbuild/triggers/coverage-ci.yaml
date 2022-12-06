@@ -7,7 +7,7 @@ github:
 name: coverage-ci
 substitutions:
   _BUILD_NAME: coverage
-  _DISTRO: fedora-36
+  _DISTRO: fedora-36-bazel
   _TRIGGER_TYPE: ci
 tags:
 - ci

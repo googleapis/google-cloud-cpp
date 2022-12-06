@@ -64,15 +64,15 @@ class ContextsClient {
                           Options opts = {});
   ~ContextsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ContextsClient(ContextsClient const&) = default;
   ContextsClient& operator=(ContextsClient const&) = default;
   ContextsClient(ContextsClient&&) = default;
   ContextsClient& operator=(ContextsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ContextsClient const& a, ContextsClient const& b) {
     return a.connection_ == b.connection_;
@@ -80,7 +80,7 @@ class ContextsClient {
   friend bool operator!=(ContextsClient const& a, ContextsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all contexts in the specified session.

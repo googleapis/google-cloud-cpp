@@ -242,6 +242,33 @@ DefaultEventarcStub::AsyncDeleteChannelConnection(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+DefaultEventarcStub::GetGoogleChannelConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
+  google::cloud::eventarc::v1::GoogleChannelConfig response;
+  auto status =
+      grpc_stub_->GetGoogleChannelConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+DefaultEventarcStub::UpdateGoogleChannelConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+        request) {
+  google::cloud::eventarc::v1::GoogleChannelConfig response;
+  auto status = grpc_stub_->UpdateGoogleChannelConfig(&client_context, request,
+                                                      &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultEventarcStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

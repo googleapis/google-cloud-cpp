@@ -242,6 +242,22 @@ AccessContextManagerConnection::DeleteGcpUserAccessBinding(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::iam::v1::Policy> AccessContextManagerConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> AccessContextManagerConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AccessContextManagerConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AccessContextManagerConnection>
 MakeAccessContextManagerConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

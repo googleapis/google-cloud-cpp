@@ -30,11 +30,10 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::rest_internal::HttpPayload;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::rest_internal::RestResponse;
 using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::MockHttpPayload;
+using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
@@ -79,14 +78,7 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(response.begin(), response.end(), buffer.begin());
-          return response.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return testing_util::MakeMockHttpPayloadSuccess(response);
   });
 
   EXPECT_CALL(*mock_rest_client_,
@@ -137,14 +129,7 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenNonRfc3339Time) {
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(response.begin(), response.end(), buffer.begin());
-          return response.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(response);
   });
 
   EXPECT_CALL(*mock_rest_client_,
@@ -193,14 +178,7 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenInvalidResponse) {
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(response.begin(), response.end(), buffer.begin());
-          return response.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(response);
   });
 
   EXPECT_CALL(*mock_rest_client_,
@@ -245,11 +223,7 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenPostFailure) {
   EXPECT_CALL(*mock_response, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kNotFound));
   EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read).WillOnce([](absl::Span<char>) {
-      return 0;
-    });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+    return MakeMockHttpPayloadSuccess(std::string{});
   });
 
   EXPECT_CALL(*mock_rest_client_,

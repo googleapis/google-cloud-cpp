@@ -31,22 +31,39 @@ namespace cloud {
 namespace resourcesettings {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-resourcesettings-options
+ */
 struct ResourceSettingsServiceRetryPolicyOption {
   using Type = std::shared_ptr<ResourceSettingsServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-resourcesettings-options
+ */
 struct ResourceSettingsServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-resourcesettings-options
+ */
 struct ResourceSettingsServiceConnectionIdempotencyPolicyOption {
   using Type =
       std::shared_ptr<ResourceSettingsServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to ResourceSettingsService.
+ *
+ * @ingroup google-cloud-resourcesettings-options
+ */
 using ResourceSettingsServicePolicyOptionList =
     OptionList<ResourceSettingsServiceRetryPolicyOption,
                ResourceSettingsServiceBackoffPolicyOption,

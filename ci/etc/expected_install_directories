@@ -93,6 +93,7 @@
 ./include/google/cloud/bigtable
 ./include/google/cloud/bigtable/admin
 ./include/google/cloud/bigtable/admin/internal
+./include/google/cloud/bigtable/admin/mocks
 ./include/google/cloud/bigtable/internal
 ./include/google/cloud/billing
 ./include/google/cloud/billing/budgets
@@ -120,6 +121,10 @@
 ./include/google/cloud/composer
 ./include/google/cloud/composer/internal
 ./include/google/cloud/composer/mocks
+./include/google/cloud/connectors
+./include/google/cloud/connectors/internal
+./include/google/cloud/connectors/mocks
+./include/google/cloud/connectors/v1
 ./include/google/cloud/contactcenterinsights
 ./include/google/cloud/contactcenterinsights/internal
 ./include/google/cloud/contactcenterinsights/mocks
@@ -346,10 +351,14 @@
 ./include/google/cloud/spanner
 ./include/google/cloud/spanner/admin
 ./include/google/cloud/spanner/admin/internal
+./include/google/cloud/spanner/admin/mocks
 ./include/google/cloud/speech
 ./include/google/cloud/speech/internal
 ./include/google/cloud/speech/mocks
 ./include/google/cloud/speech/v1
+./include/google/cloud/speech/v2
+./include/google/cloud/speech/v2/internal
+./include/google/cloud/speech/v2/mocks
 ./include/google/cloud/storage
 ./include/google/cloud/storage/internal
 ./include/google/cloud/storagetransfer
@@ -399,6 +408,10 @@
 ./include/google/cloud/vmmigration/internal
 ./include/google/cloud/vmmigration/mocks
 ./include/google/cloud/vmmigration/v1
+./include/google/cloud/vmwareengine
+./include/google/cloud/vmwareengine/v1
+./include/google/cloud/vmwareengine/v1/internal
+./include/google/cloud/vmwareengine/v1/mocks
 ./include/google/cloud/vpcaccess
 ./include/google/cloud/vpcaccess/internal
 ./include/google/cloud/vpcaccess/mocks
@@ -487,6 +500,7 @@
 ./lib64/cmake/google_cloud_cpp_channel
 ./lib64/cmake/google_cloud_cpp_cloudbuild
 ./lib64/cmake/google_cloud_cpp_composer
+./lib64/cmake/google_cloud_cpp_connectors
 ./lib64/cmake/google_cloud_cpp_contactcenterinsights
 ./lib64/cmake/google_cloud_cpp_container
 ./lib64/cmake/google_cloud_cpp_containeranalysis
@@ -543,6 +557,7 @@
 ./lib64/cmake/google_cloud_cpp_servicemanagement
 ./lib64/cmake/google_cloud_cpp_serviceusage
 ./lib64/cmake/google_cloud_cpp_shell
+./lib64/cmake/google_cloud_cpp_spanner
 ./lib64/cmake/google_cloud_cpp_speech
 ./lib64/cmake/google_cloud_cpp_storage
 ./lib64/cmake/google_cloud_cpp_storagetransfer
@@ -556,6 +571,7 @@
 ./lib64/cmake/google_cloud_cpp_videointelligence
 ./lib64/cmake/google_cloud_cpp_vision
 ./lib64/cmake/google_cloud_cpp_vmmigration
+./lib64/cmake/google_cloud_cpp_vmwareengine
 ./lib64/cmake/google_cloud_cpp_vpcaccess
 ./lib64/cmake/google_cloud_cpp_webrisk
 ./lib64/cmake/google_cloud_cpp_websecurityscanner

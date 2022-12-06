@@ -30,7 +30,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 /**
- * Implements the Builder pattern for CurlRequest, and CurlUploadRequest.
+ * Implements the Build pattern for CurlRequest, and CurlUploadRequest.
  */
 class CurlRequestBuilder {
  public:

@@ -312,6 +312,15 @@ TEST(ProcessCommandLineArgs, ProcessOmitStubFactory) {
   EXPECT_THAT(*result, Contains(Pair("omit_stub_factory", "true")));
 }
 
+TEST(ProcessCommandLineArgs, ProcessGenerateRoundRobinGenerator) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/spanner/"
+      ",generate_round_robin_decorator=true");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result,
+              Contains(Pair("generate_round_robin_decorator", "true")));
+}
+
 TEST(ProcessCommandLineArgs, ProcessEndpointLocationStyle) {
   auto result = ProcessCommandLineArgs(
       "product_path=google/cloud/spanner/"
@@ -319,6 +328,14 @@ TEST(ProcessCommandLineArgs, ProcessEndpointLocationStyle) {
   ASSERT_THAT(result, IsOk());
   EXPECT_THAT(*result, Contains(Pair("endpoint_location_style",
                                      "LOCATION_DEPENDENT_COMPAT")));
+}
+
+TEST(ProcessCommandLineArgs, ProcessExperimental) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/spanner/"
+      ",experimental=true");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result, Contains(Pair("experimental", "true")));
 }
 
 }  // namespace

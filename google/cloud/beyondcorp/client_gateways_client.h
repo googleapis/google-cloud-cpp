@@ -77,7 +77,7 @@ class ClientGatewaysServiceClient {
       Options opts = {});
   ~ClientGatewaysServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ClientGatewaysServiceClient(ClientGatewaysServiceClient const&) = default;
   ClientGatewaysServiceClient& operator=(ClientGatewaysServiceClient const&) =
@@ -85,9 +85,9 @@ class ClientGatewaysServiceClient {
   ClientGatewaysServiceClient(ClientGatewaysServiceClient&&) = default;
   ClientGatewaysServiceClient& operator=(ClientGatewaysServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ClientGatewaysServiceClient const& a,
                          ClientGatewaysServiceClient const& b) {
@@ -97,7 +97,7 @@ class ClientGatewaysServiceClient {
                          ClientGatewaysServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists ClientGateways in a given project and location.

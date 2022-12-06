@@ -87,15 +87,15 @@ class InstanceAdminClient {
       std::shared_ptr<InstanceAdminConnection> connection, Options opts = {});
   ~InstanceAdminClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   InstanceAdminClient(InstanceAdminClient const&) = default;
   InstanceAdminClient& operator=(InstanceAdminClient const&) = default;
   InstanceAdminClient(InstanceAdminClient&&) = default;
   InstanceAdminClient& operator=(InstanceAdminClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(InstanceAdminClient const& a,
                          InstanceAdminClient const& b) {
@@ -105,7 +105,7 @@ class InstanceAdminClient {
                          InstanceAdminClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the supported instance configurations for a given project.

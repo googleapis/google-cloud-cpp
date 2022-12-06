@@ -64,15 +64,15 @@ class WebhooksClient {
                           Options opts = {});
   ~WebhooksClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   WebhooksClient(WebhooksClient const&) = default;
   WebhooksClient& operator=(WebhooksClient const&) = default;
   WebhooksClient(WebhooksClient&&) = default;
   WebhooksClient& operator=(WebhooksClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(WebhooksClient const& a, WebhooksClient const& b) {
     return a.connection_ == b.connection_;
@@ -80,7 +80,7 @@ class WebhooksClient {
   friend bool operator!=(WebhooksClient const& a, WebhooksClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all webhooks in the specified agent.

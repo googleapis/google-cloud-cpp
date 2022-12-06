@@ -31,26 +31,48 @@ namespace cloud {
 namespace run {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-run-options
+ */
 struct RevisionsRetryPolicyOption {
   using Type = std::shared_ptr<RevisionsRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-run-options
+ */
 struct RevisionsBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct RevisionsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-run-options
+ */
 struct RevisionsConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<RevisionsConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-run-options
+ */
+struct RevisionsPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to Revisions.
+ *
+ * @ingroup google-cloud-run-options
+ */
 using RevisionsPolicyOptionList =
     OptionList<RevisionsRetryPolicyOption, RevisionsBackoffPolicyOption,
                RevisionsPollingPolicyOption,

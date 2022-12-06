@@ -48,7 +48,6 @@ load(":pubsub_samples_unit_tests.bzl", "pubsub_samples_unit_tests")
 ) for test in pubsub_samples_unit_tests]
 
 load(":pubsub_client_integration_samples.bzl", "pubsub_client_integration_samples")
-load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
 
 proto_library(
     name = "samples_proto",
@@ -77,9 +76,10 @@ cc_proto_library(
         ":samples_cc_proto",
         "//:common",
         "//:pubsub",
-        "@com_google_googletest//:gtest_main",
     ] + (["//:iam"] if test == "iam_samples.cc" else []),
 ) for test in pubsub_client_integration_samples]
+
+load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),

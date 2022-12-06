@@ -67,7 +67,7 @@ class ContactCenterInsightsClient {
       Options opts = {});
   ~ContactCenterInsightsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ContactCenterInsightsClient(ContactCenterInsightsClient const&) = default;
   ContactCenterInsightsClient& operator=(ContactCenterInsightsClient const&) =
@@ -75,9 +75,9 @@ class ContactCenterInsightsClient {
   ContactCenterInsightsClient(ContactCenterInsightsClient&&) = default;
   ContactCenterInsightsClient& operator=(ContactCenterInsightsClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ContactCenterInsightsClient const& a,
                          ContactCenterInsightsClient const& b) {
@@ -87,7 +87,7 @@ class ContactCenterInsightsClient {
                          ContactCenterInsightsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a conversation.

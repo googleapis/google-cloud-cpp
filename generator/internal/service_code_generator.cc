@@ -95,6 +95,11 @@ ServiceCodeGenerator::EndpointLocationStyle() const {
   return endpoint_location_style;
 }
 
+bool ServiceCodeGenerator::IsExperimental() const {
+  auto iter = vars().find("experimental");
+  return iter != vars().end() && iter->second == "true";
+}
+
 bool ServiceCodeGenerator::HasLongrunningMethod() const {
   return std::any_of(methods_.begin(), methods_.end(),
                      [](google::protobuf::MethodDescriptor const& m) {
@@ -195,7 +200,7 @@ ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
   return include_paths;
 }
 
-bool ServiceCodeGenerator::IsDeprecatedMethodSignature(
+bool ServiceCodeGenerator::OmitMethodSignature(
     google::protobuf::MethodDescriptor const& method,
     int method_signature_number) const {
   auto method_vars = service_method_vars_.find(method.full_name());

@@ -13,13 +13,12 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/mutation_batcher.h"
-#include "google/cloud/bigtable/testing/mock_mutate_rows_reader.h"
-#include "google/cloud/bigtable/testing/table_test_fixture.h"
+#include "google/cloud/bigtable/mocks/mock_data_connection.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/chrono_literals.h"
-#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
 #include "absl/memory/memory.h"
@@ -31,16 +30,15 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace btproto = ::google::bigtable::v2;
 namespace bt = ::google::cloud::bigtable;
 
+using ::google::cloud::bigtable_mocks::MockDataConnection;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
-using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
-using bigtable::testing::MockClientAsyncReaderInterface;
-using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::Not;
+using ::testing::Return;
 using ::testing::WithParamInterface;
 
 std::size_t MutationSize(SingleRowMutation mut) {
@@ -49,31 +47,23 @@ std::size_t MutationSize(SingleRowMutation mut) {
   return entry.ByteSizeLong();
 }
 
-struct ResultPiece {
-  ResultPiece(std::vector<int> succeeded_mutations,
-              std::vector<int> transiently_failed_mutations,
-              std::vector<int> permanently_failed_mutations)
-      : succeeded(std::move(succeeded_mutations)),
-        transiently_failed(std::move(transiently_failed_mutations)),
-        permanently_failed(std::move(permanently_failed_mutations)) {}
-
-  std::vector<int> succeeded;
-  std::vector<int> transiently_failed;
-  std::vector<int> permanently_failed;
-};
+Status BadStatus() { return Status(StatusCode::kAborted, "fail"); }
 
 struct Exchange {
-  Exchange(std::vector<SingleRowMutation> req, std::vector<ResultPiece> res)
-      : req(std::move(req)), res(std::move(res)) {}
+  Exchange(BulkMutation mut, std::vector<int> fails) : req(std::move(mut)) {
+    res.reserve(fails.size());
+    std::transform(fails.begin(), fails.end(), std::back_inserter(res),
+                   [](int i) { return FailedMutation(BadStatus(), i); });
+  }
 
-  std::vector<SingleRowMutation> req;
-  std::vector<ResultPiece> res;
+  BulkMutation req;
+  std::vector<FailedMutation> res;
 };
 
 struct MutationState {
   bool admitted{false};
   bool completed{false};
-  google::cloud::Status completion_status;
+  Status completion_status;
 };
 
 class MutationStates {
@@ -112,152 +102,76 @@ class MutationStates {
   std::vector<std::shared_ptr<MutationState>> states_;
 };
 
-// Lambda returning lambdas. Given a ResultPiece, return a lambda filling a
-// MutateRowsResponse accordingly.
-auto generate_response_generator = [](ResultPiece const& result_piece) {
-  return [result_piece](btproto::MutateRowsResponse* r, void*) {
-    for (int idx : result_piece.succeeded) {
-      auto& e = *r->add_entries();
-      e.set_index(idx);
-      e.mutable_status()->set_code(grpc::StatusCode::OK);
-    }
-    for (int idx : result_piece.transiently_failed) {
-      auto& e = *r->add_entries();
-      e.set_index(idx);
-      e.mutable_status()->set_code(grpc::StatusCode::UNAVAILABLE);
-    }
-    for (int idx : result_piece.permanently_failed) {
-      auto& e = *r->add_entries();
-      e.set_index(idx);
-      e.mutable_status()->set_code(grpc::StatusCode::PERMISSION_DENIED);
-    }
-  };
-};
-
-class MutationBatcherTest : public bigtable::testing::TableTestFixture {
+class MutationBatcherTest : public ::testing::Test {
  protected:
-  MutationBatcherTest()
-      : TableTestFixture(
-            CompletionQueue(std::make_shared<FakeCompletionQueueImpl>())),
-        batcher_(absl::make_unique<MutationBatcher>(table_)) {}
+  MutationBatcherTest() {
+    EXPECT_CALL(*mock_cq_, RunAsync).WillRepeatedly([this](Operation op) {
+      operations_.emplace(std::move(op));
+    });
+    EXPECT_CALL(*mock_, options).WillRepeatedly(Return(Options{}));
+
+    table_ = absl::make_unique<Table>(mock_, TableResource("p", "i", "t"));
+  }
 
   void ExpectInteraction(std::vector<Exchange> const& interactions) {
-    // gMock expectation matching starts from the latest added, so we need to
-    // add them in the reverse order.
-    for (auto exchange_it = interactions.crbegin();
-         exchange_it != interactions.crend(); ++exchange_it) {
-      auto exchange = *exchange_it;
-      // Not making it a unique_ptr because we'll be passing it to a lambda
-      // returning it as a unique_ptr.
-      auto* reader =
-          new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
-      EXPECT_CALL(*reader, Read)
-          .WillOnce([](btproto::MutateRowsResponse*, void*) {});
-      // Just like in the outer loop, we need to reverse the order to counter
-      // gMock's expectation matching order (from latest added to first).
-      for (auto result_piece_it = exchange.res.rbegin();
-           result_piece_it != exchange.res.rend(); ++result_piece_it) {
-        EXPECT_CALL(*reader, Read)
-            .WillOnce(generate_response_generator(*result_piece_it))
-            .RetiresOnSaturation();
-      }
-
-      EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
-        *status = grpc::Status::OK;
-      });
-      EXPECT_CALL(*reader, StartCall).Times(1);
-
-      EXPECT_CALL(*client_, PrepareAsyncMutateRows)
-          .WillOnce([this, reader, exchange](
-                        grpc::ClientContext* context,
-                        btproto::MutateRowsRequest const& r,
-                        grpc::CompletionQueue*) {
-            IsContextMDValid(*context, "google.bigtable.v2.Bigtable.MutateRows",
-                             r);
-            EXPECT_EQ(exchange.req.size(), r.entries_size());
-            for (std::size_t i = 0; i != exchange.req.size(); ++i) {
-              google::bigtable::v2::MutateRowsRequest::Entry expected;
-              SingleRowMutation tmp(exchange.req[i]);
-              tmp.MoveTo(&expected);
-
-              EXPECT_THAT(expected,
-                          IsProtoEqual(r.entries(static_cast<int>(i))));
-            }
-            return std::unique_ptr<
-                MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>(
-                reader);
-          })
-          .RetiresOnSaturation();
+    ::testing::InSequence seq;
+    for (auto interaction : interactions) {
+      EXPECT_CALL(*mock_, AsyncBulkApply)
+          .WillOnce(
+              [interaction](std::string const&, BulkMutation mut) mutable {
+                google::bigtable::v2::MutateRowsRequest expected;
+                interaction.req.MoveTo(&expected);
+                google::bigtable::v2::MutateRowsRequest actual;
+                mut.MoveTo(&actual);
+                EXPECT_THAT(actual, IsProtoEqual(expected));
+                return make_ready_future(interaction.res);
+              });
     }
   }
 
   void FinishSingleItemStream() {
-    cq_impl_->SimulateCompletion(true);
-    // state == PROCESSING
-    cq_impl_->SimulateCompletion(true);
-    // state == PROCESSING, 1 read
-    cq_impl_->SimulateCompletion(false);
-    // state == FINISHING
-    cq_impl_->SimulateCompletion(true);
-    // RunAsync
-    cq_impl_->SimulateCompletion(true);
+    auto op = std::move(operations_.front());
+    operations_.pop();
+    op->exec();
   }
 
-  void OpenStream() {
-    cq_impl_->SimulateCompletion(true);
-    // state == PROCESSING
-  }
-
-  void ReadPiece() { cq_impl_->SimulateCompletion(true); }
-
-  void FinishStream() {
-    // state == PROCESSING
-    cq_impl_->SimulateCompletion(false);
-    // state == FINISHING
-    cq_impl_->SimulateCompletion(true);
-    // RunAsync
-    cq_impl_->SimulateCompletion(true);
-  }
-
-  void FinishTimer() { cq_impl_->SimulateCompletion(true); }
-
-  std::shared_ptr<MutationState> Apply(SingleRowMutation mut) {
+  std::shared_ptr<MutationState> Apply(MutationBatcher& batcher,
+                                       SingleRowMutation mut) {
     auto res = std::make_shared<MutationState>();
-    auto admission_and_completion = batcher_->AsyncApply(cq_, std::move(mut));
+    auto admission_and_completion = batcher.AsyncApply(cq_, std::move(mut));
     admission_and_completion.first.then([res](future<void> f) {
       f.get();
       res->admitted = true;
     });
-    admission_and_completion.second.then(
-        [res](future<google::cloud::Status> status) {
-          res->completed = true;
-          res->completion_status = status.get();
-        });
+    admission_and_completion.second.then([res](future<Status> status) {
+      res->completed = true;
+      res->completion_status = status.get();
+    });
     return res;
   }
 
   template <typename Iterator>
-  MutationStates ApplyMany(Iterator begin, Iterator end) {
+  MutationStates ApplyMany(MutationBatcher& batcher, Iterator begin,
+                           Iterator end) {
     std::vector<std::shared_ptr<MutationState>> res;
     for (; begin != end; ++begin) {
-      res.emplace_back(Apply(*begin));
+      res.emplace_back(Apply(batcher, *begin));
     }
     return MutationStates(std::move(res));
   }
 
-  std::size_t NumOperationsOutstanding() { return cq_impl_->size(); }
+  std::size_t NumOperationsOutstanding() { return operations_.size(); }
 
-  template <typename Request>
-  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
-                        Request const& request) {
-    return validate_metadata_fixture_.IsContextMDValid(
-        context, method, request, google::cloud::internal::ApiClientHeader());
-  }
+  std::shared_ptr<MockCompletionQueueImpl> mock_cq_ =
+      std::make_shared<MockCompletionQueueImpl>();
+  CompletionQueue cq_{mock_cq_};
 
-  std::unique_ptr<MutationBatcher> batcher_;
+  using Operation = std::unique_ptr<google::cloud::internal::RunAsyncBase>;
+  std::queue<Operation> operations_;
 
- private:
-  ValidateMetadataFixture validate_metadata_fixture_;
+  std::shared_ptr<MockDataConnection> mock_ =
+      std::make_shared<MockDataConnection>();
+  std::unique_ptr<Table> table_;
 };
 
 TEST(OptionsTest, Defaults) {
@@ -293,10 +207,11 @@ TEST(OptionsTest, StrictLimits) {
 TEST_F(MutationBatcherTest, TrivialTest) {
   std::vector<SingleRowMutation> mutations(
       {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")})});
+  MutationBatcher batcher(*table_);
 
-  ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}}});
+  ExpectInteraction({Exchange({mutations[0]}, {})});
 
-  auto state = Apply(mutations[0]);
+  auto state = Apply(batcher, mutations[0]);
   EXPECT_TRUE(state->admitted);
   EXPECT_FALSE(state->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
@@ -312,23 +227,21 @@ TEST_F(MutationBatcherTest, BatchIsFlushedImmediately) {
       {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
        SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz")}),
        SingleRowMutation("foo3", {bt::SetCell("fam", "col", 0_ms, "baz")})});
-  batcher_ = absl::make_unique<MutationBatcher>(
-      table_, MutationBatcher::Options()
-                  .SetMaxMutationsPerBatch(10)
-                  .SetMaxSizePerBatch(2000)
-                  .SetMaxBatches(1)
-                  .SetMaxOutstandingSize(4000));
+  MutationBatcher batcher(*table_, MutationBatcher::Options()
+                                       .SetMaxMutationsPerBatch(10)
+                                       .SetMaxSizePerBatch(2000)
+                                       .SetMaxBatches(1)
+                                       .SetMaxOutstandingSize(4000));
 
-  ExpectInteraction(
-      {Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
-       Exchange({mutations[1], mutations[2]}, {ResultPiece({0, 1}, {}, {})})});
+  ExpectInteraction({Exchange({mutations[0]}, {}),
+                     Exchange({mutations[1], mutations[2]}, {})});
 
-  auto state0 = Apply(mutations[0]);
+  auto state0 = Apply(batcher, mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
-  auto state1 = ApplyMany(mutations.begin() + 1, mutations.end());
+  auto state1 = ApplyMany(batcher, mutations.begin() + 1, mutations.end());
   EXPECT_TRUE(state1.AllAdmitted());
   EXPECT_TRUE(state1.NoneCompleted());
   EXPECT_EQ(1, NumOperationsOutstanding());
@@ -362,35 +275,35 @@ TEST_P(MutationBatcherBoolParamTest, PerBatchLimitsAreObeyed) {
 
   bool hit_batch_size_limit = GetParam();
 
-  batcher_ = absl::make_unique<MutationBatcher>(
-      table_, MutationBatcher::Options()
-                  .SetMaxMutationsPerBatch(hit_batch_size_limit ? 1000 : 4)
-                  .SetMaxSizePerBatch(hit_batch_size_limit
-                                          ? (MutationSize(mutations[1]) +
-                                             MutationSize(mutations[2]) +
-                                             MutationSize(mutations[3]) - 1)
-                                          : 2000)
-                  .SetMaxBatches(1)
-                  .SetMaxOutstandingSize(4000));
+  MutationBatcher batcher(
+      *table_, MutationBatcher::Options()
+                   .SetMaxMutationsPerBatch(hit_batch_size_limit ? 1000 : 4)
+                   .SetMaxSizePerBatch(hit_batch_size_limit
+                                           ? (MutationSize(mutations[1]) +
+                                              MutationSize(mutations[2]) +
+                                              MutationSize(mutations[3]) - 1)
+                                           : 2000)
+                   .SetMaxBatches(1)
+                   .SetMaxOutstandingSize(4000));
 
   ExpectInteraction(
-      {Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
+      {Exchange({mutations[0]}, {}),
        // The only slot is now taken by the batch holding SingleRowMutation 0.
-       Exchange({mutations[1], mutations[2]}, {ResultPiece({0, 1}, {}, {})}),
+       Exchange({mutations[1], mutations[2]}, {}),
        // SingleRowMutations 1 and 2 fill up the batch, so mutation 3 won't fit.
-       Exchange({mutations[3]}, {ResultPiece({0}, {}, {})})}
+       Exchange({mutations[3]}, {})}
       // Therefore, mutation 3 is executed in its own batch.
   );
 
-  auto state0 = Apply(mutations[0]);
+  auto state0 = Apply(batcher, mutations[0]);
 
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
   auto immediately_admitted =
-      ApplyMany(mutations.begin() + 1, mutations.begin() + 3);
-  auto initially_not_admitted = Apply(mutations[3]);
+      ApplyMany(batcher, mutations.begin() + 1, mutations.begin() + 3);
+  auto initially_not_admitted = Apply(batcher, mutations[3]);
 
   EXPECT_TRUE(immediately_admitted.AllAdmitted());
   EXPECT_TRUE(immediately_admitted.NoneCompleted());
@@ -431,10 +344,10 @@ TEST_F(MutationBatcherTest, RequestsWithManyMutationsAreRejected) {
                                  bt::SetCell("fam", "col2", 0_ms, "baz"),
                                  bt::SetCell("fam", "col3", 0_ms, "baz")})});
 
-  batcher_ = absl::make_unique<MutationBatcher>(
-      table_, MutationBatcher::Options().SetMaxMutationsPerBatch(2));
+  MutationBatcher batcher(
+      *table_, MutationBatcher::Options().SetMaxMutationsPerBatch(2));
 
-  auto state = Apply(mutations[0]);
+  auto state = Apply(batcher, mutations[0]);
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
   EXPECT_THAT(state->completion_status, Not(IsOk()));
@@ -450,18 +363,18 @@ TEST_F(MutationBatcherTest, OutstandingMutationsAreCapped) {
 
   // The second mutation will go through alone. But it will not go through if
   // the first mutation is outstanding due to the outstanding mutations limit.
-  batcher_ = absl::make_unique<MutationBatcher>(
-      table_, MutationBatcher::Options().SetMaxOutstandingMutations(3));
+  MutationBatcher batcher(
+      *table_, MutationBatcher::Options().SetMaxOutstandingMutations(3));
 
-  ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}},
-                     {{mutations[1]}, {ResultPiece({0, 1, 2}, {}, {})}}});
+  ExpectInteraction(
+      {Exchange({mutations[0]}, {}), Exchange({mutations[1]}, {})});
 
-  auto initially_admitted = Apply(mutations[0]);
+  auto initially_admitted = Apply(batcher, mutations[0]);
   EXPECT_TRUE(initially_admitted->admitted);
   EXPECT_FALSE(initially_admitted->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
-  auto initially_not_admitted = Apply(mutations[1]);
+  auto initially_not_admitted = Apply(batcher, mutations[1]);
   EXPECT_FALSE(initially_not_admitted->admitted);
   EXPECT_FALSE(initially_not_admitted->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
@@ -489,19 +402,19 @@ TEST_F(MutationBatcherTest, OutstandingMutationSizeIsCapped) {
 
   // The second mutation will go through alone. But it will not go through if
   // the first mutation is outstanding due to the outstanding size limit.
-  batcher_ = absl::make_unique<MutationBatcher>(
-      table_, MutationBatcher::Options().SetMaxOutstandingSize(
-                  MutationSize(mutations[1])));
+  MutationBatcher batcher(*table_,
+                          MutationBatcher::Options().SetMaxOutstandingSize(
+                              MutationSize(mutations[1])));
 
-  ExpectInteraction({{{mutations[0]}, {ResultPiece({0}, {}, {})}},
-                     {{mutations[1]}, {ResultPiece({0, 1, 2}, {}, {})}}});
+  ExpectInteraction(
+      {Exchange({mutations[0]}, {}), Exchange({mutations[1]}, {})});
 
-  auto initially_admitted = Apply(mutations[0]);
+  auto initially_admitted = Apply(batcher, mutations[0]);
   EXPECT_TRUE(initially_admitted->admitted);
   EXPECT_FALSE(initially_admitted->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
-  auto initially_not_admitted = Apply(mutations[1]);
+  auto initially_not_admitted = Apply(batcher, mutations[1]);
   EXPECT_FALSE(initially_not_admitted->admitted);
   EXPECT_FALSE(initially_not_admitted->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
@@ -525,11 +438,11 @@ TEST_F(MutationBatcherTest, LargeMutationsAreRejected) {
   std::vector<SingleRowMutation> mutations(
       {SingleRowMutation("foo", {bt::SetCell("fam", "col3", 0_ms, "baz")})});
 
-  batcher_ = absl::make_unique<MutationBatcher>(
-      table_, MutationBatcher::Options().SetMaxSizePerBatch(
-                  MutationSize(mutations[0]) - 1));
+  MutationBatcher batcher(*table_,
+                          MutationBatcher::Options().SetMaxSizePerBatch(
+                              MutationSize(mutations[0]) - 1));
 
-  auto state = Apply(mutations[0]);
+  auto state = Apply(batcher, mutations[0]);
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
   EXPECT_THAT(state->completion_status, Not(IsOk()));
@@ -539,7 +452,9 @@ TEST_F(MutationBatcherTest, LargeMutationsAreRejected) {
 TEST_F(MutationBatcherTest, RequestsWithNoMutationsAreRejected) {
   std::vector<SingleRowMutation> mutations({SingleRowMutation("foo", {})});
 
-  auto state = Apply(mutations[0]);
+  MutationBatcher batcher(*table_);
+
+  auto state = Apply(batcher, mutations[0]);
   EXPECT_TRUE(state->admitted);
   EXPECT_TRUE(state->completed);
   EXPECT_THAT(state->completion_status, Not(IsOk()));
@@ -551,19 +466,17 @@ TEST_F(MutationBatcherTest, ErrorsArePropagated) {
       {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")}),
        SingleRowMutation("foo2", {bt::SetCell("fam", "col", 0_ms, "baz")}),
        SingleRowMutation("foo3", {bt::SetCell("fam", "col", 0_ms, "baz")})});
-  batcher_ = absl::make_unique<MutationBatcher>(
-      table_, MutationBatcher::Options().SetMaxBatches(1));
+  MutationBatcher batcher(*table_, MutationBatcher::Options().SetMaxBatches(1));
 
-  ExpectInteraction(
-      {Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
-       Exchange({mutations[1], mutations[2]}, {ResultPiece({0}, {}, {1})})});
+  ExpectInteraction({Exchange({mutations[0]}, {}),
+                     Exchange({mutations[1], mutations[2]}, {1})});
 
-  auto state0 = Apply(mutations[0]);
+  auto state0 = Apply(batcher, mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
-  auto state1 = ApplyMany(mutations.begin() + 1, mutations.end());
+  auto state1 = ApplyMany(batcher, mutations.begin() + 1, mutations.end());
   EXPECT_TRUE(state1.AllAdmitted());
   EXPECT_TRUE(state1.NoneCompleted());
   EXPECT_EQ(1, NumOperationsOutstanding());
@@ -589,8 +502,8 @@ TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
        SingleRowMutation("foo3", {bt::SetCell("fam", "col1", 0_ms, "baz"),
                                   bt::SetCell("fam", "col2", 0_ms, "baz")}),
        SingleRowMutation("foo4", {bt::SetCell("fam", "col", 0_ms, "baz")})});
-  batcher_ = absl::make_unique<MutationBatcher>(
-      table_,
+  MutationBatcher batcher(
+      *table_,
       MutationBatcher::Options().SetMaxBatches(1).SetMaxMutationsPerBatch(2));
 
   // The first mutation flushes the batch immediately.
@@ -598,27 +511,26 @@ TEST_F(MutationBatcherTest, SmallMutationsDontSkipPending) {
   // The third doesn't fit that batch, so becomes pending.
   // The fourth also becomes pending despite fitting in the open batch.
 
-  ExpectInteraction({Exchange({mutations[0]}, {ResultPiece({0}, {}, {})}),
-                     Exchange({mutations[1]}, {ResultPiece({0}, {}, {})}),
-                     Exchange({mutations[2]}, {ResultPiece({0}, {}, {})}),
-                     Exchange({mutations[3]}, {ResultPiece({0}, {}, {})})});
+  ExpectInteraction({Exchange({mutations[0]}, {}), Exchange({mutations[1]}, {}),
+                     Exchange({mutations[2]}, {}),
+                     Exchange({mutations[3]}, {})});
 
-  auto state0 = Apply(mutations[0]);
+  auto state0 = Apply(batcher, mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
-  auto state1 = Apply(mutations[1]);
+  auto state1 = Apply(batcher, mutations[1]);
   EXPECT_TRUE(state1->admitted);
   EXPECT_FALSE(state1->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
-  auto state2 = Apply(mutations[2]);
+  auto state2 = Apply(batcher, mutations[2]);
   EXPECT_FALSE(state2->admitted);
   EXPECT_FALSE(state2->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
-  auto state3 = Apply(mutations[3]);
+  auto state3 = Apply(batcher, mutations[3]);
   EXPECT_FALSE(state3->admitted);
   EXPECT_FALSE(state3->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
@@ -660,32 +572,31 @@ TEST_F(MutationBatcherTest, WaitForNoPendingSimple) {
        SingleRowMutation("bar", {bt::SetCell("fam", "col", 0_ms, "baz")}),
        SingleRowMutation("baz", {bt::SetCell("fam", "col", 0_ms, "baz")})});
 
-  batcher_ = absl::make_unique<MutationBatcher>(
-      table_,
+  MutationBatcher batcher(
+      *table_,
       MutationBatcher::Options().SetMaxMutationsPerBatch(2).SetMaxBatches(1));
 
-  ExpectInteraction(
-      {{{mutations[0]}, {ResultPiece({0}, {}, {})}},
-       {{mutations[1], mutations[2]}, {ResultPiece({0, 1}, {}, {})}}});
+  ExpectInteraction({Exchange({mutations[0]}, {}),
+                     Exchange({mutations[1], mutations[2]}, {})});
 
-  auto no_more_pending1 = batcher_->AsyncWaitForNoPendingRequests();
+  auto no_more_pending1 = batcher.AsyncWaitForNoPendingRequests();
   EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::ready);
   no_more_pending1.get();
 
-  auto state0 = Apply(mutations[0]);
+  auto state0 = Apply(batcher, mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
-  auto state1 = Apply(mutations[1]);
-  auto state2 = Apply(mutations[2]);
+  auto state1 = Apply(batcher, mutations[1]);
+  auto state2 = Apply(batcher, mutations[2]);
   EXPECT_TRUE(state1->admitted);
   EXPECT_TRUE(state2->admitted);
   EXPECT_FALSE(state1->completed);
   EXPECT_FALSE(state2->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
-  auto no_more_pending2 = batcher_->AsyncWaitForNoPendingRequests();
-  auto no_more_pending3 = batcher_->AsyncWaitForNoPendingRequests();
+  auto no_more_pending2 = batcher.AsyncWaitForNoPendingRequests();
+  auto no_more_pending3 = batcher.AsyncWaitForNoPendingRequests();
   EXPECT_EQ(no_more_pending2.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(no_more_pending3.wait_for(1_ms), std::future_status::timeout);
 
@@ -719,36 +630,37 @@ TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
        SingleRowMutation("foo3", {bt::SetCell("fam", "col", 0_ms, "baz"),
                                   bt::SetCell("fam", "col", 0_ms, "baz")})});
 
-  batcher_ = absl::make_unique<MutationBatcher>(
-      table_,
+  MutationBatcher batcher(
+      *table_,
       MutationBatcher::Options().SetMaxMutationsPerBatch(1).SetMaxBatches(1));
-  ExpectInteraction({Exchange({mutations[0]}, {ResultPiece({}, {}, {0})}),
-                     Exchange({mutations[1]}, {ResultPiece({}, {}, {0})})});
 
-  auto state0 = Apply(mutations[0]);
+  ExpectInteraction(
+      {Exchange({mutations[0]}, {0}), Exchange({mutations[1]}, {0})});
+
+  auto state0 = Apply(batcher, mutations[0]);
   EXPECT_TRUE(state0->admitted);
   EXPECT_FALSE(state0->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
-  auto no_more_pending0 = batcher_->AsyncWaitForNoPendingRequests();
+  auto no_more_pending0 = batcher.AsyncWaitForNoPendingRequests();
   EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::timeout);
 
-  auto state1 = Apply(mutations[1]);
+  auto state1 = Apply(batcher, mutations[1]);
   EXPECT_TRUE(state1->admitted);
   EXPECT_FALSE(state1->completed);
   EXPECT_EQ(1, NumOperationsOutstanding());
 
-  auto no_more_pending1 = batcher_->AsyncWaitForNoPendingRequests();
+  auto no_more_pending1 = batcher.AsyncWaitForNoPendingRequests();
   EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::timeout);
 
-  auto state2 = Apply(mutations[2]);
+  auto state2 = Apply(batcher, mutations[2]);
   EXPECT_TRUE(state2->admitted);
   EXPECT_TRUE(state2->completed);
   EXPECT_THAT(state2->completion_status, Not(IsOk()));
   EXPECT_EQ(1, NumOperationsOutstanding());
 
-  auto no_more_pending2 = batcher_->AsyncWaitForNoPendingRequests();
+  auto no_more_pending2 = batcher.AsyncWaitForNoPendingRequests();
 
   EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::timeout);
   EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::timeout);
@@ -773,79 +685,6 @@ TEST_F(MutationBatcherTest, WaitForNoPendingEdgeCases) {
   EXPECT_EQ(no_more_pending0.wait_for(1_ms), std::future_status::ready);
   EXPECT_EQ(no_more_pending1.wait_for(1_ms), std::future_status::ready);
   EXPECT_EQ(no_more_pending2.wait_for(1_ms), std::future_status::ready);
-}
-
-TEST_F(MutationBatcherTest, ApplyCompletesImmediately) {
-  class ApplyInterceptingBatcher : public MutationBatcher {
-   public:
-    explicit ApplyInterceptingBatcher(Table table)
-        : MutationBatcher(std::move(table)) {}
-
-    void SetOnBulkApply(std::function<void()> cb) {
-      on_bulk_apply_ = std::move(cb);
-    }
-
-   protected:
-    future<std::vector<FailedMutation>> AsyncBulkApplyImpl(
-        Table& table, BulkMutation&& mut) override {
-      auto res = MutationBatcher::AsyncBulkApplyImpl(table, std::move(mut));
-      on_bulk_apply_();
-      return res;
-    }
-
-   private:
-    std::function<void()> on_bulk_apply_;
-  };
-
-  auto* batcher_raw_ptr = new ApplyInterceptingBatcher(table_);
-  batcher_.reset(batcher_raw_ptr);
-  std::vector<SingleRowMutation> mutations(
-      {SingleRowMutation("foo", {bt::SetCell("fam", "col", 0_ms, "baz")})});
-
-  auto* reader =
-      new MockClientAsyncReaderInterface<btproto::MutateRowsResponse>;
-  EXPECT_CALL(*reader, Read)
-      .WillOnce([](btproto::MutateRowsResponse* r, void*) {
-        auto& e = *r->add_entries();
-        e.set_index(0);
-        e.mutable_status()->set_code(grpc::StatusCode::OK);
-      })
-      .WillOnce([](btproto::MutateRowsResponse*, void*) {});
-  EXPECT_CALL(*reader, Finish).WillOnce([](grpc::Status* status, void*) {
-    *status = grpc::Status::OK;
-  });
-  EXPECT_CALL(*reader, StartCall).Times(1);
-  batcher_raw_ptr->SetOnBulkApply([this] {
-    // Simulate completion queue finishing this stream before control is
-    // returned from AsyncBulkApplyImpl
-    cq_impl_->SimulateCompletion(true);
-    // state == PROCESSING
-    cq_impl_->SimulateCompletion(true);
-    // state == PROCESSING, 1 read
-    cq_impl_->SimulateCompletion(false);
-    // state == FINISHING
-    cq_impl_->SimulateCompletion(true);
-  });
-
-  EXPECT_CALL(*client_, PrepareAsyncMutateRows)
-      .WillOnce([reader](grpc::ClientContext*,
-                         btproto::MutateRowsRequest const&,
-                         grpc::CompletionQueue*) {
-        return std::unique_ptr<
-            MockClientAsyncReaderInterface<btproto::MutateRowsResponse>>(
-            reader);
-      });
-
-  auto state = Apply(mutations[0]);
-  EXPECT_TRUE(state->admitted);
-  EXPECT_FALSE(state->completed);
-  EXPECT_EQ(1, NumOperationsOutstanding());
-
-  // RunAsync
-  cq_impl_->SimulateCompletion(true);
-
-  EXPECT_TRUE(state->completed);
-  EXPECT_EQ(0, NumOperationsOutstanding());
 }
 
 }  // namespace

@@ -67,15 +67,15 @@ class DocumentsClient {
                            Options opts = {});
   ~DocumentsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DocumentsClient(DocumentsClient const&) = default;
   DocumentsClient& operator=(DocumentsClient const&) = default;
   DocumentsClient(DocumentsClient&&) = default;
   DocumentsClient& operator=(DocumentsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DocumentsClient const& a, DocumentsClient const& b) {
     return a.connection_ == b.connection_;
@@ -83,7 +83,7 @@ class DocumentsClient {
   friend bool operator!=(DocumentsClient const& a, DocumentsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns the list of all documents of the knowledge base.

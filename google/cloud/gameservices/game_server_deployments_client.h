@@ -68,7 +68,7 @@ class GameServerDeploymentsServiceClient {
       Options opts = {});
   ~GameServerDeploymentsServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   GameServerDeploymentsServiceClient(
       GameServerDeploymentsServiceClient const&) = default;
@@ -78,9 +78,9 @@ class GameServerDeploymentsServiceClient {
       default;
   GameServerDeploymentsServiceClient& operator=(
       GameServerDeploymentsServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(GameServerDeploymentsServiceClient const& a,
                          GameServerDeploymentsServiceClient const& b) {
@@ -90,7 +90,7 @@ class GameServerDeploymentsServiceClient {
                          GameServerDeploymentsServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists game server deployments in a given project and location.

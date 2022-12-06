@@ -65,16 +65,16 @@ class DataTransferServiceClient {
       Options opts = {});
   ~DataTransferServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   DataTransferServiceClient(DataTransferServiceClient const&) = default;
   DataTransferServiceClient& operator=(DataTransferServiceClient const&) =
       default;
   DataTransferServiceClient(DataTransferServiceClient&&) = default;
   DataTransferServiceClient& operator=(DataTransferServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(DataTransferServiceClient const& a,
                          DataTransferServiceClient const& b) {
@@ -84,7 +84,7 @@ class DataTransferServiceClient {
                          DataTransferServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Retrieves a supported data source and returns its settings.

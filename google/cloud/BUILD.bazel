@@ -27,12 +27,43 @@ capture_build_info(
     ],
 )
 
+config_setting(
+    name = "enable_open_telemetry_valid",
+    flag_values = {
+        "//:experimental-open_telemetry": "true",
+        "@io_opentelemetry_cpp//api:with_abseil": "true",
+    },
+)
+
+config_setting(
+    name = "disable_open_telemetry",
+    flag_values = {"//:experimental-open_telemetry": "false"},
+)
+
 load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
 
 cc_library(
     name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
+    target_compatible_with = select(
+        {
+            ":enable_open_telemetry_valid": [],
+            ":disable_open_telemetry": [],
+        },
+        # else, OpenTelemetry is enabled, but with an invalid configuration.
+        no_match_error = """
+
+
+You requested OpenTelemetry support for `google-cloud-cpp`, but OpenTelemetry is
+configured without Abseil support. This configuration will result in ODR
+violations, and possibly build-time errors, as OpenTelemetry redefines Abseil
+symbols in this case, and `google-cloud-cpp` uses Abseil directly too.
+
+To fix this problem, supply the `--@io_opentelemetry_cpp//api:with_abseil` flag
+to your build command, or set this value in your `.bazelrc` file(s).
+""",
+    ),
     visibility = [
         ":__subpackages__",
         "//:__pkg__",
@@ -74,6 +105,7 @@ load(
     }),
     deps = [
         ":google_cloud_cpp_common",
+        ":google_cloud_cpp_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
@@ -188,6 +220,22 @@ load(":google_cloud_cpp_grpc_utils_benchmarks.bzl", "google_cloud_cpp_grpc_utils
     ],
 ) for test in google_cloud_cpp_grpc_utils_benchmarks]
 
+load(":google_cloud_cpp_mocks.bzl", "google_cloud_cpp_mocks_hdrs")
+
+cc_library(
+    name = "google_cloud_cpp_mocks",
+    testonly = True,
+    srcs = [],
+    hdrs = google_cloud_cpp_mocks_hdrs,
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
+    deps = [
+        ":google_cloud_cpp_common",
+    ],
+)
+
 load(":google_cloud_cpp_rest_internal.bzl", "google_cloud_cpp_rest_internal_hdrs", "google_cloud_cpp_rest_internal_srcs")
 
 cc_library(
@@ -268,3 +316,31 @@ load(":google_cloud_cpp_rest_internal_benchmarks.bzl", "google_cloud_cpp_rest_in
         "@com_google_benchmark//:benchmark_main",
     ],
 ) for benchmark in google_cloud_cpp_rest_internal_benchmarks]
+
+load(":google_cloud_cpp_rest_protobuf_internal.bzl", "google_cloud_cpp_rest_protobuf_internal_hdrs", "google_cloud_cpp_rest_protobuf_internal_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_rest_protobuf_internal",
+    srcs = google_cloud_cpp_rest_protobuf_internal_srcs,
+    hdrs = google_cloud_cpp_rest_protobuf_internal_hdrs,
+    visibility = ["//:__subpackages__"],
+    deps = [
+        ":google_cloud_cpp_common",
+        ":google_cloud_cpp_grpc_utils",
+        ":google_cloud_cpp_rest_internal",
+    ],
+)
+
+load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cpp_rest_protobuf_internal_unit_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_rest_protobuf_internal",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
+        "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_rest_protobuf_internal_unit_tests]

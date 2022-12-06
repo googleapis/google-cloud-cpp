@@ -94,6 +94,51 @@ It will return the `T` value or throw on error.
 For operations that do not return a value the library simply returns
 `google::cloud::Status`.
 
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `binaryauthorization::BinauthzManagementServiceV1Client`:
+
+@snippet binauthz_management_service_v1_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [binaryauthorization::BinauthzManagementServiceV1Client](@ref binaryauthorization::BinauthzManagementServiceV1Client-endpoint-snippet)
+ [binaryauthorization::SystemPolicyV1Client](@ref binaryauthorization::SystemPolicyV1Client-endpoint-snippet)
+ [binaryauthorization::ValidationHelperV1Client](@ref binaryauthorization::ValidationHelperV1Client-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+<!-- inject-service-account-snippet-start -->
+@snippet binauthz_management_service_v1_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [binaryauthorization::BinauthzManagementServiceV1Client](@ref binaryauthorization::BinauthzManagementServiceV1Client-service-account-snippet)
+ [binaryauthorization::SystemPolicyV1Client](@ref binaryauthorization::SystemPolicyV1Client-service-account-snippet)
+ [binaryauthorization::ValidationHelperV1Client](@ref binaryauthorization::ValidationHelperV1Client-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -108,3 +153,42 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/binaryauthorization/quickstart/README%2Emd
 
 */
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page binaryauthorization::BinauthzManagementServiceV1Client-endpoint-snippet Override binaryauthorization::BinauthzManagementServiceV1Client Endpoint Configuration
+
+@snippet google/cloud/binaryauthorization/samples/binauthz_management_service_v1_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page binaryauthorization::BinauthzManagementServiceV1Client-service-account-snippet Override binaryauthorization::BinauthzManagementServiceV1Client Authentication Defaults
+
+@snippet google/cloud/binaryauthorization/samples/binauthz_management_service_v1_client_samples.cc with-service-account
+
+*/
+
+/*! @page binaryauthorization::SystemPolicyV1Client-endpoint-snippet Override binaryauthorization::SystemPolicyV1Client Endpoint Configuration
+
+@snippet google/cloud/binaryauthorization/samples/system_policy_v1_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page binaryauthorization::SystemPolicyV1Client-service-account-snippet Override binaryauthorization::SystemPolicyV1Client Authentication Defaults
+
+@snippet google/cloud/binaryauthorization/samples/system_policy_v1_client_samples.cc with-service-account
+
+*/
+
+/*! @page binaryauthorization::ValidationHelperV1Client-endpoint-snippet Override binaryauthorization::ValidationHelperV1Client Endpoint Configuration
+
+@snippet google/cloud/binaryauthorization/samples/validation_helper_v1_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page binaryauthorization::ValidationHelperV1Client-service-account-snippet Override binaryauthorization::ValidationHelperV1Client Authentication Defaults
+
+@snippet google/cloud/binaryauthorization/samples/validation_helper_v1_client_samples.cc with-service-account
+
+*/
+// <!-- inject-endpoint-pages-end -->

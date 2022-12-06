@@ -31,26 +31,48 @@ namespace cloud {
 namespace dialogflow_es {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-dialogflow_es-options
+ */
 struct ConversationDatasetsRetryPolicyOption {
   using Type = std::shared_ptr<ConversationDatasetsRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-dialogflow_es-options
+ */
 struct ConversationDatasetsBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct ConversationDatasetsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-dialogflow_es-options
+ */
 struct ConversationDatasetsConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<ConversationDatasetsConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-dialogflow_es-options
+ */
+struct ConversationDatasetsPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to ConversationDatasets.
+ *
+ * @ingroup google-cloud-dialogflow_es-options
+ */
 using ConversationDatasetsPolicyOptionList =
     OptionList<ConversationDatasetsRetryPolicyOption,
                ConversationDatasetsBackoffPolicyOption,

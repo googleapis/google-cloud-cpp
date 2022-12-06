@@ -16,24 +16,31 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-SOURCE_GLOB = "**/*.cc"
+filegroup(
+    name = "srcs",
+    srcs = glob([
+        "*.cc",
+        "internal/*.cc",
+    ]),
+)
 
-MOCK_SOURCE_GLOB = "mocks/*.cc"
+filegroup(
+    name = "hdrs",
+    srcs = glob([
+        "*.h",
+        "internal/*.h",
+    ]),
+)
 
-HEADER_GLOB = "**/*.h"
-
-MOCK_HEADER_GLOB = "mocks/*.h"
+filegroup(
+    name = "mocks",
+    srcs = glob(["mocks/*.h"]),
+)
 
 cc_library(
     name = "google_cloud_cpp_binaryauthorization",
-    srcs = glob(
-        include = [SOURCE_GLOB],
-        exclude = [MOCK_SOURCE_GLOB],
-    ),
-    hdrs = glob(
-        include = [HEADER_GLOB],
-        exclude = [MOCK_HEADER_GLOB],
-    ),
+    srcs = [":srcs"],
+    hdrs = [":hdrs"],
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
@@ -44,12 +51,7 @@ cc_library(
 
 cc_library(
     name = "google_cloud_cpp_binaryauthorization_mocks",
-    srcs = glob(
-        include = [MOCK_SOURCE_GLOB],
-    ),
-    hdrs = glob(
-        include = [MOCK_HEADER_GLOB],
-    ),
+    hdrs = [":mocks"],
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_binaryauthorization",

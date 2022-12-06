@@ -26,10 +26,8 @@ function (bigquery_client_define_samples)
     foreach (fname ${bigquery_client_samples})
         google_cloud_cpp_add_executable(target "bigquery" "${fname}")
         add_test(NAME ${target} COMMAND ${target})
-        target_link_libraries(
-            ${target}
-            PRIVATE google_cloud_cpp_testing google-cloud-cpp::bigquery
-                    GTest::gmock_main GTest::gmock GTest::gtest)
+        target_link_libraries(${target} PRIVATE google_cloud_cpp_testing
+                                                google-cloud-cpp::bigquery)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 

@@ -66,15 +66,15 @@ class TestCasesClient {
                            Options opts = {});
   ~TestCasesClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   TestCasesClient(TestCasesClient const&) = default;
   TestCasesClient& operator=(TestCasesClient const&) = default;
   TestCasesClient(TestCasesClient&&) = default;
   TestCasesClient& operator=(TestCasesClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(TestCasesClient const& a, TestCasesClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class TestCasesClient {
   friend bool operator!=(TestCasesClient const& a, TestCasesClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Fetches a list of test cases for a given agent.

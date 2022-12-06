@@ -82,7 +82,7 @@ TEST(MockSubscribeExample, Subscribe) {
   //! [create-client]
 
   //! [client-call]
-  std::vector<std::string> payloads;
+  std::vector<pubsub::PubsubMessageDataType> payloads;
   auto handler = [&](pubsub::Message const& m, pubsub::AckHandler h) {
     payloads.push_back(m.data());
     std::move(h).ack();
@@ -148,7 +148,7 @@ TEST(MockSubscribeExample, ExactlyOnceSubscribe) {
 
   pubsub::Subscriber subscriber(mock);
 
-  std::vector<std::string> payloads;
+  std::vector<pubsub::PubsubMessageDataType> payloads;
   auto callback = [&](pubsub::Message const& m,
                       pubsub::ExactlyOnceAckHandler h) {
     payloads.push_back(m.data());

@@ -38,6 +38,14 @@ add_library(
     internal/curl_rest_response.h
     internal/curl_wrappers.cc
     internal/curl_wrappers.h
+    internal/external_account_parsing.cc
+    internal/external_account_parsing.h
+    internal/external_account_source_format.cc
+    internal/external_account_source_format.h
+    internal/external_account_token_source_file.cc
+    internal/external_account_token_source_file.h
+    internal/external_account_token_source_url.cc
+    internal/external_account_token_source_url.h
     internal/http_payload.h
     internal/make_jwt_assertion.cc
     internal/make_jwt_assertion.h
@@ -47,6 +55,8 @@ add_library(
     internal/oauth2_anonymous_credentials.h
     internal/oauth2_authorized_user_credentials.cc
     internal/oauth2_authorized_user_credentials.h
+    internal/oauth2_cached_credentials.cc
+    internal/oauth2_cached_credentials.h
     internal/oauth2_compute_engine_credentials.cc
     internal/oauth2_compute_engine_credentials.h
     internal/oauth2_credential_constants.h
@@ -54,6 +64,9 @@ add_library(
     internal/oauth2_credentials.h
     internal/oauth2_error_credentials.cc
     internal/oauth2_error_credentials.h
+    internal/oauth2_external_account_credentials.cc
+    internal/oauth2_external_account_credentials.h
+    internal/oauth2_external_account_token_source.h
     internal/oauth2_google_application_default_credentials_file.cc
     internal/oauth2_google_application_default_credentials_file.h
     internal/oauth2_google_credentials.cc
@@ -79,7 +92,8 @@ add_library(
     internal/rest_response.cc
     internal/rest_response.h
     internal/unified_rest_credentials.cc
-    internal/unified_rest_credentials.h)
+    internal/unified_rest_credentials.h
+    rest_options.h)
 target_link_libraries(
     google_cloud_cpp_rest_internal
     PUBLIC absl::span google-cloud-cpp::common CURL::libcurl
@@ -93,10 +107,10 @@ target_compile_options(google_cloud_cpp_rest_internal
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 set_target_properties(
     google_cloud_cpp_rest_internal
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::rest-internal"
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::rest_internal"
                VERSION ${PROJECT_VERSION}
                SOVERSION ${PROJECT_VERSION_MAJOR})
-add_library(google-cloud-cpp::rest-internal ALIAS
+add_library(google-cloud-cpp::rest_internal ALIAS
             google_cloud_cpp_rest_internal)
 
 # Export the CMake targets to make it easy to create configuration files.
@@ -158,7 +172,7 @@ function (google_cloud_cpp_rest_internal_add_test fname labels)
     google_cloud_cpp_add_executable(target "rest_internal" "${fname}")
     target_link_libraries(
         ${target}
-        PRIVATE google-cloud-cpp::rest-internal
+        PRIVATE google-cloud-cpp::rest_internal
                 google_cloud_cpp_testing
                 google_cloud_cpp_testing_rest
                 google-cloud-cpp::common
@@ -191,11 +205,18 @@ if (BUILD_TESTING)
         internal/curl_wrappers_locking_disabled_test.cc
         internal/curl_wrappers_locking_enabled_test.cc
         internal/curl_wrappers_test.cc
+        internal/external_account_parsing_test.cc
+        internal/external_account_source_format_test.cc
+        internal/external_account_token_source_file_test.cc
+        internal/external_account_token_source_url_test.cc
         internal/make_jwt_assertion_test.cc
         internal/oauth2_access_token_credentials_test.cc
         internal/oauth2_anonymous_credentials_test.cc
         internal/oauth2_authorized_user_credentials_test.cc
+        internal/oauth2_cached_credentials_test.cc
         internal/oauth2_compute_engine_credentials_test.cc
+        internal/oauth2_credentials_test.cc
+        internal/oauth2_external_account_credentials_test.cc
         internal/oauth2_google_application_default_credentials_file_test.cc
         internal/oauth2_google_credentials_test.cc
         internal/oauth2_impersonate_service_account_credentials_test.cc
@@ -219,6 +240,7 @@ if (BUILD_TESTING)
     # dependencies.
     set(google_cloud_cpp_rest_internal_production_integration_tests
         # cmake-format: sort
+        internal/external_account_integration_test.cc
         internal/unified_rest_credentials_integration_test.cc)
 
     # Export the list of unit and integration tests so the Bazel BUILD file can
@@ -263,7 +285,7 @@ if (BUILD_TESTING)
         add_test(NAME ${target} COMMAND ${target})
         target_link_libraries(
             ${target}
-            PRIVATE google-cloud-cpp::rest-internal google-cloud-cpp::common
+            PRIVATE google-cloud-cpp::rest_internal google-cloud-cpp::common
                     benchmark::benchmark_main)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()

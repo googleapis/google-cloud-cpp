@@ -35,9 +35,23 @@ if (${CMAKE_VERSION} VERSION_LESS "3.12")
     message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
 elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
     find_package(Doxygen REQUIRED)
-    set(DOXYGEN_RECURSIVE NO)
-    set(DOXYGEN_FILE_PATTERNS *.h *.dox)
-    set(DOXYGEN_EXCLUDE_PATTERNS "*_test.cc" "retry_traits.h")
+    set(DOXYGEN_FILE_PATTERNS "*.dox" "*.h")
+    set(DOXYGEN_EXCLUDE_PATTERNS
+        # We should skip internal directories to speed up the build. We do not
+        # use "*/internal/*" because Doxygen breaks when we include
+        # "*/internal/*.inc" from a public header. (Don't ask me why).
+        "*/internal/*.h"
+        "*/internal/*.cc"
+        # We should skip all tests.
+        "*_test.cc"
+        # TODO(#9841): remove this special case when the files are removed.
+        "retry_traits.h"
+        # Handwritten libraries may contain the following subdirectories, which
+        # are not customer-facing. We can skip them.
+        "*/benchmarks/*"
+        "*/integration_tests/*"
+        "*/testing/*"
+        "*/tests/*")
     set(DOXYGEN_EXAMPLE_RECURSIVE NO)
     set(DOXYGEN_EXCLUDE_SYMLINKS YES)
     set(DOXYGEN_QUIET YES)
@@ -72,6 +86,7 @@ elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
         # Any additional includes that the library needs
         ${GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES})
     set(DOXYGEN_GENERATE_LATEX NO)
+    set(DOXYGEN_HAVE_DOT NO)
     set(DOXYGEN_GRAPHICAL_HIERARCHY NO)
     set(DOXYGEN_DIRECTORY_GRAPH NO)
     set(DOXYGEN_CLASS_GRAPH NO)
@@ -110,33 +125,21 @@ elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
         DOXYGEN_ALIASES
         "googleapis_dev_link{2}=\"https://googleapis.dev/cpp/google-cloud-\\1/${GOOGLE_CLOUD_CPP_DOXYGEN_VERSION}/\\2\""
     )
-    if (NOT ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}"))
+    set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS "${CMAKE_CURRENT_SOURCE_DIR}")
+    if ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}")
+        # We cannot recurse from the google/cloud directory, because it will
+        # traverse all of the libraries. So we turn off recursion and manually
+        # provide the subdirectories to be traversed.
+        set(DOXYGEN_RECURSIVE NO)
+        list(APPEND GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS
+             "${CMAKE_CURRENT_SOURCE_DIR}/mocks"
+             "${CMAKE_CURRENT_SOURCE_DIR}/doc")
+    else ()
+        set(DOXYGEN_RECURSIVE YES)
         set(DOXYGEN_TAGFILES
             "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/cpp/google-cloud-common/${GOOGLE_CLOUD_CPP_DOXYGEN_VERSION}/"
         )
     endif ()
-
-    set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS)
-    set(GOOGLE_CLOUD_CPP_DOXYGEN_POSSIBLE_INPUTS
-        # Scan the current directory (duh)
-        "${CMAKE_CURRENT_SOURCE_DIR}"
-        # Many libraries export mock classes for public consumption
-        "${CMAKE_CURRENT_SOURCE_DIR}/mocks"
-        # The Bigtable and Spanner libraries have some public APIs in `admin`.
-        "${CMAKE_CURRENT_SOURCE_DIR}/admin"
-        "${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks"
-        # The Storage library has some public APIs in `oauth2`.
-        "${CMAKE_CURRENT_SOURCE_DIR}/oauth2"
-        # Scan the examples, the directory name depends on the library
-        "${CMAKE_CURRENT_SOURCE_DIR}/samples"
-        "${CMAKE_CURRENT_SOURCE_DIR}/examples"
-        # The landing page and other documentation is in the doc/
-        "${CMAKE_CURRENT_SOURCE_DIR}/doc")
-    foreach (input IN LISTS GOOGLE_CLOUD_CPP_DOXYGEN_POSSIBLE_INPUTS)
-        if (EXISTS "${input}")
-            list(APPEND GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS "${input}")
-        endif ()
-    endforeach ()
     doxygen_add_docs(
         ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs "${GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS}"
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
@@ -244,4 +247,34 @@ function (google_cloud_cpp_add_executable target prefix source)
     set("${target}"
         "${target_name}"
         PARENT_SCOPE)
+endfunction ()
+
+# google_cloud_cpp_add_samples_relative : adds rules to compile and test
+# generated samples for $library found in the relative $path.
+function (google_cloud_cpp_add_samples_relative library path)
+    file(
+        GLOB sample_files
+        RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+        "${path}*.cc")
+    foreach (source IN LISTS sample_files)
+        google_cloud_cpp_add_executable(target "${library}" "${source}")
+        if (TARGET google-cloud-cpp::${library})
+            target_link_libraries(
+                "${target}" PRIVATE google-cloud-cpp::${library}
+                                    google_cloud_cpp_testing)
+        elseif (TARGET google-cloud-cpp::experimental-${library})
+            target_link_libraries(
+                "${target}" PRIVATE google-cloud-cpp::experimental-${library}
+                                    google_cloud_cpp_testing)
+        endif ()
+        google_cloud_cpp_add_common_options("${target}")
+        add_test(NAME "${target}" COMMAND "${target}")
+        set_tests_properties("${target}" PROPERTIES LABELS "integration-test")
+    endforeach ()
+endfunction ()
+
+# google_cloud_cpp_add_samples : adds rules to compile and test generated
+# samples
+function (google_cloud_cpp_add_samples library)
+    google_cloud_cpp_add_samples_relative("${library}" "")
 endfunction ()

@@ -63,8 +63,8 @@
 # Advanced Examples:
 #
 # 1. Runs the ci/cloudbuild/builds/asan.sh script using the
-#    ci/cloudbuild/dockerfiles/fedora-36.Dockerfile distro.
-#    $ build.sh --build asan --distro fedora-36
+#    ci/cloudbuild/dockerfiles/fedora-36-bazel.Dockerfile distro.
+#    $ build.sh --build asan --distro fedora-36-bazel
 #
 # Note: Builds with the `--docker` flag inherit some (but not all) environment
 # variables from the calling process, such as USE_BAZEL_VERSION
@@ -346,6 +346,9 @@ if [[ "${DOCKER_FLAG}" = "true" ]]; then
     # Makes the host's gcloud credentials visible inside the docker container,
     # which we need for integration tests.
     "--volume=${HOME}/.config/gcloud:/h/.config/gcloud:Z"
+    # Makes the generate-libraries build ONLY touch golden files in the
+    # generator dir.
+    "--env=GENERATE_GOLDEN_ONLY=${GENERATE_GOLDEN_ONLY-}"
   )
   # All GOOGLE_CLOUD_* env vars will be passed to the docker container.
   for e in $(env); do

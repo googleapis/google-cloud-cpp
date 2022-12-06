@@ -255,6 +255,25 @@ EventarcAuth::AsyncDeleteChannelConnection(
       });
 }
 
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcAuth::GetGoogleChannelConfig(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetGoogleChannelConfig(context, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcAuth::UpdateGoogleChannelConfig(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateGoogleChannelConfig(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

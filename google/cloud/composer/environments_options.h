@@ -31,26 +31,48 @@ namespace cloud {
 namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-composer-options
+ */
 struct EnvironmentsRetryPolicyOption {
   using Type = std::shared_ptr<EnvironmentsRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-composer-options
+ */
 struct EnvironmentsBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct EnvironmentsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-composer-options
+ */
 struct EnvironmentsConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<EnvironmentsConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-composer-options
+ */
+struct EnvironmentsPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to Environments.
+ *
+ * @ingroup google-cloud-composer-options
+ */
 using EnvironmentsPolicyOptionList =
     OptionList<EnvironmentsRetryPolicyOption, EnvironmentsBackoffPolicyOption,
                EnvironmentsPollingPolicyOption,

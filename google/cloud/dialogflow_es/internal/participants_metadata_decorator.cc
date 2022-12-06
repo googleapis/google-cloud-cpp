@@ -74,6 +74,16 @@ ParticipantsMetadata::AnalyzeContent(
   return child_->AnalyzeContent(context, request);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+ParticipantsMetadata::AsyncStreamingAnalyzeContent(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context);
+  return child_->AsyncStreamingAnalyzeContent(cq, std::move(context));
+}
+
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsMetadata::SuggestArticles(
     grpc::ClientContext& context,

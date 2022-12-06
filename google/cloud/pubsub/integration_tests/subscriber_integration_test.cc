@@ -523,6 +523,32 @@ TEST_F(SubscriberIntegrationTest, ExactlyOnce) {
   EXPECT_STATUS_OK(result.get());
 }
 
+TEST_F(SubscriberIntegrationTest, BlockingPull) {
+  auto publisher = Publisher(MakePublisherConnection(topic_));
+  auto subscriber =
+      Subscriber(MakeSubscriberConnection(exactly_once_subscription_));
+
+  std::set<std::string> ids;
+  for (auto const* data : {"message-0", "message-1", "message-2"}) {
+    auto response =
+        publisher.Publish(MessageBuilder{}.SetData(data).Build()).get();
+    EXPECT_STATUS_OK(response);
+    if (response) ids.insert(*std::move(response));
+  }
+  EXPECT_THAT(ids, Not(IsEmpty()));
+
+  auto const count = 2 * ids.size();
+  for (std::size_t i = 0; i != count && !ids.empty(); ++i) {
+    auto response = subscriber.Pull();
+    EXPECT_STATUS_OK(response);
+    if (!response) continue;
+    auto ack = std::move(response->handler).ack().get();
+    EXPECT_STATUS_OK(ack);
+    ids.erase(response->message.message_id());
+  }
+  EXPECT_THAT(ids, IsEmpty());
+}
+
 /// @test Verify the backwards compatibility `v1` namespace still exists.
 TEST_F(SubscriberIntegrationTest, BackwardsCompatibility) {
   auto connection = ::google::cloud::pubsub::v1::MakeSubscriberConnection(

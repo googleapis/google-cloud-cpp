@@ -96,15 +96,15 @@ class AccessApprovalClient {
       std::shared_ptr<AccessApprovalConnection> connection, Options opts = {});
   ~AccessApprovalClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   AccessApprovalClient(AccessApprovalClient const&) = default;
   AccessApprovalClient& operator=(AccessApprovalClient const&) = default;
   AccessApprovalClient(AccessApprovalClient&&) = default;
   AccessApprovalClient& operator=(AccessApprovalClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(AccessApprovalClient const& a,
                          AccessApprovalClient const& b) {
@@ -114,7 +114,7 @@ class AccessApprovalClient {
                          AccessApprovalClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists approval requests associated with a project, folder, or

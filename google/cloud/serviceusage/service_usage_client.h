@@ -70,15 +70,15 @@ class ServiceUsageClient {
       std::shared_ptr<ServiceUsageConnection> connection, Options opts = {});
   ~ServiceUsageClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ServiceUsageClient(ServiceUsageClient const&) = default;
   ServiceUsageClient& operator=(ServiceUsageClient const&) = default;
   ServiceUsageClient(ServiceUsageClient&&) = default;
   ServiceUsageClient& operator=(ServiceUsageClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ServiceUsageClient const& a,
                          ServiceUsageClient const& b) {
@@ -88,7 +88,7 @@ class ServiceUsageClient {
                          ServiceUsageClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Enable a service so that it can be used with a project.

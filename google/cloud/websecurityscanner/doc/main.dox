@@ -88,6 +88,41 @@ It will return the `T` value or throw on error.
 For operations that do not return a value the library simply returns
 `google::cloud::Status`.
 
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `websecurityscanner::WebSecurityScannerClient`:
+
+@snippet web_security_scanner_client_samples.cc set-client-endpoint
+
+<!-- inject-endpoint-snippet-end -->
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+<!-- inject-service-account-snippet-start -->
+@snippet web_security_scanner_client_samples.cc with-service-account
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
 ## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
@@ -101,3 +136,18 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/websecurityscanner/quickstart/README%2Emd
 
 */
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page websecurityscanner::WebSecurityScannerClient-endpoint-snippet Override websecurityscanner::WebSecurityScannerClient Endpoint Configuration
+
+@snippet google/cloud/websecurityscanner/samples/web_security_scanner_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page websecurityscanner::WebSecurityScannerClient-service-account-snippet Override websecurityscanner::WebSecurityScannerClient Authentication Defaults
+
+@snippet google/cloud/websecurityscanner/samples/web_security_scanner_client_samples.cc with-service-account
+
+*/
+// <!-- inject-endpoint-pages-end -->

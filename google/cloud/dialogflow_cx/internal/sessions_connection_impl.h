@@ -55,7 +55,7 @@ class SessionsConnectionImpl : public dialogflow_cx::SessionsConnection {
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentRequest,
       google::cloud::dialogflow::cx::v3::StreamingDetectIntentResponse>>
-      AsyncStreamingDetectIntent(ExperimentalTag) override;
+  AsyncStreamingDetectIntent() override;
 
   StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse> MatchIntent(
       google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request)

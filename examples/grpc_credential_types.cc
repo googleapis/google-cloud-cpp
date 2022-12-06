@@ -117,10 +117,10 @@ google::iam::credentials::v1::GenerateAccessTokenResponse UseAccessToken(
         google::cloud::spanner_admin::MakeInstanceAdminConnection(
             google::cloud::Options{}.set<google::cloud::GrpcCredentialOption>(
                 credentials)));
-    for (auto instance :
-         admin.ListInstances(google::cloud::Project(project_id).FullName())) {
-      if (!instance) throw std::runtime_error(instance.status().message());
-      std::cout << "Instance: " << instance->name() << "\n";
+    for (auto config : admin.ListInstanceConfigs(
+             google::cloud::Project(project_id).FullName())) {
+      if (!config) throw std::runtime_error(config.status().message());
+      std::cout << "InstanceConfig: " << config->name() << "\n";
     }
 
     return *std::move(token);
@@ -146,13 +146,13 @@ void UseAccessTokenUntilExpired(google::cloud::iam::IAMCredentialsClient client,
         google::cloud::spanner_admin::MakeInstanceAdminConnection(
             google::cloud::Options{}.set<google::cloud::GrpcCredentialOption>(
                 credentials)));
-    for (auto instance :
-         admin.ListInstances(google::cloud::Project(project_id).FullName())) {
+    for (auto config : admin.ListInstanceConfigs(
+             google::cloud::Project(project_id).FullName())) {
       // kUnauthenticated receives special treatment, it is the error received
       // when the token expires.
-      if (instance.status().code() ==
+      if (config.status().code() ==
           google::cloud::StatusCode::kUnauthenticated) {
-        std::cout << "error [" << instance.status() << "]";
+        std::cout << "error [" << config.status() << "]";
         if (!expired) {
           std::cout << ": unexpected, but could be a race condition."
                     << " Trying again\n";
@@ -161,8 +161,8 @@ void UseAccessTokenUntilExpired(google::cloud::iam::IAMCredentialsClient client,
         std::cout << ": this is expected as the token is expired\n";
         return false;
       }
-      if (!instance) throw std::runtime_error(instance.status().message());
-      std::cout << "success (" << instance->name() << ")\n";
+      if (!config) throw std::runtime_error(config.status().message());
+      std::cout << "success (" << config->name() << ")\n";
       return true;
     }
     return false;

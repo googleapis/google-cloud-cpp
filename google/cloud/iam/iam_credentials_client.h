@@ -73,15 +73,15 @@ class IAMCredentialsClient {
       std::shared_ptr<IAMCredentialsConnection> connection, Options opts = {});
   ~IAMCredentialsClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   IAMCredentialsClient(IAMCredentialsClient const&) = default;
   IAMCredentialsClient& operator=(IAMCredentialsClient const&) = default;
   IAMCredentialsClient(IAMCredentialsClient&&) = default;
   IAMCredentialsClient& operator=(IAMCredentialsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(IAMCredentialsClient const& a,
                          IAMCredentialsClient const& b) {
@@ -91,7 +91,7 @@ class IAMCredentialsClient {
                          IAMCredentialsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Generates an OAuth 2.0 access token for a service account.

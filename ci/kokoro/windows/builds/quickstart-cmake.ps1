@@ -46,14 +46,17 @@ function Get-Vcpkg-Features {
     & "${vcpkg_root}/vcpkg.exe" search "${package}" | 
         Where-Object { $_.StartsWith("${package}[") } |
         ForEach-Object { $_.replace("${package}[", "") -replace "].*", "" } |
-        # TODO(#8145) TODO(#9340) TODO(#8125) TODDO(#8725) - these do not compile on Windows.
-        Where-Object { -not ("asset", "beyondcorp", "channel", "storagetransfer" -contains $_) } |
+        Where-Object { -not (
+            # TODO(#8145) - does not compile on Windows.
+            "asset",
+            # TODO(#8125) - does not compile on Windows.
+            "channel",
+            # TODO(#8785) - does not compile on Windows.
+            "storagetransfer" -contains $_) } |
         # TODO(#9913) - these compile, but do not install on Windows.
         Where-Object { -not ("assuredworkloads",  "dialogflow-cx", "dialogflow-es" -contains $_) } |
-        # TODO(#9914) - these depends on the `grafeas`, feature but vcpkg does not install it
-        Where-Object { -not ( "binaryauthorization", "containeranalysis" -contains $_) } |
-        # These are convenience features to refactor dependencies.
-        Where-Object { -not ("googleapis", "grpc-common" -contains $_) }
+        # These are convenience features to refactor dependencies; they do not have quickstarts.
+        Where-Object { -not ("googleapis", "grpc-common", "grafeas" -contains $_) }
 }
 
 $project_root = (Get-Item -Path ".\" -Verbose).FullName -replace "\\", "/"

@@ -50,6 +50,7 @@ GA_LIBRARIES = [
     "channel",
     "cloudbuild",
     "composer",
+    "connectors",
     "contactcenterinsights",
     "container",
     "containeranalysis",
@@ -115,6 +116,7 @@ GA_LIBRARIES = [
     "videointelligence",
     "vision",
     "vmmigration",
+    "vmwareengine",
     "vpcaccess",
     "webrisk",
     "websecurityscanner",
@@ -284,4 +286,20 @@ cc_library(
     deps = [
         "//google/cloud:google_cloud_cpp_grpc_utils_private",
     ],
+)
+
+cc_library(
+    name = "mocks",
+    testonly = True,
+    deps = [
+        "//google/cloud:google_cloud_cpp_mocks",
+    ],
+)
+
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
+
+bool_flag(
+    name = "experimental-open_telemetry",
+    build_setting_default = False,
+    visibility = ["//:__subpackages__"],
 )

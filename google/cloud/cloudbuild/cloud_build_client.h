@@ -73,15 +73,15 @@ class CloudBuildClient {
                             Options opts = {});
   ~CloudBuildClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CloudBuildClient(CloudBuildClient const&) = default;
   CloudBuildClient& operator=(CloudBuildClient const&) = default;
   CloudBuildClient(CloudBuildClient&&) = default;
   CloudBuildClient& operator=(CloudBuildClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CloudBuildClient const& a, CloudBuildClient const& b) {
     return a.connection_ == b.connection_;
@@ -89,7 +89,7 @@ class CloudBuildClient {
   friend bool operator!=(CloudBuildClient const& a, CloudBuildClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Starts a build with the specified configuration.
@@ -103,12 +103,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.CreateBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1100}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1211}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
       std::string const& project_id,
@@ -122,16 +122,16 @@ class CloudBuildClient {
   /// `SUCCESS` or `FAILURE`).
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::CreateBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1100}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::CreateBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1211}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.CreateBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1100}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1211}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> CreateBuild(
       google::devtools::cloudbuild::v1::CreateBuildRequest const& request,
@@ -148,12 +148,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.GetBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1115}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1226}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
       std::string const& project_id, std::string const& id, Options opts = {});
@@ -165,16 +165,16 @@ class CloudBuildClient {
   /// `FAILURE`, or `WORKING`), and timing information.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::GetBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1115}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::GetBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1226}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.GetBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1115}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1226}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   StatusOr<google::devtools::cloudbuild::v1::Build> GetBuild(
       google::devtools::cloudbuild::v1::GetBuildRequest const& request,
@@ -191,12 +191,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.ListBuildsRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1130}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1241}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   StreamRange<google::devtools::cloudbuild::v1::Build> ListBuilds(
       std::string const& project_id, std::string const& filter,
@@ -209,16 +209,16 @@ class CloudBuildClient {
   /// successfully or unsuccessfully.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::ListBuildsRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1130}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::ListBuildsRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1241}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.ListBuildsRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1130}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1241}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   StreamRange<google::devtools::cloudbuild::v1::Build> ListBuilds(
       google::devtools::cloudbuild::v1::ListBuildsRequest request,
@@ -232,12 +232,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.CancelBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1169}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1280}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
       std::string const& project_id, std::string const& id, Options opts = {});
@@ -246,16 +246,16 @@ class CloudBuildClient {
   /// Cancels a build in progress.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::CancelBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1169}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::CancelBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1280}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.CancelBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1169}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1280}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   StatusOr<google::devtools::cloudbuild::v1::Build> CancelBuild(
       google::devtools::cloudbuild::v1::CancelBuildRequest const& request,
@@ -295,12 +295,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.RetryBuildRequest]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L364}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
       std::string const& project_id, std::string const& id, Options opts = {});
@@ -339,12 +339,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.RetryBuildRequest]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L364}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RetryBuild(
       google::devtools::cloudbuild::v1::RetryBuildRequest const& request,
@@ -364,12 +364,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.ApproveBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1184}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1295}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
       std::string const& name,
@@ -385,16 +385,16 @@ class CloudBuildClient {
   /// If rejected, the returned LRO will be immediately done.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::ApproveBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1184}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::ApproveBuildRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1295}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.ApproveBuildRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1184}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1295}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> ApproveBuild(
       google::devtools::cloudbuild::v1::ApproveBuildRequest const& request,
@@ -411,12 +411,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   /// [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1557}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1668}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
       std::string const& project_id,
@@ -429,16 +429,16 @@ class CloudBuildClient {
   /// This API is experimental.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::CreateBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1557}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::CreateBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1668}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   /// [google.devtools.cloudbuild.v1.CreateBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1557}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1668}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> CreateBuildTrigger(
       google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
@@ -456,12 +456,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   /// [google.devtools.cloudbuild.v1.GetBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1572}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1683}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
       std::string const& project_id, std::string const& trigger_id,
@@ -473,16 +473,16 @@ class CloudBuildClient {
   /// This API is experimental.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::GetBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1572}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::GetBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1683}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   /// [google.devtools.cloudbuild.v1.GetBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1572}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1683}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> GetBuildTrigger(
       google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request,
@@ -498,12 +498,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   /// [google.devtools.cloudbuild.v1.ListBuildTriggersRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1587}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1698}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   StreamRange<google::devtools::cloudbuild::v1::BuildTrigger> ListBuildTriggers(
       std::string const& project_id, Options opts = {});
@@ -514,16 +514,16 @@ class CloudBuildClient {
   /// This API is experimental.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::ListBuildTriggersRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1587}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::ListBuildTriggersRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1698}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   /// [google.devtools.cloudbuild.v1.ListBuildTriggersRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1587}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1698}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   StreamRange<google::devtools::cloudbuild::v1::BuildTrigger> ListBuildTriggers(
       google::devtools::cloudbuild::v1::ListBuildTriggersRequest request,
@@ -540,7 +540,7 @@ class CloudBuildClient {
   ///     backoff policies.
   ///
   /// [google.devtools.cloudbuild.v1.DeleteBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1614}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1725}
   ///
   Status DeleteBuildTrigger(std::string const& project_id,
                             std::string const& trigger_id, Options opts = {});
@@ -551,12 +551,12 @@ class CloudBuildClient {
   /// This API is experimental.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1614}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1725}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.devtools.cloudbuild.v1.DeleteBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1614}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1725}
   ///
   Status DeleteBuildTrigger(
       google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
@@ -574,12 +574,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   /// [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1629}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1740}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
       std::string const& project_id, std::string const& trigger_id,
@@ -592,16 +592,16 @@ class CloudBuildClient {
   /// This API is experimental.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1629}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1740}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::BuildTrigger,google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   /// [google.devtools.cloudbuild.v1.UpdateBuildTriggerRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1629}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1740}
   /// [google.devtools.cloudbuild.v1.BuildTrigger]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1271}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1382}
   ///
   StatusOr<google::devtools::cloudbuild::v1::BuildTrigger> UpdateBuildTrigger(
       google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
@@ -617,12 +617,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.RunBuildTriggerRequest]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L379}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
       std::string const& project_id, std::string const& trigger_id,
@@ -637,12 +637,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::Build,google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   /// [google.devtools.cloudbuild.v1.RunBuildTriggerRequest]:
   /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L379}
   /// [google.devtools.cloudbuild.v1.Build]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L680}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L725}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::Build>> RunBuildTrigger(
       google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request,
@@ -653,16 +653,16 @@ class CloudBuildClient {
   /// webhook request targeted at a specific trigger.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1811}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1922}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse,google/devtools/cloudbuild/v1/cloudbuild.proto#L1831}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse,google/devtools/cloudbuild/v1/cloudbuild.proto#L1942}
   ///
   /// [google.devtools.cloudbuild.v1.ReceiveTriggerWebhookRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1811}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1922}
   /// [google.devtools.cloudbuild.v1.ReceiveTriggerWebhookResponse]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1831}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1942}
   ///
   StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
   ReceiveTriggerWebhook(
@@ -685,12 +685,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   /// [google.devtools.cloudbuild.v1.CreateWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1984}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2095}
   /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   CreateWorkerPool(
@@ -702,16 +702,16 @@ class CloudBuildClient {
   /// Creates a `WorkerPool`.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::CreateWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L1984}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::CreateWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2095}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   /// [google.devtools.cloudbuild.v1.CreateWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1984}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2095}
   /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   CreateWorkerPool(
@@ -727,12 +727,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   /// [google.devtools.cloudbuild.v1.GetWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2013}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2124}
   /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
       std::string const& name, Options opts = {});
@@ -741,16 +741,16 @@ class CloudBuildClient {
   /// Returns details of a `WorkerPool`.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::GetWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2013}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::GetWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2124}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   /// [google.devtools.cloudbuild.v1.GetWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2013}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2124}
   /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   StatusOr<google::devtools::cloudbuild::v1::WorkerPool> GetWorkerPool(
       google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request,
@@ -765,12 +765,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata,google/devtools/cloudbuild/v1/cloudbuild.proto#L2129}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata,google/devtools/cloudbuild/v1/cloudbuild.proto#L2240}
   ///
   /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2025}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2136}
   /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolOperationMetadata]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2129}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2240}
   ///
   future<StatusOr<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
@@ -780,16 +780,16 @@ class CloudBuildClient {
   /// Deletes a `WorkerPool`.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2025}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata,google/devtools/cloudbuild/v1/cloudbuild.proto#L2129}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata,google/devtools/cloudbuild/v1/cloudbuild.proto#L2240}
   ///
   /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2025}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2136}
   /// [google.devtools.cloudbuild.v1.DeleteWorkerPoolOperationMetadata]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2129}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2240}
   ///
   future<StatusOr<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
@@ -809,12 +809,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   /// [google.devtools.cloudbuild.v1.UpdateWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2161}
   /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   UpdateWorkerPool(
@@ -825,16 +825,16 @@ class CloudBuildClient {
   /// Updates a `WorkerPool`.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2161}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   /// [google.devtools.cloudbuild.v1.UpdateWorkerPoolRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2050}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2161}
   /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
   UpdateWorkerPool(
@@ -849,12 +849,12 @@ class CloudBuildClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   /// [google.devtools.cloudbuild.v1.ListWorkerPoolsRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2066}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2177}
   /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   StreamRange<google::devtools::cloudbuild::v1::WorkerPool> ListWorkerPools(
       std::string const& parent, Options opts = {});
@@ -863,16 +863,16 @@ class CloudBuildClient {
   /// Lists `WorkerPool`s.
   ///
   /// @param request
-  /// @googleapis_link{google::devtools::cloudbuild::v1::ListWorkerPoolsRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2066}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::ListWorkerPoolsRequest,google/devtools/cloudbuild/v1/cloudbuild.proto#L2177}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_link{google::devtools::cloudbuild::v1::WorkerPool,google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   /// [google.devtools.cloudbuild.v1.ListWorkerPoolsRequest]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2066}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L2177}
   /// [google.devtools.cloudbuild.v1.WorkerPool]:
-  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1846}
+  /// @googleapis_reference_link{google/devtools/cloudbuild/v1/cloudbuild.proto#L1957}
   ///
   StreamRange<google::devtools::cloudbuild::v1::WorkerPool> ListWorkerPools(
       google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request,

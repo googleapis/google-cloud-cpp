@@ -811,19 +811,6 @@ service GoldenKitchenSink {
     option (google.api.method_signature) = "parent";
   }
 
-  // Streaming read of log entries as they are ingested. Until the stream is
-  // terminated, it will continue reading logs.
-  rpc TailLogEntries(TailLogEntriesRequest) returns (stream TailLogEntriesResponse) {
-    option (google.api.http) = {
-      post: "/v2/entries:tail"
-      body: "*"
-    };
-    option (google.api.routing) = {
-      routing_parameters { field: "filter" }
-    };
-    option (google.api.method_signature) = "resource_names";
-  }
-
   // Does nothing and should be omitted by command line arg.
   rpc Omitted1(google.protobuf.Empty) returns (google.protobuf.Empty) {
     option (google.api.http) = {
@@ -851,17 +838,23 @@ service GoldenKitchenSink {
   // Does Nothing.
   rpc DoNothing(google.protobuf.Empty) returns (google.protobuf.Empty) {
     option (google.api.http) = {
-      get: "/v1/doNothing"
+      post: "/v1/doNothing"
     };
     option (google.api.method_signature) = "";
   }
 
-  // A much simplified version of the AppendRows in google.cloud.bigquery.storage.v1.BigQueryWrite
-  rpc AppendRows(stream AppendRowsRequest) returns (stream AppendRowsResponse) {
+  // Tests the generator for streaming read RPCs (aka server-side streaming)
+  rpc StreamingRead(Request) returns (stream Response) {
+    option (google.api.method_signature) = "stream";
   }
 
-  // A much simplified version of the WriteObject method in google.storage.v2.Storage
-  rpc WriteObject(stream WriteObjectRequest) returns (WriteObjectResponse) {}
+  // Tests the generator for streaming write RPCs (aka client-side streaming)
+  rpc StreamingWrite(stream Request) returns (Response) {
+  }
+
+  // Tests the generator for streaming read-write RPCs (aka bidir streaming)
+  rpc StreamingReadWrite(stream Request) returns (stream Response) {
+  }
 
   // An RPC to test that explicit routing headers are supported.
   //
@@ -937,19 +930,15 @@ service GoldenKitchenSink {
   }
 }
 
-message AppendRowsRequest {
+// A simple message for the streaming test RPCs
+message Request {
+  // A placeholder to test method signatures
   string stream = 1;
 }
 
-message AppendRowsResponse {
-  string response = 1;
-}
-
-message WriteObjectRequest {
-  string stream = 1;
-}
-
-message WriteObjectResponse {
+// A simple message for the streaming test RPCs
+message Response {
+  // A placeholder to test return values
   string response = 1;
 }
 
@@ -1300,78 +1289,6 @@ message LogEntrySourceLocation {
   // `qual.if.ied.Class.method` (Java), `dir/package.func` (Go), `function`
   // (Python).
   string function = 3 [(google.api.field_behavior) = OPTIONAL];
-}
-
-// The parameters to `TailLogEntries`.
-message TailLogEntriesRequest {
-  // Required. Name of a parent resource from which to retrieve log entries:
-  //
-  //     "projects/[PROJECT_ID]"
-  //     "organizations/[ORGANIZATION_ID]"
-  //     "billingAccounts/[BILLING_ACCOUNT_ID]"
-  //     "folders/[FOLDER_ID]"
-  //
-  // May alternatively be one or more views:
-  //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
-  //     "organization/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
-  //     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
-  //     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/views/[VIEW_ID]"
-  repeated string resource_names = 1 [(google.api.field_behavior) = REQUIRED];
-
-  // Optional. A filter that chooses which log entries to return.  See [Advanced
-  // Logs Filters](https://cloud.google.com/logging/docs/view/advanced_filters).
-  // Only log entries that match the filter are returned.  An empty filter
-  // matches all log entries in the resources listed in `resource_names`.
-  // Referencing a parent resource that is not in `resource_names` will cause
-  // the filter to return no results. The maximum length of the filter is 20000
-  // characters.
-  string filter = 2 [(google.api.field_behavior) = OPTIONAL];
-
-  // Optional. The amount of time to buffer log entries at the server before
-  // being returned to prevent out of order results due to late arriving log
-  // entries. Valid values are between 0-60000 milliseconds. Defaults to 2000
-  // milliseconds.
-  google.protobuf.Duration buffer_window = 3 [(google.api.field_behavior) = OPTIONAL];
-}
-
-// Result returned from `TailLogEntries`.
-message TailLogEntriesResponse {
-  // Information about entries that were omitted from the session.
-  message SuppressionInfo {
-    // An indicator of why entries were omitted.
-    enum Reason {
-      // Unexpected default.
-      REASON_UNSPECIFIED = 0;
-
-      // Indicates suppression occurred due to relevant entries being
-      // received in excess of rate limits. For quotas and limits, see
-      // [Logging API quotas and
-      // limits](https://cloud.google.com/logging/quotas#api-limits).
-      RATE_LIMIT = 1;
-
-      // Indicates suppression occurred due to the client not consuming
-      // responses quickly enough.
-      NOT_CONSUMED = 2;
-    }
-
-    // The reason that entries were omitted from the session.
-    Reason reason = 1;
-
-    // A lower bound on the count of entries omitted due to `reason`.
-    int32 suppressed_count = 2;
-  }
-
-  // A list of log entries. Each response in the stream will order entries with
-  // increasing values of `LogEntry.timestamp`. Ordering is not guaranteed
-  // between separate responses.
-  repeated LogEntry entries = 1;
-
-  // If entries that otherwise would have been included in the session were not
-  // sent back to the client, counts of relevant entries omitted from the
-  // session with the reason that they were not included. There will be at most
-  // one of each reason per response. The counts represent the number of
-  // suppressed entries since the last streamed response.
-  repeated SuppressionInfo suppression_info = 2;
 }
 
 // The service account keys list request.

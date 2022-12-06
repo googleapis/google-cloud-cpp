@@ -133,6 +133,14 @@ ParticipantsClient::AnalyzeContent(
   return connection_->AnalyzeContent(request);
 }
 
+std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentRequest,
+    google::cloud::dialogflow::v2::StreamingAnalyzeContentResponse>>
+ParticipantsClient::AsyncStreamingAnalyzeContent(Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncStreamingAnalyzeContent();
+}
+
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsClient::SuggestArticles(std::string const& parent, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

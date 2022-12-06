@@ -65,7 +65,7 @@ class V4SignedUrlConformanceTest
   void SetUp() override {
     service_account_key_filename_ =
         google::cloud::internal::GetEnv(
-            "GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE")
+            "GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE")
             .value_or("");
     ASSERT_FALSE(service_account_key_filename_.empty());
   }

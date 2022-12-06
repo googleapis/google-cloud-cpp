@@ -93,15 +93,15 @@ class IAMClient {
                      Options opts = {});
   ~IAMClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   IAMClient(IAMClient const&) = default;
   IAMClient& operator=(IAMClient const&) = default;
   IAMClient(IAMClient&&) = default;
   IAMClient& operator=(IAMClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(IAMClient const& a, IAMClient const& b) {
     return a.connection_ == b.connection_;
@@ -109,7 +109,7 @@ class IAMClient {
   friend bool operator!=(IAMClient const& a, IAMClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists every [ServiceAccount][google.iam.admin.v1.ServiceAccount] that

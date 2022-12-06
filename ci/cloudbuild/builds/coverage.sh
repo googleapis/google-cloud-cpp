@@ -42,6 +42,11 @@ instrumentation_filter="${instrumentation_filter:1}"
 mapfile -t args < <(bazel::common_args)
 args+=("--instrumentation_filter=${instrumentation_filter}")
 args+=("--instrument_test_targets")
+# This is a workaround for:
+#     https://github.com/googleapis/google-cloud-cpp/issues/6952
+# Based on the recommendations from:
+#     https://github.com/bazelbuild/bazel/issues/3236
+args+=("--sandbox_tmpfs_path=/tmp")
 bazel coverage "${args[@]}" --test_tag_filters=-integration-test ...
 GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
 mapfile -t integration_args < <(integration::bazel_args)

@@ -8,7 +8,7 @@ github:
 name: xsan-pr
 substitutions:
   _BUILD_NAME: xsan
-  _DISTRO: fedora-36
+  _DISTRO: fedora-36-bazel
   _TRIGGER_TYPE: pr
 tags:
 - pr

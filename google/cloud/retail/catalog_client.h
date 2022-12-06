@@ -65,15 +65,15 @@ class CatalogServiceClient {
       std::shared_ptr<CatalogServiceConnection> connection, Options opts = {});
   ~CatalogServiceClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   CatalogServiceClient(CatalogServiceClient const&) = default;
   CatalogServiceClient& operator=(CatalogServiceClient const&) = default;
   CatalogServiceClient(CatalogServiceClient&&) = default;
   CatalogServiceClient& operator=(CatalogServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(CatalogServiceClient const& a,
                          CatalogServiceClient const& b) {
@@ -83,7 +83,7 @@ class CatalogServiceClient {
                          CatalogServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all the [Catalog][google.cloud.retail.v2.Catalog]s associated with

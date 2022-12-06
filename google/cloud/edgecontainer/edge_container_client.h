@@ -67,15 +67,15 @@ class EdgeContainerClient {
       std::shared_ptr<EdgeContainerConnection> connection, Options opts = {});
   ~EdgeContainerClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   EdgeContainerClient(EdgeContainerClient const&) = default;
   EdgeContainerClient& operator=(EdgeContainerClient const&) = default;
   EdgeContainerClient(EdgeContainerClient&&) = default;
   EdgeContainerClient& operator=(EdgeContainerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(EdgeContainerClient const& a,
                          EdgeContainerClient const& b) {
@@ -85,7 +85,7 @@ class EdgeContainerClient {
                          EdgeContainerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists Clusters in a given project and location.

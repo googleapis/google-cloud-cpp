@@ -79,15 +79,15 @@ class ArtifactRegistryClient {
       Options opts = {});
   ~ArtifactRegistryClient();
 
-  //@{
+  ///@{
   // @name Copy and move support
   ArtifactRegistryClient(ArtifactRegistryClient const&) = default;
   ArtifactRegistryClient& operator=(ArtifactRegistryClient const&) = default;
   ArtifactRegistryClient(ArtifactRegistryClient&&) = default;
   ArtifactRegistryClient& operator=(ArtifactRegistryClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   // @name Equality
   friend bool operator==(ArtifactRegistryClient const& a,
                          ArtifactRegistryClient const& b) {
@@ -97,7 +97,7 @@ class ArtifactRegistryClient {
                          ArtifactRegistryClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists docker images.

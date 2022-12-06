@@ -42,8 +42,12 @@ add_library(
     internal/idempotency_policy_generator.h
     internal/logging_decorator_generator.cc
     internal/logging_decorator_generator.h
+    internal/logging_decorator_rest_generator.cc
+    internal/logging_decorator_rest_generator.h
     internal/metadata_decorator_generator.cc
     internal/metadata_decorator_generator.h
+    internal/metadata_decorator_rest_generator.cc
+    internal/metadata_decorator_rest_generator.h
     internal/mock_connection_generator.cc
     internal/mock_connection_generator.h
     internal/option_defaults_generator.cc
@@ -55,14 +59,22 @@ add_library(
     internal/printer.h
     internal/retry_traits_generator.cc
     internal/retry_traits_generator.h
+    internal/round_robin_decorator_generator.cc
+    internal/round_robin_decorator_generator.h
+    internal/sample_generator.cc
+    internal/sample_generator.h
     internal/scaffold_generator.cc
     internal/scaffold_generator.h
     internal/service_code_generator.cc
     internal/service_code_generator.h
     internal/stub_factory_generator.cc
     internal/stub_factory_generator.h
+    internal/stub_factory_rest_generator.cc
+    internal/stub_factory_rest_generator.h
     internal/stub_generator.cc
-    internal/stub_generator.h)
+    internal/stub_generator.h
+    internal/stub_rest_generator.cc
+    internal/stub_rest_generator.h)
 target_include_directories(google_cloud_cpp_generator
                            PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 target_link_libraries(

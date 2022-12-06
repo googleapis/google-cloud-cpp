@@ -829,7 +829,7 @@ TEST_F(StreamingReadTest, IsStreamingRead) {
       IsStreamingRead(*service_file_descriptor->service(0)->method(3)));
 }
 
-TEST(PredicateUtilsTest, HasRoutingHeaderSuccess) {
+TEST(PredicateUtilsTest, HasHttpAnnotationRoutingHeaderSuccess) {
   google::protobuf::FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -858,6 +858,37 @@ TEST(PredicateUtilsTest, HasRoutingHeaderSuccess) {
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_TRUE(
       HasRoutingHeader(*service_file_descriptor->service(0)->method(0)));
+  EXPECT_TRUE(
+      HasHttpAnnotation(*service_file_descriptor->service(0)->method(0)));
+}
+
+TEST(PredicateUtilsTest, HasSimpleHttpAnnotationSuccess) {
+  google::protobuf::FileDescriptorProto service_file;
+  /// @cond
+  auto constexpr kServiceText = R"pb(
+    name: "google/foo/v1/service.proto"
+    package: "google.protobuf"
+    message_type { name: "Bar" }
+    message_type { name: "Empty" }
+    service {
+      name: "Service"
+      method {
+        name: "Method0"
+        input_type: "google.protobuf.Bar"
+        output_type: "google.protobuf.Empty"
+        options {
+          [google.api.http] { patch: "/v1/databases" }
+        }
+      }
+    }
+  )pb";
+  /// @endcond
+  ASSERT_TRUE(google::protobuf::TextFormat::ParseFromString(kServiceText,
+                                                            &service_file));
+  DescriptorPool pool;
+  FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
+  EXPECT_TRUE(
+      HasHttpAnnotation(*service_file_descriptor->service(0)->method(0)));
 }
 
 TEST(PredicateUtilsTest, HasRoutingHeaderWrongUrlFormat) {
@@ -889,7 +920,7 @@ TEST(PredicateUtilsTest, HasRoutingHeaderWrongUrlFormat) {
       HasRoutingHeader(*service_file_descriptor->service(0)->method(0)));
 }
 
-TEST(PredicateUtilsTest, HasRoutingHeaderAnnotationMissing) {
+TEST(PredicateUtilsTest, HasNoHttpAnnotation) {
   google::protobuf::FileDescriptorProto service_file;
   /// @cond
   auto constexpr kServiceText = R"pb(
@@ -913,6 +944,8 @@ TEST(PredicateUtilsTest, HasRoutingHeaderAnnotationMissing) {
   FileDescriptor const* service_file_descriptor = pool.BuildFile(service_file);
   EXPECT_FALSE(
       HasRoutingHeader(*service_file_descriptor->service(0)->method(0)));
+  EXPECT_FALSE(
+      HasHttpAnnotation(*service_file_descriptor->service(0)->method(0)));
 }
 
 TEST(PredicateUtilsTest, PredicatedFragmentTrueString) {

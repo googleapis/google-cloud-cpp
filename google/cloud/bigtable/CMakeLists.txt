@@ -18,8 +18,10 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Bigtable C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Bigtable")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/examples"
-                         "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
+set(DOXYGEN_EXAMPLE_PATH
+    "${CMAKE_CURRENT_SOURCE_DIR}/examples"
+    "${CMAKE_CURRENT_SOURCE_DIR}/admin/samples"
+    "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
 set(DOXYGEN_EXCLUDE_SYMBOLS "benchmarks" "bigtable_admin_internal"
                             "bigtable_internal" "internal" "testing" "examples")
 
@@ -137,8 +139,8 @@ add_library(
     internal/bigtable_logging_decorator.h
     internal/bigtable_metadata_decorator.cc
     internal/bigtable_metadata_decorator.h
-    internal/bigtable_round_robin.cc
-    internal/bigtable_round_robin.h
+    internal/bigtable_round_robin_decorator.cc
+    internal/bigtable_round_robin_decorator.h
     internal/bigtable_stub.cc
     internal/bigtable_stub.h
     internal/bigtable_stub_factory.cc
@@ -340,7 +342,6 @@ if (BUILD_TESTING)
         internal/async_row_sampler_test.cc
         internal/async_streaming_read_test.cc
         internal/bigtable_channel_refresh_test.cc
-        internal/bigtable_round_robin_test.cc
         internal/bigtable_stub_factory_test.cc
         internal/bulk_mutator_test.cc
         internal/connection_refresh_state_test.cc
@@ -431,6 +432,7 @@ endif ()
 # Only compile integration tests and benchmarks if testing is enabled.
 if (BUILD_TESTING)
     add_subdirectory(admin/integration_tests)
+    add_subdirectory(admin/samples)
     add_subdirectory(benchmarks)
     add_subdirectory(tests)
 endif ()

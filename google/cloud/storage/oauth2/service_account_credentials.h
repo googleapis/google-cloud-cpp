@@ -40,9 +40,13 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
 namespace oauth2 {
-/// Object to hold information used to instantiate an ServiceAccountCredentials.
+
+/**
+ * Object to hold information used to instantiate an ServiceAccountCredentials.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 struct ServiceAccountCredentialsInfo {
   std::string client_email;
   std::string private_key_id;
@@ -54,7 +58,12 @@ struct ServiceAccountCredentialsInfo {
   absl::optional<std::string> subject;
 };
 
-/// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
+/**
+ * Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
+
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
@@ -67,13 +76,19 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
  * @note Note that P12 keyfiles do not contain the `client_email` for the
  * service account, the application must obtain this through some other means
  * and provide them to the function.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
-/// Parses a refresh response JSON string and uses the current time to create a
-/// TemporaryToken.
+/**
+ * Parses a refresh response JSON string and uses the current time to create a
+ * TemporaryToken.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseServiceAccountRefreshResponse(
     storage::internal::HttpResponse const& response,
@@ -87,6 +102,8 @@ ParseServiceAccountRefreshResponse(
  * https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
  *
  * @see https://tools.ietf.org/html/rfc7523
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
@@ -96,14 +113,22 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
  * Given a key and a JSON header and payload, creates a JWT assertion string.
  *
  * @see https://tools.ietf.org/html/rfc7519
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 std::string MakeJWTAssertion(std::string const& header,
                              std::string const& payload,
                              std::string const& pem_contents);
 
-/// Uses a ServiceAccountCredentialsInfo and the current time to construct a
-/// JWT assertion. The assertion combined with the grant type is used to create
-/// the refresh payload.
+/**
+ * Uses a ServiceAccountCredentialsInfo and the current time to construct a JWT
+ * assertion.
+ *
+ * The assertion combined with the grant type is used to create the refresh
+ * payload.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 std::string CreateServiceAccountRefreshPayload(
     ServiceAccountCredentialsInfo const& info, std::string const& grant_type,
     std::chrono::system_clock::time_point now);
@@ -131,12 +156,18 @@ std::string CreateServiceAccountRefreshPayload(
  * @param tp the current time
  * @return a bearer token for authentication.  Include this value in the
  *   `Authorization` header with the "Bearer" type.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<std::string> MakeSelfSignedJWT(
     ServiceAccountCredentialsInfo const& info,
     std::chrono::system_clock::time_point tp);
 
-/// Return true if we need to use the OAuth path to create tokens
+/**
+ * Return true if we need to use the OAuth path to create tokens
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info);
 
 /**
@@ -163,6 +194,8 @@ bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info);
  *     overridden except for testing.
  * @tparam ClockType a dependency injection point to fetch the current time.
  *     This should generally not be overridden except for testing.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
@@ -186,9 +219,7 @@ class ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
             Options{}.set<CARootsFilePathOption>(options.ssl_root_path()))) {}
 
   StatusOr<std::string> AuthorizationHeader() override {
-    auto header = impl_->AuthorizationHeader();
-    if (!header.ok()) return header.status();
-    return header->first + ": " + header->second;
+    return oauth2_internal::AuthorizationHeaderJoined(*impl_);
   }
 
   /**
@@ -201,6 +232,8 @@ class ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
    *   Base64-encode the data before signing.
    * @return the signed blob as raw bytes. An error if the @p signing_account
    *     does not match the email for the credential's account.
+   *
+   * @deprecated Prefer using the unified credentials documented in @ref guac
    */
   StatusOr<std::vector<std::uint8_t>> SignBlob(
       SigningAccount const& signing_account,
@@ -246,6 +279,8 @@ class ServiceAccountCredentials : public Credentials {
    *   Base64-encode the data before signing.
    * @return the signed blob as raw bytes. An error if the @p signing_account
    *     does not match the email for the credential's account.
+   *
+   * @deprecated Prefer using the unified credentials documented in @ref guac
    */
   StatusOr<std::vector<std::uint8_t>> SignBlob(
       SigningAccount const& signing_account,

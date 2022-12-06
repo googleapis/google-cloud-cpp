@@ -55,7 +55,7 @@ Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::ListServiceAccountKeys
 }
 
 Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::DoNothing(google::protobuf::Empty const&) {
-  return Idempotency::kIdempotent;
+  return Idempotency::kNonIdempotent;
 }
 
 Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const&) {
