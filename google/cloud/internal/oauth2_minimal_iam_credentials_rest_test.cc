@@ -40,6 +40,7 @@ using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::A;
+using ::testing::ByMove;
 using ::testing::Eq;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -72,7 +73,7 @@ TEST(ParseGenerateAccessTokenResponse, Success) {
   EXPECT_CALL(mock, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(mock), ExtractPayload)
-      .WillOnce(Return(MakeMockHttpPayloadSuccess(response)));
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
 
   auto ec = internal::ErrorContext();
   auto token = ParseGenerateAccessTokenResponse(mock, ec);
@@ -89,7 +90,7 @@ TEST(ParseGenerateAccessTokenResponse, HttpError) {
   EXPECT_CALL(mock, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kNotFound));
   EXPECT_CALL(std::move(mock), ExtractPayload)
-      .WillOnce(Return(MakeMockHttpPayloadSuccess(response)));
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
 
   auto ec = internal::ErrorContext();
   auto token = ParseGenerateAccessTokenResponse(mock, ec);
@@ -102,7 +103,7 @@ TEST(ParseGenerateAccessTokenResponse, NotJson) {
   EXPECT_CALL(mock, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(mock), ExtractPayload)
-      .WillOnce(Return(MakeMockHttpPayloadSuccess(response)));
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
 
   auto ec = internal::ErrorContext();
   auto token = ParseGenerateAccessTokenResponse(mock, ec);
@@ -117,7 +118,7 @@ TEST(ParseGenerateAccessTokenResponse, NotJsonObject) {
   EXPECT_CALL(mock, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(mock), ExtractPayload)
-      .WillOnce(Return(MakeMockHttpPayloadSuccess(response)));
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
 
   auto ec = internal::ErrorContext();
   auto token = ParseGenerateAccessTokenResponse(mock, ec);
@@ -134,7 +135,7 @@ TEST(ParseGenerateAccessTokenResponse, MissingAccessToken) {
   EXPECT_CALL(mock, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(mock), ExtractPayload)
-      .WillOnce(Return(MakeMockHttpPayloadSuccess(response)));
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
 
   auto ec = internal::ErrorContext();
   auto token = ParseGenerateAccessTokenResponse(mock, ec);
@@ -150,7 +151,7 @@ TEST(ParseGenerateAccessTokenResponse, InvalidAccessToken) {
   EXPECT_CALL(mock, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(mock), ExtractPayload)
-      .WillOnce(Return(MakeMockHttpPayloadSuccess(response)));
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
 
   auto ec = internal::ErrorContext();
   auto token = ParseGenerateAccessTokenResponse(mock, ec);
@@ -167,7 +168,7 @@ TEST(ParseGenerateAccessTokenResponse, MissingExpireTime) {
   EXPECT_CALL(mock, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(mock), ExtractPayload)
-      .WillOnce(Return(MakeMockHttpPayloadSuccess(response)));
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
 
   auto ec = internal::ErrorContext();
   auto token = ParseGenerateAccessTokenResponse(mock, ec);
@@ -183,7 +184,7 @@ TEST(ParseGenerateAccessTokenResponse, InvalidExpireTime) {
   EXPECT_CALL(mock, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(mock), ExtractPayload)
-      .WillOnce(Return(MakeMockHttpPayloadSuccess(response)));
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
 
   auto ec = internal::ErrorContext();
   auto token = ParseGenerateAccessTokenResponse(mock, ec);
@@ -200,7 +201,7 @@ TEST(ParseGenerateAccessTokenResponse, InvalidExpireTimeFormat) {
   EXPECT_CALL(mock, StatusCode)
       .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
   EXPECT_CALL(std::move(mock), ExtractPayload)
-      .WillOnce(Return(MakeMockHttpPayloadSuccess(response)));
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
 
   auto ec = internal::ErrorContext();
   auto token = ParseGenerateAccessTokenResponse(mock, ec);
