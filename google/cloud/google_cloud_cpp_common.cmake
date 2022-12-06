@@ -147,11 +147,19 @@ target_link_libraries(
            absl::variant
            Threads::Threads
            OpenSSL::Crypto)
-if (GOOGLE_CLOUD_CPP_ENABLE_EXPERIMENTAL_OPENTELEMETRY)
-    # TODO(#10283): find_package(opentelemetry-cpp CONFIG QUIET)
-    message(
-        WARNING
-            "OpenTelemetry requested, but the feature is not yet implemented.")
+
+if (experimental-opentelemetry IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    find_package(opentelemetry-cpp CONFIG)
+    if (opentelemetry-cpp_FOUND)
+        target_link_libraries(google_cloud_cpp_common
+                              PUBLIC opentelemetry-cpp::api)
+        target_compile_definitions(
+            google_cloud_cpp_common
+            PUBLIC # Enable OpenTelemetry features in google-cloud-cpp
+                   GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY)
+        set(GOOGLE_CLOUD_CPP_FIND_OPTIONAL_DEPENDENCIES
+            "find_dependency(opentelemetry-cpp)")
+    endif ()
 endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_common)
 target_include_directories(
@@ -313,6 +321,7 @@ if (BUILD_TESTING)
         internal/invoke_result_test.cc
         internal/log_impl_test.cc
         internal/make_status_test.cc
+        internal/opentelemetry_test.cc
         internal/pagination_range_test.cc
         internal/parse_rfc3339_test.cc
         internal/populate_common_options_test.cc
