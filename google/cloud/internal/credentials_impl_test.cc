@@ -30,6 +30,7 @@ struct Visitor : public CredentialsVisitor {
   AccessToken access_token;
   ImpersonateServiceAccountConfig* impersonate = nullptr;
   std::string json_object;
+  Options options;
 
   void visit(InsecureCredentialsConfig&) override {
     name = "InsecureCredentialsConfig";
@@ -48,6 +49,11 @@ struct Visitor : public CredentialsVisitor {
   void visit(ServiceAccountConfig& cfg) override {
     name = "ServiceAccountConfig";
     json_object = cfg.json_object();
+  }
+  void visit(ExternalAccountConfig& cfg) override {
+    name = "ExternalAccountConfig";
+    json_object = cfg.json_object();
+    options = cfg.options();
   }
 };
 
@@ -116,6 +122,17 @@ TEST(Credentials, ServiceAccount) {
   CredentialsVisitor::dispatch(*credentials, visitor);
   ASSERT_EQ("ServiceAccountConfig", visitor.name);
   EXPECT_EQ("test-only-invalid", visitor.json_object);
+}
+
+TEST(Credentials, ExternalAccount) {
+  auto credentials = std::make_shared<ExternalAccountConfig>(
+      "test-only-invalid", Options{}.set<ScopesOption>({"scope1", "scope2"}));
+  Visitor visitor;
+  CredentialsVisitor::dispatch(*credentials, visitor);
+  ASSERT_EQ("ExternalAccountConfig", visitor.name);
+  EXPECT_EQ("test-only-invalid", visitor.json_object);
+  EXPECT_THAT(visitor.options.get<ScopesOption>(),
+              ElementsAre("scope1", "scope2"));
 }
 
 }  // namespace

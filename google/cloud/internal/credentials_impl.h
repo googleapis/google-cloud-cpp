@@ -37,6 +37,7 @@ class GoogleDefaultCredentialsConfig;
 class AccessTokenConfig;
 class ImpersonateServiceAccountConfig;
 class ServiceAccountConfig;
+class ExternalAccountConfig;
 
 class CredentialsVisitor {
  public:
@@ -46,6 +47,7 @@ class CredentialsVisitor {
   virtual void visit(AccessTokenConfig&) = 0;
   virtual void visit(ImpersonateServiceAccountConfig&) = 0;
   virtual void visit(ServiceAccountConfig&) = 0;
+  virtual void visit(ExternalAccountConfig&) = 0;
 
   static void dispatch(Credentials& credentials, CredentialsVisitor& visitor);
 };
@@ -120,6 +122,20 @@ class ImpersonateServiceAccountConfig : public Credentials {
 class ServiceAccountConfig : public Credentials {
  public:
   ServiceAccountConfig(std::string json_object, Options opts);
+
+  std::string const& json_object() const { return json_object_; }
+  Options const& options() const { return options_; }
+
+ private:
+  void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
+
+  std::string json_object_;
+  Options options_;
+};
+
+class ExternalAccountConfig : public Credentials {
+ public:
+  ExternalAccountConfig(std::string j, Options o);
 
   std::string const& json_object() const { return json_object_; }
   Options const& options() const { return options_; }

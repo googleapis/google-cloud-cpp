@@ -19,7 +19,9 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_credentials.h"
+#include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 
@@ -32,6 +34,7 @@ namespace {
 
 using ::google::cloud::internal::AccessTokenConfig;
 using ::google::cloud::internal::CredentialsVisitor;
+using ::google::cloud::internal::ExternalAccountConfig;
 using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
@@ -94,6 +97,24 @@ struct RestVisitor : public CredentialsVisitor {
     result = std::make_shared<WrapRestCredentials>(
         std::make_shared<oauth2_internal::ServiceAccountCredentials>(
             internal::MapServiceAccountCredentialsInfo(*std::move(info))));
+  }
+
+  void visit(ExternalAccountConfig& cfg) override {
+    auto const ec = google::cloud::internal::ErrorContext();
+    auto info = oauth2_internal::ParseExternalAccountConfiguration(
+        cfg.json_object(), ec);
+    if (!info) {
+      result = std::make_shared<ErrorCredentials>(std::move(info).status());
+      return;
+    }
+    auto client_factory = [](Options options) {
+      return rest_internal::MakeDefaultRestClient(std::string{},
+                                                  std::move(options));
+    };
+    result = std::make_shared<WrapRestCredentials>(
+        std::make_shared<oauth2_internal::CachedCredentials>(
+            std::make_shared<oauth2_internal::ExternalAccountCredentials>(
+                *info, client_factory, cfg.options())));
   }
 };
 
