@@ -342,6 +342,7 @@ function (google_cloud_cpp_enable_features)
             if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
                 add_subdirectory(google/cloud/storage)
             endif ()
+        elseif ("${feature}" STREQUAL "experimental-opentelemetry")
         else ()
             if (NOT IS_DIRECTORY
                 "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}"
