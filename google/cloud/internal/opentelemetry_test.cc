@@ -14,8 +14,8 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <gmock/gmock.h>
-#include <opentelemetry/version.h>
 #include <opentelemetry/trace/default_span.h>
+#include <opentelemetry/version.h>
 
 namespace {
 
