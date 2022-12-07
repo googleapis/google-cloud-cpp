@@ -889,6 +889,13 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+service {
+  service_proto_path: "google/iam/v2/policy.proto"
+  product_path: "google/cloud/iam/v2"
+  initial_copyright_year: "2022"
+  retryable_status_codes: ["kUnavailable"]
+}
+
 # Identity-Aware Proxy (IAP)
 service {
   service_proto_path: "google/cloud/iap/v1/service.proto"
