@@ -73,6 +73,8 @@ add_library(
     internal/oauth2_google_credentials.h
     internal/oauth2_impersonate_service_account_credentials.cc
     internal/oauth2_impersonate_service_account_credentials.h
+    internal/oauth2_logging_credentials.cc
+    internal/oauth2_logging_credentials.h
     internal/oauth2_minimal_iam_credentials_rest.cc
     internal/oauth2_minimal_iam_credentials_rest.h
     internal/oauth2_refreshing_credentials_wrapper.cc
@@ -220,6 +222,7 @@ if (BUILD_TESTING)
         internal/oauth2_google_application_default_credentials_file_test.cc
         internal/oauth2_google_credentials_test.cc
         internal/oauth2_impersonate_service_account_credentials_test.cc
+        internal/oauth2_logging_credentials_test.cc
         internal/oauth2_minimal_iam_credentials_rest_test.cc
         internal/oauth2_refreshing_credentials_wrapper_test.cc
         internal/oauth2_service_account_credentials_test.cc
