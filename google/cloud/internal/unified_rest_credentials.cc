@@ -26,6 +26,7 @@ namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
 
 using ::google::cloud::internal::AccessTokenConfig;
 using ::google::cloud::internal::CredentialsVisitor;
@@ -34,26 +35,33 @@ using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
 using ::google::cloud::internal::ServiceAccountConfig;
 
+std::shared_ptr<oauth2_internal::Credentials> MakeErrorCredentials(
+    Status status) {
+  return std::make_shared<oauth2_internal::ErrorCredentials>(std::move(status));
+}
+
+std::shared_ptr<oauth2_internal::Credentials> WithCaching(
+    std::shared_ptr<oauth2_internal::Credentials> impl) {
+  return std::make_shared<oauth2_internal::CachedCredentials>(std::move(impl));
+}
+
+}  // namespace
+
 std::shared_ptr<oauth2_internal::Credentials>
 CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
   auto info =
       oauth2_internal::ParseServiceAccountCredentials(contents, "memory");
-  if (!info) {
-    return std::make_shared<oauth2_internal::ErrorCredentials>(info.status());
-  }
+  if (!info) return MakeErrorCredentials(std::move(info).status());
 
-  std::chrono::system_clock::time_point now;
-  auto components = AssertionComponentsFromInfo(*info, now);
-  auto jwt_assertion = internal::MakeJWTAssertionNoThrow(
+  // Verify this is usable before returning it.
+  auto const tp = std::chrono::system_clock::time_point{};
+  auto const components = AssertionComponentsFromInfo(*info, tp);
+  auto jwt = internal::MakeJWTAssertionNoThrow(
       components.first, components.second, info->private_key);
-  if (!jwt_assertion) {
-    return std::make_shared<oauth2_internal::ErrorCredentials>(
-        std::move(jwt_assertion).status());
-  }
+  if (!jwt) return MakeErrorCredentials(std::move(jwt).status());
 
-  return std::shared_ptr<oauth2_internal::Credentials>(
-      std::make_shared<oauth2_internal::ServiceAccountCredentials>(*info,
-                                                                   Options{}));
+  return std::make_shared<oauth2_internal::ServiceAccountCredentials>(
+      *info, Options{});
 }
 
 std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
@@ -69,13 +77,10 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
       auto credentials =
           google::cloud::oauth2_internal::GoogleDefaultCredentials();
       if (credentials) {
-        result = *std::move(credentials);
-        result = std::make_shared<oauth2_internal::CachedCredentials>(
-            std::move(result));
+        result = WithCaching(*std::move(credentials));
         return;
       }
-      result = std::make_shared<oauth2_internal::ErrorCredentials>(
-          std::move(credentials).status());
+      result = MakeErrorCredentials(std::move(credentials).status());
     }
 
     void visit(AccessTokenConfig& config) override {
@@ -84,17 +89,14 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     }
 
     void visit(ImpersonateServiceAccountConfig& config) override {
-      result = std::make_shared<
-          oauth2_internal::ImpersonateServiceAccountCredentials>(config);
-      result = std::make_shared<oauth2_internal::CachedCredentials>(
-          std::move(result));
+      result = WithCaching(
+          std::make_shared<
+              oauth2_internal::ImpersonateServiceAccountCredentials>(config));
     }
 
     void visit(ServiceAccountConfig& cfg) override {
-      result =
-          CreateServiceAccountCredentialsFromJsonContents(cfg.json_object());
-      result = std::make_shared<oauth2_internal::CachedCredentials>(
-          std::move(result));
+      result = WithCaching(
+          CreateServiceAccountCredentialsFromJsonContents(cfg.json_object()));
     }
   } visitor;
 
