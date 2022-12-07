@@ -65,13 +65,24 @@ cc_library(
     ],
 )
 
+mock_samples_glob=[d + "samples/mock_*.cc" for d in service_dirs]
+
 [cc_test(
     name = sample.replace("/", "_").replace(".cc", ""),
     srcs = [sample],
     tags = ["integration-test"],
     deps = [
         "//:iam",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob(include=[d + "samples/*.cc" for d in service_dirs], exclude=mock_samples_glob)]
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    deps = [
+        "//:iam",
         "//:iam_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
-) for sample in glob([d + "samples/*.cc" for d in service_dirs])]
+) for sample in glob(mock_samples_glob)]

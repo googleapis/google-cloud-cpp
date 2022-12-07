@@ -169,5 +169,7 @@ install(
 foreach (dir IN LISTS service_dirs)
     if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
         google_cloud_cpp_add_samples_relative("iam" "${dir}samples/")
+        target_link_libraries(iam_samples_mock_iam PRIVATE GTest::gmock_main)
+        target_link_libraries(iam_samples_mock_iam_credentials PRIVATE GTest::gmock_main)
     endif ()
 endforeach ()
