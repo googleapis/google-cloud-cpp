@@ -208,6 +208,9 @@
 ./include/google/cloud/iam
 ./include/google/cloud/iam/internal
 ./include/google/cloud/iam/mocks
+./include/google/cloud/iam/v2
+./include/google/cloud/iam/v2/internal
+./include/google/cloud/iam/v2/mocks
 ./include/google/cloud/iap
 ./include/google/cloud/iap/internal
 ./include/google/cloud/iap/mocks
@@ -451,6 +454,7 @@
 ./include/google/iam/credentials
 ./include/google/iam/credentials/v1
 ./include/google/iam/v1
+./include/google/iam/v2
 ./include/google/identity
 ./include/google/identity/accesscontextmanager
 ./include/google/identity/accesscontextmanager/v1
