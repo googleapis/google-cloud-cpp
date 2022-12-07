@@ -30,7 +30,7 @@ foreach (dir IN LISTS service_dirs)
     list(APPEND mocks_globs "${dir}mocks/*.h")
     list(APPEND DOXYGEN_EXAMPLE_PATH
          "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
-    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "speech_${ns}internal")
+    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "iam_${ns}internal")
 endforeach ()
 
 # Creates the proto headers needed by doxygen.
@@ -164,3 +164,10 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_iam-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_iam"
     COMPONENT google_cloud_cpp_development)
+
+# google-cloud-cpp::speech must be defined before we can add the samples.
+foreach (dir IN LISTS service_dirs)
+    if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+        google_cloud_cpp_add_samples_relative("iam" "${dir}samples/")
+    endif ()
+endforeach ()
