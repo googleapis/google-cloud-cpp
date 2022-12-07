@@ -66,13 +66,13 @@ int Example::Run(int argc, char const* const argv[]) try {
 
 int flagIndex = -1;
 int cmdIndex = -1;
-for(int i=0;i<commandLineArgs.size();i++) {
+for(std::string::size_type i=0;i<commandLineArgs.size();i++) {
   if(commandLineArgs[i] == "--help"){
       flagIndex = i;
       break;
   }
 }
-for(int i=0;i<commandLineArgs.size();i++) {
+for(std::string::size_type i=0;i<commandLineArgs.size();i++) {
   if(commands_.find(commandLineArgs[i]) != commands_.end()) {
     cmdIndex = i;
     break;
@@ -84,17 +84,17 @@ if(flagIndex == -1 and cmdIndex != -1) {
   return 1;
 }
 
-if(flagIndex != -1 and cmdIndex != -1){
+else if(flagIndex != -1 and cmdIndex != -1){
   PrintUsage(commandLineArgs[cmdIndex],"",0);
   return 0;
 }
 
-if(flagIndex == -1 and cmdIndex == -1) {
+else if(flagIndex == -1 and cmdIndex == -1) {
   PrintUsage(argv[0], "",1);
   return 1;
 }
 
-if(flagIndex != -1 and cmdIndex == -1) {
+else {
   PrintUsage(argv[0], "",1);
   return 0;
 }
