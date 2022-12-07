@@ -13,10 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/external_account_token_source_file.h"
 #include "google/cloud/internal/external_account_token_source_url.h"
 #include "google/cloud/internal/json_parsing.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/oauth2_credential_constants.h"
+#include "google/cloud/internal/oauth2_minimal_iam_credentials_rest.h"
+#include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/rest_client.h"
 #include <nlohmann/json.hpp>
 
@@ -84,9 +88,38 @@ StatusOr<ExternalAccountInfo> ParseExternalAccountConfiguration(
   auto source = MakeExternalAccountTokenSource(*credential_source, ec);
   if (!source) return std::move(source).status();
 
-  return ExternalAccountInfo{*std::move(audience),
-                             *std::move(subject_token_type),
-                             *std::move(token_url), *std::move(source)};
+  auto info = ExternalAccountInfo{
+      *std::move(audience),  *std::move(subject_token_type),
+      *std::move(token_url), *std::move(source),
+      absl::nullopt,
+  };
+
+  auto it = json.find("service_account_impersonation_url");
+  if (it == json.end()) return info;
+
+  auto constexpr kDefaultImpersonationTokenLifetime =
+      std::chrono::seconds(3600);
+  if (!it->is_string()) {
+    return InvalidTypeError("service_account_impersonation_url",
+                            "credentials-file", ec);
+  }
+  info.impersonation_config = ExternalAccountImpersonationConfig{
+      it->get<std::string>(), kDefaultImpersonationTokenLifetime};
+  it = json.find("service_account_impersonation");
+  if (it == json.end()) return info;
+  if (!it->is_object()) {
+    return InvalidTypeError("service_account_impersonation", "credentials-file",
+                            ec);
+  }
+  auto lifetime = ValidateIntField(
+      it.value(), "token_lifetime_seconds",
+      "credentials-file.service_account_impersonation",
+      static_cast<std::int32_t>(kDefaultImpersonationTokenLifetime.count()),
+      ec);
+  if (!lifetime) return std::move(lifetime).status();
+  info.impersonation_config->token_lifetime = std::chrono::seconds(*lifetime);
+
+  return info;
 }
 
 ExternalAccountCredentials::ExternalAccountCredentials(
@@ -149,10 +182,32 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
             .WithMetadata("token_type", *token_type)
             .WithMetadata("issued_token_type", *issued_token_type));
   }
+  if (info_.impersonation_config.has_value()) {
+    return GetTokenImpersonation(*token, ec);
+  }
+
   auto expires_in =
       ValidateIntField(access, "expires_in", "token-exchange-response", ec);
   if (!expires_in) return std::move(expires_in).status();
   return internal::AccessToken{*token, tp + std::chrono::seconds(*expires_in)};
+}
+
+StatusOr<internal::AccessToken>
+ExternalAccountCredentials::GetTokenImpersonation(
+    std::string const& access_token, internal::ErrorContext const& ec) {
+  auto request = rest_internal::RestRequest(info_.impersonation_config->url);
+  request.AddHeader("Authorization", absl::StrCat("Bearer ", access_token));
+  request.AddHeader("Content-Type", "application/json");
+  auto const lifetime = info_.impersonation_config->token_lifetime;
+  auto request_payload = nlohmann::json{
+      {"delegates", nlohmann::json::array()},
+      {"scope", nlohmann::json::array({GoogleOAuthScopeCloudPlatform()})},
+      {"lifetime", std::to_string(lifetime.count()) + "s"}};
+
+  auto client = client_factory_(options_);
+  auto response = client->Post(request, {request_payload.dump()});
+  if (!response) return std::move(response).status();
+  return ParseGenerateAccessTokenResponse(**response, ec);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
