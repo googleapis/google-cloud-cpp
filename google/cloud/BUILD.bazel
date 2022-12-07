@@ -46,6 +46,13 @@ cc_library(
     name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
+    defines = select({
+        ":enable_open_telemetry_valid": [
+            # Enable OpenTelemetry features in google-cloud-cpp
+            "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
+        ],
+        "//conditions:default": [],
+    }),
     target_compatible_with = select(
         {
             ":enable_open_telemetry_valid": [],
@@ -76,7 +83,12 @@ to your build command, or set this value in your `.bazelrc` file(s).
         "@com_google_absl//absl/types:optional",
         "@com_google_absl//absl/types:span",
         "@com_google_absl//absl/types:variant",
-    ],
+    ] + select({
+        ":enable_open_telemetry_valid": [
+            "@io_opentelemetry_cpp//api",
+        ],
+        "//conditions:default": [],
+    }),
 )
 
 cc_library(
