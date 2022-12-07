@@ -48,7 +48,8 @@ std::shared_ptr<oauth2_internal::Credentials> WithCaching(
 }  // namespace
 
 std::shared_ptr<oauth2_internal::Credentials>
-CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
+CreateServiceAccountCredentialsFromJsonContents(std::string const& contents,
+                                                Options const& options) {
   auto info =
       oauth2_internal::ParseServiceAccountCredentials(contents, "memory");
   if (!info) return MakeErrorCredentials(std::move(info).status());
@@ -60,8 +61,8 @@ CreateServiceAccountCredentialsFromJsonContents(std::string const& contents) {
       components.first, components.second, info->private_key);
   if (!jwt) return MakeErrorCredentials(std::move(jwt).status());
 
-  return std::make_shared<oauth2_internal::ServiceAccountCredentials>(
-      *info, Options{});
+  return std::make_shared<oauth2_internal::ServiceAccountCredentials>(*info,
+                                                                      options);
 }
 
 std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
@@ -73,9 +74,10 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
       result = std::make_shared<oauth2_internal::AnonymousCredentials>();
     }
 
-    void visit(GoogleDefaultCredentialsConfig&) override {
+    void visit(GoogleDefaultCredentialsConfig& cfg) override {
       auto credentials =
-          google::cloud::oauth2_internal::GoogleDefaultCredentials();
+          google::cloud::oauth2_internal::GoogleDefaultCredentials(
+              cfg.options());
       if (credentials) {
         result = WithCaching(*std::move(credentials));
         return;
@@ -83,20 +85,20 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
       result = MakeErrorCredentials(std::move(credentials).status());
     }
 
-    void visit(AccessTokenConfig& config) override {
+    void visit(AccessTokenConfig& cfg) override {
       result = std::make_shared<oauth2_internal::AccessTokenCredentials>(
-          config.access_token());
+          cfg.access_token());
     }
 
-    void visit(ImpersonateServiceAccountConfig& config) override {
+    void visit(ImpersonateServiceAccountConfig& cfg) override {
       result = WithCaching(
           std::make_shared<
-              oauth2_internal::ImpersonateServiceAccountCredentials>(config));
+              oauth2_internal::ImpersonateServiceAccountCredentials>(cfg));
     }
 
     void visit(ServiceAccountConfig& cfg) override {
-      result = WithCaching(
-          CreateServiceAccountCredentialsFromJsonContents(cfg.json_object()));
+      result = WithCaching(CreateServiceAccountCredentialsFromJsonContents(
+          cfg.json_object(), cfg.options()));
     }
   } visitor;
 
