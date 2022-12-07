@@ -71,6 +71,7 @@ cc_library(
     tags = ["integration-test"],
     deps = [
         "//:iam",
+        "//:iam_mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 ) for sample in glob([d + "samples/*.cc" for d in service_dirs])]
