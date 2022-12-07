@@ -1145,7 +1145,7 @@ service {
   product_path: "google/cloud/pubsublite"
   initial_copyright_year: "2021"
   gen_async_rpcs: ["GetTopicPartitions"]
-  retryable_status_codes: ["kInternal", "kUnavailable"]
+  retryable_status_codes: ["kAborted", "kInternal", "kUnavailable", "kUnknown"]
 }
 
 service {
@@ -1176,7 +1176,7 @@ service {
   service_proto_path: "google/cloud/pubsublite/v1/topic_stats.proto"
   product_path: "google/cloud/pubsublite"
   initial_copyright_year: "2022"
-  retryable_status_codes: ["kInternal", "kUnavailable"]
+  retryable_status_codes: ["kAborted", "kInternal", "kUnavailable", "kUnknown"]
 }
 
 # Recommender
