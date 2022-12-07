@@ -49,7 +49,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     // if we were unable to open it for some other reason.
     return Status(StatusCode::kUnknown, "Cannot open credentials file " + path);
   }
-  std::string contents(std::istreambuf_iterator<char>{ifs}, {});
+  auto const contents = std::string(std::istreambuf_iterator<char>{ifs}, {});
   auto cred_json = nlohmann::json::parse(contents, nullptr, false);
   if (!cred_json.is_object()) {
     // This is not a JSON file, try to load it as a P12 service account.
@@ -64,31 +64,29 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     }
     info->scopes = {};
     info->subject = {};
-    auto credentials = absl::make_unique<ServiceAccountCredentials>(*info);
-    return std::unique_ptr<Credentials>(std::move(credentials));
+    return std::unique_ptr<Credentials>(
+        absl::make_unique<ServiceAccountCredentials>(*info, options));
   }
-  std::string cred_type = cred_json.value("type", "no type given");
+  auto const cred_type = cred_json.value("type", "no type given");
   // If non_service_account_ok==false and the cred_type is authorized_user,
   // we'll return "Unsupported credential type (authorized_user)".
   if (cred_type == "authorized_user") {
     auto info = ParseAuthorizedUserCredentials(contents, path);
     if (!info) return std::move(info).status();
-    std::unique_ptr<Credentials> ptr =
-        absl::make_unique<AuthorizedUserCredentials>(*info);
-    return StatusOr<std::unique_ptr<Credentials>>(std::move(ptr));
+    return std::unique_ptr<Credentials>(
+        absl::make_unique<AuthorizedUserCredentials>(*info, options));
   }
   if (cred_type == "service_account") {
     auto info = ParseServiceAccountCredentials(contents, path);
     if (!info) return std::move(info).status();
-    std::unique_ptr<Credentials> ptr =
-        absl::make_unique<ServiceAccountCredentials>(*info, options);
-    return StatusOr<std::unique_ptr<Credentials>>(std::move(ptr));
+    return std::unique_ptr<Credentials>(
+        absl::make_unique<ServiceAccountCredentials>(*info, options));
   }
-  return StatusOr<std::unique_ptr<Credentials>>(
-      Status(StatusCode::kInvalidArgument,
-             "Unsupported credential type (" + cred_type +
-                 ") when reading Application Default Credentials file from " +
-                 path + "."));
+  return Status(
+      StatusCode::kInvalidArgument,
+      "Unsupported credential type (" + cred_type +
+          ") when reading Application Default Credentials file from " + path +
+          ".");
 }
 
 // Tries to load the file at the path specified by the value of the Application
@@ -103,16 +101,14 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
 // file is found, this function returns nullptr to indicate a service account
 // file wasn't found.
 StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
-    Options const& options = {}) {
+    Options const& options) {
   // 1) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
   auto path = GoogleAdcFilePathFromEnvVarOrEmpty();
   if (path.empty()) {
     // 2) If no path was specified via environment variable, check if the
     // gcloud ADC file exists.
     path = GoogleAdcFilePathFromWellKnownPathOrEmpty();
-    if (path.empty()) {
-      return StatusOr<std::unique_ptr<Credentials>>(nullptr);
-    }
+    if (path.empty()) return StatusOr<std::unique_ptr<Credentials>>(nullptr);
     // Just because we had the necessary information to build the path doesn't
     // mean that a file exists there.
     std::error_code ec;

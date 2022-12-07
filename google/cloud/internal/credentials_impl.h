@@ -52,32 +52,45 @@ class CredentialsVisitor {
 
 class InsecureCredentialsConfig : public Credentials {
  public:
+  explicit InsecureCredentialsConfig(Options opts);
   ~InsecureCredentialsConfig() override = default;
+
+  Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
+
+  Options options_;
 };
 
 class GoogleDefaultCredentialsConfig : public Credentials {
  public:
+  explicit GoogleDefaultCredentialsConfig(Options opts);
   ~GoogleDefaultCredentialsConfig() override = default;
+
+  Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
+
+  Options options_;
 };
 
 class AccessTokenConfig : public Credentials {
  public:
   AccessTokenConfig(std::string token,
-                    std::chrono::system_clock::time_point expiration)
-      : access_token_(AccessToken{std::move(token), expiration}) {}
+                    std::chrono::system_clock::time_point expiration,
+                    Options opts);
   ~AccessTokenConfig() override = default;
 
   AccessToken const& access_token() const { return access_token_; }
+  Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
+
   AccessToken access_token_;
+  Options options_;
 };
 
 class ImpersonateServiceAccountConfig : public Credentials {
@@ -92,33 +105,34 @@ class ImpersonateServiceAccountConfig : public Credentials {
   std::string const& target_service_account() const {
     return target_service_account_;
   }
-  std::chrono::seconds lifetime() const { return lifetime_; }
-  std::vector<std::string> const& scopes() const { return scopes_; }
-  std::vector<std::string> const& delegates() const { return delegates_; }
+  std::chrono::seconds lifetime() const;
+  std::vector<std::string> const& scopes() const;
+  std::vector<std::string> const& delegates() const;
 
  private:
   void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
 
   std::shared_ptr<Credentials> base_credentials_;
   std::string target_service_account_;
-  std::chrono::seconds lifetime_;
-  std::vector<std::string> scopes_;
-  std::vector<std::string> delegates_;
+  Options options_;
 };
 
 class ServiceAccountConfig : public Credentials {
  public:
-  explicit ServiceAccountConfig(std::string json_object)
-      : json_object_(std::move(json_object)) {}
+  ServiceAccountConfig(std::string json_object, Options opts);
 
-  std::string const& json_object() const& { return json_object_; }
-  std::string&& json_object() && { return std::move(json_object_); }
+  std::string const& json_object() const { return json_object_; }
+  Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) override { v.visit(*this); }
 
   std::string json_object_;
+  Options options_;
 };
+
+/// A helper function to initialize Auth options.
+Options PopulateAuthOptions(Options options);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

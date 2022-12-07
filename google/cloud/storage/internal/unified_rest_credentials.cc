@@ -71,16 +71,16 @@ struct RestVisitor : public CredentialsVisitor {
   void visit(InsecureCredentialsConfig&) override {
     result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
   }
-  void visit(GoogleDefaultCredentialsConfig&) override {
-    auto credentials = oauth2_internal::GoogleDefaultCredentials();
+  void visit(GoogleDefaultCredentialsConfig& cfg) override {
+    auto credentials = oauth2_internal::GoogleDefaultCredentials(cfg.options());
     if (credentials) {
       result = std::make_shared<WrapRestCredentials>(*std::move(credentials));
       return;
     }
     result = MakeErrorCredentials(std::move(credentials).status());
   }
-  void visit(AccessTokenConfig& config) override {
-    result = std::make_shared<AccessTokenCredentials>(config.access_token());
+  void visit(AccessTokenConfig& cfg) override {
+    result = std::make_shared<AccessTokenCredentials>(cfg.access_token());
   }
   void visit(ImpersonateServiceAccountConfig& config) override {
     result = std::make_shared<ImpersonateServiceAccountCredentials>(config);
