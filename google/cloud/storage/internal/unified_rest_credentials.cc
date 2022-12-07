@@ -37,6 +37,10 @@ using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
 using ::google::cloud::internal::ServiceAccountConfig;
 
+std::shared_ptr<oauth2::Credentials> MakeErrorCredentials(Status status) {
+  return std::make_shared<ErrorCredentials>(std::move(status));
+}
+
 class WrapRestCredentials : public oauth2::Credentials {
  public:
   explicit WrapRestCredentials(
@@ -73,8 +77,7 @@ struct RestVisitor : public CredentialsVisitor {
       result = std::make_shared<WrapRestCredentials>(*std::move(credentials));
       return;
     }
-    result =
-        std::make_shared<ErrorCredentials>(std::move(credentials).status());
+    result = MakeErrorCredentials(std::move(credentials).status());
   }
   void visit(AccessTokenConfig& config) override {
     result = std::make_shared<AccessTokenCredentials>(config.access_token());
@@ -85,7 +88,7 @@ struct RestVisitor : public CredentialsVisitor {
   void visit(ServiceAccountConfig& cfg) override {
     auto info = oauth2::ParseServiceAccountCredentials(cfg.json_object(), {});
     if (!info) {
-      result = std::make_shared<ErrorCredentials>(std::move(info).status());
+      result = MakeErrorCredentials(std::move(info).status());
       return;
     }
     result = std::make_shared<WrapRestCredentials>(
