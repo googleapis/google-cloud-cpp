@@ -64,32 +64,32 @@ int Example::Run(int argc, char const* const argv[]) try {
     return 1;
   }
 
-int flagIndex = -1;
-int cmdIndex = -1;
+std::string::size_type flagIndex = 0;
+std::string::size_type cmdIndex = 0;
 for(std::string::size_type i=0;i<commandLineArgs.size();i++) {
   if(commandLineArgs[i] == "--help"){
-      flagIndex = i;
+      flagIndex = i+1;
       break;
   }
 }
 for(std::string::size_type i=0;i<commandLineArgs.size();i++) {
   if(commands_.find(commandLineArgs[i]) != commands_.end()) {
-    cmdIndex = i;
+    cmdIndex = i+1;
     break;
   }  
 }
 
-if(flagIndex == -1 and cmdIndex != -1) {
-  PrintUsage(commandLineArgs[cmdIndex], "",0);
+if(flagIndex == (size_t)0 and cmdIndex != (size_t)0) {
+  PrintUsage(commandLineArgs[cmdIndex-1], "",0);
   return 1;
 }
 
-else if(flagIndex != -1 and cmdIndex != -1){
-  PrintUsage(commandLineArgs[cmdIndex],"",0);
+else if(flagIndex != (size_t)0 and cmdIndex != (size_t)0){
+  PrintUsage(commandLineArgs[cmdIndex-1],"",0);
   return 0;
 }
 
-else if(flagIndex == -1 and cmdIndex == -1) {
+else if(flagIndex == (size_t)0 and cmdIndex == (size_t)0) {
   PrintUsage(argv[0], "",1);
   return 1;
 }
