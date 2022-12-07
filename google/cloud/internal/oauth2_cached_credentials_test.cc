@@ -35,8 +35,6 @@ class MockCredentials : public Credentials {
  public:
   MOCK_METHOD(StatusOr<internal::AccessToken>, GetToken,
               (std::chrono::system_clock::time_point), (override));
-  MOCK_METHOD((StatusOr<std::pair<std::string, std::string>>),
-              AuthorizationHeader, (), (override));
   MOCK_METHOD(StatusOr<std::vector<std::uint8_t>>, SignBlob,
               (absl::optional<std::string> const&, std::string const&),
               (const, override));
@@ -134,17 +132,6 @@ TEST(CachedCredentials, GetTokenExpiredWithError) {
 
   auto a2 = tested.GetToken(tp2);
   EXPECT_THAT(a2, StatusIs(StatusCode::kUnavailable));
-}
-
-TEST(CachedCredentials, AuthorizationHeader) {
-  auto mock = std::make_shared<MockCredentials>();
-  auto const expected = std::make_pair(std::string{"Authorization"},
-                                       std::string{"Bearer test-token"});
-  EXPECT_CALL(*mock, AuthorizationHeader()).WillOnce(Return(expected));
-  CachedCredentials tested(mock);
-  auto actual = tested.AuthorizationHeader();
-  ASSERT_STATUS_OK(actual);
-  EXPECT_EQ(*actual, expected);
 }
 
 TEST(CachedCredentials, SignBlob) {

@@ -235,6 +235,37 @@ CloudMemcacheConnectionImpl::ApplyParameters(
       __func__);
 }
 
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnectionImpl::RescheduleMaintenance(
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::memcache::v1::Instance>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return stub->AsyncRescheduleMaintenance(cq, std::move(context),
+                                                request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memcache::v1::Instance>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->RescheduleMaintenance(request), polling_policy(),
+      __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache_internal
 }  // namespace cloud

@@ -108,6 +108,38 @@ DefaultEnvironmentsStub::AsyncDeleteEnvironment(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultEnvironmentsStub::AsyncSaveSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::orchestration::airflow::service::v1::
+                 SaveSnapshotRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncSaveSnapshot(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultEnvironmentsStub::AsyncLoadSnapshot(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::orchestration::airflow::service::v1::
+                 LoadSnapshotRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncLoadSnapshot(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultEnvironmentsStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

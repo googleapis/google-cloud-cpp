@@ -38,6 +38,9 @@ class OsLoginServiceConnectionIdempotencyPolicy {
   virtual std::unique_ptr<OsLoginServiceConnectionIdempotencyPolicy> clone()
       const;
 
+  virtual google::cloud::Idempotency CreateSshPublicKey(
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request);
+
   virtual google::cloud::Idempotency DeletePosixAccount(
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request);
 

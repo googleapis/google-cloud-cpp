@@ -65,6 +65,18 @@ Idempotency EnvironmentsConnectionIdempotencyPolicy::DeleteEnvironment(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency EnvironmentsConnectionIdempotencyPolicy::SaveSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency EnvironmentsConnectionIdempotencyPolicy::LoadSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>
 MakeDefaultEnvironmentsConnectionIdempotencyPolicy() {
   return absl::make_unique<EnvironmentsConnectionIdempotencyPolicy>();

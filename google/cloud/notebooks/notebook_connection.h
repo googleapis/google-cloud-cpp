@@ -147,6 +147,10 @@ class NotebookServiceConnection {
       google::cloud::notebooks::v1::RollbackInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
+  DiagnoseInstance(
+      google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
   UpgradeInstanceInternal(
       google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
           request);

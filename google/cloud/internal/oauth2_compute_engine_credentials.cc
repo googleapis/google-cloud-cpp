@@ -78,13 +78,11 @@ StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
         " compute engine credentials.";
     return Status{StatusCode::kInvalidArgument, error_payload, {}};
   }
-  std::string header_value = access_token.value("token_type", "");
-  header_value += ' ';
-  header_value += access_token.value("access_token", "");
   auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
   auto new_expiration = now + expires_in;
 
-  return internal::AccessToken{std::move(header_value), new_expiration};
+  return internal::AccessToken{access_token.value("access_token", ""),
+                               new_expiration};
 }
 
 ComputeEngineCredentials::ComputeEngineCredentials()
@@ -92,10 +90,8 @@ ComputeEngineCredentials::ComputeEngineCredentials()
 
 ComputeEngineCredentials::ComputeEngineCredentials(
     std::string service_account_email, Options options,
-    std::unique_ptr<rest_internal::RestClient> rest_client,
-    CurrentTimeFn current_time_fn)
-    : current_time_fn_(std::move(current_time_fn)),
-      rest_client_(std::move(rest_client)),
+    std::unique_ptr<rest_internal::RestClient> rest_client)
+    : rest_client_(std::move(rest_client)),
       service_account_email_(std::move(service_account_email)),
       options_(std::move(options)) {
   if (!rest_client_) {
@@ -105,16 +101,23 @@ ComputeEngineCredentials::ComputeEngineCredentials(
   }
 }
 
-StatusOr<std::pair<std::string, std::string>>
-ComputeEngineCredentials::AuthorizationHeader() {
-  std::unique_lock<std::mutex> lock(mu_);
-  return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
+StatusOr<internal::AccessToken> ComputeEngineCredentials::GetToken(
+    std::chrono::system_clock::time_point tp) {
+  // Ignore failures fetching the account metadata. We can still get a token
+  // using the initial `service_account_email_` value.
+  auto email = RetrieveServiceAccountInfo();
+  auto response = DoMetadataServerGetRequest(
+      "computeMetadata/v1/instance/service-accounts/" + email + "/token",
+      false);
+  if (!response) return std::move(response).status();
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
+  return ParseComputeEngineRefreshResponse(**response, tp);
 }
 
 std::string ComputeEngineCredentials::AccountEmail() const {
-  std::unique_lock<std::mutex> lock(mu_);
+  std::lock_guard<std::mutex> lock(mu_);
   // Force a refresh on the account info.
-  RetrieveServiceAccountInfo();
+  RetrieveServiceAccountInfo(lock);
   return service_account_email_;
 }
 
@@ -138,45 +141,26 @@ ComputeEngineCredentials::DoMetadataServerGetRequest(std::string const& path,
   return rest_client_->Get(request);
 }
 
-Status ComputeEngineCredentials::RetrieveServiceAccountInfo() const {
+std::string ComputeEngineCredentials::RetrieveServiceAccountInfo() const {
+  return RetrieveServiceAccountInfo(std::lock_guard<std::mutex>{mu_});
+}
+
+std::string ComputeEngineCredentials::RetrieveServiceAccountInfo(
+    std::lock_guard<std::mutex> const&) const {
+  // Fetch the metadata only once.
+  if (metadata_retrieved_) return service_account_email_;
+
   auto response = DoMetadataServerGetRequest(
       "computeMetadata/v1/instance/service-accounts/" + service_account_email_ +
           "/",
       true);
-  if (!response) {
-    return std::move(response).status();
-  }
-  if ((*response)->StatusCode() >= 300) {
-    return AsStatus(std::move(**response));
-  }
-
+  if (!response || IsHttpError(**response)) return service_account_email_;
   auto metadata = ParseMetadataServerResponse(**response);
-  if (!metadata) {
-    return metadata.status();
-  }
+  if (!metadata) return service_account_email_;
   service_account_email_ = std::move(metadata->email);
   scopes_ = std::move(metadata->scopes);
-  return Status();
-}
-
-StatusOr<internal::AccessToken> ComputeEngineCredentials::Refresh() const {
-  auto status = RetrieveServiceAccountInfo();
-  if (!status.ok()) {
-    return status;
-  }
-
-  auto response = DoMetadataServerGetRequest(
-      "computeMetadata/v1/instance/service-accounts/" + service_account_email_ +
-          "/token",
-      false);
-  if (!response) {
-    return std::move(response).status();
-  }
-  if ((*response)->StatusCode() >= 300) {
-    return AsStatus(std::move(**response));
-  }
-
-  return ParseComputeEngineRefreshResponse(**response, current_time_fn_());
+  metadata_retrieved_ = true;
+  return service_account_email_;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

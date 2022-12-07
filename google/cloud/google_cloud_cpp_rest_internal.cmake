@@ -38,8 +38,6 @@ add_library(
     internal/curl_rest_response.h
     internal/curl_wrappers.cc
     internal/curl_wrappers.h
-    internal/external_account_parsing.cc
-    internal/external_account_parsing.h
     internal/external_account_source_format.cc
     internal/external_account_source_format.h
     internal/external_account_token_source_file.cc
@@ -47,6 +45,8 @@ add_library(
     internal/external_account_token_source_url.cc
     internal/external_account_token_source_url.h
     internal/http_payload.h
+    internal/json_parsing.cc
+    internal/json_parsing.h
     internal/make_jwt_assertion.cc
     internal/make_jwt_assertion.h
     internal/oauth2_access_token_credentials.cc
@@ -205,10 +205,10 @@ if (BUILD_TESTING)
         internal/curl_wrappers_locking_disabled_test.cc
         internal/curl_wrappers_locking_enabled_test.cc
         internal/curl_wrappers_test.cc
-        internal/external_account_parsing_test.cc
         internal/external_account_source_format_test.cc
         internal/external_account_token_source_file_test.cc
         internal/external_account_token_source_url_test.cc
+        internal/json_parsing_test.cc
         internal/make_jwt_assertion_test.cc
         internal/oauth2_access_token_credentials_test.cc
         internal/oauth2_anonymous_credentials_test.cc

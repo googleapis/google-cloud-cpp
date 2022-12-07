@@ -57,6 +57,14 @@ class EnvironmentsConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteEnvironment(
       google::cloud::orchestration::airflow::service::v1::
           DeleteEnvironmentRequest const& request);
+
+  virtual google::cloud::Idempotency SaveSnapshot(
+      google::cloud::orchestration::airflow::service::v1::
+          SaveSnapshotRequest const& request);
+
+  virtual google::cloud::Idempotency LoadSnapshot(
+      google::cloud::orchestration::airflow::service::v1::
+          LoadSnapshotRequest const& request);
 };
 
 std::unique_ptr<EnvironmentsConnectionIdempotencyPolicy>

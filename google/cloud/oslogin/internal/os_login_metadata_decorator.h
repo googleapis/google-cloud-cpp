@@ -34,6 +34,11 @@ class OsLoginServiceMetadata : public OsLoginServiceStub {
   ~OsLoginServiceMetadata() override = default;
   explicit OsLoginServiceMetadata(std::shared_ptr<OsLoginServiceStub> child);
 
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
+      grpc::ClientContext& context,
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request)
+      override;
+
   Status DeletePosixAccount(
       grpc::ClientContext& context,
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request)

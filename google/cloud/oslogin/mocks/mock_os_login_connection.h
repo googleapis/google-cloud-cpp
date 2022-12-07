@@ -47,6 +47,12 @@ class MockOsLoginServiceConnection : public oslogin::OsLoginServiceConnection {
   MOCK_METHOD(Options, options, (), (override));
 
   MOCK_METHOD(
+      StatusOr<google::cloud::oslogin::common::SshPublicKey>,
+      CreateSshPublicKey,
+      (google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       Status, DeletePosixAccount,
       (google::cloud::oslogin::v1::DeletePosixAccountRequest const& request),
       (override));

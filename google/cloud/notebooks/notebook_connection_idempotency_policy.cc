@@ -132,6 +132,11 @@ Idempotency NotebookServiceConnectionIdempotencyPolicy::RollbackInstance(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency NotebookServiceConnectionIdempotencyPolicy::DiagnoseInstance(
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 Idempotency NotebookServiceConnectionIdempotencyPolicy::UpgradeInstanceInternal(
     google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&) {
   return Idempotency::kNonIdempotent;

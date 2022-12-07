@@ -42,10 +42,10 @@ function (add_cmake_quickstart_target feature library target)
     externalproject_add(
         verify-quickstart-cmake-${feature}
         EXCLUDE_FROM_ALL ON
-        PREFIX "${PROJECT_BINARY_DIR}/cmake-${feature}-prefix"
+        PREFIX "${PROJECT_BINARY_DIR}/cmake-${library}-prefix"
         SOURCE_DIR
             "${PROJECT_SOURCE_DIR}/../../google/cloud/${library}/quickstart"
-        BINARY_DIR "${PROJECT_BINARY_DIR}/cmake-${feature}"
+        BINARY_DIR "${PROJECT_BINARY_DIR}/cmake-${library}"
         CMAKE_ARGS ${COMMON_CMAKE_ARGS}
         BUILD_COMMAND "${CMAKE_COMMAND}" "--build" "<BINARY_DIR>" "--target"
                       "${target}"
@@ -62,10 +62,10 @@ function (add_make_quickstart_target feature library target)
     externalproject_add(
         verify-quickstart-makefile-${feature}
         EXCLUDE_FROM_ALL ON
-        PREFIX "${PROJECT_BINARY_DIR}/makefile-${feature}-prefix"
+        PREFIX "${PROJECT_BINARY_DIR}/makefile-${library}-prefix"
         SOURCE_DIR
             "${PROJECT_SOURCE_DIR}/../../google/cloud/${library}/quickstart"
-        BINARY_DIR "${PROJECT_BINARY_DIR}/makefile-${feature}"
+        BINARY_DIR "${PROJECT_BINARY_DIR}/makefile-${library}"
         CONFIGURE_COMMAND ""
         BUILD_COMMAND
             "env"

@@ -34,6 +34,19 @@ OsLoginServiceLogging::OsLoginServiceLogging(
       tracing_options_(std::move(tracing_options)),
       components_(std::move(components)) {}
 
+StatusOr<google::cloud::oslogin::common::SshPublicKey>
+OsLoginServiceLogging::CreateSshPublicKey(
+    grpc::ClientContext& context,
+    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::oslogin::v1::CreateSshPublicKeyRequest const&
+                 request) {
+        return child_->CreateSshPublicKey(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 Status OsLoginServiceLogging::DeletePosixAccount(
     grpc::ClientContext& context,
     google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
