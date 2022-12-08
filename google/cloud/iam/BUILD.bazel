@@ -16,12 +16,32 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":google_cloud_cpp_iam.bzl", "google_cloud_cpp_iam_hdrs", "google_cloud_cpp_iam_srcs")
+service_dirs = [
+    "",
+    "v2/",
+]
+
+src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
+
+filegroup(
+    name = "srcs",
+    srcs = glob([d + "*.cc" for d in src_dirs]),
+)
+
+filegroup(
+    name = "hdrs",
+    srcs = glob([d + "*.h" for d in src_dirs]),
+)
+
+filegroup(
+    name = "mocks",
+    srcs = glob([d + "mocks/*.h" for d in service_dirs]),
+)
 
 cc_library(
     name = "google_cloud_cpp_iam",
-    srcs = google_cloud_cpp_iam_srcs,
-    hdrs = google_cloud_cpp_iam_hdrs,
+    srcs = [":srcs"],
+    hdrs = [":hdrs"],
     visibility = ["//:__pkg__"],
     # Do not sort: grpc++ must come last
     deps = [
@@ -30,19 +50,42 @@ cc_library(
         "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc",
         "@com_google_googleapis//google/iam/credentials/v1:credentials_cc_grpc",
         "@com_google_googleapis//google/iam/v1:iam_cc_grpc",
+        "@com_google_googleapis//google/iam/v2:iam_cc_grpc",
         "@com_github_grpc_grpc//:grpc++",
     ],
 )
 
-load(":google_cloud_cpp_iam_mocks.bzl", "google_cloud_cpp_iam_mocks_hdrs", "google_cloud_cpp_iam_mocks_srcs")
-
 cc_library(
     name = "google_cloud_cpp_iam_mocks",
-    srcs = google_cloud_cpp_iam_mocks_srcs,
-    hdrs = google_cloud_cpp_iam_mocks_hdrs,
+    hdrs = [":mocks"],
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_iam",
         "@com_google_googletest//:gtest",
     ],
 )
+
+mock_samples_glob = [d + "samples/mock_*.cc" for d in service_dirs]
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    tags = ["integration-test"],
+    deps = [
+        "//:iam",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob(
+    include = [d + "samples/*.cc" for d in service_dirs],
+    exclude = mock_samples_glob,
+)]
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    deps = [
+        "//:iam",
+        "//:iam_mocks",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob(mock_samples_glob)]

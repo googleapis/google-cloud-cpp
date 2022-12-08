@@ -18,84 +18,32 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud IAM C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud IAM")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
-                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "iam_internal" "iam_testing" "examples")
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
+
+unset(mocks_globs)
+unset(source_globs)
+set(service_dirs "" "v2/")
+foreach (dir IN LISTS service_dirs)
+    string(REPLACE "/" "_" ns "${dir}")
+    list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
+    list(APPEND mocks_globs "${dir}mocks/*.h")
+    list(APPEND DOXYGEN_EXAMPLE_PATH
+         "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
+    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "iam_${ns}internal")
+endforeach ()
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::iam_protos)
 
 include(GoogleCloudCppCommon)
 
-add_library(
-    google_cloud_cpp_iam # cmake-format: sort
-    iam_client.cc
-    iam_client.h
-    iam_connection.cc
-    iam_connection.h
-    iam_connection_idempotency_policy.cc
-    iam_connection_idempotency_policy.h
-    iam_credentials_client.cc
-    iam_credentials_client.h
-    iam_credentials_connection.cc
-    iam_credentials_connection.h
-    iam_credentials_connection_idempotency_policy.cc
-    iam_credentials_connection_idempotency_policy.h
-    iam_credentials_options.h
-    iam_options.h
-    iam_policy_client.cc
-    iam_policy_client.h
-    iam_policy_connection.cc
-    iam_policy_connection.h
-    iam_policy_connection_idempotency_policy.cc
-    iam_policy_connection_idempotency_policy.h
-    iam_policy_options.h
-    internal/iam_auth_decorator.cc
-    internal/iam_auth_decorator.h
-    internal/iam_connection_impl.cc
-    internal/iam_connection_impl.h
-    internal/iam_credentials_auth_decorator.cc
-    internal/iam_credentials_auth_decorator.h
-    internal/iam_credentials_connection_impl.cc
-    internal/iam_credentials_connection_impl.h
-    internal/iam_credentials_logging_decorator.cc
-    internal/iam_credentials_logging_decorator.h
-    internal/iam_credentials_metadata_decorator.cc
-    internal/iam_credentials_metadata_decorator.h
-    internal/iam_credentials_option_defaults.cc
-    internal/iam_credentials_option_defaults.h
-    internal/iam_credentials_retry_traits.h
-    internal/iam_credentials_stub.cc
-    internal/iam_credentials_stub.h
-    internal/iam_credentials_stub_factory.cc
-    internal/iam_credentials_stub_factory.h
-    internal/iam_logging_decorator.cc
-    internal/iam_logging_decorator.h
-    internal/iam_metadata_decorator.cc
-    internal/iam_metadata_decorator.h
-    internal/iam_option_defaults.cc
-    internal/iam_option_defaults.h
-    internal/iam_policy_auth_decorator.cc
-    internal/iam_policy_auth_decorator.h
-    internal/iam_policy_connection_impl.cc
-    internal/iam_policy_connection_impl.h
-    internal/iam_policy_logging_decorator.cc
-    internal/iam_policy_logging_decorator.h
-    internal/iam_policy_metadata_decorator.cc
-    internal/iam_policy_metadata_decorator.h
-    internal/iam_policy_option_defaults.cc
-    internal/iam_policy_option_defaults.h
-    internal/iam_policy_retry_traits.h
-    internal/iam_policy_stub.cc
-    internal/iam_policy_stub.h
-    internal/iam_policy_stub_factory.cc
-    internal/iam_policy_stub_factory.h
-    internal/iam_retry_traits.h
-    internal/iam_stub.cc
-    internal/iam_stub.h
-    internal/iam_stub_factory.cc
-    internal/iam_stub_factory.h
-    retry_traits.h)
+file(
+    GLOB source_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    ${source_globs})
+list(SORT source_files)
+add_library(google_cloud_cpp_iam ${source_files})
 target_include_directories(
     google_cloud_cpp_iam
     PUBLIC $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -115,30 +63,27 @@ target_compile_options(google_cloud_cpp_iam
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(google-cloud-cpp::iam ALIAS google_cloud_cpp_iam)
 
-# To avoid maintaining the list of files for the library, export them to a .bzl
-# file.
-include(CreateBazelConfig)
-create_bazel_config(google_cloud_cpp_iam YEAR "2020")
-
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources.
+file(
+    GLOB relative_mock_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    ${mocks_globs})
+list(SORT relative_mock_files)
+set(mock_files)
+foreach (file IN LISTS relative_mock_files)
+    list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
+endforeach ()
 add_library(google_cloud_cpp_iam_mocks INTERFACE)
-target_sources(
-    google_cloud_cpp_iam_mocks
-    INTERFACE
-        # cmake-format: sort
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_credentials_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_iam_policy_connection.h)
+target_sources(google_cloud_cpp_iam_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_iam_mocks
     INTERFACE google-cloud-cpp::iam_mocks google-cloud-cpp::iam
               GTest::gmock_main GTest::gmock GTest::gtest)
 set_target_properties(google_cloud_cpp_iam_mocks
                       PROPERTIES EXPORT_NAME google-cloud-cpp::iam_mocks)
-create_bazel_config(google_cloud_cpp_iam_mocks YEAR "2020")
 target_include_directories(
     google_cloud_cpp_iam_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -219,3 +164,13 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_iam-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_iam"
     COMPONENT google_cloud_cpp_development)
+
+# google-cloud-cpp::speech must be defined before we can add the samples.
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    foreach (dir IN LISTS service_dirs)
+        google_cloud_cpp_add_samples_relative("iam" "${dir}samples/")
+    endforeach ()
+    target_link_libraries(iam_samples_mock_iam PRIVATE GTest::gmock_main)
+    target_link_libraries(iam_samples_mock_iam_credentials
+                          PRIVATE GTest::gmock_main)
+endif ()

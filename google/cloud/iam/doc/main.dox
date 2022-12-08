@@ -69,6 +69,10 @@ behaviors in the library.
   `EndpointOption` (which defaults to "iam-meta-api.googleapis.com")
   used by `MakeIAMPolicyConnection()`.
 
+- `GOOGLE_CLOUD_CPP_POLICIES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "iam.googleapis.com")
+  used by `MakePoliciesConnection()`.
+
 <!-- inject-endpoint-env-vars-end -->
 
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
@@ -136,6 +140,7 @@ Follow these links to find examples for other \c *Client classes:
  [iam::IAMClient](@ref iam::IAMClient-endpoint-snippet)
  [iam::IAMCredentialsClient](@ref iam::IAMCredentialsClient-endpoint-snippet)
  [iam::IAMPolicyClient](@ref iam::IAMPolicyClient-endpoint-snippet)
+ [iam_v2::PoliciesClient](@ref iam_v2::PoliciesClient-endpoint-snippet)
 
 <!-- inject-endpoint-snippet-end -->
 
@@ -153,6 +158,7 @@ Follow these links to find examples for other \c *Client classes:
  [iam::IAMClient](@ref iam::IAMClient-service-account-snippet)
  [iam::IAMCredentialsClient](@ref iam::IAMCredentialsClient-service-account-snippet)
  [iam::IAMPolicyClient](@ref iam::IAMPolicyClient-service-account-snippet)
+ [iam_v2::PoliciesClient](@ref iam_v2::PoliciesClient-service-account-snippet)
 
 <!-- inject-service-account-snippet-end -->
 
@@ -217,6 +223,18 @@ guide for more details.
 /*! @page iam::IAMPolicyClient-service-account-snippet Override iam::IAMPolicyClient Authentication Defaults
 
 @snippet google/cloud/iam/samples/iam_policy_client_samples.cc with-service-account
+
+*/
+
+/*! @page iam_v2::PoliciesClient-endpoint-snippet Override iam_v2::PoliciesClient Endpoint Configuration
+
+@snippet google/cloud/iam/v2/samples/policies_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page iam_v2::PoliciesClient-service-account-snippet Override iam_v2::PoliciesClient Authentication Defaults
+
+@snippet google/cloud/iam/v2/samples/policies_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->
