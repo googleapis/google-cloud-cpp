@@ -12,14 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/internal/log_wrapper_helpers.h"
+#include "google/cloud/internal/debug_string_protobuf.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
 #include <google/protobuf/duration.pb.h>
 #include <google/protobuf/text_format.h>
 #include <google/protobuf/timestamp.pb.h>
-#include <google/rpc/error_details.pb.h>
-#include <google/rpc/status.pb.h>
 #include <google/spanner/v1/mutation.pb.h>
 #include <gmock/gmock.h>
 
@@ -138,23 +136,6 @@ TEST(LogWrapperHelpers, Truncate) {
   EXPECT_EQ(text, DebugString(MakeMutation(), tracing_options));
 }
 
-TEST(LogWrapperHelpers, TruncateString) {
-  TracingOptions tracing_options;
-  tracing_options.SetOptions("truncate_string_field_longer_than=8");
-  struct Case {
-    std::string actual;
-    std::string expected;
-  } cases[] = {
-      {"1234567", "1234567"},
-      {"12345678", "12345678"},
-      {"123456789", "12345678...<truncated>..."},
-      {"1234567890", "12345678...<truncated>..."},
-  };
-  for (auto const& c : cases) {
-    EXPECT_EQ(c.expected, DebugString(c.actual, tracing_options));
-  }
-}
-
 TEST(LogWrapperHelpers, Duration) {
   google::protobuf::Duration duration;
   duration.set_seconds((11 * 60 + 22) * 60 + 33);
@@ -174,20 +155,6 @@ TEST(LogWrapperHelpers, Timestamp) {
 })";
   EXPECT_EQ(expected, DebugString(timestamp, TracingOptions{}.SetOptions(
                                                  "single_line_mode=off")));
-}
-
-TEST(LogWrapperHelpers, FutureStatus) {
-  struct Case {
-    std::future_status actual;
-    std::string expected;
-  } cases[] = {
-      {std::future_status::deferred, "deferred"},
-      {std::future_status::timeout, "timeout"},
-      {std::future_status::ready, "ready"},
-  };
-  for (auto const& c : cases) {
-    EXPECT_EQ(c.expected, DebugFutureStatus(c.actual));
-  }
 }
 
 }  // namespace
