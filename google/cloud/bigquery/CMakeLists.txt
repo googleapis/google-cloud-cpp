@@ -54,34 +54,28 @@ target_compile_options(google_cloud_cpp_bigquery
 
 add_library(google-cloud-cpp::bigquery ALIAS google_cloud_cpp_bigquery)
 
-# To avoid maintaining the list of files for the library, export them to a .bzl
-# file.
-include(CreateBazelConfig)
-create_bazel_config(google_cloud_cpp_bigquery YEAR "2021")
-
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
 # at least one .o file). Unfortunately INTERFACE libraries are a bit weird in
 # that they need absolute paths for their sources. target_sources example:
 # ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_servicename_v2_connection.h
+file(
+    GLOB relative_mock_files
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "mocks/*.h")
+list(SORT relative_mock_files)
+set(mock_files)
+foreach (file IN LISTS relative_mock_files)
+    list(APPEND mock_files "${CMAKE_CURRENT_SOURCE_DIR}/${file}")
+endforeach ()
 add_library(google_cloud_cpp_bigquery_mocks INTERFACE)
-target_sources(
-    google_cloud_cpp_bigquery_mocks
-    INTERFACE # cmake-format: sort
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_analytics_hub_connection.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_read_connection.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_bigquery_write_connection.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_connection_connection.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_data_transfer_connection.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_model_connection.h
-              ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_reservation_connection.h)
+target_sources(google_cloud_cpp_bigquery_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_bigquery_mocks
     INTERFACE google-cloud-cpp::bigquery GTest::gmock_main GTest::gmock
               GTest::gtest)
 set_target_properties(google_cloud_cpp_bigquery_mocks
                       PROPERTIES EXPORT_NAME google-cloud-cpp::bigquery_mocks)
-create_bazel_config(google_cloud_cpp_bigquery_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_bigquery_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -165,3 +159,9 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_bigquery-config-version.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_bigquery"
     COMPONENT google_cloud_cpp_development)
+
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    google_cloud_cpp_add_samples_relative("bigquery" "samples/")
+    target_link_libraries(bigquery_samples_mock_bigquery_read
+                          PRIVATE GTest::gmock_main)
+endif ()

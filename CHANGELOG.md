@@ -118,6 +118,12 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 ## v2.6.0 - TBD
 
+### [BigQuery](/google/cloud/bigquery/README.md)
+
+The library has been expanded to include the following services:
+
+- [BigQuery Data Policy API](https://cloud.google.com/bigquery/docs/column-data-masking-intro)
+
 ## v2.5.0 - 2022-12
 
 **NOTE**

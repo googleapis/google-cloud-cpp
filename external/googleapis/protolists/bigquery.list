@@ -1,5 +1,6 @@
 @com_google_googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub.proto
 @com_google_googleapis//google/cloud/bigquery/connection/v1:connection.proto
+@com_google_googleapis//google/cloud/bigquery/datapolicies/v1:datapolicy.proto
 @com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer.proto
 @com_google_googleapis//google/cloud/bigquery/datatransfer/v1:transfer.proto
 @com_google_googleapis//google/cloud/bigquery/logging/v1:audit_data.proto
