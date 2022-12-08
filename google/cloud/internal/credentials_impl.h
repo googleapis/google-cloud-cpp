@@ -135,7 +135,7 @@ class ServiceAccountConfig : public Credentials {
 
 class ExternalAccountConfig : public Credentials {
  public:
-  ExternalAccountConfig(std::string j, Options o);
+  ExternalAccountConfig(std::string json_object, Options options);
 
   std::string const& json_object() const { return json_object_; }
   Options const& options() const { return options_; }
