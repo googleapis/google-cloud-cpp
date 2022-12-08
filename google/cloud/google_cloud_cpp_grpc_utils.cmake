@@ -56,6 +56,10 @@ add_library(
     internal/background_threads_impl.cc
     internal/background_threads_impl.h
     internal/completion_queue_impl.h
+    internal/debug_string_protobuf.cc
+    internal/debug_string_protobuf.h
+    internal/debug_string_status.cc
+    internal/debug_string_status.h
     internal/default_completion_queue_impl.cc
     internal/default_completion_queue_impl.h
     internal/extract_long_running_result.cc
@@ -73,8 +77,6 @@ add_library(
     internal/grpc_service_account_authentication.cc
     internal/grpc_service_account_authentication.h
     internal/log_wrapper.h
-    internal/log_wrapper_helpers.cc
-    internal/log_wrapper_helpers.h
     internal/minimal_iam_credentials_stub.cc
     internal/minimal_iam_credentials_stub.h
     internal/populate_grpc_options.cc
@@ -236,13 +238,14 @@ if (BUILD_TESTING)
         internal/async_streaming_write_rpc_impl_test.cc
         internal/async_streaming_write_rpc_logging_test.cc
         internal/background_threads_impl_test.cc
+        internal/debug_string_protobuf_test.cc
+        internal/debug_string_status_test.cc
         internal/extract_long_running_result_test.cc
         internal/grpc_access_token_authentication_test.cc
         internal/grpc_async_access_token_cache_test.cc
         internal/grpc_channel_credentials_authentication_test.cc
         internal/grpc_request_metadata_test.cc
         internal/grpc_service_account_authentication_test.cc
-        internal/log_wrapper_helpers_test.cc
         internal/log_wrapper_test.cc
         internal/minimal_iam_credentials_stub_test.cc
         internal/populate_grpc_options_test.cc

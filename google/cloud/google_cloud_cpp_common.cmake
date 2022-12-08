@@ -61,6 +61,10 @@ add_library(
     internal/compute_engine_util.h
     internal/credentials_impl.cc
     internal/credentials_impl.h
+    internal/debug_future_status.cc
+    internal/debug_future_status.h
+    internal/debug_string.cc
+    internal/debug_string.h
     internal/diagnostics_pop.inc
     internal/diagnostics_push.inc
     internal/disable_deprecation_warnings.inc
@@ -313,6 +317,8 @@ if (BUILD_TESTING)
         internal/compiler_info_test.cc
         internal/compute_engine_util_test.cc
         internal/credentials_impl_test.cc
+        internal/debug_future_status_test.cc
+        internal/debug_string_test.cc
         internal/error_context_test.cc
         internal/filesystem_test.cc
         internal/format_time_point_test.cc
