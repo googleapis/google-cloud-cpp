@@ -23,5 +23,5 @@ export CC=clang
 export CXX=clang++
 
 mapfile -t args < <(bazel::common_args)
-args+=("--//:experimental-open_telemetry=false")
+args+=("--//:experimental-opentelemetry=false")
 bazel test "${args[@]}" --test_tag_filters=-integration-test ...
