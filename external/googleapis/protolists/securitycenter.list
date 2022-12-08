@@ -13,6 +13,7 @@
 @com_google_googleapis//google/cloud/securitycenter/v1:folder.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:iam_binding.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:indicator.proto
+@com_google_googleapis//google/cloud/securitycenter/v1:kernel_rootkit.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:kubernetes.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:label.proto
 @com_google_googleapis//google/cloud/securitycenter/v1:mitre_attack.proto
