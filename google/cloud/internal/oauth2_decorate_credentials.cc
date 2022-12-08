@@ -15,11 +15,27 @@
 #include "google/cloud/internal/oauth2_decorate_credentials.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/oauth2_cached_credentials.h"
+#include "google/cloud/internal/oauth2_logging_credentials.h"
 
 namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+std::shared_ptr<oauth2_internal::Credentials> Decorate(
+    std::shared_ptr<oauth2_internal::Credentials> impl, Options const& opts) {
+  impl = WithLogging(std::move(impl), opts, "refresh");
+  impl = WithCaching(std::move(impl));
+  return WithLogging(std::move(impl), opts, "cached");
+}
+
+std::shared_ptr<oauth2_internal::Credentials> WithLogging(
+    std::shared_ptr<oauth2_internal::Credentials> impl, Options const& opts,
+    std::string stage) {
+  if (opts.get<TracingComponentsOption>().count("auth") == 0) return impl;
+  return std::make_shared<oauth2_internal::LoggingCredentials>(
+      std::move(stage), TracingOptions(), std::move(impl));
+}
 
 std::shared_ptr<oauth2_internal::Credentials> WithCaching(
     std::shared_ptr<oauth2_internal::Credentials> impl) {
