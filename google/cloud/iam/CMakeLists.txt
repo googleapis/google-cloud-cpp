@@ -165,7 +165,7 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_iam"
     COMPONENT google_cloud_cpp_development)
 
-# google-cloud-cpp::speech must be defined before we can add the samples.
+# google-cloud-cpp::iam must be defined before we can add the samples.
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     foreach (dir IN LISTS service_dirs)
         google_cloud_cpp_add_samples_relative("iam" "${dir}samples/")

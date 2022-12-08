@@ -124,6 +124,11 @@ The library has been expanded to include the following services:
 
 - [BigQuery Data Policy API](https://cloud.google.com/bigquery/docs/column-data-masking-intro)
 
+### [IAM](/google/cloud/iam/README.md)
+
+The library has been expanded to include the IAM v2 API. This API includes
+support for [IAM Deny](https://cloud.google.com/iam/docs/deny-overview) policies.
+
 ## v2.5.0 - 2022-12
 
 **NOTE**
