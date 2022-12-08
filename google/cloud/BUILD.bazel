@@ -28,16 +28,16 @@ capture_build_info(
 )
 
 config_setting(
-    name = "enable_open_telemetry_valid",
+    name = "enable_opentelemetry_valid",
     flag_values = {
-        "//:experimental-open_telemetry": "true",
+        "//:experimental-opentelemetry": "true",
         "@io_opentelemetry_cpp//api:with_abseil": "true",
     },
 )
 
 config_setting(
-    name = "disable_open_telemetry",
-    flag_values = {"//:experimental-open_telemetry": "false"},
+    name = "disable_opentelemetry",
+    flag_values = {"//:experimental-opentelemetry": "false"},
 )
 
 load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
@@ -47,7 +47,7 @@ cc_library(
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
     defines = select({
-        ":enable_open_telemetry_valid": [
+        ":enable_opentelemetry_valid": [
             # Enable OpenTelemetry features in google-cloud-cpp
             "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
         ],
@@ -55,8 +55,8 @@ cc_library(
     }),
     target_compatible_with = select(
         {
-            ":enable_open_telemetry_valid": [],
-            ":disable_open_telemetry": [],
+            ":enable_opentelemetry_valid": [],
+            ":disable_opentelemetry": [],
         },
         # else, OpenTelemetry is enabled, but with an invalid configuration.
         no_match_error = """
@@ -84,7 +84,7 @@ to your build command, or set this value in your `.bazelrc` file(s).
         "@com_google_absl//absl/types:span",
         "@com_google_absl//absl/types:variant",
     ] + select({
-        ":enable_open_telemetry_valid": [
+        ":enable_opentelemetry_valid": [
             "@io_opentelemetry_cpp//api",
         ],
         "//conditions:default": [],
