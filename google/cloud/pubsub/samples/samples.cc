@@ -1360,14 +1360,14 @@ void ExactlyOnceSubscribe(google::cloud::pubsub::Subscriber subscriber,
 
 void Pull(google::cloud::pubsub::Subscriber subscriber,
           std::vector<std::string> const&) {
-  //! [START pubsub_subscriber_sync_pull_with_lease] [pull]
+  //! [START pubsub_subscriber_sync_pull] [pull]
   [](google::cloud::pubsub::Subscriber subscriber) {
     auto response = subscriber.Pull();
     if (!response) throw std::move(response).status();
     std::cout << "Received message " << response->message << "\n";
     std::move(response->handler).ack();
   }
-  //! [END pubsub_subscriber_sync_pull_with_lease] [pull]
+  //! [END pubsub_subscriber_sync_pull] [pull]
   (std::move(subscriber));
 }
 
