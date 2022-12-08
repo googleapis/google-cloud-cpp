@@ -110,6 +110,7 @@ class ImpersonateServiceAccountConfig : public Credentials {
   std::chrono::seconds lifetime() const;
   std::vector<std::string> const& scopes() const;
   std::vector<std::string> const& delegates() const;
+  Options const& options() const { return options_; }
 
  private:
   void dispatch(CredentialsVisitor& v) override { v.visit(*this); }

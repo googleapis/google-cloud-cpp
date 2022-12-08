@@ -62,6 +62,8 @@ add_library(
     internal/oauth2_credential_constants.h
     internal/oauth2_credentials.cc
     internal/oauth2_credentials.h
+    internal/oauth2_decorate_credentials.cc
+    internal/oauth2_decorate_credentials.h
     internal/oauth2_error_credentials.cc
     internal/oauth2_error_credentials.h
     internal/oauth2_external_account_credentials.cc
