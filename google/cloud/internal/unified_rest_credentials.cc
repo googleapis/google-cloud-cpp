@@ -18,6 +18,7 @@
 #include "google/cloud/internal/oauth2_anonymous_credentials.h"
 #include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_error_credentials.h"
+#include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_impersonate_service_account_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
@@ -30,6 +31,7 @@ namespace {
 
 using ::google::cloud::internal::AccessTokenConfig;
 using ::google::cloud::internal::CredentialsVisitor;
+using ::google::cloud::internal::ExternalAccountConfig;
 using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
@@ -99,6 +101,23 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     void visit(ServiceAccountConfig& cfg) override {
       result = WithCaching(CreateServiceAccountCredentialsFromJsonContents(
           cfg.json_object(), cfg.options()));
+    }
+
+    void visit(ExternalAccountConfig& cfg) override {
+      auto const ec = internal::ErrorContext();
+      auto info = oauth2_internal::ParseExternalAccountConfiguration(
+          cfg.json_object(), ec);
+      if (!info) {
+        result = MakeErrorCredentials(std::move(info).status());
+        return;
+      }
+      auto client_factory = [](Options options) {
+        return rest_internal::MakeDefaultRestClient(std::string{},
+                                                    std::move(options));
+      };
+      result = WithCaching(
+          std::make_shared<oauth2_internal::ExternalAccountCredentials>(
+              *std::move(info), client_factory, cfg.options()));
     }
   } visitor;
 

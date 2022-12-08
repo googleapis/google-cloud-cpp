@@ -84,6 +84,11 @@ ServiceAccountConfig::ServiceAccountConfig(std::string json_object,
     : json_object_(std::move(json_object)),
       options_(PopulateAuthOptions(std::move(opts))) {}
 
+ExternalAccountConfig::ExternalAccountConfig(std::string json_object,
+                                             Options options)
+    : json_object_(std::move(json_object)),
+      options_(PopulateAuthOptions(std::move(options))) {}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

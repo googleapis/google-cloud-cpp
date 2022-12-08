@@ -19,9 +19,29 @@
 #include "google/cloud/internal/grpc_channel_credentials_authentication.h"
 #include "google/cloud/internal/grpc_impersonate_service_account.h"
 #include "google/cloud/internal/grpc_service_account_authentication.h"
-#include "google/cloud/internal/time_utils.h"
 #include "absl/memory/memory.h"
+#include <grpcpp/security/credentials.h>
 #include <fstream>
+
+namespace {
+
+// Put this outside our own namespace to avoid conflicts when using a naked
+// `ExternalAccountCredentials()` call.
+std::shared_ptr<grpc::CallCredentials> GrpcExternalAccountCredentials(
+    google::cloud::internal::ExternalAccountConfig const& cfg) {
+  // The using directives are a deviation from the Google Style Guide. The
+  // `ExternalAccountCredentials()` function appeared in gRPC 1.35, in the
+  // `grpc::experimental` namespace. It was moved to the `grpc` namespace in
+  // gRPC 1.36. We support gRPC >= 1.35. gRPC does not offer version macros
+  // until gRPC 1.51. We think the minor deviation from the style guide is
+  // justified in this case.
+  using namespace ::grpc;                // NOLINT(google-build-using-namespace)
+  using namespace ::grpc::experimental;  // NOLINT(google-build-using-namespace)
+  return ExternalAccountCredentials(
+      cfg.json_object(), cfg.options().get<google::cloud::ScopesOption>());
+}
+
+}  // namespace
 
 namespace google {
 namespace cloud {
@@ -69,6 +89,12 @@ std::shared_ptr<GrpcAuthenticationStrategy> CreateAuthenticationStrategy(
     void visit(ServiceAccountConfig& cfg) override {
       result = absl::make_unique<GrpcServiceAccountAuthentication>(
           cfg.json_object(), std::move(options));
+    }
+    void visit(ExternalAccountConfig& cfg) override {
+      result = absl::make_unique<GrpcChannelCredentialsAuthentication>(
+          grpc::CompositeChannelCredentials(
+              grpc::SslCredentials(grpc::SslCredentialsOptions()),
+              GrpcExternalAccountCredentials(cfg)));
     }
   } visitor(std::move(cq), std::move(options));
 

@@ -13,9 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/common_options.h"
+#include "google/cloud/internal/credentials_impl.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/json_parsing.h"
-#include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -30,44 +29,53 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::internal::GetEnv;
-using ::testing::IsEmpty;
 
 TEST(ExternalAccountIntegrationTest, UrlSourced) {
   auto filename = GetEnv("GOOGLE_CLOUD_CPP_EXTERNAL_ACCOUNT_FILE");
-  if (!filename.has_value()) GTEST_SKIP();
+  auto bucket = GetEnv("GOOGLE_CLOUD_CPP_TEST_WIF_BUCKET");
+  if (!filename.has_value() || !bucket.has_value()) GTEST_SKIP();
   auto is = std::ifstream(*filename);
   auto contents = std::string{std::istreambuf_iterator<char>{is.rdbuf()}, {}};
   ASSERT_FALSE(is.bad());
   ASSERT_FALSE(is.fail());
 
-  auto ec = internal::ErrorContext(
-      {{"GOOGLE_CLOUD_CPP_EXTERNAL_ACCOUNT_FILE", *filename},
-       {"program", "test"}});
-  auto info = ParseExternalAccountConfiguration(contents, ec);
-  ASSERT_STATUS_OK(info);
+  auto credentials = std::make_shared<internal::ExternalAccountConfig>(
+      contents, Options{}.set<TracingComponentsOption>({"auth"}));
+  auto client = rest_internal::MakeDefaultRestClient(
+      "https://storage.googleapis.com/",
+      Options{}
+          .set<UnifiedCredentialsOption>(credentials)
+          .set<TracingComponentsOption>({"http"}));
 
-  auto make_client = [](Options opts = {}) {
-    return rest_internal::MakeDefaultRestClient("", std::move(opts));
-  };
-  auto credentials = ExternalAccountCredentials(*info, make_client);
+  auto request = rest_internal::RestRequest("storage/v1/b/" + *bucket);
   // Anything involving HTTP requests may fail and needs a retry loop.
   auto now = std::chrono::system_clock::now();
-  auto access_token = [&]() -> StatusOr<internal::AccessToken> {
+  auto get_payload = [&](auto response) -> StatusOr<std::string> {
+    if (!response) return std::move(response).status();
+    if (!rest_internal::IsHttpSuccess(**response)) {
+      return AsStatus(std::move(**response));
+    }
+    return rest_internal::ReadAll(std::move(**response).ExtractPayload());
+  };
+  auto payload = [&]() -> StatusOr<std::string> {
     Status last_status;
     auto delay = std::chrono::seconds(1);
     for (int i = 0; i != 5; ++i) {
       if (i != 0) std::this_thread::sleep_for(delay);
       now = std::chrono::system_clock::now();
-      auto access_token = credentials.GetToken(now);
-      if (access_token) return access_token;
-      last_status = std::move(access_token).status();
+      auto response = client->Get(request);
+      auto payload = get_payload(std::move(response));
+      if (payload) return payload;
+      last_status = std::move(payload).status();
       delay *= 2;
     }
     return last_status;
   }();
-  ASSERT_STATUS_OK(access_token);
-  EXPECT_GT(access_token->expiration, now);
-  EXPECT_THAT(access_token->token.substr(0, 32), Not(IsEmpty()));
+  ASSERT_STATUS_OK(payload);
+  auto metadata = nlohmann::json::parse(*payload, nullptr, false);
+  ASSERT_TRUE(metadata.is_object()) << "type=" << metadata.type_name();
+  EXPECT_EQ(metadata.value("kind", ""), "storage#bucket");
+  EXPECT_EQ(metadata.value("id", ""), *bucket);
 }
 
 }  // namespace
