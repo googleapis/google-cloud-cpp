@@ -73,6 +73,10 @@ behaviors in the library.
   `EndpointOption` (which defaults to "bigqueryconnection.googleapis.com")
   used by `MakeConnection()`.
 
+- `GOOGLE_CLOUD_CPP_DATA_POLICY_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "bigquerydatapolicy.googleapis.com")
+  used by `MakeDataPolicyServiceConnection()`.
+
 - `GOOGLE_CLOUD_CPP_DATA_TRANSFER_SERVICE_ENDPOINT=...` overrides the
   `EndpointOption` (which defaults to "bigquerydatatransfer.googleapis.com")
   used by `MakeDataTransferServiceConnection()`.
@@ -157,6 +161,7 @@ Follow these links to find examples for other \c *Client classes:
  [bigquery::BigQueryReadClient](@ref bigquery::BigQueryReadClient-endpoint-snippet)
  [bigquery::BigQueryWriteClient](@ref bigquery::BigQueryWriteClient-endpoint-snippet)
  [bigquery::ConnectionServiceClient](@ref bigquery::ConnectionServiceClient-endpoint-snippet)
+ [bigquery::DataPolicyServiceClient](@ref bigquery::DataPolicyServiceClient-endpoint-snippet)
  [bigquery::DataTransferServiceClient](@ref bigquery::DataTransferServiceClient-endpoint-snippet)
  [bigquery::MigrationServiceClient](@ref bigquery::MigrationServiceClient-endpoint-snippet)
  [bigquery::ModelServiceClient](@ref bigquery::ModelServiceClient-endpoint-snippet)
@@ -179,6 +184,7 @@ Follow these links to find examples for other \c *Client classes:
  [bigquery::BigQueryReadClient](@ref bigquery::BigQueryReadClient-service-account-snippet)
  [bigquery::BigQueryWriteClient](@ref bigquery::BigQueryWriteClient-service-account-snippet)
  [bigquery::ConnectionServiceClient](@ref bigquery::ConnectionServiceClient-service-account-snippet)
+ [bigquery::DataPolicyServiceClient](@ref bigquery::DataPolicyServiceClient-service-account-snippet)
  [bigquery::DataTransferServiceClient](@ref bigquery::DataTransferServiceClient-service-account-snippet)
  [bigquery::MigrationServiceClient](@ref bigquery::MigrationServiceClient-service-account-snippet)
  [bigquery::ModelServiceClient](@ref bigquery::ModelServiceClient-service-account-snippet)
@@ -258,6 +264,18 @@ guide for more details.
 /*! @page bigquery::ConnectionServiceClient-service-account-snippet Override bigquery::ConnectionServiceClient Authentication Defaults
 
 @snippet google/cloud/bigquery/samples/connection_client_samples.cc with-service-account
+
+*/
+
+/*! @page bigquery::DataPolicyServiceClient-endpoint-snippet Override bigquery::DataPolicyServiceClient Endpoint Configuration
+
+@snippet google/cloud/bigquery/samples/data_policy_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page bigquery::DataPolicyServiceClient-service-account-snippet Override bigquery::DataPolicyServiceClient Authentication Defaults
+
+@snippet google/cloud/bigquery/samples/data_policy_client_samples.cc with-service-account
 
 */
 

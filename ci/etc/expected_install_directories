@@ -79,6 +79,8 @@
 ./include/google/cloud/bigquery/analyticshub/v1
 ./include/google/cloud/bigquery/connection
 ./include/google/cloud/bigquery/connection/v1
+./include/google/cloud/bigquery/datapolicies
+./include/google/cloud/bigquery/datapolicies/v1
 ./include/google/cloud/bigquery/datatransfer
 ./include/google/cloud/bigquery/datatransfer/v1
 ./include/google/cloud/bigquery/internal
