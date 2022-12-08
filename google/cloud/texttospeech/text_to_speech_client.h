@@ -99,12 +99,12 @@ class TextToSpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::texttospeech::v1::ListVoicesResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L123}
+  /// @googleapis_link{google::cloud::texttospeech::v1::ListVoicesResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L126}
   ///
   /// [google.cloud.texttospeech.v1.ListVoicesRequest]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L110}
+  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L113}
   /// [google.cloud.texttospeech.v1.ListVoicesResponse]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L123}
+  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L126}
   ///
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
       std::string const& language_code, Options opts = {});
@@ -113,16 +113,16 @@ class TextToSpeechClient {
   /// Returns a list of Voice supported for synthesis.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::texttospeech::v1::ListVoicesRequest,google/cloud/texttospeech/v1/cloud_tts.proto#L110}
+  /// @googleapis_link{google::cloud::texttospeech::v1::ListVoicesRequest,google/cloud/texttospeech/v1/cloud_tts.proto#L113}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::texttospeech::v1::ListVoicesResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L123}
+  /// @googleapis_link{google::cloud::texttospeech::v1::ListVoicesResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L126}
   ///
   /// [google.cloud.texttospeech.v1.ListVoicesRequest]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L110}
+  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L113}
   /// [google.cloud.texttospeech.v1.ListVoicesResponse]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L123}
+  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L126}
   ///
   StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse> ListVoices(
       google::cloud::texttospeech::v1::ListVoicesRequest const& request,
@@ -139,12 +139,12 @@ class TextToSpeechClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::texttospeech::v1::SynthesizeSpeechResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L295}
+  /// @googleapis_link{google::cloud::texttospeech::v1::SynthesizeSpeechResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L297}
   ///
   /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L146}
+  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L149}
   /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L295}
+  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L297}
   ///
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
   SynthesizeSpeech(
@@ -158,16 +158,16 @@ class TextToSpeechClient {
   /// has been processed.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::texttospeech::v1::SynthesizeSpeechRequest,google/cloud/texttospeech/v1/cloud_tts.proto#L146}
+  /// @googleapis_link{google::cloud::texttospeech::v1::SynthesizeSpeechRequest,google/cloud/texttospeech/v1/cloud_tts.proto#L149}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::texttospeech::v1::SynthesizeSpeechResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L295}
+  /// @googleapis_link{google::cloud::texttospeech::v1::SynthesizeSpeechResponse,google/cloud/texttospeech/v1/cloud_tts.proto#L297}
   ///
   /// [google.cloud.texttospeech.v1.SynthesizeSpeechRequest]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L146}
+  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L149}
   /// [google.cloud.texttospeech.v1.SynthesizeSpeechResponse]:
-  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L295}
+  /// @googleapis_reference_link{google/cloud/texttospeech/v1/cloud_tts.proto#L297}
   ///
   StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
   SynthesizeSpeech(
