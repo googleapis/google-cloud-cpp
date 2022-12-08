@@ -16,18 +16,38 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-load(":google_cloud_cpp_bigquery.bzl", "google_cloud_cpp_bigquery_hdrs", "google_cloud_cpp_bigquery_srcs")
+filegroup(
+    name = "srcs",
+    srcs = glob([
+        "*.cc",
+        "internal/*.cc",
+    ]),
+)
+
+filegroup(
+    name = "hdrs",
+    srcs = glob([
+        "*.h",
+        "internal/*.h",
+    ]),
+)
+
+filegroup(
+    name = "mocks",
+    srcs = glob(["mocks/*.h"]),
+)
 
 cc_library(
     name = "google_cloud_cpp_bigquery",
-    srcs = google_cloud_cpp_bigquery_srcs,
-    hdrs = google_cloud_cpp_bigquery_hdrs,
+    srcs = [":srcs"],
+    hdrs = [":hdrs"],
     visibility = ["//:__pkg__"],
     deps = [
         "//:common",
         "//:grpc_utils",
         "@com_google_googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub_cc_grpc",
         "@com_google_googleapis//google/cloud/bigquery/connection/v1:connection_cc_grpc",
+        "@com_google_googleapis//google/cloud/bigquery/datapolicies/v1:datapolicies_cc_grpc",
         "@com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer_cc_grpc",
         "@com_google_googleapis//google/cloud/bigquery/logging/v1:logging_cc_grpc",
         "@com_google_googleapis//google/cloud/bigquery/migration/v2:migration_cc_grpc",
@@ -37,15 +57,37 @@ cc_library(
     ],
 )
 
-load(":google_cloud_cpp_bigquery_mocks.bzl", "google_cloud_cpp_bigquery_mocks_hdrs", "google_cloud_cpp_bigquery_mocks_srcs")
-
 cc_library(
     name = "google_cloud_cpp_bigquery_mocks",
-    srcs = google_cloud_cpp_bigquery_mocks_srcs,
-    hdrs = google_cloud_cpp_bigquery_mocks_hdrs,
+    hdrs = [":mocks"],
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_bigquery",
         "@com_google_googletest//:gtest",
     ],
 )
+
+mock_samples_glob = ["samples/mock_*.cc"]
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    tags = ["integration-test"],
+    deps = [
+        "//:bigquery",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob(
+    include = ["samples/*.cc"],
+    exclude = mock_samples_glob,
+)]
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    deps = [
+        "//:bigquery",
+        "//:bigquery_mocks",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob(mock_samples_glob)]
