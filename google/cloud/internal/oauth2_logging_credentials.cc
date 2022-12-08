@@ -39,18 +39,18 @@ StatusOr<internal::AccessToken> LoggingCredentials::GetToken(
                    << token.status();
     return token;
   }
-  if (now <= token->expiration) {
+  if (now > token->expiration) {
     GCP_LOG(DEBUG) << __func__ << "(" << phase_ << "), token=" << *token
-                   << ", token will expire in "
+                   << ", token expired "
                    << absl::FormatDuration(
-                          absl::FromChrono(token->expiration - now));
+                          absl::FromChrono(now - token->expiration))
+                   << " ago";
     return token;
   }
   GCP_LOG(DEBUG) << __func__ << "(" << phase_ << "), token=" << *token
-                 << ", token expired "
+                 << ", token will expire in "
                  << absl::FormatDuration(
-                        absl::FromChrono(now - token->expiration))
-                 << " ago";
+                        absl::FromChrono(token->expiration - now));
   return token;
 }
 

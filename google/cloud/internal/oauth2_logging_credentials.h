@@ -18,6 +18,8 @@
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
+#include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -30,7 +32,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * Debugging problems with authentication can be fairly difficult. This
  * decorator is automatically inserted (twice) if
  * `google::cloud::TracingComponentsOption` includes `auth`. The decorator is
- * inserted before and after the caching layer, to show whether an cached token
+ * inserted before and after the caching layer, to show whether a cached token
  * or a new token is being used.
  *
  * @note To prevent leaking authentication secrets, the tokens are not logged in
@@ -54,7 +56,7 @@ class LoggingCredentials : public Credentials {
   std::string KeyId() const override;
 
  private:
-  std::string const phase_;
+  std::string phase_;
   TracingOptions tracing_options_;
   std::shared_ptr<Credentials> impl_;
 };
