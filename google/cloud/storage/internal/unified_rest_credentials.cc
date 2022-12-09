@@ -19,8 +19,8 @@
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/oauth2_cached_credentials.h"
 #include "google/cloud/internal/oauth2_credentials.h"
+#include "google/cloud/internal/oauth2_decorate_credentials.h"
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
@@ -39,6 +39,7 @@ using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
 using ::google::cloud::internal::ServiceAccountConfig;
+using ::google::cloud::oauth2_internal::WithCaching;
 
 std::shared_ptr<oauth2::Credentials> MakeErrorCredentials(Status status) {
   return std::make_shared<ErrorCredentials>(std::move(status));
@@ -77,7 +78,8 @@ struct RestVisitor : public CredentialsVisitor {
   void visit(GoogleDefaultCredentialsConfig& cfg) override {
     auto credentials = oauth2_internal::GoogleDefaultCredentials(cfg.options());
     if (credentials) {
-      result = std::make_shared<WrapRestCredentials>(*std::move(credentials));
+      result = std::make_shared<WrapRestCredentials>(
+          WithCaching(std::move(*credentials)));
       return;
     }
     result = MakeErrorCredentials(std::move(credentials).status());
@@ -94,9 +96,10 @@ struct RestVisitor : public CredentialsVisitor {
       result = MakeErrorCredentials(std::move(info).status());
       return;
     }
-    result = std::make_shared<WrapRestCredentials>(
-        std::make_shared<oauth2_internal::ServiceAccountCredentials>(
-            internal::MapServiceAccountCredentialsInfo(*std::move(info))));
+    auto impl = std::make_shared<oauth2_internal::ServiceAccountCredentials>(
+        internal::MapServiceAccountCredentialsInfo(*std::move(info)));
+    result =
+        std::make_shared<WrapRestCredentials>(WithCaching(std::move(impl)));
   }
 
   void visit(ExternalAccountConfig& cfg) override {
@@ -111,10 +114,10 @@ struct RestVisitor : public CredentialsVisitor {
       return rest_internal::MakeDefaultRestClient(std::string{},
                                                   std::move(options));
     };
-    result = std::make_shared<WrapRestCredentials>(
-        std::make_shared<oauth2_internal::CachedCredentials>(
-            std::make_shared<oauth2_internal::ExternalAccountCredentials>(
-                *info, client_factory, cfg.options())));
+    auto impl = std::make_shared<oauth2_internal::ExternalAccountCredentials>(
+        *info, client_factory, cfg.options());
+    result =
+        std::make_shared<WrapRestCredentials>(WithCaching(std::move(impl)));
   }
 };
 

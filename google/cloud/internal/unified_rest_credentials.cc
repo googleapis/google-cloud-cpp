@@ -16,7 +16,7 @@
 #include "google/cloud/internal/make_jwt_assertion.h"
 #include "google/cloud/internal/oauth2_access_token_credentials.h"
 #include "google/cloud/internal/oauth2_anonymous_credentials.h"
-#include "google/cloud/internal/oauth2_cached_credentials.h"
+#include "google/cloud/internal/oauth2_decorate_credentials.h"
 #include "google/cloud/internal/oauth2_error_credentials.h"
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
@@ -36,15 +36,11 @@ using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
 using ::google::cloud::internal::ServiceAccountConfig;
+using ::google::cloud::oauth2_internal::WithCaching;
 
 std::shared_ptr<oauth2_internal::Credentials> MakeErrorCredentials(
     Status status) {
   return std::make_shared<oauth2_internal::ErrorCredentials>(std::move(status));
-}
-
-std::shared_ptr<oauth2_internal::Credentials> WithCaching(
-    std::shared_ptr<oauth2_internal::Credentials> impl) {
-  return std::make_shared<oauth2_internal::CachedCredentials>(std::move(impl));
 }
 
 }  // namespace
@@ -93,9 +89,9 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     }
 
     void visit(ImpersonateServiceAccountConfig& cfg) override {
-      result = WithCaching(
-          std::make_shared<
-              oauth2_internal::ImpersonateServiceAccountCredentials>(cfg));
+      result = std::make_shared<
+          oauth2_internal::ImpersonateServiceAccountCredentials>(cfg);
+      result = WithCaching(std::move(result));
     }
 
     void visit(ServiceAccountConfig& cfg) override {
