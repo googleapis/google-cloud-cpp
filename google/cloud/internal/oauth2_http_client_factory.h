@@ -19,6 +19,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <functional>
+#include <memory>
 
 namespace google {
 namespace cloud {
