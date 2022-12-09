@@ -26,12 +26,12 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Add a full stack of logging (if needed) and caching decorators to the
-/// credentials.
+/// Add a full stack of logging (if requested in @p opts) and caching decorators
+/// to the credentials.
 std::shared_ptr<oauth2_internal::Credentials> Decorate(
     std::shared_ptr<oauth2_internal::Credentials> impl, Options const& opts);
 
-/// Add only a logging decorator to the credentials.
+/// Add only a logging decorator to the credentials if requested in @p opts
 std::shared_ptr<oauth2_internal::Credentials> WithLogging(
     std::shared_ptr<oauth2_internal::Credentials> impl, Options const& opts,
     std::string stage);
