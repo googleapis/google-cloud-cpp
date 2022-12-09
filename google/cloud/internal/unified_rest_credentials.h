@@ -17,6 +17,7 @@
 
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/oauth2_credentials.h"
+#include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -31,6 +32,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     std::shared_ptr<google::cloud::Credentials> const& credentials);
+
+/**
+ * @copydoc MapCredentials(std::shared_ptr<google::cloud::Credentials> const&)
+ *
+ * This is used in test, where the HTTP client needs to be mocked.
+ */
+std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
+    std::shared_ptr<google::cloud::Credentials> const& credentials,
+    oauth2_internal::HttpClientFactory client_factory);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
