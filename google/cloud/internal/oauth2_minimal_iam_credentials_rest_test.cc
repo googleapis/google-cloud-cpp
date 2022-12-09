@@ -209,17 +209,11 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   std::string scope = "my_scope";
   std::string delegate = "my_delegate";
   std::string response = R"""({
-  "accessToken": "my_access_token",
-  "expireTime": "2022-10-12T07:20:50.52Z"
-})""";
-
-  auto mock_credentials = std::make_shared<MockCredentials>();
-  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
-    return internal::AccessToken{"test-token", tp + lifetime};
-  });
+    "accessToken": "my_access_token",
+    "expireTime": "2022-10-12T07:20:50.52Z"})""";
 
   MockHttpClientFactory mock_client_factory;
-  EXPECT_CALL(mock_client_factory, Call).WillOnce([&](Options const&) {
+  EXPECT_CALL(mock_client_factory, Call).WillOnce([=](Options const&) {
     auto client = absl::make_unique<MockRestClient>();
     EXPECT_CALL(*client,
                 Post(_, A<std::vector<absl::Span<char const>> const&>()))
@@ -229,9 +223,10 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
           auto mock_response = absl::make_unique<MockRestResponse>();
           EXPECT_CALL(*mock_response, StatusCode)
               .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
-          EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-            return testing_util::MakeMockHttpPayloadSuccess(response);
-          });
+          EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+              .WillOnce([response] {
+                return testing_util::MakeMockHttpPayloadSuccess(response);
+              });
 
           EXPECT_THAT(
               request.path(),
@@ -249,6 +244,12 @@ TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
         });
     return std::unique_ptr<rest_internal::RestClient>(std::move(client));
   });
+
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
+    return internal::AccessToken{"test-token", tp + lifetime};
+  });
+
   auto stub =
       MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
                                     mock_client_factory.AsStdFunction());
