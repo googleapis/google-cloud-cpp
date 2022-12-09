@@ -92,7 +92,8 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
 
     void visit(ImpersonateServiceAccountConfig& cfg) override {
       result = std::make_shared<
-          oauth2_internal::ImpersonateServiceAccountCredentials>(cfg);
+          oauth2_internal::ImpersonateServiceAccountCredentials>(
+          cfg, [](Options const& o) { return MakeDefaultRestClient("", o); });
       result = Decorate(std::move(result), cfg.options());
     }
 

@@ -108,8 +108,9 @@ TEST(UnifiedRestCredentialsIntegrationTest, AccessTokenCredentials) {
       "GOOGLE_APPLICATION_CREDENTIALS", key_file);
   auto default_creds = oauth2_internal::GoogleDefaultCredentials();
   ASSERT_THAT(default_creds, IsOk());
-  auto iam_creds =
-      oauth2_internal::MakeMinimalIamCredentialsRestStub(*default_creds);
+  auto iam_creds = oauth2_internal::MakeMinimalIamCredentialsRestStub(
+      *default_creds, Options{},
+      [](Options const& o) { return MakeDefaultRestClient("", o); });
   oauth2_internal::GenerateAccessTokenRequest request;
   request.lifetime = std::chrono::hours(1);
   request.service_account = std::move(*service_account);

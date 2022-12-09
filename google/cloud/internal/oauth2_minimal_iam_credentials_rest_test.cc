@@ -51,16 +51,9 @@ class MockCredentials : public google::cloud::oauth2_internal::Credentials {
               (std::chrono::system_clock::time_point), (override));
 };
 
-class MinimalIamCredentialsRestTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    mock_rest_client_ = std::make_shared<MockRestClient>();
-    mock_credentials_ = std::make_shared<MockCredentials>();
-  }
-
-  std::shared_ptr<MockRestClient> mock_rest_client_;
-  std::shared_ptr<MockCredentials> mock_credentials_;
-};
+using MockHttpClientFactory =
+    ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
+        Options const&)>;
 
 TEST(ParseGenerateAccessTokenResponse, Success) {
   auto const response = std::string{R"""({
@@ -210,46 +203,56 @@ TEST(ParseGenerateAccessTokenResponse, InvalidExpireTimeFormat) {
                        HasSubstr("invalid format for `expireTime` field")));
 }
 
-TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
+TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   std::string service_account = "foo@somewhere.com";
   std::chrono::seconds lifetime(3600);
   std::string scope = "my_scope";
   std::string delegate = "my_delegate";
+  std::string response = R"""({
+    "accessToken": "my_access_token",
+    "expireTime": "2022-10-12T07:20:50.52Z"})""";
 
-  EXPECT_CALL(*mock_credentials_, GetToken).WillOnce([lifetime](auto tp) {
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).WillOnce([=](Options const&) {
+    auto client = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*client,
+                Post(_, A<std::vector<absl::Span<char const>> const&>()))
+        .WillOnce([response, service_account](
+                      RestRequest const& request,
+                      std::vector<absl::Span<char const>> const& payload) {
+          auto mock_response = absl::make_unique<MockRestResponse>();
+          EXPECT_CALL(*mock_response, StatusCode)
+              .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+          EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+              .WillOnce([response] {
+                return testing_util::MakeMockHttpPayloadSuccess(response);
+              });
+
+          EXPECT_THAT(
+              request.path(),
+              Eq(absl::StrCat("https://iamcredentials.googleapis.com/v1/",
+                              "projects/-/serviceAccounts/", service_account,
+                              ":generateAccessToken")));
+          std::string str_payload(payload[0].begin(), payload[0].end());
+          EXPECT_THAT(str_payload,
+                      testing::HasSubstr("\"lifetime\":\"3600s\""));
+          EXPECT_THAT(str_payload,
+                      testing::HasSubstr("\"scope\":[\"my_scope\"]"));
+          EXPECT_THAT(str_payload,
+                      testing::HasSubstr("\"delegates\":[\"my_delegate\"]"));
+          return std::unique_ptr<RestResponse>(std::move(mock_response));
+        });
+    return std::unique_ptr<rest_internal::RestClient>(std::move(client));
+  });
+
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
     return internal::AccessToken{"test-token", tp + lifetime};
   });
 
-  std::string response = R"""({
-  "accessToken": "my_access_token",
-  "expireTime": "2022-10-12T07:20:50.52Z"
-})""";
-
-  auto* mock_response = new MockRestResponse();
-  EXPECT_CALL(*mock_response, StatusCode)
-      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    return testing_util::MakeMockHttpPayloadSuccess(response);
-  });
-
-  EXPECT_CALL(*mock_rest_client_,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](RestRequest const& request,
-                    std::vector<absl::Span<char const>> const& payload) {
-        EXPECT_THAT(request.path(),
-                    Eq(absl::StrCat("projects/-/serviceAccounts/",
-                                    service_account, ":generateAccessToken")));
-        std::string str_payload(payload[0].begin(), payload[0].end());
-        EXPECT_THAT(str_payload, testing::HasSubstr("\"lifetime\":\"3600s\""));
-        EXPECT_THAT(str_payload,
-                    testing::HasSubstr("\"scope\":[\"my_scope\"]"));
-        EXPECT_THAT(str_payload,
-                    testing::HasSubstr("\"delegates\":[\"my_delegate\"]"));
-        return std::unique_ptr<RestResponse>(std::move(mock_response));
-      });
-
-  auto stub = MinimalIamCredentialsRestStub(std::move(mock_credentials_), {},
-                                            std::move(mock_rest_client_));
+  auto stub =
+      MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
+                                    mock_client_factory.AsStdFunction());
   GenerateAccessTokenRequest request;
   request.service_account = service_account;
   request.lifetime = lifetime;
@@ -261,12 +264,15 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   EXPECT_THAT(access_token->token, Eq("my_access_token"));
 }
 
-TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenCredentialFailure) {
-  EXPECT_CALL(*mock_credentials_, GetToken).WillOnce([] {
+TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenCredentialFailure) {
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([] {
     return Status(StatusCode::kPermissionDenied, "Permission Denied");
   });
-  auto stub = MinimalIamCredentialsRestStub(std::move(mock_credentials_), {},
-                                            std::move(mock_rest_client_));
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).Times(0);
+  auto stub = MinimalIamCredentialsRestStub(
+      std::move(mock_credentials), {}, mock_client_factory.AsStdFunction());
   GenerateAccessTokenRequest request;
   auto access_token = stub.GenerateAccessToken(request);
   EXPECT_THAT(access_token, StatusIs(StatusCode::kPermissionDenied));
