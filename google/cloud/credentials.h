@@ -85,7 +85,7 @@ struct UnifiedCredentialsOption {
  * @ingroup guac
  *
  * @param opts optional configuration values.  Note that the effect of these
- *     parameters depends on the underlying transport.  For example
+ *     parameters depends on the underlying transport. For example,
  *     `TracingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeInsecureCredentials(Options opts = {});
@@ -121,7 +121,7 @@ std::shared_ptr<Credentials> MakeInsecureCredentials(Options opts = {});
  * @ingroup guac
  *
  * @param opts optional configuration values.  Note that the effect of these
- *     parameters depends on the underlying transport.  For example
+ *     parameters depends on the underlying transport. For example,
  *     `TracingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeGoogleDefaultCredentials(Options opts = {});
@@ -141,7 +141,7 @@ std::shared_ptr<Credentials> MakeGoogleDefaultCredentials(Options opts = {});
  * @param access_token the access token to be used by the client library.
  * @param expiration the expiration time for the token.
  * @param opts optional configuration values.  Note that the effect of these
- *     parameters depends on the underlying transport.  For example
+ *     parameters depends on the underlying transport. For example,
  *     `TracingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeAccessTokenCredentials(
@@ -188,7 +188,7 @@ std::shared_ptr<Credentials> MakeAccessTokenCredentials(
  * @param target_service_account the email address of the service account to
  * impersonate.
  * @param opts optional configuration values.  Note that the effect of these
- *     parameters depends on the underlying transport.  For example
+ *     parameters depends on the underlying transport. For example,
  *     `TracingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
@@ -234,7 +234,7 @@ std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
  * Typically applications read this from a file, or download the contents from
  * something like Google's secret manager service.
  * @param opts optional configuration values.  Note that the effect of these
- *     parameters depends on the underlying transport.  For example
+ *     parameters depends on the underlying transport. For example,
  *     `TracingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeServiceAccountCredentials(
