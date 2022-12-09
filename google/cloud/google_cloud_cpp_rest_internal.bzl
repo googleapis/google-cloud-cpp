@@ -45,6 +45,7 @@ google_cloud_cpp_rest_internal_hdrs = [
     "internal/oauth2_external_account_token_source.h",
     "internal/oauth2_google_application_default_credentials_file.h",
     "internal/oauth2_google_credentials.h",
+    "internal/oauth2_http_client_factory.h",
     "internal/oauth2_impersonate_service_account_credentials.h",
     "internal/oauth2_logging_credentials.h",
     "internal/oauth2_minimal_iam_credentials_rest.h",

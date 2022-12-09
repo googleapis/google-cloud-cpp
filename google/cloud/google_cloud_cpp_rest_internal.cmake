@@ -73,6 +73,7 @@ add_library(
     internal/oauth2_google_application_default_credentials_file.h
     internal/oauth2_google_credentials.cc
     internal/oauth2_google_credentials.h
+    internal/oauth2_http_client_factory.h
     internal/oauth2_impersonate_service_account_credentials.cc
     internal/oauth2_impersonate_service_account_credentials.h
     internal/oauth2_logging_credentials.cc
