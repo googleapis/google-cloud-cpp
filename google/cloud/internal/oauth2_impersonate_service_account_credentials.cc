@@ -35,11 +35,12 @@ GenerateAccessTokenRequest MakeRequest(
 }  // namespace
 
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
-    google::cloud::internal::ImpersonateServiceAccountConfig const& config)
+    google::cloud::internal::ImpersonateServiceAccountConfig const& config,
+    HttpClientFactory client_factory)
     : ImpersonateServiceAccountCredentials(
-          config,
-          MakeMinimalIamCredentialsRestStub(
-              rest_internal::MapCredentials(config.base_credentials()))) {}
+          config, MakeMinimalIamCredentialsRestStub(
+                      rest_internal::MapCredentials(config.base_credentials()),
+                      config.options(), std::move(client_factory))) {}
 
 ImpersonateServiceAccountCredentials::ImpersonateServiceAccountCredentials(
     google::cloud::internal::ImpersonateServiceAccountConfig const& config,

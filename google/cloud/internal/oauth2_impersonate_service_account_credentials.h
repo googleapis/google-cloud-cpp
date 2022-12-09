@@ -39,7 +39,8 @@ class ImpersonateServiceAccountCredentials
    *     time. This should generally not be overridden except for testing.
    */
   explicit ImpersonateServiceAccountCredentials(
-      google::cloud::internal::ImpersonateServiceAccountConfig const& config);
+      google::cloud::internal::ImpersonateServiceAccountConfig const& config,
+      HttpClientFactory client_factory);
   ImpersonateServiceAccountCredentials(
       google::cloud::internal::ImpersonateServiceAccountConfig const& config,
       std::shared_ptr<MinimalIamCredentialsRest> stub);

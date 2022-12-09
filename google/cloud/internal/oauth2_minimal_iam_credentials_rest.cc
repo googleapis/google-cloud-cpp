@@ -32,25 +32,15 @@ namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace {
 
 using ::google::cloud::internal::InvalidArgumentError;
 
-auto constexpr kIamCredentialsEndpoint =
-    "https://iamcredentials.googleapis.com/v1/";
-}  // namespace
-
 MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
     std::shared_ptr<oauth2_internal::Credentials> credentials, Options options,
-    std::shared_ptr<rest_internal::RestClient> rest_client)
+    HttpClientFactory client_factory)
     : credentials_(std::move(credentials)),
-      rest_client_(std::move(rest_client)),
-      options_(std::move(options)) {
-  if (!rest_client_) {
-    rest_client_ =
-        rest_internal::MakeDefaultRestClient(kIamCredentialsEndpoint, options_);
-  }
-}
+      options_(std::move(options)),
+      client_factory_(std::move(client_factory)) {}
 
 StatusOr<google::cloud::internal::AccessToken>
 MinimalIamCredentialsRestStub::GenerateAccessToken(
@@ -68,7 +58,8 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
       {"lifetime", std::to_string(request.lifetime.count()) + "s"},
   };
 
-  auto response = rest_client_->Post(rest_request, {payload.dump()});
+  auto client = client_factory_(options_);
+  auto response = client->Post(rest_request, {payload.dump()});
   if (!response) return std::move(response).status();
   return ParseGenerateAccessTokenResponse(
       **response,
@@ -80,8 +71,9 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
 
 std::string MinimalIamCredentialsRestStub::MakeRequestPath(
     GenerateAccessTokenRequest const& request) {
-  return absl::StrCat("projects/-/serviceAccounts/", request.service_account,
-                      ":generateAccessToken");
+  return absl::StrCat(
+      "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/",
+      request.service_account, ":generateAccessToken");
 }
 
 MinimalIamCredentialsRestLogging::MinimalIamCredentialsRestLogging(
@@ -138,14 +130,15 @@ StatusOr<internal::AccessToken> ParseGenerateAccessTokenResponse(
 }
 
 std::shared_ptr<MinimalIamCredentialsRest> MakeMinimalIamCredentialsRestStub(
-    std::shared_ptr<oauth2_internal::Credentials> credentials,
-    Options options) {
+    std::shared_ptr<oauth2_internal::Credentials> credentials, Options options,
+    HttpClientFactory client_factory) {
   auto enable_logging =
       options.get<TracingComponentsOption>().count("rpc") != 0 ||
       options.get<TracingComponentsOption>().count("raw-client") != 0;
   std::shared_ptr<MinimalIamCredentialsRest> stub =
-      std::make_shared<MinimalIamCredentialsRestStub>(std::move(credentials),
-                                                      std::move(options));
+      std::make_shared<MinimalIamCredentialsRestStub>(
+          std::move(credentials), std::move(options),
+          std::move(client_factory));
   if (enable_logging) {
     stub = std::make_shared<MinimalIamCredentialsRestLogging>(std::move(stub));
   }
