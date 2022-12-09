@@ -39,7 +39,7 @@ using ::google::cloud::internal::GoogleDefaultCredentialsConfig;
 using ::google::cloud::internal::ImpersonateServiceAccountConfig;
 using ::google::cloud::internal::InsecureCredentialsConfig;
 using ::google::cloud::internal::ServiceAccountConfig;
-using ::google::cloud::oauth2_internal::WithCaching;
+using ::google::cloud::oauth2_internal::Decorate;
 
 std::shared_ptr<oauth2::Credentials> MakeErrorCredentials(Status status) {
   return std::make_shared<ErrorCredentials>(std::move(status));
@@ -79,7 +79,7 @@ struct RestVisitor : public CredentialsVisitor {
     auto credentials = oauth2_internal::GoogleDefaultCredentials(cfg.options());
     if (credentials) {
       result = std::make_shared<WrapRestCredentials>(
-          WithCaching(std::move(*credentials)));
+          Decorate(*std::move(credentials), cfg.options()));
       return;
     }
     result = MakeErrorCredentials(std::move(credentials).status());
@@ -116,8 +116,8 @@ struct RestVisitor : public CredentialsVisitor {
     };
     auto impl = std::make_shared<oauth2_internal::ExternalAccountCredentials>(
         *info, client_factory, cfg.options());
-    result =
-        std::make_shared<WrapRestCredentials>(WithCaching(std::move(impl)));
+    result = std::make_shared<WrapRestCredentials>(
+        Decorate(std::move(impl), cfg.options()));
   }
 };
 
