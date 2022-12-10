@@ -17,7 +17,7 @@
 
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/oauth2_credentials.h"
-#include "google/cloud/internal/rest_client.h"
+#include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -201,9 +201,9 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
    * @param current_time_fn a dependency injection point to fetch the current
    *     time. This should generally not be overridden except for testing.
    */
-  explicit ServiceAccountCredentials(
-      ServiceAccountCredentialsInfo info, Options options = {},
-      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr);
+  explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info,
+                                     Options options,
+                                     HttpClientFactory client_factory);
 
   /**
    * Returns a key value pair for an "Authorization" header.
@@ -238,8 +238,8 @@ class ServiceAccountCredentials : public oauth2_internal::Credentials {
       std::chrono::system_clock::time_point tp) const;
 
   ServiceAccountCredentialsInfo info_;
-  std::unique_ptr<rest_internal::RestClient> rest_client_;
   Options options_;
+  HttpClientFactory client_factory_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

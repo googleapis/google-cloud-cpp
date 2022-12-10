@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_jwt_assertion.h"
@@ -198,18 +199,13 @@ StatusOr<std::string> MakeSelfSignedJWT(
 
 ServiceAccountCredentials::ServiceAccountCredentials(
     ServiceAccountCredentialsInfo info, Options options,
-    std::unique_ptr<rest_internal::RestClient> rest_client)
+    HttpClientFactory client_factory)
     : info_(std::move(info)),
-      rest_client_(std::move(rest_client)),
       options_(internal::MergeOptions(
           std::move(options),
           Options{}.set<ServiceAccountCredentialsTokenUriOption>(
-              info_.token_uri))) {
-  if (!rest_client_) {
-    rest_client_ = rest_internal::MakeDefaultRestClient(
-        options_.get<ServiceAccountCredentialsTokenUriOption>(), options_);
-  }
-}
+              info_.token_uri))),
+      client_factory_(std::move(client_factory)) {}
 
 StatusOr<internal::AccessToken> ServiceAccountCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
@@ -355,15 +351,14 @@ bool ServiceAccountCredentials::UseOAuth() {
 
 StatusOr<internal::AccessToken> ServiceAccountCredentials::GetTokenOAuth(
     std::chrono::system_clock::time_point tp) const {
+  auto client = client_factory_(options_);
   rest_internal::RestRequest request;
+  request.SetPath(options_.get<ServiceAccountCredentialsTokenUriOption>());
   auto payload = CreateServiceAccountRefreshPayload(info_, tp);
-  StatusOr<std::unique_ptr<rest_internal::RestResponse>> response =
-      rest_client_->Post(request, payload);
-  if (!response.ok()) return std::move(response).status();
-  std::unique_ptr<rest_internal::RestResponse> real_response =
-      std::move(response.value());
-  if (IsHttpError(*real_response)) return AsStatus(std::move(*real_response));
-  return ParseServiceAccountRefreshResponse(*real_response, tp);
+  auto response = client->Post(request, payload);
+  if (!response) return std::move(response).status();
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
+  return ParseServiceAccountRefreshResponse(**response, tp);
 }
 
 StatusOr<internal::AccessToken> ServiceAccountCredentials::GetTokenSelfSigned(
