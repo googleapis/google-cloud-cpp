@@ -77,12 +77,11 @@ export HOMEBREW_NO_INSTALL_CLEANUP=1
 brew list --versions --formula
 brew list --versions --cask
 brew list --versions coreutils || brew install coreutils
-# We re-install google-cloud-sdk because the package is broken on some kokoro
-# machines, but we ignore errors here because maybe the local version works.
 if [[ "${RUNNING_CI:-}" = "yes" ]]; then
-  brew reinstall google-cloud-sdk || true
-  gcloud components install alpha || true
-  python -m pip install google-crc32c --target /usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/lib/third_party || true
+  # We use `gcloud alpha storage` as it significantly improves the
+  # upload and download performance of the cache.  If this step fails
+  # the build will fail anyway.
+  ci/retry-command.sh 3 120 gcloud components install gcloud-crc32c alpha
 fi
 
 readonly KOKORO_GFILE_DIR="${KOKORO_GFILE_DIR:-/private/var/tmp}"
