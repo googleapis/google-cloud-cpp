@@ -17,6 +17,7 @@
 
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/status.h"
+#include <cstdint>
 #include <memory>
 
 namespace google {

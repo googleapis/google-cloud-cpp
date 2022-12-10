@@ -20,6 +20,7 @@
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
 #include <curl/curl.h>
+#include <cstdint>
 #include <string>
 #include <type_traits>
 

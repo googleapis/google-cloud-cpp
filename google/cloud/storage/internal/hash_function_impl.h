@@ -18,6 +18,7 @@
 #include "google/cloud/storage/internal/hash_function.h"
 #include "google/cloud/storage/version.h"
 #include <openssl/evp.h>
+#include <cstdint>
 #include <map>
 #include <memory>
 #include <string>
