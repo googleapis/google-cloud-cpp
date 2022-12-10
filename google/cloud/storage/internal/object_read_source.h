@@ -20,6 +20,7 @@
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
+#include <cstdint>
 
 namespace google {
 namespace cloud {

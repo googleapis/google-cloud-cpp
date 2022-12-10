@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/version.h"
 #include "absl/types/optional.h"
+#include <cstdint>
 #include <iosfwd>
 #include <tuple>
 #include <utility>
