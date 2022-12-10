@@ -21,19 +21,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Credentials::~Credentials() = default;
 
-std::shared_ptr<Credentials> MakeInsecureCredentials() {
-  return std::make_shared<internal::InsecureCredentialsConfig>(Options{});
+std::shared_ptr<Credentials> MakeInsecureCredentials(Options opts) {
+  return std::make_shared<internal::InsecureCredentialsConfig>(std::move(opts));
 }
 
-std::shared_ptr<Credentials> MakeGoogleDefaultCredentials() {
-  return std::make_shared<internal::GoogleDefaultCredentialsConfig>(Options{});
+std::shared_ptr<Credentials> MakeGoogleDefaultCredentials(Options opts) {
+  return std::make_shared<internal::GoogleDefaultCredentialsConfig>(
+      std::move(opts));
 }
 
 std::shared_ptr<Credentials> MakeAccessTokenCredentials(
     std::string const& access_token,
-    std::chrono::system_clock::time_point expiration) {
+    std::chrono::system_clock::time_point expiration, Options opts) {
   return std::make_shared<internal::AccessTokenConfig>(access_token, expiration,
-                                                       Options{});
+                                                       std::move(opts));
 }
 
 std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
@@ -45,9 +46,9 @@ std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
 }
 
 std::shared_ptr<Credentials> MakeServiceAccountCredentials(
-    std::string json_object) {
+    std::string json_object, Options opts) {
   return std::make_shared<internal::ServiceAccountConfig>(
-      std::move(json_object), Options{});
+      std::move(json_object), std::move(opts));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

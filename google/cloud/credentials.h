@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_CREDENTIALS_H
 
+#include "google/cloud/common_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <chrono>
@@ -82,8 +83,12 @@ struct UnifiedCredentialsOption {
  * and sometimes even errors.
  *
  * @ingroup guac
+ *
+ * @param opts optional configuration values.  Note that the effect of these
+ *     parameters depends on the underlying transport. For example,
+ *     `TracingComponentsOption` is ignored by gRPC-based services.
  */
-std::shared_ptr<Credentials> MakeInsecureCredentials();
+std::shared_ptr<Credentials> MakeInsecureCredentials(Options opts = {});
 
 /**
  * Creates the default credentials.
@@ -114,8 +119,12 @@ std::shared_ptr<Credentials> MakeInsecureCredentials();
  * https://cloud.google.com/sdk/gcloud/reference/auth/application-default
  *
  * @ingroup guac
+ *
+ * @param opts optional configuration values.  Note that the effect of these
+ *     parameters depends on the underlying transport. For example,
+ *     `TracingComponentsOption` is ignored by gRPC-based services.
  */
-std::shared_ptr<Credentials> MakeGoogleDefaultCredentials();
+std::shared_ptr<Credentials> MakeGoogleDefaultCredentials(Options opts = {});
 
 /**
  * Creates credentials with a fixed access token.
@@ -128,10 +137,16 @@ std::shared_ptr<Credentials> MakeGoogleDefaultCredentials();
  *     authentication in GCP.
  *
  * @ingroup guac
+ *
+ * @param access_token the access token to be used by the client library.
+ * @param expiration the expiration time for the token.
+ * @param opts optional configuration values.  Note that the effect of these
+ *     parameters depends on the underlying transport. For example,
+ *     `TracingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeAccessTokenCredentials(
     std::string const& access_token,
-    std::chrono::system_clock::time_point expiration);
+    std::chrono::system_clock::time_point expiration, Options opts = {});
 
 /**
  * Creates credentials for service account impersonation.
@@ -167,6 +182,14 @@ std::shared_ptr<Credentials> MakeAccessTokenCredentials(
  *     authentication scopes in Google Cloud Platform.
  *
  * @ingroup guac
+ *
+ * @param base_credentials the credentials used to contact the IAM Credentials
+ * services.
+ * @param target_service_account the email address of the service account to
+ * impersonate.
+ * @param opts optional configuration values.  Note that the effect of these
+ *     parameters depends on the underlying transport. For example,
+ *     `TracingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
     std::shared_ptr<Credentials> base_credentials,
@@ -206,9 +229,16 @@ std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
  * https://cloud.google.com/iam/docs/creating-managing-service-account-keys#iam-service-account-keys-create-cpp
  *
  * @ingroup guac
+ *
+ * @param json_object the service account configuration as a JSON string.
+ * Typically applications read this from a file, or download the contents from
+ * something like Google's secret manager service.
+ * @param opts optional configuration values.  Note that the effect of these
+ *     parameters depends on the underlying transport. For example,
+ *     `TracingComponentsOption` is ignored by gRPC-based services.
  */
 std::shared_ptr<Credentials> MakeServiceAccountCredentials(
-    std::string json_object);
+    std::string json_object, Options opts = {});
 
 /**
  * Configure the delegates for `MakeImpersonateServiceAccountCredentials()`
@@ -289,7 +319,8 @@ struct CARootsFilePathOption {
 /// A list of  options related to authentication.
 using UnifiedCredentialsOptionList =
     OptionList<AccessTokenLifetimeOption, CARootsFilePathOption,
-               DelegatesOption, ScopesOption, UnifiedCredentialsOption>;
+               DelegatesOption, ScopesOption, TracingComponentsOption,
+               UnifiedCredentialsOption>;
 
 namespace internal {
 
