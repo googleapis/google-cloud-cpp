@@ -14,7 +14,6 @@
 
 #include "google/cloud/internal/oauth2_google_credentials.h"
 #include "google/cloud/internal/filesystem.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/make_jwt_assertion.h"
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
@@ -77,7 +76,8 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     auto info = ParseAuthorizedUserCredentials(contents, path);
     if (!info) return std::move(info).status();
     return std::unique_ptr<Credentials>(
-        absl::make_unique<AuthorizedUserCredentials>(*info, options));
+        absl::make_unique<AuthorizedUserCredentials>(
+            *info, options, std::move(client_factory)));
   }
   if (cred_type == "service_account") {
     auto info = ParseServiceAccountCredentials(contents, path);

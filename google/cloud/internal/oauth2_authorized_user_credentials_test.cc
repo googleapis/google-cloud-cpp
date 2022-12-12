@@ -35,13 +35,19 @@ using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
-using ::testing::A;
 using ::testing::AllOf;
-using ::testing::Contains;
+using ::testing::ByMove;
 using ::testing::HasSubstr;
+using ::testing::IsSupersetOf;
+using ::testing::MatcherCast;
 using ::testing::Not;
+using ::testing::Pair;
+using ::testing::Property;
 using ::testing::Return;
+
+using MockHttpClientFactory =
+    ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
+        Options const&)>;
 
 class AuthorizedUserCredentialsTest : public ::testing::Test {
  protected:
@@ -53,36 +59,35 @@ class AuthorizedUserCredentialsTest : public ::testing::Test {
 
 /// @test Verify that we can create credentials from a JWT string.
 TEST_F(AuthorizedUserCredentialsTest, Simple) {
-  std::string response = R"""({
+  std::string response_payload = R"""({
     "token_type": "Type",
     "access_token": "access-token-value",
     "id_token": "id-token-value",
     "expires_in": 1234
 })""";
 
-  auto mock_response = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*mock_response, StatusCode)
-      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    return MakeMockHttpPayloadSuccess(response);
-  });
+  auto client = [&]() {
+    auto response = absl::make_unique<MockRestResponse>();
+    EXPECT_CALL(*response, StatusCode)
+        .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+    EXPECT_CALL(std::move(*response), ExtractPayload)
+        .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response_payload))));
 
-  EXPECT_CALL(
-      *mock_rest_client_,
-      Post(_, A<std::vector<std::pair<std::string, std::string>> const&>()))
-      .WillOnce(
-          [&](RestRequest const&,
-              std::vector<std::pair<std::string, std::string>> const& payload) {
-            EXPECT_THAT(payload, Contains(std::pair<std::string, std::string>(
-                                     "grant_type", "refresh_token")));
-            EXPECT_THAT(payload, Contains(std::pair<std::string, std::string>(
-                                     "client_id", "a-client-id.example.com")));
-            EXPECT_THAT(payload, Contains(std::pair<std::string, std::string>(
-                                     "client_secret", "a-123456ABCDEF")));
-            EXPECT_THAT(payload, Contains(std::pair<std::string, std::string>(
-                                     "refresh_token", "1/THETOKEN")));
-            return std::unique_ptr<RestResponse>(std::move(mock_response));
-          });
+    auto client = absl::make_unique<MockRestClient>();
+    using FormDataType = std::vector<std::pair<std::string, std::string>>;
+    auto expected_request =
+        Property(&RestRequest::path, GoogleOAuthRefreshEndpoint());
+    auto expected_form_data = MatcherCast<FormDataType const&>(IsSupersetOf({
+        Pair("grant_type", "refresh_token"),
+        Pair("client_id", "a-client-id.example.com"),
+        Pair("client_secret", "a-123456ABCDEF"),
+        Pair("refresh_token", "1/THETOKEN"),
+    }));
+    EXPECT_CALL(*client, Post(expected_request, expected_form_data))
+        .WillOnce(
+            Return(ByMove(std::unique_ptr<RestResponse>(std::move(response)))));
+    return client;
+  }();
 
   std::string config = R"""({
       "client_id": "a-client-id.example.com",
@@ -94,8 +99,10 @@ TEST_F(AuthorizedUserCredentialsTest, Simple) {
   auto info = ParseAuthorizedUserCredentials(config, "test");
   ASSERT_STATUS_OK(info);
 
+  MockHttpClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).WillOnce(Return(ByMove(std::move(client))));
   AuthorizedUserCredentials credentials(*info, {},
-                                        std::move(mock_rest_client_));
+                                        client_factory.AsStdFunction());
   auto token = credentials.GetToken(std::chrono::system_clock::now());
   ASSERT_STATUS_OK(token);
   EXPECT_EQ(token->token, "access-token-value");

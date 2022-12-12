@@ -63,6 +63,28 @@ ParseAuthorizedUserRefreshResponse(
                                                       new_expiration};
 }
 
+AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
+                          std::chrono::system_clock>::
+    AuthorizedUserCredentials(AuthorizedUserCredentialsInfo const& info,
+                              ChannelOptions const& channel_options)
+    : AuthorizedUserCredentials(
+          google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo{
+              info.client_id, info.client_secret, info.refresh_token,
+              info.token_uri},
+          channel_options) {}
+
+AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
+                          std::chrono::system_clock>::
+    AuthorizedUserCredentials(
+        google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo info,
+        ChannelOptions const& channel_options)
+    : impl_(
+          std::move(info),
+          Options{}.set<CARootsFilePathOption>(channel_options.ssl_root_path()),
+          [](Options const& o) {
+            return rest_internal::MakeDefaultRestClient(std::string{}, o);
+          }) {}
+
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

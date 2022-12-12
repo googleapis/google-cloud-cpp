@@ -84,32 +84,26 @@ StatusOr<internal::AccessToken> ParseAuthorizedUserRefreshResponse(
 
 AuthorizedUserCredentials::AuthorizedUserCredentials(
     AuthorizedUserCredentialsInfo info, Options options,
-    std::unique_ptr<rest_internal::RestClient> rest_client)
+    HttpClientFactory client_factory)
     : info_(std::move(info)),
       options_(std::move(options)),
-      rest_client_(std::move(rest_client)) {
-  if (!rest_client_) {
-    rest_client_ =
-        rest_internal::MakeDefaultRestClient(info_.token_uri, options_);
-  }
-}
+      client_factory_(std::move(client_factory)) {}
 
 StatusOr<internal::AccessToken> AuthorizedUserCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
   rest_internal::RestRequest request;
+  request.SetPath(info_.token_uri);
   request.AddHeader("content-type", "application/x-www-form-urlencoded");
   std::vector<std::pair<std::string, std::string>> form_data;
   form_data.emplace_back("grant_type", "refresh_token");
   form_data.emplace_back("client_id", info_.client_id);
   form_data.emplace_back("client_secret", info_.client_secret);
   form_data.emplace_back("refresh_token", info_.refresh_token);
-  StatusOr<std::unique_ptr<rest_internal::RestResponse>> response =
-      rest_client_->Post(request, form_data);
+  auto client = client_factory_(options_);
+  auto response = client->Post(request, form_data);
   if (!response.ok()) return std::move(response).status();
-  std::unique_ptr<rest_internal::RestResponse> real_response =
-      std::move(response.value());
-  if (IsHttpError(*real_response)) return AsStatus(std::move(*real_response));
-  return ParseAuthorizedUserRefreshResponse(*real_response, tp);
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
+  return ParseAuthorizedUserRefreshResponse(**response, tp);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
