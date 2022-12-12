@@ -246,8 +246,9 @@ TEST(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
 
   auto mock_metadata_client_get_error = [&]() {
     auto mock = absl::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Get(expect_service_config(alias)))
-        .WillOnce(Return(Status{StatusCode::kAborted, "Fake Curl error"}));
+    EXPECT_CALL(*mock, Get(expect_service_config(alias))).WillOnce([]() {
+      return Status{StatusCode::kAborted, "Fake Curl error"};
+    });
     return mock;
   }();
 
