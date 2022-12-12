@@ -106,11 +106,14 @@ TEST(UnifiedRestCredentialsIntegrationTest, AccessTokenCredentials) {
   std::string key_file = std::move(*env);
   ScopedEnvironment google_app_creds_override_env_var(
       "GOOGLE_APPLICATION_CREDENTIALS", key_file);
-  auto default_creds = oauth2_internal::GoogleDefaultCredentials();
+  auto credentials_factory = [](Options const& o) {
+    return MakeDefaultRestClient("", o);
+  };
+  auto default_creds =
+      oauth2_internal::GoogleDefaultCredentials(Options{}, credentials_factory);
   ASSERT_THAT(default_creds, IsOk());
   auto iam_creds = oauth2_internal::MakeMinimalIamCredentialsRestStub(
-      *default_creds, Options{},
-      [](Options const& o) { return MakeDefaultRestClient("", o); });
+      *default_creds, Options{}, credentials_factory);
   oauth2_internal::GenerateAccessTokenRequest request;
   request.lifetime = std::chrono::hours(1);
   request.service_account = std::move(*service_account);

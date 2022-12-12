@@ -16,13 +16,10 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_GOOGLE_CREDENTIALS_H
 
 #include "google/cloud/internal/oauth2_credentials.h"
-#include "google/cloud/optional.h"
+#include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <memory>
-#include <set>
-#include <string>
 
 namespace google {
 namespace cloud {
@@ -42,7 +39,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * about Application Default %Credentials.
  */
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
-    Options const& options = {});
+    Options const& options, HttpClientFactory client_factory);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
