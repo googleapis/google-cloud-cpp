@@ -124,7 +124,10 @@ ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
                               ChannelOptions const& options)
     : impl_(absl::make_unique<oauth2_internal::ServiceAccountCredentials>(
           internal::MapServiceAccountCredentialsInfo(std::move(info)),
-          Options{}.set<CARootsFilePathOption>(options.ssl_root_path()))) {}
+          Options{}.set<CARootsFilePathOption>(options.ssl_root_path()),
+          [](Options const& o) {
+            return rest_internal::MakeDefaultRestClient(std::string{}, o);
+          })) {}
 
 }  // namespace oauth2
 

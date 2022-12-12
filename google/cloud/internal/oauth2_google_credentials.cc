@@ -20,6 +20,7 @@
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
+#include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "absl/memory/memory.h"
@@ -42,7 +43,8 @@ namespace {
 // credential file is found, this function returns nullptr to indicate a service
 // account file wasn't found.
 StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
-    std::string const& path, Options const& options) {
+    std::string const& path, Options const& options,
+    HttpClientFactory client_factory) {
   std::ifstream ifs(path);
   if (!ifs.is_open()) {
     // We use kUnknown here because we don't know if the file does not exist, or
@@ -65,7 +67,8 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     info->scopes = {};
     info->subject = {};
     return std::unique_ptr<Credentials>(
-        absl::make_unique<ServiceAccountCredentials>(*info, options));
+        absl::make_unique<ServiceAccountCredentials>(
+            *info, options, std::move(client_factory)));
   }
   auto const cred_type = cred_json.value("type", "no type given");
   // If non_service_account_ok==false and the cred_type is authorized_user,
@@ -80,7 +83,8 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     auto info = ParseServiceAccountCredentials(contents, path);
     if (!info) return std::move(info).status();
     return std::unique_ptr<Credentials>(
-        absl::make_unique<ServiceAccountCredentials>(*info, options));
+        absl::make_unique<ServiceAccountCredentials>(
+            *info, options, std::move(client_factory)));
   }
   return Status(
       StatusCode::kInvalidArgument,
@@ -101,35 +105,36 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
 // file is found, this function returns nullptr to indicate a service account
 // file wasn't found.
 StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
-    Options const& options) {
+    Options const& options, HttpClientFactory client_factory) {
   // 1) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable is set.
   auto path = GoogleAdcFilePathFromEnvVarOrEmpty();
   if (path.empty()) {
     // 2) If no path was specified via environment variable, check if the
     // gcloud ADC file exists.
     path = GoogleAdcFilePathFromWellKnownPathOrEmpty();
-    if (path.empty()) return StatusOr<std::unique_ptr<Credentials>>(nullptr);
+    if (path.empty()) return {nullptr};
     // Just because we had the necessary information to build the path doesn't
     // mean that a file exists there.
     std::error_code ec;
     auto adc_file_status = google::cloud::internal::status(path, ec);
-    if (!google::cloud::internal::exists(adc_file_status)) {
-      return StatusOr<std::unique_ptr<Credentials>>(nullptr);
-    }
+    if (!google::cloud::internal::exists(adc_file_status)) return {nullptr};
   }
 
   // If the path was specified, try to load that file; explicitly fail if it
   // doesn't exist or can't be read and parsed.
-  return LoadCredsFromPath(path, options);
+  return LoadCredsFromPath(path, options, std::move(client_factory));
 }
 
 }  // namespace
 
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
     Options const& options) {
+  auto client_factory = [](Options const& o) {
+    return rest_internal::MakeDefaultRestClient("", o);
+  };
   // 1 and 2) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable
   // is set or if the gcloud ADC file exists.
-  auto creds = MaybeLoadCredsFromAdcPaths(options);
+  auto creds = MaybeLoadCredsFromAdcPaths(options, std::move(client_factory));
   if (!creds) return std::move(creds).status();
   if (*creds) return std::shared_ptr<Credentials>(*std::move(creds));
 

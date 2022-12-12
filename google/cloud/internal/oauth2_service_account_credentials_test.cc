@@ -36,19 +36,26 @@ namespace {
 
 using ::google::cloud::internal::SignUsingSha256;
 using ::google::cloud::internal::UrlsafeBase64Decode;
+using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
-using ::testing::_;
-using ::testing::A;
+using ::testing::AllOf;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
+using ::testing::MatcherCast;
 using ::testing::Not;
+using ::testing::Pair;
+using ::testing::Property;
 using ::testing::Return;
+
+using MockHttpClientFactory =
+    ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
+        Options const&)>;
 
 constexpr char kScopeForTest0[] =
     "https://www.googleapis.com/auth/devstorage.full_control";
@@ -119,38 +126,44 @@ std::string MakeTestContents() {
       .dump();
 }
 
-void CheckInfoYieldsExpectedAssertion(std::unique_ptr<MockRestClient> mock,
-                                      ServiceAccountCredentialsInfo const& info,
+void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
                                       std::string const& assertion,
                                       std::time_t assertion_time) {
-  std::string response = R"""({
+  auto const post_response = std::string{R"""({
       "token_type": "Type",
       "access_token": "access-token-value",
       "expires_in": 1234
-  })""";
+  })"""};
 
-  auto* mock_response1 = new MockRestResponse();
-  EXPECT_CALL(*mock_response1, StatusCode)
-      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response1), ExtractPayload).WillOnce([&] {
-    return MakeMockHttpPayloadSuccess(response);
-  });
+  auto token_client = [=] {
+    using FormDataType = std::vector<std::pair<std::string, std::string>>;
+    auto mock = absl::make_unique<MockRestClient>();
+    auto expected_request = Property(&RestRequest::path, info.token_uri);
+    auto expected_form_data = MatcherCast<FormDataType const&>(
+        AllOf(Contains(Pair("assertion", assertion)),
+              Contains(Pair("grant_type", kGrantParamUnescaped))));
+    EXPECT_CALL(*mock, Post(expected_request, expected_form_data))
+        .WillOnce([assertion, post_response]() {
+          auto response = absl::make_unique<MockRestResponse>();
+          EXPECT_CALL(*response, StatusCode)
+              .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+          EXPECT_CALL(std::move(*response), ExtractPayload)
+              .WillOnce(
+                  Return(ByMove(MakeMockHttpPayloadSuccess(post_response))));
 
-  EXPECT_CALL(
-      *mock,
-      Post(_, A<std::vector<std::pair<std::string, std::string>> const&>()))
-      .WillOnce(
-          [&](rest_internal::RestRequest const&,
-              std::vector<std::pair<std::string, std::string>> const& payload) {
-            EXPECT_THAT(payload, Contains(std::pair<std::string, std::string>(
-                                     "assertion", assertion)));
-            EXPECT_THAT(payload, Contains(std::pair<std::string, std::string>(
-                                     "grant_type", kGrantParamUnescaped)));
-            return std::unique_ptr<rest_internal::RestResponse>(mock_response1);
-          });
+          return std::unique_ptr<rest_internal::RestResponse>(
+              std::move(response));
+        });
+    return mock;
+  }();
+
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call)
+      .WillOnce(Return(ByMove(std::move(token_client))));
 
   auto const tp = std::chrono::system_clock::from_time_t(assertion_time);
-  ServiceAccountCredentials credentials(info, Options{}, std::move(mock));
+  ServiceAccountCredentials credentials(info, Options{},
+                                        mock_client_factory.AsStdFunction());
   // Calls Refresh to obtain the access token for our authorization header.
   auto token = credentials.GetToken(tp);
   ASSERT_STATUS_OK(token);
@@ -276,8 +289,7 @@ TEST(ServiceAccountCredentialsTest,
 
   auto const assertion = MakeJWTAssertion(expected_header.dump(),
                                           expected_payload.dump(), kPrivateKey);
-  CheckInfoYieldsExpectedAssertion(absl::make_unique<MockRestClient>(), *info,
-                                   assertion, kFixedJwtTimestamp);
+  CheckInfoYieldsExpectedAssertion(*info, assertion, kFixedJwtTimestamp);
 }
 
 /// @test Verify that ServiceAccountCredentials defaults to self-signed JWTs.
@@ -297,14 +309,10 @@ TEST(ServiceAccountCredentialsTest, RefreshWithSelfSignedJWT) {
       "expires_in": 1234
   })""";
 
-  auto mock = absl::make_unique<MockRestClient>();
-  // Verify the rest client is *not* used.
-  EXPECT_CALL(
-      *mock,
-      Post(_, A<std::vector<std::pair<std::string, std::string>> const&>()))
-      .Times(0);
-
-  ServiceAccountCredentials credentials(*info, Options{}, std::move(mock));
+  MockHttpClientFactory mock_http_client_factory;
+  EXPECT_CALL(mock_http_client_factory, Call).Times(0);
+  ServiceAccountCredentials credentials(
+      *info, Options{}, mock_http_client_factory.AsStdFunction());
   auto const now = std::chrono::system_clock::now();
   auto access_token = credentials.GetToken(now);
   ASSERT_STATUS_OK(access_token);
@@ -339,8 +347,7 @@ TEST(ServiceAccountCredentialsTest,
 
   auto const assertion = MakeJWTAssertion(expected_header.dump(),
                                           expected_payload.dump(), kPrivateKey);
-  CheckInfoYieldsExpectedAssertion(absl::make_unique<MockRestClient>(), *info,
-                                   assertion, kFixedJwtTimestamp);
+  CheckInfoYieldsExpectedAssertion(*info, assertion, kFixedJwtTimestamp);
 }
 
 TEST(ServiceAccountCredentialsTest, MultipleScopes) {
@@ -503,7 +510,10 @@ TEST(ServiceAccountCredentialsTest, ParseOptionalField) {
 TEST(ServiceAccountCredentialsTest, SignBlob) {
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
-  ServiceAccountCredentials credentials(*info);
+  MockHttpClientFactory mock_http_client_factory;
+  EXPECT_CALL(mock_http_client_factory, Call).Times(0);
+  ServiceAccountCredentials credentials(
+      *info, Options{}, mock_http_client_factory.AsStdFunction());
 
   std::string blob = R"""(GET
 rmYdCNHKFXam78uCt7xQLw==
@@ -540,7 +550,10 @@ x-goog-meta-foo:bar,baz
 TEST(ServiceAccountCredentialsTest, SignBlobFailure) {
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
-  ServiceAccountCredentials credentials(*info);
+  MockHttpClientFactory mock_http_client_factory;
+  EXPECT_CALL(mock_http_client_factory, Call).Times(0);
+  ServiceAccountCredentials credentials(
+      *info, Options{}, mock_http_client_factory.AsStdFunction());
 
   auto actual = credentials.SignBlob("fake@fake.com", "test-blob");
   EXPECT_THAT(
@@ -553,7 +566,10 @@ TEST(ServiceAccountCredentialsTest, SignBlobFailure) {
 TEST(ServiceAccountCredentialsTest, ClientId) {
   auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
-  ServiceAccountCredentials credentials(*info);
+  MockHttpClientFactory mock_http_client_factory;
+  EXPECT_CALL(mock_http_client_factory, Call).Times(0);
+  ServiceAccountCredentials credentials(
+      *info, Options{}, mock_http_client_factory.AsStdFunction());
 
   EXPECT_EQ(kClientEmail, credentials.AccountEmail());
   EXPECT_EQ(kPrivateKeyId, credentials.KeyId());
