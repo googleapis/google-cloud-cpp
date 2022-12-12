@@ -48,9 +48,14 @@ using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 using ::testing::UnorderedElementsAreArray;
 
+using MockHttpClientFactory =
+    ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
+        Options const&)>;
+
 auto expect_service_config = [](std::string const& account) {
   auto const expected_path = absl::StrCat(
-      "computeMetadata/v1/instance/service-accounts/", account, "/");
+      internal::GceMetadataScheme(), "://", internal::GceMetadataHostname(),
+      "/computeMetadata/v1/instance/service-accounts/", account, "/");
   return AllOf(
       Property(&RestRequest::path, expected_path),
       Property(&RestRequest::headers,
@@ -60,7 +65,8 @@ auto expect_service_config = [](std::string const& account) {
 
 auto expect_token = [](std::string const& account) {
   auto const expected_path = absl::StrCat(
-      "computeMetadata/v1/instance/service-accounts/", account, "/token");
+      internal::GceMetadataScheme(), "://", internal::GceMetadataHostname(),
+      "/computeMetadata/v1/instance/service-accounts/", account, "/token");
   return AllOf(Property(&RestRequest::path, expected_path),
                Property(&RestRequest::headers,
                         Contains(Pair("metadata-flavor", Contains("Google")))),
@@ -83,32 +89,41 @@ TEST(ComputeEngineCredentialsTest,
       "token_type": "tokentype"
   })"""};
 
-  auto mock_response1 = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*mock_response1, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response1), ExtractPayload).WillOnce([&] {
-    return MakeMockHttpPayloadSuccess(svc_acct_info_resp);
-  });
+  auto mock_metadata_client = [&]() {
+    auto response = absl::make_unique<MockRestResponse>();
+    EXPECT_CALL(*response, StatusCode)
+        .WillRepeatedly(Return(HttpStatusCode::kOk));
+    EXPECT_CALL(std::move(*response), ExtractPayload)
+        .WillOnce(
+            Return(ByMove(MakeMockHttpPayloadSuccess(svc_acct_info_resp))));
 
-  auto mock_response2 = absl::make_unique<MockRestResponse>();
-  EXPECT_CALL(*mock_response2, StatusCode)
-      .WillRepeatedly(Return(HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response2), ExtractPayload).WillOnce([&] {
-    return MakeMockHttpPayloadSuccess(token_info_resp);
-  });
+    auto mock = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*mock, Get(expect_service_config(alias)))
+        .WillOnce(
+            Return(ByMove(std::unique_ptr<RestResponse>(std::move(response)))));
+    return mock;
+  }();
 
-  auto mock_rest_client = absl::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(expect_service_config(alias)))
-      .WillOnce([&](RestRequest const&) {
-        return std::unique_ptr<RestResponse>(std::move(mock_response1));
-      });
-  EXPECT_CALL(*mock_rest_client, Get(expect_token(email)))
-      .WillOnce([&](RestRequest const&) {
-        return std::unique_ptr<RestResponse>(std::move(mock_response2));
-      });
+  auto mock_token_client = [&]() {
+    auto response = absl::make_unique<MockRestResponse>();
+    EXPECT_CALL(*response, StatusCode)
+        .WillRepeatedly(Return(HttpStatusCode::kOk));
+    EXPECT_CALL(std::move(*response), ExtractPayload)
+        .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(token_info_resp))));
 
-  ComputeEngineCredentials credentials(alias, Options{},
-                                       std::move(mock_rest_client));
+    auto mock = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*mock, Get(expect_token(email)))
+        .WillOnce(
+            Return(ByMove(std::unique_ptr<RestResponse>(std::move(response)))));
+    return mock;
+  }();
+
+  MockHttpClientFactory mock_http_client_factory;
+  EXPECT_CALL(mock_http_client_factory, Call)
+      .WillOnce(Return(ByMove(std::move(mock_metadata_client))))
+      .WillOnce(Return(ByMove(std::move(mock_token_client))));
+  ComputeEngineCredentials credentials(
+      alias, Options{}, mock_http_client_factory.AsStdFunction());
   // Calls Refresh to obtain the access token for our authorization header.
   auto const now = std::chrono::system_clock::now();
   auto const expected_token = internal::AccessToken{
@@ -229,23 +244,32 @@ TEST(ComputeEngineCredentialsTest, FailedRetrieveServiceAccountInfo) {
       "expires_in": 3600,
       "token_type": "tokentype"})"""};
 
-  ::testing::InSequence sequence;
-  auto mock_rest_client = absl::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(expect_service_config(alias)))
-      .WillOnce([] {
-        return Status{StatusCode::kAborted, "Fake Curl error"};
-      });
-  EXPECT_CALL(*mock_rest_client, Get(expect_service_config(alias)))
-      .WillOnce([&] {
-        auto response = absl::make_unique<MockRestResponse>();
-        EXPECT_CALL(*response, StatusCode)
-            .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
-        return std::unique_ptr<oauth2_internal::RestResponse>(
-            std::move(response));
-      });
+  auto mock_metadata_client_get_error = [&]() {
+    auto mock = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*mock, Get(expect_service_config(alias))).WillOnce([]() {
+      return Status{StatusCode::kAborted, "Fake Curl error"};
+    });
+    return mock;
+  }();
 
-  ComputeEngineCredentials credentials(alias, Options{},
-                                       std::move(mock_rest_client));
+  auto mock_metadata_client_response_error = [&]() {
+    auto mock = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*mock, Get(expect_service_config(alias))).WillOnce([] {
+      auto response = absl::make_unique<MockRestResponse>();
+      EXPECT_CALL(*response, StatusCode)
+          .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
+      return std::unique_ptr<RestResponse>(std::move(response));
+    });
+    return mock;
+  }();
+
+  MockHttpClientFactory mock_http_client_factory;
+  EXPECT_CALL(mock_http_client_factory, Call)
+      .WillOnce(Return(ByMove(std::move(mock_metadata_client_get_error))))
+      .WillOnce(Return(ByMove(std::move(mock_metadata_client_response_error))));
+
+  ComputeEngineCredentials credentials(
+      alias, Options{}, mock_http_client_factory.AsStdFunction());
   // Response 1
   auto actual = credentials.AccountEmail();
   EXPECT_EQ(actual, alias);
@@ -268,17 +292,42 @@ TEST(ComputeEngineCredentialsTest, FailedRefresh) {
       "token_type": "tokentype"
   })"""};
 
-  // Create the mock functions before the `::testing::InSequence`
-  auto svc_acct_info_success = [&](RestRequest const&) {
+  // Fail the first call to RetrieveServiceAccountInfo immediately.
+  auto metadata_aborted = [&]() {
+    auto client = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*client, Get(expect_service_config(alias)))
+        .WillOnce([&](RestRequest const&) {
+          return Status{StatusCode::kAborted, "Fake Curl error / info", {}};
+        });
+    return client;
+  }();
+  // Then fail the token request immediately.
+  auto token_aborted = [&]() {
+    auto client = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*client, Get(expect_token(alias)))
+        .WillOnce([&](RestRequest const&) {
+          return Status{StatusCode::kAborted, "Fake Curl error / token", {}};
+        });
+    return client;
+  }();
+  // Since the service config request failed, it will be attempted again. This
+  // time have it succeed.
+  auto metadata_success = [&]() {
     auto response = absl::make_unique<MockRestResponse>();
     EXPECT_CALL(*response, StatusCode)
         .WillRepeatedly(Return(HttpStatusCode::kOk));
-    EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([&] {
+    EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([&]() {
       return MakeMockHttpPayloadSuccess(svc_acct_info_resp);
     });
-    return std::unique_ptr<RestResponse>(std::move(response));
-  };
-  auto token_http_error = [&](RestRequest const&) {
+
+    auto client = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*client, Get(expect_service_config(alias)))
+        .WillOnce(
+            Return(ByMove(std::unique_ptr<RestResponse>(std::move(response)))));
+    return client;
+  }();
+  // Make the token request fail. Now with a bad HTTP error code.
+  auto token_bad_http = [&]() {
     auto response = absl::make_unique<MockRestResponse>();
     EXPECT_CALL(*response, StatusCode)
         .WillRepeatedly(Return(HttpStatusCode::kBadRequest));
@@ -286,46 +335,37 @@ TEST(ComputeEngineCredentialsTest, FailedRefresh) {
       return MakeMockHttpPayloadSuccess(std::string{});
     });
 
-    return std::unique_ptr<RestResponse>(std::move(response));
-  };
-  auto token_incomplete = [&](RestRequest const&) {
+    auto client = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*client, Get(expect_token(email)))
+        .WillOnce(
+            Return(ByMove(std::unique_ptr<RestResponse>(std::move(response)))));
+    return client;
+  }();
+  // And fail again, now with an incomplete response.
+  auto token_incomplete = [&]() {
     auto response = absl::make_unique<MockRestResponse>();
     EXPECT_CALL(*response, StatusCode)
         .WillRepeatedly(Return(HttpStatusCode::kOk));
     EXPECT_CALL(std::move(*response), ExtractPayload).WillOnce([&] {
       return MakeMockHttpPayloadSuccess(token_info_resp);
     });
-    return std::unique_ptr<RestResponse>(std::move(response));
-  };
 
-  auto mock_rest_client = absl::make_unique<MockRestClient>();
-  {
-    // We need a new scope because the nested calls can (and should) execute
-    // in a different order.
-    ::testing::InSequence sequence;
-    // Fail the first call to RetrieveServiceAccountInfo immediately.
-    EXPECT_CALL(*mock_rest_client, Get(expect_service_config(alias)))
-        .WillOnce([&](RestRequest const&) {
-          return Status{StatusCode::kAborted, "Fake Curl error / info", {}};
-        });
-    // Then fail the token request immediately.
-    EXPECT_CALL(*mock_rest_client, Get(expect_token(alias)))
-        .WillOnce([&](RestRequest const&) {
-          return Status{StatusCode::kAborted, "Fake Curl error / token", {}};
-        });
-    // Since the service config request failed, it will be attempted again. This
-    // time have it succeed.
-    EXPECT_CALL(*mock_rest_client, Get(expect_service_config(alias)))
-        .WillOnce(svc_acct_info_success);
-    // Make the token request fail. Now with a bad HTTP error code.
-    EXPECT_CALL(*mock_rest_client, Get(expect_token(email)))
-        .WillOnce(token_http_error);
-    // And fail again, now with an incomplete response.
-    EXPECT_CALL(*mock_rest_client, Get(expect_token(email)))
-        .WillOnce(token_incomplete);
-  }
+    auto client = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*client, Get(expect_token(email)))
+        .WillOnce(
+            Return(ByMove(std::unique_ptr<RestResponse>(std::move(response)))));
+    return client;
+  }();
+
+  MockHttpClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call)
+      .WillOnce(Return(ByMove(std::move(metadata_aborted))))
+      .WillOnce(Return(ByMove(std::move(token_aborted))))
+      .WillOnce(Return(ByMove(std::move(metadata_success))))
+      .WillOnce(Return(ByMove(std::move(token_bad_http))))
+      .WillOnce(Return(ByMove(std::move(token_incomplete))));
   ComputeEngineCredentials credentials(alias, Options{},
-                                       std::move(mock_rest_client));
+                                       client_factory.AsStdFunction());
   auto const now = std::chrono::system_clock::now();
   auto status = credentials.GetToken(now);
   EXPECT_THAT(status, StatusIs(StatusCode::kAborted,
@@ -347,8 +387,8 @@ TEST(ComputeEngineCredentialsTest, AccountEmail) {
       "scopes": ["scope1","scope2"]
   })"""};
 
-  auto mock_rest_client = absl::make_unique<MockRestClient>();
-  EXPECT_CALL(*mock_rest_client, Get(expect_service_config(alias)))
+  auto client = absl::make_unique<MockRestClient>();
+  EXPECT_CALL(*client, Get(expect_service_config(alias)))
       .WillOnce([&](RestRequest const&) {
         auto response = absl::make_unique<MockRestResponse>();
         EXPECT_CALL(*response, StatusCode)
@@ -359,8 +399,10 @@ TEST(ComputeEngineCredentialsTest, AccountEmail) {
         return std::unique_ptr<RestResponse>(std::move(response));
       });
 
+  MockHttpClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).WillOnce(Return(ByMove(std::move(client))));
   ComputeEngineCredentials credentials(alias, Options{},
-                                       std::move(mock_rest_client));
+                                       client_factory.AsStdFunction());
   EXPECT_EQ(credentials.service_account_email(), alias);
   auto refreshed_email = credentials.AccountEmail();
   EXPECT_EQ(email, refreshed_email);

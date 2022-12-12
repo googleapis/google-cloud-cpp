@@ -58,6 +58,13 @@ ParseComputeEngineRefreshResponse(
                                                       new_expiration};
 }
 
+ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
+                         std::chrono::system_clock>::
+    ComputeEngineCredentials(std::string service_account_email)
+    : impl_(std::move(service_account_email), Options{}, [](Options const& o) {
+        return rest_internal::MakeDefaultRestClient(std::string{}, o);
+      }) {}
+
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

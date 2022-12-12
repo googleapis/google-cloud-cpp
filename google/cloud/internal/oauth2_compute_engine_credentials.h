@@ -16,7 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_COMPUTE_ENGINE_CREDENTIALS_H
 
 #include "google/cloud/internal/oauth2_credentials.h"
-#include "google/cloud/internal/rest_client.h"
+#include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <chrono>
@@ -75,7 +75,8 @@ StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
  */
 class ComputeEngineCredentials : public Credentials {
  public:
-  explicit ComputeEngineCredentials();
+  explicit ComputeEngineCredentials(Options options,
+                                    HttpClientFactory client_factory);
 
   /**
    * Creates an instance of ComputeEngineCredentials.
@@ -84,9 +85,9 @@ class ComputeEngineCredentials : public Credentials {
    *     mock internal libcurl wrappers. This should generally not be overridden
    *     except for testing.
    */
-  explicit ComputeEngineCredentials(
-      std::string service_account_email, Options options = {},
-      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr);
+  explicit ComputeEngineCredentials(std::string service_account_email,
+                                    Options options,
+                                    HttpClientFactory client_factory);
 
   StatusOr<internal::AccessToken> GetToken(
       std::chrono::system_clock::time_point tp) override;
@@ -118,15 +119,6 @@ class ComputeEngineCredentials : public Credentials {
 
  private:
   /**
-   * Sends an HTTP GET request to the GCE metadata server.
-   *
-   * @see https://cloud.google.com/compute/docs/storing-retrieving-metadata for
-   * an overview of retrieving information from the GCE metadata server.
-   */
-  StatusOr<std::unique_ptr<rest_internal::RestResponse>>
-  DoMetadataServerGetRequest(std::string const& path, bool recursive) const;
-
-  /**
    * Fetches metadata for an instance's service account.
    *
    * @see
@@ -137,12 +129,12 @@ class ComputeEngineCredentials : public Credentials {
   std::string RetrieveServiceAccountInfo(
       std::lock_guard<std::mutex> const&) const;
 
+  Options options_;
+  HttpClientFactory client_factory_;
   mutable std::mutex mu_;
-  std::unique_ptr<rest_internal::RestClient> rest_client_;
   mutable bool metadata_retrieved_ = false;
   mutable std::set<std::string> scopes_;
   mutable std::string service_account_email_;
-  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

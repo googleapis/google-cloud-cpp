@@ -103,8 +103,7 @@ class ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
                                std::chrono::system_clock> : public Credentials {
  public:
   explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}
-  explicit ComputeEngineCredentials(std::string service_account_email)
-      : impl_(std::move(service_account_email)) {}
+  explicit ComputeEngineCredentials(std::string service_account_email);
 
   StatusOr<std::string> AuthorizationHeader() override {
     return oauth2_internal::AuthorizationHeaderJoined(impl_);

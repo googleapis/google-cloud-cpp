@@ -134,14 +134,15 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
   };
   // 1 and 2) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable
   // is set or if the gcloud ADC file exists.
-  auto creds = MaybeLoadCredsFromAdcPaths(options, std::move(client_factory));
+  auto creds = MaybeLoadCredsFromAdcPaths(options, client_factory);
   if (!creds) return std::move(creds).status();
   if (*creds) return std::shared_ptr<Credentials>(*std::move(creds));
 
   // 3) Check for implicit environment-based credentials (GCE, GAE Flexible,
   // Cloud Run or GKE Environment).
   return std::shared_ptr<Credentials>(
-      std::make_shared<ComputeEngineCredentials>());
+      std::make_shared<ComputeEngineCredentials>(Options{},
+                                                 std::move(client_factory)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

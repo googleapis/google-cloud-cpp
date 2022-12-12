@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/compute_engine_util.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
@@ -26,6 +27,20 @@ namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+StatusOr<std::unique_ptr<rest_internal::RestResponse>>
+DoMetadataServerGetRequest(rest_internal::RestClient& client,
+                           std::string const& path, bool recursive) {
+  rest_internal::RestRequest request;
+  request.SetPath(absl::StrCat(internal::GceMetadataScheme(), "://",
+                               internal::GceMetadataHostname(), "/", path));
+  request.AddHeader("metadata-flavor", "Google");
+  if (recursive) request.AddQueryParameter("recursive", "true");
+  return client.Get(request);
+}
+
+}  // namespace
 
 StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
     rest_internal::RestResponse& response) {
@@ -85,28 +100,26 @@ StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
                                new_expiration};
 }
 
-ComputeEngineCredentials::ComputeEngineCredentials()
-    : ComputeEngineCredentials("default") {}
+ComputeEngineCredentials::ComputeEngineCredentials(
+    Options options, HttpClientFactory client_factory)
+    : ComputeEngineCredentials("default", std::move(options),
+                               std::move(client_factory)) {}
 
 ComputeEngineCredentials::ComputeEngineCredentials(
     std::string service_account_email, Options options,
-    std::unique_ptr<rest_internal::RestClient> rest_client)
-    : rest_client_(std::move(rest_client)),
-      service_account_email_(std::move(service_account_email)),
-      options_(std::move(options)) {
-  if (!rest_client_) {
-    options_.set<rest_internal::CurlFollowLocationOption>(true);
-    rest_client_ = rest_internal::MakeDefaultRestClient(
-        "http://" + google::cloud::internal::GceMetadataHostname(), options_);
-  }
-}
+    HttpClientFactory client_factory)
+    : options_(std::move(options)),
+      client_factory_(std::move(client_factory)),
+      service_account_email_(std::move(service_account_email)) {}
 
 StatusOr<internal::AccessToken> ComputeEngineCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
   // Ignore failures fetching the account metadata. We can still get a token
   // using the initial `service_account_email_` value.
   auto email = RetrieveServiceAccountInfo();
+  auto client = client_factory_(options_);
   auto response = DoMetadataServerGetRequest(
+      *client,
       "computeMetadata/v1/instance/service-accounts/" + email + "/token",
       false);
   if (!response) return std::move(response).status();
@@ -131,16 +144,6 @@ std::set<std::string> ComputeEngineCredentials::scopes() const {
   return scopes_;
 }
 
-StatusOr<std::unique_ptr<rest_internal::RestResponse>>
-ComputeEngineCredentials::DoMetadataServerGetRequest(std::string const& path,
-                                                     bool recursive) const {
-  rest_internal::RestRequest request;
-  request.SetPath(path);
-  request.AddHeader("metadata-flavor", "Google");
-  if (recursive) request.AddQueryParameter("recursive", "true");
-  return rest_client_->Get(request);
-}
-
 std::string ComputeEngineCredentials::RetrieveServiceAccountInfo() const {
   return RetrieveServiceAccountInfo(std::lock_guard<std::mutex>{mu_});
 }
@@ -150,7 +153,9 @@ std::string ComputeEngineCredentials::RetrieveServiceAccountInfo(
   // Fetch the metadata only once.
   if (metadata_retrieved_) return service_account_email_;
 
+  auto client = client_factory_(options_);
   auto response = DoMetadataServerGetRequest(
+      *client,
       "computeMetadata/v1/instance/service-accounts/" + service_account_email_ +
           "/",
       true);
