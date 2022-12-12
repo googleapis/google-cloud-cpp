@@ -36,6 +36,6 @@
       { "name": "protobuf", "version": "3.15.8" },
       { "name": "grpc", "version": "1.36.4" },
       { "name": "upb", "version": "2020-12-19" },
-      { "name": "gtest", "version": "1.11.0" }
+      { "name": "gtest", "version": "1.12.0" }
     ]
 }
