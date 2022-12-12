@@ -128,10 +128,7 @@ StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
 }  // namespace
 
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
-    Options const& options) {
-  auto client_factory = [](Options const& o) {
-    return rest_internal::MakeDefaultRestClient("", o);
-  };
+    Options const& options, HttpClientFactory client_factory) {
   // 1 and 2) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable
   // is set or if the gcloud ADC file exists.
   auto creds = MaybeLoadCredsFromAdcPaths(options, client_factory);
@@ -141,7 +138,7 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
   // 3) Check for implicit environment-based credentials (GCE, GAE Flexible,
   // Cloud Run or GKE Environment).
   return std::shared_ptr<Credentials>(
-      std::make_shared<ComputeEngineCredentials>(Options{},
+      std::make_shared<ComputeEngineCredentials>(options,
                                                  std::move(client_factory)));
 }
 
