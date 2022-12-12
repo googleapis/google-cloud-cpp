@@ -67,8 +67,8 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     info->scopes = {};
     info->subject = {};
     return std::unique_ptr<Credentials>(
-        absl::make_unique<ServiceAccountCredentials>(*info, options,
-                                                     std::move(client_factory)));
+        absl::make_unique<ServiceAccountCredentials>(
+            *info, options, std::move(client_factory)));
   }
   auto const cred_type = cred_json.value("type", "no type given");
   // If non_service_account_ok==false and the cred_type is authorized_user,
