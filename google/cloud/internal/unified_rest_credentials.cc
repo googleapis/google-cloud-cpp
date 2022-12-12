@@ -96,7 +96,7 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
       };
       result = std::make_shared<
           oauth2_internal::ImpersonateServiceAccountCredentials>(
-          cfg, client_factory);
+          cfg, std::move(client_factory));
       result = Decorate(std::move(result), cfg.options());
     }
 
@@ -123,7 +123,7 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
       }
       result = Decorate(
           std::make_shared<oauth2_internal::ExternalAccountCredentials>(
-              *std::move(info), client_factory, cfg.options()),
+              *std::move(info), std::move(client_factory), cfg.options()),
           cfg.options());
     }
   } visitor;

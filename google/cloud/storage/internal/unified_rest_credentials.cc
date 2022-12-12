@@ -101,7 +101,7 @@ struct RestVisitor : public CredentialsVisitor {
     }
     auto impl = std::make_shared<oauth2_internal::ServiceAccountCredentials>(
         internal::MapServiceAccountCredentialsInfo(*std::move(info)),
-        cfg.options(), client_factory);
+        cfg.options(), std::move(client_factory));
     result =
         std::make_shared<WrapRestCredentials>(WithCaching(std::move(impl)));
   }
@@ -119,7 +119,7 @@ struct RestVisitor : public CredentialsVisitor {
       return;
     }
     auto impl = std::make_shared<oauth2_internal::ExternalAccountCredentials>(
-        *info, client_factory, cfg.options());
+        *info, std::move(client_factory), cfg.options());
     result = std::make_shared<WrapRestCredentials>(
         Decorate(std::move(impl), cfg.options()));
   }

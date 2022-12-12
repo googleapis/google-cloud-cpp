@@ -68,7 +68,7 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     info->subject = {};
     return std::unique_ptr<Credentials>(
         absl::make_unique<ServiceAccountCredentials>(*info, options,
-                                                     client_factory));
+                                                     std::move(client_factory)));
   }
   auto const cred_type = cred_json.value("type", "no type given");
   // If non_service_account_ok==false and the cred_type is authorized_user,
@@ -134,7 +134,7 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
   };
   // 1 and 2) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable
   // is set or if the gcloud ADC file exists.
-  auto creds = MaybeLoadCredsFromAdcPaths(options, client_factory);
+  auto creds = MaybeLoadCredsFromAdcPaths(options, std::move(client_factory));
   if (!creds) return std::move(creds).status();
   if (*creds) return std::shared_ptr<Credentials>(*std::move(creds));
 
