@@ -128,10 +128,7 @@ StatusOr<std::unique_ptr<Credentials>> MaybeLoadCredsFromAdcPaths(
 }  // namespace
 
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
-    Options const& options) {
-  auto client_factory = [](Options const& o) {
-    return rest_internal::MakeDefaultRestClient("", o);
-  };
+    Options const& options, HttpClientFactory client_factory) {
   // 1 and 2) Check if the GOOGLE_APPLICATION_CREDENTIALS environment variable
   // is set or if the gcloud ADC file exists.
   auto creds = MaybeLoadCredsFromAdcPaths(options, client_factory);

@@ -67,7 +67,11 @@ CreateServiceAccountCredentialsFromJsonContents(
 
 std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     std::shared_ptr<google::cloud::Credentials> const& credentials) {
-  struct Visitor : public CredentialsVisitor {
+  class Visitor : public CredentialsVisitor {
+   public:
+    explicit Visitor(oauth2_internal::HttpClientFactory client_factory)
+        : client_factory_(std::move(client_factory)) {}
+
     std::shared_ptr<oauth2_internal::Credentials> result;
 
     void visit(InsecureCredentialsConfig&) override {
@@ -77,7 +81,7 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     void visit(GoogleDefaultCredentialsConfig& cfg) override {
       auto credentials =
           google::cloud::oauth2_internal::GoogleDefaultCredentials(
-              cfg.options());
+              cfg.options(), std::move(client_factory_));
       if (credentials) {
         result = Decorate(*std::move(credentials), cfg.options());
         return;
@@ -91,29 +95,20 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     }
 
     void visit(ImpersonateServiceAccountConfig& cfg) override {
-      auto client_factory = [](Options const& o) {
-        return MakeDefaultRestClient("", o);
-      };
       result = std::make_shared<
           oauth2_internal::ImpersonateServiceAccountCredentials>(
-          cfg, std::move(client_factory));
+          cfg, std::move(client_factory_));
       result = Decorate(std::move(result), cfg.options());
     }
 
     void visit(ServiceAccountConfig& cfg) override {
-      auto client_factory = [](Options const& o) {
-        return MakeDefaultRestClient("", o);
-      };
       result = Decorate(
           CreateServiceAccountCredentialsFromJsonContents(
-              cfg.json_object(), cfg.options(), std::move(client_factory)),
+              cfg.json_object(), cfg.options(), std::move(client_factory_)),
           cfg.options());
     }
 
     void visit(ExternalAccountConfig& cfg) override {
-      auto client_factory = [](Options options) {
-        return MakeDefaultRestClient(std::string{}, std::move(options));
-      };
       auto const ec = internal::ErrorContext();
       auto info = oauth2_internal::ParseExternalAccountConfiguration(
           cfg.json_object(), ec);
@@ -123,11 +118,17 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
       }
       result = Decorate(
           std::make_shared<oauth2_internal::ExternalAccountCredentials>(
-              *std::move(info), std::move(client_factory), cfg.options()),
+              *std::move(info), std::move(client_factory_), cfg.options()),
           cfg.options());
     }
-  } visitor;
 
+   private:
+    oauth2_internal::HttpClientFactory client_factory_;
+  };
+
+  Visitor visitor([](Options options) {
+    return MakeDefaultRestClient(std::string{}, std::move(options));
+  });
   CredentialsVisitor::dispatch(*credentials, visitor);
   return std::move(visitor.result);
 }

@@ -69,14 +69,19 @@ class WrapRestCredentials : public oauth2::Credentials {
   std::shared_ptr<oauth2_internal::Credentials> impl_;
 };
 
-struct RestVisitor : public CredentialsVisitor {
+class RestVisitor : public CredentialsVisitor {
+ public:
+  explicit RestVisitor(oauth2_internal::HttpClientFactory client_factory)
+      : client_factory_(std::move(client_factory)) {}
+
   std::shared_ptr<oauth2::Credentials> result;
 
   void visit(InsecureCredentialsConfig&) override {
     result = google::cloud::storage::oauth2::CreateAnonymousCredentials();
   }
   void visit(GoogleDefaultCredentialsConfig& cfg) override {
-    auto credentials = oauth2_internal::GoogleDefaultCredentials(cfg.options());
+    auto credentials = oauth2_internal::GoogleDefaultCredentials(
+        cfg.options(), std::move(client_factory_));
     if (credentials) {
       result = std::make_shared<WrapRestCredentials>(
           Decorate(*std::move(credentials), cfg.options()));
@@ -91,9 +96,6 @@ struct RestVisitor : public CredentialsVisitor {
     result = std::make_shared<ImpersonateServiceAccountCredentials>(config);
   }
   void visit(ServiceAccountConfig& cfg) override {
-    auto client_factory = [](Options const& options) {
-      return rest_internal::MakeDefaultRestClient(std::string{}, options);
-    };
     auto info = oauth2::ParseServiceAccountCredentials(cfg.json_object(), {});
     if (!info) {
       result = MakeErrorCredentials(std::move(info).status());
@@ -101,16 +103,12 @@ struct RestVisitor : public CredentialsVisitor {
     }
     auto impl = std::make_shared<oauth2_internal::ServiceAccountCredentials>(
         internal::MapServiceAccountCredentialsInfo(*std::move(info)),
-        cfg.options(), std::move(client_factory));
+        cfg.options(), std::move(client_factory_));
     result =
         std::make_shared<WrapRestCredentials>(WithCaching(std::move(impl)));
   }
 
   void visit(ExternalAccountConfig& cfg) override {
-    auto client_factory = [](Options options) {
-      return rest_internal::MakeDefaultRestClient(std::string{},
-                                                  std::move(options));
-    };
     auto const ec = google::cloud::internal::ErrorContext();
     auto info = oauth2_internal::ParseExternalAccountConfiguration(
         cfg.json_object(), ec);
@@ -119,17 +117,22 @@ struct RestVisitor : public CredentialsVisitor {
       return;
     }
     auto impl = std::make_shared<oauth2_internal::ExternalAccountCredentials>(
-        *info, std::move(client_factory), cfg.options());
+        *info, std::move(client_factory_), cfg.options());
     result = std::make_shared<WrapRestCredentials>(
         Decorate(std::move(impl), cfg.options()));
   }
+
+ private:
+  oauth2_internal::HttpClientFactory client_factory_;
 };
 
 }  // namespace
 
 std::shared_ptr<oauth2::Credentials> MapCredentials(
     std::shared_ptr<google::cloud::Credentials> const& credentials) {
-  RestVisitor visitor;
+  RestVisitor visitor([](Options const& o) {
+    return rest_internal::MakeDefaultRestClient(std::string{}, o);
+  });
   CredentialsVisitor::dispatch(*credentials, visitor);
   return std::move(visitor.result);
 }
