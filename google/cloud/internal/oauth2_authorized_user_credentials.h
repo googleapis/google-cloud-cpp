@@ -18,7 +18,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/oauth2_credentials.h"
-#include "google/cloud/internal/rest_client.h"
+#include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
@@ -74,9 +74,9 @@ class AuthorizedUserCredentials : public Credentials {
    *     mock internal REST types. This should generally not be overridden
    *     except for testing.
    */
-  explicit AuthorizedUserCredentials(
-      AuthorizedUserCredentialsInfo info, Options options = {},
-      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr);
+  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,
+                                     Options options,
+                                     HttpClientFactory client_factory);
 
   /**
    * Returns a key value pair for an "Authorization" header.
@@ -87,7 +87,7 @@ class AuthorizedUserCredentials : public Credentials {
  private:
   AuthorizedUserCredentialsInfo info_;
   Options options_;
-  std::unique_ptr<rest_internal::RestClient> rest_client_;
+  HttpClientFactory client_factory_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

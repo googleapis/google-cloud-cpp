@@ -105,20 +105,13 @@ class AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
                                 std::chrono::system_clock>
     : public Credentials {
  public:
-  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo const& info,
-                                     ChannelOptions const& channel_options = {})
-      : impl_(
-            google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo{
-                info.client_id, info.client_secret, info.refresh_token,
-                info.token_uri},
-            Options{}.set<CARootsFilePathOption>(
-                channel_options.ssl_root_path())) {}
+  explicit AuthorizedUserCredentials(
+      AuthorizedUserCredentialsInfo const& info,
+      ChannelOptions const& channel_options = {});
 
   explicit AuthorizedUserCredentials(
       google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo info,
-      ChannelOptions const& channel_options = {})
-      : impl_(std::move(info), Options{}.set<CARootsFilePathOption>(
-                                   channel_options.ssl_root_path())) {}
+      ChannelOptions const& channel_options = {});
 
   StatusOr<std::string> AuthorizationHeader() override {
     return oauth2_internal::AuthorizationHeaderJoined(impl_);
