@@ -138,7 +138,7 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
   // 3) Check for implicit environment-based credentials (GCE, GAE Flexible,
   // Cloud Run or GKE Environment).
   return std::shared_ptr<Credentials>(
-      std::make_shared<ComputeEngineCredentials>(Options{},
+      std::make_shared<ComputeEngineCredentials>(options,
                                                  std::move(client_factory)));
 }
 

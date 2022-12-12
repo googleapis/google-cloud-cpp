@@ -20,9 +20,7 @@
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
-#include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
-#include "google/cloud/testing_util/mock_rest_response.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -69,14 +67,6 @@ auto constexpr kAuthorizedUserCredContents = R"""({
   "type": "authorized_user"
 })""";
 
-ScopedEnvironment SetUpAuthorizedUserCredentialsFileForTest(
-    std::string const& filename) {
-  std::ofstream os(filename);
-  os << kAuthorizedUserCredContents;
-  os.close();
-  return ScopedEnvironment(GoogleAdcEnvVar(), filename.c_str());
-}
-
 /**
  * @test Verify `GoogleDefaultCredentials()` loads authorized user credentials.
  *
@@ -90,7 +80,8 @@ ScopedEnvironment SetUpAuthorizedUserCredentialsFileForTest(
 TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaEnvVar) {
   auto const filename = google::cloud::internal::PathAppend(
       ::testing::TempDir(), kAuthorizedUserCredFilename);
-  auto const env = SetUpAuthorizedUserCredentialsFileForTest(filename);
+  std::ofstream(filename) << kAuthorizedUserCredContents;
+  auto const env = ScopedEnvironment(GoogleAdcEnvVar(), filename.c_str());
 
   // Test that the authorized user credentials are loaded as the default when
   // specified via the well known environment variable.
@@ -108,7 +99,9 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaEnvVar) {
 TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaGcloudFile) {
   auto const filename = google::cloud::internal::PathAppend(
       ::testing::TempDir(), kAuthorizedUserCredFilename);
-  auto const env = SetUpAuthorizedUserCredentialsFileForTest(filename);
+  std::ofstream(filename) << kAuthorizedUserCredContents;
+  auto const env =
+      ScopedEnvironment(GoogleGcloudAdcFileEnvVar(), filename.c_str());
   // Test that the authorized user credentials are loaded as the default when
   // stored in the well known gcloud ADC file path.
   MockHttpClientFactory client_factory;
@@ -144,18 +137,11 @@ auto constexpr kServiceAccountCredContents = R"""({
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
 })""";
 
-ScopedEnvironment SetUpServiceAccountCredentialsFileForTest(
-    std::string const& filename) {
-  std::ofstream os(filename);
-  os << kServiceAccountCredContents;
-  os.close();
-  return ScopedEnvironment(GoogleAdcEnvVar(), filename.c_str());
-}
-
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaEnvVar) {
   auto const filename = google::cloud::internal::PathAppend(
       ::testing::TempDir(), kAuthorizedUserCredFilename);
-  auto const env = SetUpServiceAccountCredentialsFileForTest(filename);
+  std::ofstream(filename) << kServiceAccountCredContents;
+  auto const env = ScopedEnvironment(GoogleAdcEnvVar(), filename.c_str());
 
   // Test that the service account credentials are loaded as the default when
   // specified via the well known environment variable.
@@ -173,7 +159,9 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaEnvVar) {
 TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaGcloudFile) {
   auto const filename = google::cloud::internal::PathAppend(
       ::testing::TempDir(), kAuthorizedUserCredFilename);
-  auto const env = SetUpServiceAccountCredentialsFileForTest(filename);
+  std::ofstream(filename) << kServiceAccountCredContents;
+  auto const env =
+      ScopedEnvironment(GoogleGcloudAdcFileEnvVar(), filename.c_str());
 
   // Test that the service account credentials are loaded as the default when
   // stored in the well known gcloud ADC file path.
@@ -187,6 +175,8 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaGcloudFile) {
 }
 
 TEST_F(GoogleCredentialsTest, LoadComputeEngineCredentialsFromADCFlow) {
+  // Developers may have an ADC file in $HOME/.gcloud, override the default
+  // path to a location that is not going to succeed.
   auto const env = ScopedEnvironment(GoogleGcloudAdcFileEnvVar(), "");
   // If the ADC flow thinks we're on a GCE instance, it should return
   // ComputeEngineCredentials.
@@ -277,8 +267,10 @@ TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
   auto const gce_host_env = ScopedEnvironment(
       internal::GceMetadataHostnameEnvVar(), "invalid.google.internal");
 
+  auto const options = Options{}.set<UserProjectOption>("test-only");
   MockHttpClientFactory client_factory;
-  EXPECT_CALL(client_factory, Call).WillRepeatedly([]() {
+  EXPECT_CALL(client_factory, Call).WillRepeatedly([](Options const& o) {
+    EXPECT_EQ(o.get<UserProjectOption>(), "test-only");
     auto mock = absl::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Get).WillOnce([] {
       return Status{StatusCode::kUnavailable, "bad hostname"};
@@ -286,7 +278,7 @@ TEST_F(GoogleCredentialsTest, MissingCredentialsViaGcloudFilePath) {
     return mock;
   });
   auto creds =
-      GoogleDefaultCredentials(Options{}, client_factory.AsStdFunction());
+      GoogleDefaultCredentials(options, client_factory.AsStdFunction());
   ASSERT_STATUS_OK(creds);
   ASSERT_THAT(*creds, NotNull());
   auto token = (*creds)->GetToken(std::chrono::system_clock::now());

@@ -44,8 +44,6 @@ std::shared_ptr<oauth2_internal::Credentials> MakeErrorCredentials(
   return std::make_shared<oauth2_internal::ErrorCredentials>(std::move(status));
 }
 
-}  // namespace
-
 std::shared_ptr<oauth2_internal::Credentials>
 CreateServiceAccountCredentialsFromJsonContents(
     std::string const& contents, Options const& options,
@@ -64,6 +62,8 @@ CreateServiceAccountCredentialsFromJsonContents(
   return std::make_shared<oauth2_internal::ServiceAccountCredentials>(
       *info, options, std::move(client_factory));
 }
+
+}  // namespace
 
 std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     std::shared_ptr<google::cloud::Credentials> const& credentials) {
