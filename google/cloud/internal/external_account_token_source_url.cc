@@ -39,10 +39,11 @@ Status DecorateHttpError(Status const& status,
 }
 
 StatusOr<std::string> FetchContents(HttpClientFactory const& client_factory,
+                                    Options const& options,
                                     std::string const& url,
                                     Headers const& headers,
                                     internal::ErrorContext const& ec) {
-  auto client = client_factory(Options{});
+  auto client = client_factory(options);
   auto request = rest_internal::RestRequest(url);
   for (auto const& h : headers) request.AddHeader(h.first, h.second);
   auto status = client->Get(request);
@@ -56,18 +57,19 @@ StatusOr<std::string> FetchContents(HttpClientFactory const& client_factory,
 }
 
 StatusOr<internal::SubjectToken> FetchTokenText(
-    HttpClientFactory const& client_factory, std::string const& url,
-    Headers const& headers, internal::ErrorContext const& ec) {
-  auto contents = FetchContents(client_factory, url, headers, ec);
+    HttpClientFactory const& client_factory, Options const& options,
+    std::string const& url, Headers const& headers,
+    internal::ErrorContext const& ec) {
+  auto contents = FetchContents(client_factory, options, url, headers, ec);
   if (!contents) return std::move(contents).status();
   return internal::SubjectToken{*std::move(contents)};
 }
 
 StatusOr<internal::SubjectToken> FetchTokenJson(
-    HttpClientFactory const& client_factory, std::string const& url,
-    Headers const& headers, std::string const& field_name,
-    internal::ErrorContext const& ec) {
-  auto contents = FetchContents(client_factory, url, headers, ec);
+    HttpClientFactory const& client_factory, Options const& options,
+    std::string const& url, Headers const& headers,
+    std::string const& field_name, internal::ErrorContext const& ec) {
+  auto contents = FetchContents(client_factory, options, url, headers, ec);
   if (!contents) return std::move(contents).status();
   auto error_details = [&](std::string const& msg) {
     return msg + " in JSON object retrieved from `" + url +
@@ -133,8 +135,9 @@ StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceUrl(
     context.emplace_back("credentials_source.url.type", "text");
     return ExternalAccountTokenSource{
         [url = *std::move(url), headers = *std::move(headers),
-         ec = std::move(context)](HttpClientFactory const& cf, Options const&) {
-          return FetchTokenText(cf, url, headers, ec);
+         ec = std::move(context)](HttpClientFactory const& cf,
+                                  Options const& o) {
+          return FetchTokenText(cf, o, url, headers, ec);
         }};
   }
   context.emplace_back("credentials_source.url.type", "json");
@@ -143,8 +146,8 @@ StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceUrl(
   return ExternalAccountTokenSource{
       [url = *std::move(url), headers = *std::move(headers),
        fn = std::move(format->subject_token_field_name),
-       ec = std::move(context)](HttpClientFactory const& cf, Options const&) {
-        return FetchTokenJson(cf, url, headers, fn, ec);
+       ec = std::move(context)](HttpClientFactory const& cf, Options const& o) {
+        return FetchTokenJson(cf, o, url, headers, fn, ec);
       }};
 }
 
