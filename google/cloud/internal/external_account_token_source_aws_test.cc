@@ -26,11 +26,21 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::rest_internal::HttpStatusCode;
+using ::google::cloud::rest_internal::RestRequest;
+using ::google::cloud::rest_internal::RestResponse;
+using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
+using ::google::cloud::testing_util::MockRestClient;
+using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::ByMove;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
 using ::testing::IsSupersetOf;
 using ::testing::Pair;
+using ::testing::Property;
+using ::testing::ResultOf;
+using ::testing::Return;
 
 using MockClientFactory =
     ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
@@ -39,6 +49,51 @@ using MockClientFactory =
 internal::ErrorContext MakeTestErrorContext() {
   return internal::ErrorContext{
       {{"filename", "my-credentials.json"}, {"key", "value"}}};
+}
+
+std::unique_ptr<RestResponse> MakeMockResponseSuccess(std::string contents) {
+  auto response = absl::make_unique<MockRestResponse>();
+  EXPECT_CALL(*response, StatusCode)
+      .WillRepeatedly(Return(HttpStatusCode::kOk));
+  EXPECT_CALL(std::move(*response), ExtractPayload)
+      .WillOnce(
+          Return(ByMove(MakeMockHttpPayloadSuccess(std::move(contents)))));
+  return response;
+}
+
+TEST(ExternalAccountTokenSource, WorkingImdsv2SessionTokenUrl) {
+  auto const test_url = std::string{"http://169.254.169.254/latest/api/token"};
+  auto const token = std::string{"a-test-only-token"};
+
+  auto expected_options =
+      ResultOf([](Options const& o) { return o.get<QuotaUserOption>(); },
+               "test-quota-user");
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call(expected_options))
+      .WillOnce([test_url, token]() {
+        auto mock = absl::make_unique<MockRestClient>();
+        auto expected_request = Property(&RestRequest::path, test_url);
+        EXPECT_CALL(*mock, Get(expected_request))
+            .WillOnce(Return(ByMove(MakeMockResponseSuccess(token))));
+        return mock;
+      });
+
+  auto const creds = nlohmann::json{
+      {"environment_id", "aws1"},
+      {"region_url", "test-region-url"},
+      {"url", "test-url"},
+      {"regional_cred_verification_url", "test-verification-url"},
+      {"imdsv2_session_token_url", test_url},
+  };
+  auto const source =
+      MakeExternalAccountTokenSourceAws(creds, MakeTestErrorContext());
+  ASSERT_STATUS_OK(source);
+  auto const actual =
+      (*source)(client_factory.AsStdFunction(),
+                Options{}.set<QuotaUserOption>("test-quota-user"));
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(*actual, internal::SubjectToken{token});
 }
 
 TEST(ExternalAccountTokenSource, ParseSuccess) {

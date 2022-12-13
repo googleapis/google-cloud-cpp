@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/external_account_token_source_aws.h"
 #include "google/cloud/internal/external_account_token_source_file.h"
 #include "google/cloud/internal/external_account_token_source_url.h"
 #include "google/cloud/internal/json_parsing.h"
@@ -35,7 +36,9 @@ using ::google::cloud::internal::InvalidArgumentError;
 StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSource(
     nlohmann::json const& credentials_source,
     internal::ErrorContext const& ec) {
-  auto source = MakeExternalAccountTokenSourceUrl(credentials_source, ec);
+  auto source = MakeExternalAccountTokenSourceAws(credentials_source, ec);
+  if (source) return source;
+  source = MakeExternalAccountTokenSourceUrl(credentials_source, ec);
   if (source) return source;
   source = MakeExternalAccountTokenSourceFile(credentials_source, ec);
   if (source) return source;

@@ -17,6 +17,8 @@
 #include "google/cloud/internal/external_account_source_format.h"
 #include "google/cloud/internal/json_parsing.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/rest_request.h"
+#include "google/cloud/internal/rest_response.h"
 #include "absl/strings/match.h"
 
 namespace google {
@@ -44,11 +46,34 @@ auto constexpr kDefaultUrl =
 
 using ::google::cloud::internal::InvalidArgumentError;
 
+StatusOr<internal::SubjectToken> Idmsv2TokenSource(
+    ExternalAccountTokenSourceAwsInfo const& info,
+    HttpClientFactory const& client_factory, Options const& opts) {
+  auto client = client_factory(opts);
+  auto request =
+      rest_internal::RestRequest().SetPath(info.imdsv2_session_token_url);
+  auto response = client->Get(request);
+  if (!response) return std::move(response).status();
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
+  auto payload = rest_internal::ReadAll(std::move(**response).ExtractPayload());
+  if (!payload) return std::move(payload).status();
+  return internal::SubjectToken{*std::move(payload)};
+}
+
 }  // namespace
 
 StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceAws(
-    nlohmann::json const& /*credentials_source*/,
+    nlohmann::json const& credentials_source,
     internal::ErrorContext const& ec) {
+  auto info = ParseExternalAccountTokenSourceAws(credentials_source, ec);
+  if (!info) return std::move(info).status();
+  if (!info->imdsv2_session_token_url.empty()) {
+    return ExternalAccountTokenSource{
+        [info = *std::move(info)](HttpClientFactory const& cf,
+                                  Options const& opts) {
+          return Idmsv2TokenSource(info, cf, opts);
+        }};
+  }
   return internal::UnimplementedError("WIP", GCP_ERROR_INFO().WithContext(ec));
 }
 

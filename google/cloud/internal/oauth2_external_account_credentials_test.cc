@@ -132,6 +132,33 @@ struct TestOnlyOption {
   using Type = std::string;
 };
 
+TEST(ExternalAccount, ParseAwsSuccess) {
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", "test-token-url"},
+      {"credential_source",
+       nlohmann::json{
+           {"environment_id", "aws1"},
+           {"region_url",
+            "http://169.254.169.254/latest/meta-data/placement/"
+            "availability-zone"},
+           {"regional_cred_verification_url", "test-verification-url"},
+           {"imdsv2_session_token_url",
+            "http://169.254.169.254/latest/api/token"},
+       }},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(actual->audience, "test-audience");
+  EXPECT_EQ(actual->subject_token_type, "test-subject-token-type");
+  EXPECT_EQ(actual->token_url, "test-token-url");
+}
+
 TEST(ExternalAccount, ParseUrlSuccess) {
   auto const configuration = nlohmann::json{
       {"type", "external_account"},
@@ -420,7 +447,8 @@ TEST(ExternalAccount, ParseMissingCredentialSource) {
       {"audience", "test-audience"},
       {"subject_token_type", "test-subject-token-type"},
       {"token_url", "test-token-url"},
-      // {"credential_source", nlohmann::json{{"file", "/dev/null-test-only"}}},
+      // {"credential_source", nlohmann::json{{"file",
+      // "/dev/null-test-only"}}},
   };
   auto ec = internal::ErrorContext(
       {{"program", "test"}, {"full-configuration", configuration.dump()}});
@@ -882,7 +910,8 @@ TEST(ExternalAccount, MissingIssuedTokenType) {
   auto const json_response = nlohmann::json{
       {"access_token", expected_access_token},
       {"expires_in", expected_expires_in.count()},
-      // {"issued_token_type", "urn:ietf:params:oauth:token-type:access_token"},
+      // {"issued_token_type",
+      // "urn:ietf:params:oauth:token-type:access_token"},
       {"token_type", "Bearer"},
   };
   auto mock_source = [](HttpClientFactory const&, Options const&) {
