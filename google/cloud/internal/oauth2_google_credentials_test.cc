@@ -117,7 +117,7 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaEnvVar) {
   auto const env = ScopedEnvironment(GoogleAdcEnvVar(), filename.c_str());
 
   // Test that the authorized user credentials are loaded as the default when
-  // specified via the well known environment variable.
+  // specified via the well-known environment variable.
   MockHttpClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).Times(0);
   auto creds =
@@ -134,7 +134,7 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaGcloudFile) {
   auto const env =
       ScopedEnvironment(GoogleGcloudAdcFileEnvVar(), filename.c_str());
   // Test that the authorized user credentials are loaded as the default when
-  // stored in the well known gcloud ADC file path.
+  // stored in the well-known gcloud ADC file path.
   MockHttpClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).Times(0);
   auto creds =
@@ -151,7 +151,7 @@ TEST_F(GoogleCredentialsTest, LoadValidExternalAccountCredentialsViaEnvVar) {
   auto const env = ScopedEnvironment(GoogleAdcEnvVar(), filename.c_str());
 
   // Test that the authorized user credentials are loaded as the default when
-  // specified via the well known environment variable.
+  // specified via the well-known environment variable.
   MockHttpClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).Times(0);
   auto creds =
@@ -170,7 +170,7 @@ TEST_F(GoogleCredentialsTest,
       ScopedEnvironment(GoogleGcloudAdcFileEnvVar(), filename.c_str());
 
   // Test that the authorized user credentials are loaded as the default when
-  // stored in the well known gcloud ADC file path.
+  // stored in the well-known gcloud ADC file path.
   MockHttpClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).Times(0);
   auto creds =
@@ -198,7 +198,7 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaEnvVar) {
   auto const env = ScopedEnvironment(GoogleAdcEnvVar(), filename.c_str());
 
   // Test that the service account credentials are loaded as the default when
-  // specified via the well known environment variable.
+  // specified via the well-known environment variable.
   MockHttpClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).Times(0);
   auto creds =
@@ -216,7 +216,7 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaGcloudFile) {
       ScopedEnvironment(GoogleGcloudAdcFileEnvVar(), filename.c_str());
 
   // Test that the service account credentials are loaded as the default when
-  // stored in the well known gcloud ADC file path.
+  // stored in the well-known gcloud ADC file path.
   MockHttpClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).Times(0);
   auto creds =

@@ -293,7 +293,7 @@ TEST(UnifiedRestCredentialsTest, AdcIsExternalAccount) {
   auto sts_client = [sts_url, subject_token] {
     using FormDataType = std::vector<std::pair<std::string, std::string>>;
     auto expected_sts_request = Property(&RestRequest::path, sts_url);
-    // Check only one value, there are other test for the full contents.
+    // Check only one value. There are other tests for the full contents.
     auto expected_form_data = MatcherCast<FormDataType const&>(
         Contains(Pair("subject_token", subject_token)));
     auto mock = absl::make_unique<MockRestClient>();
