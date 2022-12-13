@@ -162,8 +162,7 @@ function (google_cloud_cpp_generator_define_tests)
 
     # Generate a target for each unit test.
     foreach (fname ${google_cloud_cpp_generator_unit_tests})
-        google_cloud_cpp_add_executable(target "google_cloud_cpp_generator"
-                                        "${fname}")
+        google_cloud_cpp_add_executable(target "generator" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE google_cloud_cpp_generator

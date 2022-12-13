@@ -87,7 +87,7 @@ export_list_to_bazel("google_cloud_cpp_testing_unit_tests.bzl"
                      "google_cloud_cpp_testing_unit_tests" YEAR "2018")
 
 foreach (fname ${google_cloud_cpp_testing_unit_tests})
-    google_cloud_cpp_add_executable(target "common_testing" "${fname}")
+    google_cloud_cpp_add_executable(target "testing_util" "${fname}")
     target_link_libraries(
         ${target} PRIVATE google_cloud_cpp_testing google-cloud-cpp::common
                           GTest::gmock_main GTest::gmock GTest::gtest)

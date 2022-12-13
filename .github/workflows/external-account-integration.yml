@@ -59,7 +59,7 @@ jobs:
       - name: build
         run: |
           cmake --build "${{runner.temp}}/build" -j 2 \
-            --target rest_internal_internal_external_account_integration_test
+            --target common_internal_external_account_integration_test
 
       # Configure Workload Identity Federation and generate an access token.
       - id: 'auth'

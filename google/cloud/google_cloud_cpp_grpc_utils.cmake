@@ -189,7 +189,7 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 function (google_cloud_cpp_grpc_utils_add_test fname labels)
-    google_cloud_cpp_add_executable(target "common_grpc_utils" "${fname}")
+    google_cloud_cpp_add_executable(target "common" "${fname}")
     target_link_libraries(
         ${target}
         PRIVATE google-cloud-cpp::grpc_utils

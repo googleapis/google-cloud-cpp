@@ -174,7 +174,7 @@ create_bazel_config(google_cloud_cpp_rest_internal YEAR 2021)
 
 # Define the unit tests in a function so we have a new scope for variable names.
 function (google_cloud_cpp_rest_internal_add_test fname labels)
-    google_cloud_cpp_add_executable(target "rest_internal" "${fname}")
+    google_cloud_cpp_add_executable(target "common" "${fname}")
     target_link_libraries(
         ${target}
         PRIVATE google-cloud-cpp::rest_internal
