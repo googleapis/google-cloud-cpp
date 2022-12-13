@@ -136,8 +136,7 @@ export_list_to_bazel("google_cloud_cpp_generator_golden_tests.bzl"
                      "google_cloud_cpp_generator_golden_tests" YEAR "2020")
 
 foreach (fname ${google_cloud_cpp_generator_golden_tests})
-    google_cloud_cpp_add_executable(target "google_cloud_cpp_generator_golden"
-                                    "${fname}")
+    google_cloud_cpp_add_executable(target "generator_golden" "${fname}")
     target_link_libraries(
         ${target}
         PRIVATE google_cloud_cpp_generator_golden_testing

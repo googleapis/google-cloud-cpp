@@ -101,7 +101,7 @@ install(
     COMPONENT google_cloud_cpp_development)
 
 function (google_cloud_cpp_rest_protobuf_internal_add_test fname labels)
-    google_cloud_cpp_add_executable(target "common_rest_protobuf" "${fname}")
+    google_cloud_cpp_add_executable(target "common" "${fname}")
     target_link_libraries(
         ${target}
         PRIVATE google-cloud-cpp::rest_protobuf_internal
