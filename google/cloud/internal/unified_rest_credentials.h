@@ -36,7 +36,7 @@ std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
 /**
  * @copydoc MapCredentials(std::shared_ptr<google::cloud::Credentials> const&)
  *
- * This is used in test, where the HTTP client needs to be mocked.
+ * This is used in tests, where the HTTP client needs to be mocked.
  */
 std::shared_ptr<oauth2_internal::Credentials> MapCredentials(
     std::shared_ptr<google::cloud::Credentials> const& credentials,

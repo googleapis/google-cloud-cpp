@@ -63,8 +63,6 @@ using MockClientFactory =
     ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
         Options const&)>;
 
-// Create a loadable, i.e., syntactically valid, key file, load it, and it
-// has the right contents.
 auto constexpr kServiceAccountKeyId = "test-only-key-id";
 auto constexpr kServiceAccountEmail =
     "sa@invalid-test-only-project.iam.gserviceaccount.com";
