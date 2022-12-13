@@ -276,6 +276,67 @@ TEST(UnifiedRestCredentialsTest, AdcIsComputeEngine) {
               StatusIs(StatusCode::kPermissionDenied, "uh-oh - GCE token"));
 }
 
+TEST(UnifiedRestCredentialsTest, AdcIsExternalAccount) {
+  // This sets up a mocked request for the subject token.
+  auto const subject_url = std::string{"https://test-only-oidc.example.com/"};
+  auto const subject_token = std::string{"test-subject-token"};
+  auto subject_token_client = [subject_url, subject_token] {
+    auto expected_sts_request = Property(&RestRequest::path, subject_url);
+    auto mock = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*mock, Get(expected_sts_request))
+        .WillOnce(Return(ByMove(MakeMockResponse(subject_token))));
+    return mock;
+  }();
+
+  // This sets up a mocked request for the token exchange.
+  auto const sts_url = std::string{"https://sts.example.com/"};
+  auto sts_client = [sts_url, subject_token] {
+    using FormDataType = std::vector<std::pair<std::string, std::string>>;
+    auto expected_sts_request = Property(&RestRequest::path, sts_url);
+    // Check only one value, there are other test for the full contents.
+    auto expected_form_data = MatcherCast<FormDataType const&>(
+        Contains(Pair("subject_token", subject_token)));
+    auto mock = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*mock, Post(expected_sts_request, expected_form_data))
+        .WillOnce(Return(
+            Status{StatusCode::kPermissionDenied, "uh-oh - STS exchange"}));
+    return mock;
+  }();
+
+  auto expected_options = ::testing::AllOf(
+      ::testing::ResultOf(
+          "has UserProjectOption",
+          [](Options const& o) { return o.has<UserProjectOption>(); }, true),
+      ::testing::ResultOf(
+          "UserProjectOption is `test-user-project`",
+          [](Options const& o) { return o.get<UserProjectOption>(); },
+          std::string{"test-user-project"}));
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call(expected_options))
+      .WillOnce(Return(ByMove(std::move(subject_token_client))))
+      .WillOnce(Return(ByMove(std::move(sts_client))));
+
+  auto const json_external_account = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", "test-audience"},
+      {"subject_token_type", "test-subject-token-type"},
+      {"token_url", sts_url},
+      {"credential_source", nlohmann::json{{"url", subject_url}}},
+  };
+  auto const filename = TempKeyFileName();
+  auto const env = SetUpAdcFile(filename, json_external_account.dump());
+  auto config = std::make_shared<internal::GoogleDefaultCredentialsConfig>(
+      Options{}.set<UserProjectOption>("test-user-project"));
+  auto credentials = MapCredentials(config, client_factory.AsStdFunction());
+  (void)std::remove(filename.c_str());
+
+  auto const now = std::chrono::system_clock::now();
+  auto access_token = credentials->GetToken(now);
+  EXPECT_THAT(access_token,
+              StatusIs(StatusCode::kPermissionDenied, "uh-oh - STS exchange"));
+}
+
 TEST(UnifiedRestCredentialsTest, AccessToken) {
   auto const now = std::chrono::system_clock::now();
   auto const expiration = now + std::chrono::seconds(1800);
