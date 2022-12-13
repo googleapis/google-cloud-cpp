@@ -25,6 +25,20 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+/**
+ * The default URL to query AWS metadata.
+ *
+ * In some scenarios, we may need to contact the AWS metadata service to
+ * retrieve the security credentials associated with the VM. The URLs for this
+ * purpose are documented at:
+ *
+ * https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/iam-roles-for-amazon-ec2.html#instance-metadata-security-credentials
+ *
+ * Note that `169.254.169.254` is a [link-local address], it should not leave
+ * the local subnetwork that the host is connected to.
+ *
+ * [link-local address]: https://en.wikipedia.org/wiki/Link-local_address
+ */
 auto constexpr kDefaultUrl =
     "http://169.254.169.254/latest/meta-data/iam/security-credentials";
 
