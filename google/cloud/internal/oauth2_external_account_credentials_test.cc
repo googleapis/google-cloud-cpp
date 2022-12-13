@@ -38,6 +38,7 @@ using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
+using ::testing::AllOf;
 using ::testing::An;
 using ::testing::AtMost;
 using ::testing::ByMove;
@@ -47,6 +48,7 @@ using ::testing::HasSubstr;
 using ::testing::MatcherCast;
 using ::testing::Pair;
 using ::testing::Property;
+using ::testing::ResultOf;
 using ::testing::Return;
 using ::testing::UnorderedElementsAre;
 
@@ -125,6 +127,10 @@ std::unique_ptr<RestResponse> MakeMockResponsePartialError(
 }
 
 using FormDataType = std::vector<std::pair<std::string, std::string>>;
+
+struct TestOnlyOption {
+  using Type = std::string;
+};
 
 TEST(ExternalAccount, ParseUrlSuccess) {
   auto const configuration = nlohmann::json{
@@ -502,6 +508,17 @@ TEST(ExternalAccount, ParseInvalidServiceAccountLifetime) {
                HasSubstr("invalid type for `token_lifetime_seconds` field")));
 }
 
+auto make_expected_options = []() {
+  return AllOf(
+      ResultOf(
+          "has TestOnlyOption",
+          [](Options const& o) { return o.has<TestOnlyOption>(); }, true),
+      ResultOf(
+          "TestOnlyOption is `test-option`",
+          [](Options const& o) { return o.get<TestOnlyOption>(); },
+          std::string{"test-option"}));
+};
+
 TEST(ExternalAccount, Working) {
   auto const test_url = std::string{"https://sts.example.com/"};
   auto const expected_access_token = std::string{"test-access-token"};
@@ -519,8 +536,9 @@ TEST(ExternalAccount, Working) {
       "test-audience", "test-subject-token-type", test_url, mock_source,
       absl::nullopt,
   };
+
   MockClientFactory client_factory;
-  EXPECT_CALL(client_factory, Call).WillOnce([&]() {
+  EXPECT_CALL(client_factory, Call(make_expected_options())).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
         .WillOnce(
@@ -545,7 +563,8 @@ TEST(ExternalAccount, Working) {
   });
 
   auto credentials =
-      ExternalAccountCredentials(info, client_factory.AsStdFunction());
+      ExternalAccountCredentials(info, client_factory.AsStdFunction(),
+                                 Options{}.set<TestOnlyOption>("test-option"));
   auto const now = std::chrono::system_clock::now();
   auto access_token = credentials.GetToken(now);
   ASSERT_STATUS_OK(access_token);
@@ -633,12 +652,13 @@ TEST(ExternalAccount, WorkingWithImpersonation) {
   }();
 
   MockClientFactory client_factory;
-  EXPECT_CALL(client_factory, Call)
+  EXPECT_CALL(client_factory, Call(make_expected_options()))
       .WillOnce(Return(ByMove(std::move(sts_client))))
       .WillOnce(Return(ByMove(std::move(impersonate_client))));
 
   auto credentials =
-      ExternalAccountCredentials(info, client_factory.AsStdFunction());
+      ExternalAccountCredentials(info, client_factory.AsStdFunction(),
+                                 Options{}.set<TestOnlyOption>("test-option"));
   auto access_token = credentials.GetToken(now);
   ASSERT_STATUS_OK(access_token);
   EXPECT_EQ(access_token->expiration, impersonate_expire_time);

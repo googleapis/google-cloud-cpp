@@ -130,7 +130,7 @@ ExternalAccountCredentials::ExternalAccountCredentials(
 
 StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
     std::chrono::system_clock::time_point tp) {
-  auto subject_token = (info_.token_source)(client_factory_, Options{});
+  auto subject_token = (info_.token_source)(client_factory_, options_);
   if (!subject_token) return std::move(subject_token).status();
 
   auto form_data = std::vector<std::pair<std::string, std::string>>{
