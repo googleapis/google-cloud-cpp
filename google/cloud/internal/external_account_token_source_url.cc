@@ -136,8 +136,8 @@ StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceUrl(
     return ExternalAccountTokenSource{
         [url = *std::move(url), headers = *std::move(headers),
          ec = std::move(context)](HttpClientFactory const& cf,
-                                  Options const& o) {
-          return FetchTokenText(cf, o, url, headers, ec);
+                                  Options const& opts) {
+          return FetchTokenText(cf, opts, url, headers, ec);
         }};
   }
   context.emplace_back("credentials_source.url.type", "json");
@@ -146,8 +146,9 @@ StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceUrl(
   return ExternalAccountTokenSource{
       [url = *std::move(url), headers = *std::move(headers),
        fn = std::move(format->subject_token_field_name),
-       ec = std::move(context)](HttpClientFactory const& cf, Options const& o) {
-        return FetchTokenJson(cf, o, url, headers, fn, ec);
+       ec = std::move(context)](HttpClientFactory const& cf,
+                                Options const& opts) {
+        return FetchTokenJson(cf, opts, url, headers, fn, ec);
       }};
 }
 
