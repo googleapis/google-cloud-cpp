@@ -18,6 +18,7 @@
 #include "google/cloud/internal/oauth2_authorized_user_credentials.h"
 #include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/internal/oauth2_credentials.h"
+#include "google/cloud/internal/oauth2_external_account_credentials.h"
 #include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
 #include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/internal/oauth2_service_account_credentials.h"
@@ -78,6 +79,14 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     return std::unique_ptr<Credentials>(
         absl::make_unique<AuthorizedUserCredentials>(
             *info, options, std::move(client_factory)));
+  }
+  if (cred_type == "external_account") {
+    auto info =
+        ParseExternalAccountConfiguration(contents, internal::ErrorContext{});
+    if (!info) return std::move(info).status();
+    return std::unique_ptr<Credentials>(
+        absl::make_unique<ExternalAccountCredentials>(
+            *std::move(info), std::move(client_factory), options));
   }
   if (cred_type == "service_account") {
     auto info = ParseServiceAccountCredentials(contents, path);
