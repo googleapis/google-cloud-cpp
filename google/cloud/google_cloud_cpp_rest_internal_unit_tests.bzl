@@ -30,6 +30,7 @@ google_cloud_cpp_rest_internal_unit_tests = [
     "internal/curl_wrappers_locking_enabled_test.cc",
     "internal/curl_wrappers_test.cc",
     "internal/external_account_source_format_test.cc",
+    "internal/external_account_token_source_aws_test.cc",
     "internal/external_account_token_source_file_test.cc",
     "internal/external_account_token_source_url_test.cc",
     "internal/json_parsing_test.cc",
