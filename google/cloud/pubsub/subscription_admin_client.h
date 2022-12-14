@@ -221,7 +221,6 @@ class SubscriptionAdminClient {
    * @param opts Override the class-level options, such as retry and backoff
    *     policies.
    */
-  // TODO(#4792) - add missing example once it is testable
   StatusOr<google::pubsub::v1::Snapshot> CreateSnapshot(
       Subscription const& subscription, SnapshotBuilder builder = {},
       Options opts = {}) {
