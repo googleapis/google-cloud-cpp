@@ -65,8 +65,38 @@ struct ExternalAccountTokenSourceAwsInfo {
   std::string imdsv2_session_token_url;
 };
 
+struct ExternalAccountTokenSourceAwsSecrets {
+  std::string access_key_id;
+  std::string secret_access_key;
+  std::string session_token;
+};
+
 StatusOr<ExternalAccountTokenSourceAwsInfo> ParseExternalAccountTokenSourceAws(
     nlohmann::json const& credentials_source, internal::ErrorContext const& ec);
+
+/**
+ * If needed, gets the IMDSv2 metadata session token from the AWS EC2 metadata
+ * server.
+ *
+ * If the configuration does not require IMDSv2 tokens, returns an empty string.
+ */
+StatusOr<std::string> FetchMetadataToken(
+    ExternalAccountTokenSourceAwsInfo const& info,
+    HttpClientFactory const& client_factory, Options const& opts,
+    internal::ErrorContext const& ec);
+
+/// Obtains the AWS region for IMDSv1 configurations.
+StatusOr<std::string> FetchRegion(ExternalAccountTokenSourceAwsInfo const& info,
+                                  std::string const& metadata_token,
+                                  HttpClientFactory const& cf,
+                                  Options const& opts,
+                                  internal::ErrorContext const& ec);
+
+/// Obtains the AWS secrets for the default role.
+StatusOr<ExternalAccountTokenSourceAwsSecrets> FetchSecrets(
+    ExternalAccountTokenSourceAwsInfo const& info,
+    std::string const& metadata_token, HttpClientFactory const& cf,
+    Options const& opts, internal::ErrorContext const& ec);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
