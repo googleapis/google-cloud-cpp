@@ -35,8 +35,8 @@ $build_flags = Get-Bazel-Build-Flags "${BuildName}"
 Fetch-Bazel-Dependencies
 
 Write-Host "================ DEBUG DEBUG ================"
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Bazel Root (${bazel_root}) size"
-Get-Item -ErrorAction SilentlyContinue "T:\b"  | `
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) T: size"
+Get-Item -ErrorAction SilentlyContinue "T:"  | `
     Get-ChildItem -ErrorAction SilentlyContinue -Recurse | `
     Measure-Object -ErrorAction SilentlyContinue -Sum Length | `
     Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
@@ -105,8 +105,8 @@ bazelisk shutdown
 Write-Host "`n$(Get-Date -Format o) DONE"
 
 Write-Host "================ DEBUG DEBUG ================"
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Bazel Root (${bazel_root}) size"
-Get-Item -ErrorAction SilentlyContinue "T:\b"  | `
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) T: size"
+Get-Item -ErrorAction SilentlyContinue "T:"  | `
     Get-ChildItem -ErrorAction SilentlyContinue -Recurse | `
     Measure-Object -ErrorAction SilentlyContinue -Sum Length | `
     Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
