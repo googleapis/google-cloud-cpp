@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,12 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HASH_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HASH_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HMAC_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HMAC_H
 
 #include "google/cloud/internal/sha256_type.h"
 #include "google/cloud/version.h"
 #include "absl/types/span.h"
+#include <array>
 #include <cstdint>
 #include <string>
 #include <vector>
@@ -27,21 +28,32 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-/// Return the SHA256 hash (as raw bytes) of @p str.
-Sha256Type Sha256Hash(std::string const& str);
+///@{
+/**
+ * @defgroup Overloads for HMAC(HMAC(...))
+ *
+ * Compute the SHA256 HMAC (as raw bytes) from @p data using @p key as the key.
+ */
+Sha256Type Sha256Hmac(std::string const& key, absl::Span<char const> data);
+Sha256Type Sha256Hmac(std::string const& key,
+                      absl::Span<std::uint8_t const> data);
+//@}
 
-/// Return the SHA256 hash (as raw bytes) of @p bytes.
-Sha256Type Sha256Hash(std::vector<std::uint8_t> const& bytes);
-
-/// Return @p bytes encoded as a lowercase hexadecimal string.
-std::string HexEncode(absl::Span<std::uint8_t const> bytes);
-
-/// Parse @p str as a hex-encoded string.
-std::vector<std::uint8_t> HexDecode(std::string const& str);
+///@{
+/**
+ * @defgroup Overloads for HMAC(HMAC(...))
+ *
+ * HMAC is often used in chains, as in `HMAC(HMAC(HMAC(key, v1), v2), v3)`.
+ * these overloads simplify writing such cases.
+ */
+Sha256Type Sha256Hmac(Sha256Type const& key, absl::Span<char const> data);
+Sha256Type Sha256Hmac(Sha256Type const& key,
+                      absl::Span<std::uint8_t const> data);
+///@}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HASH_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HMAC_H
