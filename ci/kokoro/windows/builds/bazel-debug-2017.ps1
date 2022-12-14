@@ -35,11 +35,8 @@ $build_flags = Get-Bazel-Build-Flags "${BuildName}"
 Fetch-Bazel-Dependencies
 
 Write-Host "================ DEBUG DEBUG ================"
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) T: size"
-Get-Item -ErrorAction SilentlyContinue "T:"  | `
-    Get-ChildItem -ErrorAction SilentlyContinue -Recurse | `
-    Measure-Object -ErrorAction SilentlyContinue -Sum Length | `
-    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) free space"
+Get-Volume
 Write-Host "================ DEBUG DEBUG ================"
 
 # All the build_flags should be set by now, so we'll copy them, and add a few
@@ -105,9 +102,6 @@ bazelisk shutdown
 Write-Host "`n$(Get-Date -Format o) DONE"
 
 Write-Host "================ DEBUG DEBUG ================"
-Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) T: size"
-Get-Item -ErrorAction SilentlyContinue "T:"  | `
-    Get-ChildItem -ErrorAction SilentlyContinue -Recurse | `
-    Measure-Object -ErrorAction SilentlyContinue -Sum Length | `
-    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) free space"
+Get-Volume
 Write-Host "================ DEBUG DEBUG ================"
