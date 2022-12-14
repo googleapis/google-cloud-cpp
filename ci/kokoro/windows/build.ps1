@@ -68,6 +68,8 @@ if ($BuildName -eq "cmake-debug") {
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x86-windows-static"
     $BuildScript = "builds/cmake.ps1"
+} elseif ($BuildName -like "bazel-debug-2017*") {
+    $BuildScript = "builds/bazel-debug-2017.ps1"
 } elseif ($BuildName -like "bazel*") {
     $BuildScript = "builds/bazel.ps1"
 } elseif ($BuildName -eq "quickstart-bazel") {
