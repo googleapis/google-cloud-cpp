@@ -23,12 +23,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-template <typename C>
-Sha256Type Sha256HmacImpl(absl::Span<C const> key, unsigned char const* data,
+static_assert(EVP_MAX_MD_SIZE >= Sha256Type().size(),
+              "EVP_MAX_MD_SIZE is too small");
+
+template <typename T>
+Sha256Type Sha256HmacImpl(absl::Span<T const> key, unsigned char const* data,
                           std::size_t count) {
   std::array<unsigned char, EVP_MAX_MD_SIZE> digest;
   Sha256Type hash;
-  static_assert(EVP_MAX_MD_SIZE >= hash.size(), "EVP_MAX_MD_SIZE is too small");
 
   unsigned int size = 0;
   HMAC(EVP_sha256(), key.data(), static_cast<unsigned int>(key.size()), data,
