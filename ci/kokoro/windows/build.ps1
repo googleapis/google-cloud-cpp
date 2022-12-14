@@ -68,8 +68,8 @@ if ($BuildName -eq "cmake-debug") {
     $env:GENERATOR = "Ninja"
     $env:VCPKG_TRIPLET = "x86-windows-static"
     $BuildScript = "builds/cmake.ps1"
-} elseif ($BuildName -like "bazel-debug-2017*") {
-    $BuildScript = "builds/bazel-debug-2017.ps1"
+} elseif ($BuildName -like "bazel-debug*") {
+    $BuildScript = "builds/bazel-debug.ps1"
 } elseif ($BuildName -like "bazel*") {
     $BuildScript = "builds/bazel.ps1"
 } elseif ($BuildName -eq "quickstart-bazel") {
@@ -108,6 +108,12 @@ if (Test-Path env:KOKORO_ARTIFACTS_DIR) {
         Write-Host "$(Get-Date -Format o) error cleaning up KOKORO_ARTIFACTS_DIR, ignored"
     }
 }
+
+Write-Host "`n$(Get-Date -Format o) Disk(s) size and space for troubleshooting"
+Get-CimInstance -Class CIM_LogicalDisk | `
+    Select-Object -Property DeviceID, DriveType, VolumeName, `
+        @{L='FreeSpaceGB';E={"{0:N2}" -f ($_.FreeSpace /1GB)}}, `
+        @{L="Capacity";E={"{0:N2}" -f ($_.Size/1GB)}}
 
 if ($BuildExitCode) {
     Write-Host -ForegroundColor Red "Build failed with exit code ${BuildExitCode}"
