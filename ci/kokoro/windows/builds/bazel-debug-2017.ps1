@@ -41,6 +41,7 @@ $test_flags += @("--test_output=errors", "--verbose_failures=true")
 
 Write-Host "`n$(Get-Date -Format o) Compiling and running unit tests"
 $targets = @(
+    "//google/cloud:all",
     "//google/cloud/bigquery/...",
     "//google/cloud/bigtable/...",
     "//google/cloud/iam/...",
@@ -94,3 +95,6 @@ bazelisk $common_flags shutdown
 bazelisk shutdown
 
 Write-Host "`n$(Get-Date -Format o) DONE"
+Write_Host "================ DEBUG DEBUG ================"
+&cmd /c dir T:\
+Write_Host "================ DEBUG DEBUG ================"
