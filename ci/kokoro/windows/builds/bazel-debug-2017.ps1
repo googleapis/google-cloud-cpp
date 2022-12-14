@@ -95,6 +95,8 @@ bazelisk $common_flags shutdown
 bazelisk shutdown
 
 Write-Host "`n$(Get-Date -Format o) DONE"
-Write_Host "================ DEBUG DEBUG ================"
-&cmd /c dir T:\
-Write_Host "================ DEBUG DEBUG ================"
+Write-Host "================ DEBUG DEBUG ================"
+dir "T:\\"
+Write-Host "================ DEBUG DEBUG ================"
+&cmd /c dir "T:\\"
+Write-Host "================ DEBUG DEBUG ================"
