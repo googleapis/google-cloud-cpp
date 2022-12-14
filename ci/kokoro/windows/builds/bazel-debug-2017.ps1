@@ -34,6 +34,14 @@ $build_flags = Get-Bazel-Build-Flags "${BuildName}"
 
 Fetch-Bazel-Dependencies
 
+Write-Host "================ DEBUG DEBUG ================"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Bazel Root (${bazel_root}) size"
+Get-Item -ErrorAction SilentlyContinue "T:\b"  | `
+    Get-ChildItem -ErrorAction SilentlyContinue -Recurse | `
+    Measure-Object -ErrorAction SilentlyContinue -Sum Length | `
+    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
+Write-Host "================ DEBUG DEBUG ================"
+
 # All the build_flags should be set by now, so we'll copy them, and add a few
 # more test-only flags.
 $test_flags = $build_flags
@@ -95,8 +103,11 @@ bazelisk $common_flags shutdown
 bazelisk shutdown
 
 Write-Host "`n$(Get-Date -Format o) DONE"
+
 Write-Host "================ DEBUG DEBUG ================"
-dir "T:\\"
-Write-Host "================ DEBUG DEBUG ================"
-&cmd /c dir "T:\\"
+Write-Host -ForegroundColor Yellow "`n$(Get-Date -Format o) Bazel Root (${bazel_root}) size"
+Get-Item -ErrorAction SilentlyContinue "T:\b"  | `
+    Get-ChildItem -ErrorAction SilentlyContinue -Recurse | `
+    Measure-Object -ErrorAction SilentlyContinue -Sum Length | `
+    Select-Object Count, @{L="SizeGB";E={"{0:N2}" -f ($_.Sum / 1GB)}}
 Write-Host "================ DEBUG DEBUG ================"
