@@ -1,9 +1,8 @@
 # How-to Guide: Declare a library as GA
 
 This document describes the steps required to promote a `google-cloud-cpp`
-library to GA. The document is intended for contributors to the
-`google-cloud-cpp` libraries. It assumes you are familiar with the build systems
-used in these libraries, and that you are familiar with existing libraries.
+library to GA (General Availability). It is intended for contributors,
+and assumes you are familiar with the build system used in the library.
 
 This document applies to both hand-crafted and generated libraries, but mostly
 it will be using generated libraries as examples.

@@ -1,8 +1,8 @@
 # How-to Guide: Running CI builds locally
 
 The `google-cloud-cpp` libraries need to be tested with different compilers,
-different build tools, as shared libraries, as static libraries, and we need to
-verify our instructions to install the libraries are up to date. This is in
+different build tools, as shared libraries, and as static libraries, and we need to
+verify that our instructions to install the libraries are up to date. This is in
 addition to following best practices for C++, such as running the code with
 dynamic analysis tools (e.g. AddressSanitizer), and enforcing style guidelines
 with `clang-tidy`.
@@ -11,8 +11,8 @@ Each one of these builds may require different compilers, different system
 libraries, or may require different ways to compile the dependencies.
 Fortunately, one can use containers to create isolated environments to run
 each one of these builds, and these containers can be created as-needed in both
-the CI systems and the developer workstation. Well, at least as long as the
-base platform supports containers.
+the CI systems and the developer workstation (assuming the base platform
+supports containers).
 
 ## Running the CI build
 

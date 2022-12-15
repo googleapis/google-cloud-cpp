@@ -1,12 +1,11 @@
 # How-to Guide: Adding generated libraries
 
 This document describes the steps required to add a new library to
-`google-cloud-cpp`. The document is intended for contributors to the
-`google-cloud-cpp` libraries, it assumes you are familiar with the build systems
-used in these libraries, that you are familiar with existing libraries, and with
-which libraries are based on gRPC.
+`google-cloud-cpp`. It is intended for contributors, and assumes you are
+familiar with the existing libraries, the build systems used in those
+libraries, and which libraries are based on gRPC.
 
-> :warning: for libraries that include multiple services, the scaffold README
+> :warning: For libraries that include multiple services, the scaffold README
 > files (and any other documentation) will use the **last** service description
 > as the description of the library. Adjust the ordering and/or fix the
 > documentation after the fact.
