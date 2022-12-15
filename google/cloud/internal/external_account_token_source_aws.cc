@@ -19,6 +19,7 @@
 #include "google/cloud/internal/json_parsing.h"
 #include "google/cloud/internal/make_status.h"
 #include "absl/strings/match.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -89,7 +90,7 @@ StatusOr<ExternalAccountTokenSourceAwsInfo> ParseExternalAccountTokenSourceAws(
             *environment_id,
             ". Consider updating `google-cloud-cpp`, as a new version may",
             " support this environment. If you find this is not the case,",
-            " please file a feature at"
+            " please file a feature request at"
             " https://github.com/googleapis/google-cloud-cpp/issues"),
         GCP_ERROR_INFO().WithContext(ec));
   }
@@ -120,12 +121,13 @@ StatusOr<std::string> FetchMetadataToken(
     HttpClientFactory const& client_factory, Options const& opts,
     internal::ErrorContext const& /*ec*/) {
   if (info.imdsv2_session_token_url.empty()) return std::string{};
+  auto const ttl =
+      std::chrono::duration_cast<std::chrono::seconds>(kDefaultMetadataTokenTtl)
+          .count();
+  auto request = rest_internal::RestRequest()
+                     .SetPath(std::move(info.imdsv2_session_token_url))
+                     .AddHeader(kMetadataTokenTtlHeader, std::to_string(ttl));
   auto client = client_factory(opts);
-  auto request =
-      rest_internal::RestRequest()
-          .SetPath(std::move(info.imdsv2_session_token_url))
-          .AddHeader(kMetadataTokenTtlHeader,
-                     std::to_string(kDefaultMetadataTokenTtl.count()));
   auto response = client->Put(request, {});
   if (!response) return std::move(response).status();
   if (IsHttpError(**response)) return AsStatus(std::move(**response));
@@ -149,8 +151,8 @@ StatusOr<std::string> FetchRegion(ExternalAccountTokenSourceAwsInfo const& info,
         absl::StrCat("invalid (empty) region returned from ", info.region_url),
         GCP_ERROR_INFO().WithContext(ec));
   }
-  // The metadata service returns an availability zone, we must remove the last
-  // character to return the region.
+  // The metadata service returns an availability zone, so we must remove the
+  // last character to return the region.
   payload->pop_back();
   return *std::move(payload);
 }
@@ -161,8 +163,8 @@ StatusOr<ExternalAccountTokenSourceAwsSecrets> FetchSecrets(
     Options const& opts, internal::ErrorContext const& ec) {
   auto access_key_id_env = internal::GetEnv("AWS_ACCESS_KEY_ID");
   auto secret_access_key_env = internal::GetEnv("AWS_SECRET_ACCESS_KEY");
-  auto session_token_env = internal::GetEnv("AWS_SESSION_TOKEN");
   if (access_key_id_env.has_value() && secret_access_key_env.has_value()) {
+    auto session_token_env = internal::GetEnv("AWS_SESSION_TOKEN");
     return ExternalAccountTokenSourceAwsSecrets{
         /*access_key_id=*/std::move(*access_key_id_env),
         /*secret_access_key=*/std::move(*secret_access_key_env),
