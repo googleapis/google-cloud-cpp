@@ -97,6 +97,27 @@ Status ContactCenterInsightsConnection::DeleteAnalysis(
 }
 
 future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+ContactCenterInsightsConnection::BulkAnalyzeConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   BulkAnalyzeConversationsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+ContactCenterInsightsConnection::IngestConversations(
+    google::cloud::contactcenterinsights::v1::
+        IngestConversationsRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
     google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
 ContactCenterInsightsConnection::ExportInsightsData(
     google::cloud::contactcenterinsights::v1::
@@ -175,6 +196,11 @@ ContactCenterInsightsConnection::ListIssues(
 StatusOr<google::cloud::contactcenterinsights::v1::Issue>
 ContactCenterInsightsConnection::UpdateIssue(
     google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status ContactCenterInsightsConnection::DeleteIssue(
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

@@ -129,6 +129,48 @@ Status ContactCenterInsightsAuth::DeleteAnalysis(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsAuth::AsyncBulkAnalyzeConversations(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncBulkAnalyzeConversations(cq, *std::move(context),
+                                                    request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsAuth::AsyncIngestConversations(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncIngestConversations(cq, *std::move(context),
+                                               request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsAuth::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -285,6 +327,15 @@ ContactCenterInsightsAuth::UpdateIssue(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateIssue(context, request);
+}
+
+Status ContactCenterInsightsAuth::DeleteIssue(
+    grpc::ClientContext& context,
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteIssue(context, request);
 }
 
 StatusOr<

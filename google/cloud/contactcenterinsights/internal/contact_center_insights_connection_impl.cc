@@ -231,6 +231,74 @@ Status ContactCenterInsightsConnectionImpl::DeleteAnalysis(
 }
 
 future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+ContactCenterInsightsConnectionImpl::BulkAnalyzeConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::
+          BulkAnalyzeConversationsResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::contactcenterinsights::v1::
+                 BulkAnalyzeConversationsRequest const& request) {
+        return stub->AsyncBulkAnalyzeConversations(cq, std::move(context),
+                                                   request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::
+              BulkAnalyzeConversationsResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->BulkAnalyzeConversations(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+ContactCenterInsightsConnectionImpl::IngestConversations(
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::contactcenterinsights::v1::
+                 IngestConversationsRequest const& request) {
+        return stub->AsyncIngestConversations(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::contactcenterinsights::v1::
+              IngestConversationsResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->IngestConversations(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<
     google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
 ContactCenterInsightsConnectionImpl::ExportInsightsData(
     google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
@@ -467,6 +535,18 @@ ContactCenterInsightsConnectionImpl::UpdateIssue(
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
                  request) { return stub_->UpdateIssue(context, request); },
+      request, __func__);
+}
+
+Status ContactCenterInsightsConnectionImpl::DeleteIssue(
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->DeleteIssue(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
+                 request) { return stub_->DeleteIssue(context, request); },
       request, __func__);
 }
 

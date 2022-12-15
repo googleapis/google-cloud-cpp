@@ -91,6 +91,19 @@ class ContactCenterInsightsStub {
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncBulkAnalyzeConversations(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::contactcenterinsights::v1::
+          BulkAnalyzeConversationsRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncIngestConversations(google::cloud::CompletionQueue& cq,
+                           std::unique_ptr<grpc::ClientContext> context,
+                           google::cloud::contactcenterinsights::v1::
+                               IngestConversationsRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
   AsyncExportInsightsData(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -157,6 +170,11 @@ class ContactCenterInsightsStub {
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
       grpc::ClientContext& context,
       google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
+          request) = 0;
+
+  virtual Status DeleteIssue(
+      grpc::ClientContext& context,
+      google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
           request) = 0;
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::
@@ -310,6 +328,19 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
       google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>>
+  AsyncBulkAnalyzeConversations(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::contactcenterinsights::v1::
+          BulkAnalyzeConversationsRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncIngestConversations(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::contactcenterinsights::v1::
+          IngestConversationsRequest const& request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncExportInsightsData(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -370,6 +401,11 @@ class DefaultContactCenterInsightsStub : public ContactCenterInsightsStub {
   StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
       grpc::ClientContext& client_context,
       google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
+          request) override;
+
+  Status DeleteIssue(
+      grpc::ClientContext& client_context,
+      google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
           request) override;
 
   StatusOr<google::cloud::contactcenterinsights::v1::

@@ -102,12 +102,12 @@ class ClusterControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   /// [google.cloud.dataproc.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1037}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1147}
   /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
       std::string const& project_id, std::string const& region,
@@ -119,16 +119,16 @@ class ClusterControllerClient {
   /// [ClusterOperationMetadata](https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::CreateClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1037}
+  /// @googleapis_link{google::cloud::dataproc::v1::CreateClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1147}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   /// [google.cloud.dataproc.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1037}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1147}
   /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> CreateCluster(
       google::cloud::dataproc::v1::CreateClusterRequest const& request,
@@ -202,12 +202,12 @@ class ClusterControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   /// [google.cloud.dataproc.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1066}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1178}
   /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
       std::string const& project_id, std::string const& region,
@@ -224,16 +224,16 @@ class ClusterControllerClient {
   /// error is returned.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::UpdateClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1066}
+  /// @googleapis_link{google::cloud::dataproc::v1::UpdateClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1178}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   /// [google.cloud.dataproc.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1066}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1178}
   /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> UpdateCluster(
       google::cloud::dataproc::v1::UpdateClusterRequest const& request,
@@ -243,16 +243,16 @@ class ClusterControllerClient {
   /// Stops a cluster in a project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::StopClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1160}
+  /// @googleapis_link{google::cloud::dataproc::v1::StopClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1274}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   /// [google.cloud.dataproc.v1.StopClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1160}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1274}
   /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StopCluster(
       google::cloud::dataproc::v1::StopClusterRequest const& request,
@@ -262,16 +262,16 @@ class ClusterControllerClient {
   /// Starts a cluster in a project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::StartClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1191}
+  /// @googleapis_link{google::cloud::dataproc::v1::StartClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1305}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   /// [google.cloud.dataproc.v1.StartClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1191}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1305}
   /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Cluster>> StartCluster(
       google::cloud::dataproc::v1::StartClusterRequest const& request,
@@ -291,12 +291,12 @@ class ClusterControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::ClusterOperationMetadata,google/cloud/dataproc/v1/operations.proto#L94}
+  /// @googleapis_link{google::cloud::dataproc::v1::ClusterOperationMetadata,google/cloud/dataproc/v1/operations.proto#L95}
   ///
   /// [google.cloud.dataproc.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1222}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1336}
   /// [google.cloud.dataproc.v1.ClusterOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/operations.proto#L94}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/operations.proto#L95}
   ///
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
   DeleteCluster(std::string const& project_id, std::string const& region,
@@ -308,16 +308,16 @@ class ClusterControllerClient {
   /// [ClusterOperationMetadata](https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#clusteroperationmetadata).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::DeleteClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1222}
+  /// @googleapis_link{google::cloud::dataproc::v1::DeleteClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1336}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::ClusterOperationMetadata,google/cloud/dataproc/v1/operations.proto#L94}
+  /// @googleapis_link{google::cloud::dataproc::v1::ClusterOperationMetadata,google/cloud/dataproc/v1/operations.proto#L95}
   ///
   /// [google.cloud.dataproc.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1222}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1336}
   /// [google.cloud.dataproc.v1.ClusterOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/operations.proto#L94}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/operations.proto#L95}
   ///
   future<StatusOr<google::cloud::dataproc::v1::ClusterOperationMetadata>>
   DeleteCluster(
@@ -336,12 +336,12 @@ class ClusterControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   /// [google.cloud.dataproc.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1253}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1367}
   /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
       std::string const& project_id, std::string const& region,
@@ -351,16 +351,16 @@ class ClusterControllerClient {
   /// Gets the resource representation for a cluster in a project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::GetClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1253}
+  /// @googleapis_link{google::cloud::dataproc::v1::GetClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1367}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   /// [google.cloud.dataproc.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1253}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1367}
   /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   StatusOr<google::cloud::dataproc::v1::Cluster> GetCluster(
       google::cloud::dataproc::v1::GetClusterRequest const& request,
@@ -377,12 +377,12 @@ class ClusterControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   /// [google.cloud.dataproc.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1266}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1380}
   /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
       std::string const& project_id, std::string const& region,
@@ -413,12 +413,12 @@ class ClusterControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   /// [google.cloud.dataproc.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1266}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1380}
   /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
       std::string const& project_id, std::string const& region,
@@ -428,16 +428,16 @@ class ClusterControllerClient {
   /// Lists all regions/{region}/clusters in a project alphabetically.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::ListClustersRequest,google/cloud/dataproc/v1/clusters.proto#L1266}
+  /// @googleapis_link{google::cloud::dataproc::v1::ListClustersRequest,google/cloud/dataproc/v1/clusters.proto#L1380}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_link{google::cloud::dataproc::v1::Cluster,google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   /// [google.cloud.dataproc.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1266}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1380}
   /// [google.cloud.dataproc.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L157}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L164}
   ///
   StreamRange<google::cloud::dataproc::v1::Cluster> ListClusters(
       google::cloud::dataproc::v1::ListClustersRequest request,
@@ -461,12 +461,12 @@ class ClusterControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::DiagnoseClusterResults,google/cloud/dataproc/v1/clusters.proto#L1327}
+  /// @googleapis_link{google::cloud::dataproc::v1::DiagnoseClusterResults,google/cloud/dataproc/v1/clusters.proto#L1441}
   ///
   /// [google.cloud.dataproc.v1.DiagnoseClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1314}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1428}
   /// [google.cloud.dataproc.v1.DiagnoseClusterResults]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1327}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1441}
   ///
   future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
   DiagnoseCluster(std::string const& project_id, std::string const& region,
@@ -482,16 +482,16 @@ class ClusterControllerClient {
   /// [DiagnoseClusterResults](https://cloud.google.com/dataproc/docs/reference/rpc/google.cloud.dataproc.v1#diagnoseclusterresults).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::DiagnoseClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1314}
+  /// @googleapis_link{google::cloud::dataproc::v1::DiagnoseClusterRequest,google/cloud/dataproc/v1/clusters.proto#L1428}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::DiagnoseClusterResults,google/cloud/dataproc/v1/clusters.proto#L1327}
+  /// @googleapis_link{google::cloud::dataproc::v1::DiagnoseClusterResults,google/cloud/dataproc/v1/clusters.proto#L1441}
   ///
   /// [google.cloud.dataproc.v1.DiagnoseClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1314}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1428}
   /// [google.cloud.dataproc.v1.DiagnoseClusterResults]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1327}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/clusters.proto#L1441}
   ///
   future<StatusOr<google::cloud::dataproc::v1::DiagnoseClusterResults>>
   DiagnoseCluster(

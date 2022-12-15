@@ -196,6 +196,51 @@ Status ContactCenterInsightsClient::DeleteAnalysis(
 }
 
 future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+ContactCenterInsightsClient::BulkAnalyzeConversations(std::string const& parent,
+                                                      std::string const& filter,
+                                                      float analysis_percentage,
+                                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest
+      request;
+  request.set_parent(parent);
+  request.set_filter(filter);
+  request.set_analysis_percentage(analysis_percentage);
+  return connection_->BulkAnalyzeConversations(request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+ContactCenterInsightsClient::BulkAnalyzeConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkAnalyzeConversations(request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+ContactCenterInsightsClient::IngestConversations(std::string const& parent,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::IngestConversationsRequest request;
+  request.set_parent(parent);
+  return connection_->IngestConversations(request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+ContactCenterInsightsClient::IngestConversations(
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->IngestConversations(request);
+}
+
+future<StatusOr<
     google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
 ContactCenterInsightsClient::ExportInsightsData(std::string const& parent,
                                                 Options opts) {
@@ -402,6 +447,21 @@ ContactCenterInsightsClient::UpdateIssue(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateIssue(request);
+}
+
+Status ContactCenterInsightsClient::DeleteIssue(std::string const& name,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::DeleteIssueRequest request;
+  request.set_name(name);
+  return connection_->DeleteIssue(request);
+}
+
+Status ContactCenterInsightsClient::DeleteIssue(
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteIssue(request);
 }
 
 StatusOr<

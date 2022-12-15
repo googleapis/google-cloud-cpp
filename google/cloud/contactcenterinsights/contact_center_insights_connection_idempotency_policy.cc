@@ -89,6 +89,20 @@ Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteAnalysis(
 }
 
 Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::BulkAnalyzeConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
+ContactCenterInsightsConnectionIdempotencyPolicy::IngestConversations(
+    google::cloud::contactcenterinsights::v1::
+        IngestConversationsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency
 ContactCenterInsightsConnectionIdempotencyPolicy::ExportInsightsData(
     google::cloud::contactcenterinsights::v1::
         ExportInsightsDataRequest const&) {
@@ -144,6 +158,11 @@ Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::ListIssues(
 
 Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::UpdateIssue(
     google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ContactCenterInsightsConnectionIdempotencyPolicy::DeleteIssue(
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

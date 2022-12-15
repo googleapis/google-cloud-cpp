@@ -73,6 +73,14 @@ class ContactCenterInsightsConnectionIdempotencyPolicy {
       google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
           request);
 
+  virtual google::cloud::Idempotency BulkAnalyzeConversations(
+      google::cloud::contactcenterinsights::v1::
+          BulkAnalyzeConversationsRequest const& request);
+
+  virtual google::cloud::Idempotency IngestConversations(
+      google::cloud::contactcenterinsights::v1::
+          IngestConversationsRequest const& request);
+
   virtual google::cloud::Idempotency ExportInsightsData(
       google::cloud::contactcenterinsights::v1::ExportInsightsDataRequest const&
           request);
@@ -114,6 +122,10 @@ class ContactCenterInsightsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency UpdateIssue(
       google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
+          request);
+
+  virtual google::cloud::Idempotency DeleteIssue(
+      google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
           request);
 
   virtual google::cloud::Idempotency CalculateIssueModelStats(

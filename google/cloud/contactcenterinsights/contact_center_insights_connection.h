@@ -111,6 +111,16 @@ class ContactCenterInsightsConnection {
       google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
           request);
 
+  virtual future<StatusOr<google::cloud::contactcenterinsights::v1::
+                              BulkAnalyzeConversationsResponse>>
+  BulkAnalyzeConversations(google::cloud::contactcenterinsights::v1::
+                               BulkAnalyzeConversationsRequest const& request);
+
+  virtual future<StatusOr<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+  IngestConversations(google::cloud::contactcenterinsights::v1::
+                          IngestConversationsRequest const& request);
+
   virtual future<StatusOr<
       google::cloud::contactcenterinsights::v1::ExportInsightsDataResponse>>
   ExportInsightsData(
@@ -165,6 +175,10 @@ class ContactCenterInsightsConnection {
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::Issue> UpdateIssue(
       google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
+          request);
+
+  virtual Status DeleteIssue(
+      google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
           request);
 
   virtual StatusOr<google::cloud::contactcenterinsights::v1::
