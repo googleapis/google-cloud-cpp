@@ -28,7 +28,7 @@ namespace {
 static_assert(EVP_MAX_MD_SIZE >= Sha256Type().size(),
               "EVP_MAX_MD_SIZE is too small");
 static_assert(std::is_same<std::uint8_t, unsigned char>::value,
-              "We assume std::uint8_t exists is `unsigned char`");
+              "When `std::uint8_t` exists it must be `unsigned char`");
 
 template <typename T>
 Sha256Type Sha256HmacImpl(absl::Span<T const> key, unsigned char const* data,
