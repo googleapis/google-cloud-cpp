@@ -13,7 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/common_options.h"
-#include "google/cloud/internal/credentials_impl.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -31,21 +31,14 @@ namespace {
 using ::google::cloud::internal::GetEnv;
 
 TEST(ExternalAccountIntegrationTest, UrlSourced) {
-  auto filename = GetEnv("GOOGLE_CLOUD_CPP_EXTERNAL_ACCOUNT_FILE");
   auto bucket = GetEnv("GOOGLE_CLOUD_CPP_TEST_WIF_BUCKET");
-  if (!filename.has_value() || !bucket.has_value()) GTEST_SKIP();
-  auto is = std::ifstream(*filename);
-  auto contents = std::string{std::istreambuf_iterator<char>{is.rdbuf()}, {}};
-  ASSERT_FALSE(is.bad());
-  ASSERT_FALSE(is.fail());
+  if (!bucket.has_value()) GTEST_SKIP();
 
-  auto credentials = std::make_shared<internal::ExternalAccountConfig>(
-      contents, Options{}.set<TracingComponentsOption>({"auth"}));
+  auto credentials = google::cloud::MakeGoogleDefaultCredentials(
+      Options{}.set<TracingComponentsOption>({"auth", "http"}));
   auto client = rest_internal::MakeDefaultRestClient(
       "https://storage.googleapis.com/",
-      Options{}
-          .set<UnifiedCredentialsOption>(credentials)
-          .set<TracingComponentsOption>({"http"}));
+      Options{}.set<UnifiedCredentialsOption>(credentials));
 
   auto request = rest_internal::RestRequest("storage/v1/b/" + *bucket);
   // Anything involving HTTP requests may fail and needs a retry loop.
