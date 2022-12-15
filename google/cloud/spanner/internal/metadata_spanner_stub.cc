@@ -54,21 +54,6 @@ MetadataSpannerStub::AsyncBatchCreateSessions(
   return child_->AsyncBatchCreateSessions(cq, std::move(context), request);
 }
 
-StatusOr<google::spanner::v1::Session> MetadataSpannerStub::GetSession(
-    grpc::ClientContext& client_context,
-    google::spanner::v1::GetSessionRequest const& request) {
-  SetMetadata(client_context, "name=" + request.name());
-  return child_->GetSession(client_context, request);
-}
-
-StatusOr<google::spanner::v1::ListSessionsResponse>
-MetadataSpannerStub::ListSessions(
-    grpc::ClientContext& client_context,
-    google::spanner::v1::ListSessionsRequest const& request) {
-  SetMetadata(client_context, "database=" + request.database());
-  return child_->ListSessions(client_context, request);
-}
-
 Status MetadataSpannerStub::DeleteSession(
     grpc::ClientContext& client_context,
     google::spanner::v1::DeleteSessionRequest const& request) {

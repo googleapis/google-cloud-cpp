@@ -37,6 +37,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * The API is defined in:
  * https://github.com/googleapis/googleapis/blob/master/google/spanner/v1/spanner.proto
+ *
+ * @note We don't use the GetSession(), ListSessions(), or Read() RPCs.
  */
 class SpannerStub {
  public:
@@ -55,18 +57,11 @@ class SpannerStub {
   BatchCreateSessions(
       grpc::ClientContext& client_context,
       google::spanner::v1::BatchCreateSessionsRequest const& request) = 0;
-
   virtual future<StatusOr<google::spanner::v1::BatchCreateSessionsResponse>>
   AsyncBatchCreateSessions(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::spanner::v1::BatchCreateSessionsRequest const& request) = 0;
-  virtual StatusOr<google::spanner::v1::Session> GetSession(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::GetSessionRequest const& request) = 0;
-  virtual StatusOr<google::spanner::v1::ListSessionsResponse> ListSessions(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::ListSessionsRequest const& request) = 0;
   virtual Status DeleteSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::DeleteSessionRequest const& request) = 0;
