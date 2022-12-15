@@ -72,8 +72,10 @@ jobs:
           service_account: 'github-actions@cloud-cpp-identity-federation.iam.gserviceaccount.com'
       - id: 'test'
         if: '!github.event.pull_request.head.repo.fork'
-        name: 'test'
+        name: 'Run Integration Test'
         env:
-          GOOGLE_CLOUD_CPP_EXTERNAL_ACCOUNT_FILE: "${{ steps.auth.outputs.credentials_file_path }}"
+          GOOGLE_APPLICATION_CREDENTIALS: "${{ steps.auth.outputs.credentials_file_path }}"
+          GOOGLE_CLOUD_CPP_TEST_WIF_BUCKET: "cloud-cpp-wif-test-bucket"
+          GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG: "lastN,1024,WARNING"
         run: |
-          ctest --test-dir "${{runner.temp}}/build" --output-on-failure -R rest_internal_internal_external_account_integration_test
+          ctest --test-dir "${{runner.temp}}/build" --output-on-failure -R common_internal_external_account_integration_test
