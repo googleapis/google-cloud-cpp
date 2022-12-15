@@ -4323,8 +4323,7 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_create_database");
   CreateDatabase(database_admin_client, project_id, instance_id, database_id);
 
-  // TODO(#5479): Awaiting emulator support for version_retention_period.
-  if (!emulator) {
+  if (!emulator) {  // version_retention_period
     SampleBanner("spanner_drop_database");
     DropDatabase(database_admin_client, project_id, instance_id, database_id);
 
@@ -4333,8 +4332,7 @@ void RunAll(bool emulator) {
                                              instance_id, database_id);
   }
 
-  // TODO(#5048): Remove this check when the emulator supports CMEK.
-  if (!emulator) {
+  if (!emulator) {  // CMEK
     auto location = google::cloud::spanner_testing::InstanceLocation(
         google::cloud::spanner::Instance(project_id, instance_id));
     if (!location) {
@@ -4676,8 +4674,7 @@ void RunAll(bool emulator) {
   DeleteAll(client);
   DropDatabase(database_admin_client, project_id, instance_id, database_id);
 
-  // TODO(#7144): Awaiting emulator support for default_leader.
-  if (!emulator) {
+  if (!emulator) {  // default_leader
     auto random_instance = google::cloud::spanner_testing::PickRandomInstance(
         generator, project_id,
         "labels.samples:yes AND name:/instances/test-instance-mr-");

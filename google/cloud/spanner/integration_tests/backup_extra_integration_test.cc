@@ -114,8 +114,7 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithVersionTime) {
       ") PRIMARY KEY (Name)"};
   auto database =
       database_admin_client_.CreateDatabase(db, extra_statements).get();
-  if (Emulator()) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (Emulator()) {  // version_retention_period
     EXPECT_THAT(database, Not(IsOk()));
     return;
   }
@@ -248,8 +247,7 @@ TEST_F(BackupExtraIntegrationTest, BackupWithExpiredVersionTime) {
                    "` SET OPTIONS (version_retention_period='1h')")};
   auto database =
       database_admin_client_.CreateDatabase(db, extra_statements).get();
-  if (Emulator()) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (Emulator()) {  // version_retention_period
     EXPECT_THAT(database, Not(IsOk()));
     return;
   }
@@ -286,8 +284,7 @@ TEST_F(BackupExtraIntegrationTest, BackupWithFutureVersionTime) {
                    "` SET OPTIONS (version_retention_period='1h')")};
   auto database =
       database_admin_client_.CreateDatabase(db, extra_statements).get();
-  if (Emulator()) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (Emulator()) {  // version_retention_period
     EXPECT_THAT(database, Not(IsOk()));
     return;
   }

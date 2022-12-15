@@ -61,8 +61,7 @@ void DatabaseIntegrationTest::SetUpTestSuite() {
   google::spanner::admin::database::v1::CreateDatabaseRequest request;
   request.set_parent(db_->instance().FullName());
   request.set_create_statement("CREATE DATABASE `" + db_->database_id() + "`");
-  if (!emulator_) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (!emulator_) {                // version_retention_period
     request.add_extra_statements(  //
         "ALTER DATABASE `" + db_->database_id() + "` " +
         "SET OPTIONS (version_retention_period='2h')");

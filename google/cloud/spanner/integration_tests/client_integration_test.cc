@@ -907,8 +907,7 @@ TEST_F(ClientIntegrationTest, VersionRetentionPeriod) {
       )"""));
   using RowType = std::tuple<std::string>;
   for (auto& row : StreamOf<RowType>(rows)) {
-    if (UsingEmulator()) {
-      // TODO(#5479): Awaiting emulator support for version_retention_period.
+    if (UsingEmulator()) {  // version_retention_period
       EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
     } else {
       EXPECT_THAT(row, IsOk());
@@ -927,8 +926,7 @@ TEST_F(ClientIntegrationTest, DefaultLeader) {
       )"""));
   using RowType = std::tuple<std::string>;
   for (auto& row : StreamOf<RowType>(rows)) {
-    if (UsingEmulator()) {
-      // TODO(#7144): Awaiting emulator support for default_leader.
+    if (UsingEmulator()) {  // default_leader
       EXPECT_THAT(row, StatusIs(StatusCode::kInvalidArgument));
     } else {
       EXPECT_THAT(row, IsOk());

@@ -129,8 +129,7 @@ TEST_F(BackupExtraIntegrationTest, CreateBackupWithVersionTime) {
       "  Value  INT64 NOT NULL"
       ") PRIMARY KEY (Name)");
   auto database = database_admin_client_.CreateDatabase(creq).get();
-  if (Emulator()) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (Emulator()) {  // version_retention_period
     EXPECT_THAT(database, Not(IsOk()));
     return;
   }
@@ -303,8 +302,7 @@ TEST_F(BackupExtraIntegrationTest, CreateBackupWithExpiredVersionTime) {
       absl::StrCat("ALTER DATABASE `", db.database_id(),
                    "` SET OPTIONS (version_retention_period='1h')"));
   auto database = database_admin_client_.CreateDatabase(creq).get();
-  if (Emulator()) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (Emulator()) {  // version_retention_period
     EXPECT_THAT(database, Not(IsOk()));
     return;
   }
@@ -349,8 +347,7 @@ TEST_F(BackupExtraIntegrationTest, CreateBackupWithFutureVersionTime) {
       absl::StrCat("ALTER DATABASE `", db.database_id(),
                    "` SET OPTIONS (version_retention_period='1h')"));
   auto database = database_admin_client_.CreateDatabase(creq).get();
-  if (Emulator()) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (Emulator()) {  // version_retention_period
     EXPECT_THAT(database, Not(IsOk()));
     return;
   }
