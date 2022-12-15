@@ -100,19 +100,47 @@ StatusOr<ExternalAccountTokenSourceAwsInfo> ParseExternalAccountTokenSourceAws(
   auto url = ValidateStringField(credentials_source, "url",
                                  "credentials-source", kDefaultUrl, ec);
   if (!url) return std::move(url).status();
-  auto regional_url =
+  auto verification_url =
       ValidateStringField(credentials_source, "regional_cred_verification_url",
                           "credentials-source", ec);
-  if (!regional_url) return std::move(regional_url).status();
+  if (!verification_url) return std::move(verification_url).status();
   auto imdsv2 =
       ValidateStringField(credentials_source, "imdsv2_session_token_url",
                           "credentials-source", std::string{}, ec);
   if (!imdsv2) return std::move(imdsv2).status();
+
+  auto invalid_url = [](absl::string_view name, absl::string_view value) {
+    return absl::StrCat(
+        "the `", name,
+        "` field should refer to the AWS metadata service, got=<", value, ">");
+  };
+  auto targets_metadata = [](absl::string_view url) {
+    // We probably need a full URL parser to verify the host part is either
+    // `169.254.169.254` or `fd00:ec2::254`.  We just assume there is no
+    // `userinfo` component. The AWS documentation makes no reference to it, and
+    // the component is deprecated in any case.
+    return absl::StartsWith(url, "http://169.254.169.254") ||
+           absl::StartsWith(url, "http://[fd00:ec2::254]");
+  };
+  if (!targets_metadata(*url)) {
+    return InvalidArgumentError(invalid_url("url", *url),
+                                GCP_ERROR_INFO().WithContext(ec));
+  }
+  if (!targets_metadata(*region_url)) {
+    return InvalidArgumentError(invalid_url("region_url", *region_url),
+                                GCP_ERROR_INFO().WithContext(ec));
+  }
+  if (!imdsv2->empty() && !targets_metadata(*imdsv2)) {
+    return InvalidArgumentError(
+        invalid_url("imdsv2_session_token_url", *imdsv2),
+        GCP_ERROR_INFO().WithContext(ec));
+  }
+
   return ExternalAccountTokenSourceAwsInfo{
       /*environment_id=*/*std::move(environment_id),
       /*region_url=*/*std::move(region_url),
       /*url=*/*std::move(url),
-      /*regional_cred_verification_url=*/*std::move(regional_url),
+      /*regional_cred_verification_url=*/*std::move(verification_url),
       /*imdsv2_session_token_url=*/*std::move(imdsv2)};
 }
 

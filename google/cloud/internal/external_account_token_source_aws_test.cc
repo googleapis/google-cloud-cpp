@@ -103,55 +103,77 @@ ExternalAccountTokenSourceAwsInfo MakeTestInfoImdsV2() {
 TEST(ExternalAccountTokenSource, ParseSuccess) {
   auto const creds = nlohmann::json{
       {"environment_id", "aws1"},
-      {"region_url", "test-region-url"},
-      {"url", "test-url"},
-      {"regional_cred_verification_url", "test-verification-url"},
-      {"imdsv2_session_token_url", "test-imdsv2"},
+      {"region_url", kTestRegionUrl},
+      {"url", kTestMetadataUrl},
+      {"regional_cred_verification_url", kTestVerificationUrl},
+      {"imdsv2_session_token_url", kTestImdsv2Url},
   };
   auto const info =
       ParseExternalAccountTokenSourceAws(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(info);
   EXPECT_EQ(info->environment_id, "aws1");
-  EXPECT_EQ(info->region_url, "test-region-url");
-  EXPECT_EQ(info->url, "test-url");
-  EXPECT_EQ(info->regional_cred_verification_url, "test-verification-url");
-  EXPECT_EQ(info->imdsv2_session_token_url, "test-imdsv2");
+  EXPECT_EQ(info->region_url, kTestRegionUrl);
+  EXPECT_EQ(info->url, kTestMetadataUrl);
+  EXPECT_EQ(info->regional_cred_verification_url, kTestVerificationUrl);
+  EXPECT_EQ(info->imdsv2_session_token_url, kTestImdsv2Url);
+}
+
+TEST(ExternalAccountTokenSource, ParseSuccessIPv6) {
+  auto constexpr kTestMetadataUrlV6 = "http://[fd00:ec2::254]/metadata";
+  auto constexpr kTestRegionUrlV6 = "http://[fd00:ec2::254]/region";
+  auto constexpr kTestImdsv2UrlV6 = "http://[fd00:ec2::254]/imdsv2";
+
+  auto const creds = nlohmann::json{
+      {"environment_id", "aws1"},
+      {"region_url", kTestRegionUrlV6},
+      {"url", kTestMetadataUrlV6},
+      {"regional_cred_verification_url", kTestVerificationUrl},
+      {"imdsv2_session_token_url", kTestImdsv2UrlV6},
+  };
+  auto const info =
+      ParseExternalAccountTokenSourceAws(creds, MakeTestErrorContext());
+  ASSERT_STATUS_OK(info);
+  EXPECT_EQ(info->environment_id, "aws1");
+  EXPECT_EQ(info->region_url, kTestRegionUrlV6);
+  EXPECT_EQ(info->url, kTestMetadataUrlV6);
+  EXPECT_EQ(info->regional_cred_verification_url, kTestVerificationUrl);
+  EXPECT_EQ(info->imdsv2_session_token_url, kTestImdsv2UrlV6);
 }
 
 TEST(ExternalAccountTokenSource, ParseSuccessNoUrl) {
   auto const creds = nlohmann::json{
       {"environment_id", "aws1"},
-      {"region_url", "test-region-url"},
+      {"region_url", kTestRegionUrl},
       // {"url", "test-url"},
-      {"regional_cred_verification_url", "test-verification-url"},
-      {"imdsv2_session_token_url", "test-imdsv2"},
+      {"regional_cred_verification_url", kTestVerificationUrl},
+      {"imdsv2_session_token_url", kTestImdsv2Url},
   };
   auto const info =
       ParseExternalAccountTokenSourceAws(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(info);
   EXPECT_EQ(info->environment_id, "aws1");
-  EXPECT_EQ(info->region_url, "test-region-url");
+  EXPECT_EQ(info->region_url, kTestRegionUrl);
   EXPECT_EQ(info->url,
             "http://169.254.169.254/latest/meta-data/iam/security-credentials");
-  EXPECT_EQ(info->regional_cred_verification_url, "test-verification-url");
-  EXPECT_EQ(info->imdsv2_session_token_url, "test-imdsv2");
+  EXPECT_EQ(info->regional_cred_verification_url, kTestVerificationUrl);
+  EXPECT_EQ(info->imdsv2_session_token_url, kTestImdsv2Url);
 }
 
 TEST(ExternalAccountTokenSource, ParseSuccessNoImdsv2) {
   auto const creds = nlohmann::json{
       {"environment_id", "aws1"},
-      {"region_url", "test-region-url"},
-      {"url", "test-url"},
-      {"regional_cred_verification_url", "test-verification-url"},
+      {"region_url", kTestRegionUrl},
+      {"url", kTestMetadataUrl},
+      {"regional_cred_verification_url", kTestVerificationUrl},
       // {"imdsv2_session_token_url", "test-imdsv2"},
   };
   auto const info =
       ParseExternalAccountTokenSourceAws(creds, MakeTestErrorContext());
   ASSERT_STATUS_OK(info);
   EXPECT_EQ(info->environment_id, "aws1");
-  EXPECT_EQ(info->region_url, "test-region-url");
-  EXPECT_EQ(info->url, "test-url");
-  EXPECT_EQ(info->regional_cred_verification_url, "test-verification-url");
+  EXPECT_EQ(info->region_url, kTestRegionUrl);
+  EXPECT_EQ(info->url, kTestMetadataUrl);
+  EXPECT_EQ(info->regional_cred_verification_url, kTestVerificationUrl);
   EXPECT_THAT(info->imdsv2_session_token_url, IsEmpty());
 }
 
@@ -248,6 +270,23 @@ TEST(ExternalAccountTokenSource, InvalidRegionUrl) {
                             Pair("key", "value")}));
 }
 
+TEST(ExternalAccountTokenSource, NonMetadataRegionUrl) {
+  auto const creds = nlohmann::json{
+      {"environment_id", "aws1"},
+      {"region_url", "https://example.com"},
+      {"regional_cred_verification_url", "test-verification-url"},
+  };
+  auto const info =
+      ParseExternalAccountTokenSourceAws(creds, MakeTestErrorContext());
+  EXPECT_THAT(info,
+              StatusIs(StatusCode::kInvalidArgument,
+                       AllOf(HasSubstr("the `region_url` field should refer"),
+                             HasSubstr("https://example.com"))));
+  EXPECT_THAT(info.status().error_info().metadata(),
+              IsSupersetOf({Pair("filename", "my-credentials.json"),
+                            Pair("key", "value")}));
+}
+
 TEST(ExternalAccountTokenSource, InvalidUrl) {
   auto const creds = nlohmann::json{
       {"environment_id", "aws1"},
@@ -259,6 +298,23 @@ TEST(ExternalAccountTokenSource, InvalidUrl) {
       ParseExternalAccountTokenSourceAws(creds, MakeTestErrorContext());
   EXPECT_THAT(info, StatusIs(StatusCode::kInvalidArgument,
                              HasSubstr("invalid type for `url` field")));
+  EXPECT_THAT(info.status().error_info().metadata(),
+              IsSupersetOf({Pair("filename", "my-credentials.json"),
+                            Pair("key", "value")}));
+}
+
+TEST(ExternalAccountTokenSource, NonMetadataUrl) {
+  auto const creds = nlohmann::json{
+      {"environment_id", "aws1"},
+      {"region_url", "http://169.254.169.254/region"},
+      {"url", "https://example.com"},
+      {"regional_cred_verification_url", "test-verification-url"},
+  };
+  auto const info =
+      ParseExternalAccountTokenSourceAws(creds, MakeTestErrorContext());
+  EXPECT_THAT(info, StatusIs(StatusCode::kInvalidArgument,
+                             AllOf(HasSubstr("the `url` field should refer"),
+                                   HasSubstr("https://example.com"))));
   EXPECT_THAT(info.status().error_info().metadata(),
               IsSupersetOf({Pair("filename", "my-credentials.json"),
                             Pair("key", "value")}));
@@ -312,6 +368,26 @@ TEST(ExternalAccountTokenSource, InvalidImdsv2SessionTokenUrl) {
       info,
       StatusIs(StatusCode::kInvalidArgument,
                HasSubstr("invalid type for `imdsv2_session_token_url` field")));
+  EXPECT_THAT(info.status().error_info().metadata(),
+              IsSupersetOf({Pair("filename", "my-credentials.json"),
+                            Pair("key", "value")}));
+}
+
+TEST(ExternalAccountTokenSource, NonMetadataImdsv2SessionTokenUrl) {
+  auto const creds = nlohmann::json{
+      {"environment_id", "aws1"},
+      {"region_url", kTestRegionUrl},
+      {"regional_cred_verification_url", kTestVerificationUrl},
+      {"imdsv2_session_token_url", "https://example.com"},
+  };
+  auto const info =
+      ParseExternalAccountTokenSourceAws(creds, MakeTestErrorContext());
+  EXPECT_THAT(
+      info,
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          AllOf(HasSubstr("the `imdsv2_session_token_url` field should refer"),
+                HasSubstr("https://example.com"))));
   EXPECT_THAT(info.status().error_info().metadata(),
               IsSupersetOf({Pair("filename", "my-credentials.json"),
                             Pair("key", "value")}));
