@@ -1,4 +1,4 @@
-// Copyright 2019 Google LLC
+// Copyright 2022 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,36 +12,24 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HASH_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HASH_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_TYPE_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_TYPE_H
 
-#include "google/cloud/internal/sha256_type.h"
 #include "google/cloud/version.h"
-#include "absl/types/span.h"
+#include <array>
 #include <cstdint>
-#include <string>
-#include <vector>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-/// Return the SHA256 hash (as raw bytes) of @p str.
-Sha256Type Sha256Hash(std::string const& str);
-
-/// Return the SHA256 hash (as raw bytes) of @p bytes.
-Sha256Type Sha256Hash(std::vector<std::uint8_t> const& bytes);
-
-/// Return @p bytes encoded as a lowercase hexadecimal string.
-std::string HexEncode(absl::Span<std::uint8_t const> bytes);
-
-/// Parse @p str as a hex-encoded string.
-std::vector<std::uint8_t> HexDecode(std::string const& str);
+// (8 bits per byte) * 32 bytes = 256 bits
+using Sha256Type = std::array<std::uint8_t, 32>;
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_HASH_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_SHA256_TYPE_H
