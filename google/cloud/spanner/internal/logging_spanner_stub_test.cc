@@ -96,34 +96,6 @@ TEST_F(LoggingSpannerStubTest, BatchCreateSessions) {
   EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
 }
 
-TEST_F(LoggingSpannerStubTest, GetSession) {
-  EXPECT_CALL(*mock_, GetSession).WillOnce(Return(TransientError()));
-
-  LoggingSpannerStub stub(mock_, TracingOptions{});
-  grpc::ClientContext context;
-  auto status =
-      stub.GetSession(context, google::spanner::v1::GetSessionRequest());
-  EXPECT_EQ(TransientError(), status.status());
-
-  auto const log_lines = log_.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("GetSession")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
-}
-
-TEST_F(LoggingSpannerStubTest, ListSessions) {
-  EXPECT_CALL(*mock_, ListSessions).WillOnce(Return(TransientError()));
-
-  LoggingSpannerStub stub(mock_, TracingOptions{});
-  grpc::ClientContext context;
-  auto status =
-      stub.ListSessions(context, google::spanner::v1::ListSessionsRequest());
-  EXPECT_EQ(TransientError(), status.status());
-
-  auto const log_lines = log_.ExtractLines();
-  EXPECT_THAT(log_lines, Contains(HasSubstr("ListSessions")));
-  EXPECT_THAT(log_lines, Contains(HasSubstr(TransientError().message())));
-}
-
 TEST_F(LoggingSpannerStubTest, DeleteSession) {
   EXPECT_CALL(*mock_, DeleteSession).WillOnce(Return(TransientError()));
 

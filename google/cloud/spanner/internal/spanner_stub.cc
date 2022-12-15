@@ -54,12 +54,6 @@ class DefaultSpannerStub : public SpannerStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::spanner::v1::BatchCreateSessionsRequest const& request) override;
-  StatusOr<google::spanner::v1::Session> GetSession(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::GetSessionRequest const& request) override;
-  StatusOr<google::spanner::v1::ListSessionsResponse> ListSessions(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::ListSessionsRequest const& request) override;
   Status DeleteSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::DeleteSessionRequest const& request) override;
@@ -142,31 +136,6 @@ DefaultSpannerStub::AsyncBatchCreateSessions(
         return grpc_stub_->AsyncBatchCreateSessions(context, request, cq);
       },
       request, std::move(context));
-}
-
-StatusOr<google::spanner::v1::Session> DefaultSpannerStub::GetSession(
-    grpc::ClientContext& client_context,
-    google::spanner::v1::GetSessionRequest const& request) {
-  google::spanner::v1::Session response;
-  grpc::Status grpc_status =
-      grpc_stub_->GetSession(&client_context, request, &response);
-  if (!grpc_status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(grpc_status);
-  }
-  return response;
-}
-
-StatusOr<google::spanner::v1::ListSessionsResponse>
-DefaultSpannerStub::ListSessions(
-    grpc::ClientContext& client_context,
-    google::spanner::v1::ListSessionsRequest const& request) {
-  google::spanner::v1::ListSessionsResponse response;
-  grpc::Status grpc_status =
-      grpc_stub_->ListSessions(&client_context, request, &response);
-  if (!grpc_status.ok()) {
-    return google::cloud::MakeStatusFromRpcError(grpc_status);
-  }
-  return response;
 }
 
 Status DefaultSpannerStub::DeleteSession(

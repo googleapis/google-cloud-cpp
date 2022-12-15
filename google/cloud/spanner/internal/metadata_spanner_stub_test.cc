@@ -178,47 +178,6 @@ TEST_F(MetadataSpannerStubTest, BatchCreateSessions) {
   EXPECT_EQ(TransientError(), status.status());
 }
 
-TEST_F(MetadataSpannerStubTest, GetSession) {
-  EXPECT_CALL(*mock_, GetSession)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::spanner::v1::GetSessionRequest const& request) {
-        IsContextMDValid(context, "google.spanner.v1.Spanner.GetSession",
-                         request);
-        return TransientError();
-      });
-
-  MetadataSpannerStub stub(mock_, db_.FullName());
-  grpc::ClientContext context;
-  google::spanner::v1::GetSessionRequest request;
-  request.set_name(
-      google::cloud::spanner::Database(
-          google::cloud::spanner::Instance(
-              google::cloud::Project("test-project-id"), "test-instance-id"),
-          "test-database-id")
-          .FullName() +
-      "/sessions/test-session-id");
-  auto status = stub.GetSession(context, request);
-  EXPECT_EQ(TransientError(), status.status());
-}
-
-TEST_F(MetadataSpannerStubTest, ListSessions) {
-  EXPECT_CALL(*mock_, ListSessions)
-      .WillOnce(
-          [this](grpc::ClientContext& context,
-                 google::spanner::v1::ListSessionsRequest const& request) {
-            IsContextMDValid(context, "google.spanner.v1.Spanner.ListSessions",
-                             request);
-            return TransientError();
-          });
-
-  MetadataSpannerStub stub(mock_, db_.FullName());
-  grpc::ClientContext context;
-  google::spanner::v1::ListSessionsRequest request;
-  request.set_database(db_.FullName());
-  auto status = stub.ListSessions(context, request);
-  EXPECT_EQ(TransientError(), status.status());
-}
-
 TEST_F(MetadataSpannerStubTest, DeleteSession) {
   EXPECT_CALL(*mock_, DeleteSession)
       .WillOnce(

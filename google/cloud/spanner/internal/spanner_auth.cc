@@ -41,22 +41,6 @@ SpannerAuth::BatchCreateSessions(
   return child_->BatchCreateSessions(context, request);
 }
 
-StatusOr<google::spanner::v1::Session> SpannerAuth::GetSession(
-    grpc::ClientContext& context,
-    google::spanner::v1::GetSessionRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GetSession(context, request);
-}
-
-StatusOr<google::spanner::v1::ListSessionsResponse> SpannerAuth::ListSessions(
-    grpc::ClientContext& context,
-    google::spanner::v1::ListSessionsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->ListSessions(context, request);
-}
-
 Status SpannerAuth::DeleteSession(
     grpc::ClientContext& context,
     google::spanner::v1::DeleteSessionRequest const& request) {

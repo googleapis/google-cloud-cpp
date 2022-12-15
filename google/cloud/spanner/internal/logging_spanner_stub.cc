@@ -60,29 +60,6 @@ LoggingSpannerStub::AsyncBatchCreateSessions(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
-StatusOr<google::spanner::v1::Session> LoggingSpannerStub::GetSession(
-    grpc::ClientContext& client_context,
-    google::spanner::v1::GetSessionRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::spanner::v1::GetSessionRequest const& request) {
-        return child_->GetSession(context, request);
-      },
-      client_context, request, __func__, tracing_options_);
-}
-
-StatusOr<google::spanner::v1::ListSessionsResponse>
-LoggingSpannerStub::ListSessions(
-    grpc::ClientContext& client_context,
-    google::spanner::v1::ListSessionsRequest const& request) {
-  return LogWrapper(
-      [this](grpc::ClientContext& context,
-             google::spanner::v1::ListSessionsRequest const& request) {
-        return child_->ListSessions(context, request);
-      },
-      client_context, request, __func__, tracing_options_);
-}
-
 Status LoggingSpannerStub::DeleteSession(
     grpc::ClientContext& client_context,
     google::spanner::v1::DeleteSessionRequest const& request) {
