@@ -278,8 +278,10 @@ TEST(ExternalAccountTokenSource, NonMetadataRegionUrl) {
   };
   auto const info =
       ParseExternalAccountTokenSourceAws(creds, MakeTestErrorContext());
-  EXPECT_THAT(info, StatusIs(StatusCode::kInvalidArgument,
-                             HasSubstr("the `region_url` field should refer")));
+  EXPECT_THAT(info,
+              StatusIs(StatusCode::kInvalidArgument,
+                       AllOf(HasSubstr("the `region_url` field should refer"),
+                             HasSubstr("https://example.com"))));
   EXPECT_THAT(info.status().error_info().metadata(),
               IsSupersetOf({Pair("filename", "my-credentials.json"),
                             Pair("key", "value")}));
@@ -311,7 +313,8 @@ TEST(ExternalAccountTokenSource, NonMetadataUrl) {
   auto const info =
       ParseExternalAccountTokenSourceAws(creds, MakeTestErrorContext());
   EXPECT_THAT(info, StatusIs(StatusCode::kInvalidArgument,
-                             HasSubstr("the `url` field should refer")));
+                             AllOf(HasSubstr("the `url` field should refer"),
+                                   HasSubstr("https://example.com"))));
   EXPECT_THAT(info.status().error_info().metadata(),
               IsSupersetOf({Pair("filename", "my-credentials.json"),
                             Pair("key", "value")}));
@@ -381,8 +384,10 @@ TEST(ExternalAccountTokenSource, NonMetadataImdsv2SessionTokenUrl) {
       ParseExternalAccountTokenSourceAws(creds, MakeTestErrorContext());
   EXPECT_THAT(
       info,
-      StatusIs(StatusCode::kInvalidArgument,
-               HasSubstr("the `imdsv2_session_token_url` field should refer")));
+      StatusIs(
+          StatusCode::kInvalidArgument,
+          AllOf(HasSubstr("the `imdsv2_session_token_url` field should refer"),
+                HasSubstr("https://example.com"))));
   EXPECT_THAT(info.status().error_info().metadata(),
               IsSupersetOf({Pair("filename", "my-credentials.json"),
                             Pair("key", "value")}));

@@ -109,9 +109,10 @@ StatusOr<ExternalAccountTokenSourceAwsInfo> ParseExternalAccountTokenSourceAws(
                           "credentials-source", std::string{}, ec);
   if (!imdsv2) return std::move(imdsv2).status();
 
-  auto invalid_url = [](absl::string_view name) {
-    return absl::StrCat("the `", name,
-                        "` field should refer to the AWS metadata service");
+  auto invalid_url = [](absl::string_view name, absl::string_view value) {
+    return absl::StrCat(
+        "the `", name,
+        "` field should refer to the AWS metadata service, got=<", value, ">");
   };
   auto targets_metadata = [](absl::string_view url) {
     // We probably need a full URL parser to verify the host part is either
@@ -122,16 +123,17 @@ StatusOr<ExternalAccountTokenSourceAwsInfo> ParseExternalAccountTokenSourceAws(
            absl::StartsWith(url, "http://[fd00:ec2::254]");
   };
   if (!targets_metadata(*url)) {
-    return InvalidArgumentError(invalid_url("url"),
+    return InvalidArgumentError(invalid_url("url", *url),
                                 GCP_ERROR_INFO().WithContext(ec));
   }
   if (!targets_metadata(*region_url)) {
-    return InvalidArgumentError(invalid_url("region_url"),
+    return InvalidArgumentError(invalid_url("region_url", *region_url),
                                 GCP_ERROR_INFO().WithContext(ec));
   }
   if (!imdsv2->empty() && !targets_metadata(*imdsv2)) {
-    return InvalidArgumentError(invalid_url("imdsv2_session_token_url"),
-                                GCP_ERROR_INFO().WithContext(ec));
+    return InvalidArgumentError(
+        invalid_url("imdsv2_session_token_url", *imdsv2),
+        GCP_ERROR_INFO().WithContext(ec));
   }
 
   return ExternalAccountTokenSourceAwsInfo{
