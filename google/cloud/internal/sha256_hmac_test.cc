@@ -36,6 +36,7 @@ TEST(Sha256Hmac, WikipediaString) {
   EXPECT_EQ(expected,
             HexEncode(Sha256Hmac("key", absl::Span<char const>(data))));
   std::vector<std::uint8_t> v(data.begin(), data.end());
+  EXPECT_EQ(expected, HexEncode(Sha256Hmac("key", v)));
   EXPECT_EQ(expected,
             HexEncode(Sha256Hmac("key", absl::Span<std::uint8_t>(v))));
   EXPECT_EQ(expected,
@@ -57,6 +58,7 @@ TEST(Sha256Hmac, Rehash) {
   EXPECT_EQ(expected, HexEncode(Sha256Hmac(key, absl::Span<char>(data))));
   EXPECT_EQ(expected, HexEncode(Sha256Hmac(key, absl::Span<char const>(data))));
   std::vector<std::uint8_t> v(data.begin(), data.end());
+  EXPECT_EQ(expected, HexEncode(Sha256Hmac(key, v)));
   EXPECT_EQ(expected, HexEncode(Sha256Hmac(key, absl::Span<std::uint8_t>(v))));
   EXPECT_EQ(expected,
             HexEncode(Sha256Hmac(key, absl::Span<std::uint8_t const>(v))));

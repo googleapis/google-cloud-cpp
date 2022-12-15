@@ -18,10 +18,8 @@
 #include "google/cloud/internal/sha256_type.h"
 #include "google/cloud/version.h"
 #include "absl/types/span.h"
-#include <array>
 #include <cstdint>
 #include <string>
-#include <vector>
 
 namespace google {
 namespace cloud {

@@ -16,6 +16,8 @@
 #include <openssl/evp.h>
 #include <openssl/hmac.h>
 #include <algorithm>
+#include <array>
+#include <type_traits>
 
 namespace google {
 namespace cloud {
@@ -25,6 +27,8 @@ namespace {
 
 static_assert(EVP_MAX_MD_SIZE >= Sha256Type().size(),
               "EVP_MAX_MD_SIZE is too small");
+static_assert(std::is_same<std::uint8_t, unsigned char>::value,
+              "We assume std::uint8_t exists is `unsigned char`");
 
 template <typename T>
 Sha256Type Sha256HmacImpl(absl::Span<T const> key, unsigned char const* data,
