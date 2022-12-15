@@ -155,6 +155,38 @@ Status DefaultContactCenterInsightsStub::DeleteAnalysis(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+DefaultContactCenterInsightsStub::AsyncBulkAnalyzeConversations(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::contactcenterinsights::v1::
+                 BulkAnalyzeConversationsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncBulkAnalyzeConversations(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultContactCenterInsightsStub::AsyncIngestConversations(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::contactcenterinsights::v1::
+                 IngestConversationsRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncIngestConversations(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
 DefaultContactCenterInsightsStub::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -311,6 +343,18 @@ DefaultContactCenterInsightsStub::UpdateIssue(
     return google::cloud::MakeStatusFromRpcError(status);
   }
   return response;
+}
+
+Status DefaultContactCenterInsightsStub::DeleteIssue(
+    grpc::ClientContext& client_context,
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteIssue(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
 }
 
 StatusOr<

@@ -105,12 +105,12 @@ class BigQueryWriteClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::WriteStream,google/cloud/bigquery/storage/v1/stream.proto#L224}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::WriteStream,google/cloud/bigquery/storage/v1/stream.proto#L234}
   ///
   /// [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L382}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L386}
   /// [google.cloud.bigquery.storage.v1.WriteStream]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L224}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
   ///
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
       std::string const& parent,
@@ -126,16 +126,16 @@ class BigQueryWriteClient {
   /// soon as an acknowledgement is received.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::CreateWriteStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L382}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::CreateWriteStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L386}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::WriteStream,google/cloud/bigquery/storage/v1/stream.proto#L224}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::WriteStream,google/cloud/bigquery/storage/v1/stream.proto#L234}
   ///
   /// [google.cloud.bigquery.storage.v1.CreateWriteStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L382}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L386}
   /// [google.cloud.bigquery.storage.v1.WriteStream]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L224}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
   ///
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> CreateWriteStream(
       google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
@@ -178,14 +178,14 @@ class BigQueryWriteClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::AppendRowsRequest,google/cloud/bigquery/storage/v1/storage.proto#L404}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::AppendRowsRequest,google/cloud/bigquery/storage/v1/storage.proto#L406}
   /// and response (read) type:
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::AppendRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L497}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::AppendRowsResponse,google/cloud/bigquery/storage/v1/storage.proto#L499}
   ///
   /// [google.cloud.bigquery.storage.v1.AppendRowsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L404}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L406}
   /// [google.cloud.bigquery.storage.v1.AppendRowsResponse]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L497}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L499}
   ///
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::bigquery::storage::v1::AppendRowsRequest,
@@ -200,12 +200,12 @@ class BigQueryWriteClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::WriteStream,google/cloud/bigquery/storage/v1/stream.proto#L224}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::WriteStream,google/cloud/bigquery/storage/v1/stream.proto#L234}
   ///
   /// [google.cloud.bigquery.storage.v1.GetWriteStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L548}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L550}
   /// [google.cloud.bigquery.storage.v1.WriteStream]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L224}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
   ///
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
       std::string const& name, Options opts = {});
@@ -214,16 +214,16 @@ class BigQueryWriteClient {
   /// Gets information about a write stream.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::GetWriteStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L548}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::GetWriteStreamRequest,google/cloud/bigquery/storage/v1/storage.proto#L550}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::WriteStream,google/cloud/bigquery/storage/v1/stream.proto#L224}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::WriteStream,google/cloud/bigquery/storage/v1/stream.proto#L234}
   ///
   /// [google.cloud.bigquery.storage.v1.GetWriteStreamRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L548}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L550}
   /// [google.cloud.bigquery.storage.v1.WriteStream]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L224}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/stream.proto#L234}
   ///
   StatusOr<google::cloud::bigquery::storage::v1::WriteStream> GetWriteStream(
       google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
@@ -280,15 +280,15 @@ class BigQueryWriteClient {
   /// for read operations.
   ///
   /// @param parent  Required. Parent table that all the streams should belong
-  /// to, in the form of
-  ///  `projects/{project}/datasets/{dataset}/tables/{table}`.
+  /// to, in the form
+  ///  of `projects/{project}/datasets/{dataset}/tables/{table}`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse,google/cloud/bigquery/storage/v1/storage.proto#L579}
   ///
   /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L564}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L566}
   /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse]:
   /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L579}
   ///
@@ -305,14 +305,14 @@ class BigQueryWriteClient {
   /// for read operations.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest,google/cloud/bigquery/storage/v1/storage.proto#L564}
+  /// @googleapis_link{google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest,google/cloud/bigquery/storage/v1/storage.proto#L566}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse,google/cloud/bigquery/storage/v1/storage.proto#L579}
   ///
   /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsRequest]:
-  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L564}
+  /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L566}
   /// [google.cloud.bigquery.storage.v1.BatchCommitWriteStreamsResponse]:
   /// @googleapis_reference_link{google/cloud/bigquery/storage/v1/storage.proto#L579}
   ///

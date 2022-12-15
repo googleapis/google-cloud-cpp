@@ -98,12 +98,12 @@ class JobControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   /// [google.cloud.dataproc.v1.SubmitJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L755}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L779}
   /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
       std::string const& project_id, std::string const& region,
@@ -113,16 +113,16 @@ class JobControllerClient {
   /// Submits a job to a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::SubmitJobRequest,google/cloud/dataproc/v1/jobs.proto#L755}
+  /// @googleapis_link{google::cloud::dataproc::v1::SubmitJobRequest,google/cloud/dataproc/v1/jobs.proto#L779}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   /// [google.cloud.dataproc.v1.SubmitJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L755}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L779}
   /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   StatusOr<google::cloud::dataproc::v1::Job> SubmitJob(
       google::cloud::dataproc::v1::SubmitJobRequest const& request,
@@ -140,12 +140,12 @@ class JobControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   /// [google.cloud.dataproc.v1.SubmitJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L755}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L779}
   /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
       std::string const& project_id, std::string const& region,
@@ -155,16 +155,16 @@ class JobControllerClient {
   /// Submits job to a cluster.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::SubmitJobRequest,google/cloud/dataproc/v1/jobs.proto#L755}
+  /// @googleapis_link{google::cloud::dataproc::v1::SubmitJobRequest,google/cloud/dataproc/v1/jobs.proto#L779}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   /// [google.cloud.dataproc.v1.SubmitJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L755}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L779}
   /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   future<StatusOr<google::cloud::dataproc::v1::Job>> SubmitJobAsOperation(
       google::cloud::dataproc::v1::SubmitJobRequest const& request,
@@ -182,12 +182,12 @@ class JobControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   /// [google.cloud.dataproc.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L797}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L822}
   /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   StatusOr<google::cloud::dataproc::v1::Job> GetJob(
       std::string const& project_id, std::string const& region,
@@ -197,16 +197,16 @@ class JobControllerClient {
   /// Gets the resource representation for a job in a project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::GetJobRequest,google/cloud/dataproc/v1/jobs.proto#L797}
+  /// @googleapis_link{google::cloud::dataproc::v1::GetJobRequest,google/cloud/dataproc/v1/jobs.proto#L822}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   /// [google.cloud.dataproc.v1.GetJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L797}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L822}
   /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   StatusOr<google::cloud::dataproc::v1::Job> GetJob(
       google::cloud::dataproc::v1::GetJobRequest const& request,
@@ -223,12 +223,12 @@ class JobControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   /// [google.cloud.dataproc.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L810}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L835}
   /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
       std::string const& project_id, std::string const& region,
@@ -255,12 +255,12 @@ class JobControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   /// [google.cloud.dataproc.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L810}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L835}
   /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
       std::string const& project_id, std::string const& region,
@@ -270,16 +270,16 @@ class JobControllerClient {
   /// Lists regions/{region}/jobs in a project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::ListJobsRequest,google/cloud/dataproc/v1/jobs.proto#L810}
+  /// @googleapis_link{google::cloud::dataproc::v1::ListJobsRequest,google/cloud/dataproc/v1/jobs.proto#L835}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   /// [google.cloud.dataproc.v1.ListJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L810}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L835}
   /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   StreamRange<google::cloud::dataproc::v1::Job> ListJobs(
       google::cloud::dataproc::v1::ListJobsRequest request, Options opts = {});
@@ -288,16 +288,16 @@ class JobControllerClient {
   /// Updates a job in a project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::UpdateJobRequest,google/cloud/dataproc/v1/jobs.proto#L866}
+  /// @googleapis_link{google::cloud::dataproc::v1::UpdateJobRequest,google/cloud/dataproc/v1/jobs.proto#L892}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   /// [google.cloud.dataproc.v1.UpdateJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L866}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L892}
   /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   StatusOr<google::cloud::dataproc::v1::Job> UpdateJob(
       google::cloud::dataproc::v1::UpdateJobRequest const& request,
@@ -319,12 +319,12 @@ class JobControllerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   /// [google.cloud.dataproc.v1.CancelJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L901}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L928}
   /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   StatusOr<google::cloud::dataproc::v1::Job> CancelJob(
       std::string const& project_id, std::string const& region,
@@ -338,16 +338,16 @@ class JobControllerClient {
   /// [regions/{region}/jobs.get](https://cloud.google.com/dataproc/docs/reference/rest/v1/projects.regions.jobs/get).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::CancelJobRequest,google/cloud/dataproc/v1/jobs.proto#L901}
+  /// @googleapis_link{google::cloud::dataproc::v1::CancelJobRequest,google/cloud/dataproc/v1/jobs.proto#L928}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_link{google::cloud::dataproc::v1::Job,google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   /// [google.cloud.dataproc.v1.CancelJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L901}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L928}
   /// [google.cloud.dataproc.v1.Job]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L639}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L647}
   ///
   StatusOr<google::cloud::dataproc::v1::Job> CancelJob(
       google::cloud::dataproc::v1::CancelJobRequest const& request,
@@ -367,7 +367,7 @@ class JobControllerClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dataproc.v1.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L914}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L941}
   ///
   Status DeleteJob(std::string const& project_id, std::string const& region,
                    std::string const& job_id, Options opts = {});
@@ -377,12 +377,12 @@ class JobControllerClient {
   /// and the response returns `FAILED_PRECONDITION`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dataproc::v1::DeleteJobRequest,google/cloud/dataproc/v1/jobs.proto#L914}
+  /// @googleapis_link{google::cloud::dataproc::v1::DeleteJobRequest,google/cloud/dataproc/v1/jobs.proto#L941}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dataproc.v1.DeleteJobRequest]:
-  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L914}
+  /// @googleapis_reference_link{google/cloud/dataproc/v1/jobs.proto#L941}
   ///
   Status DeleteJob(google::cloud::dataproc::v1::DeleteJobRequest const& request,
                    Options opts = {});
