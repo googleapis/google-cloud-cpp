@@ -57,8 +57,8 @@ set_target_properties(google_cloud_cpp_generator_golden_protos
 file(
     GLOB google_cloud_cpp_generator_golden_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "golden/*.h" "golden/*.cc" "golden/internal/*.h" "golden/internal/*.cc"
-    "golden/mocks/*.h")
+    "golden/v1/*.h" "golden/v1/*.cc" "golden/v1/internal/*.h"
+    "golden/v1/internal/*.cc" "golden/v1/mocks/*.h")
 list(SORT google_cloud_cpp_generator_golden_files)
 
 # Create a library from the where the golden code was copied to.
@@ -161,7 +161,7 @@ endforeach ()
 file(
     GLOB
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "golden/samples/*.cc")
+    "golden/v1/samples/*.cc")
 foreach (fname IN LISTS samples_cc)
     google_cloud_cpp_add_executable(target "generator" "${fname}")
     target_link_libraries(

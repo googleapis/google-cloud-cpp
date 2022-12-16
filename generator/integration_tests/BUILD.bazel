@@ -65,17 +65,17 @@ cc_grpc_library(
 filegroup(
     name = "golden_srcs",
     srcs = glob([
-        "golden/*.cc",
-        "golden/internal/*.cc",
+        "golden/v1/*.cc",
+        "golden/v1/internal/*.cc",
     ]),
 )
 
 filegroup(
     name = "golden_hdrs",
     srcs = glob([
-        "golden/*.h",
-        "golden/internal/*.h",
-        "golden/mocks/*.h",
+        "golden/v1/*.h",
+        "golden/v1/internal/*.h",
+        "golden/v1/mocks/*.h",
     ]),
 )
 
@@ -142,4 +142,4 @@ filegroup(
         ":google_cloud_cpp_generator_golden",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
-) for sample in glob(["golden/samples/*.cc"])]
+) for sample in glob(["golden/v1/samples/*.cc"])]
