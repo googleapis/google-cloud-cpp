@@ -17,7 +17,7 @@
 service {
   service_proto_path: "generator/integration_tests/test.proto"
   additional_proto_files: "generator/integration_tests/backup.proto"
-  product_path: "generator/integration_tests/golden"
+  product_path: "generator/integration_tests/golden/v1"
   initial_copyright_year: "2022"
   omitted_rpcs: ["Omitted1", "GoldenKitchenSink.Omitted2"]
   service_endpoint_env_var: "GOLDEN_KITCHEN_SINK_ENDPOINT"
