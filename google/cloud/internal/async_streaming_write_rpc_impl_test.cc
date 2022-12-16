@@ -32,7 +32,7 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::testing::_;
-using ::testing::ReturnRef;
+using ::testing::Return;
 
 struct FakeRequest {
   std::string key;
@@ -85,8 +85,7 @@ TEST(AsyncStreamingWriteRpcTest, Basic) {
       });
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  grpc::CompletionQueue grpc_cq;
-  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(ReturnRef(grpc_cq));
+  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(Return(nullptr));
 
   std::deque<std::shared_ptr<AsyncGrpcOperation>> operations;
   auto notify_next_op = [&](bool ok = true) {

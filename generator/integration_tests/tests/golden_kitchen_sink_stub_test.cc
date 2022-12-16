@@ -35,7 +35,6 @@ using ::google::test::admin::database::v1::Request;
 using ::google::test::admin::database::v1::Response;
 using ::testing::_;
 using ::testing::Return;
-using ::testing::ReturnRef;
 
 class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
                                           v1::GoldenKitchenSink::StubInterface {
@@ -477,8 +476,7 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingWriteRead) {
       });
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  grpc::CompletionQueue grpc_cq;
-  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(ReturnRef(grpc_cq));
+  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(Return(nullptr));
 
   std::deque<std::shared_ptr<AsyncGrpcOperation>> operations;
   auto notify_next_op = [&](bool ok) {
@@ -549,8 +547,7 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingRead) {
       });
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  grpc::CompletionQueue grpc_cq;
-  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(ReturnRef(grpc_cq));
+  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(Return(nullptr));
 
   std::deque<std::shared_ptr<AsyncGrpcOperation>> operations;
   auto notify_next_op = [&](bool ok) {
@@ -621,8 +618,7 @@ TEST_F(GoldenKitchenSinkStubTest, AsyncStreamingWrite) {
           });
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  grpc::CompletionQueue grpc_cq;
-  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(ReturnRef(grpc_cq));
+  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(Return(nullptr));
 
   std::deque<std::shared_ptr<AsyncGrpcOperation>> operations;
   auto notify_next_op = [&](bool ok) {

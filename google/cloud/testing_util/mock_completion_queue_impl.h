@@ -43,7 +43,7 @@ class MockCompletionQueueImpl : public internal::CompletionQueueImpl {
                absl::FunctionRef<void(void*)>),
               (override));
 
-  MOCK_METHOD(grpc::CompletionQueue&, cq, (), (override));
+  MOCK_METHOD(grpc::CompletionQueue*, cq, (), (override));
 };
 
 }  // namespace testing_util

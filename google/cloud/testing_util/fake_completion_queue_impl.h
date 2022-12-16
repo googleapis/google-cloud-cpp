@@ -39,7 +39,7 @@ class FakeCompletionQueueImpl
   void Run() override;
   void Shutdown() override;
   void CancelAll() override;
-  grpc::CompletionQueue& cq() override { return cq_; }
+  grpc::CompletionQueue* cq() override { return &cq_; }
 
   future<StatusOr<std::chrono::system_clock::time_point>> MakeDeadlineTimer(
       std::chrono::system_clock::time_point deadline) override;

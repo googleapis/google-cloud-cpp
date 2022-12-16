@@ -75,13 +75,13 @@ TEST(BigtableChannelRefresh, Disabled) {
 TEST(BigtableChannelRefresh, Continuations) {
   using ms = std::chrono::milliseconds;
   using ns = std::chrono::nanoseconds;
-  using ::testing::ReturnRef;
+  using ::testing::Return;
 
   promise<StatusOr<std::chrono::system_clock::time_point>> p;
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
   grpc::CompletionQueue grpc_cq;
-  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(ReturnRef(grpc_cq));
+  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(Return(&grpc_cq));
 
   ::testing::InSequence s;
   EXPECT_CALL(*mock_cq, MakeRelativeTimer)

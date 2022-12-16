@@ -85,7 +85,7 @@ future<bool> NotifyOnStateChange::Start(
     grpc_connectivity_state last_observed) {
   auto op = std::make_shared<NotifyOnStateChange>();
   cq->StartOperation(op, [&](void* tag) {
-    channel->NotifyOnStateChange(last_observed, deadline, &cq->cq(), tag);
+    channel->NotifyOnStateChange(last_observed, deadline, cq->cq(), tag);
   });
   return op->promise_.get_future();
 }
