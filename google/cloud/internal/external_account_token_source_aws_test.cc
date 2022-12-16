@@ -695,7 +695,7 @@ TEST(ExternalAccountTokenSource, ComputeSubjectToken) {
       "workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID"};
 
   auto const actual =
-      ComputeSubjectToken(info, kTestRegion, secrets, tp, target, false);
+      ComputeSubjectToken(info, kTestRegion, secrets, tp, target);
   auto const subject =
       ComputeSubjectToken(info, kTestRegion, secrets, tp, target, true);
   // Verify that the debug version only adds a few values.

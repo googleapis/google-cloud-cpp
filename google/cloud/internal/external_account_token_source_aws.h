@@ -110,7 +110,7 @@ nlohmann::json ComputeSubjectToken(
     ExternalAccountTokenSourceAwsInfo const& info, std::string const& region,
     ExternalAccountTokenSourceAwsSecrets const& secrets,
     std::chrono::system_clock::time_point now, std::string const& target,
-    bool debug);
+    bool debug = false);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
