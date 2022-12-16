@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/internal/golden_thing_admin_rest_metadata_decorator.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_metadata_decorator.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -23,11 +23,11 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::golden_internal::MockGoldenThingAdminRestStub;
+using ::google::cloud::golden_v1_internal::MockGoldenThingAdminRestStub;
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
@@ -541,6 +541,6 @@ TEST(ThingAdminRestMetadataDecoratorTest, ListBackupOperations) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
+}  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google

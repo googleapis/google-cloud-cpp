@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/golden_kitchen_sink_connection_idempotency_policy.h"
+#include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection_idempotency_policy.h"
 #include <gmock/gmock.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -27,10 +27,12 @@ using ::google::cloud::Idempotency;
 class GoldenKitchenSinkIdempotencyPolicyTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    policy_ = golden::MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy();
+    policy_ =
+        golden_v1::MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy();
   }
 
-  std::unique_ptr<golden::GoldenKitchenSinkConnectionIdempotencyPolicy> policy_;
+  std::unique_ptr<golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicy>
+      policy_;
 };
 
 TEST_F(GoldenKitchenSinkIdempotencyPolicyTest, GenerateAccessToken) {
@@ -60,6 +62,6 @@ TEST_F(GoldenKitchenSinkIdempotencyPolicyTest, ListServiceAccountKeys) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
+}  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google

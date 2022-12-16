@@ -12,13 +12,13 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/golden_thing_admin_connection_idempotency_policy.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_connection_idempotency_policy.h"
 #include <gmock/gmock.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -28,10 +28,12 @@ namespace gtab = ::google::test::admin::database::v1;
 class GoldenIdempotencyPolicyTest : public ::testing::Test {
  protected:
   void SetUp() override {
-    policy_ = golden::MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy();
+    policy_ =
+        golden_v1::MakeDefaultGoldenThingAdminConnectionIdempotencyPolicy();
   }
 
-  std::unique_ptr<golden::GoldenThingAdminConnectionIdempotencyPolicy> policy_;
+  std::unique_ptr<golden_v1::GoldenThingAdminConnectionIdempotencyPolicy>
+      policy_;
 };
 
 TEST_F(GoldenIdempotencyPolicyTest, ListDatabases) {
@@ -121,6 +123,6 @@ TEST_F(GoldenIdempotencyPolicyTest, ListBackupOperations) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
+}  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google

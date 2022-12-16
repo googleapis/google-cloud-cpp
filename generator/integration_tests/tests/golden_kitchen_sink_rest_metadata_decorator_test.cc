@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_rest_metadata_decorator.h"
+#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_rest_metadata_decorator.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/testing_util/status_matchers.h"
@@ -23,11 +23,11 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::golden_internal::MockGoldenKitchenSinkRestStub;
+using ::google::cloud::golden_v1_internal::MockGoldenKitchenSinkRestStub;
 using ::testing::AnyOf;
 using ::testing::Contains;
 using ::testing::IsEmpty;
@@ -348,6 +348,6 @@ TEST(KitchenSinkRestMetadataDecoratorTest, ExplicitRoutingNestedField) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
+}  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google

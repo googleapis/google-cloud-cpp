@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_TESTS_MOCK_GOLDEN_KITCHEN_SINK_REST_STUB_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_TESTS_MOCK_GOLDEN_KITCHEN_SINK_REST_STUB_H
 
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_rest_stub.h"
+#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_rest_stub.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockGoldenKitchenSinkRestStub : public GoldenKitchenSinkRestStub {
@@ -77,7 +77,7 @@ class MockGoldenKitchenSinkRestStub : public GoldenKitchenSinkRestStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
+}  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google
 

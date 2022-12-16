@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/golden_thing_admin_connection.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_connection.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/async_sequencer.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/golden_thing_admin_options.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_connection_impl.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_connection_impl.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
 #include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
@@ -29,14 +29,14 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
+namespace golden_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::golden_internal::GoldenThingAdminConnectionImpl;
-using ::google::cloud::golden_internal::GoldenThingAdminDefaultOptions;
-using ::google::cloud::golden_internal::GoldenThingAdminStub;
-using ::google::cloud::golden_internal::MockGoldenThingAdminStub;
+using ::google::cloud::golden_v1_internal::GoldenThingAdminConnectionImpl;
+using ::google::cloud::golden_v1_internal::GoldenThingAdminDefaultOptions;
+using ::google::cloud::golden_v1_internal::GoldenThingAdminStub;
+using ::google::cloud::golden_v1_internal::MockGoldenThingAdminStub;
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
@@ -48,22 +48,23 @@ using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Return;
 
-std::shared_ptr<golden::GoldenThingAdminConnection> CreateTestingConnection(
+std::shared_ptr<golden_v1::GoldenThingAdminConnection> CreateTestingConnection(
     std::shared_ptr<GoldenThingAdminStub> mock) {
-  golden::GoldenThingAdminLimitedErrorCountRetryPolicy retry(
+  golden_v1::GoldenThingAdminLimitedErrorCountRetryPolicy retry(
       /*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
       /*initial_delay=*/std::chrono::microseconds(1),
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
-  GenericPollingPolicy<golden::GoldenThingAdminLimitedErrorCountRetryPolicy,
+  GenericPollingPolicy<golden_v1::GoldenThingAdminLimitedErrorCountRetryPolicy,
                        ExponentialBackoffPolicy>
       polling(retry, backoff);
   auto options = GoldenThingAdminDefaultOptions(
       Options{}
-          .set<golden::GoldenThingAdminRetryPolicyOption>(retry.clone())
-          .set<golden::GoldenThingAdminBackoffPolicyOption>(backoff.clone())
-          .set<golden::GoldenThingAdminPollingPolicyOption>(polling.clone()));
+          .set<golden_v1::GoldenThingAdminRetryPolicyOption>(retry.clone())
+          .set<golden_v1::GoldenThingAdminBackoffPolicyOption>(backoff.clone())
+          .set<golden_v1::GoldenThingAdminPollingPolicyOption>(
+              polling.clone()));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   return std::make_shared<GoldenThingAdminConnectionImpl>(
       std::move(background), std::move(mock), std::move(options));
@@ -1363,6 +1364,6 @@ TEST(GoldenThingAdminConnectionTest, CheckExpectedOptions) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden
+}  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google

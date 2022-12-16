@@ -15,17 +15,17 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/golden_thing_admin_client.h"
-#include "generator/integration_tests/golden/golden_thing_admin_options.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_connection_impl.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_client.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_connection_impl.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
 #include "generator/integration_tests/tests/mock_golden_thing_admin_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace golden {
+namespace golden_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -66,15 +66,16 @@ TEST(PlumbingTest, RetryLoopUsesPerCallPolicies) {
     return clone;
   });
 
-  auto stub = std::make_shared<golden_internal::MockGoldenThingAdminStub>();
+  auto stub = std::make_shared<golden_v1_internal::MockGoldenThingAdminStub>();
   EXPECT_CALL(*stub, GetDatabase)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try again")))
       .WillOnce(Return(Status(StatusCode::kPermissionDenied, "fail")));
 
-  auto options = golden_internal::GoldenThingAdminDefaultOptions({});
+  auto options = golden_v1_internal::GoldenThingAdminDefaultOptions({});
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto conn = std::make_shared<golden_internal::GoldenThingAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<golden_v1_internal::GoldenThingAdminConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
   auto client = GoldenThingAdminClient(std::move(conn));
 
   (void)client.GetDatabase("name", std::move(call_options));
@@ -98,7 +99,7 @@ TEST(PlumbingTest, PollingLoopUsesPerCallPolicies) {
     return clone;
   });
 
-  auto stub = std::make_shared<golden_internal::MockGoldenThingAdminStub>();
+  auto stub = std::make_shared<golden_v1_internal::MockGoldenThingAdminStub>();
   EXPECT_CALL(*stub, AsyncCreateDatabase)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
                    ::google::test::admin::database::v1::
@@ -117,10 +118,11 @@ TEST(PlumbingTest, PollingLoopUsesPerCallPolicies) {
         return make_ready_future(make_status_or(op));
       });
 
-  auto options = golden_internal::GoldenThingAdminDefaultOptions({});
+  auto options = golden_v1_internal::GoldenThingAdminDefaultOptions({});
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto conn = std::make_shared<golden_internal::GoldenThingAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+  auto conn =
+      std::make_shared<golden_v1_internal::GoldenThingAdminConnectionImpl>(
+          std::move(background), std::move(stub), std::move(options));
   auto client = GoldenThingAdminClient(std::move(conn));
 
   (void)client.CreateDatabase({}, std::move(call_options));
@@ -128,6 +130,6 @@ TEST(PlumbingTest, PollingLoopUsesPerCallPolicies) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden
+}  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google
