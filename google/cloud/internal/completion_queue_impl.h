@@ -72,7 +72,7 @@ class CompletionQueueImpl {
                               absl::FunctionRef<void(void*)> start) = 0;
 
   /// The underlying gRPC completion queue, if it exists.
-  virtual grpc::CompletionQueue* cq() { return nullptr; }
+  virtual grpc::CompletionQueue* cq() = 0;
 };
 
 }  // namespace internal
