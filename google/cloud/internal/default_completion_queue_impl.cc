@@ -217,7 +217,7 @@ DefaultCompletionQueueImpl::MakeDeadlineTimer(
     std::chrono::system_clock::time_point deadline) {
   auto p = AsyncTimerFuture::Create();
   auto op = std::move(p.first);
-  StartOperation(op, [&](void* tag) { op->Set(cq(), deadline, tag); });
+  StartOperation(op, [&](void* tag) { op->Set(*cq(), deadline, tag); });
   return std::move(p.second);
 }
 
@@ -243,7 +243,7 @@ void DefaultCompletionQueueImpl::StartOperation(
                  std::move(start));
 }
 
-grpc::CompletionQueue& DefaultCompletionQueueImpl::cq() { return cq_; }
+grpc::CompletionQueue* DefaultCompletionQueueImpl::cq() { return &cq_; }
 
 void DefaultCompletionQueueImpl::StartOperation(
     std::unique_lock<std::mutex> lk, std::shared_ptr<AsyncGrpcOperation> op,
@@ -322,7 +322,7 @@ void DefaultCompletionQueueImpl::DrainRunAsyncOnIdle() {
     return;
   }
   auto op = std::make_shared<WakeUpRunAsyncOnIdle>(shared_from_this());
-  StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
+  StartOperation(std::move(lk), op, [&](void* tag) { op->Set(*cq(), tag); });
 }
 
 void DefaultCompletionQueueImpl::WakeUpRunAsyncThread(
@@ -333,7 +333,7 @@ void DefaultCompletionQueueImpl::WakeUpRunAsyncThread(
     ++run_async_pool_size_;
     run_async_pool_hwm_ = (std::max)(run_async_pool_hwm_, run_async_pool_size_);
     auto op = std::make_shared<WakeUpRunAsyncOnIdle>(shared_from_this());
-    StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
+    StartOperation(std::move(lk), op, [&](void* tag) { op->Set(*cq(), tag); });
     return;
   }
   // Always leave one thread for I/O
@@ -341,7 +341,7 @@ void DefaultCompletionQueueImpl::WakeUpRunAsyncThread(
   auto op = std::make_shared<WakeUpRunAsyncLoop>(shared_from_this());
   ++run_async_pool_size_;
   run_async_pool_hwm_ = (std::max)(run_async_pool_hwm_, run_async_pool_size_);
-  StartOperation(std::move(lk), op, [&](void* tag) { op->Set(cq(), tag); });
+  StartOperation(std::move(lk), op, [&](void* tag) { op->Set(*cq(), tag); });
 }
 
 }  // namespace internal

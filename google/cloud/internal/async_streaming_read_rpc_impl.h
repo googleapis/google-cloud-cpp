@@ -137,7 +137,7 @@ std::unique_ptr<AsyncStreamingReadRpc<Response>> MakeStreamingReadRpc(
     CompletionQueue const& cq, std::unique_ptr<grpc::ClientContext> context,
     Request const& request, PrepareAsyncReadRpc<Request, Response> async_call) {
   auto cq_impl = GetCompletionQueueImpl(cq);
-  auto stream = async_call(context.get(), request, &cq_impl->cq());
+  auto stream = async_call(context.get(), request, cq_impl->cq());
   return absl::make_unique<AsyncStreamingReadRpcImpl<Response>>(
       std::move(cq_impl), std::move(context), std::move(stream));
 }

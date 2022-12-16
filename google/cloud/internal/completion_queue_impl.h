@@ -71,8 +71,8 @@ class CompletionQueueImpl {
   virtual void StartOperation(std::shared_ptr<AsyncGrpcOperation> op,
                               absl::FunctionRef<void(void*)> start) = 0;
 
-  /// The underlying gRPC completion queue.
-  virtual grpc::CompletionQueue& cq() = 0;
+  /// The underlying gRPC completion queue, if it exists.
+  virtual grpc::CompletionQueue* cq() { return nullptr; }
 };
 
 }  // namespace internal
