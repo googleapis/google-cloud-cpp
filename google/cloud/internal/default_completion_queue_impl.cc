@@ -217,6 +217,7 @@ DefaultCompletionQueueImpl::MakeDeadlineTimer(
     std::chrono::system_clock::time_point deadline) {
   auto p = AsyncTimerFuture::Create();
   auto op = std::move(p.first);
+  // We know *cq() is always valid as it's implemented in this class.
   StartOperation(op, [&](void* tag) { op->Set(*cq(), deadline, tag); });
   return std::move(p.second);
 }

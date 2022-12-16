@@ -81,8 +81,7 @@ TEST(AsyncStreamingReadRpcTest, Basic) {
       });
 
   auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  grpc::CompletionQueue grpc_cq;
-  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(Return(&grpc_cq));
+  EXPECT_CALL(*mock_cq, cq).WillRepeatedly(Return(nullptr));
 
   std::deque<std::shared_ptr<AsyncGrpcOperation>> operations;
   auto notify_next_op = [&](bool ok = true) {

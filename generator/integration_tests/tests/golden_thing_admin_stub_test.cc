@@ -570,7 +570,6 @@ class GoldenStubTest : public ::testing::Test {
 
   std::unique_ptr<MockGrpcGoldenThingAdminStub> grpc_stub_;
   std::unique_ptr<MockLongrunningOperationsStub> longrunning_stub_;
-  grpc::CompletionQueue grpc_cq_;
 };
 
 TEST_F(GoldenStubTest, ListDatabases) {
@@ -600,7 +599,7 @@ TEST_F(GoldenStubTest, AsyncCreateDatabase) {
         f(op.get());
         op->Notify(false);
       });
-  EXPECT_CALL(*mock, cq).WillOnce(Return(&grpc_cq_));
+  EXPECT_CALL(*mock, cq).WillOnce(Return(nullptr));
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
@@ -637,7 +636,7 @@ TEST_F(GoldenStubTest, AsyncUpdateDatabaseDdl) {
         f(op.get());
         op->Notify(false);
       });
-  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(&grpc_cq_));
+  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(nullptr));
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
@@ -733,7 +732,7 @@ TEST_F(GoldenStubTest, AsyncCreateBackup) {
         f(op.get());
         op->Notify(false);
       });
-  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(&grpc_cq_));
+  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(nullptr));
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
@@ -815,7 +814,7 @@ TEST_F(GoldenStubTest, AsyncRestoreDatabase) {
         f(op.get());
         op->Notify(false);
       });
-  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(&grpc_cq_));
+  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(nullptr));
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
@@ -867,7 +866,7 @@ TEST_F(GoldenStubTest, AsyncGetDatabase) {
         f(op.get());
         op->Notify(false);
       });
-  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(&grpc_cq_));
+  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(nullptr));
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
@@ -888,7 +887,7 @@ TEST_F(GoldenStubTest, AsyncDropDatabase) {
         f(op.get());
         op->Notify(false);
       });
-  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(&grpc_cq_));
+  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(nullptr));
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
@@ -910,7 +909,7 @@ TEST_F(GoldenStubTest, AsyncGetOperation) {
         f(op.get());
         op->Notify(false);
       });
-  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(&grpc_cq_));
+  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(nullptr));
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
@@ -932,7 +931,7 @@ TEST_F(GoldenStubTest, AsyncCancelOperation) {
         f(op.get());
         op->Notify(false);
       });
-  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(&grpc_cq_));
+  EXPECT_CALL(*mock, cq).WillOnce(::testing::Return(nullptr));
   CompletionQueue cq(mock);
 
   DefaultGoldenThingAdminStub stub(std::move(grpc_stub_),
