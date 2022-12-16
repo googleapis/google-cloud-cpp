@@ -14,11 +14,16 @@
 
 #include "google/cloud/internal/external_account_token_source_aws.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/external_account_source_format.h"
+#include "google/cloud/internal/format_time_point.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/json_parsing.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/sha256_hash.h"
+#include "google/cloud/internal/sha256_hmac.h"
 #include "absl/strings/match.h"
+#include "absl/strings/str_split.h"
 #include <chrono>
 
 namespace google {
@@ -231,6 +236,120 @@ StatusOr<ExternalAccountTokenSourceAwsSecrets> FetchSecrets(
       /*access_key_id=*/*std::move(access_key_id),
       /*secret_access_key=*/*std::move(secret_access_key),
       /*session_token=*/*std::move(session_token)};
+}
+
+using ::google::cloud::internal::HexEncode;
+using ::google::cloud::internal::Sha256Hash;
+using ::google::cloud::internal::Sha256Hmac;
+
+nlohmann::json ComputeSubjectToken(
+    ExternalAccountTokenSourceAwsInfo const& info, std::string const& region,
+    ExternalAccountTokenSourceAwsSecrets const& secrets,
+    std::chrono::system_clock::time_point now, std::string const& target,
+    bool debug) {
+  // We need to compute a signed API request to the `GetCallerIdentity` API in
+  // AWS's Security Token Service.  The format for these requests is documented
+  // at:
+  //    https://docs.aws.amazon.com/general/latest/gr/create-signed-request.html
+  // As you can see below, the code consists of computing several strings and
+  // then computing their HMAC-SHA256 and SHA256 hashes.  The format for these
+  // strings is the most delicate portion of the code.  A single extra space,
+  // or an excess trailing newline breaks the signature.
+  //
+  // The secrets are used as inputs into the final "Signature" field. This
+  // signature only validates the request with the given input parameters and
+  // timestamps.
+  //
+  // In almost all cases the URL will be
+  //    https://sts.{region}.amazonaws.com?Action=GetCallerIdentity&Version=2011-06-15
+  //
+  // In fact, that is the documented URL for the `GetCallerIdentity` API, but
+  // we need to be prepared for VPC-SC and other environments where the service
+  // may have a different name. As usual, we need to use the canonical `Host`
+  // header for this service.
+
+  // The info.regional_cred_verification_url is really a template. The {region}
+  // tag needs to be replaced with the actual region.
+  auto const verification_url = absl::StrReplaceAll(
+      info.regional_cred_verification_url, {{"{region}", region}});
+
+  // We need to split the URL into the query and the base.
+  std::vector<absl::string_view> verification =
+      absl::StrSplit(verification_url, absl::MaxSplits('?', 1));
+  auto const canonical_query_string =
+      verification.size() == 2
+          ? std::string{verification[1]}
+          : std::string{"Action=GetCallerIdentity&Version=2011-06-15"};
+
+  auto const host = absl::StrCat("sts.", region, ".amazonaws.com");
+  auto const timestamp = internal::FormatV4SignedUrlTimestamp(now);
+  auto const signed_headers = std::string{"host;x-amz-date"};
+  auto const body = std::string{};
+  auto const body_hash = HexEncode(Sha256Hash(body));
+
+  auto const canonical_request = absl::StrCat(  //
+      "POST\n",                                 // Method
+      "/\n",                                    // CanonicalUri
+      canonical_query_string, "\n",             //
+      "host:", host, "\n",                      // CanonicalHeaders
+      "x-amz-date:", timestamp, "\n",           //
+      signed_headers, "\n",                     //
+      body_hash                                 //
+  );
+  auto const canonical_request_hash = HexEncode(Sha256Hash(canonical_request));
+
+  auto const date = internal::FormatV4SignedUrlScope(now);
+  auto const string_to_sign = absl::StrCat(      //
+      "AWS4-HMAC-SHA256\n",                      //
+      timestamp, "\n",                           //
+      date, "/", region, "/sts/aws4_request\n",  // scope
+      canonical_request_hash                     //
+  );
+  auto const k1 = Sha256Hmac("AWS4" + secrets.secret_access_key, timestamp);
+  auto const k2 = Sha256Hmac(k1, region);
+  auto const k3 = Sha256Hmac(k2, std::string{"sts"});
+  auto const k4 = Sha256Hmac(k3, std::string{"aws4_request"});
+  auto const signature = Sha256Hmac(k4, string_to_sign);
+  auto const authorization = absl::StrCat(    //
+      "AWS-HMAC-SHA256",                      //
+      " Credential=", secrets.access_key_id,  //
+      ",SignedHeaders=", signed_headers,      //
+      ",Signature=", HexEncode(signature)     //
+  );
+  std::vector<nlohmann::json> headers({
+      {{"key", "x-goog-cloud-target-resource"}, {"value", target}},
+      {{"key", "x-amz-date"}, {"value", timestamp}},
+      {{"key", "authorization"}, {"value", authorization}},
+      {{"key", "host"}, {"value", host}},
+  });
+  // The session token may be empty, in which case we do not need to include it.
+  if (!secrets.session_token.empty()) {
+    headers.push_back(
+        {{"key", "x-amz-security-token"}, {"value", secrets.session_token}});
+  }
+  if (debug) {
+    return nlohmann::json{
+        {"url", verification_url},
+        {"headers", headers},
+        {"method", "POST"},
+        {"body", ""},
+        {"body_hash", body_hash},
+        {"canonical_request", canonical_request},
+        {"canonical_request_hash", canonical_request_hash},
+        {"string_to_sign", string_to_sign},
+        {"k1", HexEncode(k1)},
+        {"k2", HexEncode(k2)},
+        {"k3", HexEncode(k3)},
+        {"k4", HexEncode(k4)},
+        {"signature", HexEncode(signature)},
+    };
+  }
+  return nlohmann::json{
+      {"url", verification_url},
+      {"headers", headers},
+      {"method", "POST"},
+      {"body", ""},
+  };
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
