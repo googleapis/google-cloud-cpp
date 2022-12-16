@@ -519,6 +519,14 @@ auto make_expected_options = []() {
           std::string{"test-option"}));
 };
 
+auto make_expected_token_exchange_request = [](std::string const& path) {
+  return AllOf(
+      Property(&RestRequest::path, path),
+      Property(&RestRequest::headers,
+               Contains(Pair("content-type",
+                             Contains("application/x-www-form-urlencoded")))));
+};
+
 TEST(ExternalAccount, Working) {
   auto const test_url = std::string{"https://sts.example.com/"};
   auto const expected_access_token = std::string{"test-access-token"};
@@ -540,25 +548,20 @@ TEST(ExternalAccount, Working) {
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call(make_expected_options())).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
+    auto expected_request = make_expected_token_exchange_request(test_url);
+    auto expected_payload =
+        MatcherCast<FormDataType const&>(UnorderedElementsAre(
+            Pair("grant_type",
+                 "urn:ietf:params:oauth:grant-type:token-exchange"),
+            Pair("requested_token_type",
+                 "urn:ietf:params:oauth:token-type:access_token"),
+            Pair("scope", "https://www.googleapis.com/auth/cloud-platform"),
+            Pair("audience", "test-audience"),
+            Pair("subject_token_type", "test-subject-token-type"),
+            Pair("subject_token", "test-subject-token")));
+    EXPECT_CALL(*mock, Post(expected_request, expected_payload))
         .WillOnce(
-            [test_url, info, response = json_response.dump()](
-                RestRequest const& request, auto const& form_data) mutable {
-              EXPECT_THAT(
-                  form_data,
-                  UnorderedElementsAre(
-                      Pair("grant_type",
-                           "urn:ietf:params:oauth:grant-type:token-exchange"),
-                      Pair("requested_token_type",
-                           "urn:ietf:params:oauth:token-type:access_token"),
-                      Pair("scope",
-                           "https://www.googleapis.com/auth/cloud-platform"),
-                      Pair("audience", "test-audience"),
-                      Pair("subject_token_type", "test-subject-token-type"),
-                      Pair("subject_token", "test-subject-token")));
-              EXPECT_EQ(request.path(), test_url);
-              return MakeMockResponseSuccess(std::move(response));
-            });
+            Return(ByMove(MakeMockResponseSuccess(json_response.dump()))));
     return mock;
   });
 
@@ -684,24 +687,20 @@ TEST(ExternalAccount, HandleHttpError) {
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
-        .WillOnce([test_url, info](RestRequest const& request,
-                                   auto const& form_data) {
-          EXPECT_THAT(
-              form_data,
-              UnorderedElementsAre(
-                  Pair("grant_type",
-                       "urn:ietf:params:oauth:grant-type:token-exchange"),
-                  Pair("requested_token_type",
-                       "urn:ietf:params:oauth:token-type:access_token"),
-                  Pair("scope",
-                       "https://www.googleapis.com/auth/cloud-platform"),
-                  Pair("audience", "test-audience"),
-                  Pair("subject_token_type", "test-subject-token-type"),
-                  Pair("subject_token", "test-subject-token")));
-          EXPECT_EQ(request.path(), test_url);
-          return MakeMockResponseError();
-        });
+    auto expected_request = make_expected_token_exchange_request(test_url);
+    auto expected_form_data =
+        MatcherCast<FormDataType const&>(UnorderedElementsAre(
+            Pair("grant_type",
+                 "urn:ietf:params:oauth:grant-type:token-exchange"),
+            Pair("requested_token_type",
+                 "urn:ietf:params:oauth:token-type:access_token"),
+            Pair("scope", "https://www.googleapis.com/auth/cloud-platform"),
+            Pair("audience", "test-audience"),
+            Pair("subject_token_type", "test-subject-token-type"),
+            Pair("subject_token", "test-subject-token")));
+
+    EXPECT_CALL(*mock, Post(expected_request, expected_form_data))
+        .WillOnce(Return(ByMove(MakeMockResponseError())));
     return mock;
   });
 
@@ -725,24 +724,20 @@ TEST(ExternalAccount, HandleHttpPartialError) {
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
-        .WillOnce([test_url, info, response](RestRequest const& request,
-                                             auto const& form_data) mutable {
-          EXPECT_THAT(
-              form_data,
-              UnorderedElementsAre(
-                  Pair("grant_type",
-                       "urn:ietf:params:oauth:grant-type:token-exchange"),
-                  Pair("requested_token_type",
-                       "urn:ietf:params:oauth:token-type:access_token"),
-                  Pair("scope",
-                       "https://www.googleapis.com/auth/cloud-platform"),
-                  Pair("audience", "test-audience"),
-                  Pair("subject_token_type", "test-subject-token-type"),
-                  Pair("subject_token", "test-subject-token")));
-          EXPECT_EQ(request.path(), test_url);
-          return MakeMockResponsePartialError(std::move(response));
-        });
+    auto expected_request = make_expected_token_exchange_request(test_url);
+    auto expected_form_data =
+        MatcherCast<FormDataType const&>(UnorderedElementsAre(
+            Pair("grant_type",
+                 "urn:ietf:params:oauth:grant-type:token-exchange"),
+            Pair("requested_token_type",
+                 "urn:ietf:params:oauth:token-type:access_token"),
+            Pair("scope", "https://www.googleapis.com/auth/cloud-platform"),
+            Pair("audience", "test-audience"),
+            Pair("subject_token_type", "test-subject-token-type"),
+            Pair("subject_token", "test-subject-token")));
+
+    EXPECT_CALL(*mock, Post(expected_request, expected_form_data))
+        .WillOnce(Return(ByMove(MakeMockResponsePartialError(response))));
     return mock;
   });
 
@@ -767,24 +762,19 @@ TEST(ExternalAccount, HandleNotJson) {
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
-        .WillOnce([test_url, info, p = payload](RestRequest const& request,
-                                                auto const& form_data) mutable {
-          EXPECT_THAT(
-              form_data,
-              UnorderedElementsAre(
-                  Pair("grant_type",
-                       "urn:ietf:params:oauth:grant-type:token-exchange"),
-                  Pair("requested_token_type",
-                       "urn:ietf:params:oauth:token-type:access_token"),
-                  Pair("scope",
-                       "https://www.googleapis.com/auth/cloud-platform"),
-                  Pair("audience", "test-audience"),
-                  Pair("subject_token_type", "test-subject-token-type"),
-                  Pair("subject_token", "test-subject-token")));
-          EXPECT_EQ(request.path(), test_url);
-          return MakeMockResponseSuccess(std::move(p));
-        });
+    auto expected_request = make_expected_token_exchange_request(test_url);
+    auto expected_payload =
+        MatcherCast<FormDataType const&>(UnorderedElementsAre(
+            Pair("grant_type",
+                 "urn:ietf:params:oauth:grant-type:token-exchange"),
+            Pair("requested_token_type",
+                 "urn:ietf:params:oauth:token-type:access_token"),
+            Pair("scope", "https://www.googleapis.com/auth/cloud-platform"),
+            Pair("audience", "test-audience"),
+            Pair("subject_token_type", "test-subject-token-type"),
+            Pair("subject_token", "test-subject-token")));
+    EXPECT_CALL(*mock, Post(expected_request, expected_payload))
+        .WillOnce(Return(ByMove(MakeMockResponseSuccess(payload))));
     return mock;
   });
 
@@ -810,24 +800,19 @@ TEST(ExternalAccount, HandleNotJsonObject) {
   MockClientFactory client_factory;
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
-    EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
-        .WillOnce([test_url, info, p = payload](RestRequest const& request,
-                                                auto const& form_data) mutable {
-          EXPECT_THAT(
-              form_data,
-              UnorderedElementsAre(
-                  Pair("grant_type",
-                       "urn:ietf:params:oauth:grant-type:token-exchange"),
-                  Pair("requested_token_type",
-                       "urn:ietf:params:oauth:token-type:access_token"),
-                  Pair("scope",
-                       "https://www.googleapis.com/auth/cloud-platform"),
-                  Pair("audience", "test-audience"),
-                  Pair("subject_token_type", "test-subject-token-type"),
-                  Pair("subject_token", "test-subject-token")));
-          EXPECT_EQ(request.path(), test_url);
-          return MakeMockResponseSuccess(std::move(p));
-        });
+    auto expected_request = make_expected_token_exchange_request(test_url);
+    auto expected_payload =
+        MatcherCast<FormDataType const&>(UnorderedElementsAre(
+            Pair("grant_type",
+                 "urn:ietf:params:oauth:grant-type:token-exchange"),
+            Pair("requested_token_type",
+                 "urn:ietf:params:oauth:token-type:access_token"),
+            Pair("scope", "https://www.googleapis.com/auth/cloud-platform"),
+            Pair("audience", "test-audience"),
+            Pair("subject_token_type", "test-subject-token-type"),
+            Pair("subject_token", "test-subject-token")));
+    EXPECT_CALL(*mock, Post(expected_request, expected_payload))
+        .WillOnce(Return(ByMove(MakeMockResponseSuccess(payload))));
     return mock;
   });
 
@@ -860,10 +845,8 @@ TEST(ExternalAccount, MissingToken) {
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
-        .WillOnce([test_url, info, response = json_response.dump()](
-                      auto const&, auto const&) {
-          return MakeMockResponseSuccess(response);
-        });
+        .WillOnce(
+            Return(ByMove(MakeMockResponseSuccess(json_response.dump()))));
     return mock;
   });
 
@@ -895,10 +878,8 @@ TEST(ExternalAccount, MissingIssuedTokenType) {
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
-        .WillOnce([test_url, info, response = json_response.dump()](
-                      auto const&, auto const&) {
-          return MakeMockResponseSuccess(response);
-        });
+        .WillOnce(
+            Return(ByMove(MakeMockResponseSuccess(json_response.dump()))));
     return mock;
   });
 
@@ -930,10 +911,8 @@ TEST(ExternalAccount, MissingTokenType) {
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
-        .WillOnce([test_url, info, response = json_response.dump()](
-                      auto const&, auto const&) {
-          return MakeMockResponseSuccess(response);
-        });
+        .WillOnce(
+            Return(ByMove(MakeMockResponseSuccess(json_response.dump()))));
     return mock;
   });
 
@@ -965,10 +944,8 @@ TEST(ExternalAccount, InvalidIssuedTokenType) {
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
-        .WillOnce([test_url, info, response = json_response.dump()](
-                      auto const&, auto const&) {
-          return MakeMockResponseSuccess(response);
-        });
+        .WillOnce(
+            Return(ByMove(MakeMockResponseSuccess(json_response.dump()))));
     return mock;
   });
 
@@ -1002,10 +979,8 @@ TEST(ExternalAccount, InvalidTokenType) {
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
-        .WillOnce([test_url, info, response = json_response.dump()](
-                      auto const&, auto const&) {
-          return MakeMockResponseSuccess(response);
-        });
+        .WillOnce(
+            Return(ByMove(MakeMockResponseSuccess(json_response.dump()))));
     return mock;
   });
 
@@ -1040,10 +1015,8 @@ TEST(ExternalAccount, MissingExpiresIn) {
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
-        .WillOnce([test_url, info, response = json_response.dump()](
-                      auto const&, auto const&) {
-          return MakeMockResponseSuccess(response);
-        });
+        .WillOnce(
+            Return(ByMove(MakeMockResponseSuccess(json_response.dump()))));
     return mock;
   });
 
@@ -1076,10 +1049,8 @@ TEST(ExternalAccount, InvalidExpiresIn) {
   EXPECT_CALL(client_factory, Call).WillOnce([&]() {
     auto mock = absl::make_unique<MockRestClient>();
     EXPECT_CALL(*mock, Post(_, An<FormDataType const&>()))
-        .WillOnce([test_url, info, response = json_response.dump()](
-                      auto const&, auto const&) {
-          return MakeMockResponseSuccess(response);
-        });
+        .WillOnce(
+            Return(ByMove(MakeMockResponseSuccess(json_response.dump()))));
     return mock;
   });
 

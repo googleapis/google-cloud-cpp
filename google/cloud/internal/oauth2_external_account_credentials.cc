@@ -141,7 +141,9 @@ StatusOr<internal::AccessToken> ExternalAccountCredentials::GetToken(
       {"subject_token_type", info_.subject_token_type},
       {"subject_token", subject_token->token},
   };
-  auto request = rest_internal::RestRequest(info_.token_url);
+  auto request =
+      rest_internal::RestRequest(info_.token_url)
+          .AddHeader("content-type", "application/x-www-form-urlencoded");
 
   auto client = client_factory_(options_);
   auto response = client->Post(request, form_data);
