@@ -98,6 +98,20 @@ StatusOr<ExternalAccountTokenSourceAwsSecrets> FetchSecrets(
     std::string const& metadata_token, HttpClientFactory const& cf,
     Options const& opts, internal::ErrorContext const& ec);
 
+/**
+ * Compute the subject token using the fetched region and secrets.
+ *
+ * The subject token will be url-encoded and then passed to Google's STS
+ * (Security Token Service) to exchange for an access token. Embedded in this
+ * JSON object is a signed request to AWS.  Presumably Google's STS uses this
+ * signed request to contact AWS.
+ */
+nlohmann::json ComputeSubjectToken(
+    ExternalAccountTokenSourceAwsInfo const& info, std::string const& region,
+    ExternalAccountTokenSourceAwsSecrets const& secrets,
+    std::chrono::system_clock::time_point now, std::string const& target,
+    bool debug);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal
 }  // namespace cloud
