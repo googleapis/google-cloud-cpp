@@ -132,7 +132,7 @@ filegroup(
 ) for test in google_cloud_cpp_generator_golden_tests]
 
 [cc_test(
-    name = sample.replace(".cc", "").replace("_", "/"),
+    name = sample.replace("/", "_").replace(".cc", ""),
     srcs = [sample],
     copts = [
         "-I$(BINDIR)",
