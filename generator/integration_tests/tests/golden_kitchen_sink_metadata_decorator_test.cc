@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_metadata_decorator.h"
+#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_metadata_decorator.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
@@ -27,13 +27,13 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
-using ::google::cloud::golden_internal::MockStreamingReadRpc;
-using ::google::cloud::golden_internal::MockStreamingWriteRpc;
+using ::google::cloud::golden_v1_internal::MockGoldenKitchenSinkStub;
+using ::google::cloud::golden_v1_internal::MockStreamingReadRpc;
+using ::google::cloud::golden_v1_internal::MockStreamingWriteRpc;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
@@ -475,6 +475,6 @@ TEST_F(MetadataDecoratorTest, ExplicitRoutingNestedField) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
+}  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google

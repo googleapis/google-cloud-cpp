@@ -15,16 +15,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_TESTS_MOCK_GOLDEN_THING_ADMIN_STUB_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_TESTS_MOCK_GOLDEN_THING_ADMIN_STUB_H
 
-#include "generator/integration_tests/golden/internal/golden_thing_admin_stub.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_stub.h"
 #include <gmock/gmock.h>
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class MockGoldenThingAdminStub
-    : public google::cloud::golden_internal::GoldenThingAdminStub {
+    : public google::cloud::golden_v1_internal::GoldenThingAdminStub {
  public:
   ~MockGoldenThingAdminStub() override = default;
 
@@ -154,7 +154,7 @@ class MockGoldenThingAdminStub
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
+}  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google
 

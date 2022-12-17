@@ -53,9 +53,9 @@ if [ -z "${GENERATE_GOLDEN_ONLY}" ]; then
 else
   io::log_red "Only formatting generated golden code."
   git ls-files -z -- 'generator/integration_tests/golden/internal/*.h' \
-    'generator/integration_tests/golden/*.h' \
-    'generator/integration_tests/golden/internal/*.cc' \
-    'generator/integration_tests/golden/*.cc' |
+    'generator/integration_tests/golden/v1/*.h' \
+    'generator/integration_tests/golden/v1/internal/*.cc' \
+    'generator/integration_tests/golden/v1/*.cc' |
     xargs -P "$(nproc)" -n 1 -0 clang-format -i
 fi
 

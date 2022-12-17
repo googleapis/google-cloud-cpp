@@ -12,16 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/golden_thing_admin_client.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/golden_thing_admin_options.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_option_defaults.h"
-#include "generator/integration_tests/golden/mocks/mock_golden_thing_admin_connection.h"
+#include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
+#include "generator/integration_tests/golden/v1/internal/golden_thing_admin_option_defaults.h"
+#include "generator/integration_tests/golden/v1/mocks/mock_golden_thing_admin_connection.h"
 #include <google/iam/v1/policy.pb.h>
 #include <google/protobuf/util/field_mask_util.h>
 #include <gmock/gmock.h>
@@ -29,7 +29,7 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
+namespace golden_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
@@ -42,13 +42,15 @@ using ::testing::HasSubstr;
 using ::testing::Not;
 
 TEST(GoldenThingAdminClientTest, CopyMoveEquality) {
-  auto conn1 = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto conn1 =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   EXPECT_CALL(*conn1, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
-  auto conn2 = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto conn2 =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   EXPECT_CALL(*conn2, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
 
   GoldenThingAdminClient c1(conn1);
@@ -74,7 +76,8 @@ TEST(GoldenThingAdminClientTest, CopyMoveEquality) {
 }
 
 TEST(GoldenThingAdminClientTest, ListDatabases) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
@@ -134,7 +137,8 @@ TEST(GoldenThingAdminClientTest, ListDatabases) {
 }
 
 TEST(GoldenThingAdminClientTest, CreateDatabase) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   std::string expected_database =
@@ -197,7 +201,8 @@ TEST(GoldenThingAdminClientTest, CreateDatabase) {
 }
 
 TEST(GoldenThingAdminClientTest, GetDatabase) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
@@ -244,11 +249,12 @@ TEST(GoldenThingAdminClientTest, GetDatabase) {
 }
 
 TEST(GoldenThingAdminClientTest, UpdateDatabase) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, UpdateDatabaseDdl)
       .Times(2)
@@ -279,11 +285,12 @@ TEST(GoldenThingAdminClientTest, UpdateDatabase) {
 }
 
 TEST(GoldenThingAdminClientTest, DropDatabase) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, DropDatabase)
       .Times(2)
@@ -304,11 +311,12 @@ TEST(GoldenThingAdminClientTest, DropDatabase) {
 }
 
 TEST(GoldenThingAdminClientTest, GetDatabaseDdl) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, GetDatabaseDdl)
       .Times(2)
@@ -333,11 +341,12 @@ TEST(GoldenThingAdminClientTest, GetDatabaseDdl) {
 }
 
 TEST(GoldenThingAdminClientTest, SetIamPolicy) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, SetIamPolicy)
       .Times(2)
@@ -358,13 +367,14 @@ TEST(GoldenThingAdminClientTest, SetIamPolicy) {
 }
 
 TEST(GoldenThingAdminClientTest, SetIamPolicyUpdater) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   std::string etag_old = "\007\005\313\113\361\351\232\005";
   std::string etag_new = "\007\005\313\113\366\143\244\343";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(
         Options{}
             .set<GrpcTracingOptionsOption>(TracingOptions().SetOptions(
                 "truncate_string_field_longer_than=64"))
@@ -424,11 +434,12 @@ TEST(GoldenThingAdminClientTest, SetIamPolicyUpdater) {
 }
 
 TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterGetFailure) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce(
@@ -448,12 +459,13 @@ TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterGetFailure) {
 }
 
 TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterCancelled) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   std::string etag_old = "\007\005\313\113\374\306\126\007";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([expected_database,
@@ -474,12 +486,13 @@ TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterCancelled) {
 }
 
 TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterSetFailure) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   std::string etag_old = "\007\005\313\113\377\272\224\367";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([expected_database,
@@ -508,14 +521,15 @@ TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterSetFailure) {
 }
 
 TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterRerun) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   std::string etag_old = "\007\005\313\114\002\240\006\225";
   std::string etag_new = "\007\005\313\114\005\046\113\243";
   std::string etag_rerun = "\007\005\313\114\007\252\023\045";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, GetIamPolicy)
       .WillOnce([expected_database,
@@ -564,13 +578,14 @@ TEST(GoldenThingAdminClientTest, SetIamPolicyUpdaterRerun) {
 }
 
 TEST(GoldenThingAdminClientTest, GetIamPolicy) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   std::string const expected_role = "roles/spanner.databaseReader";
   std::string const expected_member = "user:foobar@example.com";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, GetIamPolicy)
       .Times(2)
@@ -601,12 +616,13 @@ TEST(GoldenThingAdminClientTest, GetIamPolicy) {
 }
 
 TEST(GoldenThingAdminClientTest, TestIamPermissions) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   std::string expected_permission = "spanner.databases.read";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, TestIamPermissions)
       .Times(2)
@@ -636,7 +652,8 @@ TEST(GoldenThingAdminClientTest, TestIamPermissions) {
 }
 
 TEST(GoldenThingAdminClientTest, CreateBackup) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   std::string expected_database =
@@ -647,7 +664,7 @@ TEST(GoldenThingAdminClientTest, CreateBackup) {
   std::chrono::system_clock::time_point expire_time =
       std::chrono::system_clock::now() + std::chrono::hours(7);
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, CreateBackup)
       .Times(2)
@@ -690,11 +707,12 @@ TEST(GoldenThingAdminClientTest, CreateBackup) {
 }
 
 TEST(GoldenThingAdminClientTest, GetBackup) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, GetBackup)
       .Times(2)
@@ -724,7 +742,8 @@ TEST(GoldenThingAdminClientTest, GetBackup) {
 }
 
 TEST(GoldenThingAdminClientTest, UpdateBackupExpireTime) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   std::chrono::system_clock::time_point expire_time =
@@ -732,7 +751,7 @@ TEST(GoldenThingAdminClientTest, UpdateBackupExpireTime) {
   auto proto_expire_time =
       google::cloud::internal::ToProtoTimestamp(expire_time);
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, UpdateBackup)
       .Times(2)
@@ -777,11 +796,12 @@ TEST(GoldenThingAdminClientTest, UpdateBackupExpireTime) {
 }
 
 TEST(GoldenThingAdminClientTest, DeleteBackup) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, DeleteBackup)
       .Times(2)
@@ -802,11 +822,12 @@ TEST(GoldenThingAdminClientTest, DeleteBackup) {
 }
 
 TEST(GoldenThingAdminClientTest, ListBackups) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, ListBackups)
       .Times(2)
@@ -840,7 +861,8 @@ TEST(GoldenThingAdminClientTest, ListBackups) {
 }
 
 TEST(GoldenThingAdminClientTest, RestoreDatabase) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   std::string expected_database =
@@ -848,7 +870,7 @@ TEST(GoldenThingAdminClientTest, RestoreDatabase) {
   std::string expected_backup_name =
       "/projects/test-project/instances/test-instance/backups/test-backup";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, RestoreDatabase)
       .Times(2)
@@ -887,11 +909,12 @@ TEST(GoldenThingAdminClientTest, RestoreDatabase) {
 }
 
 TEST(GoldenThingAdminClientTest, ListDatabaseOperations) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, ListDatabaseOperations)
       .Times(2)
@@ -928,11 +951,12 @@ TEST(GoldenThingAdminClientTest, ListDatabaseOperations) {
 }
 
 TEST(GoldenThingAdminClientTest, ListBackupOperations) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_instance =
       "/projects/test-project/instances/test-instance";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, ListBackupOperations)
       .Times(2)
@@ -968,7 +992,8 @@ TEST(GoldenThingAdminClientTest, ListBackupOperations) {
 }
 
 TEST(GoldenThingAdminClientTest, AsyncGetDatabase) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
@@ -1017,11 +1042,12 @@ TEST(GoldenThingAdminClientTest, AsyncGetDatabase) {
 }
 
 TEST(GoldenThingAdminClientTest, AsyncDropDatabase) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenThingAdminConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenThingAdminConnection>();
   std::string expected_database =
       "/projects/test-project/instances/test-instance/databases/test-db";
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
-    return golden_internal::GoldenThingAdminDefaultOptions(Options{});
+    return golden_v1_internal::GoldenThingAdminDefaultOptions(Options{});
   });
   EXPECT_CALL(*mock, AsyncDropDatabase)
       .Times(2)
@@ -1043,6 +1069,6 @@ TEST(GoldenThingAdminClientTest, AsyncDropDatabase) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden
+}  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google

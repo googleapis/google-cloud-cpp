@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_auth_decorator.h"
+#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_auth_decorator.h"
 #include "google/cloud/internal/async_streaming_read_rpc_impl.h"
 #include "google/cloud/internal/async_streaming_write_rpc_impl.h"
 #include "google/cloud/internal/streaming_read_rpc.h"
@@ -25,11 +25,11 @@
 
 namespace google {
 namespace cloud {
-namespace golden_internal {
+namespace golden_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::golden_internal::MockStreamingWriteRpc;
+using ::google::cloud::golden_v1_internal::MockStreamingWriteRpc;
 using ::google::cloud::internal::StreamingReadRpcError;
 using ::google::cloud::testing_util::MakeTypicalAsyncMockAuth;
 using ::google::cloud::testing_util::MakeTypicalMockAuth;
@@ -242,6 +242,6 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, AsyncStreamingWrite) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
+}  // namespace golden_v1_internal
 }  // namespace cloud
 }  // namespace google

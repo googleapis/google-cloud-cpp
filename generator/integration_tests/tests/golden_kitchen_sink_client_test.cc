@@ -12,14 +12,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/golden_kitchen_sink_client.h"
+#include "generator/integration_tests/golden/v1/golden_kitchen_sink_client.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/time_utils.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/mocks/mock_golden_kitchen_sink_connection.h"
+#include "generator/integration_tests/golden/v1/mocks/mock_golden_kitchen_sink_connection.h"
 #include "generator/integration_tests/tests/mock_golden_kitchen_sink_stub.h"
 #include <google/iam/v1/policy.pb.h>
 #include <google/protobuf/util/field_mask_util.h>
@@ -28,11 +28,11 @@
 
 namespace google {
 namespace cloud {
-namespace golden {
+namespace golden_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::golden_internal::MockAsyncStreamingReadWriteRpc;
+using ::google::cloud::golden_v1_internal::MockAsyncStreamingReadWriteRpc;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::test::admin::database::v1::Request;
@@ -43,9 +43,9 @@ using ::testing::UnorderedElementsAreArray;
 
 TEST(GoldenKitchenSinkClientTest, CopyMoveEquality) {
   auto conn1 =
-      std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+      std::make_shared<golden_v1_mocks::MockGoldenKitchenSinkConnection>();
   auto conn2 =
-      std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+      std::make_shared<golden_v1_mocks::MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*conn1, options);
   EXPECT_CALL(*conn2, options);
 
@@ -72,7 +72,8 @@ TEST(GoldenKitchenSinkClientTest, CopyMoveEquality) {
 }
 
 TEST(GoldenKitchenSinkClientTest, GenerateAccessToken) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, options);
 
   std::string expected_name = "/projects/-/serviceAccounts/foo@bar.com";
@@ -109,7 +110,8 @@ TEST(GoldenKitchenSinkClientTest, GenerateAccessToken) {
 }
 
 TEST(GoldenKitchenSinkClientTest, GenerateIdToken) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, options);
 
   std::string expected_name = "/projects/-/serviceAccounts/foo@bar.com";
@@ -146,7 +148,8 @@ TEST(GoldenKitchenSinkClientTest, GenerateIdToken) {
 }
 
 TEST(GoldenKitchenSinkClientTest, WriteLogEntries) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, options);
 
   std::string expected_log_name = "projects/my_project/logs/my_log";
@@ -175,7 +178,8 @@ TEST(GoldenKitchenSinkClientTest, WriteLogEntries) {
 }
 
 TEST(GoldenKitchenSinkClientTest, ListLogs) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, options);
 
   std::string expected_parent = "projects/my-project";
@@ -210,7 +214,8 @@ TEST(GoldenKitchenSinkClientTest, ListLogs) {
 }
 
 TEST(GoldenKitchenSinkClientTest, StreamingRead) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
     return Options{}
         .set<GrpcTracingOptionsOption>(
@@ -256,7 +261,8 @@ TEST(GoldenKitchenSinkClientTest, StreamingRead) {
 }
 
 TEST(GoldenKitchenSinkClientTest, ListServiceAccountKeys) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, options);
 
   std::string expected_name =
@@ -290,7 +296,8 @@ TEST(GoldenKitchenSinkClientTest, ListServiceAccountKeys) {
 }
 
 TEST(GoldenKitchenSinkClientTest, AsyncStreamingReadWrite) {
-  auto mock = std::make_shared<golden_mocks::MockGoldenKitchenSinkConnection>();
+  auto mock =
+      std::make_shared<golden_v1_mocks::MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, options).WillRepeatedly([] {
     return Options{}
         .set<GrpcTracingOptionsOption>(
@@ -353,6 +360,6 @@ TEST(GoldenKitchenSinkClientTest, AsyncStreamingReadWrite) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden
+}  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google

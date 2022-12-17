@@ -12,29 +12,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
+#include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
-#include "generator/integration_tests/golden/golden_kitchen_sink_options.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_connection_impl.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_option_defaults.h"
+#include "generator/integration_tests/golden/v1/golden_kitchen_sink_options.h"
+#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_connection_impl.h"
+#include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_option_defaults.h"
 #include "generator/integration_tests/tests/mock_golden_kitchen_sink_stub.h"
 #include <gmock/gmock.h>
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace golden {
+namespace golden_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::golden_internal::GoldenKitchenSinkConnectionImpl;
-using ::google::cloud::golden_internal::GoldenKitchenSinkDefaultOptions;
-using ::google::cloud::golden_internal::GoldenKitchenSinkStub;
-using ::google::cloud::golden_internal::MockGoldenKitchenSinkStub;
-using ::google::cloud::golden_internal::MockStreamingReadRpc;
+using ::google::cloud::golden_v1_internal::GoldenKitchenSinkConnectionImpl;
+using ::google::cloud::golden_v1_internal::GoldenKitchenSinkDefaultOptions;
+using ::google::cloud::golden_v1_internal::GoldenKitchenSinkStub;
+using ::google::cloud::golden_v1_internal::MockGoldenKitchenSinkStub;
+using ::google::cloud::golden_v1_internal::MockStreamingReadRpc;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::test::admin::database::v1::Request;
 using ::google::test::admin::database::v1::Response;
@@ -45,23 +45,24 @@ using ::testing::ContainsRegex;
 using ::testing::ElementsAre;
 using ::testing::Return;
 
-std::shared_ptr<golden::GoldenKitchenSinkConnection> CreateTestingConnection(
+std::shared_ptr<golden_v1::GoldenKitchenSinkConnection> CreateTestingConnection(
     std::shared_ptr<GoldenKitchenSinkStub> mock) {
-  golden::GoldenKitchenSinkLimitedErrorCountRetryPolicy retry(
+  golden_v1::GoldenKitchenSinkLimitedErrorCountRetryPolicy retry(
       /*maximum_failures=*/2);
   ExponentialBackoffPolicy backoff(
       /*initial_delay=*/std::chrono::microseconds(1),
       /*maximum_delay=*/std::chrono::microseconds(1),
       /*scaling=*/2.0);
-  GenericPollingPolicy<golden::GoldenKitchenSinkLimitedErrorCountRetryPolicy,
+  GenericPollingPolicy<golden_v1::GoldenKitchenSinkLimitedErrorCountRetryPolicy,
                        ExponentialBackoffPolicy>
       polling(retry, backoff);
   auto options = GoldenKitchenSinkDefaultOptions(
       Options{}
-          .set<golden::GoldenKitchenSinkRetryPolicyOption>(retry.clone())
-          .set<golden::GoldenKitchenSinkBackoffPolicyOption>(backoff.clone()));
+          .set<golden_v1::GoldenKitchenSinkRetryPolicyOption>(retry.clone())
+          .set<golden_v1::GoldenKitchenSinkBackoffPolicyOption>(
+              backoff.clone()));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<golden_internal::GoldenKitchenSinkConnectionImpl>(
+  return std::make_shared<golden_v1_internal::GoldenKitchenSinkConnectionImpl>(
       std::move(background), std::move(mock), std::move(options));
 }
 
@@ -335,6 +336,6 @@ TEST(GoldenKitchenSinkConnectionTest, CheckExpectedOptions) {
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden
+}  // namespace golden_v1
 }  // namespace cloud
 }  // namespace google
