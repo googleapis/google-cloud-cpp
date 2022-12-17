@@ -21,9 +21,7 @@
 #include "absl/memory/memory.h"
 #include <chrono>
 #include <deque>
-#include <memory>
 #include <mutex>
-#include <thread>
 
 namespace google {
 namespace cloud {

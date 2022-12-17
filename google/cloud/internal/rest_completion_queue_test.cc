@@ -23,17 +23,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 TEST(RestCompletionQueue, AddTag) {
-  RestCompletionQueue cq;
   int tag;
+  RestCompletionQueue cq;
   ASSERT_EQ(cq.size(), 0);
   cq.AddTag(static_cast<void*>(&tag));
   EXPECT_EQ(cq.size(), 1);
 }
 
 TEST(RestCompletionQueue, RemoveTag) {
-  RestCompletionQueue cq;
   int tag1;
   int tag2;
+  RestCompletionQueue cq;
   ASSERT_EQ(cq.size(), 0);
   cq.AddTag(static_cast<void*>(&tag1));
   EXPECT_EQ(cq.size(), 1);
@@ -44,8 +44,8 @@ TEST(RestCompletionQueue, RemoveTag) {
 }
 
 TEST(RestCompletionQueue, GetNext) {
-  RestCompletionQueue cq;
   int tag1;
+  RestCompletionQueue cq;
   ASSERT_EQ(cq.size(), 0);
   cq.AddTag(static_cast<void*>(&tag1));
   void* tag;
@@ -59,8 +59,8 @@ TEST(RestCompletionQueue, GetNext) {
 }
 
 TEST(RestCompletionQueue, ShutdownThenGetNext) {
-  RestCompletionQueue cq;
   int tag1;
+  RestCompletionQueue cq;
   ASSERT_EQ(cq.size(), 0);
   cq.AddTag(static_cast<void*>(&tag1));
   cq.Shutdown();
@@ -73,8 +73,8 @@ TEST(RestCompletionQueue, ShutdownThenGetNext) {
 }
 
 TEST(RestCompletionQueue, ShutdownThenAddTag) {
-  RestCompletionQueue cq;
   int tag1;
+  RestCompletionQueue cq;
   ASSERT_EQ(cq.size(), 0);
   cq.Shutdown();
   cq.AddTag(static_cast<void*>(&tag1));
@@ -82,14 +82,16 @@ TEST(RestCompletionQueue, ShutdownThenAddTag) {
 }
 
 TEST(RestCompletionQueue, ShutdownThenRemoveTag) {
-  RestCompletionQueue cq;
   int tag1;
+  int tag2;
+  RestCompletionQueue cq;
   ASSERT_EQ(cq.size(), 0);
   cq.AddTag(static_cast<void*>(&tag1));
-  EXPECT_EQ(cq.size(), 1);
+  cq.AddTag(static_cast<void*>(&tag2));
+  EXPECT_EQ(cq.size(), 2);
   cq.Shutdown();
   cq.RemoveTag(static_cast<void*>(&tag1));
-  EXPECT_EQ(cq.size(), 1);
+  EXPECT_EQ(cq.size(), 0);
 }
 
 }  // namespace

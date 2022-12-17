@@ -25,6 +25,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 void RestCompletionQueue::Shutdown() {
   std::lock_guard<std::mutex> lock(mu_);
   shutdown_ = true;
+  std::deque<void*> pending_tags(std::move(pending_tags_));
 }
 
 RestCompletionQueue::QueueStatus RestCompletionQueue::GetNext(
@@ -37,14 +38,13 @@ RestCompletionQueue::QueueStatus RestCompletionQueue::GetNext(
       return QueueStatus::kShutdown;
     }
 
-    if (!pending_tags_.empty()) {
-      auto* front = std::move(pending_tags_.front());
-      pending_tags_.pop_front();
-      *tag = front;
-      *ok = true;
-      return QueueStatus::kGotEvent;
-    }
-    return QueueStatus::kTimeout;
+    if (pending_tags_.empty()) return QueueStatus::kTimeout;
+
+    auto* front = std::move(pending_tags_.front());
+    pending_tags_.pop_front();
+    *tag = front;
+    *ok = true;
+    return QueueStatus::kGotEvent;
   };
 
   // This is a naive implementation of using the deadline to return if no tags
