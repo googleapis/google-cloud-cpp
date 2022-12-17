@@ -24,31 +24,35 @@ namespace {
 
 TEST(RestCompletionQueue, AddTag) {
   RestCompletionQueue cq;
+  int tag;
   ASSERT_EQ(cq.size(), 0);
-  cq.AddTag((void*)0xDECAFBAD);  // NOLINT
+  cq.AddTag(static_cast<void*>(&tag));
   EXPECT_EQ(cq.size(), 1);
 }
 
 TEST(RestCompletionQueue, RemoveTag) {
   RestCompletionQueue cq;
+  int tag1;
+  int tag2;
   ASSERT_EQ(cq.size(), 0);
-  cq.AddTag((void*)0xDECAFBAD);  // NOLINT
+  cq.AddTag(static_cast<void*>(&tag1));
   EXPECT_EQ(cq.size(), 1);
-  cq.RemoveTag((void*)0xDEADBEEF);  // NOLINT
+  cq.RemoveTag(static_cast<void*>(&tag2));
   EXPECT_EQ(cq.size(), 1);
-  cq.RemoveTag((void*)0xDECAFBAD);  // NOLINT
+  cq.RemoveTag(static_cast<void*>(&tag1));
   EXPECT_EQ(cq.size(), 0);
 }
 
 TEST(RestCompletionQueue, GetNext) {
   RestCompletionQueue cq;
+  int tag1;
   ASSERT_EQ(cq.size(), 0);
-  cq.AddTag((void*)0xDECAFBAD);  // NOLINT
+  cq.AddTag(static_cast<void*>(&tag1));
   void* tag;
   bool ok;
   auto status = cq.GetNext(&tag, &ok, std::chrono::system_clock::now());
   EXPECT_EQ(status, RestCompletionQueue::QueueStatus::kGotEvent);
-  EXPECT_EQ(tag, (void*)0xDECAFBAD);  // NOLINT
+  EXPECT_EQ(tag, static_cast<void*>(&tag1));
   EXPECT_TRUE(ok);
   status = cq.GetNext(&tag, &ok, std::chrono::system_clock::now());
   EXPECT_EQ(status, RestCompletionQueue::QueueStatus::kTimeout);
@@ -56,8 +60,9 @@ TEST(RestCompletionQueue, GetNext) {
 
 TEST(RestCompletionQueue, ShutdownThenGetNext) {
   RestCompletionQueue cq;
+  int tag1;
   ASSERT_EQ(cq.size(), 0);
-  cq.AddTag((void*)0xDECAFBAD);  // NOLINT
+  cq.AddTag(static_cast<void*>(&tag1));
   cq.Shutdown();
   void* tag;
   bool ok;
@@ -69,19 +74,21 @@ TEST(RestCompletionQueue, ShutdownThenGetNext) {
 
 TEST(RestCompletionQueue, ShutdownThenAddTag) {
   RestCompletionQueue cq;
+  int tag1;
   ASSERT_EQ(cq.size(), 0);
   cq.Shutdown();
-  cq.AddTag((void*)0xDECAFBAD);  // NOLINT
+  cq.AddTag(static_cast<void*>(&tag1));
   EXPECT_EQ(cq.size(), 0);
 }
 
 TEST(RestCompletionQueue, ShutdownThenRemoveTag) {
   RestCompletionQueue cq;
+  int tag1;
   ASSERT_EQ(cq.size(), 0);
-  cq.AddTag((void*)0xDECAFBAD);  // NOLINT
+  cq.AddTag(static_cast<void*>(&tag1));
   EXPECT_EQ(cq.size(), 1);
   cq.Shutdown();
-  cq.RemoveTag((void*)0xDECAFBAD);  // NOLINT
+  cq.RemoveTag(static_cast<void*>(&tag1));
   EXPECT_EQ(cq.size(), 1);
 }
 
