@@ -253,9 +253,10 @@ void ServiceCodeGenerator::CcSystemIncludes(
   GenerateSystemIncludes(cc_, system_includes);
 }
 
-Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
+Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type,
+                                                  ProductPathType pp_type) {
   HeaderPrint("\n");
-  return OpenNamespaces(header_, ns_type);
+  return OpenNamespaces(header_, ns_type, pp_type);
 }
 
 void ServiceCodeGenerator::HeaderCloseNamespaces() {
@@ -263,9 +264,10 @@ void ServiceCodeGenerator::HeaderCloseNamespaces() {
   CloseNamespaces(header_);
 }
 
-Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
+Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type,
+                                              ProductPathType pp_type) {
   CcPrint("\n");
-  return OpenNamespaces(cc_, ns_type);
+  return OpenNamespaces(cc_, ns_type, pp_type);
 }
 
 void ServiceCodeGenerator::CcCloseNamespaces() {
@@ -341,12 +343,17 @@ void ServiceCodeGenerator::GenerateSystemIncludes(
   }
 }
 
-Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type) {
-  auto result = service_vars_.find("product_path");
+Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type,
+                                            ProductPathType pp_type) {
+  std::string product_path_var =
+      (pp_type == ProductPathType::kNormal ? "product_path"
+                                           : "forwarding_product_path");
+  auto result = service_vars_.find(product_path_var);
   if (result == service_vars_.end()) {
-    return Status(StatusCode::kInternal, "product_path not found in vars");
+    return Status(StatusCode::kInternal,
+                  product_path_var + " not found in vars");
   }
-  namespaces_ = BuildNamespaces(service_vars_["product_path"], ns_type);
+  namespaces_ = BuildNamespaces(service_vars_[product_path_var], ns_type);
   for (auto const& nspace : namespaces_) {
     if (nspace == "GOOGLE_CLOUD_CPP_NS") {
       p.Print("GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN\n");

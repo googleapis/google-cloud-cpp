@@ -196,6 +196,43 @@ TEST_F(CreateServiceVarsTest, AdditionalGrpcHeaderPathsEmpty) {
   EXPECT_THAT(iter->second, Eq(""));
 }
 
+TEST_F(CreateServiceVarsTest, ForwardingHeaderPaths) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto");
+  service_vars_ = CreateServiceVars(
+      *service_file_descriptor->service(0),
+      {std::make_pair("product_path", "google/cloud/frobber/v1/"),
+       std::make_pair("forwarding_product_path", "google/cloud/frobber/")});
+  EXPECT_THAT(
+      service_vars_,
+      AllOf(Contains(Pair("forwarding_client_header_path",
+                          "google/cloud/frobber/frobber_client.h")),
+            Contains(Pair("forwarding_connection_header_path",
+                          "google/cloud/frobber/frobber_connection.h")),
+            Contains(Pair("forwarding_idempotency_policy_header_path",
+                          "google/cloud/frobber/"
+                          "frobber_connection_idempotency_policy.h")),
+            Contains(
+                Pair("forwarding_mock_connection_header_path",
+                     "google/cloud/frobber/mocks/mock_frobber_connection.h")),
+            Contains(Pair("forwarding_options_header_path",
+                          "google/cloud/frobber/frobber_options.h"))));
+  EXPECT_THAT(
+      service_vars_,
+      AllOf(Contains(Pair("client_header_path",
+                          "google/cloud/frobber/v1/frobber_client.h")),
+            Contains(Pair("connection_header_path",
+                          "google/cloud/frobber/v1/frobber_connection.h")),
+            Contains(Pair("idempotency_policy_header_path",
+                          "google/cloud/frobber/v1/"
+                          "frobber_connection_idempotency_policy.h")),
+            Contains(Pair(
+                "mock_connection_header_path",
+                "google/cloud/frobber/v1/mocks/mock_frobber_connection.h")),
+            Contains(Pair("options_header_path",
+                          "google/cloud/frobber/v1/frobber_options.h"))));
+}
+
 TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto");

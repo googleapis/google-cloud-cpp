@@ -116,6 +116,14 @@ int WriteInstallDirectories(
     if (!service.omit_connection()) {
       install_directories.push_back("./include/" + product_path + "/mocks");
     }
+    auto const& forwarding_product_path = service.forwarding_product_path();
+    if (!forwarding_product_path.empty()) {
+      install_directories.push_back("./include/" + forwarding_product_path);
+      if (!service.omit_connection()) {
+        install_directories.push_back("./include/" + forwarding_product_path +
+                                      "/mocks");
+      }
+    }
     auto const lib = LibraryName(product_path);
     install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib);
   }
@@ -261,6 +269,10 @@ int main(int argc, char** argv) {
     }
     if (service.experimental()) {
       args.emplace_back("--cpp_codegen_opt=experimental=true");
+    }
+    if (!service.forwarding_product_path().empty()) {
+      args.emplace_back("--cpp_codegen_opt=forwarding_product_path=" +
+                        service.forwarding_product_path());
     }
 
     GCP_LOG(INFO) << "Generating service code using: "

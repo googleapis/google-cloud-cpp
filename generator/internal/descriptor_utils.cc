@@ -25,6 +25,11 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/connection_generator.h"
 #include "generator/internal/connection_impl_generator.h"
+#include "generator/internal/forwarding_client_generator.h"
+#include "generator/internal/forwarding_connection_generator.h"
+#include "generator/internal/forwarding_idempotency_policy_generator.h"
+#include "generator/internal/forwarding_mock_connection_generator.h"
+#include "generator/internal/forwarding_options_generator.h"
 #include "generator/internal/idempotency_policy_generator.h"
 #include "generator/internal/logging_decorator_generator.h"
 #include "generator/internal/logging_decorator_rest_generator.h"
@@ -862,7 +867,6 @@ VarsDictionary CreateServiceVars(
   vars["client_header_path"] =
       absl::StrCat(vars["product_path"],
                    ServiceNameToFilePath(descriptor.name()), "_client.h");
-
   vars["client_samples_cc_path"] = absl::StrCat(
       vars["product_path"], "samples/",
       ServiceNameToFilePath(descriptor.name()), "_client_samples.cc");
@@ -884,6 +888,21 @@ VarsDictionary CreateServiceVars(
       absl::StrCat(descriptor.name(), "ConnectionOptions");
   vars["connection_options_traits_name"] =
       absl::StrCat(descriptor.name(), "ConnectionOptionsTraits");
+  vars["forwarding_client_header_path"] =
+      absl::StrCat(vars["forwarding_product_path"],
+                   ServiceNameToFilePath(descriptor.name()), "_client.h");
+  vars["forwarding_connection_header_path"] =
+      absl::StrCat(vars["forwarding_product_path"],
+                   ServiceNameToFilePath(descriptor.name()), "_connection.h");
+  vars["forwarding_idempotency_policy_header_path"] = absl::StrCat(
+      vars["forwarding_product_path"], ServiceNameToFilePath(descriptor.name()),
+      "_connection_idempotency_policy.h");
+  vars["forwarding_mock_connection_header_path"] =
+      absl::StrCat(vars["forwarding_product_path"], "mocks/mock_",
+                   ServiceNameToFilePath(descriptor.name()), "_connection.h");
+  vars["forwarding_options_header_path"] =
+      absl::StrCat(vars["forwarding_product_path"],
+                   ServiceNameToFilePath(descriptor.name()), "_options.h");
   vars["grpc_stub_fqn"] = ProtoNameToCppName(descriptor.full_name());
   vars["idempotency_class_name"] =
       absl::StrCat(descriptor.name(), "ConnectionIdempotencyPolicy");
@@ -1102,6 +1121,22 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
   if (omit_stub_factory == service_vars.end() ||
       omit_stub_factory->second != "true") {
     code_generators.push_back(absl::make_unique<StubFactoryGenerator>(
+        service, service_vars, method_vars, context));
+  }
+  auto const forwarding_headers = service_vars.find("forwarding_product_path");
+  if (forwarding_headers != service_vars.end() &&
+      !forwarding_headers->second.empty()) {
+    code_generators.push_back(absl::make_unique<ForwardingClientGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(absl::make_unique<ForwardingConnectionGenerator>(
+        service, service_vars, method_vars, context));
+    code_generators.push_back(
+        absl::make_unique<ForwardingIdempotencyPolicyGenerator>(
+            service, service_vars, method_vars, context));
+    code_generators.push_back(
+        absl::make_unique<ForwardingMockConnectionGenerator>(
+            service, service_vars, method_vars, context));
+    code_generators.push_back(absl::make_unique<ForwardingOptionsGenerator>(
         service, service_vars, method_vars, context));
   }
   code_generators.push_back(absl::make_unique<AuthDecoratorGenerator>(

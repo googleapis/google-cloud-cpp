@@ -65,6 +65,8 @@ std::string ProtoNameToCppName(absl::string_view proto_name);
 
 enum class NamespaceType { kNormal, kInternal, kMocks };
 
+enum class ProductPathType { kNormal, kForwarding };
+
 /**
  * Builds namespace hierarchy.
  *
