@@ -37,6 +37,16 @@ add_library(
     internal/connection_impl_generator.h
     internal/descriptor_utils.cc
     internal/descriptor_utils.h
+    internal/forwarding_client_generator.cc
+    internal/forwarding_client_generator.h
+    internal/forwarding_connection_generator.cc
+    internal/forwarding_connection_generator.h
+    internal/forwarding_idempotency_policy_generator.cc
+    internal/forwarding_idempotency_policy_generator.h
+    internal/forwarding_mock_connection_generator.cc
+    internal/forwarding_mock_connection_generator.h
+    internal/forwarding_options_generator.cc
+    internal/forwarding_options_generator.h
     internal/generator_interface.h
     internal/idempotency_policy_generator.cc
     internal/idempotency_policy_generator.h
