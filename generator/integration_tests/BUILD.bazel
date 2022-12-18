@@ -73,6 +73,8 @@ filegroup(
 filegroup(
     name = "golden_hdrs",
     srcs = glob([
+        "golden/*.h",
+        "golden/mocks/*.h",
         "golden/v1/*.h",
         "golden/v1/internal/*.h",
         "golden/v1/mocks/*.h",

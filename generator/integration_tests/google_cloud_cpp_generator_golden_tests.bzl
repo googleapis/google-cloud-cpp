@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_generator_golden_tests = [
+    "tests/forwarding_headers_test.cc",
     "tests/golden_kitchen_sink_auth_decorator_test.cc",
     "tests/golden_kitchen_sink_client_test.cc",
     "tests/golden_kitchen_sink_connection_test.cc",

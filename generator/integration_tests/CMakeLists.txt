@@ -57,8 +57,13 @@ set_target_properties(google_cloud_cpp_generator_golden_protos
 file(
     GLOB google_cloud_cpp_generator_golden_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "golden/v1/*.h" "golden/v1/*.cc" "golden/v1/internal/*.h"
-    "golden/v1/internal/*.cc" "golden/v1/mocks/*.h")
+    "golden/*.h"
+    "golden/mocks/*.h"
+    "golden/v1/*.h"
+    "golden/v1/*.cc"
+    "golden/v1/internal/*.h"
+    "golden/v1/internal/*.cc"
+    "golden/v1/mocks/*.h")
 list(SORT google_cloud_cpp_generator_golden_files)
 
 # Create a library from the where the golden code was copied to.
@@ -100,6 +105,7 @@ target_link_libraries(
 
 set(google_cloud_cpp_generator_golden_tests
     # cmake-format: sort
+    tests/forwarding_headers_test.cc
     tests/golden_kitchen_sink_auth_decorator_test.cc
     tests/golden_kitchen_sink_client_test.cc
     tests/golden_kitchen_sink_connection_test.cc
