@@ -156,15 +156,17 @@ TEST(ExternalAccountTokenSource, SourceWorking) {
 }
 
 TEST(ExternalAccountTokenSource, SourceImdsv2Failure) {
-  // To simplify the test we provide all the parameters via environment
-  // variables and avoid using imdsv2.
-  auto const region = ScopedEnvironment("AWS_REGION", "expected-region");
+  // Return an error in fetching the imdsv2 token. In any implementation the
+  // imdsv2 query *must* happen if it is needed to fetch the region and secrets.
+  // Unset the environment variables to set that behavior.
+  auto const region = ScopedEnvironment("AWS_REGION", absl::nullopt);
+  auto const default_region =
+      ScopedEnvironment("AWS_DEFAULT_REGION", absl::nullopt);
   auto const access_key_id =
-      ScopedEnvironment("AWS_ACCESS_KEY_ID", "test-access-key-id");
+      ScopedEnvironment("AWS_ACCESS_KEY_ID", absl::nullopt);
   auto const secret_access_key =
-      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", "test-secret-access-key");
-  auto const token =
-      ScopedEnvironment("AWS_SESSION_TOKEN", "test-session-token");
+      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", absl::nullopt);
+  auto const token = ScopedEnvironment("AWS_SESSION_TOKEN", absl::nullopt);
   auto const credentials_source = nlohmann::json{
       {"environment_id", "aws1"},
       {"region_url", kTestRegionUrl},
@@ -193,8 +195,9 @@ TEST(ExternalAccountTokenSource, SourceImdsv2Failure) {
 }
 
 TEST(ExternalAccountTokenSource, SourceRegionFailure) {
-  // To simplify the test we provide all the parameters via environment
-  // variables and avoid using imdsv2.
+  // Do not use imdsv2, and force a metadata query to get the region. Use
+  // environment variables for the secrets, in case the implementation order
+  // changes.
   auto const region = ScopedEnvironment("AWS_REGION", absl::nullopt);
   auto const default_region =
       ScopedEnvironment("AWS_DEFAULT_REGION", absl::nullopt);
@@ -232,8 +235,9 @@ TEST(ExternalAccountTokenSource, SourceRegionFailure) {
 }
 
 TEST(ExternalAccountTokenSource, SourceSecretsFailure) {
-  // To simplify the test we provide all the parameters via environment
-  // variables and avoid using imdsv2.
+  // Do not use imdsv2. Unset the environment variables for secrets to force an
+  // HTTP request to obtain the secrets.  Keep the environment variables for
+  // the region set, so this test works regardless of the query order.
   auto const region = ScopedEnvironment("AWS_REGION", "us-central1");
   auto const access_key_id =
       ScopedEnvironment("AWS_ACCESS_KEY_ID", absl::nullopt);
