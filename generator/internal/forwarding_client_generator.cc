@@ -45,8 +45,7 @@ Status ForwardingClientGenerator::GenerateHeader() {
       vars("client_header_path"),
   });
 
-  auto result = HeaderOpenNamespaces(NamespaceType::kNormal,
-                                     ProductPathType::kForwarding);
+  auto result = HeaderOpenForwardingNamespaces();
   if (!result.ok()) return result;
 
   // forwards

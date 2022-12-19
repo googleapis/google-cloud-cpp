@@ -253,10 +253,15 @@ void ServiceCodeGenerator::CcSystemIncludes(
   GenerateSystemIncludes(cc_, system_includes);
 }
 
-Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type,
-                                                  ProductPathType pp_type) {
+Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
   HeaderPrint("\n");
-  return OpenNamespaces(header_, ns_type, pp_type);
+  return OpenNamespaces(header_, ns_type, "product_path");
+}
+
+Status ServiceCodeGenerator::HeaderOpenForwardingNamespaces(
+    NamespaceType ns_type) {
+  HeaderPrint("\n");
+  return OpenNamespaces(header_, ns_type, "forwarding_product_path");
 }
 
 void ServiceCodeGenerator::HeaderCloseNamespaces() {
@@ -264,10 +269,9 @@ void ServiceCodeGenerator::HeaderCloseNamespaces() {
   CloseNamespaces(header_);
 }
 
-Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type,
-                                              ProductPathType pp_type) {
+Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
   CcPrint("\n");
-  return OpenNamespaces(cc_, ns_type, pp_type);
+  return OpenNamespaces(cc_, ns_type, "product_path");
 }
 
 void ServiceCodeGenerator::CcCloseNamespaces() {
@@ -343,11 +347,8 @@ void ServiceCodeGenerator::GenerateSystemIncludes(
   }
 }
 
-Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type,
-                                            ProductPathType pp_type) {
-  std::string product_path_var =
-      (pp_type == ProductPathType::kNormal ? "product_path"
-                                           : "forwarding_product_path");
+Status ServiceCodeGenerator::OpenNamespaces(
+    Printer& p, NamespaceType ns_type, std::string const& product_path_var) {
   auto result = service_vars_.find(product_path_var);
   if (result == service_vars_.end()) {
     return Status(StatusCode::kInternal,

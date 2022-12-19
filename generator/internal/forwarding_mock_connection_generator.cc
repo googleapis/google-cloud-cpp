@@ -45,8 +45,7 @@ Status ForwardingMockConnectionGenerator::GenerateHeader() {
       vars("forwarding_connection_header_path"),
   });
 
-  auto result =
-      HeaderOpenNamespaces(NamespaceType::kMocks, ProductPathType::kForwarding);
+  auto result = HeaderOpenForwardingNamespaces(NamespaceType::kMocks);
   if (!result.ok()) return result;
 
   HeaderPrint(
