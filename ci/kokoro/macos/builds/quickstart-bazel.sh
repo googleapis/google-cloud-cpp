@@ -24,7 +24,7 @@ source module ci/lib/io.sh
 # NOTE: In this file use the command `bazelisk` rather than bazel, because
 # Kokoro has both installed and we want to make sure to use the former.
 io::log_h2 "Using bazel version"
-: "${USE_BAZEL_VERSION:="5.4.0"}"
+: "${USE_BAZEL_VERSION:="6.0.0"}"
 export USE_BAZEL_VERSION
 bazelisk version || rm -fr "$HOME"/Library/Caches/bazelisk || bazelisk version
 # Kokoro needs bazel to be shutdown here, otherwise it will hang. This shutdown
