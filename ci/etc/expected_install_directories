@@ -18,9 +18,10 @@
 ./include/google/bigtable/v2
 ./include/google/cloud
 ./include/google/cloud/accessapproval
-./include/google/cloud/accessapproval/internal
 ./include/google/cloud/accessapproval/mocks
 ./include/google/cloud/accessapproval/v1
+./include/google/cloud/accessapproval/v1/internal
+./include/google/cloud/accessapproval/v1/mocks
 ./include/google/cloud/accesscontextmanager
 ./include/google/cloud/accesscontextmanager/internal
 ./include/google/cloud/accesscontextmanager/mocks
