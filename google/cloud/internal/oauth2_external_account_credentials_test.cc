@@ -18,6 +18,7 @@
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
@@ -36,6 +37,7 @@ using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockHttpPayload;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::AllOf;
@@ -131,6 +133,60 @@ using FormDataType = std::vector<std::pair<std::string, std::string>>;
 struct TestOnlyOption {
   using Type = std::string;
 };
+
+TEST(ExternalAccount, ParseAwsSuccess) {
+  // To simplify the test we provide all the parameters via environment
+  // variables and avoid using imdsv2.
+  auto const region = ScopedEnvironment("AWS_REGION", "expected-region");
+  auto const access_key_id =
+      ScopedEnvironment("AWS_ACCESS_KEY_ID", "test-access-key-id");
+  auto const secret_access_key =
+      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", "test-secret-access-key");
+  auto const token =
+      ScopedEnvironment("AWS_SESSION_TOKEN", "test-session-token");
+  auto constexpr kTestRegionUrl = "http://169.254.169.254/region";
+  auto constexpr kTestMetadataUrl = "http://169.254.169.254/metadata";
+  auto constexpr kTestVerificationUrl =
+      "https://sts.{region}.aws.example.com"
+      "?Action=GetCallerIdentity&Version=2011-06-15";
+  auto constexpr kTestTokenType = "urn:ietf:params:aws:token-type:aws4_request";
+  auto constexpr kTestAudience =
+      "//iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/"
+      "workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID";
+
+  auto const configuration = nlohmann::json{
+      {"type", "external_account"},
+      {"audience", kTestAudience},
+      {"subject_token_type", kTestTokenType},
+      {"token_url", "test-token-url"},
+      {"credential_source",
+       nlohmann::json{
+           {"environment_id", "aws1"},
+           {"region_url", kTestRegionUrl},
+           {"url", kTestMetadataUrl},
+           {"regional_cred_verification_url", kTestVerificationUrl},
+           // {"imdsv2_session_token_url", kTestImdsv2Url},
+       }},
+  };
+  auto ec = internal::ErrorContext(
+      {{"program", "test"}, {"full-configuration", configuration.dump()}});
+  auto const actual =
+      ParseExternalAccountConfiguration(configuration.dump(), ec);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_EQ(actual->audience, kTestAudience);
+  EXPECT_EQ(actual->subject_token_type, kTestTokenType);
+  EXPECT_EQ(actual->token_url, "test-token-url");
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).Times(0);
+  auto const subject =
+      actual->token_source(client_factory.AsStdFunction(), Options{});
+  ASSERT_STATUS_OK(subject);
+  EXPECT_THAT(subject->token,
+              HasSubstr(nlohmann::json{{"key", "x-goog-cloud-target-resource"},
+                                       {"value", kTestAudience}}
+                            .dump()));
+}
 
 TEST(ExternalAccount, ParseUrlSuccess) {
   auto const configuration = nlohmann::json{
