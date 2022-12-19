@@ -42,6 +42,33 @@ using ::google::cloud::golden_v1::GoldenThingAdminLimitedTimeRetryPolicy;
 /// @deprecated Use golden_v1::GoldenThingAdminRetryPolicy directly.
 using ::google::cloud::golden_v1::GoldenThingAdminRetryPolicy;
 
+/**
+ * A factory function to construct an object of type `GoldenThingAdminConnection`
+ * that uses REST over HTTP as transport in lieu of gRpc. REST transport should
+ * only be used for services that do not support gRpc or if the existing network
+ * configuration precludes using gRpc.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of GoldenThingAdminClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `GoldenThingAdminConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::RestOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::golden::GoldenThingAdminPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `GoldenThingAdminConnection` created by
+ * this function.
+ */
+std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnectionRest(
+    Options options = {});
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
 }  // namespace cloud

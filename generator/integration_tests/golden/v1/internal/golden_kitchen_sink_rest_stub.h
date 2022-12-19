@@ -19,6 +19,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_GOLDEN_KITCHEN_SINK_REST_STUB_H
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_GOLDEN_KITCHEN_SINK_REST_STUB_H
 
+#include "google/cloud/completion_queue.h"
 #include "google/cloud/internal/rest_client.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/status_or.h"
@@ -75,7 +76,7 @@ class DefaultGoldenKitchenSinkRestStub : public GoldenKitchenSinkRestStub {
 
   explicit DefaultGoldenKitchenSinkRestStub(Options options);
   DefaultGoldenKitchenSinkRestStub(
-      std::shared_ptr<rest_internal::RestClient> rest_client,
+      std::shared_ptr<rest_internal::RestClient> service,
       Options options);
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
@@ -111,7 +112,7 @@ class DefaultGoldenKitchenSinkRestStub : public GoldenKitchenSinkRestStub {
       google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
  private:
-  std::shared_ptr<rest_internal::RestClient> rest_client_;
+  std::shared_ptr<rest_internal::RestClient> service_;
   Options options_;
 };
 

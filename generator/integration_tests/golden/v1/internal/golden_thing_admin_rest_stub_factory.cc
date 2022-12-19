@@ -39,6 +39,10 @@ CreateDefaultGoldenThingAdminRestStub(Options const& options) {
   if (!opts.has<UnifiedCredentialsOption>()) {
     opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   }
+  if (!opts.has<rest_internal::LongrunningEndpointOption>()) {
+    opts.set<rest_internal::LongrunningEndpointOption>(
+        "longrunning.googleapis.com");
+  }
   std::shared_ptr<GoldenThingAdminRestStub> stub =
       std::make_shared<DefaultGoldenThingAdminRestStub>(std::move(opts));
   stub = std::make_shared<GoldenThingAdminRestMetadata>(std::move(stub));

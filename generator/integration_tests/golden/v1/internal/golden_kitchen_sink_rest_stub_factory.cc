@@ -39,6 +39,10 @@ CreateDefaultGoldenKitchenSinkRestStub(Options const& options) {
   if (!opts.has<UnifiedCredentialsOption>()) {
     opts.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   }
+  if (!opts.has<rest_internal::LongrunningEndpointOption>()) {
+    opts.set<rest_internal::LongrunningEndpointOption>(
+        "longrunning.googleapis.com");
+  }
   std::shared_ptr<GoldenKitchenSinkRestStub> stub =
       std::make_shared<DefaultGoldenKitchenSinkRestStub>(std::move(opts));
   stub = std::make_shared<GoldenKitchenSinkRestMetadata>(std::move(stub));
