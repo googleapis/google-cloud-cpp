@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/accessapproval/access_approval_client.h"
+#include "google/cloud/accessapproval/v1/access_approval_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -22,7 +22,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace accessapproval = ::google::cloud::accessapproval;
+  namespace accessapproval = ::google::cloud::accessapproval_v1;
   auto client = accessapproval::AccessApprovalClient(
       accessapproval::MakeAccessApprovalConnection());
   auto const project = google::cloud::Project(argv[1]);
