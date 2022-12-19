@@ -48,7 +48,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * https://google.aip.dev/auth/4117#determining-the-subject-token-in-aws
  */
 StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceAws(
-    nlohmann::json const& credentials_source, internal::ErrorContext const& ec);
+    nlohmann::json const& credentials_source, std::string const& audience,
+    internal::ErrorContext const& ec);
 
 /**
  * Represents the AWS token source configuration.

@@ -38,6 +38,7 @@ using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::_;
 using ::testing::ByMove;
 using ::testing::Contains;
 using ::testing::HasSubstr;
@@ -65,6 +66,16 @@ std::unique_ptr<RestResponse> MakeMockResponseSuccess(std::string contents) {
   EXPECT_CALL(std::move(*response), ExtractPayload)
       .WillOnce(
           Return(ByMove(MakeMockHttpPayloadSuccess(std::move(contents)))));
+  return response;
+}
+
+std::unique_ptr<RestResponse> MakeMockResponseNotFound() {
+  auto response = absl::make_unique<MockRestResponse>();
+  EXPECT_CALL(*response, StatusCode)
+      .WillRepeatedly(Return(HttpStatusCode::kNotFound));
+  EXPECT_CALL(std::move(*response), ExtractPayload)
+      .WillOnce(
+          Return(ByMove(MakeMockHttpPayloadSuccess(std::string{"NOT FOUND"}))));
   return response;
 }
 
@@ -101,6 +112,159 @@ ExternalAccountTokenSourceAwsInfo MakeTestInfoImdsV2() {
   auto info = MakeTestInfoImdsV1();
   info.imdsv2_session_token_url = kTestImdsv2Url;
   return info;
+}
+
+TEST(ExternalAccountTokenSource, SourceWorking) {
+  // To simplify the test we provide all the parameters via environment
+  // variables and avoid using imdsv2.
+  auto const region = ScopedEnvironment("AWS_REGION", "expected-region");
+  auto const access_key_id =
+      ScopedEnvironment("AWS_ACCESS_KEY_ID", "test-access-key-id");
+  auto const secret_access_key =
+      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", "test-secret-access-key");
+  auto const token =
+      ScopedEnvironment("AWS_SESSION_TOKEN", "test-session-token");
+  auto const credentials_source = nlohmann::json{
+      {"environment_id", "aws1"},
+      {"region_url", kTestRegionUrl},
+      {"url", kTestMetadataUrl},
+      {"regional_cred_verification_url", kTestVerificationUrl},
+      // {"imdsv2_session_token_url", kTestImdsv2Url},
+  };
+  auto const target = std::string{
+      "//iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/"
+      "workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID"};
+  auto const source = MakeExternalAccountTokenSourceAws(
+      credentials_source, target, MakeTestErrorContext());
+  ASSERT_STATUS_OK(source);
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).Times(0);
+
+  auto subject_token = (*source)(client_factory.AsStdFunction(), Options{});
+  ASSERT_STATUS_OK(subject_token);
+  // Verify some simple cases. We make a full test in ComputeSubjectToken().
+  EXPECT_THAT(subject_token->token, HasSubstr(nlohmann::json{
+                                        {"key", "x-goog-cloud-target-resource"},
+                                        {"value",
+                                         target}}.dump()));
+  EXPECT_THAT(
+      subject_token->token,
+      HasSubstr(nlohmann::json{{"key", "host"},
+                               {"value", "sts.expected-region.amazonaws.com"}}
+                    .dump()));
+}
+
+TEST(ExternalAccountTokenSource, SourceImdsv2Failure) {
+  // To simplify the test we provide all the parameters via environment
+  // variables and avoid using imdsv2.
+  auto const region = ScopedEnvironment("AWS_REGION", "expected-region");
+  auto const access_key_id =
+      ScopedEnvironment("AWS_ACCESS_KEY_ID", "test-access-key-id");
+  auto const secret_access_key =
+      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", "test-secret-access-key");
+  auto const token =
+      ScopedEnvironment("AWS_SESSION_TOKEN", "test-session-token");
+  auto const credentials_source = nlohmann::json{
+      {"environment_id", "aws1"},
+      {"region_url", kTestRegionUrl},
+      {"url", kTestMetadataUrl},
+      {"regional_cred_verification_url", kTestVerificationUrl},
+      {"imdsv2_session_token_url", kTestImdsv2Url},
+  };
+  auto const target = std::string{
+      "//iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/"
+      "workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID"};
+  auto const source = MakeExternalAccountTokenSourceAws(
+      credentials_source, target, MakeTestErrorContext());
+  ASSERT_STATUS_OK(source);
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).WillOnce([] {
+    auto mock = absl::make_unique<MockRestClient>();
+    auto expected_request = Property(&RestRequest::path, kTestImdsv2Url);
+    EXPECT_CALL(*mock, Put(expected_request, _))
+        .WillOnce(Return(ByMove(MakeMockResponseNotFound())));
+    return mock;
+  });
+
+  auto subject_token = (*source)(client_factory.AsStdFunction(), Options{});
+  EXPECT_THAT(subject_token, StatusIs(StatusCode::kNotFound));
+}
+
+TEST(ExternalAccountTokenSource, SourceRegionFailure) {
+  // To simplify the test we provide all the parameters via environment
+  // variables and avoid using imdsv2.
+  auto const region = ScopedEnvironment("AWS_REGION", absl::nullopt);
+  auto const default_region =
+      ScopedEnvironment("AWS_DEFAULT_REGION", absl::nullopt);
+  auto const access_key_id =
+      ScopedEnvironment("AWS_ACCESS_KEY_ID", "test-access-key-id");
+  auto const secret_access_key =
+      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", "test-secret-access-key");
+  auto const token =
+      ScopedEnvironment("AWS_SESSION_TOKEN", "test-session-token");
+  auto const credentials_source = nlohmann::json{
+      {"environment_id", "aws1"},
+      {"region_url", kTestRegionUrl},
+      {"url", kTestMetadataUrl},
+      {"regional_cred_verification_url", kTestVerificationUrl},
+      // {"imdsv2_session_token_url", kTestImdsv2Url},
+  };
+  auto const target = std::string{
+      "//iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/"
+      "workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID"};
+  auto const source = MakeExternalAccountTokenSourceAws(
+      credentials_source, target, MakeTestErrorContext());
+  ASSERT_STATUS_OK(source);
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).WillOnce([] {
+    auto mock = absl::make_unique<MockRestClient>();
+    auto expected_request = Property(&RestRequest::path, kTestRegionUrl);
+    EXPECT_CALL(*mock, Get(expected_request))
+        .WillOnce(Return(ByMove(MakeMockResponseNotFound())));
+    return mock;
+  });
+
+  auto subject_token = (*source)(client_factory.AsStdFunction(), Options{});
+  EXPECT_THAT(subject_token, StatusIs(StatusCode::kNotFound));
+}
+
+TEST(ExternalAccountTokenSource, SourceSecretsFailure) {
+  // To simplify the test we provide all the parameters via environment
+  // variables and avoid using imdsv2.
+  auto const region = ScopedEnvironment("AWS_REGION", "us-central1");
+  auto const access_key_id =
+      ScopedEnvironment("AWS_ACCESS_KEY_ID", absl::nullopt);
+  auto const secret_access_key =
+      ScopedEnvironment("AWS_SECRET_ACCESS_KEY", absl::nullopt);
+  auto const token = ScopedEnvironment("AWS_SESSION_TOKEN", absl::nullopt);
+  auto const credentials_source = nlohmann::json{
+      {"environment_id", "aws1"},
+      {"region_url", kTestRegionUrl},
+      {"url", kTestMetadataUrl},
+      {"regional_cred_verification_url", kTestVerificationUrl},
+      // {"imdsv2_session_token_url", kTestImdsv2Url},
+  };
+  auto const target = std::string{
+      "//iam.googleapis.com/projects/$PROJECT_NUMBER/locations/global/"
+      "workloadIdentityPools/$POOL_ID/providers/$PROVIDER_ID"};
+  auto const source = MakeExternalAccountTokenSourceAws(
+      credentials_source, target, MakeTestErrorContext());
+  ASSERT_STATUS_OK(source);
+
+  MockClientFactory client_factory;
+  EXPECT_CALL(client_factory, Call).WillOnce([] {
+    auto mock = absl::make_unique<MockRestClient>();
+    auto expected_request = Property(&RestRequest::path, kTestMetadataUrl);
+    EXPECT_CALL(*mock, Get(expected_request))
+        .WillOnce(Return(ByMove(MakeMockResponseNotFound())));
+    return mock;
+  });
+
+  auto subject_token = (*source)(client_factory.AsStdFunction(), Options{});
+  EXPECT_THAT(subject_token, StatusIs(StatusCode::kNotFound));
 }
 
 TEST(ExternalAccountTokenSource, ParseSuccess) {
