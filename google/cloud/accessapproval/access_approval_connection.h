@@ -20,118 +20,19 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_ACCESS_APPROVAL_CONNECTION_H
 
 #include "google/cloud/accessapproval/access_approval_connection_idempotency_policy.h"
-#include "google/cloud/accessapproval/internal/access_approval_retry_traits.h"
-#include "google/cloud/accessapproval/internal/access_approval_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/accessapproval/v1/access_approval_connection.h"
 
 namespace google {
 namespace cloud {
 namespace accessapproval {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using AccessApprovalRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        accessapproval_internal::AccessApprovalRetryTraits>;
-
-using AccessApprovalLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        accessapproval_internal::AccessApprovalRetryTraits>;
-
-using AccessApprovalLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        accessapproval_internal::AccessApprovalRetryTraits>;
-
-/**
- * The `AccessApprovalConnection` object for `AccessApprovalClient`.
- *
- * This interface defines virtual methods for each of the user-facing overload
- * sets in `AccessApprovalClient`. This allows users to inject custom behavior
- * (e.g., with a Google Mock object) when writing tests that use objects of type
- * `AccessApprovalClient`.
- *
- * To create a concrete instance, see `MakeAccessApprovalConnection()`.
- *
- * For mocking, see `accessapproval_mocks::MockAccessApprovalConnection`.
- */
-class AccessApprovalConnection {
- public:
-  virtual ~AccessApprovalConnection() = 0;
-
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
-  ListApprovalRequests(
-      google::cloud::accessapproval::v1::ListApprovalRequestsMessage request);
-
-  virtual StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  GetApprovalRequest(
-      google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
-          request);
-
-  virtual StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  ApproveApprovalRequest(
-      google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
-          request);
-
-  virtual StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  DismissApprovalRequest(
-      google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
-          request);
-
-  virtual StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  InvalidateApprovalRequest(
-      google::cloud::accessapproval::v1::InvalidateApprovalRequestMessage const&
-          request);
-
-  virtual StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  GetAccessApprovalSettings(
-      google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
-          request);
-
-  virtual StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  UpdateAccessApprovalSettings(
-      google::cloud::accessapproval::v1::
-          UpdateAccessApprovalSettingsMessage const& request);
-
-  virtual Status DeleteAccessApprovalSettings(
-      google::cloud::accessapproval::v1::
-          DeleteAccessApprovalSettingsMessage const& request);
-
-  virtual StatusOr<
-      google::cloud::accessapproval::v1::AccessApprovalServiceAccount>
-  GetAccessApprovalServiceAccount(
-      google::cloud::accessapproval::v1::
-          GetAccessApprovalServiceAccountMessage const& request);
-};
-
-/**
- * A factory function to construct an object of type `AccessApprovalConnection`.
- *
- * The returned connection object should not be used directly; instead it
- * should be passed as an argument to the constructor of AccessApprovalClient.
- *
- * The optional @p options argument may be used to configure aspects of the
- * returned `AccessApprovalConnection`. Expected options are any of the types in
- * the following option lists:
- *
- * - `google::cloud::CommonOptionList`
- * - `google::cloud::GrpcOptionList`
- * - `google::cloud::UnifiedCredentialsOptionList`
- * - `google::cloud::accessapproval::AccessApprovalPolicyOptionList`
- *
- * @note Unexpected options will be ignored. To log unexpected options instead,
- *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
- *
- * @param options (optional) Configure the `AccessApprovalConnection` created by
- * this function.
- */
-std::shared_ptr<AccessApprovalConnection> MakeAccessApprovalConnection(
-    Options options = {});
+using ::google::cloud::accessapproval_v1::AccessApprovalConnection;
+using ::google::cloud::accessapproval_v1::
+    AccessApprovalLimitedErrorCountRetryPolicy;
+using ::google::cloud::accessapproval_v1::AccessApprovalLimitedTimeRetryPolicy;
+using ::google::cloud::accessapproval_v1::AccessApprovalRetryPolicy;
+using ::google::cloud::accessapproval_v1::MakeAccessApprovalConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval
