@@ -70,12 +70,33 @@ StatusOr<std::string> GetMetadata(std::string path,
   return rest_internal::ReadAll(std::move(**response).ExtractPayload());
 }
 
+StatusOr<internal::SubjectToken> Source(
+    HttpClientFactory const& cf, Options const& opts,
+    ExternalAccountTokenSourceAwsInfo const& info, std::string const& audience,
+    internal::ErrorContext const& ec) {
+  auto token = FetchMetadataToken(info, cf, opts, ec);
+  if (!token) return std::move(token).status();
+  auto region = FetchRegion(info, *token, cf, opts, ec);
+  if (!region) return std::move(region).status();
+  auto secrets = FetchSecrets(info, *token, cf, opts, ec);
+  if (!secrets) return std::move(secrets).status();
+  auto now = std::chrono::system_clock::now();
+  auto subject = ComputeSubjectToken(info, *region, *secrets, now, audience);
+  return internal::SubjectToken{subject.dump()};
+}
+
 }  // namespace
 
 StatusOr<ExternalAccountTokenSource> MakeExternalAccountTokenSourceAws(
-    nlohmann::json const& /*credentials_source*/,
+    nlohmann::json const& credentials_source, std::string const& audience,
     internal::ErrorContext const& ec) {
-  return internal::UnimplementedError("WIP", GCP_ERROR_INFO().WithContext(ec));
+  auto info = ParseExternalAccountTokenSourceAws(credentials_source, ec);
+  if (!info) return std::move(info).status();
+  return ExternalAccountTokenSource{
+      [info = *std::move(info), audience, ec](HttpClientFactory const& cf,
+                                              Options const& opts) {
+        return Source(cf, opts, info, audience, ec);
+      }};
 }
 
 StatusOr<ExternalAccountTokenSourceAwsInfo> ParseExternalAccountTokenSourceAws(
