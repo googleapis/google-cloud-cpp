@@ -255,7 +255,13 @@ void ServiceCodeGenerator::CcSystemIncludes(
 
 Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
   HeaderPrint("\n");
-  return OpenNamespaces(header_, ns_type);
+  return OpenNamespaces(header_, ns_type, "product_path");
+}
+
+Status ServiceCodeGenerator::HeaderOpenForwardingNamespaces(
+    NamespaceType ns_type) {
+  HeaderPrint("\n");
+  return OpenNamespaces(header_, ns_type, "forwarding_product_path");
 }
 
 void ServiceCodeGenerator::HeaderCloseNamespaces() {
@@ -265,7 +271,7 @@ void ServiceCodeGenerator::HeaderCloseNamespaces() {
 
 Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
   CcPrint("\n");
-  return OpenNamespaces(cc_, ns_type);
+  return OpenNamespaces(cc_, ns_type, "product_path");
 }
 
 void ServiceCodeGenerator::CcCloseNamespaces() {
@@ -341,12 +347,14 @@ void ServiceCodeGenerator::GenerateSystemIncludes(
   }
 }
 
-Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type) {
-  auto result = service_vars_.find("product_path");
+Status ServiceCodeGenerator::OpenNamespaces(
+    Printer& p, NamespaceType ns_type, std::string const& product_path_var) {
+  auto result = service_vars_.find(product_path_var);
   if (result == service_vars_.end()) {
-    return Status(StatusCode::kInternal, "product_path not found in vars");
+    return Status(StatusCode::kInternal,
+                  product_path_var + " not found in vars");
   }
-  namespaces_ = BuildNamespaces(service_vars_["product_path"], ns_type);
+  namespaces_ = BuildNamespaces(service_vars_[product_path_var], ns_type);
   for (auto const& nspace : namespaces_) {
     if (nspace == "GOOGLE_CLOUD_CPP_NS") {
       p.Print("GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN\n");

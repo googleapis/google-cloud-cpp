@@ -107,6 +107,19 @@ message ServiceConfiguration {
   // If set, this flag will add an `ExperimentalTag` parameter to the client
   // constructor and the connection factory function.
   bool experimental = 18;
+
+  // We use this setting to maintain backwards compatibility when relocating a
+  // service from the undesired `forwarding_product_path` to the desired
+  // `product_path`.
+  //
+  // If set, generate backwards compatibility headers at the
+  // `forwarding_product_path`. These headers define aliases (in the namespace
+  // derived from `forwarding_product_path`), which point to types defined at
+  // the `product_path` (in the namespace derived from `product_path`).
+  //
+  // For details on why we would relocate a service, see #10170, or
+  // https://github.com/googleapis/google-cloud-cpp/blob/main/doc/adr/2022-11-11-multiple-versions-of-GCP-service-in-one-library.md
+  string forwarding_product_path = 19;
 }
 
 message GeneratorConfiguration {

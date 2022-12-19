@@ -75,6 +75,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
   void CcSystemIncludes(std::vector<std::string> const& system_includes);
 
   Status HeaderOpenNamespaces(NamespaceType ns_type = NamespaceType::kNormal);
+  Status HeaderOpenForwardingNamespaces(
+      NamespaceType ns_type = NamespaceType::kNormal);
   void HeaderCloseNamespaces();
   Status CcOpenNamespaces(NamespaceType ns_type = NamespaceType::kNormal);
   void CcCloseNamespaces();
@@ -189,8 +191,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
   static void GenerateSystemIncludes(Printer& p,
                                      std::vector<std::string> system_includes);
 
-  Status OpenNamespaces(Printer& p,
-                        NamespaceType ns_type = NamespaceType::kNormal);
+  Status OpenNamespaces(Printer& p, NamespaceType ns_type,
+                        std::string const& product_path_var);
   void CloseNamespaces(Printer& p);
 
   google::protobuf::ServiceDescriptor const* service_descriptor_;

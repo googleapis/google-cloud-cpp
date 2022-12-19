@@ -35,6 +35,15 @@ std::vector<std::pair<std::string, std::string>> const& SnakeCaseExceptions() {
   return kExceptions;
 }
 
+void FormatProductPath(std::string& path) {
+  if (path.front() == '/') {
+    path = path.substr(1);
+  }
+  if (path.back() != '/') {
+    path += '/';
+  }
+}
+
 Status ProcessArgProductPath(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   auto product_path =
@@ -46,14 +55,7 @@ Status ProcessArgProductPath(
     return Status(StatusCode::kInvalidArgument,
                   "--cpp_codegen_opt=product_path=<path> must be specified.");
   }
-
-  auto& path = product_path->second;
-  if (path.front() == '/') {
-    path = path.substr(1);
-  }
-  if (path.back() != '/') {
-    path += '/';
-  }
+  FormatProductPath(product_path->second);
   return {};
 }
 
@@ -153,6 +155,16 @@ void ProcessArgAdditionalProtoFiles(
                   command_line_args);
 }
 
+void ProcessArgForwardingProductPath(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  auto path = std::find_if(command_line_args.begin(), command_line_args.end(),
+                           [](std::pair<std::string, std::string> const& p) {
+                             return p.first == "forwarding_product_path";
+                           });
+  if (path == command_line_args.end() || path->second.empty()) return;
+  FormatProductPath(path->second);
+}
+
 }  // namespace
 
 std::string CurrentCopyrightYear() {
@@ -247,6 +259,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgGenerateAsyncRpc(command_line_args);
   ProcessArgRetryGrpcStatusCode(command_line_args);
   ProcessArgAdditionalProtoFiles(command_line_args);
+  ProcessArgForwardingProductPath(command_line_args);
   return command_line_args;
 }
 
