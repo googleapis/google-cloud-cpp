@@ -183,9 +183,8 @@ TEST(ExternalAccount, ParseAwsSuccess) {
       actual->token_source(client_factory.AsStdFunction(), Options{});
   ASSERT_STATUS_OK(subject);
   EXPECT_THAT(subject->token,
-              HasSubstr(nlohmann::json{{"key", "x-goog-cloud-target-resource"},
-                                       {"value", kTestAudience}}
-                            .dump()));
+              HasSubstr("%22key%22%3A%22host%22%2C%22value%22%3A"
+                        "%22sts.expected-region.amazonaws.com%22"));
 }
 
 TEST(ExternalAccount, ParseUrlSuccess) {
