@@ -50,7 +50,10 @@ Status ForwardingIdempotencyPolicyGenerator::GenerateHeader() {
   // forwards
   HeaderPrint(
       R"""(
+/// @deprecated Use $product_namespace$::MakeDefault$idempotency_class_name$ directly.
 using ::google::cloud::$product_namespace$::MakeDefault$idempotency_class_name$;
+
+/// @deprecated Use $product_namespace$::$idempotency_class_name$ directly.
 using ::google::cloud::$product_namespace$::$idempotency_class_name$;
 )""");
 

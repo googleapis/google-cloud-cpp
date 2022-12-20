@@ -50,6 +50,7 @@ Status ForwardingMockConnectionGenerator::GenerateHeader() {
 
   HeaderPrint(
       R"""(
+/// @deprecated Use $product_namespace$_mocks::$mock_connection_class_name$ directly.
 using ::google::cloud::$product_namespace$_mocks::$mock_connection_class_name$;
 )""");
 

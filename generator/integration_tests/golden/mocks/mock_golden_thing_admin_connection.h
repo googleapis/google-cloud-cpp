@@ -27,6 +27,7 @@ namespace cloud {
 namespace golden_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// @deprecated Use golden_v1_mocks::MockGoldenThingAdminConnection directly.
 using ::google::cloud::golden_v1_mocks::MockGoldenThingAdminConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

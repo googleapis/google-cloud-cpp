@@ -26,7 +26,10 @@ namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// @deprecated Use golden_v1::MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy directly.
 using ::google::cloud::golden_v1::MakeDefaultGoldenKitchenSinkConnectionIdempotencyPolicy;
+
+/// @deprecated Use golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicy directly.
 using ::google::cloud::golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
