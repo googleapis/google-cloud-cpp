@@ -125,7 +125,7 @@ TEST(Credentials, ServiceAccount) {
 }
 
 TEST(Credentials, ExternalAccount) {
-  auto credentials = std::make_shared<ExternalAccountConfig>(
+  auto credentials = MakeExternalAccountCredentials(
       "test-only-invalid", Options{}.set<ScopesOption>({"scope1", "scope2"}));
   Visitor visitor;
   CredentialsVisitor::dispatch(*credentials, visitor);
