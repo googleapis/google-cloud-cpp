@@ -51,6 +51,12 @@ std::shared_ptr<Credentials> MakeServiceAccountCredentials(
       std::move(json_object), std::move(opts));
 }
 
+std::shared_ptr<Credentials> MakeExternalAccountCredentials(
+    std::string json_object, Options opts) {
+  return std::make_shared<internal::ExternalAccountConfig>(
+      std::move(json_object), std::move(opts));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

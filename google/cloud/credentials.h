@@ -241,6 +241,37 @@ std::shared_ptr<Credentials> MakeServiceAccountCredentials(
     std::string json_object, Options opts = {});
 
 /**
+ * Creates credentials based on external accounts.
+ *
+ * [Workload Identity Federation] can grant on-premises or multi-cloud workloads
+ * access to Google Cloud resources, without using a service account key. You
+ * can use identity federation with Amazon Web Services (AWS), or with any
+ * identity provider that supports OpenID Connect (OIDC), such as Microsoft
+ * Azure, or SAML 2.0.
+ *
+ * @see https://cloud.google.com/docs/authentication for more information on
+ *     authentication in GCP.
+ *
+ * @ingroup guac
+ *
+ * @param json_object the external account configuration as a JSON string.
+ *     Typically applications read this from a file, or download the contents
+ *     from something like Google's secret manager service. The configuration
+ *     file can be created using the [create-cred-config] `gcloud` subcommand.
+ * @param opts optional configuration values.  Note that the effect of these
+ *     parameters depends on the underlying transport. For example,
+ *     `TracingComponentsOption` is ignored by gRPC-based services.
+ *
+ * [create-cred-config]:
+ * https://cloud.google.com/sdk/gcloud/reference/iam/workload-identity-pools/create-cred-config
+ * [IAM quotas]: https://cloud.google.com/iam/quotas
+ * [Workload Identity Federation]:
+ * https://cloud.google.com/iam/docs/workload-identity-federation
+ */
+std::shared_ptr<Credentials> MakeExternalAccountCredentials(
+    std::string json_object, Options opts = {});
+
+/**
  * Configure the delegates for `MakeImpersonateServiceAccountCredentials()`
  *
  * @ingroup options
