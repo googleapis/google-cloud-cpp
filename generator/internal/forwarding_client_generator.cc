@@ -51,6 +51,7 @@ Status ForwardingClientGenerator::GenerateHeader() {
   // forwards
   HeaderPrint(
       R"""(
+/// @deprecated Use $product_namespace$::$client_class_name$ directly.
 using ::google::cloud::$product_namespace$::$client_class_name$;
 )""");
 

@@ -50,10 +50,19 @@ Status ForwardingConnectionGenerator::GenerateHeader() {
 
   HeaderPrint(
       R"""(
+/// @deprecated Use $product_namespace$::Make$connection_class_name$ directly.
 using ::google::cloud::$product_namespace$::Make$connection_class_name$;
+
+/// @deprecated Use $product_namespace$::$connection_class_name$ directly.
 using ::google::cloud::$product_namespace$::$connection_class_name$;
+
+/// @deprecated Use $product_namespace$::$limited_error_count_retry_policy_name$ directly.
 using ::google::cloud::$product_namespace$::$limited_error_count_retry_policy_name$;
+
+/// @deprecated Use $product_namespace$::$limited_time_retry_policy_name$ directly.
 using ::google::cloud::$product_namespace$::$limited_time_retry_policy_name$;
+
+/// @deprecated Use $product_namespace$::$retry_policy_name$ directly.
 using ::google::cloud::$product_namespace$::$retry_policy_name$;
 )""");
 

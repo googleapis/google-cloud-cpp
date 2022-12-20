@@ -52,12 +52,21 @@ Status ForwardingOptionsGenerator::GenerateHeader() {
   // forwards
   if (HasLongrunningMethod()) {
     HeaderPrint(R"""(
-using ::google::cloud::$product_namespace$::$service_name$PollingPolicyOption;)""");
+/// @deprecated Use $product_namespace$::$service_name$PollingPolicyOption directly.
+using ::google::cloud::$product_namespace$::$service_name$PollingPolicyOption;
+)""");
   }
   HeaderPrint(R"""(
+/// @deprecated Use $product_namespace$::$service_name$BackoffPolicyOption directly.
 using ::google::cloud::$product_namespace$::$service_name$BackoffPolicyOption;
+
+/// @deprecated Use $product_namespace$::$service_name$ConnectionIdempotencyPolicyOption directly.
 using ::google::cloud::$product_namespace$::$service_name$ConnectionIdempotencyPolicyOption;
+
+/// @deprecated Use $product_namespace$::$service_name$PolicyOptionList directly.
 using ::google::cloud::$product_namespace$::$service_name$PolicyOptionList;
+
+/// @deprecated Use $product_namespace$::$service_name$RetryPolicyOption directly.
 using ::google::cloud::$product_namespace$::$service_name$RetryPolicyOption;
 )""");
 
