@@ -27,6 +27,8 @@ namespace cloud {
 namespace accessapproval_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// @deprecated Use accessapproval_v1_mocks::MockAccessApprovalConnection
+/// directly.
 using ::google::cloud::accessapproval_v1_mocks::MockAccessApprovalConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

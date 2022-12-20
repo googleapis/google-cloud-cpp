@@ -26,10 +26,16 @@ namespace cloud {
 namespace accessapproval {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using ::google::cloud::accessapproval_v1::
-    AccessApprovalConnectionIdempotencyPolicy;
+/// @deprecated Use
+/// accessapproval_v1::MakeDefaultAccessApprovalConnectionIdempotencyPolicy
+/// directly.
 using ::google::cloud::accessapproval_v1::
     MakeDefaultAccessApprovalConnectionIdempotencyPolicy;
+
+/// @deprecated Use accessapproval_v1::AccessApprovalConnectionIdempotencyPolicy
+/// directly.
+using ::google::cloud::accessapproval_v1::
+    AccessApprovalConnectionIdempotencyPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval

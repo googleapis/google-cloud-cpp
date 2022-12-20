@@ -27,6 +27,7 @@ namespace cloud {
 namespace accessapproval {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// @deprecated Use accessapproval_v1::AccessApprovalClient directly.
 using ::google::cloud::accessapproval_v1::AccessApprovalClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

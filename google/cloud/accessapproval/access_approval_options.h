@@ -28,10 +28,19 @@ namespace cloud {
 namespace accessapproval {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// @deprecated Use accessapproval_v1::AccessApprovalBackoffPolicyOption
+/// directly.
 using ::google::cloud::accessapproval_v1::AccessApprovalBackoffPolicyOption;
+
+/// @deprecated Use
+/// accessapproval_v1::AccessApprovalConnectionIdempotencyPolicyOption directly.
 using ::google::cloud::accessapproval_v1::
     AccessApprovalConnectionIdempotencyPolicyOption;
+
+/// @deprecated Use accessapproval_v1::AccessApprovalPolicyOptionList directly.
 using ::google::cloud::accessapproval_v1::AccessApprovalPolicyOptionList;
+
+/// @deprecated Use accessapproval_v1::AccessApprovalRetryPolicyOption directly.
 using ::google::cloud::accessapproval_v1::AccessApprovalRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
