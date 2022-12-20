@@ -14,6 +14,7 @@
 
 #include "google/cloud/internal/external_account_token_source_aws.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
 #include "google/cloud/internal/external_account_source_format.h"
 #include "google/cloud/internal/format_time_point.h"
@@ -24,7 +25,11 @@
 #include "google/cloud/internal/sha256_hmac.h"
 #include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
+#include "absl/strings/string_view.h"
+#include <algorithm>
+#include <array>
 #include <chrono>
+#include <utility>
 
 namespace google {
 namespace cloud {
@@ -80,9 +85,20 @@ StatusOr<internal::SubjectToken> Source(
   if (!region) return std::move(region).status();
   auto secrets = FetchSecrets(info, *token, cf, opts, ec);
   if (!secrets) return std::move(secrets).status();
-  auto now = std::chrono::system_clock::now();
-  auto subject = ComputeSubjectToken(info, *region, *secrets, now, audience);
-  return internal::SubjectToken{subject.dump()};
+  auto const now = std::chrono::system_clock::now();
+  auto const subject =
+      ComputeSubjectToken(info, *region, *secrets, now, audience).dump();
+  // We need to URL-encode the string.
+  using CharMapping = std::pair<absl::string_view, absl::string_view>;
+  auto const mappings = std::array<CharMapping, 25>{{
+      {" ", "%20"}, {"\"", "%22"}, {"#", "%23"},  {"$", "%24"}, {"%", "%25"},
+      {"&", "%26"}, {"+", "%2B"},  {",", "%2C"},  {"/", "%2F"}, {":", "%3A"},
+      {";", "%3B"}, {"<", "%3C"},  {"=", "%3D"},  {">", "%3E"}, {"?", "%3F"},
+      {"@", "%40"}, {"[", "%5B"},  {"\\", "%5C"}, {"]", "%5D"}, {"^", "%5E"},
+      {"`", "%60"}, {"{", "%7B"},  {"|", "%7C"},  {"}", "%7D"}, {"\177", "%7F"},
+  }};
+
+  return internal::SubjectToken{absl::StrReplaceAll(subject, mappings)};
 }
 
 }  // namespace
@@ -304,7 +320,26 @@ nlohmann::json ComputeSubjectToken(
 
   auto const host = absl::StrCat("sts.", region, ".amazonaws.com");
   auto const timestamp = internal::FormatV4SignedUrlTimestamp(now);
-  auto const signed_headers = std::string{"host;x-amz-date"};
+  auto const signed_headers_full = [&]() {
+    auto headers = std::vector<std::pair<std::string, std::string>>{
+        {"host", host},
+        {"x-amz-date", timestamp},
+        {"x-goog-cloud-target-resource", target},
+    };
+    // The session token may be empty, in which case we do not need to include
+    // it.
+    if (!secrets.session_token.empty()) {
+      headers.emplace_back("x-amz-security-token", secrets.session_token);
+    }
+    std::sort(headers.begin(), headers.end());
+    return headers;
+  }();
+
+  auto const canonical_headers =
+      absl::StrJoin(signed_headers_full, "\n", absl::PairFormatter(":"));
+  auto const signed_headers = absl::StrJoin(
+      signed_headers_full, ";",
+      [](std::string* out, auto const& p) { out->append(p.first); });
   auto const body = std::string{};
   auto const body_hash = HexEncode(Sha256Hash(body));
 
@@ -312,8 +347,8 @@ nlohmann::json ComputeSubjectToken(
       "POST\n",                                 // Method
       "/\n",                                    // CanonicalUri
       canonical_query_string, "\n",             //
-      "host:", host, "\n",                      // CanonicalHeaders
-      "x-amz-date:", timestamp, "\n",           //
+      canonical_headers, "\n",                  // CanonicalHeaders
+      "\n",                                     // Separator Line
       signed_headers, "\n",                     //
       body_hash                                 //
   );
@@ -326,28 +361,25 @@ nlohmann::json ComputeSubjectToken(
       date, "/", region, "/sts/aws4_request\n",  // scope
       canonical_request_hash                     //
   );
-  auto const k1 = Sha256Hmac("AWS4" + secrets.secret_access_key, timestamp);
+  auto const k1 = Sha256Hmac("AWS4" + secrets.secret_access_key, date);
   auto const k2 = Sha256Hmac(k1, region);
   auto const k3 = Sha256Hmac(k2, std::string{"sts"});
   auto const k4 = Sha256Hmac(k3, std::string{"aws4_request"});
   auto const signature = Sha256Hmac(k4, string_to_sign);
-  auto const authorization = absl::StrCat(    //
-      "AWS-HMAC-SHA256",                      //
-      " Credential=", secrets.access_key_id,  //
-      ",SignedHeaders=", signed_headers,      //
-      ",Signature=", HexEncode(signature)     //
+  auto const authorization = absl::StrCat(          //
+      "AWS4-HMAC-SHA256",                           //
+      " Credential=", secrets.access_key_id,        //
+      "/", date, "/", region, "/sts/aws4_request",  //
+      ",SignedHeaders=", signed_headers,            //
+      ",Signature=", HexEncode(signature)           //
   );
-  std::vector<nlohmann::json> headers({
-      {{"key", "x-goog-cloud-target-resource"}, {"value", target}},
-      {{"key", "x-amz-date"}, {"value", timestamp}},
-      {{"key", "authorization"}, {"value", authorization}},
-      {{"key", "host"}, {"value", host}},
-  });
-  // The session token may be empty, in which case we do not need to include it.
-  if (!secrets.session_token.empty()) {
-    headers.push_back(
-        {{"key", "x-amz-security-token"}, {"value", secrets.session_token}});
-  }
+  std::vector<nlohmann::json> headers;
+  headers.push_back({{"key", "authorization"}, {"value", authorization}});
+  std::transform(
+      signed_headers_full.begin(), signed_headers_full.end(),
+      std::back_inserter(headers), [](auto const& p) {
+        return nlohmann::json({{"key", p.first}, {"value", p.second}});
+      });
   if (debug) {
     return nlohmann::json{
         {"url", verification_url},
