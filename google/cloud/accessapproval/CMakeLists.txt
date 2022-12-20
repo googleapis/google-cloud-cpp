@@ -28,9 +28,11 @@ foreach (dir IN LISTS service_dirs)
     string(REPLACE "/" "_" ns "${dir}")
     list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
     list(APPEND mocks_globs "${dir}mocks/*.h")
-    list(APPEND DOXYGEN_EXAMPLE_PATH
-         "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
     list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "accessapproval_${ns}internal")
+    if (NOT dir STREQUAL "")
+        list(APPEND DOXYGEN_EXAMPLE_PATH
+             "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
+    endif ()
 endforeach ()
 
 # Creates the proto headers needed by doxygen.
@@ -203,8 +205,8 @@ external_googleapis_install_pc("google_cloud_cpp_accessapproval_protos")
 
 # google-cloud-cpp::accessapproval must be defined before we can add the
 # samples.
-foreach (dir IN LISTS service_dirs)
-    if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    foreach (dir IN LISTS service_dirs)
         google_cloud_cpp_add_samples_relative("accessapproval" "${dir}samples/")
-    endif ()
-endforeach ()
+    endforeach ()
+endif ()
