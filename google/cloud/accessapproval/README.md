@@ -32,7 +32,7 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/accessapproval/v1/access_approval_client.h"
+#include "google/cloud/accessapproval/access_approval_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
 
@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) try {
     return 1;
   }
 
-  namespace accessapproval = ::google::cloud::accessapproval_v1;
+  namespace accessapproval = ::google::cloud::accessapproval;
   auto client = accessapproval::AccessApprovalClient(
       accessapproval::MakeAccessApprovalConnection());
   auto const project = google::cloud::Project(argv[1]);
