@@ -27,10 +27,19 @@ namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// @deprecated Use golden_v1::MakeGoldenThingAdminConnection directly.
 using ::google::cloud::golden_v1::MakeGoldenThingAdminConnection;
+
+/// @deprecated Use golden_v1::GoldenThingAdminConnection directly.
 using ::google::cloud::golden_v1::GoldenThingAdminConnection;
+
+/// @deprecated Use golden_v1::GoldenThingAdminLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::golden_v1::GoldenThingAdminLimitedErrorCountRetryPolicy;
+
+/// @deprecated Use golden_v1::GoldenThingAdminLimitedTimeRetryPolicy directly.
 using ::google::cloud::golden_v1::GoldenThingAdminLimitedTimeRetryPolicy;
+
+/// @deprecated Use golden_v1::GoldenThingAdminRetryPolicy directly.
 using ::google::cloud::golden_v1::GoldenThingAdminRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -27,10 +27,19 @@ namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// @deprecated Use golden_v1::MakeGoldenKitchenSinkConnection directly.
 using ::google::cloud::golden_v1::MakeGoldenKitchenSinkConnection;
+
+/// @deprecated Use golden_v1::GoldenKitchenSinkConnection directly.
 using ::google::cloud::golden_v1::GoldenKitchenSinkConnection;
+
+/// @deprecated Use golden_v1::GoldenKitchenSinkLimitedErrorCountRetryPolicy directly.
 using ::google::cloud::golden_v1::GoldenKitchenSinkLimitedErrorCountRetryPolicy;
+
+/// @deprecated Use golden_v1::GoldenKitchenSinkLimitedTimeRetryPolicy directly.
 using ::google::cloud::golden_v1::GoldenKitchenSinkLimitedTimeRetryPolicy;
+
+/// @deprecated Use golden_v1::GoldenKitchenSinkRetryPolicy directly.
 using ::google::cloud::golden_v1::GoldenKitchenSinkRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

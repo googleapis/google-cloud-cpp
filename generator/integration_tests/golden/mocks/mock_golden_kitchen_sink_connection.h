@@ -27,6 +27,7 @@ namespace cloud {
 namespace golden_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// @deprecated Use golden_v1_mocks::MockGoldenKitchenSinkConnection directly.
 using ::google::cloud::golden_v1_mocks::MockGoldenKitchenSinkConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -28,10 +28,19 @@ namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// @deprecated Use golden_v1::GoldenThingAdminPollingPolicyOption directly.
 using ::google::cloud::golden_v1::GoldenThingAdminPollingPolicyOption;
+
+/// @deprecated Use golden_v1::GoldenThingAdminBackoffPolicyOption directly.
 using ::google::cloud::golden_v1::GoldenThingAdminBackoffPolicyOption;
+
+/// @deprecated Use golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption directly.
 using ::google::cloud::golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption;
+
+/// @deprecated Use golden_v1::GoldenThingAdminPolicyOptionList directly.
 using ::google::cloud::golden_v1::GoldenThingAdminPolicyOptionList;
+
+/// @deprecated Use golden_v1::GoldenThingAdminRetryPolicyOption directly.
 using ::google::cloud::golden_v1::GoldenThingAdminRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

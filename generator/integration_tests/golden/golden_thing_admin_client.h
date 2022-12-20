@@ -27,6 +27,7 @@ namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/// @deprecated Use golden_v1::GoldenThingAdminClient directly.
 using ::google::cloud::golden_v1::GoldenThingAdminClient;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
