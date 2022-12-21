@@ -163,7 +163,7 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeTestConnection(
 void BM_ClientRoundTripStubOnly(benchmark::State& state) {
   auto options = Options{};
   auto stub = std::make_shared<TestStub>();
-  auto conn = MakeTestConnection(stub, std::move(options));
+  auto conn = MakeTestConnection(std::move(stub), std::move(options));
   auto client = GoldenKitchenSinkClient(std::move(conn));
 
   for (auto _ : state) {
@@ -177,7 +177,7 @@ void BM_ClientRoundTripMetadata(benchmark::State& state) {
   auto options = Options{};
   std::shared_ptr<GoldenKitchenSinkStub> stub = std::make_shared<TestStub>();
   stub = std::make_shared<GoldenKitchenSinkMetadata>(std::move(stub));
-  auto conn = MakeTestConnection(stub, std::move(options));
+  auto conn = MakeTestConnection(std::move(stub), std::move(options));
   auto client = GoldenKitchenSinkClient(std::move(conn));
 
   for (auto _ : state) {
@@ -227,7 +227,7 @@ void BM_ClientRoundTripTenExtraOptions(benchmark::State& state) {
                      .set<ExtraOption8>(8)
                      .set<ExtraOption9>(9);
   auto stub = std::make_shared<TestStub>();
-  auto conn = MakeTestConnection(stub, std::move(options));
+  auto conn = MakeTestConnection(std::move(stub), std::move(options));
   auto client = GoldenKitchenSinkClient(std::move(conn));
 
   for (auto _ : state) {
@@ -236,8 +236,6 @@ void BM_ClientRoundTripTenExtraOptions(benchmark::State& state) {
   }
 }
 BENCHMARK(BM_ClientRoundTripTenExtraOptions);
-
-BENCHMARK_MAIN();
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

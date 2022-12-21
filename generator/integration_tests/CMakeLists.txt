@@ -180,6 +180,7 @@ foreach (fname IN LISTS samples_cc)
     set_tests_properties("${target}" PROPERTIES LABELS "integration-test")
 endforeach ()
 
+include(FindBenchmarkWithWorkarounds)
 file(
     GLOB benchmarks_cc
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
