@@ -15,6 +15,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/log.h"
 #include "google/cloud/version.h"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_client.h"
 #include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection.h"
@@ -42,10 +43,10 @@ namespace {
 // ----------------------------------------------------------------------------
 // Benchmark                                  Time             CPU   Iterations
 // ----------------------------------------------------------------------------
-// BM_ClientRoundTripStubOnly              2330 ns         2329 ns       293640
-// BM_ClientRoundTripMetadata              2693 ns         2693 ns       253897
-// BM_ClientRoundTripLogging               5551 ns         5551 ns       126334
-// BM_ClientRoundTripTenExtraOptions       5352 ns         5351 ns       131036
+// BM_ClientRoundTripStubOnly              2384 ns         2384 ns       291682
+// BM_ClientRoundTripMetadata              2808 ns         2808 ns       248738
+// BM_ClientRoundTripLogging               2420 ns         2419 ns       288583
+// BM_ClientRoundTripTenExtraOptions       5070 ns         5069 ns       138898
 
 using ::google::cloud::golden_v1_internal::GoldenKitchenSinkConnectionImpl;
 using ::google::cloud::golden_v1_internal::GoldenKitchenSinkDefaultOptions;
@@ -192,7 +193,13 @@ void BM_ClientRoundTripMetadata(benchmark::State& state) {
 }
 BENCHMARK(BM_ClientRoundTripMetadata);
 
+/**
+ * Measure the cost of logging, when the logging decorator is present, but the
+ * log severity is set above that which the logging decorator uses.
+ */
 void BM_ClientRoundTripLogging(benchmark::State& state) {
+  google::cloud::LogSink::Instance().set_minimum_severity(
+      google::cloud::Severity::GCP_LS_WARNING);
   auto options = Options{};
   std::shared_ptr<GoldenKitchenSinkStub> stub = std::make_shared<TestStub>();
   stub = std::make_shared<GoldenKitchenSinkLogging>(
