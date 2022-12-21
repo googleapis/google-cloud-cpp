@@ -32,8 +32,6 @@ find_package(absl CONFIG REQUIRED)
 
 include(GoogleCloudCppCommon)
 
-set(EXTERNAL_GOOGLEAPIS_SOURCE
-    "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
 find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
 if (PROTO_INCLUDE_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
