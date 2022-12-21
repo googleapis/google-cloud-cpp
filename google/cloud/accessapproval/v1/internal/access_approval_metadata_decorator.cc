@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
-#include "google/cloud/accessapproval/internal/access_approval_metadata_decorator.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_metadata_decorator.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/status_or.h"
@@ -25,7 +25,7 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
+namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessApprovalMetadata::AccessApprovalMetadata(
@@ -132,6 +132,6 @@ void AccessApprovalMetadata::SetMetadata(grpc::ClientContext& context) {
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accessapproval_internal
+}  // namespace accessapproval_v1_internal
 }  // namespace cloud
 }  // namespace google

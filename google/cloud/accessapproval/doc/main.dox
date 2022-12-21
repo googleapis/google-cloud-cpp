@@ -94,7 +94,7 @@ library. Use the `google::cloud::EndpointOption` when initializing the client
 library to change this default.
 
 <!-- inject-endpoint-snippet-start -->
-For example, this will override the default endpoint for `accessapproval::AccessApprovalClient`:
+For example, this will override the default endpoint for `accessapproval_v1::AccessApprovalClient`:
 
 @snippet access_approval_client_samples.cc set-client-endpoint
 
@@ -144,15 +144,15 @@ can override the default policies.
 
 // <!-- inject-endpoint-pages-start -->
 
-/*! @page accessapproval::AccessApprovalClient-endpoint-snippet Override accessapproval::AccessApprovalClient Endpoint Configuration
+/*! @page accessapproval_v1::AccessApprovalClient-endpoint-snippet Override accessapproval_v1::AccessApprovalClient Endpoint Configuration
 
-@snippet google/cloud/accessapproval/samples/access_approval_client_samples.cc set-client-endpoint
+@snippet google/cloud/accessapproval/v1/samples/access_approval_client_samples.cc set-client-endpoint
 
 */
 
-/*! @page accessapproval::AccessApprovalClient-service-account-snippet Override accessapproval::AccessApprovalClient Authentication Defaults
+/*! @page accessapproval_v1::AccessApprovalClient-service-account-snippet Override accessapproval_v1::AccessApprovalClient Authentication Defaults
 
-@snippet google/cloud/accessapproval/samples/access_approval_client_samples.cc with-service-account
+@snippet google/cloud/accessapproval/v1/samples/access_approval_client_samples.cc with-service-account
 
 */
 // <!-- inject-endpoint-pages-end -->

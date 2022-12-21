@@ -16,10 +16,10 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_INTERNAL_ACCESS_APPROVAL_LOGGING_DECORATOR_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_INTERNAL_ACCESS_APPROVAL_LOGGING_DECORATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_V1_INTERNAL_ACCESS_APPROVAL_LOGGING_DECORATOR_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_V1_INTERNAL_ACCESS_APPROVAL_LOGGING_DECORATOR_H
 
-#include "google/cloud/accessapproval/internal/access_approval_stub.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_stub.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
 #include <memory>
@@ -28,7 +28,7 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
+namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AccessApprovalLogging : public AccessApprovalStub {
@@ -98,8 +98,8 @@ class AccessApprovalLogging : public AccessApprovalStub {
 };  // AccessApprovalLogging
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accessapproval_internal
+}  // namespace accessapproval_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_INTERNAL_ACCESS_APPROVAL_LOGGING_DECORATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_V1_INTERNAL_ACCESS_APPROVAL_LOGGING_DECORATOR_H

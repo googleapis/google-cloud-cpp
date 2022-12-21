@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
-#include "google/cloud/accessapproval/access_approval_connection.h"
-#include "google/cloud/accessapproval/access_approval_options.h"
-#include "google/cloud/accessapproval/internal/access_approval_connection_impl.h"
-#include "google/cloud/accessapproval/internal/access_approval_option_defaults.h"
-#include "google/cloud/accessapproval/internal/access_approval_stub_factory.h"
+#include "google/cloud/accessapproval/v1/access_approval_connection.h"
+#include "google/cloud/accessapproval/v1/access_approval_options.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_connection_impl.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_option_defaults.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
@@ -30,7 +30,7 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval {
+namespace accessapproval_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessApprovalConnection::~AccessApprovalConnection() = default;
@@ -101,17 +101,17 @@ std::shared_ptr<AccessApprovalConnection> MakeAccessApprovalConnection(
                                  UnifiedCredentialsOptionList,
                                  AccessApprovalPolicyOptionList>(options,
                                                                  __func__);
-  options =
-      accessapproval_internal::AccessApprovalDefaultOptions(std::move(options));
+  options = accessapproval_v1_internal::AccessApprovalDefaultOptions(
+      std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
-  auto stub = accessapproval_internal::CreateDefaultAccessApprovalStub(
+  auto stub = accessapproval_v1_internal::CreateDefaultAccessApprovalStub(
       background->cq(), options);
   return std::make_shared<
-      accessapproval_internal::AccessApprovalConnectionImpl>(
+      accessapproval_v1_internal::AccessApprovalConnectionImpl>(
       std::move(background), std::move(stub), std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accessapproval
+}  // namespace accessapproval_v1
 }  // namespace cloud
 }  // namespace google

@@ -16,7 +16,7 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
-#include "google/cloud/accessapproval/internal/access_approval_logging_decorator.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_logging_decorator.h"
 #include "google/cloud/internal/log_wrapper.h"
 #include "google/cloud/status_or.h"
 #include <google/cloud/accessapproval/v1/accessapproval.grpc.pb.h>
@@ -24,7 +24,7 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
+namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessApprovalLogging::AccessApprovalLogging(
@@ -161,6 +161,6 @@ AccessApprovalLogging::GetAccessApprovalServiceAccount(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accessapproval_internal
+}  // namespace accessapproval_v1_internal
 }  // namespace cloud
 }  // namespace google

@@ -21,52 +21,27 @@
 
 #include "google/cloud/accessapproval/access_approval_connection.h"
 #include "google/cloud/accessapproval/access_approval_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/accessapproval/v1/access_approval_options.h"
 
 namespace google {
 namespace cloud {
 namespace accessapproval {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Use with `google::cloud::Options` to configure the retry policy.
- *
- * @ingroup google-cloud-accessapproval-options
- */
-struct AccessApprovalRetryPolicyOption {
-  using Type = std::shared_ptr<AccessApprovalRetryPolicy>;
-};
+/// @deprecated Use accessapproval_v1::AccessApprovalBackoffPolicyOption
+/// directly.
+using ::google::cloud::accessapproval_v1::AccessApprovalBackoffPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure the backoff policy.
- *
- * @ingroup google-cloud-accessapproval-options
- */
-struct AccessApprovalBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use
+/// accessapproval_v1::AccessApprovalConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::accessapproval_v1::
+    AccessApprovalConnectionIdempotencyPolicyOption;
 
-/**
- * Use with `google::cloud::Options` to configure which operations are retried.
- *
- * @ingroup google-cloud-accessapproval-options
- */
-struct AccessApprovalConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<AccessApprovalConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use accessapproval_v1::AccessApprovalPolicyOptionList directly.
+using ::google::cloud::accessapproval_v1::AccessApprovalPolicyOptionList;
 
-/**
- * The options applicable to AccessApproval.
- *
- * @ingroup google-cloud-accessapproval-options
- */
-using AccessApprovalPolicyOptionList =
-    OptionList<AccessApprovalRetryPolicyOption,
-               AccessApprovalBackoffPolicyOption,
-               AccessApprovalConnectionIdempotencyPolicyOption>;
+/// @deprecated Use accessapproval_v1::AccessApprovalRetryPolicyOption directly.
+using ::google::cloud::accessapproval_v1::AccessApprovalRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval

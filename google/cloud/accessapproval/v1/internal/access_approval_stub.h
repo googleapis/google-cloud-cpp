@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_INTERNAL_ACCESS_APPROVAL_STUB_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_INTERNAL_ACCESS_APPROVAL_STUB_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_V1_INTERNAL_ACCESS_APPROVAL_STUB_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_V1_INTERNAL_ACCESS_APPROVAL_STUB_H
 
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
@@ -26,7 +26,7 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
+namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AccessApprovalStub {
@@ -157,8 +157,8 @@ class DefaultAccessApprovalStub : public AccessApprovalStub {
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accessapproval_internal
+}  // namespace accessapproval_v1_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_INTERNAL_ACCESS_APPROVAL_STUB_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_V1_INTERNAL_ACCESS_APPROVAL_STUB_H

@@ -16,11 +16,11 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
-#include "google/cloud/accessapproval/internal/access_approval_stub_factory.h"
-#include "google/cloud/accessapproval/internal/access_approval_auth_decorator.h"
-#include "google/cloud/accessapproval/internal/access_approval_logging_decorator.h"
-#include "google/cloud/accessapproval/internal/access_approval_metadata_decorator.h"
-#include "google/cloud/accessapproval/internal/access_approval_stub.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_stub_factory.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_auth_decorator.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_logging_decorator.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_metadata_decorator.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_stub.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -31,7 +31,7 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
+namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<AccessApprovalStub> CreateDefaultAccessApprovalStub(
@@ -60,6 +60,6 @@ std::shared_ptr<AccessApprovalStub> CreateDefaultAccessApprovalStub(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accessapproval_internal
+}  // namespace accessapproval_v1_internal
 }  // namespace cloud
 }  // namespace google

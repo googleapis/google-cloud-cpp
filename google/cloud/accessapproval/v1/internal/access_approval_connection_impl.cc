@@ -16,8 +16,8 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
-#include "google/cloud/accessapproval/internal/access_approval_connection_impl.h"
-#include "google/cloud/accessapproval/internal/access_approval_option_defaults.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_connection_impl.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_option_defaults.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
@@ -27,12 +27,12 @@
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
+namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessApprovalConnectionImpl::AccessApprovalConnectionImpl(
     std::unique_ptr<google::cloud::BackgroundThreads> background,
-    std::shared_ptr<accessapproval_internal::AccessApprovalStub> stub,
+    std::shared_ptr<accessapproval_v1_internal::AccessApprovalStub> stub,
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
@@ -44,8 +44,9 @@ AccessApprovalConnectionImpl::ListApprovalRequests(
     google::cloud::accessapproval::v1::ListApprovalRequestsMessage request) {
   request.clear_page_token();
   auto& stub = stub_;
-  auto retry = std::shared_ptr<accessapproval::AccessApprovalRetryPolicy const>(
-      retry_policy());
+  auto retry =
+      std::shared_ptr<accessapproval_v1::AccessApprovalRetryPolicy const>(
+          retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListApprovalRequests(request);
   char const* function_name = __func__;
@@ -193,6 +194,6 @@ AccessApprovalConnectionImpl::GetAccessApprovalServiceAccount(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accessapproval_internal
+}  // namespace accessapproval_v1_internal
 }  // namespace cloud
 }  // namespace google

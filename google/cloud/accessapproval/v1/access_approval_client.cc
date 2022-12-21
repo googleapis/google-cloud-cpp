@@ -16,12 +16,12 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
-#include "google/cloud/accessapproval/access_approval_client.h"
+#include "google/cloud/accessapproval/v1/access_approval_client.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace accessapproval {
+namespace accessapproval_v1 {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessApprovalClient::AccessApprovalClient(
@@ -168,6 +168,6 @@ AccessApprovalClient::GetAccessApprovalServiceAccount(
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accessapproval
+}  // namespace accessapproval_v1
 }  // namespace cloud
 }  // namespace google

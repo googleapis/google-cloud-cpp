@@ -16,16 +16,16 @@
 // If you make any local changes, they will be lost.
 // source: google/cloud/accessapproval/v1/accessapproval.proto
 
-#include "google/cloud/accessapproval/internal/access_approval_option_defaults.h"
-#include "google/cloud/accessapproval/access_approval_connection.h"
-#include "google/cloud/accessapproval/access_approval_options.h"
+#include "google/cloud/accessapproval/v1/internal/access_approval_option_defaults.h"
+#include "google/cloud/accessapproval/v1/access_approval_connection.h"
+#include "google/cloud/accessapproval/v1/access_approval_options.h"
 #include "google/cloud/internal/populate_common_options.h"
 #include "google/cloud/internal/populate_grpc_options.h"
 #include <memory>
 
 namespace google {
 namespace cloud {
-namespace accessapproval_internal {
+namespace accessapproval_v1_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
@@ -39,29 +39,30 @@ Options AccessApprovalDefaultOptions(Options options) {
       "accessapproval.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
-  if (!options.has<accessapproval::AccessApprovalRetryPolicyOption>()) {
-    options.set<accessapproval::AccessApprovalRetryPolicyOption>(
-        accessapproval::AccessApprovalLimitedTimeRetryPolicy(
+  if (!options.has<accessapproval_v1::AccessApprovalRetryPolicyOption>()) {
+    options.set<accessapproval_v1::AccessApprovalRetryPolicyOption>(
+        accessapproval_v1::AccessApprovalLimitedTimeRetryPolicy(
             std::chrono::minutes(30))
             .clone());
   }
-  if (!options.has<accessapproval::AccessApprovalBackoffPolicyOption>()) {
-    options.set<accessapproval::AccessApprovalBackoffPolicyOption>(
+  if (!options.has<accessapproval_v1::AccessApprovalBackoffPolicyOption>()) {
+    options.set<accessapproval_v1::AccessApprovalBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
             .clone());
   }
-  if (!options.has<
-          accessapproval::AccessApprovalConnectionIdempotencyPolicyOption>()) {
+  if (!options.has<accessapproval_v1::
+                       AccessApprovalConnectionIdempotencyPolicyOption>()) {
     options.set<
-        accessapproval::AccessApprovalConnectionIdempotencyPolicyOption>(
-        accessapproval::MakeDefaultAccessApprovalConnectionIdempotencyPolicy());
+        accessapproval_v1::AccessApprovalConnectionIdempotencyPolicyOption>(
+        accessapproval_v1::
+            MakeDefaultAccessApprovalConnectionIdempotencyPolicy());
   }
 
   return options;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accessapproval_internal
+}  // namespace accessapproval_v1_internal
 }  // namespace cloud
 }  // namespace google
