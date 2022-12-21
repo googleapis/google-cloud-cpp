@@ -179,3 +179,15 @@ foreach (fname IN LISTS samples_cc)
     add_test(NAME ${target} COMMAND ${target})
     set_tests_properties("${target}" PROPERTIES LABELS "integration-test")
 endforeach ()
+
+file(
+    GLOB benchmarks_cc
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "benchmarks/*.cc")
+foreach (fname IN LISTS benchmarks_cc)
+    google_cloud_cpp_add_executable(target "generator" "${fname}")
+    add_test(NAME ${target} COMMAND ${target})
+    target_link_libraries(${target} PRIVATE google_cloud_cpp_generator_golden
+                                            benchmark::benchmark_main)
+    google_cloud_cpp_add_common_options(${target})
+endforeach ()

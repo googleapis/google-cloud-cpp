@@ -145,3 +145,16 @@ filegroup(
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 ) for sample in glob(["golden/v1/samples/*.cc"])]
+
+[cc_test(
+    name = benchmark.replace("/", "_").replace(".cc", ""),
+    srcs = [benchmark],
+    copts = [
+        "-I$(BINDIR)",
+    ],
+    tags = ["benchmark"],
+    deps = [
+        ":google_cloud_cpp_generator_golden",
+        "@com_google_benchmark//:benchmark_main",
+    ],
+) for benchmark in glob(["benchmarks/*.cc"])]
