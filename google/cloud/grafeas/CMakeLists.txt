@@ -38,10 +38,10 @@ endif ()
 include(CompileProtos)
 google_cloud_cpp_load_protolist(
     grafeas_list
-    "${CMAKE_SOURCE_DIR}/external/googleapis/protolists/grafeas.list")
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/grafeas.list")
 google_cloud_cpp_load_protodeps(
     grafeas_deps
-    "${CMAKE_SOURCE_DIR}/external/googleapis/protodeps/grafeas.deps")
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/grafeas.deps")
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_grafeas_protos ${grafeas_list} PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
