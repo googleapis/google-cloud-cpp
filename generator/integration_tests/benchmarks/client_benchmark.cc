@@ -160,6 +160,11 @@ std::shared_ptr<GoldenKitchenSinkConnection> MakeTestConnection(
       std::move(background), std::move(stub), std::move(options));
 }
 
+template <int N>
+struct ExtraOption {
+  using Type = int;
+};
+
 void BM_ClientRoundTripStubOnly(benchmark::State& state) {
   auto options = Options{};
   auto stub = std::make_shared<TestStub>();
@@ -203,29 +208,17 @@ void BM_ClientRoundTripLogging(benchmark::State& state) {
 BENCHMARK(BM_ClientRoundTripLogging);
 
 void BM_ClientRoundTripTenExtraOptions(benchmark::State& state) {
-  // clang-format off
-  struct ExtraOption0 { using Type = int; };
-  struct ExtraOption1 { using Type = int; };
-  struct ExtraOption2 { using Type = int; };
-  struct ExtraOption3 { using Type = int; };
-  struct ExtraOption4 { using Type = int; };
-  struct ExtraOption5 { using Type = int; };
-  struct ExtraOption6 { using Type = int; };
-  struct ExtraOption7 { using Type = int; };
-  struct ExtraOption8 { using Type = int; };
-  struct ExtraOption9 { using Type = int; };
-  // clang-format on
   auto options = Options{}
-                     .set<ExtraOption0>(0)
-                     .set<ExtraOption1>(1)
-                     .set<ExtraOption2>(2)
-                     .set<ExtraOption3>(3)
-                     .set<ExtraOption4>(4)
-                     .set<ExtraOption5>(5)
-                     .set<ExtraOption6>(6)
-                     .set<ExtraOption7>(7)
-                     .set<ExtraOption8>(8)
-                     .set<ExtraOption9>(9);
+                     .set<ExtraOption<0>>(0)
+                     .set<ExtraOption<1>>(1)
+                     .set<ExtraOption<2>>(2)
+                     .set<ExtraOption<3>>(3)
+                     .set<ExtraOption<4>>(4)
+                     .set<ExtraOption<5>>(5)
+                     .set<ExtraOption<6>>(6)
+                     .set<ExtraOption<7>>(7)
+                     .set<ExtraOption<8>>(8)
+                     .set<ExtraOption<9>>(9);
   auto stub = std::make_shared<TestStub>();
   auto conn = MakeTestConnection(std::move(stub), std::move(options));
   auto client = GoldenKitchenSinkClient(std::move(conn));
