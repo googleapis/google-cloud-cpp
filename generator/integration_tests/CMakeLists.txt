@@ -103,45 +103,11 @@ target_link_libraries(
     PUBLIC google_cloud_cpp_testing google_cloud_cpp_generator_golden
            GTest::gmock_main GTest::gmock GTest::gtest)
 
-set(google_cloud_cpp_generator_golden_tests
-    # cmake-format: sort
-    tests/forwarding_headers_test.cc
-    tests/golden_kitchen_sink_auth_decorator_test.cc
-    tests/golden_kitchen_sink_client_test.cc
-    tests/golden_kitchen_sink_connection_test.cc
-    tests/golden_kitchen_sink_idempotency_policy_test.cc
-    tests/golden_kitchen_sink_logging_decorator_test.cc
-    tests/golden_kitchen_sink_metadata_decorator_test.cc
-    tests/golden_kitchen_sink_option_defaults_test.cc
-    tests/golden_kitchen_sink_rest_logging_decorator_test.cc
-    tests/golden_kitchen_sink_rest_metadata_decorator_test.cc
-    tests/golden_kitchen_sink_rest_stub_factory_test.cc
-    tests/golden_kitchen_sink_rest_stub_test.cc
-    tests/golden_kitchen_sink_round_robin_decorator_test.cc
-    tests/golden_kitchen_sink_stub_factory_test.cc
-    tests/golden_kitchen_sink_stub_test.cc
-    tests/golden_thing_admin_auth_decorator_test.cc
-    tests/golden_thing_admin_client_test.cc
-    tests/golden_thing_admin_connection_test.cc
-    tests/golden_thing_admin_idempotency_policy_test.cc
-    tests/golden_thing_admin_logging_decorator_test.cc
-    tests/golden_thing_admin_metadata_decorator_test.cc
-    tests/golden_thing_admin_option_defaults_test.cc
-    tests/golden_thing_admin_rest_logging_decorator_test.cc
-    tests/golden_thing_admin_rest_metadata_decorator_test.cc
-    tests/golden_thing_admin_rest_stub_factory_test.cc
-    tests/golden_thing_admin_rest_stub_test.cc
-    tests/golden_thing_admin_round_robin_decorator_test.cc
-    tests/golden_thing_admin_stub_factory_test.cc
-    tests/golden_thing_admin_stub_test.cc
-    tests/plumbing_test.cc)
-
-# Export the list of unit tests to a .bzl file so we do not need to maintain the
-# list in two places.
-export_list_to_bazel("google_cloud_cpp_generator_golden_tests.bzl"
-                     "google_cloud_cpp_generator_golden_tests" YEAR "2020")
-
-foreach (fname ${google_cloud_cpp_generator_golden_tests})
+file(
+    GLOB tests_cc
+    RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "tests/*.cc")
+foreach (fname ${tests_cc})
     google_cloud_cpp_add_executable(target "generator_golden" "${fname}")
     target_link_libraries(
         ${target}
@@ -165,7 +131,7 @@ foreach (fname ${google_cloud_cpp_generator_golden_tests})
 endforeach ()
 
 file(
-    GLOB
+    GLOB samples_cc
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
     "golden/v1/samples/*.cc")
 foreach (fname IN LISTS samples_cc)

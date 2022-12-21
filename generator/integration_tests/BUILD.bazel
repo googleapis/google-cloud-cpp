@@ -107,8 +107,6 @@ cc_library(
     ],
 )
 
-load(":google_cloud_cpp_generator_golden_tests.bzl", "google_cloud_cpp_generator_golden_tests")
-
 filegroup(
     name = "test_mocks",
     srcs = glob(["tests/mock_*.h"]),
@@ -131,7 +129,7 @@ filegroup(
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
         "@com_google_googletest//:gtest_main",
     ],
-) for test in google_cloud_cpp_generator_golden_tests]
+) for test in glob(["tests/*.cc"])]
 
 [cc_test(
     name = sample.replace("/", "_").replace(".cc", ""),
