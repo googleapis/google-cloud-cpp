@@ -266,29 +266,11 @@ TEST_P(CurlClientTest, InsertObjectMediaMultipart) {
   CheckStatus(actual);
 }
 
-TEST_P(CurlClientTest, InsertObjectMediaXml) {
-  OptionsSpan const span(client_->options());
-  auto actual =
-      client_
-          ->InsertObjectMedia(InsertObjectMediaRequest("bkt", "obj", "contents")
-                                  .set_multiple_options(Fields("")))
-          .status();
-  CheckStatus(actual);
-}
-
 TEST_P(CurlClientTest, GetObjectMetadata) {
   OptionsSpan const span(client_->options());
   auto actual =
       client_->GetObjectMetadata(GetObjectMetadataRequest("bkt", "obj"))
           .status();
-  CheckStatus(actual);
-}
-
-TEST_P(CurlClientTest, ReadObjectXml) {
-  OptionsSpan const span(client_->options());
-  if (GetParam() == "libcurl-failure") GTEST_SKIP();
-  auto actual =
-      client_->ReadObject(ReadObjectRangeRequest("bkt", "obj")).status();
   CheckStatus(actual);
 }
 

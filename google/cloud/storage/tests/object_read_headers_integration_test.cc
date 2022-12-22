@@ -56,7 +56,7 @@ class ObjectReadHeadersIntegrationTest
   std::string bucket_name_;
 };
 
-TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataXml) {
+TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataJson) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -79,31 +79,6 @@ TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataXml) {
   EXPECT_THAT(is.status(), IsOk());
 }
 
-TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataJson) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto const object_name = MakeRandomObjectName();
-
-  auto insert = client->InsertObject(bucket_name(), object_name, LoremIpsum(),
-                                     IfGenerationMatch(0));
-  ASSERT_THAT(insert, IsOk());
-  ScheduleForDelete(*insert);
-
-  auto is = client->ReadObject(
-      bucket_name(), object_name, Generation(insert->generation()),
-      // Force JSON (if using REST) as this is not supported by the XML API.
-      IfMetagenerationNotMatch(0));
-  EXPECT_EQ(insert->generation(), is.generation().value_or(0));
-  EXPECT_EQ(insert->metageneration(), is.metageneration().value_or(0));
-  EXPECT_EQ(insert->storage_class(), is.storage_class().value_or(""));
-  EXPECT_EQ(insert->size(), is.size().value_or(0));
-
-  auto const actual = std::string{std::istreambuf_iterator<char>(is), {}};
-  is.Close();
-  EXPECT_THAT(is.status(), IsOk());
-}
-
 TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataJsonRanged) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -115,10 +90,8 @@ TEST_F(ObjectReadHeadersIntegrationTest, CaptureMetadataJsonRanged) {
   ASSERT_THAT(insert, IsOk());
   ScheduleForDelete(*insert);
 
-  auto is = client->ReadObject(
-      bucket_name(), object_name, Generation(insert->generation()),
-      // Force JSON (if using REST) as this is not supported by the XML API.
-      IfMetagenerationNotMatch(0), ReadFromOffset(4));
+  auto is = client->ReadObject(bucket_name(), object_name,
+                               Generation(insert->generation()));
   EXPECT_EQ(insert->generation(), is.generation().value_or(0));
   EXPECT_EQ(insert->metageneration(), is.metageneration().value_or(0));
   EXPECT_EQ(insert->storage_class(), is.storage_class().value_or(""));

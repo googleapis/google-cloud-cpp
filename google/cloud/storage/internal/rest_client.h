@@ -177,20 +177,14 @@ class RestClient : public RawClient,
   StatusOr<ObjectMetadata> InsertObjectMediaMultipart(
       InsertObjectMediaRequest const& request);
 
-  StatusOr<ObjectMetadata> InsertObjectMediaXml(
-      InsertObjectMediaRequest const& request);
-
   StatusOr<ObjectMetadata> InsertObjectMediaSimple(
       InsertObjectMediaRequest const& request);
 
   std::string MakeBoundary();
-  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectXml(
-      ReadObjectRangeRequest const& request);
 
   std::shared_ptr<google::cloud::rest_internal::RestClient>
       storage_rest_client_;
   std::shared_ptr<google::cloud::rest_internal::RestClient> iam_rest_client_;
-  bool const xml_enabled_;
   std::mutex mu_;
   google::cloud::internal::DefaultPRNG generator_;  // GUARDED_BY(mu_);
   google::cloud::Options options_;

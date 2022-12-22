@@ -71,9 +71,7 @@ which should give you a taste of the Cloud Storage C++ client library API.
 ### Experimental
 
 - `GOOGLE_CLOUD_CPP_STORAGE_REST_CONFIG=...` configuration for the REST
-  protocol, currently only the `disable-xml` value has any effect. Sometimes
-  the application developer may want to test using an emulator that does not
-  support XML, while the library defaults to XML for some media operations.
+  protocol, currently unused.
 
 - `GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG=...` used with
   `google::cloud::storage_experimental::DefaultGrpcClient()` to configure

@@ -453,63 +453,6 @@ TEST_F(ObjectIntegrationTest, StreamingWriteEmpty) {
   ASSERT_TRUE(actual.empty());
 }
 
-TEST_F(ObjectIntegrationTest, XmlStreamingWrite) {
-  // This test makes no sense when using the gRPC API.
-  if (UsingGrpc()) GTEST_SKIP();
-
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  // Create the object, but only if it does not exist already.
-  auto os = client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0),
-                                Fields(""));
-  os.exceptions(std::ios_base::failbit);
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-
-  WriteRandomLines(os, expected);
-
-  os.Close();
-  ObjectMetadata meta = os.metadata().value();
-  ScheduleForDelete(meta);
-  // When asking for an empty list of fields we should not expect any values:
-  EXPECT_TRUE(meta.bucket().empty());
-  EXPECT_TRUE(meta.name().empty());
-
-  // Create a iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  ASSERT_FALSE(actual.empty());
-  auto expected_str = expected.str();
-  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
-  EXPECT_EQ(expected_str, actual);
-}
-
-TEST_F(ObjectIntegrationTest, XmlReadWrite) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  std::string expected = LoremIpsum();
-
-  // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, expected, IfGenerationMatch(0), Fields(""));
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  EXPECT_EQ(object_name, meta->name());
-  EXPECT_EQ(bucket_name_, meta->bucket());
-
-  // Create a iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(expected, actual);
-}
-
 TEST_F(ObjectIntegrationTest, AccessControlCRUD) {
   // TODO(#9800) - enable in production.
   if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();

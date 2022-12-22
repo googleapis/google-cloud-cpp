@@ -48,13 +48,6 @@ using ::google::cloud::internal::CurrentOptions;
 
 namespace {
 
-bool XmlEnabled() {
-  auto const config =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_REST_CONFIG")
-          .value_or("");
-  return config != "disable-xml";
-}
-
 std::string UrlEscapeString(std::string const& value) {
   CurlHandle handle;
   return std::string(handle.MakeEscapedString(value).get());
@@ -172,7 +165,6 @@ RestClient::RestClient(
     google::cloud::Options options)
     : storage_rest_client_(std::move(storage_rest_client)),
       iam_rest_client_(std::move(iam_rest_client)),
-      xml_enabled_(XmlEnabled()),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
       options_(std::move(options)),
       backwards_compatibility_options_(
@@ -419,96 +411,6 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMediaMultipart(
        absl::MakeConstSpan(trailer)}));
 }
 
-StatusOr<ObjectMetadata> RestClient::InsertObjectMediaXml(
-    InsertObjectMediaRequest const& request) {
-  auto const& current = CurrentOptions();
-  RestRequestBuilder builder(absl::StrCat(
-      request.bucket_name(), "/", UrlEscapeString(request.object_name())));
-  auto auth = AddAuthorizationHeader(current, builder);
-  if (!auth.ok()) return auth;
-  // Apply the options from InsertObjectMediaRequest that are set, translating
-  // to the XML format for them.
-  builder.AddOption(request.GetOption<ContentEncoding>());
-
-  // Set the content type to a sensible value. The application can override this
-  // in the options for the request.
-  if (!request.HasOption<ContentType>()) {
-    builder.AddHeader("content-type", "application/octet-stream");
-  } else {
-    builder.AddOption(request.GetOption<ContentType>());
-  }
-  builder.AddOption(request.GetOption<EncryptionKey>());
-
-  if (request.HasOption<IfGenerationMatch>()) {
-    builder.AddHeader(
-        "x-goog-if-generation-match",
-        std::to_string(request.GetOption<IfGenerationMatch>().value()));
-  }
-
-  // IfGenerationNotMatch cannot be set, checked by the caller.
-  if (request.HasOption<IfMetagenerationMatch>()) {
-    builder.AddHeader(
-        "x-goog-if-metageneration-match",
-        std::to_string(request.GetOption<IfMetagenerationMatch>().value()));
-  }
-
-  // IfMetagenerationNotMatch cannot be set, checked by the caller.
-  if (request.HasOption<KmsKeyName>()) {
-    builder.AddHeader("x-goog-encryption-kms-key-name",
-                      request.GetOption<KmsKeyName>().value());
-  }
-
-  if (request.HasOption<MD5HashValue>()) {
-    builder.AddHeader(
-        "x-goog-hash",
-        absl::StrCat("md5=", request.GetOption<MD5HashValue>().value()));
-  } else if (!request.GetOption<DisableMD5Hash>().value_or(false)) {
-    builder.AddHeader(
-        "x-goog-hash",
-        absl::StrCat("md5=" + ComputeMD5Hash(request.contents())));
-  }
-
-  if (request.HasOption<Crc32cChecksumValue>()) {
-    builder.AddHeader(
-        "x-goog-hash",
-        absl::StrCat("crc32c=",
-                     request.GetOption<Crc32cChecksumValue>().value()));
-  } else if (!request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
-    builder.AddHeader(
-        "x-goog-hash",
-        absl::StrCat("crc32c=", ComputeCrc32cChecksum(request.contents())));
-  }
-
-  if (request.HasOption<PredefinedAcl>()) {
-    builder.AddHeader("x-goog-acl",
-                      request.GetOption<PredefinedAcl>().HeaderName());
-  }
-  builder.AddOption(request.GetOption<UserProject>());
-
-  //
-  // Apply the options from GenericRequestBase<> that are set, translating
-  // to the XML format for them.
-  //
-  // Fields cannot be set, checked by the caller.
-  builder.AddOption(request.GetOption<CustomHeader>());
-  builder.AddOption(request.GetOption<IfMatchEtag>());
-  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
-  // QuotaUser cannot be set, checked by the caller.
-  // UserIp cannot be set, checked by the caller.
-
-  auto response =
-      storage_rest_client_->Put(std::move(builder).BuildRequest(),
-                                {absl::MakeConstSpan(request.contents())});
-  if (!response.ok()) return std::move(response).status();
-  if (IsHttpError(**response)) return rest::AsStatus(std::move(**response));
-  auto payload = rest::ReadAll(std::move(**response).ExtractPayload());
-  if (!payload.ok()) return std::move(payload).status();
-  return internal::ObjectMetadataParser::FromJson(nlohmann::json{
-      {"name", request.object_name()},
-      {"bucket", request.bucket_name()},
-  });
-}
-
 StatusOr<ObjectMetadata> RestClient::InsertObjectMediaSimple(
     InsertObjectMediaRequest const& request) {
   auto const& current = CurrentOptions();
@@ -540,15 +442,6 @@ StatusOr<ObjectMetadata> RestClient::InsertObjectMedia(
   // If the object metadata is specified, then we need to do a multipart upload.
   if (request.HasOption<WithObjectMetadata>()) {
     return InsertObjectMediaMultipart(request);
-  }
-
-  // Unless the request uses a feature that disables it, prefer to use XML.
-  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
-      !request.HasOption<IfGenerationNotMatch>() &&
-      !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>() &&
-      !request.HasOption<Projection>() && request.HasOption<Fields>() &&
-      request.GetOption<Fields>().value().empty()) {
-    return InsertObjectMediaXml(request);
   }
 
   // If the application has set an explicit hash value we need to use multipart
@@ -601,58 +494,8 @@ StatusOr<ObjectMetadata> RestClient::GetObjectMetadata(
       storage_rest_client_->Get(std::move(builder).BuildRequest()));
 }
 
-StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObjectXml(
-    ReadObjectRangeRequest const& request) {
-  auto const& current = CurrentOptions();
-  RestRequestBuilder builder(absl::StrCat(
-      request.bucket_name(), "/", UrlEscapeString(request.object_name())));
-  auto auth = AddAuthorizationHeader(current, builder);
-  if (!auth.ok()) return auth;
-  //
-  // Apply the options from ReadObjectMediaRequest that are set, translating
-  // to the XML format for them.
-  //
-  builder.AddOption(request.GetOption<EncryptionKey>());
-  builder.AddOption(request.GetOption<Generation>());
-  // None of the IfGeneration*Match nor IfMetageneration*Match can be set. This
-  // is checked by the caller (in this class).
-  builder.AddOption(request.GetOption<UserProject>());
-  builder.AddOption(request.GetOption<AcceptEncoding>());
-
-  //
-  // Apply the options from GenericRequestBase<> that are set, translating
-  // to the XML format for them.
-  //
-  builder.AddOption(request.GetOption<CustomHeader>());
-  builder.AddOption(request.GetOption<IfMatchEtag>());
-  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
-  // QuotaUser cannot be set, checked by the caller.
-  // UserIp cannot be set, checked by the caller.
-
-  if (request.RequiresRangeHeader()) {
-    builder.AddHeader("Range", request.RangeHeaderValue());
-  }
-  if (request.RequiresNoCache()) {
-    builder.AddHeader("Cache-Control", "no-transform");
-  }
-
-  auto response = storage_rest_client_->Get(std::move(builder).BuildRequest());
-  if (!response.ok()) return std::move(response).status();
-  if (IsHttpError(**response)) return rest::AsStatus(std::move(**response));
-  return std::unique_ptr<ObjectReadSource>(
-      new RestObjectReadSource(*std::move(response)));
-}
-
 StatusOr<std::unique_ptr<ObjectReadSource>> RestClient::ReadObject(
     ReadObjectRangeRequest const& request) {
-  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
-      !request.HasOption<IfGenerationNotMatch>() &&
-      !request.HasOption<IfMetagenerationMatch>() &&
-      !request.HasOption<IfGenerationMatch>() &&
-      !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>()) {
-    return ReadObjectXml(request);
-  }
-
   auto const& current = CurrentOptions();
   RestRequestBuilder builder(absl::StrCat(
       "storage/", current.get<TargetApiVersionOption>(), "/b/",

@@ -44,7 +44,7 @@ struct ThroughputExperimentConfig {
  *
  * Throughput benchmarks typically repeat the same "experiment" multiple times,
  * sometimes choosing at random which experiment to run, and which parameters to
- * use. An experiment might be "upload an object using XML" or "download an
+ * use. An experiment might be "upload an object using JSON" or "download an
  * an object using raw libcurl calls".
  */
 class ThroughputExperiment {

@@ -40,7 +40,7 @@ TEST(AggregateUploadThroughputOptions, Basic) {
           "--resumable-upload-chunk-size=4MiB",
           "--thread-count=42",
           "--iteration-count=10",
-          "--api=XML",
+          "--api=JSON",
           "--client-per-thread",
           "--grpc-channel-count=16",
           "--rest-http-version=1.1",
@@ -62,7 +62,7 @@ TEST(AggregateUploadThroughputOptions, Basic) {
   EXPECT_EQ(32 * kMiB, options->maximum_object_size);
   EXPECT_EQ(42, options->thread_count);
   EXPECT_EQ(10, options->iteration_count);
-  EXPECT_EQ("XML", options->api);
+  EXPECT_EQ("JSON", options->api);
   EXPECT_EQ(true, options->client_per_thread);
   EXPECT_EQ(16, options->client_options.get<GrpcNumChannelsOption>());
   EXPECT_EQ("1.1", options->client_options.get<gcs_ex::HttpVersionOption>());

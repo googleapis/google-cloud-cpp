@@ -102,13 +102,6 @@ StatusOr<ReturnType> ParseFromHttpResponse(StatusOr<HttpResponse> response) {
   return ReturnType::FromHttpResponse(response->payload);
 }
 
-bool XmlEnabled() {
-  auto const config =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_REST_CONFIG")
-          .value_or("");
-  return config != "disable-xml";
-}
-
 }  // namespace
 
 std::string HostHeader(Options const& options, char const* service) {
@@ -176,7 +169,6 @@ CurlClient::CurlClient(google::cloud::Options options)
       upload_endpoint_(JsonUploadEndpoint(opts_)),
       xml_endpoint_(XmlEndpoint(opts_)),
       iam_endpoint_(IamEndpoint(opts_)),
-      xml_enabled_(XmlEnabled()),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
       storage_factory_(CreateHandleFactory(opts_)),
       upload_factory_(CreateHandleFactory(opts_)),
@@ -359,15 +351,6 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
     return InsertObjectMediaMultipart(request);
   }
 
-  // Unless the request uses a feature that disables it, prefer to use XML.
-  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
-      !request.HasOption<IfGenerationNotMatch>() &&
-      !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>() &&
-      !request.HasOption<Projection>() && request.HasOption<Fields>() &&
-      request.GetOption<Fields>().value().empty()) {
-    return InsertObjectMediaXml(request);
-  }
-
   // If the application has set an explicit hash value we need to use multipart
   // uploads. `DisableMD5Hash` and `DisableCrc32cChecksum` should not be
   // dependent on each other.
@@ -420,13 +403,6 @@ StatusOr<ObjectMetadata> CurlClient::GetObjectMetadata(
 
 StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
     ReadObjectRangeRequest const& request) {
-  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
-      !request.HasOption<IfGenerationNotMatch>() &&
-      !request.HasOption<IfMetagenerationMatch>() &&
-      !request.HasOption<IfGenerationMatch>() &&
-      !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>()) {
-    return ReadObjectXml(request);
-  }
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/o/" + UrlEscapeString(request.object_name()),
@@ -1109,134 +1085,6 @@ StatusOr<EmptyResponse> CurlClient::DeleteNotification(
   }
   return ReturnEmptyResponse(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
-}
-
-StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
-    InsertObjectMediaRequest const& request) {
-  CurlRequestBuilder builder(xml_endpoint_ + "/" + request.bucket_name() + "/" +
-                                 UrlEscapeString(request.object_name()),
-                             xml_upload_factory_);
-  auto status = SetupBuilderCommon(builder, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
-
-  //
-  // Apply the options from InsertObjectMediaRequest that are set, translating
-  // to the XML format for them.
-  //
-  builder.AddOption(request.GetOption<ContentEncoding>());
-  // Set the content type of a sensible value, the application can override this
-  // in the options for the request.
-  if (!request.HasOption<ContentType>()) {
-    builder.AddHeader("content-type: application/octet-stream");
-  } else {
-    builder.AddOption(request.GetOption<ContentType>());
-  }
-  builder.AddOption(request.GetOption<EncryptionKey>());
-  if (request.HasOption<IfGenerationMatch>()) {
-    builder.AddHeader(
-        "x-goog-if-generation-match: " +
-        std::to_string(request.GetOption<IfGenerationMatch>().value()));
-  }
-  // IfGenerationNotMatch cannot be set, checked by the caller.
-  if (request.HasOption<IfMetagenerationMatch>()) {
-    builder.AddHeader(
-        "x-goog-if-metageneration-match: " +
-        std::to_string(request.GetOption<IfMetagenerationMatch>().value()));
-  }
-  // IfMetagenerationNotMatch cannot be set, checked by the caller.
-  if (request.HasOption<KmsKeyName>()) {
-    builder.AddHeader("x-goog-encryption-kms-key-name: " +
-                      request.GetOption<KmsKeyName>().value());
-  }
-  if (request.HasOption<MD5HashValue>()) {
-    builder.AddHeader("x-goog-hash: md5=" +
-                      request.GetOption<MD5HashValue>().value());
-  } else if (!request.GetOption<DisableMD5Hash>().value_or(false)) {
-    builder.AddHeader("x-goog-hash: md5=" + ComputeMD5Hash(request.contents()));
-  }
-  if (request.HasOption<Crc32cChecksumValue>()) {
-    builder.AddHeader("x-goog-hash: crc32c=" +
-                      request.GetOption<Crc32cChecksumValue>().value());
-  } else if (!request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
-    builder.AddHeader("x-goog-hash: crc32c=" +
-                      ComputeCrc32cChecksum(request.contents()));
-  }
-  if (request.HasOption<PredefinedAcl>()) {
-    builder.AddHeader("x-goog-acl: " +
-                      request.GetOption<PredefinedAcl>().HeaderName());
-  }
-  builder.AddOption(request.GetOption<UserProject>());
-
-  //
-  // Apply the options from GenericRequestBase<> that are set, translating
-  // to the XML format for them.
-  //
-  // Fields cannot be set, checked by the caller.
-  builder.AddOption(request.GetOption<CustomHeader>());
-  builder.AddOption(request.GetOption<IfMatchEtag>());
-  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
-  // QuotaUser cannot be set, checked by the caller.
-  // UserIp cannot be set, checked by the caller.
-
-  builder.AddHeader("Content-Length: " +
-                    std::to_string(request.contents().size()));
-  auto response =
-      std::move(builder).BuildRequest().MakeRequest(request.contents());
-  if (!response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
-    return AsStatus(*response);
-  }
-  return internal::ObjectMetadataParser::FromJson(nlohmann::json{
-      {"name", request.object_name()},
-      {"bucket", request.bucket_name()},
-  });
-}
-
-StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
-    ReadObjectRangeRequest const& request) {
-  CurlRequestBuilder builder(xml_endpoint_ + "/" + request.bucket_name() + "/" +
-                                 UrlEscapeString(request.object_name()),
-                             xml_download_factory_);
-  auto status = SetupBuilderCommon(builder, "GET");
-  if (!status.ok()) {
-    return status;
-  }
-
-  //
-  // Apply the options from ReadObjectMediaRequest that are set, translating
-  // to the XML format for them.
-  //
-  builder.AddOption(request.GetOption<EncryptionKey>());
-  builder.AddOption(request.GetOption<Generation>());
-  // None of the IfGeneration*Match nor IfMetageneration*Match can be set. This
-  // is checked by the caller (in this class).
-  builder.AddOption(request.GetOption<UserProject>());
-  builder.AddOption(request.GetOption<AcceptEncoding>());
-
-  //
-  // Apply the options from GenericRequestBase<> that are set, translating
-  // to the XML format for them.
-  //
-  builder.AddOption(request.GetOption<CustomHeader>());
-  builder.AddOption(request.GetOption<IfMatchEtag>());
-  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
-  // QuotaUser cannot be set, checked by the caller.
-  // UserIp cannot be set, checked by the caller.
-
-  if (request.RequiresRangeHeader()) {
-    builder.AddHeader(request.RangeHeader());
-  }
-  if (request.RequiresNoCache()) {
-    builder.AddHeader("Cache-Control: no-transform");
-  }
-
-  auto download = std::move(builder).BuildDownloadRequest();
-  if (!download) return std::move(download).status();
-  return std::unique_ptr<ObjectReadSource>(*std::move(download));
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(

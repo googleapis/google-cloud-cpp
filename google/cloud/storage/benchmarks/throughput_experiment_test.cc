@@ -123,22 +123,12 @@ INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestJson,
                          ::testing::Values(TestParam{
                              ExperimentLibrary::kCppClient,
                              ExperimentTransport::kJson}));
-INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestXml,
-                         ThroughputExperimentIntegrationTest,
-                         ::testing::Values(TestParam{
-                             ExperimentLibrary::kCppClient,
-                             ExperimentTransport::kXml}));
 INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestGrpc,
                          ThroughputExperimentIntegrationTest,
                          ::testing::Values(TestParam{
                              ExperimentLibrary::kCppClient,
                              ExperimentTransport::kGrpc}));
 INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawJson,
-                         ThroughputExperimentIntegrationTest,
-                         ::testing::Values(TestParam{
-                             ExperimentLibrary::kRaw,
-                             ExperimentTransport::kJson}));
-INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawXml,
                          ThroughputExperimentIntegrationTest,
                          ::testing::Values(TestParam{
                              ExperimentLibrary::kRaw,

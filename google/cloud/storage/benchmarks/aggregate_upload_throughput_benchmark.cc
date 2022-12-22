@@ -312,16 +312,10 @@ UploadDetail UploadOneObject(gcs::Client& client,
   using std::chrono::microseconds;
 
   auto const buffer_size = static_cast<std::streamsize>(write_block.size());
-  // The JSON API returns the object metadata after an insert, while the XML API
-  // does not. If the application explicitly requests "filter out all the
-  // fields" from the response, then both APIs are equivalent and the library
-  // prefers XML in that case. Using gcs::Fields() has no effect.
-  auto xml_hack = options.api == "XML" ? gcs::Fields("") : gcs::Fields();
   auto const object_start = clock::now();
   auto const start = std::chrono::system_clock::now();
 
-  auto stream =
-      client.WriteObject(options.bucket_name, upload.object_name, xml_hack);
+  auto stream = client.WriteObject(options.bucket_name, upload.object_name);
   auto object_bytes = std::uint64_t{0};
   while (object_bytes < upload.object_size) {
     auto n = std::min(static_cast<std::uint64_t>(buffer_size),

@@ -91,8 +91,6 @@ char const* ToString(ApiName api) {
   switch (api) {
     case ApiName::kApiJson:
       return "JSON";
-    case ApiName::kApiXml:
-      return "XML";
     case ApiName::kApiGrpc:
       return "GRPC";
   }
@@ -100,7 +98,7 @@ char const* ToString(ApiName api) {
 }
 
 StatusOr<ApiName> ParseApiName(std::string const& val) {
-  for (auto a : {ApiName::kApiJson, ApiName::kApiXml, ApiName::kApiGrpc}) {
+  for (auto a : {ApiName::kApiJson, ApiName::kApiGrpc}) {
     if (val == ToString(a)) return a;
   }
   return Status{StatusCode::kInvalidArgument, "unknown ApiName " + val};
@@ -116,8 +114,7 @@ StatusOr<ExperimentLibrary> ParseExperimentLibrary(std::string const& val) {
 
 StatusOr<ExperimentTransport> ParseExperimentTransport(std::string const& val) {
   for (auto v : {ExperimentTransport::kDirectPath, ExperimentTransport::kGrpc,
-                 ExperimentTransport::kJson, ExperimentTransport::kXml,
-                 ExperimentTransport::kJsonV2, ExperimentTransport::kXmlV2}) {
+                 ExperimentTransport::kJson, ExperimentTransport::kJsonV2}) {
     if (val == ToString(v)) return v;
   }
   return Status{StatusCode::kInvalidArgument,
@@ -142,12 +139,8 @@ std::string ToString(ExperimentTransport v) {
       return "Grpc";
     case ExperimentTransport::kJson:
       return "Json";
-    case ExperimentTransport::kXml:
-      return "Xml";
     case ExperimentTransport::kJsonV2:
       return "JsonV2";
-    case ExperimentTransport::kXmlV2:
-      return "XmlV2";
   }
   return "";
 }

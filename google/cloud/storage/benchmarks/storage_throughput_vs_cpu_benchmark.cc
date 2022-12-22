@@ -62,8 +62,8 @@ via the command line, to obtain more samples in parallel. Configure this value
 with a small enough number of threads such that you do not saturate the CPU.
 
 Each thread creates C++ objects to perform the "upload experiments". Each one
-of these objects represents the "api" used to perform the upload, that is XML,
-JSON and/or gRPC (though technically gRPC is just another protocol for the JSON
+of these objects represents the "api" used to perform the upload, that is JSON
+and/or gRPC (though technically gRPC is just another protocol for the JSON
 API). Likewise, the thread creates a number of "download experiments", also
 based on the APIs configured via the command-line.
 
@@ -309,7 +309,7 @@ gcs_bm::ClientProvider BaseProvider(ThroughputOptions const& options) {
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
     opts = google::cloud::internal::MergeOptions(options.rest_options,
                                                  std::move(opts));
-    if (t == ExperimentTransport::kJsonV2 || t == ExperimentTransport::kXmlV2) {
+    if (t == ExperimentTransport::kJsonV2) {
       opts.set<gcs::internal::UseRestClientOption>(true);
     }
     return gcs::Client(std::move(opts));
@@ -474,7 +474,7 @@ google::cloud::StatusOr<ThroughputOptions> SelfTest(char const* argv0) {
           "--duration=1s",
           "--minimum-sample-count=4",
           "--maximum-sample-count=10",
-          "--enabled-transports=Json,Xml",
+          "--enabled-transports=Json",
           "--enabled-crc32c=enabled",
           "--enabled-md5=disabled",
       },
