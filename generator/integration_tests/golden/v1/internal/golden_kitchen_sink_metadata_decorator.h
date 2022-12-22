@@ -35,38 +35,37 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
   explicit GoldenKitchenSinkMetadata(std::shared_ptr<GoldenKitchenSinkStub> child);
 
   StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse> GenerateAccessToken(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
+      grpc::ClientContext& context,
+      google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse> GenerateIdToken(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
+      grpc::ClientContext& context,
+      google::test::admin::database::v1::GenerateIdTokenRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse> WriteLogEntries(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
+      grpc::ClientContext& context,
+      google::test::admin::database::v1::WriteLogEntriesRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListLogsResponse> ListLogs(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::ListLogsRequest const& request) override;
+      grpc::ClientContext& context,
+      google::test::admin::database::v1::ListLogsRequest const& request) override;
 
   StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse> ListServiceAccountKeys(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
+      grpc::ClientContext& context,
+      google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) override;
 
   Status DoNothing(
-    grpc::ClientContext& context,
-    google::protobuf::Empty const& request) override;
+      grpc::ClientContext& context,
+      google::protobuf::Empty const& request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
-    StreamingRead(
-    std::unique_ptr<grpc::ClientContext> context,
-    google::test::admin::database::v1::Request const& request) override;
+  StreamingRead(
+      std::unique_ptr<grpc::ClientContext> context,
+      google::test::admin::database::v1::Request const& request) override;
 
   std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
       google::test::admin::database::v1::Request,
-      google::test::admin::database::v1::Response>>
-  StreamingWrite(
+      google::test::admin::database::v1::Response>> StreamingWrite(
       std::unique_ptr<grpc::ClientContext> context) override;
 
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -77,12 +76,12 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
       std::unique_ptr<grpc::ClientContext> context) override;
 
   Status ExplicitRouting1(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
+      grpc::ClientContext& context,
+      google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
   Status ExplicitRouting2(
-    grpc::ClientContext& context,
-    google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
+      grpc::ClientContext& context,
+      google::test::admin::database::v1::ExplicitRoutingRequest const& request) override;
 
   std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       google::test::admin::database::v1::Response>>
