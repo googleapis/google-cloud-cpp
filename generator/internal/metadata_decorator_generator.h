@@ -17,7 +17,7 @@
 
 #include "google/cloud/status.h"
 #include "generator/internal/printer.h"
-#include "generator/internal/service_code_generator.h"
+#include "generator/internal/stub_generator_base.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
 #include <map>
@@ -32,7 +32,7 @@ namespace generator_internal {
  * Generates the header file and cc file for the Metadata decorator for a
  * particular service.
  */
-class MetadataDecoratorGenerator : public ServiceCodeGenerator {
+class MetadataDecoratorGenerator : public StubGeneratorBase {
  public:
   MetadataDecoratorGenerator(
       google::protobuf::ServiceDescriptor const* service_descriptor,

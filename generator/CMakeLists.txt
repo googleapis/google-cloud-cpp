@@ -83,6 +83,8 @@ add_library(
     internal/stub_factory_rest_generator.h
     internal/stub_generator.cc
     internal/stub_generator.h
+    internal/stub_generator_base.cc
+    internal/stub_generator_base.h
     internal/stub_rest_generator.cc
     internal/stub_rest_generator.h)
 target_include_directories(google_cloud_cpp_generator

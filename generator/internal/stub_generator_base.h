@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2020 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -12,12 +12,12 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_ROUND_ROBIN_DECORATOR_GENERATOR_H
-#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_ROUND_ROBIN_DECORATOR_GENERATOR_H
+#ifndef GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_STUB_GENERATOR_BASE_H
+#define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_STUB_GENERATOR_BASE_H
 
 #include "google/cloud/status.h"
 #include "generator/internal/printer.h"
-#include "generator/internal/stub_generator_base.h"
+#include "generator/internal/service_code_generator.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
 #include <map>
@@ -28,33 +28,22 @@ namespace google {
 namespace cloud {
 namespace generator_internal {
 
-/**
- * Generates the RoundRobin decorator for a particular service.
- */
-class RoundRobinDecoratorGenerator : public StubGeneratorBase {
+/// Base class that knows how to print Stub member function signatures.
+class StubGeneratorBase : public ServiceCodeGenerator {
  public:
-  RoundRobinDecoratorGenerator(
+  StubGeneratorBase(
+      std::string const& header_path_key, std::string const& cc_path_key,
       google::protobuf::ServiceDescriptor const* service_descriptor,
       VarsDictionary service_vars,
       std::map<std::string, VarsDictionary> service_method_vars,
       google::protobuf::compiler::GeneratorContext* context);
 
-  ~RoundRobinDecoratorGenerator() override = default;
-
-  RoundRobinDecoratorGenerator(RoundRobinDecoratorGenerator const&) = delete;
-  RoundRobinDecoratorGenerator& operator=(RoundRobinDecoratorGenerator const&) =
-      delete;
-  RoundRobinDecoratorGenerator(RoundRobinDecoratorGenerator&&) = default;
-  RoundRobinDecoratorGenerator& operator=(RoundRobinDecoratorGenerator&&) =
-      default;
-
- private:
-  Status GenerateHeader() override;
-  Status GenerateCc() override;
+ protected:
+  void HeaderPrintPublicMethods();
 };
 
 }  // namespace generator_internal
 }  // namespace cloud
 }  // namespace google
 
-#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_ROUND_ROBIN_DECORATOR_GENERATOR_H
+#endif  // GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_STUB_GENERATOR_BASE_H
