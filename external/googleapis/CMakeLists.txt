@@ -31,9 +31,6 @@ if (GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH)
         "${GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH}")
 endif ()
 
-set(EXTERNAL_GOOGLEAPIS_SOURCE
-    "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
-
 set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     # cmake-format: sort
     "google/api/annotations.proto"
@@ -96,6 +93,17 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
 
 include(EnableWerror)
 
+# Set EXTERNAL_GOOGLEAPIS_SOURCE in the parent directory, as it is used by all
+# the generated libraries.  The Conan packages (https://conan.io), will need to
+# patch this value.  Setting the value in a single place makes such patching
+# easier.
+set(EXTERNAL_GOOGLEAPIS_PREFIX "${PROJECT_BINARY_DIR}/external/googleapis")
+set(EXTERNAL_GOOGLEAPIS_SOURCE
+    "${EXTERNAL_GOOGLEAPIS_PREFIX}/src/googleapis_download"
+    PARENT_SCOPE)
+set(EXTERNAL_GOOGLEAPIS_SOURCE
+    "${EXTERNAL_GOOGLEAPIS_PREFIX}/src/googleapis_download")
+
 # Include the functions to compile proto files and maintain proto libraries.
 include(CompileProtos)
 
@@ -118,7 +126,7 @@ include(ExternalProject)
 externalproject_add(
     googleapis_download
     EXCLUDE_FROM_ALL ON
-    PREFIX "${PROJECT_BINARY_DIR}/external/googleapis"
+    PREFIX "${EXTERNAL_GOOGLEAPIS_PREFIX}"
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
     URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL_HASH}
     PATCH_COMMAND
