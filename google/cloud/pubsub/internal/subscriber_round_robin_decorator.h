@@ -60,7 +60,7 @@ class SubscriberRoundRobin : public SubscriberStub {
       grpc::ClientContext& context,
       google::pubsub::v1::PullRequest const& request) override;
 
-  std::unique_ptr<google::cloud::AsyncStreamingReadWriteRpc<
+  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::pubsub::v1::StreamingPullRequest,
       google::pubsub::v1::StreamingPullResponse>>
   AsyncStreamingPull(google::cloud::CompletionQueue const& cq,
