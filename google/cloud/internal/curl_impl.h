@@ -25,27 +25,52 @@
 #include "google/cloud/version.h"
 #include "absl/types/span.h"
 #include <array>
-#include <set>
+#include <chrono>
+#include <cstdint>
+#include <map>
+#include <memory>
+#include <string>
 #include <utility>
+#include <vector>
 
 namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-extern "C" std::size_t RestCurlRequestWrite(char* ptr, size_t size,
-                                            size_t nmemb, void* userdata);
-extern "C" std::size_t RestCurlRequestHeader(char* contents, std::size_t size,
-                                             std::size_t nitems,
-                                             void* userdata);
+// libcurl will never pass a block larger than CURL_MAX_WRITE_SIZE to the
+// [write callback](https://curl.se/libcurl/c/CURLOPT_WRITEFUNCTION.html).
+// However, CurlImpl::Read() may not be given a buffer large enough to
+// store it all, so we need a place to store the remainder.
+class SpillBuffer {
+ public:
+  SpillBuffer() = default;
 
-// This class encapsulates use of libcurl and manages all the necessary state
-// of a request and its associated response.
+  std::size_t capacity() const { return buffer_.max_size(); }
+  std::size_t size() const { return size_; }
+
+  // Copy all the data from the source.
+  std::size_t CopyFrom(absl::Span<char const> src);
+
+  // Copy as much data as possible to the destination.
+  std::size_t MoveTo(absl::Span<char> dst);
+
+ private:
+  // The logical content of the spill buffer is the size_ length prefix of
+  // buffer_[start_ ... CURL_MAX_WRITE_SIZE-1] + buffer_[0 ... start_-1].
+  std::array<char, CURL_MAX_WRITE_SIZE> buffer_;
+  std::size_t start_ = 0;
+  std::size_t size_ = 0;
+};
+
+// Encapsulates use of libcurl, managing all the necessary state for a
+// request and its associated response.
 class CurlImpl {
  public:
   enum class HttpMethod { kDelete, kGet, kPatch, kPost, kPut };
+
   CurlImpl(CurlHandle handle, std::shared_ptr<CurlHandleFactory> factory,
-           Options options);
+           Options const& options);
   ~CurlImpl();
 
   CurlImpl(CurlImpl const&) = delete;
@@ -57,91 +82,72 @@ class CurlImpl {
   void SetHeader(std::pair<std::string, std::string> const& header);
   void SetHeaders(RestRequest const& request);
 
+  std::string MakeEscapedString(std::string const& s);
+
   void SetUrl(std::string const& endpoint, RestRequest const& request,
               RestRequest::HttpParameters const& additional_parameters);
+  std::string const& url() const { return url_; }
 
-  std::string LastClientIpAddress() const {
-    return factory_->LastClientIpAddress();
-  }
-
-  HttpStatusCode status_code() const {
-    return static_cast<HttpStatusCode>(http_code_);
-  }
-
+  std::string LastClientIpAddress() const;
+  HttpStatusCode status_code() const { return http_code_; }
   std::multimap<std::string, std::string> const& headers() const {
     return received_headers_;
   }
 
-  std::string const& url() const { return url_; }
+  Status MakeRequest(HttpMethod method,
+                     std::vector<absl::Span<char const>> request = {});
 
-  bool HasUnreadData() const { return !(curl_closed_ && spill_offset_ == 0); }
-
-  std::string MakeEscapedString(std::string const& payload) {
-    return handle_.MakeEscapedString(payload).get();
-  }
-
-  Status MakeRequest(CurlImpl::HttpMethod method,
-                     std::vector<absl::Span<char const>> payload = {});
-
+  bool HasUnreadData() const;
   StatusOr<std::size_t> Read(absl::Span<char> output);
 
+  // Called from libcurl callbacks for received data.
+  std::size_t WriteCallback(absl::Span<char> response);
+  std::size_t HeaderCallback(absl::Span<char> response);
+
  private:
-  friend std::size_t RestCurlRequestWrite(char* ptr, size_t size, size_t nmemb,
-                                          void* userdata);
-  friend std::size_t RestCurlRequestHeader(char* contents, std::size_t size,
-                                           std::size_t nitems, void* userdata);
-
-  // Called by libcurl to show that more data is available in the request.
-  std::size_t WriteCallback(void* ptr, std::size_t size, std::size_t nmemb);
-  std::size_t HeaderCallback(char* contents, std::size_t size,
-                             std::size_t nitems);
-
-  std::size_t WriteToUserBuffer(void* ptr, std::size_t size, std::size_t nmemb);
-  std::size_t WriteAllBytesToSpillBuffer(void* ptr, std::size_t size,
-                                         std::size_t nmemb);
-
-  void ApplyOptions(Options const& options);
-  StatusOr<std::size_t> ReadImpl(absl::Span<char> output);
   Status MakeRequestImpl();
+  StatusOr<std::size_t> ReadImpl(absl::Span<char> output);
 
   // Cleanup the CURL handles, leaving them ready for reuse.
   void CleanupHandles();
-  // Copy any available data from the spill buffer to `buffer_`
-  std::size_t DrainSpillBuffer();
-  // Use libcurl to perform at least part of the request.
+  // Perform at least part of the request.
   StatusOr<int> PerformWork();
-  // Use libcurl to wait until the underlying data can perform work.
-  Status WaitForHandles(int& repeats);
   // Loop on PerformWork until a condition is met.
   Status PerformWorkUntil(absl::FunctionRef<bool()> predicate);
-  // Simplify handling of errors in the curl_multi_* API.
-  static Status AsStatus(CURLMcode result, char const* where);
+  // Wait until the underlying data can perform work.
+  Status WaitForHandles(int& repeats);
+
   Status OnTransferError(Status status);
   void OnTransferDone();
 
   std::shared_ptr<CurlHandleFactory> factory_;
   CurlHeaders request_headers_;
+  CurlHandle handle_;
+  CurlMulti multi_;
+
+  bool logging_enabled_;
+  bool follow_location_;
+  CurlHandle::SocketOptions socket_options_;
+  std::string user_agent_;
+  std::string http_version_;
+  std::chrono::seconds transfer_stall_timeout_;
+  std::uint32_t transfer_stall_minimum_rate_;
+  std::chrono::seconds download_stall_timeout_;
+  std::uint32_t download_stall_minimum_rate_;
+
   CurlReceivedHeaders received_headers_;
   std::string url_;
-  std::string user_agent_;
-  bool logging_enabled_ = false;
-  CurlHandle::SocketOptions socket_options_;
-  std::chrono::seconds transfer_stall_timeout_;
-  std::uint32_t transfer_stall_minimum_rate_ = 1;
-  std::chrono::seconds download_stall_timeout_;
-  std::uint32_t download_stall_minimum_rate_ = 1;
-  std::string http_version_;
-  std::int32_t http_code_;
+  HttpStatusCode http_code_;
 
-  // Explicitly closing the handle happens in two steps.
-  // 1. This class needs to notify libcurl that the transfer is terminated by
-  //    returning 0 from the callback.
-  // 2. Once that callback returns 0, this class needs to wait until libcurl
-  //    stops using the handle, which happens via PerformWork().
+  // Explicitly closing the handle happens in two steps:
+  // 1. CurlImpl notifies libcurl that the transfer is terminated by
+  //    returning 0 from WriteCallback().
+  // 2. Once that happens, CurlImpl needs to wait until libcurl stops
+  //    using the handle, which happens via PerformWork().
   //
-  // Closing also happens automatically when the transfer completes successfully
-  // or when the connection is dropped due to some error. In both cases
-  // PerformWork() sets the curl_closed_ flags to true.
+  // Closing also happens automatically when the transfer completes
+  // successfully or when the connection is dropped due to some error.
+  // In both cases PerformWork() sets the curl_closed_ flag to true.
   //
   // The closing_ flag is set when we enter step 1.
   bool closing_ = false;
@@ -149,31 +155,20 @@ class CurlImpl {
   // completes.
   bool curl_closed_ = false;
 
-  CurlHandle handle_;
-  CurlMulti multi_;
-  // Track whether `handle_` has been added to `multi_` or not. The exact
-  // lifecycle for the handle depends on the libcurl version, and using this
-  // flag makes the code less elegant, but less prone to bugs.
+  // Track whether handle_ has been added to multi_ or not. The exact
+  // lifecycle for the handle depends on the libcurl version, and using
+  // this flag makes the code less elegant, but less prone to bugs.
   bool in_multi_ = false;
   bool paused_ = false;
 
   // Track when status and headers from the response are received.
   bool all_headers_received_ = false;
 
-  // Track the usage of the buffer provided to Read.
-  absl::Span<char> buffer_;
+  // Track the unused portion of the output buffer provided to Read().
+  absl::Span<char> avail_;
 
-  // libcurl(1) will never pass a block larger than CURL_MAX_WRITE_SIZE to
-  // `WriteCallback()`:
-  //     https://curl.se/libcurl/c/CURLOPT_WRITEFUNCTION.html
-  // However, the callback *must* save all the bytes.  If the callback reports
-  // that not all bytes are processed the download is aborted. The application
-  // may not provide a large enough buffer in the call to `Read()`, so we need a
-  // place to store the additional bytes.
-  std::array<char, CURL_MAX_WRITE_SIZE> spill_;
-  std::size_t spill_offset_ = 0;
-
-  Options options_;
+  // Store pending data between WriteCallback() calls.
+  SpillBuffer spill_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
