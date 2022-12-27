@@ -215,7 +215,7 @@ void PgDatabaseIntegrationTest::SetUpTestSuite() {
           ArrayBytesValue BYTEA[],
           ArrayTimestampValue TIMESTAMP WITH TIME ZONE[],
           ArrayDateValue DATE[],
-          -- TODO(#10095): ArrayJsonValue JSONB[],
+          ArrayJsonValue JSONB[],
           ArrayNumericValue NUMERIC[],
           PRIMARY KEY(Id)
         )
