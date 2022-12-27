@@ -68,13 +68,13 @@ class BigtableRoundRobin : public BigtableStub {
       grpc::ClientContext& context,
       google::bigtable::v2::ReadModifyWriteRowRequest const& request) override;
 
-  std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       google::bigtable::v2::ReadRowsResponse>>
   AsyncReadRows(google::cloud::CompletionQueue const& cq,
                 std::unique_ptr<grpc::ClientContext> context,
                 google::bigtable::v2::ReadRowsRequest const& request) override;
 
-  std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       google::bigtable::v2::SampleRowKeysResponse>>
   AsyncSampleRowKeys(
       google::cloud::CompletionQueue const& cq,
@@ -86,7 +86,7 @@ class BigtableRoundRobin : public BigtableStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::bigtable::v2::MutateRowRequest const& request) override;
 
-  std::unique_ptr<google::cloud::internal::AsyncStreamingReadRpc<
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
       google::bigtable::v2::MutateRowsResponse>>
   AsyncMutateRows(
       google::cloud::CompletionQueue const& cq,
