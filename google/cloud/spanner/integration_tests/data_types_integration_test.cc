@@ -417,16 +417,6 @@ TEST_F(PgDataTypeIntegrationTest, WriteReadArrayJson) {
       },
   };
   auto result = WriteReadData(*client_, data, "ArrayJsonValue");
-  {
-    // TODO(#10095): Remove this when JSONB[] is supported.
-    auto matcher = StatusIs(StatusCode::kNotFound,
-                            AnyOf(HasSubstr("Column not found in table"),
-                                  HasSubstr("is not a column in")));
-    testing::StringMatchResultListener listener;
-    if (matcher.impl().MatchAndExplain(result, &listener)) {
-      GTEST_SKIP();
-    }
-  }
   ASSERT_STATUS_OK(result);
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
