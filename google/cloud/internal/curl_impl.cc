@@ -45,23 +45,18 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-std::string UserAgentSuffix() {
-  static auto const* const kUserAgentSuffix = new auto([] {
-    return absl::StrCat(internal::UserAgentPrefix(), " ", curl_version());
-  }());
-  return *kUserAgentSuffix;
-}
-
-std::string NormalizeEndpoint(std::string endpoint) {
-  if (!endpoint.empty() && endpoint.back() != '/') endpoint.push_back('/');
-  return endpoint;
-}
-
 char const* InitialQueryParameterSeparator(std::string const& url) {
   // Abseil <= 20200923 does not implement StrContains(.., char)
   // NOLINTNEXTLINE(abseil-string-find-str-contains)
   if (url.find('?') != std::string::npos) return "&";
   return "?";
+}
+
+std::string UserAgentSuffix() {
+  static auto const* const kUserAgentSuffix = new auto([] {
+    return absl::StrCat(internal::UserAgentPrefix(), " ", curl_version());
+  }());
+  return *kUserAgentSuffix;
 }
 
 char const* HttpMethodToName(CurlImpl::HttpMethod method) {
@@ -78,6 +73,11 @@ char const* HttpMethodToName(CurlImpl::HttpMethod method) {
       return "PUT";
   }
   return "UNKNOWN";
+}
+
+std::string NormalizeEndpoint(std::string endpoint) {
+  if (!endpoint.empty() && endpoint.back() != '/') endpoint.push_back('/');
+  return endpoint;
 }
 
 // Convert a CURLM_* error code to a google::cloud::Status().
@@ -175,11 +175,11 @@ extern "C" {  // libcurl callbacks
 // It would be nice to be able to send data from, and receive data into,
 // our own buffers (i.e., without an extra copy). But, there is no such API.
 
-// Fill buffer to send data to peer (POST/PUT).
-static std::size_t ReadFunction(char* buffer, std::size_t size,
-                                std::size_t nitems, void* userdata) {
-  auto* const writev = reinterpret_cast<WriteVector*>(userdata);
-  return writev->MoveTo(absl::MakeSpan(buffer, size * nitems));
+// Receive response data from peer.
+static std::size_t WriteFunction(char* ptr, size_t size, size_t nmemb,
+                                 void* userdata) {
+  auto* const request = reinterpret_cast<CurlImpl*>(userdata);
+  return request->WriteCallback(absl::MakeSpan(ptr, size * nmemb));
 }
 
 // Receive a response header from peer.
@@ -189,11 +189,11 @@ static std::size_t HeaderFunction(char* buffer, std::size_t size,
   return request->HeaderCallback(absl::MakeSpan(buffer, size * nitems));
 }
 
-// Receive response data from peer.
-static std::size_t WriteFunction(char* ptr, size_t size, size_t nmemb,
-                                 void* userdata) {
-  auto* const request = reinterpret_cast<CurlImpl*>(userdata);
-  return request->WriteCallback(absl::MakeSpan(ptr, size * nmemb));
+// Fill buffer to send data to peer (POST/PUT).
+static std::size_t ReadFunction(char* buffer, std::size_t size,
+                                std::size_t nitems, void* userdata) {
+  auto* const writev = reinterpret_cast<WriteVector*>(userdata);
+  return writev->MoveTo(absl::MakeSpan(buffer, size * nitems));
 }
 
 }  // extern "C"
@@ -227,6 +227,28 @@ CurlImpl::CurlImpl(CurlHandle handle,
   download_stall_minimum_rate_ = options.get<DownloadStallMinimumRateOption>();
 }
 
+void CurlImpl::CleanupHandles() {
+  if (!multi_ != !handle_.handle_) {
+    GCP_LOG(FATAL) << "handles are inconsistent, multi_=" << multi_.get()
+                   << ", handle_.handle_=" << handle_.handle_.get();
+  }
+
+  // Remove the handle from the CURLM* interface and wait for the response.
+  if (in_multi_) {
+    (void)curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
+    in_multi_ = false;
+    TRACE_STATE();
+  }
+
+  if (curl_closed_ || !multi_) return;
+
+  if (paused_) {
+    paused_ = false;
+    (void)handle_.EasyPause(CURLPAUSE_RECV_CONT);
+    TRACE_STATE();
+  }
+}
+
 CurlImpl::~CurlImpl() {
   if (!curl_closed_) {
     // Set the closing_ flag to trigger a return 0 from the next
@@ -255,6 +277,71 @@ CurlImpl::~CurlImpl() {
 
   CurlHandle::ReturnToPool(*factory_, std::move(handle_));
   factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
+}
+
+std::size_t CurlImpl::WriteCallback(absl::Span<char> response) {
+  handle_.FlushDebug(__func__);
+  TRACE_STATE() << ", begin"
+                << ", size=" << response.size();
+
+  // This transfer is closing, so just return zero. That will make libcurl
+  // finish any pending work, and will return the handle_ pointer from
+  // curl_multi_info_read() in PerformWork(), where curl_closed_ is set.
+  if (closing_) {
+    TRACE_STATE() << ", closing";
+    return 0;
+  }
+
+  // If headers have not been received and avail_ is empty then this is the
+  // initial call to make the request, and we need to stash the received bytes
+  // into the spill buffer so that we can make the response code and headers
+  // available without requiring the user to read the response. Any bytes
+  // sequestered in the spill buffer will be the first returned to the user
+  // on attempts to read the response. Only after the spill buffer has been
+  // emptied will we read more from handle_.
+  if (!all_headers_received_ && avail_.empty()) {
+    all_headers_received_ = true;
+    http_code_ = static_cast<HttpStatusCode>(handle_.GetResponseCode());
+    // Capture the peer (the HTTP server). Used for troubleshooting.
+    received_headers_.emplace(":curl-peer", handle_.GetPeer());
+    TRACE_STATE() << ", headers received";
+    return spill_.CopyFrom(response);
+  }
+
+  // Use the spill buffer first.
+  avail_.remove_prefix(spill_.MoveTo(avail_));
+
+  // Check that we can accept all the data. If not, pause the transfer and
+  // request that the data be delivered again when the transfer is unpaused.
+  if (response.size() > avail_.size() + (spill_.capacity() - spill_.size())) {
+    paused_ = true;
+    TRACE_STATE() << ", response.size()=" << response.size()
+                  << " too big *** PAUSING HANDLE ***";
+    return CURL_WRITEFUNC_PAUSE;
+  }
+
+  // We're now committed to consuming the entire response.
+  auto const response_size = response.size();
+
+  // Copy as much as possible to the output.
+  auto const len = (std::min)(response_size, avail_.size());
+  std::copy(response.begin(), response.begin() + len, avail_.begin());
+  response.remove_prefix(len);
+  avail_.remove_prefix(len);
+
+  // Copy the remainder to the spill buffer.
+  spill_.CopyFrom(response);
+
+  TRACE_STATE() << ", end";
+  return response_size;
+}
+
+// libcurl invokes the HEADERFUNCTION exactly once for each complete header
+// line received. The status line and blank lines preceding and following the
+// headers are also passed to this function.
+std::size_t CurlImpl::HeaderCallback(absl::Span<char> response) {
+  return CurlAppendHeaderData(received_headers_, response.data(),
+                              response.size());
 }
 
 void CurlImpl::SetHeader(std::string const& header) {
@@ -317,8 +404,265 @@ void CurlImpl::SetUrl(
   append_params(additional_parameters);
 }
 
+void CurlImpl::OnTransferDone() {
+  http_code_ = static_cast<HttpStatusCode>(handle_.GetResponseCode());
+  TRACE_STATE() << ", done";
+
+  // handle_ was removed from multi_ as part of the transfer completing
+  // in PerformWork(). Release the handles back to the factory as soon as
+  // possible, so they can be reused for any other requests.
+  CurlHandle::ReturnToPool(*factory_, std::move(handle_));
+  factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
+}
+
+Status CurlImpl::OnTransferError(Status status) {
+  // When there is a transfer error the handle is suspect. It could be pointing
+  // to an invalid host, a host that is slow and trickling data, or otherwise
+  // be in a bad state. Release the handle, but do not return it to the pool.
+  CleanupHandles();
+  CurlHandle::DiscardFromPool(*factory_, std::move(handle_));
+
+  // While the handle is suspect, there is probably nothing wrong with the
+  // CURLM* handle. That just represents a local resource, such as data
+  // structures for epoll(7) or select(2).
+  factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
+
+  return status;
+}
+
 std::string CurlImpl::LastClientIpAddress() const {
   return factory_->LastClientIpAddress();
+}
+
+bool CurlImpl::HasUnreadData() const {
+  return !curl_closed_ || spill_.size() != 0;
+}
+
+Status CurlImpl::PerformWorkUntil(absl::FunctionRef<bool()> predicate) {
+  TRACE_STATE() << ", begin";
+  int repeats = 0;
+  while (!predicate()) {
+    handle_.FlushDebug(__func__);
+    TRACE_STATE() << ", repeats=" << repeats;
+    auto running_handles = PerformWork();
+    if (!running_handles.ok()) return std::move(running_handles).status();
+
+    // Only wait if there are CURL handles with pending work *and* the
+    // predicate is not satisfied. Note that if the predicate is ill-defined
+    // it might continue to be unsatisfied even though the handles have
+    // completed their work.
+    if (*running_handles == 0 || predicate()) break;
+    auto status = WaitForHandles(repeats);
+    if (!status.ok()) return status;
+  }
+  return {};
+}
+
+StatusOr<int> CurlImpl::PerformWork() {
+  TRACE_STATE();
+  if (!in_multi_) return 0;
+  // Block while there is work to do, apparently newer versions of libcurl do
+  // not need this loop and curl_multi_perform() blocks until there is no more
+  // work, but is it pretty harmless to keep here.
+  int running_handles = 0;
+  CURLMcode multi_perform_result;
+  do {
+    multi_perform_result = curl_multi_perform(multi_.get(), &running_handles);
+  } while (multi_perform_result == CURLM_CALL_MULTI_PERFORM);
+
+  if (multi_perform_result != CURLM_OK) {
+    auto status = AsStatus(multi_perform_result, __func__);
+    TRACE_STATE() << ", status=" << status;
+    return status;
+  }
+
+  if (running_handles == 0) {
+    // The only way we get here is if the handle "completed", and therefore the
+    // transfer either failed or was successful. Pull all the messages out of
+    // the info queue until we get the message about our handle.
+    int remaining;
+    while (auto* msg = curl_multi_info_read(multi_.get(), &remaining)) {
+      if (msg->easy_handle != handle_.handle_.get()) {
+        // Return an error if this is the wrong handle. This should never
+        // happen. If it does, we are using the libcurl API incorrectly. But it
+        // is better to give a meaningful error message in this case.
+        std::ostringstream os;
+        os << __func__ << " unknown handle returned by curl_multi_info_read()"
+           << ", msg.msg=[" << msg->msg << "]"
+           << ", result=[" << msg->data.result
+           << "]=" << curl_easy_strerror(msg->data.result);
+        return internal::UnknownError(std::move(os).str());
+      }
+
+      auto multi_info_read_result = msg->data.result;
+      TRACE_STATE() << ", status="
+                    << CurlHandle::AsStatus(multi_info_read_result, __func__)
+                    << ", remaining=" << remaining
+                    << ", running_handles=" << running_handles;
+      // Whatever the status is, the transfer is done, we need to remove it
+      // from the CURLM* interface.
+      curl_closed_ = true;
+      CURLMcode multi_remove_result = CURLM_OK;
+      if (in_multi_) {
+        // In the extremely unlikely case that removing the handle from CURLM*
+        // was an error, return that as a status.
+        multi_remove_result =
+            curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
+        in_multi_ = false;
+      }
+
+      TRACE_STATE() << ", status="
+                    << CurlHandle::AsStatus(multi_info_read_result, __func__)
+                    << ", remaining=" << remaining
+                    << ", running_handles=" << running_handles
+                    << ", multi_remove_status="
+                    << AsStatus(multi_remove_result, __func__);
+
+      // Ignore errors when closing the handle. They are expected because
+      // libcurl may have received a block of data, but the WriteCallback()
+      // (see above) tells libcurl that it cannot receive more data.
+      if (closing_) continue;
+      if (multi_info_read_result != CURLE_OK) {
+        return CurlHandle::AsStatus(multi_info_read_result, __func__);
+      }
+      if (multi_remove_result != CURLM_OK) {
+        return AsStatus(multi_remove_result, __func__);
+      }
+    }
+  }
+  TRACE_STATE() << ", running_handles=" << running_handles;
+  return running_handles;
+}
+
+Status CurlImpl::WaitForHandles(int& repeats) {
+  int const timeout_ms = 1000;
+  int numfds = 0;
+#if CURL_AT_LEAST_VERSION(7, 66, 0)
+  CURLMcode result =
+      curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+  TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
+                << ", repeats=" << repeats;
+  if (result != CURLM_OK) return AsStatus(result, __func__);
+#else
+  CURLMcode result =
+      curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
+  TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
+                << ", repeats=" << repeats;
+  if (result != CURLM_OK) return AsStatus(result, __func__);
+  // The documentation for curl_multi_wait() recommends sleeping if it returns
+  // numfds == 0 more than once in a row :shrug:
+  //    https://curl.haxx.se/libcurl/c/curl_multi_wait.html
+  if (numfds == 0) {
+    if (++repeats > 1) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(timeout_ms));
+    }
+  } else {
+    repeats = 0;
+  }
+#endif
+  return {};
+}
+
+StatusOr<std::size_t> CurlImpl::Read(absl::Span<char> output) {
+  if (output.empty()) {
+    return internal::InvalidArgumentError("Output buffer cannot be empty");
+  }
+  return ReadImpl(std::move(output));
+}
+
+StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
+  handle_.FlushDebug(__func__);
+  avail_ = output;
+  TRACE_STATE() << ", begin";
+
+  // Before calling WaitForHandles(), move any data from the spill buffer
+  // into the output buffer. It is possible that WaitForHandles() will
+  // never call WriteCallback() (e.g., because PerformWork() closed the
+  // connection), but if there is any data left in the spill buffer we
+  // need to return it.
+  auto bytes_read = spill_.MoveTo(avail_);
+  avail_.remove_prefix(bytes_read);
+  if (curl_closed_) return bytes_read;
+
+  Status status;
+  status = handle_.SetOption(CURLOPT_HEADERFUNCTION, &HeaderFunction);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_HEADERDATA, this);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_WRITEFUNCTION, &WriteFunction);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_WRITEDATA, this);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  handle_.FlushDebug(__func__);
+
+  if (!curl_closed_ && paused_) {
+    paused_ = false;
+    status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
+    TRACE_STATE() << ", status=" << status;
+    if (!status.ok()) return OnTransferError(std::move(status));
+  }
+
+  if (avail_.empty()) {
+    // Once we have received the status and all the headers we have read
+    // enough to satisfy calls to any of RestResponse's methods, and we can
+    // stop reading until we have a user buffer to fill with the body.
+    status = PerformWorkUntil(
+        [this] { return curl_closed_ || paused_ || all_headers_received_; });
+  } else {
+    status = PerformWorkUntil(
+        [this] { return curl_closed_ || paused_ || avail_.empty(); });
+  }
+
+  TRACE_STATE() << ", status=" << status;
+  if (!status.ok()) return OnTransferError(std::move(status));
+
+  bytes_read = output.size() - avail_.size();
+  if (curl_closed_) {
+    OnTransferDone();
+    return bytes_read;
+  }
+  TRACE_STATE() << ", http code=" << http_code_;
+  return bytes_read;
+}
+
+Status CurlImpl::MakeRequestImpl() {
+  TRACE_STATE() << ", url_=" << url_;
+
+  Status status;
+  status = handle_.SetOption(CURLOPT_URL, url_.c_str());
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_HTTPHEADER, request_headers_.get());
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
+  if (!status.ok()) return OnTransferError(std::move(status));
+  handle_.EnableLogging(logging_enabled_);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  handle_.SetSocketCallback(socket_options_);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_NOSIGNAL, 1);
+  if (!status.ok()) return OnTransferError(std::move(status));
+  status = handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
+  if (!status.ok()) return OnTransferError(std::move(status));
+
+  handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
+                             VersionToCurlCode(http_version_));
+
+  auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
+
+  // This indicates that we are using the API incorrectly. The application
+  // can not recover from these problems, so terminating is the right thing
+  // to do.
+  if (error != CURLM_OK) {
+    GCP_LOG(FATAL) << ", status=" << AsStatus(error, __func__);
+  }
+
+  in_multi_ = true;
+
+  // This call to Read() should send the request, get the response, and
+  // thus make available the status_code and headers. Any response data
+  // should be put into the spill buffer, which makes them available for
+  // subsequent calls to Read() after the headers have been extracted.
+  return ReadImpl({}).status();
 }
 
 Status CurlImpl::MakeRequest(HttpMethod method,
@@ -404,350 +748,6 @@ Status CurlImpl::MakeRequest(HttpMethod method,
 
   return internal::InvalidArgumentError(
       absl::StrCat("Unknown method: ", method));
-}
-
-bool CurlImpl::HasUnreadData() const {
-  return !curl_closed_ || spill_.size() != 0;
-}
-
-StatusOr<std::size_t> CurlImpl::Read(absl::Span<char> output) {
-  if (output.empty()) {
-    return internal::InvalidArgumentError("Output buffer cannot be empty");
-  }
-  return ReadImpl(std::move(output));
-}
-
-std::size_t CurlImpl::WriteCallback(absl::Span<char> response) {
-  handle_.FlushDebug(__func__);
-  TRACE_STATE() << ", begin"
-                << ", size=" << response.size();
-
-  // This transfer is closing, so just return zero. That will make libcurl
-  // finish any pending work, and will return the handle_ pointer from
-  // curl_multi_info_read() in PerformWork(), where curl_closed_ is set.
-  if (closing_) {
-    TRACE_STATE() << ", closing";
-    return 0;
-  }
-
-  // If headers have not been received and avail_ is empty then this is the
-  // initial call to make the request, and we need to stash the received bytes
-  // into the spill buffer so that we can make the response code and headers
-  // available without requiring the user to read the response. Any bytes
-  // sequestered in the spill buffer will be the first returned to the user
-  // on attempts to read the response. Only after the spill buffer has been
-  // emptied will we read more from handle_.
-  if (!all_headers_received_ && avail_.empty()) {
-    all_headers_received_ = true;
-    http_code_ = static_cast<HttpStatusCode>(handle_.GetResponseCode());
-    // Capture the peer (the HTTP server). Used for troubleshooting.
-    received_headers_.emplace(":curl-peer", handle_.GetPeer());
-    TRACE_STATE() << ", headers received";
-    return spill_.CopyFrom(response);
-  }
-
-  // Use the spill buffer first.
-  avail_.remove_prefix(spill_.MoveTo(avail_));
-
-  // Check that we can accept all the data. If not, pause the transfer and
-  // request that the data be delivered again when the transfer is unpaused.
-  if (response.size() > avail_.size() + (spill_.capacity() - spill_.size())) {
-    paused_ = true;
-    TRACE_STATE() << ", response.size()=" << response.size()
-                  << " too big *** PAUSING HANDLE ***";
-    return CURL_WRITEFUNC_PAUSE;
-  }
-
-  // We're now committed to consuming the entire response.
-  auto const response_size = response.size();
-
-  // Copy as much as possible to the output.
-  auto const len = (std::min)(response_size, avail_.size());
-  std::copy(response.begin(), response.begin() + len, avail_.begin());
-  response.remove_prefix(len);
-  avail_.remove_prefix(len);
-
-  // Copy the remainder to the spill buffer.
-  spill_.CopyFrom(response);
-
-  TRACE_STATE() << ", end";
-  return response_size;
-}
-
-// libcurl invokes the HEADERFUNCTION exactly once for each complete header
-// line received. The status line and blank lines preceding and following the
-// headers are also passed to this function.
-std::size_t CurlImpl::HeaderCallback(absl::Span<char> response) {
-  return CurlAppendHeaderData(received_headers_, response.data(),
-                              response.size());
-}
-
-Status CurlImpl::MakeRequestImpl() {
-  TRACE_STATE() << ", url_=" << url_;
-
-  Status status;
-  status = handle_.SetOption(CURLOPT_URL, url_.c_str());
-  if (!status.ok()) return OnTransferError(std::move(status));
-  status = handle_.SetOption(CURLOPT_HTTPHEADER, request_headers_.get());
-  if (!status.ok()) return OnTransferError(std::move(status));
-  status = handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
-  if (!status.ok()) return OnTransferError(std::move(status));
-  handle_.EnableLogging(logging_enabled_);
-  if (!status.ok()) return OnTransferError(std::move(status));
-  handle_.SetSocketCallback(socket_options_);
-  if (!status.ok()) return OnTransferError(std::move(status));
-  status = handle_.SetOption(CURLOPT_NOSIGNAL, 1);
-  if (!status.ok()) return OnTransferError(std::move(status));
-  status = handle_.SetOption(CURLOPT_TCP_KEEPALIVE, 1L);
-  if (!status.ok()) return OnTransferError(std::move(status));
-
-  handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
-                             VersionToCurlCode(http_version_));
-
-  auto error = curl_multi_add_handle(multi_.get(), handle_.handle_.get());
-
-  // This indicates that we are using the API incorrectly. The application
-  // can not recover from these problems, so terminating is the right thing
-  // to do.
-  if (error != CURLM_OK) {
-    GCP_LOG(FATAL) << ", status=" << AsStatus(error, __func__);
-  }
-
-  in_multi_ = true;
-
-  // This call to Read() should send the request, get the response, and
-  // thus make available the status_code and headers. Any response data
-  // should be put into the spill buffer, which makes them available for
-  // subsequent calls to Read() after the headers have been extracted.
-  return ReadImpl({}).status();
-}
-
-StatusOr<std::size_t> CurlImpl::ReadImpl(absl::Span<char> output) {
-  handle_.FlushDebug(__func__);
-  avail_ = output;
-  TRACE_STATE() << ", begin";
-
-  // Before calling WaitForHandles(), move any data from the spill buffer
-  // into the output buffer. It is possible that WaitForHandles() will
-  // never call WriteCallback() (e.g., because PerformWork() closed the
-  // connection), but if there is any data left in the spill buffer we
-  // need to return it.
-  auto bytes_read = spill_.MoveTo(avail_);
-  avail_.remove_prefix(bytes_read);
-  if (curl_closed_) return bytes_read;
-
-  Status status;
-  status = handle_.SetOption(CURLOPT_HEADERFUNCTION, &HeaderFunction);
-  if (!status.ok()) return OnTransferError(std::move(status));
-  status = handle_.SetOption(CURLOPT_HEADERDATA, this);
-  if (!status.ok()) return OnTransferError(std::move(status));
-  status = handle_.SetOption(CURLOPT_WRITEFUNCTION, &WriteFunction);
-  if (!status.ok()) return OnTransferError(std::move(status));
-  status = handle_.SetOption(CURLOPT_WRITEDATA, this);
-  if (!status.ok()) return OnTransferError(std::move(status));
-  handle_.FlushDebug(__func__);
-
-  if (!curl_closed_ && paused_) {
-    paused_ = false;
-    status = handle_.EasyPause(CURLPAUSE_RECV_CONT);
-    TRACE_STATE() << ", status=" << status;
-    if (!status.ok()) return OnTransferError(std::move(status));
-  }
-
-  if (avail_.empty()) {
-    // Once we have received the status and all the headers we have read
-    // enough to satisfy calls to any of RestResponse's methods, and we can
-    // stop reading until we have a user buffer to fill with the body.
-    status = PerformWorkUntil(
-        [this] { return curl_closed_ || paused_ || all_headers_received_; });
-  } else {
-    status = PerformWorkUntil(
-        [this] { return curl_closed_ || paused_ || avail_.empty(); });
-  }
-
-  TRACE_STATE() << ", status=" << status;
-  if (!status.ok()) return OnTransferError(std::move(status));
-
-  bytes_read = output.size() - avail_.size();
-  if (curl_closed_) {
-    OnTransferDone();
-    return bytes_read;
-  }
-  TRACE_STATE() << ", http code=" << http_code_;
-  return bytes_read;
-}
-
-void CurlImpl::CleanupHandles() {
-  if (!multi_ != !handle_.handle_) {
-    GCP_LOG(FATAL) << "handles are inconsistent, multi_=" << multi_.get()
-                   << ", handle_.handle_=" << handle_.handle_.get();
-  }
-
-  // Remove the handle from the CURLM* interface and wait for the response.
-  if (in_multi_) {
-    (void)curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-    in_multi_ = false;
-    TRACE_STATE();
-  }
-
-  if (curl_closed_ || !multi_) return;
-
-  if (paused_) {
-    paused_ = false;
-    (void)handle_.EasyPause(CURLPAUSE_RECV_CONT);
-    TRACE_STATE();
-  }
-}
-
-StatusOr<int> CurlImpl::PerformWork() {
-  TRACE_STATE();
-  if (!in_multi_) return 0;
-  // Block while there is work to do, apparently newer versions of libcurl do
-  // not need this loop and curl_multi_perform() blocks until there is no more
-  // work, but is it pretty harmless to keep here.
-  int running_handles = 0;
-  CURLMcode multi_perform_result;
-  do {
-    multi_perform_result = curl_multi_perform(multi_.get(), &running_handles);
-  } while (multi_perform_result == CURLM_CALL_MULTI_PERFORM);
-
-  if (multi_perform_result != CURLM_OK) {
-    auto status = AsStatus(multi_perform_result, __func__);
-    TRACE_STATE() << ", status=" << status;
-    return status;
-  }
-
-  if (running_handles == 0) {
-    // The only way we get here is if the handle "completed", and therefore the
-    // transfer either failed or was successful. Pull all the messages out of
-    // the info queue until we get the message about our handle.
-    int remaining;
-    while (auto* msg = curl_multi_info_read(multi_.get(), &remaining)) {
-      if (msg->easy_handle != handle_.handle_.get()) {
-        // Return an error if this is the wrong handle. This should never
-        // happen. If it does, we are using the libcurl API incorrectly. But it
-        // is better to give a meaningful error message in this case.
-        std::ostringstream os;
-        os << __func__ << " unknown handle returned by curl_multi_info_read()"
-           << ", msg.msg=[" << msg->msg << "]"
-           << ", result=[" << msg->data.result
-           << "]=" << curl_easy_strerror(msg->data.result);
-        return internal::UnknownError(std::move(os).str());
-      }
-
-      auto multi_info_read_result = msg->data.result;
-      TRACE_STATE() << ", status="
-                    << CurlHandle::AsStatus(multi_info_read_result, __func__)
-                    << ", remaining=" << remaining
-                    << ", running_handles=" << running_handles;
-      // Whatever the status is, the transfer is done, we need to remove it
-      // from the CURLM* interface.
-      curl_closed_ = true;
-      CURLMcode multi_remove_result = CURLM_OK;
-      if (in_multi_) {
-        // In the extremely unlikely case that removing the handle from CURLM*
-        // was an error, return that as a status.
-        multi_remove_result =
-            curl_multi_remove_handle(multi_.get(), handle_.handle_.get());
-        in_multi_ = false;
-      }
-
-      TRACE_STATE() << ", status="
-                    << CurlHandle::AsStatus(multi_info_read_result, __func__)
-                    << ", remaining=" << remaining
-                    << ", running_handles=" << running_handles
-                    << ", multi_remove_status="
-                    << AsStatus(multi_remove_result, __func__);
-
-      // Ignore errors when closing the handle. They are expected because
-      // libcurl may have received a block of data, but the WriteCallback()
-      // (see above) tells libcurl that it cannot receive more data.
-      if (closing_) continue;
-      if (multi_info_read_result != CURLE_OK) {
-        return CurlHandle::AsStatus(multi_info_read_result, __func__);
-      }
-      if (multi_remove_result != CURLM_OK) {
-        return AsStatus(multi_remove_result, __func__);
-      }
-    }
-  }
-  TRACE_STATE() << ", running_handles=" << running_handles;
-  return running_handles;
-}
-
-Status CurlImpl::PerformWorkUntil(absl::FunctionRef<bool()> predicate) {
-  TRACE_STATE() << ", begin";
-  int repeats = 0;
-  while (!predicate()) {
-    handle_.FlushDebug(__func__);
-    TRACE_STATE() << ", repeats=" << repeats;
-    auto running_handles = PerformWork();
-    if (!running_handles.ok()) return std::move(running_handles).status();
-
-    // Only wait if there are CURL handles with pending work *and* the
-    // predicate is not satisfied. Note that if the predicate is ill-defined
-    // it might continue to be unsatisfied even though the handles have
-    // completed their work.
-    if (*running_handles == 0 || predicate()) break;
-    auto status = WaitForHandles(repeats);
-    if (!status.ok()) return status;
-  }
-  return {};
-}
-
-Status CurlImpl::WaitForHandles(int& repeats) {
-  int const timeout_ms = 1000;
-  int numfds = 0;
-#if CURL_AT_LEAST_VERSION(7, 66, 0)
-  CURLMcode result =
-      curl_multi_poll(multi_.get(), nullptr, 0, timeout_ms, &numfds);
-  TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
-                << ", repeats=" << repeats;
-  if (result != CURLM_OK) return AsStatus(result, __func__);
-#else
-  CURLMcode result =
-      curl_multi_wait(multi_.get(), nullptr, 0, timeout_ms, &numfds);
-  TRACE_STATE() << ", numfds=" << numfds << ", result=" << result
-                << ", repeats=" << repeats;
-  if (result != CURLM_OK) return AsStatus(result, __func__);
-  // The documentation for curl_multi_wait() recommends sleeping if it returns
-  // numfds == 0 more than once in a row :shrug:
-  //    https://curl.haxx.se/libcurl/c/curl_multi_wait.html
-  if (numfds == 0) {
-    if (++repeats > 1) {
-      std::this_thread::sleep_for(std::chrono::milliseconds(timeout_ms));
-    }
-  } else {
-    repeats = 0;
-  }
-#endif
-  return {};
-}
-
-Status CurlImpl::OnTransferError(Status status) {
-  // When there is a transfer error the handle is suspect. It could be pointing
-  // to an invalid host, a host that is slow and trickling data, or otherwise
-  // be in a bad state. Release the handle, but do not return it to the pool.
-  CleanupHandles();
-  CurlHandle::DiscardFromPool(*factory_, std::move(handle_));
-
-  // While the handle is suspect, there is probably nothing wrong with the
-  // CURLM* handle. That just represents a local resource, such as data
-  // structures for epoll(7) or select(2).
-  factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
-
-  return status;
-}
-
-void CurlImpl::OnTransferDone() {
-  http_code_ = static_cast<HttpStatusCode>(handle_.GetResponseCode());
-  TRACE_STATE() << ", done";
-
-  // handle_ was removed from multi_ as part of the transfer completing
-  // in PerformWork(). Release the handles back to the factory as soon as
-  // possible, so they can be reused for any other requests.
-  CurlHandle::ReturnToPool(*factory_, std::move(handle_));
-  factory_->CleanupMultiHandle(std::move(multi_), HandleDisposition::kKeep);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
