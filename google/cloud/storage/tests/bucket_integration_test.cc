@@ -33,6 +33,7 @@ namespace {
 using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
@@ -153,6 +154,23 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
   EXPECT_THAT(list_bucket_names(), Not(Contains(bucket_name)));
+}
+
+TEST_F(BucketIntegrationTest, CreateDuplicate) {
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto const bucket_name = MakeRandomBucketName();
+  auto metadata = client->CreateBucketForProject(bucket_name, project_id_,
+                                                 BucketMetadata());
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+  EXPECT_EQ(bucket_name, metadata->name());
+  // Wait at least 2 seconds before trying to create / delete another bucket.
+  if (!UsingEmulator()) std::this_thread::sleep_for(std::chrono::seconds(2));
+
+  auto dup = client->CreateBucketForProject(bucket_name, project_id_,
+                                            BucketMetadata());
+  EXPECT_THAT(dup, StatusIs(StatusCode::kAlreadyExists));
 }
 
 TEST_F(BucketIntegrationTest, CreatePredefinedAcl) {
