@@ -204,13 +204,20 @@ StatusOr<BucketMetadata> CurlClient::CreateBucket(
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b", storage_factory_);
   auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  if (!status.ok()) return status;
   builder.AddQueryParameter("project", request.project_id());
   builder.AddHeader("Content-Type: application/json");
-  return CheckedFromString<BucketMetadataParser>(
+  auto response = CheckedFromString<BucketMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(request.json_payload()));
+  // GCS returns a 409 when buckets already exist:
+  //     https://cloud.google.com/storage/docs/json_api/v1/status-codes#409-conflict
+  // This seems to be the only case where kAlreadyExists is a better match
+  // for 409 than kAborted.
+  if (!response && response.status().code() == StatusCode::kAborted) {
+    return google::cloud::internal::WithStatusCode(std::move(response).status(),
+                                                   StatusCode::kAlreadyExists);
+  }
+  return response;
 }
 
 StatusOr<BucketMetadata> CurlClient::GetBucketMetadata(
