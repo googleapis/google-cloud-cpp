@@ -1513,7 +1513,7 @@ sudo dnf makecache && \
 sudo dnf update -y && \
 sudo dnf install -y epel-release && \
 sudo dnf makecache && \
-sudo dnf install -y ccache cmake curl findutils gcc-c++ git make openssl-devel \
+sudo dnf install -y ccache cmake findutils gcc-c++ git make openssl-devel \
         patch re2-devel zlib-devel libcurl-devel c-ares-devel tar wget which
 ```
 

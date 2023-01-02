@@ -25,7 +25,7 @@ RUN dnf makecache && \
     dnf update -y && \
     dnf install -y epel-release && \
     dnf makecache && \
-    dnf install -y ccache cmake curl findutils gcc-c++ git make openssl-devel \
+    dnf install -y ccache cmake findutils gcc-c++ git make openssl-devel \
         patch re2-devel zlib-devel libcurl-devel c-ares-devel tar wget which
 # ```
 
