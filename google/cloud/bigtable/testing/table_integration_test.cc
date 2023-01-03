@@ -19,6 +19,7 @@
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
+#include <gmock/gmock.h>
 #include <algorithm>
 #include <cctype>
 
@@ -27,14 +28,24 @@ namespace cloud {
 namespace bigtable {
 namespace testing {
 
+MATCHER(CellEqual, "") {
+  auto const& rhs = std::get<0>(arg);
+  auto const& lhs = std::get<1>(arg);
+  return rhs.row_key() == lhs.row_key() &&
+         rhs.family_name() == lhs.family_name() &&
+         rhs.column_qualifier() == lhs.column_qualifier() &&
+         rhs.timestamp() == lhs.timestamp() && rhs.value() == lhs.value() &&
+         rhs.labels() == lhs.labels();
+}
+
 bigtable_admin::BigtableTableAdminClient TableAdminClient() {
   return bigtable_admin::BigtableTableAdminClient(
       bigtable_admin::MakeBigtableTableAdminConnection());
 }
 
 using ::google::cloud::internal::GetEnv;
-using ::testing::ContainerEq;
 using ::testing::IsEmpty;
+using ::testing::UnorderedPointwise;
 
 std::string TableTestEnvironment::project_id_;
 std::string TableTestEnvironment::instance_id_;
@@ -248,10 +259,9 @@ std::vector<bigtable::Cell> TableIntegrationTest::GetCellsIgnoringTimestamp(
 }
 
 void TableIntegrationTest::CheckEqualUnordered(
-    std::vector<bigtable::Cell> expected, std::vector<bigtable::Cell> actual) {
-  std::sort(expected.begin(), expected.end());
-  std::sort(actual.begin(), actual.end());
-  EXPECT_THAT(actual, ContainerEq(expected));
+    std::vector<bigtable::Cell> const& expected,
+    std::vector<bigtable::Cell> const& actual) {
+  EXPECT_THAT(actual, UnorderedPointwise(CellEqual(), expected));
 }
 
 std::string TableIntegrationTest::RandomTableId() {
@@ -272,49 +282,6 @@ std::string TableIntegrationTest::RandomBackupId() {
 
 }  // namespace testing
 
-int CellCompare(bigtable::Cell const& lhs, bigtable::Cell const& rhs) {
-  auto compare_row_key = internal::CompareRowKey(lhs.row_key(), rhs.row_key());
-  if (compare_row_key != 0) {
-    return compare_row_key;
-  }
-  auto compare_family_name = lhs.family_name().compare(rhs.family_name());
-  if (compare_family_name != 0) {
-    return compare_family_name;
-  }
-  auto compare_column_qualifier = internal::CompareColumnQualifiers(
-      lhs.column_qualifier(), rhs.column_qualifier());
-  if (compare_column_qualifier != 0) {
-    return compare_column_qualifier;
-  }
-  if (lhs.timestamp() < rhs.timestamp()) {
-    return -1;
-  }
-  if (lhs.timestamp() > rhs.timestamp()) {
-    return 1;
-  }
-  auto compare_value = internal::CompareCellValues(lhs.value(), rhs.value());
-  if (compare_value != 0) {
-    return compare_value;
-  }
-  if (lhs.labels() < rhs.labels()) {
-    return -1;
-  }
-  if (lhs.labels() == rhs.labels()) {
-    return 0;
-  }
-  return 1;
-}
-
-//@{
-/// @name Helpers for GTest.
-bool operator==(Cell const& lhs, Cell const& rhs) {
-  return CellCompare(lhs, rhs) == 0;
-}
-
-bool operator<(Cell const& lhs, Cell const& rhs) {
-  return CellCompare(lhs, rhs) < 0;
-}
-
 /**
  * This function is not used in this file, but it is used by GoogleTest; without
  * it, failing tests will output binary blobs instead of human-readable text.
@@ -331,7 +298,6 @@ void PrintTo(bigtable::Cell const& cell, std::ostream* os) {
   }
   *os << "}";
 }
-//@}
 
 }  // namespace bigtable
 }  // namespace cloud
