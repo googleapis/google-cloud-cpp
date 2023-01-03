@@ -131,8 +131,8 @@ class TableIntegrationTest
    * Compare two sets of cells.
    * Unordered because ReadRows does not guarantee a particular order.
    */
-  static void CheckEqualUnordered(std::vector<bigtable::Cell> expected,
-                                  std::vector<bigtable::Cell> actual);
+  static void CheckEqualUnordered(std::vector<bigtable::Cell> const& expected,
+                                  std::vector<bigtable::Cell> const& actual);
 
   /**
    * Generate a random table id.
