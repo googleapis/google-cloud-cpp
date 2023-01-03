@@ -1,7 +1,11 @@
 @com_google_googleapis//google/cloud/dataplex/v1:analyze.proto
 @com_google_googleapis//google/cloud/dataplex/v1:content.proto
+@com_google_googleapis//google/cloud/dataplex/v1:data_profile.proto
+@com_google_googleapis//google/cloud/dataplex/v1:data_quality.proto
+@com_google_googleapis//google/cloud/dataplex/v1:datascans.proto
 @com_google_googleapis//google/cloud/dataplex/v1:logs.proto
 @com_google_googleapis//google/cloud/dataplex/v1:metadata.proto
+@com_google_googleapis//google/cloud/dataplex/v1:processing.proto
 @com_google_googleapis//google/cloud/dataplex/v1:resources.proto
 @com_google_googleapis//google/cloud/dataplex/v1:service.proto
 @com_google_googleapis//google/cloud/dataplex/v1:tasks.proto

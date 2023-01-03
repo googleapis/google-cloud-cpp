@@ -103,12 +103,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   /// [google.cloud.secretmanager.v1.ListSecretsRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L206}
   /// [google.cloud.secretmanager.v1.Secret]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
       std::string const& parent, Options opts = {});
@@ -121,12 +121,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   /// [google.cloud.secretmanager.v1.ListSecretsRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L206}
   /// [google.cloud.secretmanager.v1.Secret]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StreamRange<google::cloud::secretmanager::v1::Secret> ListSecrets(
       google::cloud::secretmanager::v1::ListSecretsRequest request,
@@ -149,12 +149,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   /// [google.cloud.secretmanager.v1.CreateSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L248}
   /// [google.cloud.secretmanager.v1.Secret]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
       std::string const& parent, std::string const& secret_id,
@@ -170,12 +170,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   /// [google.cloud.secretmanager.v1.CreateSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L248}
   /// [google.cloud.secretmanager.v1.Secret]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> CreateSecret(
       google::cloud::secretmanager::v1::CreateSecretRequest const& request,
@@ -195,12 +195,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   /// [google.cloud.secretmanager.v1.AddSecretVersionRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L270}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
       std::string const& parent,
@@ -217,12 +217,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   /// [google.cloud.secretmanager.v1.AddSecretVersionRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L270}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> AddSecretVersion(
       google::cloud::secretmanager::v1::AddSecretVersionRequest const& request,
@@ -237,12 +237,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   /// [google.cloud.secretmanager.v1.GetSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L285}
   /// [google.cloud.secretmanager.v1.Secret]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
       std::string const& name, Options opts = {});
@@ -255,12 +255,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   /// [google.cloud.secretmanager.v1.GetSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L285}
   /// [google.cloud.secretmanager.v1.Secret]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> GetSecret(
       google::cloud::secretmanager::v1::GetSecretRequest const& request,
@@ -276,12 +276,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
   /// [google.cloud.secretmanager.v1.Secret]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
       google::cloud::secretmanager::v1::Secret const& secret,
@@ -296,12 +296,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_link{google::cloud::secretmanager::v1::Secret,google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   /// [google.cloud.secretmanager.v1.UpdateSecretRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L354}
   /// [google.cloud.secretmanager.v1.Secret]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L39}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L40}
   ///
   StatusOr<google::cloud::secretmanager::v1::Secret> UpdateSecret(
       google::cloud::secretmanager::v1::UpdateSecretRequest const& request,
@@ -347,12 +347,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L296}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
   ListSecretVersions(std::string const& parent, Options opts = {});
@@ -366,12 +366,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   /// [google.cloud.secretmanager.v1.ListSecretVersionsRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L296}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StreamRange<google::cloud::secretmanager::v1::SecretVersion>
   ListSecretVersions(
@@ -393,12 +393,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L339}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
       std::string const& name, Options opts = {});
@@ -415,12 +415,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   /// [google.cloud.secretmanager.v1.GetSecretVersionRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L339}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> GetSecretVersion(
       google::cloud::secretmanager::v1::GetSecretVersionRequest const& request,
@@ -490,12 +490,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L407}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DisableSecretVersion(std::string const& name, Options opts = {});
@@ -512,12 +512,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   /// [google.cloud.secretmanager.v1.DisableSecretVersionRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L407}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DisableSecretVersion(
@@ -539,12 +539,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L424}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
       std::string const& name, Options opts = {});
@@ -561,12 +561,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   /// [google.cloud.secretmanager.v1.EnableSecretVersionRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L424}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion> EnableSecretVersion(
       google::cloud::secretmanager::v1::EnableSecretVersionRequest const&
@@ -588,12 +588,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L441}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DestroySecretVersion(std::string const& name, Options opts = {});
@@ -611,12 +611,12 @@ class SecretManagerServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_link{google::cloud::secretmanager::v1::SecretVersion,google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   /// [google.cloud.secretmanager.v1.DestroySecretVersionRequest]:
   /// @googleapis_reference_link{google/cloud/secretmanager/v1/service.proto#L441}
   /// [google.cloud.secretmanager.v1.SecretVersion]:
-  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L115}
+  /// @googleapis_reference_link{google/cloud/secretmanager/v1/resources.proto#L144}
   ///
   StatusOr<google::cloud::secretmanager::v1::SecretVersion>
   DestroySecretVersion(
