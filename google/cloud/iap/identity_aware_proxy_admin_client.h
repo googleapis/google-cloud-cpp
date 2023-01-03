@@ -157,16 +157,16 @@ class IdentityAwareProxyAdminServiceClient {
   /// Gets the IAP settings on a particular IAP protected resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::GetIapSettingsRequest,google/cloud/iap/v1/service.proto#L340}
+  /// @googleapis_link{google::cloud::iap::v1::GetIapSettingsRequest,google/cloud/iap/v1/service.proto#L274}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L361}
+  /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L295}
   ///
   /// [google.cloud.iap.v1.GetIapSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L340}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L274}
   /// [google.cloud.iap.v1.IapSettings]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L361}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L295}
   ///
   StatusOr<google::cloud::iap::v1::IapSettings> GetIapSettings(
       google::cloud::iap::v1::GetIapSettingsRequest const& request,
@@ -177,16 +177,16 @@ class IdentityAwareProxyAdminServiceClient {
   /// replaces all fields unless the `update_mask` is set.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::UpdateIapSettingsRequest,google/cloud/iap/v1/service.proto#L348}
+  /// @googleapis_link{google::cloud::iap::v1::UpdateIapSettingsRequest,google/cloud/iap/v1/service.proto#L282}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L361}
+  /// @googleapis_link{google::cloud::iap::v1::IapSettings,google/cloud/iap/v1/service.proto#L295}
   ///
   /// [google.cloud.iap.v1.UpdateIapSettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L348}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L282}
   /// [google.cloud.iap.v1.IapSettings]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L361}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L295}
   ///
   StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request,
@@ -204,12 +204,12 @@ class IdentityAwareProxyAdminServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L252}
   ///
   /// [google.cloud.iap.v1.ListTunnelDestGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L141}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L152}
   /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L252}
   ///
   StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
       std::string const& parent, Options opts = {});
@@ -220,16 +220,16 @@ class IdentityAwareProxyAdminServiceClient {
   /// `/v1/projects/123/iap_tunnel/locations/-/destGroups`
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::ListTunnelDestGroupsRequest,google/cloud/iap/v1/service.proto#L141}
+  /// @googleapis_link{google::cloud::iap::v1::ListTunnelDestGroupsRequest,google/cloud/iap/v1/service.proto#L152}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L252}
   ///
   /// [google.cloud.iap.v1.ListTunnelDestGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L141}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L152}
   /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L252}
   ///
   StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
       google::cloud::iap::v1::ListTunnelDestGroupsRequest request,
@@ -243,19 +243,19 @@ class IdentityAwareProxyAdminServiceClient {
   ///  `projects/{project_number/id}/iap_tunnel/locations/{location}`.
   /// @param tunnel_dest_group  Required. The TunnelDestGroup to create.
   /// @param tunnel_dest_group_id  Required. The ID to use for the
-  /// TunnelDestGroup, which becomes the final component of
-  ///  the resource name.
+  /// TunnelDestGroup, which becomes the final
+  ///  component of the resource name.
   ///  This value must be 4-63 characters, and valid characters
-  ///  are `[a-z][0-9]-`.
+  ///  are `[a-z]-`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L252}
   ///
   /// [google.cloud.iap.v1.CreateTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L179}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L190}
   /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L252}
   ///
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
       std::string const& parent,
@@ -266,16 +266,16 @@ class IdentityAwareProxyAdminServiceClient {
   /// Creates a new TunnelDestGroup.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::CreateTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L179}
+  /// @googleapis_link{google::cloud::iap::v1::CreateTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L190}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L252}
   ///
   /// [google.cloud.iap.v1.CreateTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L179}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L190}
   /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L252}
   ///
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
       google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request,
@@ -290,12 +290,12 @@ class IdentityAwareProxyAdminServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L252}
   ///
   /// [google.cloud.iap.v1.GetTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L202}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L214}
   /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L252}
   ///
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
       std::string const& name, Options opts = {});
@@ -304,16 +304,16 @@ class IdentityAwareProxyAdminServiceClient {
   /// Retrieves an existing TunnelDestGroup.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::GetTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L202}
+  /// @googleapis_link{google::cloud::iap::v1::GetTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L214}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L252}
   ///
   /// [google.cloud.iap.v1.GetTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L202}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L214}
   /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L252}
   ///
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
       google::cloud::iap::v1::GetTunnelDestGroupRequest const& request,
@@ -329,7 +329,7 @@ class IdentityAwareProxyAdminServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L215}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L227}
   ///
   Status DeleteTunnelDestGroup(std::string const& name, Options opts = {});
 
@@ -337,12 +337,12 @@ class IdentityAwareProxyAdminServiceClient {
   /// Deletes a TunnelDestGroup.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::DeleteTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L215}
+  /// @googleapis_link{google::cloud::iap::v1::DeleteTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L227}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.iap.v1.DeleteTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L215}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L227}
   ///
   Status DeleteTunnelDestGroup(
       google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request,
@@ -360,12 +360,12 @@ class IdentityAwareProxyAdminServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L252}
   ///
   /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L228}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L240}
   /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L252}
   ///
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
       google::cloud::iap::v1::TunnelDestGroup const& tunnel_dest_group,
@@ -375,16 +375,16 @@ class IdentityAwareProxyAdminServiceClient {
   /// Updates a TunnelDestGroup.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::iap::v1::UpdateTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L228}
+  /// @googleapis_link{google::cloud::iap::v1::UpdateTunnelDestGroupRequest,google/cloud/iap/v1/service.proto#L240}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_link{google::cloud::iap::v1::TunnelDestGroup,google/cloud/iap/v1/service.proto#L252}
   ///
   /// [google.cloud.iap.v1.UpdateTunnelDestGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L228}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L240}
   /// [google.cloud.iap.v1.TunnelDestGroup]:
-  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L239}
+  /// @googleapis_reference_link{google/cloud/iap/v1/service.proto#L252}
   ///
   StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
       google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request,
