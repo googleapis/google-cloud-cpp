@@ -92,6 +92,9 @@ add_library(
     internal/make_status.cc
     internal/make_status.h
     internal/non_constructible.h
+    internal/opentelemetry.cc
+    internal/opentelemetry.h
+    internal/opentelemetry_options.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
     internal/parse_rfc3339.h
