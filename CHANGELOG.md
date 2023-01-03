@@ -116,6 +116,8 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 </details>
 
+## v2.7.0 - TBD
+
 ## v2.6.0 - 2023-01
 
 ### [BigQuery](/google/cloud/bigquery/README.md)
