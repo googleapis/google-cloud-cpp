@@ -214,8 +214,8 @@ StatusOr<BucketMetadata> CurlClient::CreateBucket(
   // This seems to be the only case where kAlreadyExists is a better match
   // for 409 than kAborted.
   if (!response && response.status().code() == StatusCode::kAborted) {
-    return google::cloud::internal::WithStatusCode(std::move(response).status(),
-                                                   StatusCode::kAlreadyExists);
+    return Status(StatusCode::kAlreadyExists, response.status().message(),
+                  response.status().error_info());
   }
   return response;
 }

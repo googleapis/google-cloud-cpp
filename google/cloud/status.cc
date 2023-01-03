@@ -98,8 +98,6 @@ class Status::Impl {
   ErrorInfo const& error_info() const { return error_info_; }
   PayloadType const& payload() const { return payload_; };
 
-  void set_code(StatusCode c) { code_ = c; }
-
   // Allows mutable access to payload, which is needed in the
   // `internal::SetPayload()` function.
   PayloadType& payload() { return payload_; };
@@ -142,8 +140,6 @@ Status::Status(StatusCode code, std::string message, ErrorInfo info)
                 : new Status::Impl{
                       code, std::move(message), std::move(info), {}}) {}
 
-Status::Status(std::unique_ptr<Impl> impl) : impl_(std::move(impl)) {}
-
 StatusCode Status::code() const {
   return impl_ ? impl_->code() : StatusCode::kOk;
 }
@@ -173,8 +169,8 @@ std::ostream& operator<<(std::ostream& os, Status const& s) {
   os << ", domain=" << e.domain();
   os << ", metadata={";
   char const* sep = "";
-  for (auto const& kv : e.metadata()) {
-    os << sep << kv.first << "=" << kv.second;
+  for (auto const& e : e.metadata()) {
+    os << sep << e.first << "=" << e.second;
     sep = ", ";
   }
   return os << "}}";
@@ -198,11 +194,6 @@ absl::optional<std::string> GetPayload(Status const& s,
   auto it = payload.find(key);
   if (it == payload.end()) return absl::nullopt;
   return it->second;
-}
-
-Status WithStatusCode(Status status, StatusCode code) {
-  status.impl_->set_code(code);
-  return Status(std::move(status.impl_));
 }
 
 }  // namespace internal

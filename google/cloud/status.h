@@ -61,7 +61,6 @@ class Status;
 namespace internal {
 void SetPayload(Status&, std::string key, std::string payload);
 absl::optional<std::string> GetPayload(Status const&, std::string const& key);
-Status WithStatusCode(Status, StatusCode code);
 }  // namespace internal
 
 /**
@@ -139,14 +138,12 @@ class Status {
   friend std::ostream& operator<<(std::ostream& os, Status const& s);
 
  private:
-  class Impl;
-  explicit Status(std::unique_ptr<Impl> impl);
   static bool Equals(Status const& a, Status const& b);
   friend void internal::SetPayload(Status&, std::string, std::string);
   friend absl::optional<std::string> internal::GetPayload(Status const&,
                                                           std::string const&);
-  friend Status internal::WithStatusCode(Status, StatusCode code);
 
+  class Impl;
   // A null `impl_` is an OK status. Only non-OK Statuses allocate an Impl.
   std::unique_ptr<Impl> impl_;
 };
