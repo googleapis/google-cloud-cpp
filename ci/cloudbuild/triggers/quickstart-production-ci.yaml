@@ -9,5 +9,6 @@ substitutions:
   _BUILD_NAME: quickstart-production
   _DISTRO: fedora-36-cmake
   _TRIGGER_TYPE: ci
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - ci

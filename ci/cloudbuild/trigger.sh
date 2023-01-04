@@ -56,6 +56,7 @@ substitutions:
   _BUILD_NAME: ${name}
   _DISTRO: fedora
   _TRIGGER_TYPE: ci
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - ci
 EOF
@@ -76,6 +77,7 @@ substitutions:
   _BUILD_NAME: ${name}
   _DISTRO: fedora
   _TRIGGER_TYPE: pr
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr
 EOF

@@ -10,5 +10,6 @@ substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-alpine-stable
   _TRIGGER_TYPE: pr
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
   - pr

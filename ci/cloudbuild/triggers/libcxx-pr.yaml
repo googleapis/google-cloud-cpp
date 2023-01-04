@@ -10,5 +10,6 @@ substitutions:
   _BUILD_NAME: libcxx
   _DISTRO: fedora-36-bazel
   _TRIGGER_TYPE: pr
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr

@@ -9,5 +9,6 @@ substitutions:
   _BUILD_NAME: clang-60
   _DISTRO: ubuntu-bionic-install
   _TRIGGER_TYPE: ci
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - ci
