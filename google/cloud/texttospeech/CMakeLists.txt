@@ -37,7 +37,6 @@ endif ()
 add_library(google_cloud_cpp_texttospeech_protos INTERFACE)
 target_link_libraries(google_cloud_cpp_texttospeech_protos
                       INTERFACE google-cloud-cpp::cloud_texttospeech_protos)
-# google_cloud_cpp_add_common_options(google_cloud_cpp_texttospeech_protos)
 set_target_properties(
     google_cloud_cpp_texttospeech_protos
     PROPERTIES EXPORT_NAME google-cloud-cpp::texttospeech_protos

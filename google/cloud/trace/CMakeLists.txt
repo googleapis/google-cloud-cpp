@@ -38,7 +38,6 @@ target_link_libraries(
     google_cloud_cpp_trace_protos
     INTERFACE google-cloud-cpp::devtools_cloudtrace_v2_trace_protos
               google-cloud-cpp::devtools_cloudtrace_v2_tracing_protos)
-# google_cloud_cpp_add_common_options(google_cloud_cpp_trace_protos)
 set_target_properties(
     google_cloud_cpp_trace_protos
     PROPERTIES EXPORT_NAME google-cloud-cpp::trace_protos
