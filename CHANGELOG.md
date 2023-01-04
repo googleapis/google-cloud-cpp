@@ -133,16 +133,16 @@ support for [IAM Deny](https://cloud.google.com/iam/docs/deny-overview) policies
 
 - fix: add missing <cstdint> includes ([#10421](https://github.com/googleapis/google-cloud-cpp/pull/10421))
 
+### [Speech](/google/cloud/speech/README.md)
+
+- fix: remove duplicate protos ([#10486](https://github.com/googleapis/google-cloud-cpp/pull/10486))
+
 ### [Storage](/google/cloud/storage/README.md)
 
 - fix(storage): better error code for CreateBucket() and 409 errors ([#10480](https://github.com/googleapis/google-cloud-cpp/pull/10480)
 - fix: add missing <cstdint> includes ([#10421](https://github.com/googleapis/google-cloud-cpp/pull/10421))
 - fix(storage): scopes should disable self-signed JWTs ([#10369](https://github.com/googleapis/google-cloud-cpp/pull/10369))
 - doc(storage): document all `oauth2` names as deprecated ([#10352](https://github.com/googleapis/google-cloud-cpp/pull/10352))
-
-### [Speech](/google/cloud/speech/README.md)
-
-- fix: remove duplicate protos ([#10486](https://github.com/googleapis/google-cloud-cpp/pull/10486))
 
 ### [Text-to-Speech](/google/cloud/texttospeech/README.md)
 
