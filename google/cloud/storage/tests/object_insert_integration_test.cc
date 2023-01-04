@@ -102,28 +102,6 @@ TEST_P(ObjectInsertIntegrationTest, SimpleInsertWithNonUrlSafeName) {
   EXPECT_EQ(expected, actual);
 }
 
-TEST_P(ObjectInsertIntegrationTest, XmlInsertWithNonUrlSafeName) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = "name-+-&-=- -%-" + MakeRandomObjectName();
-
-  std::string expected = LoremIpsum();
-
-  // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, expected, IfGenerationMatch(0), Fields(""));
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-  EXPECT_EQ(object_name, meta->name());
-  EXPECT_EQ(bucket_name_, meta->bucket());
-
-  // Create an iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(expected, actual);
-}
-
 TEST_P(ObjectInsertIntegrationTest, MultipartInsertWithNonUrlSafeName) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -181,29 +159,6 @@ TEST_P(ObjectInsertIntegrationTest, InsertWithComputedMD5) {
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0),
       MD5HashValue(ComputeMD5Hash(expected)));
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-  EXPECT_EQ(object_name, meta->name());
-  EXPECT_EQ(bucket_name_, meta->bucket());
-
-  // Create an iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(expected, actual);
-}
-
-TEST_P(ObjectInsertIntegrationTest, XmlInsertWithMD5) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  std::string expected = LoremIpsum();
-
-  // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> meta = client->InsertObject(
-      bucket_name_, object_name, expected, IfGenerationMatch(0), Fields(""),
-      MD5HashValue("96HF9K981B+JfoQuTVnyCg=="));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
   EXPECT_EQ(object_name, meta->name());
@@ -359,157 +314,6 @@ TEST_P(ObjectInsertIntegrationTest, InsertPredefinedAclPublicRead) {
   StatusOr<ObjectMetadata> meta = client->InsertObject(
       bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
       PredefinedAcl::PublicRead(), Projection::Full());
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  EXPECT_LT(
-      0, CountMatchingEntities(
-             meta->acl(),
-             ObjectAccessControl().set_entity("allUsers").set_role("READER")))
-      << *meta;
-}
-
-TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclAuthenticatedRead) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  StatusOr<ObjectMetadata> insert = client->InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
-      PredefinedAcl::AuthenticatedRead(), Fields(""));
-  ASSERT_STATUS_OK(insert);
-
-  StatusOr<ObjectMetadata> meta =
-      client->GetObjectMetadata(bucket_name_, object_name, Projection::Full());
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
-                                     ObjectAccessControl()
-                                         .set_entity("allAuthenticatedUsers")
-                                         .set_role("READER")))
-      << *meta;
-}
-
-TEST_P(ObjectInsertIntegrationTest,
-       XmlInsertPredefinedAclBucketOwnerFullControl) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  StatusOr<BucketMetadata> bucket =
-      client->GetBucketMetadata(bucket_name_, Projection::Full());
-  ASSERT_STATUS_OK(bucket);
-  ASSERT_TRUE(bucket->has_owner());
-  std::string owner = bucket->owner().entity;
-
-  StatusOr<ObjectMetadata> insert = client->InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
-      PredefinedAcl::BucketOwnerFullControl(), Fields(""));
-  ASSERT_STATUS_OK(insert);
-
-  StatusOr<ObjectMetadata> meta =
-      client->GetObjectMetadata(bucket_name_, object_name, Projection::Full());
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  EXPECT_LT(0, CountMatchingEntities(
-                   meta->acl(),
-                   ObjectAccessControl().set_entity(owner).set_role("OWNER")))
-      << *meta;
-}
-
-TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclBucketOwnerRead) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  StatusOr<BucketMetadata> bucket =
-      client->GetBucketMetadata(bucket_name_, Projection::Full());
-  ASSERT_STATUS_OK(bucket);
-  ASSERT_TRUE(bucket->has_owner());
-  std::string owner = bucket->owner().entity;
-
-  StatusOr<ObjectMetadata> insert = client->InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
-      PredefinedAcl::BucketOwnerRead(), Fields(""));
-  ASSERT_STATUS_OK(insert);
-
-  StatusOr<ObjectMetadata> meta =
-      client->GetObjectMetadata(bucket_name_, object_name, Projection::Full());
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  EXPECT_LT(0, CountMatchingEntities(
-                   meta->acl(),
-                   ObjectAccessControl().set_entity(owner).set_role("READER")))
-      << *meta;
-}
-
-TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPrivate) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  StatusOr<ObjectMetadata> insert = client->InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
-      PredefinedAcl::Private(), Fields(""));
-  ASSERT_STATUS_OK(insert);
-
-  StatusOr<ObjectMetadata> meta =
-      client->GetObjectMetadata(bucket_name_, object_name, Projection::Full());
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  ASSERT_TRUE(meta->has_owner());
-  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
-                                     ObjectAccessControl()
-                                         .set_entity(meta->owner().entity)
-                                         .set_role("OWNER")))
-      << *meta;
-}
-
-TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclProjectPrivate) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  StatusOr<ObjectMetadata> insert = client->InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
-      PredefinedAcl::ProjectPrivate(), Fields(""));
-  ASSERT_STATUS_OK(insert);
-
-  StatusOr<ObjectMetadata> meta =
-      client->GetObjectMetadata(bucket_name_, object_name, Projection::Full());
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-
-  ASSERT_TRUE(meta->has_owner());
-  EXPECT_LT(0, CountMatchingEntities(meta->acl(),
-                                     ObjectAccessControl()
-                                         .set_entity(meta->owner().entity)
-                                         .set_role("OWNER")))
-      << *meta;
-}
-
-TEST_P(ObjectInsertIntegrationTest, XmlInsertPredefinedAclPublicRead) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  StatusOr<ObjectMetadata> insert = client->InsertObject(
-      bucket_name_, object_name, LoremIpsum(), IfGenerationMatch(0),
-      PredefinedAcl::PublicRead(), Fields(""));
-  ASSERT_STATUS_OK(insert);
-
-  StatusOr<ObjectMetadata> meta =
-      client->GetObjectMetadata(bucket_name_, object_name, Projection::Full());
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
@@ -689,29 +493,6 @@ TEST_P(ObjectInsertIntegrationTest, InsertFailure) {
   // This operation should fail because the object already exists.
   StatusOr<ObjectMetadata> failure = client->InsertObject(
       bucket_name_, object_name, expected, IfGenerationMatch(0));
-  EXPECT_THAT(failure, Not(IsOk())) << "metadata=" << failure.value();
-}
-
-TEST_P(ObjectInsertIntegrationTest, InsertXmlFailure) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  std::string expected = LoremIpsum();
-
-  // Create the object, but only if it does not exist already.
-  StatusOr<ObjectMetadata> insert = client->InsertObject(
-      bucket_name_, object_name, expected, Fields(""), IfGenerationMatch(0));
-  ASSERT_STATUS_OK(insert);
-  ScheduleForDelete(*insert);
-
-  EXPECT_EQ(object_name, insert->name());
-  EXPECT_EQ(bucket_name_, insert->bucket());
-
-  // This operation should fail because the object already exists.
-  StatusOr<ObjectMetadata> failure = client->InsertObject(
-      bucket_name_, object_name, expected, Fields(""), IfGenerationMatch(0));
   EXPECT_THAT(failure, Not(IsOk())) << "metadata=" << failure.value();
 }
 

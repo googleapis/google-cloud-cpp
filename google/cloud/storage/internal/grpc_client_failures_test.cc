@@ -155,7 +155,7 @@ TEST_P(GrpcClientFailuresTest, InsertObjectMediaMultipart) {
   EXPECT_THAT(actual, StatusIs(StatusCode::kUnavailable));
 }
 
-TEST_P(GrpcClientFailuresTest, InsertObjectMediaXml) {
+TEST_P(GrpcClientFailuresTest, InsertObjectMedia) {
   OptionsSpan const span(client_->options());
   auto actual = client_->InsertObjectMedia(
       InsertObjectMediaRequest("bkt", "obj", "contents")

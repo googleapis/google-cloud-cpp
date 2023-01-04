@@ -52,9 +52,9 @@ TEST_P(ObjectHashIntegrationTest, InsertObjectDefault) {
   auto client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
-  auto meta = client->InsertObject(
-      bucket_name_, object_name, LoremIpsum(), DisableCrc32cChecksum(true),
-      RestApiFlags(GetParam()).for_insert, IfGenerationMatch(0));
+  auto meta =
+      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
+                           DisableCrc32cChecksum(true), IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
@@ -72,8 +72,7 @@ TEST_P(ObjectHashIntegrationTest, InsertObjectExplicitDisable) {
 
   auto meta = client->InsertObject(
       bucket_name_, object_name, LoremIpsum(), DisableMD5Hash(true),
-      DisableCrc32cChecksum(true), RestApiFlags(GetParam()).for_insert,
-      IfGenerationMatch(0));
+      DisableCrc32cChecksum(true), IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
@@ -91,8 +90,7 @@ TEST_P(ObjectHashIntegrationTest, InsertObjectExplicitEnable) {
 
   auto meta = client->InsertObject(
       bucket_name_, object_name, LoremIpsum(), DisableMD5Hash(false),
-      DisableCrc32cChecksum(true), RestApiFlags(GetParam()).for_insert,
-      IfGenerationMatch(0));
+      DisableCrc32cChecksum(true), IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
@@ -107,10 +105,10 @@ TEST_P(ObjectHashIntegrationTest, InsertObjectWithValueSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   auto object_name = MakeRandomObjectName();
-  auto meta = client->InsertObject(
-      bucket_name_, object_name, LoremIpsum(),
-      MD5HashValue(ComputeMD5Hash(LoremIpsum())), DisableCrc32cChecksum(true),
-      RestApiFlags(GetParam()).for_insert, IfGenerationMatch(0));
+  auto meta =
+      client->InsertObject(bucket_name_, object_name, LoremIpsum(),
+                           MD5HashValue(ComputeMD5Hash(LoremIpsum())),
+                           DisableCrc32cChecksum(true), IfGenerationMatch(0));
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
@@ -129,8 +127,7 @@ TEST_P(ObjectHashIntegrationTest, InsertObjectWithValueFailure) {
   // This should fail because the MD5 hash value is incorrect.
   auto failure = client->InsertObject(
       bucket_name_, object_name, LoremIpsum(), MD5HashValue(ComputeMD5Hash("")),
-      DisableCrc32cChecksum(false), RestApiFlags(GetParam()).for_insert,
-      IfGenerationMatch(0));
+      DisableCrc32cChecksum(false), IfGenerationMatch(0));
   EXPECT_THAT(failure, Not(IsOk()));
 }
 
@@ -286,8 +283,7 @@ TEST_P(ObjectHashIntegrationTest, ReadObjectDefault) {
   ASSERT_STATUS_OK(meta);
   ScheduleForDelete(*meta);
 
-  auto stream = client->ReadObject(bucket_name_, object_name,
-                                   RestApiFlags(GetParam()).for_streaming_read);
+  auto stream = client->ReadObject(bucket_name_, object_name);
   auto const actual = std::string{std::istreambuf_iterator<char>{stream}, {}};
   ASSERT_FALSE(stream.IsOpen());
 
@@ -312,8 +308,7 @@ TEST_P(ObjectHashIntegrationTest, ReadObjectCorruptedByServerGetc) {
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(false),
       DisableCrc32cChecksum(true),
-      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"),
-      RestApiFlags(GetParam()).for_streaming_read);
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
   EXPECT_THROW(
@@ -352,8 +347,7 @@ TEST_P(ObjectHashIntegrationTest, ReadObjectCorruptedByServerRead) {
   auto stream = client->ReadObject(
       bucket_name_, object_name, DisableMD5Hash(false),
       DisableCrc32cChecksum(true),
-      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"),
-      RestApiFlags(GetParam()).for_streaming_read);
+      CustomHeader("x-goog-emulator-instructions", "return-corrupted-data"));
 
   // Create a buffer large enough to read the full contents.
   std::vector<char> buffer(2 * LoremIpsum().size());
@@ -368,9 +362,6 @@ TEST_P(ObjectHashIntegrationTest, ReadObjectCorruptedByServerRead) {
 
 INSTANTIATE_TEST_SUITE_P(ObjectHashIntegrationTestJson,
                          ObjectHashIntegrationTest, ::testing::Values("JSON"));
-
-INSTANTIATE_TEST_SUITE_P(ObjectHashIntegrationTestXml,
-                         ObjectHashIntegrationTest, ::testing::Values("XML"));
 
 }  // anonymous namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

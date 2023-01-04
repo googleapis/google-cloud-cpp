@@ -322,7 +322,7 @@ google::cloud::StatusOr<ThroughputOptions> ParseThroughputOptions(
          options.libs = ParseLibraries(val);
        }},
       {"--enabled-transports",
-       "enable a subset of the transports (DirectPath, Grpc, Json, Xml)",
+       "enable a subset of the transports (DirectPath, Grpc, Json)",
        [&options](std::string const& val) {
          options.transports = ParseTransports(val);
        }},

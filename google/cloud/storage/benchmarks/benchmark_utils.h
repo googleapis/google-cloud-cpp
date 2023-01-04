@@ -59,7 +59,6 @@ void DeleteAllObjects(google::cloud::storage::Client client,
 // protocol, but it is easier to represent it as such in the benchmark.
 enum class ApiName {
   kApiJson,
-  kApiXml,
   kApiGrpc,
 };
 char const* ToString(ApiName api);
@@ -69,11 +68,9 @@ StatusOr<ApiName> ParseApiName(std::string const& val);
 // We want to compare the following alternatives.
 //
 // - Raw (no C++ client library) JSON Download
-// - Raw XML Download
 // - Raw gRPC Download
 // - Raw gRPC+DirectPath Download
 // - JSON Download
-// - XML Download
 // - gRPC Download
 // - gRPC+DirectPath Download
 // - JSON Upload
@@ -83,7 +80,7 @@ StatusOr<ApiName> ParseApiName(std::string const& val);
 // We will model this with 3 dimensions for each experiment:
 // - Direction: Upload vs. Download
 // - Library: Raw vs. Client library
-// - Transport: XML vs. JSON vs. gRPC vs. gRPC+DirectPath
+// - Transport: JSON vs. gRPC vs. gRPC+DirectPath
 //
 // Some combinations are simply not implemented and ignored when building the
 // set of experiments.
@@ -92,9 +89,7 @@ enum class ExperimentTransport {
   kDirectPath,
   kGrpc,
   kJson,
-  kXml,
   kJsonV2,
-  kXmlV2,
 };
 
 StatusOr<ExperimentLibrary> ParseExperimentLibrary(std::string const& val);

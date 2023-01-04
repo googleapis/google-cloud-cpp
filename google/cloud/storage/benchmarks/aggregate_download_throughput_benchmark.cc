@@ -266,11 +266,6 @@ DownloadDetail DownloadOneObject(
 
   std::vector<char> buffer(options.read_buffer_size);
   auto const buffer_size = static_cast<std::streamsize>(buffer.size());
-  // Using IfGenerationNotMatch(0) triggers JSON, as this feature is not
-  // supported by XML.  Using IfGenerationNotMatch() -- without a value -- has
-  // no effect.
-  auto xml_hack = options.api == "JSON" ? gcs::IfGenerationNotMatch(0)
-                                        : gcs::IfGenerationNotMatch();
   auto const object_start = clock::now();
   auto const start = std::chrono::system_clock::now();
   auto object_bytes = std::uint64_t{0};
@@ -281,9 +276,8 @@ DownloadDetail DownloadOneObject(
         0, object_size - options.read_size);
     range = gcs::ReadRange(read_start(generator), options.read_size);
   }
-  auto stream =
-      client.ReadObject(object.bucket(), object.name(),
-                        gcs::Generation(object.generation()), range, xml_hack);
+  auto stream = client.ReadObject(object.bucket(), object.name(),
+                                  gcs::Generation(object.generation()), range);
   while (stream.read(buffer.data(), buffer_size)) {
     object_bytes += stream.gcount();
   }

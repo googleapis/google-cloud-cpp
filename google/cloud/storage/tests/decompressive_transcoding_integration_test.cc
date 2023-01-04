@@ -91,37 +91,6 @@ TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadJson) {
   EXPECT_THAT(decompressed, StartsWith(kFirstLine));
 }
 
-TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadXml) {
-  auto client = Client(
-      Options{}
-          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
-          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(5).clone()));
-
-  auto object_name = MakeRandomObjectName();
-  auto insert = client.InsertObject(
-      bucket_name(), object_name, gzipped_contents(), IfGenerationMatch(0),
-      WithObjectMetadata(
-          ObjectMetadata().set_content_encoding("gzip").set_content_type(
-              "text/plain")));
-  ASSERT_STATUS_OK(insert);
-  ScheduleForDelete(*insert);
-  EXPECT_EQ(insert->content_encoding(), "gzip");
-  EXPECT_EQ(insert->content_type(), "text/plain");
-
-  // TODO(#8829) - decompressive transcoding does not work with gRPC
-  if (UsingGrpc()) return;
-
-  auto reader = client.ReadObject(bucket_name(), object_name);
-  ASSERT_STATUS_OK(reader.status());
-  auto decompressed = std::string{std::istreambuf_iterator<char>(reader), {}};
-  ASSERT_STATUS_OK(reader.status());
-
-  // The whole point is to decompress the data and return something different.
-  ASSERT_NE(decompressed.substr(0, 32), gzipped_contents().substr(0, 32));
-  // Verify the decompressed data looks right.
-  EXPECT_THAT(decompressed, StartsWith(kFirstLine));
-}
-
 TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadCompressedJson) {
   auto client = Client(
       Options{}
@@ -142,32 +111,6 @@ TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadCompressedJson) {
   auto reader =
       client.ReadObject(bucket_name(), object_name, AcceptEncodingGzip(),
                         IfGenerationNotMatch(0));
-  ASSERT_STATUS_OK(reader.status());
-  auto compressed = std::string{std::istreambuf_iterator<char>(reader), {}};
-  ASSERT_STATUS_OK(reader.status());
-
-  ASSERT_EQ(compressed.substr(0, 32), gzipped_contents().substr(0, 32));
-}
-
-TEST_F(DecompressiveTranscodingIntegrationTest, WriteAndReadCompressedXml) {
-  auto client = Client(
-      Options{}
-          .set<TransferStallTimeoutOption>(std::chrono::seconds(3))
-          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(5).clone()));
-
-  auto object_name = MakeRandomObjectName();
-  auto insert = client.InsertObject(
-      bucket_name(), object_name, gzipped_contents(), IfGenerationMatch(0),
-      WithObjectMetadata(
-          ObjectMetadata().set_content_encoding("gzip").set_content_type(
-              "text/plain")));
-  ASSERT_STATUS_OK(insert);
-  ScheduleForDelete(*insert);
-  EXPECT_EQ(insert->content_encoding(), "gzip");
-  EXPECT_EQ(insert->content_type(), "text/plain");
-
-  auto reader =
-      client.ReadObject(bucket_name(), object_name, AcceptEncodingGzip());
   ASSERT_STATUS_OK(reader.status());
   auto compressed = std::string{std::istreambuf_iterator<char>(reader), {}};
   ASSERT_STATUS_OK(reader.status());

@@ -106,7 +106,7 @@ ParseAggregateDownloadThroughputOptions(std::vector<std::string> const& argv,
        [&options](std::string const& val) {
          options.read_buffer_size = ParseBufferSize(val);
        }},
-      {"--api", "select the API (JSON, XML, or GRPC) for the benchmark",
+      {"--api", "select the API (JSON, or GRPC) for the benchmark",
        [&options](std::string const& val) { options.api = val; }},
       {"--client-per-thread",
        "use a different storage::Client object in each thread",

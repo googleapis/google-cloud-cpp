@@ -119,41 +119,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadRangeJSON) {
   EXPECT_EQ(large_text.substr(1 * kChunk, 1 * kChunk), actual);
 }
 
-/// @test Read a portion of a relatively large object using the XML API.
-TEST_F(ObjectMediaIntegrationTest, ReadRangeXml) {
-  // The emulator always requires multiple iterations to copy this object.
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  // This produces a 64 KiB text object. Normally applications should download
-  // much larger chunks from GCS, but it is really hard to figure out what is
-  // broken when the error messages are in the MiB ranges.
-  std::size_t constexpr kChunk = 16 * 1024L;
-  std::size_t constexpr kLines = 4 * kChunk / 128;
-  std::string large_text;
-  for (std::size_t i = 0; i != kLines; ++i) {
-    auto line = google::cloud::internal::Sample(generator_, 127,
-                                                "abcdefghijklmnopqrstuvwxyz"
-                                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                "0123456789");
-    large_text += line + "\n";
-  }
-
-  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
-      bucket_name_, object_name, large_text, IfGenerationMatch(0));
-  ASSERT_STATUS_OK(source_meta);
-  ScheduleForDelete(*source_meta);
-
-  // Create an iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name,
-                                   ReadRange(1 * kChunk, 2 * kChunk));
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(1 * kChunk, actual.size());
-  EXPECT_EQ(large_text.substr(1 * kChunk, 1 * kChunk), actual);
-}
-
 /// @test Read a portion of a relatively large object using the JSON API.
 TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
   // The emulator always requires multiple iterations to copy this object.
@@ -185,41 +150,6 @@ TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetJSON) {
   auto stream =
       client->ReadObject(bucket_name_, object_name, ReadFromOffset(2 * kChunk),
                          IfGenerationNotMatch(0));
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_EQ(2 * kChunk, actual.size());
-  EXPECT_EQ(large_text.substr(2 * kChunk), actual);
-}
-
-/// @test Read a portion of a relatively large object using the XML API.
-TEST_F(ObjectMediaIntegrationTest, ReadFromOffsetXml) {
-  // The emulator always requires multiple iterations to copy this object.
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-
-  // This produces a 64 KiB text object. Normally applications should download
-  // much larger chunks from GCS, but it is really hard to figure out what is
-  // broken when the error messages are in the MiB ranges.
-  std::size_t constexpr kChunk = 16 * 1024L;
-  std::size_t constexpr kLines = 4 * kChunk / 128;
-  std::string large_text;
-  for (std::size_t i = 0; i != kLines; ++i) {
-    auto line = google::cloud::internal::Sample(generator_, 127,
-                                                "abcdefghijklmnopqrstuvwxyz"
-                                                "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                                "0123456789");
-    large_text += line + "\n";
-  }
-
-  StatusOr<ObjectMetadata> source_meta = client->InsertObject(
-      bucket_name_, object_name, large_text, IfGenerationMatch(0));
-  ASSERT_STATUS_OK(source_meta);
-  ScheduleForDelete(*source_meta);
-
-  // Create an iostream to read the object back.
-  auto stream =
-      client->ReadObject(bucket_name_, object_name, ReadFromOffset(2 * kChunk));
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_EQ(2 * kChunk, actual.size());
   EXPECT_EQ(large_text.substr(2 * kChunk), actual);
@@ -499,29 +429,6 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadJSON) {
 
   auto object_name = MakeRandomObjectName();
 
-  // We force the library to use the JSON API by adding the
-  // `IfGenerationNotMatch()` parameter, both JSON and XML use the same code to
-  // download, but controlling the endpoint for JSON is easier.
-  auto stream =
-      client.ReadObject(bucket_name_, object_name, IfGenerationNotMatch(0));
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  EXPECT_TRUE(actual.empty());
-  EXPECT_TRUE(stream.bad());
-  EXPECT_FALSE(stream.status().ok());
-  EXPECT_EQ(StatusCode::kUnavailable, stream.status().code())
-      << ", status=" << stream.status();
-}
-
-TEST_F(ObjectMediaIntegrationTest, ConnectionFailureReadXML) {
-  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
-  Client client{
-      Options{}
-          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-          .set<RestEndpointOption>("http://localhost:1")
-          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(2).clone())};
-
-  auto object_name = MakeRandomObjectName();
-
   auto stream = client.ReadObject(bucket_name_, object_name);
   std::string actual(std::istreambuf_iterator<char>{stream}, {});
   EXPECT_TRUE(actual.empty());
@@ -541,29 +448,8 @@ TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteJSON) {
 
   auto object_name = MakeRandomObjectName();
 
-  // We force the library to use the JSON API by adding the
-  // `IfGenerationNotMatch()` parameter, both JSON and XML use the same code to
-  // download, but controlling the endpoint for JSON is easier.
-  auto stream = client.WriteObject(
-      bucket_name_, object_name, IfGenerationMatch(0), IfGenerationNotMatch(7));
-  EXPECT_TRUE(stream.bad());
-  EXPECT_FALSE(stream.metadata().status().ok());
-  EXPECT_EQ(StatusCode::kUnavailable, stream.metadata().status().code())
-      << ", status=" << stream.metadata().status();
-}
-
-TEST_F(ObjectMediaIntegrationTest, ConnectionFailureWriteXML) {
-  ScopedEnvironment emulator("CLOUD_STORAGE_EMULATOR_ENDPOINT", {});
-  Client client{
-      Options{}
-          .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
-          .set<RestEndpointOption>("http://localhost:1")
-          .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(2).clone())};
-
-  auto object_name = MakeRandomObjectName();
-
-  auto stream = client.WriteObject(
-      bucket_name_, object_name, IfGenerationMatch(0), IfGenerationNotMatch(7));
+  auto stream =
+      client.WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
   EXPECT_TRUE(stream.bad());
   EXPECT_FALSE(stream.metadata().status().ok());
   EXPECT_EQ(StatusCode::kUnavailable, stream.metadata().status().code())

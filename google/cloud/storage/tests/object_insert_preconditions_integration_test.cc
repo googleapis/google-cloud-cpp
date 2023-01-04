@@ -34,18 +34,10 @@ using ::testing::AnyOf;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
-struct TestParam {
-  absl::optional<std::string> rest_config;
-  Fields fields;
-};
-
 class ObjectInsertPreconditionsIntegrationTest
-    : public ::google::cloud::storage::testing::StorageIntegrationTest,
-      public ::testing::WithParamInterface<TestParam> {
+    : public ::google::cloud::storage::testing::StorageIntegrationTest {
  protected:
-  ObjectInsertPreconditionsIntegrationTest()
-      : config_("GOOGLE_CLOUD_CPP_STORAGE_REST_CONFIG",
-                GetParam().rest_config) {}
+  ObjectInsertPreconditionsIntegrationTest() = default;
 
   void SetUp() override {
     bucket_name_ =
@@ -58,10 +50,9 @@ class ObjectInsertPreconditionsIntegrationTest
 
  private:
   std::string bucket_name_;
-  google::cloud::testing_util::ScopedEnvironment config_;
 };
 
-TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
+TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -73,13 +64,12 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
   ScheduleForDelete(*meta);
 
   auto insert = client->InsertObject(bucket_name(), object_name, expected_text,
-                                     GetParam().fields,
                                      IfGenerationMatch(meta->generation()));
   ASSERT_THAT(insert, IsOk());
   ScheduleForDelete(*insert);
 }
 
-TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchFailure) {
+TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -91,12 +81,12 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationMatchFailure) {
   ScheduleForDelete(*meta);
 
   auto insert = client->InsertObject(bucket_name(), object_name, expected_text,
-                                     GetParam().fields,
+
                                      IfGenerationMatch(meta->generation() + 1));
   ASSERT_THAT(insert, StatusIs(StatusCode::kFailedPrecondition));
 }
 
-TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
+TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -107,14 +97,14 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
-  auto insert = client->InsertObject(
-      bucket_name(), object_name, expected_text, GetParam().fields,
-      IfGenerationNotMatch(meta->generation() + 1));
+  auto insert =
+      client->InsertObject(bucket_name(), object_name, expected_text,
+                           IfGenerationNotMatch(meta->generation() + 1));
   ASSERT_THAT(insert, IsOk());
   ScheduleForDelete(*insert);
 }
 
-TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
+TEST_F(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -126,13 +116,13 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
   ScheduleForDelete(*meta);
 
   auto insert = client->InsertObject(bucket_name(), object_name, expected_text,
-                                     GetParam().fields,
+
                                      IfGenerationNotMatch(meta->generation()));
   ASSERT_THAT(insert, StatusIs(AnyOf(StatusCode::kFailedPrecondition,
                                      StatusCode::kAborted)));
 }
 
-TEST_P(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
+TEST_F(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -143,14 +133,14 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
-  auto insert = client->InsertObject(
-      bucket_name(), object_name, expected_text, GetParam().fields,
-      IfMetagenerationMatch(meta->metageneration()));
+  auto insert =
+      client->InsertObject(bucket_name(), object_name, expected_text,
+                           IfMetagenerationMatch(meta->metageneration()));
   ASSERT_THAT(insert, IsOk());
   ScheduleForDelete(*insert);
 }
 
-TEST_P(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
+TEST_F(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -161,13 +151,13 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
-  auto insert = client->InsertObject(
-      bucket_name(), object_name, expected_text, GetParam().fields,
-      IfMetagenerationMatch(meta->metageneration() + 1));
+  auto insert =
+      client->InsertObject(bucket_name(), object_name, expected_text,
+                           IfMetagenerationMatch(meta->metageneration() + 1));
   ASSERT_THAT(insert, StatusIs(StatusCode::kFailedPrecondition));
 }
 
-TEST_P(ObjectInsertPreconditionsIntegrationTest,
+TEST_F(ObjectInsertPreconditionsIntegrationTest,
        IfMetagenerationNotMatchSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -180,13 +170,13 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest,
   ScheduleForDelete(*meta);
 
   auto insert = client->InsertObject(
-      bucket_name(), object_name, expected_text, GetParam().fields,
+      bucket_name(), object_name, expected_text,
       IfMetagenerationNotMatch(meta->metageneration() + 1));
   ASSERT_THAT(insert, IsOk());
   ScheduleForDelete(*insert);
 }
 
-TEST_P(ObjectInsertPreconditionsIntegrationTest,
+TEST_F(ObjectInsertPreconditionsIntegrationTest,
        IfMetagenerationNotMatchFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -198,22 +188,12 @@ TEST_P(ObjectInsertPreconditionsIntegrationTest,
   ASSERT_THAT(meta, IsOk());
   ScheduleForDelete(*meta);
 
-  auto insert = client->InsertObject(
-      bucket_name(), object_name, expected_text, GetParam().fields,
-      IfMetagenerationNotMatch(meta->metageneration()));
+  auto insert =
+      client->InsertObject(bucket_name(), object_name, expected_text,
+                           IfMetagenerationNotMatch(meta->metageneration()));
   ASSERT_THAT(insert, StatusIs(AnyOf(StatusCode::kFailedPrecondition,
                                      StatusCode::kAborted)));
 }
-
-INSTANTIATE_TEST_SUITE_P(XmlEnabledAndUsed,
-                         ObjectInsertPreconditionsIntegrationTest,
-                         ::testing::Values(TestParam{absl::nullopt,
-                                                     Fields("")}));
-INSTANTIATE_TEST_SUITE_P(XmlEnabledNotUsed,
-                         ObjectInsertPreconditionsIntegrationTest,
-                         ::testing::Values(TestParam{absl::nullopt, Fields()}));
-INSTANTIATE_TEST_SUITE_P(XmlDisabled, ObjectInsertPreconditionsIntegrationTest,
-                         ::testing::Values(TestParam{"disable-xml", Fields()}));
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

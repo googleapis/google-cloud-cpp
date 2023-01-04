@@ -50,7 +50,7 @@ TEST(ThroughputOptions, Basic) {
       "--minimum-sample-count=1",
       "--maximum-sample-count=2",
       "--enabled-libs=Raw,CppClient",
-      "--enabled-transports=DirectPath,Grpc,Json,Xml",
+      "--enabled-transports=DirectPath,Grpc,Json",
       "--upload-functions=WriteObject",
       "--enabled-crc32c=enabled",
       "--enabled-md5=disabled",
@@ -95,9 +95,9 @@ TEST(ThroughputOptions, Basic) {
               UnorderedElementsAre(ExperimentLibrary::kRaw,
                                    ExperimentLibrary::kCppClient));
   EXPECT_THAT(options->transports,
-              UnorderedElementsAre(
-                  ExperimentTransport::kDirectPath, ExperimentTransport::kGrpc,
-                  ExperimentTransport::kJson, ExperimentTransport::kXml));
+              UnorderedElementsAre(ExperimentTransport::kDirectPath,
+                                   ExperimentTransport::kGrpc,
+                                   ExperimentTransport::kJson));
   EXPECT_THAT(options->upload_functions, UnorderedElementsAre("WriteObject"));
   EXPECT_THAT(options->enabled_crc32c, ElementsAre(true));
   EXPECT_THAT(options->enabled_md5, ElementsAre(false));

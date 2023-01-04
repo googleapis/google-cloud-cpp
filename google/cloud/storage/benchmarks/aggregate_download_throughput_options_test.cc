@@ -38,7 +38,7 @@ TEST(AggregateDownloadThroughputOptions, Basic) {
           "--repeats-per-iteration=2",
           "--read-size=4MiB",
           "--read-buffer-size=1MiB",
-          "--api=XML",
+          "--api=JSON",
           "--client-per-thread",
           "--grpc-channel-count=16",
           "--rest-http-version=1.1",
@@ -60,7 +60,7 @@ TEST(AggregateDownloadThroughputOptions, Basic) {
   EXPECT_EQ(2, options->repeats_per_iteration);
   EXPECT_EQ(4 * kMiB, options->read_size);
   EXPECT_EQ(1 * kMiB, options->read_buffer_size);
-  EXPECT_EQ("XML", options->api);
+  EXPECT_EQ("JSON", options->api);
   EXPECT_EQ(true, options->client_per_thread);
   EXPECT_EQ(16, options->client_options.get<GrpcNumChannelsOption>());
   EXPECT_EQ("1.1", options->client_options.get<gcs_ex::HttpVersionOption>());

@@ -192,11 +192,6 @@ class CurlClient : public RawClient,
   Status SetupBuilder(CurlRequestBuilder& builder, Request const& request,
                       char const* method);
 
-  StatusOr<ObjectMetadata> InsertObjectMediaXml(
-      InsertObjectMediaRequest const& request);
-  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectXml(
-      ReadObjectRangeRequest const& request);
-
   /// Insert an object using uploadType=multipart.
   StatusOr<ObjectMetadata> InsertObjectMediaMultipart(
       InsertObjectMediaRequest const& request);
@@ -213,7 +208,6 @@ class CurlClient : public RawClient,
   std::string const upload_endpoint_;
   std::string const xml_endpoint_;
   std::string const iam_endpoint_;
-  bool const xml_enabled_;
 
   std::mutex mu_;
   google::cloud::internal::DefaultPRNG generator_;  // GUARDED_BY(mu_);
