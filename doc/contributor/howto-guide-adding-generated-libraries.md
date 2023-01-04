@@ -121,6 +121,7 @@ bazel run \
   --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
   --output_path="${PWD}" \
   --config_file="${PWD}/generator/generator_config.textproto" \
+  --scaffold_templates_path="${PWD}/generator/templates/" \
   --scaffold="google/cloud/${library}/"
 ```
 
@@ -228,15 +229,6 @@ Edit the tests so this new quickstart receives the right command-line
 arguments in the CI builds.
 
 - `google/cloud/${library}/CMakeLists.txt`
-
-The scaffold generator does not know the current version of `google-cloud-cpp`.
-We can copy it from a library that should be up-to-date.
-
-```sh
-sed -i '/workspace(/q' google/cloud/${library}/quickstart/WORKSPACE.bazel
-sed '1,/workspace(/d' google/cloud/accessapproval/quickstart/WORKSPACE.bazel \
-    >> google/cloud/${library}/quickstart/WORKSPACE.bazel
-```
 
 ## Update the README files
 

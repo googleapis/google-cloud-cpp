@@ -65,6 +65,7 @@ ProductPath ParseProductPath(std::string const& product_path) {
 }  // namespace
 
 auto constexpr kApiIndexFilename = "api-index-v1.json";
+auto constexpr kWorkspaceTemplate = "WORKSPACE.bazel";
 
 std::string LibraryName(std::string const& product_path) {
   return ParseProductPath(product_path).library_name;
@@ -149,7 +150,8 @@ void MakeDirectory(std::string const& path) {
 }
 
 void GenerateScaffold(
-    std::string const& googleapis_path, std::string const& output_path,
+    std::string const& googleapis_path,
+    std::string const& scaffold_templates_path, std::string const& output_path,
     google::cloud::cpp::generator::ServiceConfiguration const& service,
     bool experimental) {
   using Generator = std::function<void(
@@ -168,7 +170,6 @@ void GenerateScaffold(
       {"quickstart/quickstart.cc", GenerateQuickstartSkeleton},
       {"quickstart/CMakeLists.txt", GenerateQuickstartCMake},
       {"quickstart/Makefile", GenerateQuickstartMakefile},
-      {"quickstart/WORKSPACE.bazel", GenerateQuickstartWorkspace},
       {"quickstart/BUILD.bazel", GenerateQuickstartBuild},
       {"quickstart/.bazelrc", GenerateQuickstartBazelrc},
   };
@@ -184,6 +185,10 @@ void GenerateScaffold(
     std::ofstream os(destination + f.name);
     f.generator(os, vars);
   }
+  std::ifstream is(scaffold_templates_path + kWorkspaceTemplate);
+  auto const contents = std::string{std::istreambuf_iterator<char>(is), {}};
+  std::ofstream os(destination + "quickstart/WORKSPACE.bazel");
+  GenerateQuickstartWorkspace(os, vars, contents);
 }
 
 void GenerateCmakeConfigIn(
@@ -1037,64 +1042,11 @@ $$(BIN)/quickstart: quickstart.cc
 }
 
 void GenerateQuickstartWorkspace(
-    std::ostream& os, std::map<std::string, std::string> const& variables) {
-  // The version and SHA are hardcoded in this template, but it does not matter
-  // too much, renovate bot would update it as soon as it is merged.
-  auto constexpr kText = R"""(# Copyright $copyright_year$ Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     https://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# A minimal WORKSPACE file showing how to use the $title$
-# C++ client library in Bazel-based projects.
-workspace(name = "qs")
-
-# Add the necessary Starlark functions to fetch google-cloud-cpp.
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
-# Fetch the Google Cloud C++ libraries.
-# NOTE: Update this version and SHA256 as needed.
-http_archive(
-    name = "google_cloud_cpp",
-    sha256 = "e8d904bbff788a26aa9cd67d6c0725f9798448fcf73ab809ec2d7b80f89a1dc5",
-    strip_prefix = "google-cloud-cpp-2.2.0",
-    url = "https://github.com/googleapis/google-cloud-cpp/archive/v2.2.0.tar.gz",
-)
-
-# Load indirect dependencies due to
-#     https://github.com/bazelbuild/bazel/issues/1943
-load("@google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
-
-google_cloud_cpp_deps()
-
-load("@com_google_googleapis//:repository_rules.bzl", "switched_rules_by_language")
-
-switched_rules_by_language(
-    name = "com_google_googleapis_imports",
-    cc = True,
-    grpc = True,
-)
-
-load("@com_github_grpc_grpc//bazel:grpc_deps.bzl", "grpc_deps")
-
-grpc_deps()
-
-load("@com_github_grpc_grpc//bazel:grpc_extra_deps.bzl", "grpc_extra_deps")
-
-grpc_extra_deps()
-)""";
+    std::ostream& os, std::map<std::string, std::string> const& variables,
+    std::string const& contents) {
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');
-  printer.Print(variables, kText);
+  printer.Print(variables, contents.c_str());
 }
 
 void GenerateQuickstartBuild(

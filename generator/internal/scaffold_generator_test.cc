@@ -326,12 +326,24 @@ TEST_F(ScaffoldGenerator, QuickstartMakefile) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartWorkspace) {
+  auto constexpr kContents = R"""(# Copyright $copyright_year$ Google LLC
+
+# A minimal WORKSPACE file showing how to use the $title$
+# C++ client library in Bazel-based projects.
+workspace(name = "qs")
+)""";
+
   auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
-  GenerateQuickstartWorkspace(os, vars);
+  GenerateQuickstartWorkspace(os, vars, kContents);
   auto const actual = std::move(os).str();
-  EXPECT_THAT(actual, HasSubstr("2034"));
+  EXPECT_THAT(actual, HasSubstr("# Copyright 2034 Google LLC"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+  EXPECT_THAT(
+      actual,
+      HasSubstr(
+          "A minimal WORKSPACE file showing how to use the Test Only API"));
+  EXPECT_THAT(actual, Not(HasSubstr("$title$")));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartBuild) {
