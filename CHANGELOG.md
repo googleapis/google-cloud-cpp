@@ -116,7 +116,7 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 </details>
 
-## v2.6.0 - TBD
+## v2.6.0 - 2023-01
 
 ### [BigQuery](/google/cloud/bigquery/README.md)
 
@@ -128,6 +128,38 @@ The library has been expanded to include the following services:
 
 The library has been expanded to include the IAM v2 API. This API includes
 support for [IAM Deny](https://cloud.google.com/iam/docs/deny-overview) policies.
+
+### [Pub/Sub](/google/cloud/pubsub/README.md)
+
+- fix: add missing <cstdint> includes ([#10421](https://github.com/googleapis/google-cloud-cpp/pull/10421))
+
+### [Speech](/google/cloud/speech/README.md)
+
+- fix: remove duplicate protos ([#10486](https://github.com/googleapis/google-cloud-cpp/pull/10486))
+
+### [Storage](/google/cloud/storage/README.md)
+
+- fix(storage): better error code for CreateBucket() and 409 errors ([#10480](https://github.com/googleapis/google-cloud-cpp/pull/10480)
+- fix: add missing <cstdint> includes ([#10421](https://github.com/googleapis/google-cloud-cpp/pull/10421))
+- fix(storage): scopes should disable self-signed JWTs ([#10369](https://github.com/googleapis/google-cloud-cpp/pull/10369))
+- doc(storage): document all `oauth2` names as deprecated ([#10352](https://github.com/googleapis/google-cloud-cpp/pull/10352))
+
+### [Text-to-Speech](/google/cloud/texttospeech/README.md)
+
+- fix: remove duplicate protos ([#10486](https://github.com/googleapis/google-cloud-cpp/pull/10486))
+
+### [Trace](/google/cloud/trace/README.md)
+
+- fix: remove duplicate protos ([#10486](https://github.com/googleapis/google-cloud-cpp/pull/10486))
+
+### [Common Libraries](/google/cloud/README.md)
+
+- fix: add missing <cstdint> includes ([#10421](https://github.com/googleapis/google-cloud-cpp/pull/10421))
+- feat(common): support external accounts ([#10465](https://github.com/googleapis/google-cloud-cpp/pull/10465))
+  ([#10430](https://github.com/googleapis/google-cloud-cpp/pull/10430))
+  ([#10357](https://github.com/googleapis/google-cloud-cpp/pull/10357))
+- feat(common): options for `Make*Credentials()` ([#10417](https://github.com/googleapis/google-cloud-cpp/pull/10417))
+- feat: support logging for unified Rest credentials ([#10412](https://github.com/googleapis/google-cloud-cpp/pull/10412))
 
 ## v2.5.0 - 2022-12
 
