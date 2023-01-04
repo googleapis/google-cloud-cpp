@@ -23,56 +23,23 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void RestCompletionQueue::Shutdown() {
-  std::lock_guard<std::mutex> lock(mu_);
-  shutdown_ = true;
-  std::deque<void*> pending_tags(std::move(pending_tags_));
-}
-
-RestCompletionQueue::QueueStatus RestCompletionQueue::GetNext(
-    void** tag, bool* ok, std::chrono::system_clock::time_point deadline) {
-  auto check_queue = [&]() mutable {
+  if (!shutdown_) {
+    std::cout << " thread=" << std::this_thread::get_id() << " "
+              << __PRETTY_FUNCTION__ << std::endl;
     std::lock_guard<std::mutex> lock(mu_);
-    if (shutdown_) {
-      *tag = nullptr;
-      *ok = false;
-      return QueueStatus::kShutdown;
-    }
-
-    if (pending_tags_.empty()) return QueueStatus::kTimeout;
-
-    auto* front = std::move(pending_tags_.front());
-    pending_tags_.pop_front();
-    *tag = front;
-    *ok = true;
-    return QueueStatus::kGotEvent;
-  };
-
-  // This is a naive implementation of using the deadline to return if no tags
-  // are present.
-  auto initial_check = check_queue();
-  if (initial_check != QueueStatus::kTimeout) return initial_check;
-  std::this_thread::sleep_until(deadline);
-  return check_queue();
+    shutdown_ = true;
+    tq_.Shutdown();
+  }
 }
 
-void RestCompletionQueue::AddTag(void* tag) {
-  std::lock_guard<std::mutex> lock(mu_);
-  if (shutdown_) return;
-  pending_tags_.push_back(tag);
+void RestCompletionQueue::CancelAll() { tq_.CancelAll(); }
+
+future<StatusOr<std::chrono::system_clock::time_point>>
+RestCompletionQueue::ScheduleTimer(std::chrono::system_clock::time_point tp) {
+  return tq_.Schedule(std::move(tp));
 }
 
-void RestCompletionQueue::RemoveTag(void* tag) {
-  std::lock_guard<std::mutex> lock(mu_);
-  if (shutdown_) return;
-  auto iter = std::find(pending_tags_.begin(), pending_tags_.end(), tag);
-  if (iter == pending_tags_.end()) return;
-  pending_tags_.erase(iter);
-}
-
-std::size_t RestCompletionQueue::size() const {
-  std::lock_guard<std::mutex> lock(mu_);
-  return pending_tags_.size();
-}
+void RestCompletionQueue::Service() { tq_.Service(); }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

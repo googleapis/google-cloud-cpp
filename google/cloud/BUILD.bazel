@@ -350,8 +350,10 @@ load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cp
     srcs = [test],
     deps = [
         ":google_cloud_cpp_rest_protobuf_internal",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
+        "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc",
         "@com_google_googletest//:gtest_main",
     ],
