@@ -68,7 +68,8 @@ std::map<std::string, std::string> ScaffoldVars(
 void MakeDirectory(std::string const& path);
 
 void GenerateScaffold(
-    std::string const& googleapis_path, std::string const& output_path,
+    std::string const& googleapis_path,
+    std::string const& scaffold_templates_path, std::string const& output_path,
     google::cloud::cpp::generator::ServiceConfiguration const& service,
     bool experimental);
 
@@ -93,15 +94,12 @@ void GenerateQuickstartCMake(
 void GenerateQuickstartMakefile(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateQuickstartWorkspace(
-    std::ostream& os, std::map<std::string, std::string> const& variables);
+    std::ostream& os, std::map<std::string, std::string> const& variables,
+    std::string const& contents);
 void GenerateQuickstartBuild(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateQuickstartBazelrc(
     std::ostream& os, std::map<std::string, std::string> const& variables);
-void GenerateSamplesBuild(std::ostream& os,
-                          std::map<std::string, std::string> const& variables);
-void GenerateSamplesCMake(std::ostream& os,
-                          std::map<std::string, std::string> const& variables);
 
 }  // namespace generator_internal
 }  // namespace cloud

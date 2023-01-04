@@ -121,6 +121,7 @@ bazel run \
   --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
   --output_path="${PWD}" \
   --config_file="${PWD}/generator/generator_config.textproto" \
+  --scaffold_templates_path="${PWD}/generator/templates/" \
   --scaffold="google/cloud/${library}/"
 ```
 
