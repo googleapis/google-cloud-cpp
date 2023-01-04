@@ -44,19 +44,18 @@ if (PROTO_INCLUDE_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
 endif ()
 
-include(CompileProtos)
-google_cloud_cpp_load_protolist(
-    proto_list
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/speech.list")
-google_cloud_cpp_load_protodeps(
-    proto_deps
-    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/speech.deps")
-google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_speech_protos # cmake-format: sort
-    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
-    "${PROTO_INCLUDE_DIR}")
-external_googleapis_set_version_and_alias(speech_protos)
-target_link_libraries(google_cloud_cpp_speech_protos PUBLIC ${proto_deps})
+add_library(google_cloud_cpp_speech_protos INTERFACE)
+target_link_libraries(google_cloud_cpp_speech_protos
+                      INTERFACE google-cloud-cpp::cloud_speech_protos)
+set_target_properties(
+    google_cloud_cpp_speech_protos
+    PROPERTIES EXPORT_NAME google-cloud-cpp::speech_protos
+               VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
+target_compile_options(google_cloud_cpp_speech_protos
+                       INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
+add_library(google-cloud-cpp::speech_protos ALIAS
+            google_cloud_cpp_speech_protos)
 
 file(
     GLOB source_files
