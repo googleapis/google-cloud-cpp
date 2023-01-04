@@ -9,5 +9,6 @@ substitutions:
   _BUILD_NAME: tsan
   _DISTRO: fedora-36-bazel
   _TRIGGER_TYPE: ci
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - ci

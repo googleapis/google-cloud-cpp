@@ -10,5 +10,6 @@ substitutions:
   _BUILD_NAME: gcc-7.3
   _DISTRO: centos-7
   _TRIGGER_TYPE: pr
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr
