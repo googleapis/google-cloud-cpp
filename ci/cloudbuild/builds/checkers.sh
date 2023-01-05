@@ -60,12 +60,12 @@ export -f sed_edit
 #
 # By default, we format all files in the repository tracked by `git`. To format
 # only the files that have changed in a development branch, set
-# `GOOGLE_CLOUD_CPP_FORMAT_CHANGES_ONLY=1`.
+# `GOOGLE_CLOUD_CPP_FAST_CHECKERS=1`.
 git_files() {
-  if [ -z "${GOOGLE_CLOUD_CPP_FORMAT_CHANGES_ONLY-}" ]; then
-    git ls-files -z "${@}"
+  if [ -z "${GOOGLE_CLOUD_CPP_FAST_CHECKERS-}" ]; then
+    git ls-files "${@}"
   else
-    git diff upstream/main --name-only -z "${@}"
+    git diff main --name-only "${@}"
   fi
 }
 
@@ -90,7 +90,7 @@ time {
 
 printf "%-50s" "Running check-include-guards:" >&2
 time {
-  git_files -- '*.h' |
+  git_files -z -- '*.h' |
     xargs -r -0 awk -f "ci/check-include-guards.gawk"
 }
 
@@ -103,7 +103,7 @@ time {
 printf "%-50s" "Running Abseil header fixes:" >&2
 time {
   expressions=("-e" "'s;#include \"absl/strings/str_\(cat\|replace\|join\).h\";#include \"google/cloud/internal/absl_str_\1_quiet.h\";'")
-  git_files -- '*.h' '*.cc' |
+  git_files -z -- '*.h' '*.cc' |
     (grep -zv 'google/cloud/internal/absl_.*quiet.h$' || true) |
     xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
@@ -118,7 +118,7 @@ time {
   expressions=("-e" "'s/grpc::\([A-Z][A-Z_]\+\)/grpc::StatusCode::\1/g'")
   expressions+=("-e" "'s;#include <grpc++/grpc++.h>;#include <grpcpp/grpcpp.h>;'")
   expressions+=("-e" "'s;#include <grpc++/;#include <grpcpp/;'")
-  git_files -- '*.h' '*.cc' |
+  git_files -z -- '*.h' '*.cc' |
     xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
@@ -130,7 +130,7 @@ time {
   expressions=("-e" "'s/[[:blank:]]\+$//'")
   # Removes trailing blank lines (see http://sed.sourceforge.net/sed1line.txt)
   expressions+=("-e" "':x;/^\n*$/{\$d;N;bx;}'")
-  git_files | grep -zv '\.gz$' | grep -zv 'googleapis.patch$' |
+  git_files -z | grep -zv '\.gz$' | grep -zv 'googleapis.patch$' |
     (xargs -r -P "$(nproc)" -n 50 -0 grep -ZPL "\b[D]O NOT EDIT\b" || true) |
     xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
@@ -139,7 +139,7 @@ time {
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
 printf "%-50s" "Running buildifier:" >&2
 time {
-  git_files -- '*.BUILD' '*.bzl' '*.bazel' |
+  git_files -z -- '*.BUILD' '*.bzl' '*.bazel' |
     xargs -r -0 buildifier -mode=fix
 }
 
@@ -147,19 +147,19 @@ time {
 #    https://pypi.org/project/black/
 printf "%-50s" "Running black:" >&2
 time {
-  git_files -- '*.py' | xargs -r -0 python3 -m black --quiet
+  git_files -z -- '*.py' | xargs -r -0 python3 -m black --quiet
 }
 
 # Apply shfmt to format all shell scripts
 printf "%-50s" "Running shfmt:" >&2
 time {
-  git_files -- '*.sh' | xargs -r -0 shfmt -w
+  git_files -z -- '*.sh' | xargs -r -0 shfmt -w
 }
 
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.
 printf "%-50s" "Running shellcheck:" >&2
 time {
-  git_files -- '*.sh' |
+  git_files -z -- '*.sh' |
     xargs -r -P "$(nproc)" -n 1 -0 shellcheck \
       --exclude=SC1090 \
       --exclude=SC1091 \
@@ -172,7 +172,7 @@ time {
 # different formatting output (sigh).
 printf "%-50s" "Running clang-format:" >&2
 time {
-  git_files -- '*.h' '*.cc' |
+  git_files -z -- '*.h' '*.cc' |
     xargs -r -P "$(nproc)" -n 1 -0 clang-format -i
 }
 
@@ -180,7 +180,7 @@ time {
 #     https://github.com/cheshirekow/cmake_format
 printf "%-50s" "Running cmake-format:" >&2
 time {
-  git_files -- '**/CMakeLists.txt' '*.cmake' |
+  git_files -z -- '**/CMakeLists.txt' '*.cmake' |
     xargs -r -P "$(nproc)" -n 1 -0 cmake-format -i
 }
 
@@ -206,7 +206,7 @@ time {
 printf "%-50s" "Running markdown formatter:" >&2
 time {
   # See `.mdformat.toml` for the configuration parameters.
-  git_files -- '*.md' | xargs -r -P "$(nproc)" -n 1 -0 mdformat
+  git_files -z -- '*.md' | xargs -r -P "$(nproc)" -n 1 -0 mdformat
 }
 
 printf "%-50s" "Running doxygen landing-page updates:" >&2
