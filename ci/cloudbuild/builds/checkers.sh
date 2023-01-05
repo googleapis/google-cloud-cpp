@@ -56,9 +56,9 @@ function sed_edit() {
 }
 export -f sed_edit
 
-# The list of files to format.
+# The list of files to check.
 #
-# By default, we format all files in the repository tracked by `git`. To format
+# By default, we check all files in the repository tracked by `git`. To check
 # only the files that have changed in a development branch, set
 # `GOOGLE_CLOUD_CPP_FAST_CHECKERS=1`.
 git_files() {
