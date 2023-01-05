@@ -78,6 +78,7 @@ google_cloud_cpp_common_hdrs = [
     "internal/strerror.h",
     "internal/subject_token.h",
     "internal/throw_delegate.h",
+    "internal/timer_queue.h",
     "internal/tuple.h",
     "internal/type_list.h",
     "internal/type_traits.h",

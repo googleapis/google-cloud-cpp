@@ -120,6 +120,7 @@ add_library(
     internal/subject_token.h
     internal/throw_delegate.cc
     internal/throw_delegate.h
+    internal/timer_queue.h
     internal/tuple.h
     internal/type_list.h
     internal/type_traits.h
@@ -346,6 +347,7 @@ if (BUILD_TESTING)
         internal/strerror_test.cc
         internal/subject_token_test.cc
         internal/throw_delegate_test.cc
+        internal/timer_queue_test.cc
         internal/tuple_test.cc
         internal/type_list_test.cc
         internal/user_agent_prefix_test.cc
