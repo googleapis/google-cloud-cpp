@@ -69,6 +69,13 @@ git_files() {
   fi
 }
 
+CI_CHANGES="$(git_files -z -- "ci/generate-markdown/")"
+if [ -z "${CI_CHANGES}" ]; then
+  mapfile -t GIT_LIBS < <(comm -12 <(features::libraries) <(git_files google/cloud/*/ | cut -d "/" -f3 | uniq))
+else
+  mapfile -t GIT_LIBS < <(features::libraries)
+fi
+
 # This controls the output format from bash's `time` command, which we use
 # below to time blocks of the script. A newline is automatically included.
 readonly TIMEFORMAT="... %R seconds"
@@ -189,16 +196,17 @@ time {
 # markdown files. It is nice if those examples are properly formatted.
 printf "%-50s" "Running markdown generators:" >&2
 time {
-  declare -A -r GENERATOR_MAP=(
-    ["ci/generate-markdown/generate-readme.sh"]="/dev/null"
-    ["ci/generate-markdown/generate-packaging.sh"]="doc/packaging.md"
-  )
-  for generator in "${!GENERATOR_MAP[@]}"; do
-    "${generator}" >"${GENERATOR_MAP[${generator}]}"
-  done
+  if [ -n "${CI_CHANGES}" ]; then
+    declare -A -r GENERATOR_MAP=(
+      ["ci/generate-markdown/generate-readme.sh"]="/dev/null"
+      ["ci/generate-markdown/generate-packaging.sh"]="doc/packaging.md"
+    )
+    for generator in "${!GENERATOR_MAP[@]}"; do
+      "${generator}" >"${GENERATOR_MAP[${generator}]}"
+    done
+  fi
 
-  mapfile -t libraries < <(features::libraries)
-  for library in "${libraries[@]}"; do
+  for library in "${GIT_LIBS[@]}"; do
     ci/generate-markdown/update-library-readme.sh "${library}"
   done
 }
@@ -211,8 +219,7 @@ time {
 
 printf "%-50s" "Running doxygen landing-page updates:" >&2
 time {
-  mapfile -t libraries < <(features::libraries)
-  for library in "${libraries[@]}"; do
+  for library in "${GIT_LIBS[@]}"; do
     ci/generate-markdown/update-library-landing-dox.sh "${library}"
   done
 }
