@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -15,38 +15,16 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/opentelemetry_options.h"
-#include <gmock/gmock.h>
-#include <opentelemetry/trace/default_span.h>
-#include <opentelemetry/version.h>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-namespace {
 
-using ::testing::IsEmpty;
-using ::testing::Not;
-
-TEST(OpenTelemetry, IsUsable) {
-  auto version = std::string{OPENTELEMETRY_VERSION};
-  EXPECT_THAT(version, Not(IsEmpty()));
-  auto span = opentelemetry::trace::DefaultSpan::GetInvalid();
-  EXPECT_EQ(span.ToString(), "DefaultSpan");
+bool TracingEnabled(Options const& options) {
+  return options.get<OpenTelemetryTracingOption>();
 }
 
-TEST(OpenTelemetry, TracingEnabled) {
-  auto options = Options{};
-  EXPECT_FALSE(TracingEnabled(options));
-
-  options.set<OpenTelemetryTracingOption>(false);
-  EXPECT_FALSE(TracingEnabled(options));
-
-  options.set<OpenTelemetryTracingOption>(true);
-  EXPECT_TRUE(TracingEnabled(options));
-}
-
-}  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
