@@ -56,6 +56,19 @@ function sed_edit() {
 }
 export -f sed_edit
 
+# The list of files to format.
+#
+# By default, we format all files in the repository tracked by `git`. To format
+# only the files that have changed in a development branch, set
+# `GOOGLE_CLOUD_CPP_FORMAT_CHANGES_ONLY=1`.
+git_files() {
+  if [ -z "${GOOGLE_CLOUD_CPP_FORMAT_CHANGES_ONLY-}" ]; then
+    git ls-files -z "${@}"
+  else
+    git diff upstream/main --name-only -z "${@}"
+  fi
+}
+
 # This controls the output format from bash's `time` command, which we use
 # below to time blocks of the script. A newline is automatically included.
 readonly TIMEFORMAT="... %R seconds"
@@ -77,8 +90,8 @@ time {
 
 printf "%-50s" "Running check-include-guards:" >&2
 time {
-  git ls-files -z -- '*.h' |
-    xargs -0 awk -f "ci/check-include-guards.gawk"
+  git_files -- '*.h' |
+    xargs -r -0 awk -f "ci/check-include-guards.gawk"
 }
 
 # TODO(#4501) - this fixup can be removed if #include <absl/...> works
@@ -90,9 +103,9 @@ time {
 printf "%-50s" "Running Abseil header fixes:" >&2
 time {
   expressions=("-e" "'s;#include \"absl/strings/str_\(cat\|replace\|join\).h\";#include \"google/cloud/internal/absl_str_\1_quiet.h\";'")
-  git ls-files -z -- '*.h' '*.cc' |
-    grep -zv 'google/cloud/internal/absl_.*quiet.h$' |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
+  git_files -- '*.h' '*.cc' |
+    (grep -zv 'google/cloud/internal/absl_.*quiet.h$' || true) |
+    xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
 # Apply several transformations that cannot be enforced by clang-format:
@@ -105,8 +118,8 @@ time {
   expressions=("-e" "'s/grpc::\([A-Z][A-Z_]\+\)/grpc::StatusCode::\1/g'")
   expressions+=("-e" "'s;#include <grpc++/grpc++.h>;#include <grpcpp/grpcpp.h>;'")
   expressions+=("-e" "'s;#include <grpc++/;#include <grpcpp/;'")
-  git ls-files -z -- '*.h' '*.cc' |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
+  git_files -- '*.h' '*.cc' |
+    xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
 # Applies whitespace fixes in text files, unless they request no edits. The
@@ -117,37 +130,37 @@ time {
   expressions=("-e" "'s/[[:blank:]]\+$//'")
   # Removes trailing blank lines (see http://sed.sourceforge.net/sed1line.txt)
   expressions+=("-e" "':x;/^\n*$/{\$d;N;bx;}'")
-  git ls-files -z | grep -zv '\.gz$' | grep -zv 'googleapis.patch$' |
-    (xargs -P "$(nproc)" -n 50 -0 grep -ZPL "\b[D]O NOT EDIT\b" || true) |
-    xargs -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
+  git_files | grep -zv '\.gz$' | grep -zv 'googleapis.patch$' |
+    (xargs -r -P "$(nproc)" -n 50 -0 grep -ZPL "\b[D]O NOT EDIT\b" || true) |
+    xargs -r -P "$(nproc)" -n 50 -0 bash -c "sed_edit ${expressions[*]} \"\$0\" \"\$@\""
 }
 
 # Apply buildifier to fix the BUILD and .bzl formatting rules.
 #    https://github.com/bazelbuild/buildtools/tree/master/buildifier
 printf "%-50s" "Running buildifier:" >&2
 time {
-  git ls-files -z -- '*.BUILD' '*.bzl' '*.bazel' |
-    xargs -0 buildifier -mode=fix
+  git_files -- '*.BUILD' '*.bzl' '*.bazel' |
+    xargs -r -0 buildifier -mode=fix
 }
 
 # Apply psf/black to format Python files.
 #    https://pypi.org/project/black/
 printf "%-50s" "Running black:" >&2
 time {
-  git ls-files -z -- '*.py' | xargs -0 python3 -m black --quiet
+  git_files -- '*.py' | xargs -r -0 python3 -m black --quiet
 }
 
 # Apply shfmt to format all shell scripts
 printf "%-50s" "Running shfmt:" >&2
 time {
-  git ls-files -z -- '*.sh' | xargs -0 shfmt -w
+  git_files -- '*.sh' | xargs -r -0 shfmt -w
 }
 
 # Apply shellcheck(1) to emit warnings for common scripting mistakes.
 printf "%-50s" "Running shellcheck:" >&2
 time {
-  git ls-files -z -- '*.sh' |
-    xargs -P "$(nproc)" -n 1 -0 shellcheck \
+  git_files -- '*.sh' |
+    xargs -r -P "$(nproc)" -n 1 -0 shellcheck \
       --exclude=SC1090 \
       --exclude=SC1091 \
       --exclude=SC2034 \
@@ -159,16 +172,16 @@ time {
 # different formatting output (sigh).
 printf "%-50s" "Running clang-format:" >&2
 time {
-  git ls-files -z -- '*.h' '*.cc' |
-    xargs -P "$(nproc)" -n 1 -0 clang-format -i
+  git_files -- '*.h' '*.cc' |
+    xargs -r -P "$(nproc)" -n 1 -0 clang-format -i
 }
 
 # Apply cmake_format to all the CMake list files.
 #     https://github.com/cheshirekow/cmake_format
 printf "%-50s" "Running cmake-format:" >&2
 time {
-  git ls-files -z -- '**/CMakeLists.txt' '*.cmake' |
-    xargs -P "$(nproc)" -n 1 -0 cmake-format -i
+  git_files -- '**/CMakeLists.txt' '*.cmake' |
+    xargs -r -P "$(nproc)" -n 1 -0 cmake-format -i
 }
 
 # The markdown generators run last. This is useful because as part of the
@@ -193,7 +206,7 @@ time {
 printf "%-50s" "Running markdown formatter:" >&2
 time {
   # See `.mdformat.toml` for the configuration parameters.
-  git ls-files -z -- '*.md' | xargs -P "$(nproc)" -n 1 -0 mdformat
+  git_files -- '*.md' | xargs -r -P "$(nproc)" -n 1 -0 mdformat
 }
 
 printf "%-50s" "Running doxygen landing-page updates:" >&2
