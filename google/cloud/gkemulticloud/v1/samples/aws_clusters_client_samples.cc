@@ -39,7 +39,8 @@ void SetClientEndpoint(std::vector<std::string> const& argv) {
   auto options = google::cloud::Options{}.set<google::cloud::EndpointOption>(
       "private.googleapis.com");
   auto client = google::cloud::gkemulticloud_v1::AwsClustersClient(
-      google::cloud::gkemulticloud_v1::MakeAwsClustersConnection(options));
+      google::cloud::gkemulticloud_v1::MakeAwsClustersConnection("unused",
+                                                                 options));
   //! [set-client-endpoint]
 }
 
@@ -56,7 +57,8 @@ void WithServiceAccount(std::vector<std::string> const& argv) {
         google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents));
     return google::cloud::gkemulticloud_v1::AwsClustersClient(
-        google::cloud::gkemulticloud_v1::MakeAwsClustersConnection(options));
+        google::cloud::gkemulticloud_v1::MakeAwsClustersConnection(
+            "us-west1" /* regional service region */, options));
   }
   //! [with-service-account]
   (argv.at(0));
