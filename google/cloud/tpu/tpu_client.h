@@ -69,7 +69,7 @@ class TpuClient {
   ~TpuClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   TpuClient(TpuClient const&) = default;
   TpuClient& operator=(TpuClient const&) = default;
   TpuClient(TpuClient&&) = default;
@@ -77,7 +77,7 @@ class TpuClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(TpuClient const& a, TpuClient const& b) {
     return a.connection_ == b.connection_;
   }

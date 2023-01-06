@@ -65,7 +65,7 @@ class ContextsClient {
   ~ContextsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ContextsClient(ContextsClient const&) = default;
   ContextsClient& operator=(ContextsClient const&) = default;
   ContextsClient(ContextsClient&&) = default;
@@ -73,7 +73,7 @@ class ContextsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ContextsClient const& a, ContextsClient const& b) {
     return a.connection_ == b.connection_;
   }

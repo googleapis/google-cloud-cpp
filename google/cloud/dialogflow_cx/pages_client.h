@@ -65,7 +65,7 @@ class PagesClient {
   ~PagesClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   PagesClient(PagesClient const&) = default;
   PagesClient& operator=(PagesClient const&) = default;
   PagesClient(PagesClient&&) = default;
@@ -73,7 +73,7 @@ class PagesClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(PagesClient const& a, PagesClient const& b) {
     return a.connection_ == b.connection_;
   }

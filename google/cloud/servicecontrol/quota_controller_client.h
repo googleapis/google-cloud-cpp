@@ -68,7 +68,7 @@ class QuotaControllerClient {
   ~QuotaControllerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   QuotaControllerClient(QuotaControllerClient const&) = default;
   QuotaControllerClient& operator=(QuotaControllerClient const&) = default;
   QuotaControllerClient(QuotaControllerClient&&) = default;
@@ -76,7 +76,7 @@ class QuotaControllerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(QuotaControllerClient const& a,
                          QuotaControllerClient const& b) {
     return a.connection_ == b.connection_;

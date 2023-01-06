@@ -67,7 +67,7 @@ class MigrationServiceClient {
   ~MigrationServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   MigrationServiceClient(MigrationServiceClient const&) = default;
   MigrationServiceClient& operator=(MigrationServiceClient const&) = default;
   MigrationServiceClient(MigrationServiceClient&&) = default;
@@ -75,7 +75,7 @@ class MigrationServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(MigrationServiceClient const& a,
                          MigrationServiceClient const& b) {
     return a.connection_ == b.connection_;

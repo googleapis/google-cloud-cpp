@@ -66,7 +66,7 @@ class CloudSchedulerClient {
   ~CloudSchedulerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CloudSchedulerClient(CloudSchedulerClient const&) = default;
   CloudSchedulerClient& operator=(CloudSchedulerClient const&) = default;
   CloudSchedulerClient(CloudSchedulerClient&&) = default;
@@ -74,7 +74,7 @@ class CloudSchedulerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CloudSchedulerClient const& a,
                          CloudSchedulerClient const& b) {
     return a.connection_ == b.connection_;

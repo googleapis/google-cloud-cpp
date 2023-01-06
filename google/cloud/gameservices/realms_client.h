@@ -68,7 +68,7 @@ class RealmsServiceClient {
   ~RealmsServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   RealmsServiceClient(RealmsServiceClient const&) = default;
   RealmsServiceClient& operator=(RealmsServiceClient const&) = default;
   RealmsServiceClient(RealmsServiceClient&&) = default;
@@ -76,7 +76,7 @@ class RealmsServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(RealmsServiceClient const& a,
                          RealmsServiceClient const& b) {
     return a.connection_ == b.connection_;

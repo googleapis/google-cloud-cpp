@@ -81,7 +81,7 @@ class AppGatewaysServiceClient {
   ~AppGatewaysServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AppGatewaysServiceClient(AppGatewaysServiceClient const&) = default;
   AppGatewaysServiceClient& operator=(AppGatewaysServiceClient const&) =
       default;
@@ -90,7 +90,7 @@ class AppGatewaysServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AppGatewaysServiceClient const& a,
                          AppGatewaysServiceClient const& b) {
     return a.connection_ == b.connection_;

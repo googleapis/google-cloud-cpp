@@ -68,7 +68,7 @@ class CloudFunctionsServiceClient {
   ~CloudFunctionsServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CloudFunctionsServiceClient(CloudFunctionsServiceClient const&) = default;
   CloudFunctionsServiceClient& operator=(CloudFunctionsServiceClient const&) =
       default;
@@ -78,7 +78,7 @@ class CloudFunctionsServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CloudFunctionsServiceClient const& a,
                          CloudFunctionsServiceClient const& b) {
     return a.connection_ == b.connection_;

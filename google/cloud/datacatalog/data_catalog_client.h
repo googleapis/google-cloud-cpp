@@ -68,7 +68,7 @@ class DataCatalogClient {
   ~DataCatalogClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   DataCatalogClient(DataCatalogClient const&) = default;
   DataCatalogClient& operator=(DataCatalogClient const&) = default;
   DataCatalogClient(DataCatalogClient&&) = default;
@@ -76,7 +76,7 @@ class DataCatalogClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(DataCatalogClient const& a,
                          DataCatalogClient const& b) {
     return a.connection_ == b.connection_;

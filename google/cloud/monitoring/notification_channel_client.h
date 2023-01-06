@@ -68,7 +68,7 @@ class NotificationChannelServiceClient {
   ~NotificationChannelServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   NotificationChannelServiceClient(NotificationChannelServiceClient const&) =
       default;
   NotificationChannelServiceClient& operator=(
@@ -80,7 +80,7 @@ class NotificationChannelServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(NotificationChannelServiceClient const& a,
                          NotificationChannelServiceClient const& b) {
     return a.connection_ == b.connection_;

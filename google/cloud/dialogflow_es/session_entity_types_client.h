@@ -67,7 +67,7 @@ class SessionEntityTypesClient {
   ~SessionEntityTypesClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   SessionEntityTypesClient(SessionEntityTypesClient const&) = default;
   SessionEntityTypesClient& operator=(SessionEntityTypesClient const&) =
       default;
@@ -76,7 +76,7 @@ class SessionEntityTypesClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(SessionEntityTypesClient const& a,
                          SessionEntityTypesClient const& b) {
     return a.connection_ == b.connection_;

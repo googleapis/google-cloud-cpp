@@ -67,7 +67,7 @@ class VersionsClient {
   ~VersionsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   VersionsClient(VersionsClient const&) = default;
   VersionsClient& operator=(VersionsClient const&) = default;
   VersionsClient(VersionsClient&&) = default;
@@ -75,7 +75,7 @@ class VersionsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(VersionsClient const& a, VersionsClient const& b) {
     return a.connection_ == b.connection_;
   }

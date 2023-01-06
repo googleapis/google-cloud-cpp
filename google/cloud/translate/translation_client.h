@@ -68,7 +68,7 @@ class TranslationServiceClient {
   ~TranslationServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   TranslationServiceClient(TranslationServiceClient const&) = default;
   TranslationServiceClient& operator=(TranslationServiceClient const&) =
       default;
@@ -77,7 +77,7 @@ class TranslationServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(TranslationServiceClient const& a,
                          TranslationServiceClient const& b) {
     return a.connection_ == b.connection_;

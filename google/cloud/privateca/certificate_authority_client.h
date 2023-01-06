@@ -70,7 +70,7 @@ class CertificateAuthorityServiceClient {
   ~CertificateAuthorityServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CertificateAuthorityServiceClient(CertificateAuthorityServiceClient const&) =
       default;
   CertificateAuthorityServiceClient& operator=(
@@ -82,7 +82,7 @@ class CertificateAuthorityServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CertificateAuthorityServiceClient const& a,
                          CertificateAuthorityServiceClient const& b) {
     return a.connection_ == b.connection_;

@@ -88,7 +88,7 @@ class InstanceAdminClient {
   ~InstanceAdminClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   InstanceAdminClient(InstanceAdminClient const&) = default;
   InstanceAdminClient& operator=(InstanceAdminClient const&) = default;
   InstanceAdminClient(InstanceAdminClient&&) = default;
@@ -96,7 +96,7 @@ class InstanceAdminClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(InstanceAdminClient const& a,
                          InstanceAdminClient const& b) {
     return a.connection_ == b.connection_;

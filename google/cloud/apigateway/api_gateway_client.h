@@ -68,7 +68,7 @@ class ApiGatewayServiceClient {
   ~ApiGatewayServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ApiGatewayServiceClient(ApiGatewayServiceClient const&) = default;
   ApiGatewayServiceClient& operator=(ApiGatewayServiceClient const&) = default;
   ApiGatewayServiceClient(ApiGatewayServiceClient&&) = default;
@@ -76,7 +76,7 @@ class ApiGatewayServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ApiGatewayServiceClient const& a,
                          ApiGatewayServiceClient const& b) {
     return a.connection_ == b.connection_;

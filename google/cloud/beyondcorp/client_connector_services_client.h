@@ -78,7 +78,7 @@ class ClientConnectorServicesServiceClient {
   ~ClientConnectorServicesServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ClientConnectorServicesServiceClient(
       ClientConnectorServicesServiceClient const&) = default;
   ClientConnectorServicesServiceClient& operator=(
@@ -90,7 +90,7 @@ class ClientConnectorServicesServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ClientConnectorServicesServiceClient const& a,
                          ClientConnectorServicesServiceClient const& b) {
     return a.connection_ == b.connection_;

@@ -66,7 +66,7 @@ class EntityTypesClient {
   ~EntityTypesClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   EntityTypesClient(EntityTypesClient const&) = default;
   EntityTypesClient& operator=(EntityTypesClient const&) = default;
   EntityTypesClient(EntityTypesClient&&) = default;
@@ -74,7 +74,7 @@ class EntityTypesClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(EntityTypesClient const& a,
                          EntityTypesClient const& b) {
     return a.connection_ == b.connection_;

@@ -67,7 +67,7 @@ class QueryServiceClient {
   ~QueryServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   QueryServiceClient(QueryServiceClient const&) = default;
   QueryServiceClient& operator=(QueryServiceClient const&) = default;
   QueryServiceClient(QueryServiceClient&&) = default;
@@ -75,7 +75,7 @@ class QueryServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(QueryServiceClient const& a,
                          QueryServiceClient const& b) {
     return a.connection_ == b.connection_;

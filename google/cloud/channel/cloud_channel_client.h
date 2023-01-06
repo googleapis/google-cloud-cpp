@@ -86,7 +86,7 @@ class CloudChannelServiceClient {
   ~CloudChannelServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CloudChannelServiceClient(CloudChannelServiceClient const&) = default;
   CloudChannelServiceClient& operator=(CloudChannelServiceClient const&) =
       default;
@@ -95,7 +95,7 @@ class CloudChannelServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CloudChannelServiceClient const& a,
                          CloudChannelServiceClient const& b) {
     return a.connection_ == b.connection_;

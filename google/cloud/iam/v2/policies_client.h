@@ -67,7 +67,7 @@ class PoliciesClient {
   ~PoliciesClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   PoliciesClient(PoliciesClient const&) = default;
   PoliciesClient& operator=(PoliciesClient const&) = default;
   PoliciesClient(PoliciesClient&&) = default;
@@ -75,7 +75,7 @@ class PoliciesClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(PoliciesClient const& a, PoliciesClient const& b) {
     return a.connection_ == b.connection_;
   }

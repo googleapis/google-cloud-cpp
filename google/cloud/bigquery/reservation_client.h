@@ -80,7 +80,7 @@ class ReservationServiceClient {
   ~ReservationServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ReservationServiceClient(ReservationServiceClient const&) = default;
   ReservationServiceClient& operator=(ReservationServiceClient const&) =
       default;
@@ -89,7 +89,7 @@ class ReservationServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ReservationServiceClient const& a,
                          ReservationServiceClient const& b) {
     return a.connection_ == b.connection_;

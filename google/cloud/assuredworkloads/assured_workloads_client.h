@@ -68,7 +68,7 @@ class AssuredWorkloadsServiceClient {
   ~AssuredWorkloadsServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AssuredWorkloadsServiceClient(AssuredWorkloadsServiceClient const&) = default;
   AssuredWorkloadsServiceClient& operator=(
       AssuredWorkloadsServiceClient const&) = default;
@@ -78,7 +78,7 @@ class AssuredWorkloadsServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AssuredWorkloadsServiceClient const& a,
                          AssuredWorkloadsServiceClient const& b) {
     return a.connection_ == b.connection_;

@@ -73,7 +73,7 @@ class BigtableTableAdminClient {
   ~BigtableTableAdminClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   BigtableTableAdminClient(BigtableTableAdminClient const&) = default;
   BigtableTableAdminClient& operator=(BigtableTableAdminClient const&) =
       default;
@@ -82,7 +82,7 @@ class BigtableTableAdminClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(BigtableTableAdminClient const& a,
                          BigtableTableAdminClient const& b) {
     return a.connection_ == b.connection_;

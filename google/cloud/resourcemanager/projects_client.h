@@ -67,7 +67,7 @@ class ProjectsClient {
   ~ProjectsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ProjectsClient(ProjectsClient const&) = default;
   ProjectsClient& operator=(ProjectsClient const&) = default;
   ProjectsClient(ProjectsClient&&) = default;
@@ -75,7 +75,7 @@ class ProjectsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ProjectsClient const& a, ProjectsClient const& b) {
     return a.connection_ == b.connection_;
   }

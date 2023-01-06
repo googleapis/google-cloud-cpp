@@ -68,7 +68,7 @@ class ConversationProfilesClient {
   ~ConversationProfilesClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ConversationProfilesClient(ConversationProfilesClient const&) = default;
   ConversationProfilesClient& operator=(ConversationProfilesClient const&) =
       default;
@@ -77,7 +77,7 @@ class ConversationProfilesClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ConversationProfilesClient const& a,
                          ConversationProfilesClient const& b) {
     return a.connection_ == b.connection_;

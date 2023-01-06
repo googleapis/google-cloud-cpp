@@ -66,7 +66,7 @@ class ModelServiceClient {
   ~ModelServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ModelServiceClient(ModelServiceClient const&) = default;
   ModelServiceClient& operator=(ModelServiceClient const&) = default;
   ModelServiceClient(ModelServiceClient&&) = default;
@@ -74,7 +74,7 @@ class ModelServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ModelServiceClient const& a,
                          ModelServiceClient const& b) {
     return a.connection_ == b.connection_;

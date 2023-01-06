@@ -68,7 +68,7 @@ class CloudDeployClient {
   ~CloudDeployClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CloudDeployClient(CloudDeployClient const&) = default;
   CloudDeployClient& operator=(CloudDeployClient const&) = default;
   CloudDeployClient(CloudDeployClient&&) = default;
@@ -76,7 +76,7 @@ class CloudDeployClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CloudDeployClient const& a,
                          CloudDeployClient const& b) {
     return a.connection_ == b.connection_;

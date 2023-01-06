@@ -69,7 +69,7 @@ class ServiceControllerClient {
   ~ServiceControllerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ServiceControllerClient(ServiceControllerClient const&) = default;
   ServiceControllerClient& operator=(ServiceControllerClient const&) = default;
   ServiceControllerClient(ServiceControllerClient&&) = default;
@@ -77,7 +77,7 @@ class ServiceControllerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ServiceControllerClient const& a,
                          ServiceControllerClient const& b) {
     return a.connection_ == b.connection_;

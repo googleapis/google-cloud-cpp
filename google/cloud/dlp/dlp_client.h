@@ -73,7 +73,7 @@ class DlpServiceClient {
   ~DlpServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   DlpServiceClient(DlpServiceClient const&) = default;
   DlpServiceClient& operator=(DlpServiceClient const&) = default;
   DlpServiceClient(DlpServiceClient&&) = default;
@@ -81,7 +81,7 @@ class DlpServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(DlpServiceClient const& a, DlpServiceClient const& b) {
     return a.connection_ == b.connection_;
   }

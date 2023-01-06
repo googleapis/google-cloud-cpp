@@ -97,7 +97,7 @@ class AccessApprovalClient {
   ~AccessApprovalClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AccessApprovalClient(AccessApprovalClient const&) = default;
   AccessApprovalClient& operator=(AccessApprovalClient const&) = default;
   AccessApprovalClient(AccessApprovalClient&&) = default;
@@ -105,7 +105,7 @@ class AccessApprovalClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AccessApprovalClient const& a,
                          AccessApprovalClient const& b) {
     return a.connection_ == b.connection_;

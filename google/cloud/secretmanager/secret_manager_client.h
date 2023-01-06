@@ -73,7 +73,7 @@ class SecretManagerServiceClient {
   ~SecretManagerServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   SecretManagerServiceClient(SecretManagerServiceClient const&) = default;
   SecretManagerServiceClient& operator=(SecretManagerServiceClient const&) =
       default;
@@ -82,7 +82,7 @@ class SecretManagerServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(SecretManagerServiceClient const& a,
                          SecretManagerServiceClient const& b) {
     return a.connection_ == b.connection_;

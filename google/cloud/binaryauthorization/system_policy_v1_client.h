@@ -66,7 +66,7 @@ class SystemPolicyV1Client {
   ~SystemPolicyV1Client();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   SystemPolicyV1Client(SystemPolicyV1Client const&) = default;
   SystemPolicyV1Client& operator=(SystemPolicyV1Client const&) = default;
   SystemPolicyV1Client(SystemPolicyV1Client&&) = default;
@@ -74,7 +74,7 @@ class SystemPolicyV1Client {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(SystemPolicyV1Client const& a,
                          SystemPolicyV1Client const& b) {
     return a.connection_ == b.connection_;

@@ -80,7 +80,7 @@ class ArtifactRegistryClient {
   ~ArtifactRegistryClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ArtifactRegistryClient(ArtifactRegistryClient const&) = default;
   ArtifactRegistryClient& operator=(ArtifactRegistryClient const&) = default;
   ArtifactRegistryClient(ArtifactRegistryClient&&) = default;
@@ -88,7 +88,7 @@ class ArtifactRegistryClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ArtifactRegistryClient const& a,
                          ArtifactRegistryClient const& b) {
     return a.connection_ == b.connection_;

@@ -69,7 +69,7 @@ class VpcAccessServiceClient {
   ~VpcAccessServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   VpcAccessServiceClient(VpcAccessServiceClient const&) = default;
   VpcAccessServiceClient& operator=(VpcAccessServiceClient const&) = default;
   VpcAccessServiceClient(VpcAccessServiceClient&&) = default;
@@ -77,7 +77,7 @@ class VpcAccessServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(VpcAccessServiceClient const& a,
                          VpcAccessServiceClient const& b) {
     return a.connection_ == b.connection_;

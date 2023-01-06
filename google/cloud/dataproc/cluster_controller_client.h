@@ -69,7 +69,7 @@ class ClusterControllerClient {
   ~ClusterControllerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ClusterControllerClient(ClusterControllerClient const&) = default;
   ClusterControllerClient& operator=(ClusterControllerClient const&) = default;
   ClusterControllerClient(ClusterControllerClient&&) = default;
@@ -77,7 +77,7 @@ class ClusterControllerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ClusterControllerClient const& a,
                          ClusterControllerClient const& b) {
     return a.connection_ == b.connection_;

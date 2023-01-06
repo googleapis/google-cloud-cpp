@@ -72,7 +72,7 @@ class LivestreamServiceClient {
   ~LivestreamServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   LivestreamServiceClient(LivestreamServiceClient const&) = default;
   LivestreamServiceClient& operator=(LivestreamServiceClient const&) = default;
   LivestreamServiceClient(LivestreamServiceClient&&) = default;
@@ -80,7 +80,7 @@ class LivestreamServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(LivestreamServiceClient const& a,
                          LivestreamServiceClient const& b) {
     return a.connection_ == b.connection_;

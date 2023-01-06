@@ -67,7 +67,7 @@ class CloudTasksClient {
   ~CloudTasksClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CloudTasksClient(CloudTasksClient const&) = default;
   CloudTasksClient& operator=(CloudTasksClient const&) = default;
   CloudTasksClient(CloudTasksClient&&) = default;
@@ -75,7 +75,7 @@ class CloudTasksClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CloudTasksClient const& a, CloudTasksClient const& b) {
     return a.connection_ == b.connection_;
   }

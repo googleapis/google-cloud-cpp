@@ -67,7 +67,7 @@ class ApiKeysClient {
   ~ApiKeysClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ApiKeysClient(ApiKeysClient const&) = default;
   ApiKeysClient& operator=(ApiKeysClient const&) = default;
   ApiKeysClient(ApiKeysClient&&) = default;
@@ -75,7 +75,7 @@ class ApiKeysClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ApiKeysClient const& a, ApiKeysClient const& b) {
     return a.connection_ == b.connection_;
   }

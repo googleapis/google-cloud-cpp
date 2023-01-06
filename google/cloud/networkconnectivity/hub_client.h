@@ -69,7 +69,7 @@ class HubServiceClient {
   ~HubServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   HubServiceClient(HubServiceClient const&) = default;
   HubServiceClient& operator=(HubServiceClient const&) = default;
   HubServiceClient(HubServiceClient&&) = default;
@@ -77,7 +77,7 @@ class HubServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(HubServiceClient const& a, HubServiceClient const& b) {
     return a.connection_ == b.connection_;
   }

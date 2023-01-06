@@ -65,7 +65,7 @@ class CompanyServiceClient {
   ~CompanyServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CompanyServiceClient(CompanyServiceClient const&) = default;
   CompanyServiceClient& operator=(CompanyServiceClient const&) = default;
   CompanyServiceClient(CompanyServiceClient&&) = default;
@@ -73,7 +73,7 @@ class CompanyServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CompanyServiceClient const& a,
                          CompanyServiceClient const& b) {
     return a.connection_ == b.connection_;

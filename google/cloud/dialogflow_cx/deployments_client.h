@@ -66,7 +66,7 @@ class DeploymentsClient {
   ~DeploymentsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   DeploymentsClient(DeploymentsClient const&) = default;
   DeploymentsClient& operator=(DeploymentsClient const&) = default;
   DeploymentsClient(DeploymentsClient&&) = default;
@@ -74,7 +74,7 @@ class DeploymentsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(DeploymentsClient const& a,
                          DeploymentsClient const& b) {
     return a.connection_ == b.connection_;

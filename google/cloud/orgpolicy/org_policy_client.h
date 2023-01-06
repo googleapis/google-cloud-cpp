@@ -84,7 +84,7 @@ class OrgPolicyClient {
   ~OrgPolicyClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   OrgPolicyClient(OrgPolicyClient const&) = default;
   OrgPolicyClient& operator=(OrgPolicyClient const&) = default;
   OrgPolicyClient(OrgPolicyClient&&) = default;
@@ -92,7 +92,7 @@ class OrgPolicyClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(OrgPolicyClient const& a, OrgPolicyClient const& b) {
     return a.connection_ == b.connection_;
   }

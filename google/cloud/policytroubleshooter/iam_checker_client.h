@@ -68,7 +68,7 @@ class IamCheckerClient {
   ~IamCheckerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   IamCheckerClient(IamCheckerClient const&) = default;
   IamCheckerClient& operator=(IamCheckerClient const&) = default;
   IamCheckerClient(IamCheckerClient&&) = default;
@@ -76,7 +76,7 @@ class IamCheckerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(IamCheckerClient const& a, IamCheckerClient const& b) {
     return a.connection_ == b.connection_;
   }

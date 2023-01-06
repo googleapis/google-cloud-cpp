@@ -68,7 +68,7 @@ class WebSecurityScannerClient {
   ~WebSecurityScannerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   WebSecurityScannerClient(WebSecurityScannerClient const&) = default;
   WebSecurityScannerClient& operator=(WebSecurityScannerClient const&) =
       default;
@@ -77,7 +77,7 @@ class WebSecurityScannerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(WebSecurityScannerClient const& a,
                          WebSecurityScannerClient const& b) {
     return a.connection_ == b.connection_;

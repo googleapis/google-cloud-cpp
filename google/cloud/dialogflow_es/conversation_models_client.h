@@ -67,7 +67,7 @@ class ConversationModelsClient {
   ~ConversationModelsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ConversationModelsClient(ConversationModelsClient const&) = default;
   ConversationModelsClient& operator=(ConversationModelsClient const&) =
       default;
@@ -76,7 +76,7 @@ class ConversationModelsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ConversationModelsClient const& a,
                          ConversationModelsClient const& b) {
     return a.connection_ == b.connection_;

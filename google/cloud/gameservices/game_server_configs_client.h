@@ -68,7 +68,7 @@ class GameServerConfigsServiceClient {
   ~GameServerConfigsServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   GameServerConfigsServiceClient(GameServerConfigsServiceClient const&) =
       default;
   GameServerConfigsServiceClient& operator=(
@@ -79,7 +79,7 @@ class GameServerConfigsServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(GameServerConfigsServiceClient const& a,
                          GameServerConfigsServiceClient const& b) {
     return a.connection_ == b.connection_;

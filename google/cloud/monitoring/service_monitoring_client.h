@@ -70,7 +70,7 @@ class ServiceMonitoringServiceClient {
   ~ServiceMonitoringServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ServiceMonitoringServiceClient(ServiceMonitoringServiceClient const&) =
       default;
   ServiceMonitoringServiceClient& operator=(
@@ -81,7 +81,7 @@ class ServiceMonitoringServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ServiceMonitoringServiceClient const& a,
                          ServiceMonitoringServiceClient const& b) {
     return a.connection_ == b.connection_;

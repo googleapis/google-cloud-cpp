@@ -67,7 +67,7 @@ class ServiceManagerClient {
   ~ServiceManagerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ServiceManagerClient(ServiceManagerClient const&) = default;
   ServiceManagerClient& operator=(ServiceManagerClient const&) = default;
   ServiceManagerClient(ServiceManagerClient&&) = default;
@@ -75,7 +75,7 @@ class ServiceManagerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ServiceManagerClient const& a,
                          ServiceManagerClient const& b) {
     return a.connection_ == b.connection_;

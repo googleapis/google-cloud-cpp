@@ -71,7 +71,7 @@ class AnalyticsHubServiceClient {
   ~AnalyticsHubServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AnalyticsHubServiceClient(AnalyticsHubServiceClient const&) = default;
   AnalyticsHubServiceClient& operator=(AnalyticsHubServiceClient const&) =
       default;
@@ -80,7 +80,7 @@ class AnalyticsHubServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AnalyticsHubServiceClient const& a,
                          AnalyticsHubServiceClient const& b) {
     return a.connection_ == b.connection_;

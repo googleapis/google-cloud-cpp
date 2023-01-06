@@ -74,7 +74,7 @@ class IAMCredentialsClient {
   ~IAMCredentialsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   IAMCredentialsClient(IAMCredentialsClient const&) = default;
   IAMCredentialsClient& operator=(IAMCredentialsClient const&) = default;
   IAMCredentialsClient(IAMCredentialsClient&&) = default;
@@ -82,7 +82,7 @@ class IAMCredentialsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(IAMCredentialsClient const& a,
                          IAMCredentialsClient const& b) {
     return a.connection_ == b.connection_;

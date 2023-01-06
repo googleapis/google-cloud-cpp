@@ -68,7 +68,7 @@ class DashboardsServiceClient {
   ~DashboardsServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   DashboardsServiceClient(DashboardsServiceClient const&) = default;
   DashboardsServiceClient& operator=(DashboardsServiceClient const&) = default;
   DashboardsServiceClient(DashboardsServiceClient&&) = default;
@@ -76,7 +76,7 @@ class DashboardsServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(DashboardsServiceClient const& a,
                          DashboardsServiceClient const& b) {
     return a.connection_ == b.connection_;

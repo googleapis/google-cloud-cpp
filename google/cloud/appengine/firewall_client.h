@@ -74,7 +74,7 @@ class FirewallClient {
   ~FirewallClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   FirewallClient(FirewallClient const&) = default;
   FirewallClient& operator=(FirewallClient const&) = default;
   FirewallClient(FirewallClient&&) = default;
@@ -82,7 +82,7 @@ class FirewallClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(FirewallClient const& a, FirewallClient const& b) {
     return a.connection_ == b.connection_;
   }

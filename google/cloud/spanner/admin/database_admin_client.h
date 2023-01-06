@@ -73,7 +73,7 @@ class DatabaseAdminClient {
   ~DatabaseAdminClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   DatabaseAdminClient(DatabaseAdminClient const&) = default;
   DatabaseAdminClient& operator=(DatabaseAdminClient const&) = default;
   DatabaseAdminClient(DatabaseAdminClient&&) = default;
@@ -81,7 +81,7 @@ class DatabaseAdminClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(DatabaseAdminClient const& a,
                          DatabaseAdminClient const& b) {
     return a.connection_ == b.connection_;

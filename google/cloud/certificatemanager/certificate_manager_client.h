@@ -93,7 +93,7 @@ class CertificateManagerClient {
   ~CertificateManagerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CertificateManagerClient(CertificateManagerClient const&) = default;
   CertificateManagerClient& operator=(CertificateManagerClient const&) =
       default;
@@ -102,7 +102,7 @@ class CertificateManagerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CertificateManagerClient const& a,
                          CertificateManagerClient const& b) {
     return a.connection_ == b.connection_;

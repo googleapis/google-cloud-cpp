@@ -69,7 +69,7 @@ class BatchServiceClient {
   ~BatchServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   BatchServiceClient(BatchServiceClient const&) = default;
   BatchServiceClient& operator=(BatchServiceClient const&) = default;
   BatchServiceClient(BatchServiceClient&&) = default;
@@ -77,7 +77,7 @@ class BatchServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(BatchServiceClient const& a,
                          BatchServiceClient const& b) {
     return a.connection_ == b.connection_;

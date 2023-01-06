@@ -67,7 +67,7 @@ class ManagedNotebookServiceClient {
   ~ManagedNotebookServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ManagedNotebookServiceClient(ManagedNotebookServiceClient const&) = default;
   ManagedNotebookServiceClient& operator=(ManagedNotebookServiceClient const&) =
       default;
@@ -77,7 +77,7 @@ class ManagedNotebookServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ManagedNotebookServiceClient const& a,
                          ManagedNotebookServiceClient const& b) {
     return a.connection_ == b.connection_;

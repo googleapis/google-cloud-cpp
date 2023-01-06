@@ -81,7 +81,7 @@ class RegistrationServiceClient {
   ~RegistrationServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   RegistrationServiceClient(RegistrationServiceClient const&) = default;
   RegistrationServiceClient& operator=(RegistrationServiceClient const&) =
       default;
@@ -90,7 +90,7 @@ class RegistrationServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(RegistrationServiceClient const& a,
                          RegistrationServiceClient const& b) {
     return a.connection_ == b.connection_;

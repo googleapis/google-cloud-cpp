@@ -75,7 +75,7 @@ class BareMetalSolutionClient {
   ~BareMetalSolutionClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   BareMetalSolutionClient(BareMetalSolutionClient const&) = default;
   BareMetalSolutionClient& operator=(BareMetalSolutionClient const&) = default;
   BareMetalSolutionClient(BareMetalSolutionClient&&) = default;
@@ -83,7 +83,7 @@ class BareMetalSolutionClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(BareMetalSolutionClient const& a,
                          BareMetalSolutionClient const& b) {
     return a.connection_ == b.connection_;

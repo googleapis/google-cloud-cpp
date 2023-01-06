@@ -68,7 +68,7 @@ class SessionsClient {
   ~SessionsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   SessionsClient(SessionsClient const&) = default;
   SessionsClient& operator=(SessionsClient const&) = default;
   SessionsClient(SessionsClient&&) = default;
@@ -76,7 +76,7 @@ class SessionsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(SessionsClient const& a, SessionsClient const& b) {
     return a.connection_ == b.connection_;
   }

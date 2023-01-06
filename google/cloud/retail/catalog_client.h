@@ -66,7 +66,7 @@ class CatalogServiceClient {
   ~CatalogServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CatalogServiceClient(CatalogServiceClient const&) = default;
   CatalogServiceClient& operator=(CatalogServiceClient const&) = default;
   CatalogServiceClient(CatalogServiceClient&&) = default;
@@ -74,7 +74,7 @@ class CatalogServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CatalogServiceClient const& a,
                          CatalogServiceClient const& b) {
     return a.connection_ == b.connection_;

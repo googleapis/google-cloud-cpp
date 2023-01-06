@@ -66,7 +66,7 @@ class ParticipantsClient {
   ~ParticipantsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ParticipantsClient(ParticipantsClient const&) = default;
   ParticipantsClient& operator=(ParticipantsClient const&) = default;
   ParticipantsClient(ParticipantsClient&&) = default;
@@ -74,7 +74,7 @@ class ParticipantsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ParticipantsClient const& a,
                          ParticipantsClient const& b) {
     return a.connection_ == b.connection_;

@@ -68,7 +68,7 @@ class JobServiceClient {
   ~JobServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   JobServiceClient(JobServiceClient const&) = default;
   JobServiceClient& operator=(JobServiceClient const&) = default;
   JobServiceClient(JobServiceClient&&) = default;
@@ -76,7 +76,7 @@ class JobServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(JobServiceClient const& a, JobServiceClient const& b) {
     return a.connection_ == b.connection_;
   }

@@ -66,7 +66,7 @@ class DomainMappingsClient {
   ~DomainMappingsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   DomainMappingsClient(DomainMappingsClient const&) = default;
   DomainMappingsClient& operator=(DomainMappingsClient const&) = default;
   DomainMappingsClient(DomainMappingsClient&&) = default;
@@ -74,7 +74,7 @@ class DomainMappingsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(DomainMappingsClient const& a,
                          DomainMappingsClient const& b) {
     return a.connection_ == b.connection_;

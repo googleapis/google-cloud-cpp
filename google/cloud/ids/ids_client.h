@@ -67,7 +67,7 @@ class IDSClient {
   ~IDSClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   IDSClient(IDSClient const&) = default;
   IDSClient& operator=(IDSClient const&) = default;
   IDSClient(IDSClient&&) = default;
@@ -75,7 +75,7 @@ class IDSClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(IDSClient const& a, IDSClient const& b) {
     return a.connection_ == b.connection_;
   }

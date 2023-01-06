@@ -65,7 +65,7 @@ class LookupServiceClient {
   ~LookupServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   LookupServiceClient(LookupServiceClient const&) = default;
   LookupServiceClient& operator=(LookupServiceClient const&) = default;
   LookupServiceClient(LookupServiceClient&&) = default;
@@ -73,7 +73,7 @@ class LookupServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(LookupServiceClient const& a,
                          LookupServiceClient const& b) {
     return a.connection_ == b.connection_;

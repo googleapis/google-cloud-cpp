@@ -90,7 +90,7 @@ class IAMPolicyClient {
   ~IAMPolicyClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   IAMPolicyClient(IAMPolicyClient const&) = default;
   IAMPolicyClient& operator=(IAMPolicyClient const&) = default;
   IAMPolicyClient(IAMPolicyClient&&) = default;
@@ -98,7 +98,7 @@ class IAMPolicyClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(IAMPolicyClient const& a, IAMPolicyClient const& b) {
     return a.connection_ == b.connection_;
   }

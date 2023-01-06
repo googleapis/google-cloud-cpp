@@ -67,7 +67,7 @@ class DatastreamClient {
   ~DatastreamClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   DatastreamClient(DatastreamClient const&) = default;
   DatastreamClient& operator=(DatastreamClient const&) = default;
   DatastreamClient(DatastreamClient&&) = default;
@@ -75,7 +75,7 @@ class DatastreamClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(DatastreamClient const& a, DatastreamClient const& b) {
     return a.connection_ == b.connection_;
   }

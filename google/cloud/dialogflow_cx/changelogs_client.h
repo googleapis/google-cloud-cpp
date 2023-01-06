@@ -65,7 +65,7 @@ class ChangelogsClient {
   ~ChangelogsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ChangelogsClient(ChangelogsClient const&) = default;
   ChangelogsClient& operator=(ChangelogsClient const&) = default;
   ChangelogsClient(ChangelogsClient&&) = default;
@@ -73,7 +73,7 @@ class ChangelogsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ChangelogsClient const& a, ChangelogsClient const& b) {
     return a.connection_ == b.connection_;
   }

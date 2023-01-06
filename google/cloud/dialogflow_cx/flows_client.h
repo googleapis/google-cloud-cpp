@@ -66,7 +66,7 @@ class FlowsClient {
   ~FlowsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   FlowsClient(FlowsClient const&) = default;
   FlowsClient& operator=(FlowsClient const&) = default;
   FlowsClient(FlowsClient&&) = default;
@@ -74,7 +74,7 @@ class FlowsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(FlowsClient const& a, FlowsClient const& b) {
     return a.connection_ == b.connection_;
   }

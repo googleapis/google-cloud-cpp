@@ -66,7 +66,7 @@ class DataPolicyServiceClient {
   ~DataPolicyServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   DataPolicyServiceClient(DataPolicyServiceClient const&) = default;
   DataPolicyServiceClient& operator=(DataPolicyServiceClient const&) = default;
   DataPolicyServiceClient(DataPolicyServiceClient&&) = default;
@@ -74,7 +74,7 @@ class DataPolicyServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(DataPolicyServiceClient const& a,
                          DataPolicyServiceClient const& b) {
     return a.connection_ == b.connection_;

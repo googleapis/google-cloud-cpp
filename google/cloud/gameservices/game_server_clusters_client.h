@@ -69,7 +69,7 @@ class GameServerClustersServiceClient {
   ~GameServerClustersServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   GameServerClustersServiceClient(GameServerClustersServiceClient const&) =
       default;
   GameServerClustersServiceClient& operator=(
@@ -80,7 +80,7 @@ class GameServerClustersServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(GameServerClustersServiceClient const& a,
                          GameServerClustersServiceClient const& b) {
     return a.connection_ == b.connection_;

@@ -68,7 +68,7 @@ class IdentityAwareProxyOAuthServiceClient {
   ~IdentityAwareProxyOAuthServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   IdentityAwareProxyOAuthServiceClient(
       IdentityAwareProxyOAuthServiceClient const&) = default;
   IdentityAwareProxyOAuthServiceClient& operator=(
@@ -80,7 +80,7 @@ class IdentityAwareProxyOAuthServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(IdentityAwareProxyOAuthServiceClient const& a,
                          IdentityAwareProxyOAuthServiceClient const& b) {
     return a.connection_ == b.connection_;

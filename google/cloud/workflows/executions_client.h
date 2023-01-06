@@ -66,7 +66,7 @@ class ExecutionsClient {
   ~ExecutionsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ExecutionsClient(ExecutionsClient const&) = default;
   ExecutionsClient& operator=(ExecutionsClient const&) = default;
   ExecutionsClient(ExecutionsClient&&) = default;
@@ -74,7 +74,7 @@ class ExecutionsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ExecutionsClient const& a, ExecutionsClient const& b) {
     return a.connection_ == b.connection_;
   }

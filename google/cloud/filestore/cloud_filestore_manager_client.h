@@ -88,7 +88,7 @@ class CloudFilestoreManagerClient {
   ~CloudFilestoreManagerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CloudFilestoreManagerClient(CloudFilestoreManagerClient const&) = default;
   CloudFilestoreManagerClient& operator=(CloudFilestoreManagerClient const&) =
       default;
@@ -98,7 +98,7 @@ class CloudFilestoreManagerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CloudFilestoreManagerClient const& a,
                          CloudFilestoreManagerClient const& b) {
     return a.connection_ == b.connection_;

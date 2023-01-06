@@ -66,7 +66,7 @@ class ApplicationsClient {
   ~ApplicationsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ApplicationsClient(ApplicationsClient const&) = default;
   ApplicationsClient& operator=(ApplicationsClient const&) = default;
   ApplicationsClient(ApplicationsClient&&) = default;
@@ -74,7 +74,7 @@ class ApplicationsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ApplicationsClient const& a,
                          ApplicationsClient const& b) {
     return a.connection_ == b.connection_;

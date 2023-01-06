@@ -67,7 +67,7 @@ class LoggingServiceV2Client {
   ~LoggingServiceV2Client();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   LoggingServiceV2Client(LoggingServiceV2Client const&) = default;
   LoggingServiceV2Client& operator=(LoggingServiceV2Client const&) = default;
   LoggingServiceV2Client(LoggingServiceV2Client&&) = default;
@@ -75,7 +75,7 @@ class LoggingServiceV2Client {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(LoggingServiceV2Client const& a,
                          LoggingServiceV2Client const& b) {
     return a.connection_ == b.connection_;

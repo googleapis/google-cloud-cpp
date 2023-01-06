@@ -71,7 +71,7 @@ class PolicyTagManagerClient {
   ~PolicyTagManagerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   PolicyTagManagerClient(PolicyTagManagerClient const&) = default;
   PolicyTagManagerClient& operator=(PolicyTagManagerClient const&) = default;
   PolicyTagManagerClient(PolicyTagManagerClient&&) = default;
@@ -79,7 +79,7 @@ class PolicyTagManagerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(PolicyTagManagerClient const& a,
                          PolicyTagManagerClient const& b) {
     return a.connection_ == b.connection_;

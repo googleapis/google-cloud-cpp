@@ -80,7 +80,7 @@ class GkeHubClient {
   ~GkeHubClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   GkeHubClient(GkeHubClient const&) = default;
   GkeHubClient& operator=(GkeHubClient const&) = default;
   GkeHubClient(GkeHubClient&&) = default;
@@ -88,7 +88,7 @@ class GkeHubClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(GkeHubClient const& a, GkeHubClient const& b) {
     return a.connection_ == b.connection_;
   }

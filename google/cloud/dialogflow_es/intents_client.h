@@ -66,7 +66,7 @@ class IntentsClient {
   ~IntentsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   IntentsClient(IntentsClient const&) = default;
   IntentsClient& operator=(IntentsClient const&) = default;
   IntentsClient(IntentsClient&&) = default;
@@ -74,7 +74,7 @@ class IntentsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(IntentsClient const& a, IntentsClient const& b) {
     return a.connection_ == b.connection_;
   }

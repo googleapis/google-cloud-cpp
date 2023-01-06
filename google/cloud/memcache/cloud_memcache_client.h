@@ -83,7 +83,7 @@ class CloudMemcacheClient {
   ~CloudMemcacheClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CloudMemcacheClient(CloudMemcacheClient const&) = default;
   CloudMemcacheClient& operator=(CloudMemcacheClient const&) = default;
   CloudMemcacheClient(CloudMemcacheClient&&) = default;
@@ -91,7 +91,7 @@ class CloudMemcacheClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CloudMemcacheClient const& a,
                          CloudMemcacheClient const& b) {
     return a.connection_ == b.connection_;

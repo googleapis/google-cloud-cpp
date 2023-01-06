@@ -69,7 +69,7 @@ class OsLoginServiceClient {
   ~OsLoginServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   OsLoginServiceClient(OsLoginServiceClient const&) = default;
   OsLoginServiceClient& operator=(OsLoginServiceClient const&) = default;
   OsLoginServiceClient(OsLoginServiceClient&&) = default;
@@ -77,7 +77,7 @@ class OsLoginServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(OsLoginServiceClient const& a,
                          OsLoginServiceClient const& b) {
     return a.connection_ == b.connection_;

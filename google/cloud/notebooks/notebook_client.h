@@ -67,7 +67,7 @@ class NotebookServiceClient {
   ~NotebookServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   NotebookServiceClient(NotebookServiceClient const&) = default;
   NotebookServiceClient& operator=(NotebookServiceClient const&) = default;
   NotebookServiceClient(NotebookServiceClient&&) = default;
@@ -75,7 +75,7 @@ class NotebookServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(NotebookServiceClient const& a,
                          NotebookServiceClient const& b) {
     return a.connection_ == b.connection_;

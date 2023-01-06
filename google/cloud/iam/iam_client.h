@@ -94,7 +94,7 @@ class IAMClient {
   ~IAMClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   IAMClient(IAMClient const&) = default;
   IAMClient& operator=(IAMClient const&) = default;
   IAMClient(IAMClient&&) = default;
@@ -102,7 +102,7 @@ class IAMClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(IAMClient const& a, IAMClient const& b) {
     return a.connection_ == b.connection_;
   }

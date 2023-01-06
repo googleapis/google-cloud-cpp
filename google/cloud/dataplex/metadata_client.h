@@ -66,7 +66,7 @@ class MetadataServiceClient {
   ~MetadataServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   MetadataServiceClient(MetadataServiceClient const&) = default;
   MetadataServiceClient& operator=(MetadataServiceClient const&) = default;
   MetadataServiceClient(MetadataServiceClient&&) = default;
@@ -74,7 +74,7 @@ class MetadataServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(MetadataServiceClient const& a,
                          MetadataServiceClient const& b) {
     return a.connection_ == b.connection_;

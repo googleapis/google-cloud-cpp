@@ -67,7 +67,7 @@ class TransitionRouteGroupsClient {
   ~TransitionRouteGroupsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   TransitionRouteGroupsClient(TransitionRouteGroupsClient const&) = default;
   TransitionRouteGroupsClient& operator=(TransitionRouteGroupsClient const&) =
       default;
@@ -77,7 +77,7 @@ class TransitionRouteGroupsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(TransitionRouteGroupsClient const& a,
                          TransitionRouteGroupsClient const& b) {
     return a.connection_ == b.connection_;

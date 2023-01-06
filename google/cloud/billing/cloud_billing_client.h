@@ -67,7 +67,7 @@ class CloudBillingClient {
   ~CloudBillingClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CloudBillingClient(CloudBillingClient const&) = default;
   CloudBillingClient& operator=(CloudBillingClient const&) = default;
   CloudBillingClient(CloudBillingClient&&) = default;
@@ -75,7 +75,7 @@ class CloudBillingClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CloudBillingClient const& a,
                          CloudBillingClient const& b) {
     return a.connection_ == b.connection_;

@@ -69,7 +69,7 @@ class TraceServiceClient {
   ~TraceServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   TraceServiceClient(TraceServiceClient const&) = default;
   TraceServiceClient& operator=(TraceServiceClient const&) = default;
   TraceServiceClient(TraceServiceClient&&) = default;
@@ -77,7 +77,7 @@ class TraceServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(TraceServiceClient const& a,
                          TraceServiceClient const& b) {
     return a.connection_ == b.connection_;

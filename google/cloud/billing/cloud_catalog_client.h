@@ -67,7 +67,7 @@ class CloudCatalogClient {
   ~CloudCatalogClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CloudCatalogClient(CloudCatalogClient const&) = default;
   CloudCatalogClient& operator=(CloudCatalogClient const&) = default;
   CloudCatalogClient(CloudCatalogClient&&) = default;
@@ -75,7 +75,7 @@ class CloudCatalogClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CloudCatalogClient const& a,
                          CloudCatalogClient const& b) {
     return a.connection_ == b.connection_;

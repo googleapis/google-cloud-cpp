@@ -68,7 +68,7 @@ class ImageAnnotatorClient {
   ~ImageAnnotatorClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ImageAnnotatorClient(ImageAnnotatorClient const&) = default;
   ImageAnnotatorClient& operator=(ImageAnnotatorClient const&) = default;
   ImageAnnotatorClient(ImageAnnotatorClient&&) = default;
@@ -76,7 +76,7 @@ class ImageAnnotatorClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ImageAnnotatorClient const& a,
                          ImageAnnotatorClient const& b) {
     return a.connection_ == b.connection_;

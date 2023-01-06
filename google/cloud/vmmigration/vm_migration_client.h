@@ -67,7 +67,7 @@ class VmMigrationClient {
   ~VmMigrationClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   VmMigrationClient(VmMigrationClient const&) = default;
   VmMigrationClient& operator=(VmMigrationClient const&) = default;
   VmMigrationClient(VmMigrationClient&&) = default;
@@ -75,7 +75,7 @@ class VmMigrationClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(VmMigrationClient const& a,
                          VmMigrationClient const& b) {
     return a.connection_ == b.connection_;

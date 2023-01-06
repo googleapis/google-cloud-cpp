@@ -68,7 +68,7 @@ class AuthorizedDomainsClient {
   ~AuthorizedDomainsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AuthorizedDomainsClient(AuthorizedDomainsClient const&) = default;
   AuthorizedDomainsClient& operator=(AuthorizedDomainsClient const&) = default;
   AuthorizedDomainsClient(AuthorizedDomainsClient&&) = default;
@@ -76,7 +76,7 @@ class AuthorizedDomainsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AuthorizedDomainsClient const& a,
                          AuthorizedDomainsClient const& b) {
     return a.connection_ == b.connection_;

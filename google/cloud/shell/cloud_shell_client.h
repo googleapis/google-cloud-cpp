@@ -73,7 +73,7 @@ class CloudShellServiceClient {
   ~CloudShellServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CloudShellServiceClient(CloudShellServiceClient const&) = default;
   CloudShellServiceClient& operator=(CloudShellServiceClient const&) = default;
   CloudShellServiceClient(CloudShellServiceClient&&) = default;
@@ -81,7 +81,7 @@ class CloudShellServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CloudShellServiceClient const& a,
                          CloudShellServiceClient const& b) {
     return a.connection_ == b.connection_;

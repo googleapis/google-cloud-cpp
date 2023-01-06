@@ -66,7 +66,7 @@ class SecuritySettingsServiceClient {
   ~SecuritySettingsServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   SecuritySettingsServiceClient(SecuritySettingsServiceClient const&) = default;
   SecuritySettingsServiceClient& operator=(
       SecuritySettingsServiceClient const&) = default;
@@ -76,7 +76,7 @@ class SecuritySettingsServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(SecuritySettingsServiceClient const& a,
                          SecuritySettingsServiceClient const& b) {
     return a.connection_ == b.connection_;

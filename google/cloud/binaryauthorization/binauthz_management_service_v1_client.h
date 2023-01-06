@@ -73,7 +73,7 @@ class BinauthzManagementServiceV1Client {
   ~BinauthzManagementServiceV1Client();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   BinauthzManagementServiceV1Client(BinauthzManagementServiceV1Client const&) =
       default;
   BinauthzManagementServiceV1Client& operator=(
@@ -85,7 +85,7 @@ class BinauthzManagementServiceV1Client {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(BinauthzManagementServiceV1Client const& a,
                          BinauthzManagementServiceV1Client const& b) {
     return a.connection_ == b.connection_;

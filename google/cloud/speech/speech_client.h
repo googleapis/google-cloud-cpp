@@ -66,7 +66,7 @@ class SpeechClient {
   ~SpeechClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   SpeechClient(SpeechClient const&) = default;
   SpeechClient& operator=(SpeechClient const&) = default;
   SpeechClient(SpeechClient&&) = default;
@@ -74,7 +74,7 @@ class SpeechClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(SpeechClient const& a, SpeechClient const& b) {
     return a.connection_ == b.connection_;
   }

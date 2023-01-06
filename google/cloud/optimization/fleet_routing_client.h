@@ -82,7 +82,7 @@ class FleetRoutingClient {
   ~FleetRoutingClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   FleetRoutingClient(FleetRoutingClient const&) = default;
   FleetRoutingClient& operator=(FleetRoutingClient const&) = default;
   FleetRoutingClient(FleetRoutingClient&&) = default;
@@ -90,7 +90,7 @@ class FleetRoutingClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(FleetRoutingClient const& a,
                          FleetRoutingClient const& b) {
     return a.connection_ == b.connection_;

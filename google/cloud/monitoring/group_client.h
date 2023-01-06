@@ -76,7 +76,7 @@ class GroupServiceClient {
   ~GroupServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   GroupServiceClient(GroupServiceClient const&) = default;
   GroupServiceClient& operator=(GroupServiceClient const&) = default;
   GroupServiceClient(GroupServiceClient&&) = default;
@@ -84,7 +84,7 @@ class GroupServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(GroupServiceClient const& a,
                          GroupServiceClient const& b) {
     return a.connection_ == b.connection_;

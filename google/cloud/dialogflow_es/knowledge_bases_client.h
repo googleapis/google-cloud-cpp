@@ -66,7 +66,7 @@ class KnowledgeBasesClient {
   ~KnowledgeBasesClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   KnowledgeBasesClient(KnowledgeBasesClient const&) = default;
   KnowledgeBasesClient& operator=(KnowledgeBasesClient const&) = default;
   KnowledgeBasesClient(KnowledgeBasesClient&&) = default;
@@ -74,7 +74,7 @@ class KnowledgeBasesClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(KnowledgeBasesClient const& a,
                          KnowledgeBasesClient const& b) {
     return a.connection_ == b.connection_;

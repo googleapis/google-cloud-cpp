@@ -71,7 +71,7 @@ class VideoStitcherServiceClient {
   ~VideoStitcherServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   VideoStitcherServiceClient(VideoStitcherServiceClient const&) = default;
   VideoStitcherServiceClient& operator=(VideoStitcherServiceClient const&) =
       default;
@@ -80,7 +80,7 @@ class VideoStitcherServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(VideoStitcherServiceClient const& a,
                          VideoStitcherServiceClient const& b) {
     return a.connection_ == b.connection_;

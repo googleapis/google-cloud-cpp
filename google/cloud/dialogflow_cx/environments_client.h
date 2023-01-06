@@ -67,7 +67,7 @@ class EnvironmentsClient {
   ~EnvironmentsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   EnvironmentsClient(EnvironmentsClient const&) = default;
   EnvironmentsClient& operator=(EnvironmentsClient const&) = default;
   EnvironmentsClient(EnvironmentsClient&&) = default;
@@ -75,7 +75,7 @@ class EnvironmentsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(EnvironmentsClient const& a,
                          EnvironmentsClient const& b) {
     return a.connection_ == b.connection_;

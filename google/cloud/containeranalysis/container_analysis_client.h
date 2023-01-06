@@ -79,7 +79,7 @@ class ContainerAnalysisClient {
   ~ContainerAnalysisClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ContainerAnalysisClient(ContainerAnalysisClient const&) = default;
   ContainerAnalysisClient& operator=(ContainerAnalysisClient const&) = default;
   ContainerAnalysisClient(ContainerAnalysisClient&&) = default;
@@ -87,7 +87,7 @@ class ContainerAnalysisClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ContainerAnalysisClient const& a,
                          ContainerAnalysisClient const& b) {
     return a.connection_ == b.connection_;

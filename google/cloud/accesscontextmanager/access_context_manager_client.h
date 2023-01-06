@@ -77,7 +77,7 @@ class AccessContextManagerClient {
   ~AccessContextManagerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AccessContextManagerClient(AccessContextManagerClient const&) = default;
   AccessContextManagerClient& operator=(AccessContextManagerClient const&) =
       default;
@@ -86,7 +86,7 @@ class AccessContextManagerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AccessContextManagerClient const& a,
                          AccessContextManagerClient const& b) {
     return a.connection_ == b.connection_;

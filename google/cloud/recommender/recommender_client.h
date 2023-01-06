@@ -69,7 +69,7 @@ class RecommenderClient {
   ~RecommenderClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   RecommenderClient(RecommenderClient const&) = default;
   RecommenderClient& operator=(RecommenderClient const&) = default;
   RecommenderClient(RecommenderClient&&) = default;
@@ -77,7 +77,7 @@ class RecommenderClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(RecommenderClient const& a,
                          RecommenderClient const& b) {
     return a.connection_ == b.connection_;

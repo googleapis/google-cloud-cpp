@@ -66,7 +66,7 @@ class ClusterManagerClient {
   ~ClusterManagerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ClusterManagerClient(ClusterManagerClient const&) = default;
   ClusterManagerClient& operator=(ClusterManagerClient const&) = default;
   ClusterManagerClient(ClusterManagerClient&&) = default;
@@ -74,7 +74,7 @@ class ClusterManagerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ClusterManagerClient const& a,
                          ClusterManagerClient const& b) {
     return a.connection_ == b.connection_;
