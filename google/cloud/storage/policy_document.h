@@ -38,7 +38,7 @@ class PolicyDocumentCondition {
 
   std::vector<std::string> const& elements() const { return elements_; }
 
-  //@{
+  ///@{
   /**
    * @name Creates different types of PolicyDocumentCondition matchers.
    */
@@ -79,7 +79,7 @@ class PolicyDocumentCondition {
     result.emplace_back(std::to_string(max_range));
     return result;
   }
-  //@}
+  ///@}
 
  private:
   std::vector<std::string> elements_;

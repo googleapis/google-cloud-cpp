@@ -40,7 +40,7 @@ struct BucketCustomPlacementConfig {
   std::vector<std::string> data_locations;
 };
 
-//@{
+///@{
 /// @name Comparison operators for BucketCustomPlacementConfig.
 inline bool operator==(BucketCustomPlacementConfig const& lhs,
                        BucketCustomPlacementConfig const& rhs) {
@@ -71,7 +71,7 @@ inline bool operator>=(BucketCustomPlacementConfig const& lhs,
                        BucketCustomPlacementConfig const& rhs) {
   return std::rel_ops::operator>=(lhs, rhs);
 }
-//@}
+///@}
 
 std::ostream& operator<<(std::ostream& os,
                          BucketCustomPlacementConfig const& rhs);

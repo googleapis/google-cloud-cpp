@@ -56,7 +56,7 @@ class RawClient {
 
   virtual google::cloud::Options options() const { return {}; }
 
-  //@{
+  ///@{
   /// @name Bucket resource operations
   virtual StatusOr<ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) = 0;
@@ -76,9 +76,9 @@ class RawClient {
       TestBucketIamPermissionsRequest const& request) = 0;
   virtual StatusOr<BucketMetadata> LockBucketRetentionPolicy(
       LockBucketRetentionPolicyRequest const& request) = 0;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name Object resource operations
   virtual StatusOr<ObjectMetadata> InsertObjectMedia(
       InsertObjectMediaRequest const&) = 0;
@@ -105,9 +105,9 @@ class RawClient {
       DeleteResumableUploadRequest const& request) = 0;
   virtual StatusOr<QueryResumableUploadResponse> UploadChunk(
       UploadChunkRequest const& request) = 0;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name BucketAccessControls resource operations
   virtual StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const&) = 0;
@@ -121,9 +121,9 @@ class RawClient {
       UpdateBucketAclRequest const&) = 0;
   virtual StatusOr<BucketAccessControl> PatchBucketAcl(
       PatchBucketAclRequest const&) = 0;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name ObjectAccessControls operations
   virtual StatusOr<ListObjectAclResponse> ListObjectAcl(
       ListObjectAclRequest const&) = 0;
@@ -137,9 +137,9 @@ class RawClient {
       UpdateObjectAclRequest const&) = 0;
   virtual StatusOr<ObjectAccessControl> PatchObjectAcl(
       PatchObjectAclRequest const&) = 0;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name DefaultObjectAccessControls operations.
   virtual StatusOr<ListDefaultObjectAclResponse> ListDefaultObjectAcl(
       ListDefaultObjectAclRequest const&) = 0;
@@ -153,9 +153,9 @@ class RawClient {
       UpdateDefaultObjectAclRequest const&) = 0;
   virtual StatusOr<ObjectAccessControl> PatchDefaultObjectAcl(
       PatchDefaultObjectAclRequest const&) = 0;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   virtual StatusOr<ServiceAccount> GetServiceAccount(
       GetProjectServiceAccountRequest const&) = 0;
   virtual StatusOr<ListHmacKeysResponse> ListHmacKeys(
@@ -168,9 +168,9 @@ class RawClient {
   virtual StatusOr<HmacKeyMetadata> UpdateHmacKey(
       UpdateHmacKeyRequest const&) = 0;
   virtual StatusOr<SignBlobResponse> SignBlob(SignBlobRequest const&) = 0;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   virtual StatusOr<ListNotificationsResponse> ListNotifications(
       ListNotificationsRequest const&) = 0;
   virtual StatusOr<NotificationMetadata> CreateNotification(
@@ -179,7 +179,7 @@ class RawClient {
       GetNotificationRequest const&) = 0;
   virtual StatusOr<EmptyResponse> DeleteNotification(
       DeleteNotificationRequest const&) = 0;
-  //@}
+  ///@}
 };
 
 struct CreateOrResumeResponse {

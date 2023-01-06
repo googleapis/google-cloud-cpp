@@ -61,7 +61,7 @@ class PatchBuilder {
   bool empty() const;
   void clear();
 
-  //@{
+  ///@{
   /// @name Calculate the delta between the original (`lhs`) and the new (`rhs`)
   /// values and set the patch instructions accordingly.
 
@@ -85,7 +85,7 @@ class PatchBuilder {
                             std::int64_t rhs, std::int64_t null_value = 0);
   PatchBuilder& AddIntField(char const* field_name, std::uint64_t lhs,
                             std::uint64_t rhs, std::uint64_t null_value = 0);
-  //@}
+  ///@}
 
   /// Add a patch for @p field_name.
   PatchBuilder& AddSubPatch(char const* field_name,
@@ -94,7 +94,7 @@ class PatchBuilder {
   /// Create a patch that removes @p field_name
   PatchBuilder& RemoveField(char const* field_name);
 
-  //@{
+  ///@{
   /// @name Create a patch that sets fields to the given value.
   PatchBuilder& SetStringField(char const* field_name, std::string const& v);
 
@@ -107,7 +107,7 @@ class PatchBuilder {
   PatchBuilder& SetIntField(char const* field_name, std::int64_t v);
 
   PatchBuilder& SetIntField(char const* field_name, std::uint64_t v);
-  //@}
+  ///@}
 
   /**
    * Adds an array field to the patch.

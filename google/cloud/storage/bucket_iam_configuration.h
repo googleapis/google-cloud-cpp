@@ -44,7 +44,7 @@ struct UniformBucketLevelAccess {
 };
 using BucketPolicyOnly = UniformBucketLevelAccess;
 
-//@{
+///@{
 /// @name Comparison operators For UniformBucketLevelAccess
 inline bool operator==(UniformBucketLevelAccess const& lhs,
                        UniformBucketLevelAccess const& rhs) {
@@ -77,7 +77,7 @@ inline bool operator>=(UniformBucketLevelAccess const& lhs,
                        UniformBucketLevelAccess const& rhs) {
   return std::rel_ops::operator>=(lhs, rhs);
 }
-//@}
+///@}
 
 std::ostream& operator<<(std::ostream& os, UniformBucketLevelAccess const& rhs);
 
@@ -101,15 +101,15 @@ struct BucketIamConfiguration {
   absl::optional<std::string> public_access_prevention;
 };
 
-//@{
+///@{
 /// @name Public Access Prevention helper functions
 inline std::string PublicAccessPreventionEnforced() { return "enforced"; }
 inline std::string PublicAccessPreventionInherited() { return "inherited"; }
 GOOGLE_CLOUD_CPP_DEPRECATED("Use PublicAccessPreventionInherited()")
 inline std::string PublicAccessPreventionUnspecified() { return "unspecified"; }
-//@}
+///@}
 
-//@{
+///@{
 /// @name Comparison operators for BucketIamConfiguration.
 inline bool operator==(BucketIamConfiguration const& lhs,
                        BucketIamConfiguration const& rhs) {
@@ -146,7 +146,7 @@ inline bool operator>=(BucketIamConfiguration const& lhs,
                        BucketIamConfiguration const& rhs) {
   return std::rel_ops::operator>=(lhs, rhs);
 }
-//@}
+///@}
 
 std::ostream& operator<<(std::ostream& os, BucketIamConfiguration const& rhs);
 

@@ -62,7 +62,7 @@ class IdempotencyPolicy {
   /// Create a new copy of this object.
   virtual std::unique_ptr<IdempotencyPolicy> clone() const = 0;
 
-  //@{
+  ///@{
   /// @name Bucket resource operations
   virtual bool IsIdempotent(
       internal::ListBucketsRequest const& request) const = 0;
@@ -84,9 +84,9 @@ class IdempotencyPolicy {
       internal::TestBucketIamPermissionsRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::LockBucketRetentionPolicyRequest const& request) const = 0;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name Object resource operations
   virtual bool IsIdempotent(
       internal::InsertObjectMediaRequest const& request) const = 0;
@@ -112,9 +112,9 @@ class IdempotencyPolicy {
       internal::ResumableUploadRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::UploadChunkRequest const& request) const = 0;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name BucketAccessControls resource operations
   virtual bool IsIdempotent(
       internal::ListBucketAclRequest const& request) const = 0;
@@ -128,9 +128,9 @@ class IdempotencyPolicy {
       internal::UpdateBucketAclRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::PatchBucketAclRequest const& request) const = 0;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name ObjectAccessControls operations
   virtual bool IsIdempotent(
       internal::ListObjectAclRequest const& request) const = 0;
@@ -144,9 +144,9 @@ class IdempotencyPolicy {
       internal::UpdateObjectAclRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::PatchObjectAclRequest const& request) const = 0;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name DefaultObjectAccessControls operations.
   virtual bool IsIdempotent(
       internal::ListDefaultObjectAclRequest const& request) const = 0;
@@ -160,9 +160,9 @@ class IdempotencyPolicy {
       internal::UpdateDefaultObjectAclRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::PatchDefaultObjectAclRequest const& request) const = 0;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   virtual bool IsIdempotent(
       internal::GetProjectServiceAccountRequest const& request) const = 0;
   virtual bool IsIdempotent(
@@ -176,9 +176,9 @@ class IdempotencyPolicy {
   virtual bool IsIdempotent(
       internal::UpdateHmacKeyRequest const& request) const = 0;
   virtual bool IsIdempotent(internal::SignBlobRequest const& request) const = 0;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   virtual bool IsIdempotent(
       internal::ListNotificationsRequest const& request) const = 0;
   virtual bool IsIdempotent(
@@ -187,7 +187,7 @@ class IdempotencyPolicy {
       internal::GetNotificationRequest const& request) const = 0;
   virtual bool IsIdempotent(
       internal::DeleteNotificationRequest const& request) const = 0;
-  //@}
+  ///@}
 };
 
 /**
@@ -199,7 +199,7 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
 
   std::unique_ptr<IdempotencyPolicy> clone() const override;
 
-  //@{
+  ///@{
   /// @name Bucket resource operations
   bool IsIdempotent(internal::ListBucketsRequest const& request) const override;
   bool IsIdempotent(
@@ -219,9 +219,9 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
       internal::TestBucketIamPermissionsRequest const& request) const override;
   bool IsIdempotent(
       internal::LockBucketRetentionPolicyRequest const& request) const override;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name Object resource operations
   bool IsIdempotent(
       internal::InsertObjectMediaRequest const& request) const override;
@@ -243,9 +243,9 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
   bool IsIdempotent(
       internal::ResumableUploadRequest const& request) const override;
   bool IsIdempotent(internal::UploadChunkRequest const& request) const override;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name BucketAccessControls resource operations
   bool IsIdempotent(
       internal::ListBucketAclRequest const& request) const override;
@@ -259,9 +259,9 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
       internal::UpdateBucketAclRequest const& request) const override;
   bool IsIdempotent(
       internal::PatchBucketAclRequest const& request) const override;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name ObjectAccessControls operations
   bool IsIdempotent(
       internal::ListObjectAclRequest const& request) const override;
@@ -275,9 +275,9 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
       internal::UpdateObjectAclRequest const& request) const override;
   bool IsIdempotent(
       internal::PatchObjectAclRequest const& request) const override;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name DefaultObjectAccessControls operations.
   bool IsIdempotent(
       internal::ListDefaultObjectAclRequest const& request) const override;
@@ -291,9 +291,9 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
       internal::UpdateDefaultObjectAclRequest const& request) const override;
   bool IsIdempotent(
       internal::PatchDefaultObjectAclRequest const& request) const override;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   bool IsIdempotent(
       internal::GetProjectServiceAccountRequest const& request) const override;
   bool IsIdempotent(
@@ -306,9 +306,9 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
   bool IsIdempotent(
       internal::UpdateHmacKeyRequest const& request) const override;
   bool IsIdempotent(internal::SignBlobRequest const& request) const override;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   bool IsIdempotent(
       internal::ListNotificationsRequest const& request) const override;
   bool IsIdempotent(
@@ -317,7 +317,7 @@ class AlwaysRetryIdempotencyPolicy : public IdempotencyPolicy {
       internal::GetNotificationRequest const& request) const override;
   bool IsIdempotent(
       internal::DeleteNotificationRequest const& request) const override;
-  //@}
+  ///@}
 };
 
 /**
@@ -329,7 +329,7 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
 
   std::unique_ptr<IdempotencyPolicy> clone() const override;
 
-  //@{
+  ///@{
   /// @name Bucket resource operations
   bool IsIdempotent(internal::ListBucketsRequest const& request) const override;
   bool IsIdempotent(
@@ -349,9 +349,9 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
       internal::TestBucketIamPermissionsRequest const& request) const override;
   bool IsIdempotent(
       internal::LockBucketRetentionPolicyRequest const& request) const override;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name Object resource operations
   bool IsIdempotent(
       internal::InsertObjectMediaRequest const& request) const override;
@@ -373,9 +373,9 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
   bool IsIdempotent(
       internal::ResumableUploadRequest const& request) const override;
   bool IsIdempotent(internal::UploadChunkRequest const& request) const override;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name BucketAccessControls resource operations
   bool IsIdempotent(
       internal::ListBucketAclRequest const& request) const override;
@@ -389,9 +389,9 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
       internal::UpdateBucketAclRequest const& request) const override;
   bool IsIdempotent(
       internal::PatchBucketAclRequest const& request) const override;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name ObjectAccessControls operations
   bool IsIdempotent(
       internal::ListObjectAclRequest const& request) const override;
@@ -405,9 +405,9 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
       internal::UpdateObjectAclRequest const& request) const override;
   bool IsIdempotent(
       internal::PatchObjectAclRequest const& request) const override;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name DefaultObjectAccessControls operations.
   bool IsIdempotent(
       internal::ListDefaultObjectAclRequest const& request) const override;
@@ -421,9 +421,9 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
       internal::UpdateDefaultObjectAclRequest const& request) const override;
   bool IsIdempotent(
       internal::PatchDefaultObjectAclRequest const& request) const override;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   bool IsIdempotent(
       internal::GetProjectServiceAccountRequest const& request) const override;
   bool IsIdempotent(
@@ -436,9 +436,9 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
   bool IsIdempotent(
       internal::UpdateHmacKeyRequest const& request) const override;
   bool IsIdempotent(internal::SignBlobRequest const& request) const override;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   bool IsIdempotent(
       internal::ListNotificationsRequest const& request) const override;
   bool IsIdempotent(
@@ -447,7 +447,7 @@ class StrictIdempotencyPolicy : public IdempotencyPolicy {
       internal::GetNotificationRequest const& request) const override;
   bool IsIdempotent(
       internal::DeleteNotificationRequest const& request) const override;
-  //@}
+  ///@}
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

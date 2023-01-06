@@ -30,7 +30,7 @@ struct ObjectMetadataParser {
   static StatusOr<ObjectMetadata> FromString(std::string const& payload);
 };
 
-//@{
+///@{
 /**
  * @name Create the correct JSON payload depending on the operation.
  *
@@ -44,7 +44,7 @@ nlohmann::json ObjectMetadataJsonForCopy(ObjectMetadata const& meta);
 nlohmann::json ObjectMetadataJsonForInsert(ObjectMetadata const& meta);
 nlohmann::json ObjectMetadataJsonForRewrite(ObjectMetadata const& meta);
 nlohmann::json ObjectMetadataJsonForUpdate(ObjectMetadata const& meta);
-//@}
+///@}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

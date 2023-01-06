@@ -131,7 +131,7 @@ class ObjectReadStream : public std::basic_istream<char> {
    */
   HeadersMap const& headers() const { return buf_->headers(); }
 
-  //@{
+  ///@{
   /**
    * @name Object metadata information.
    *
@@ -174,7 +174,7 @@ class ObjectReadStream : public std::basic_istream<char> {
    * [object transcoding]: https://cloud.google.com/storage/docs/transcoding
    */
   absl::optional<std::uint64_t> const& size() const { return buf_->size(); }
-  //@}
+  ///@}
 
  private:
   std::unique_ptr<internal::ObjectReadStreambuf> buf_;

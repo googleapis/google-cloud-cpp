@@ -52,7 +52,7 @@ class NotificationMetadata {
    */
   std::string JsonPayloadForInsert() const;
 
-  //@{
+  ///@{
   /// @name Accessors and modifiers to the custom attributes.
   bool has_custom_attribute(std::string const& key) const {
     return custom_attributes_.end() != custom_attributes_.find(key);
@@ -91,11 +91,11 @@ class NotificationMetadata {
   std::map<std::string, std::string>& mutable_custom_attributes() {
     return custom_attributes_;
   }
-  //@}
+  ///@}
 
   std::string const& etag() const { return etag_; }
 
-  //@{
+  ///@{
   /**
    * @name Accessors and modifiers to the event types list.
    *
@@ -116,7 +116,7 @@ class NotificationMetadata {
 
   std::vector<std::string> const& event_types() const { return event_types_; }
   std::vector<std::string>& mutable_event_types() { return event_types_; }
-  //@}
+  ///@}
 
   std::string const& id() const { return id_; }
   std::string const& kind() const { return kind_; }
