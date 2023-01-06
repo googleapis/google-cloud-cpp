@@ -54,6 +54,8 @@ Status TracingConnectionGenerator::GenerateHeader() {
   if (!result.ok()) return result;
 
   HeaderPrint(R"""(
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 class $tracing_connection_class_name$
     : public $product_namespace$::$connection_class_name$ {
  public:
@@ -82,6 +84,8 @@ class $tracing_connection_class_name$
  private:
   std::shared_ptr<$product_namespace$::$connection_class_name$> child_;
 };
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 )""");
 
   HeaderCloseNamespaces();
@@ -111,6 +115,8 @@ Status TracingConnectionGenerator::GenerateCc() {
   if (!result.ok()) return result;
 
   CcPrint(R"""(
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 $tracing_connection_class_name$::$tracing_connection_class_name$(
     std::shared_ptr<$product_namespace$::$connection_class_name$> child)
     : child_(std::move(child)) {}
@@ -126,6 +132,9 @@ $tracing_connection_class_name$::$tracing_connection_class_name$(
     CcPrintMethod(method, __FILE__, __LINE__, AsyncMethodDefinition(method));
   }
 
+  CcPrint(R"""(
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+)""");
   CcCloseNamespaces();
   return {};
 }
