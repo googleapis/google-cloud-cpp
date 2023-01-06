@@ -765,7 +765,6 @@ class Client {
   /// @name Backwards compatibility for QueryOptions.
   /**
    * @copybrief AnalyzeSql(Transaction,SqlStatement,Options)
-   *
    * @see AnalyzeSql(Transaction,SqlStatement,Options)
    */
   StatusOr<ExecutionPlan> AnalyzeSql(Transaction transaction,
@@ -776,7 +775,6 @@ class Client {
   }
   /**
    * @copybrief AnalyzeSql(Transaction,SqlStatement,Options)
-   *
    * @see AnalyzeSql(Transaction,SqlStatement,Options)
    */
   StatusOr<ExecutionPlan> AnalyzeSql(
