@@ -40,12 +40,12 @@ class Topic {
       : project_id_(std::move(project_id)), topic_id_(std::move(topic_id)) {}
 
   /// @name Copy and move
-  //@{
+  ///@{
   Topic(Topic const&) = default;
   Topic& operator=(Topic const&) = default;
   Topic(Topic&&) = default;
   Topic& operator=(Topic&&) = default;
-  //@}
+  ///@}
 
   /// Returns the Project ID
   std::string const& project_id() const { return project_id_; }
@@ -60,10 +60,10 @@ class Topic {
   std::string FullName() const;
 
   /// @name Equality operators
-  //@{
+  ///@{
   friend bool operator==(Topic const& a, Topic const& b);
   friend bool operator!=(Topic const& a, Topic const& b) { return !(a == b); }
-  //@}
+  ///@}
 
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream& os, Topic const& rhs);

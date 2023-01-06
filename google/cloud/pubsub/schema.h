@@ -41,12 +41,12 @@ class Schema {
       : project_id_(std::move(project_id)), schema_id_(std::move(schema_id)) {}
 
   /// @name Copy and move
-  //@{
+  ///@{
   Schema(Schema const&) = default;
   Schema& operator=(Schema const&) = default;
   Schema(Schema&&) = default;
   Schema& operator=(Schema&&) = default;
-  //@}
+  ///@}
 
   /// Returns the Project ID
   std::string const& project_id() const { return project_id_; }
@@ -60,11 +60,11 @@ class Schema {
    */
   std::string FullName() const;
 
-  //@{
+  ///@{
   /// @name Equality operators
   friend bool operator==(Schema const& a, Schema const& b);
   friend bool operator!=(Schema const& a, Schema const& b) { return !(a == b); }
-  //@}
+  ///@}
 
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream& os, Schema const& rhs);

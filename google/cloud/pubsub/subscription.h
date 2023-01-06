@@ -43,12 +43,12 @@ class Subscription {
         subscription_id_(std::move(subscription_id)) {}
 
   /// @name Copy and move
-  //@{
+  ///@{
   Subscription(Subscription const&) = default;
   Subscription& operator=(Subscription const&) = default;
   Subscription(Subscription&&) = default;
   Subscription& operator=(Subscription&&) = default;
-  //@}
+  ///@}
 
   /// Returns the Project ID
   std::string const& project_id() const { return project_id_; }
@@ -63,12 +63,12 @@ class Subscription {
   std::string FullName() const;
 
   /// @name Equality operators
-  //@{
+  ///@{
   friend bool operator==(Subscription const& a, Subscription const& b);
   friend bool operator!=(Subscription const& a, Subscription const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream& os, Subscription const& rhs);

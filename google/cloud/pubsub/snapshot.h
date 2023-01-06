@@ -41,12 +41,12 @@ class Snapshot {
         snapshot_id_(std::move(snapshot_id)) {}
 
   /// @name Copy and move
-  //@{
+  ///@{
   Snapshot(Snapshot const&) = default;
   Snapshot& operator=(Snapshot const&) = default;
   Snapshot(Snapshot&&) = default;
   Snapshot& operator=(Snapshot&&) = default;
-  //@}
+  ///@}
 
   /// Returns the Project ID
   std::string const& project_id() const { return project_id_; }
@@ -60,13 +60,13 @@ class Snapshot {
    */
   std::string FullName() const;
 
-  //@{
+  ///@{
   /// @name Equality operators
   friend bool operator==(Snapshot const& a, Snapshot const& b);
   friend bool operator!=(Snapshot const& a, Snapshot const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream& os, Snapshot const& rhs);
