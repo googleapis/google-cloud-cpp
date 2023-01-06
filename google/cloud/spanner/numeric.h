@@ -89,7 +89,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 template <DecimalMode>
 class Decimal {
  public:
-  /// Integer and fractional precision of a `Decimal` value of the mode.
+  /// @name Integer and fractional precision of a `Decimal` value of the mode.
   ///@{
   static std::size_t const kIntPrecision;
   static std::size_t const kFracPrecision;
@@ -98,9 +98,10 @@ class Decimal {
   /// Whether `DecimalMode` supports NaN values.
   static bool const kHasNaN;
 
-  /// @deprecated These backwards-compatibility constants only apply to
-  /// kGoogleSQL mode, and are no longer used in the implementation.
   ///@{
+  /// @name Backwards-compatibility constants.
+  /// @deprecated Only apply to kGoogleSQL mode, and are no longer used in the
+  /// implementation.
   static constexpr std::size_t kIntPrec = 29;
   static constexpr std::size_t kFracPrec = 9;
   ///@}
@@ -108,7 +109,7 @@ class Decimal {
   /// A zero value.
   Decimal() : rep_("0") {}
 
-  /// Regular value type, supporting copy, assign, move.
+  /// @name Regular value type, supporting copy, assign, move.
   ///@{
   Decimal(Decimal&&) noexcept = default;
   Decimal& operator=(Decimal&&) noexcept = default;
@@ -132,7 +133,7 @@ class Decimal {
   std::string&& ToString() && { return std::move(rep_); }
   ///@}
 
-  /// Relational operators
+  /// @name Relational operators
   ///@{
   friend bool operator==(Decimal const& a, Decimal const& b) {
     // Decimal-value equality, which only depends on the canonical
