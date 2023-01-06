@@ -47,6 +47,7 @@
 #include "generator/internal/stub_factory_rest_generator.h"
 #include "generator/internal/stub_generator.h"
 #include "generator/internal/stub_rest_generator.h"
+#include "generator/internal/tracing_connection_generator.h"
 #include <google/api/routing.pb.h>
 #include <google/longrunning/operations.pb.h>
 #include <google/protobuf/compiler/code_generator.h>
@@ -1038,6 +1039,14 @@ VarsDictionary CreateServiceVars(
   vars["stub_factory_rest_header_path"] = absl::StrCat(
       vars["product_path"], "internal/",
       ServiceNameToFilePath(descriptor.name()), "_rest_stub_factory.h");
+  vars["tracing_connection_class_name"] =
+      absl::StrCat(descriptor.name(), "TracingConnection");
+  vars["tracing_connection_cc_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_tracing_connection.cc");
+  vars["tracing_connection_header_path"] = absl::StrCat(
+      vars["product_path"], "internal/",
+      ServiceNameToFilePath(descriptor.name()), "_tracing_connection.h");
   SetRetryStatusCodeExpression(vars);
   return vars;
 }
@@ -1119,6 +1128,8 @@ std::vector<std::unique_ptr<GeneratorInterface>> MakeGenerators(
       code_generators.push_back(absl::make_unique<RetryTraitsGenerator>(
           service, service_vars, method_vars, context));
     }
+    code_generators.push_back(absl::make_unique<TracingConnectionGenerator>(
+        service, service_vars, method_vars, context));
   }
   auto const omit_stub_factory = service_vars.find("omit_stub_factory");
   if (omit_stub_factory == service_vars.end() ||
