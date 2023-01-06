@@ -23,6 +23,7 @@
 #include "google/cloud/tpu/tpu_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -82,9 +83,9 @@ future<StatusOr<google::cloud::tpu::v1::Node>> TpuConnection::StartNode(
 }
 
 StreamRange<google::cloud::tpu::v1::TensorFlowVersion>
-    TpuConnection::ListTensorFlowVersions(
-        google::cloud::tpu::v1::
-            ListTensorFlowVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+TpuConnection::ListTensorFlowVersions(
+    google::cloud::tpu::v1::
+        ListTensorFlowVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::tpu::v1::TensorFlowVersion>>();
 }
@@ -96,9 +97,9 @@ TpuConnection::GetTensorFlowVersion(
 }
 
 StreamRange<google::cloud::tpu::v1::AcceleratorType>
-    TpuConnection::ListAcceleratorTypes(
-        google::cloud::tpu::v1::
-            ListAcceleratorTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+TpuConnection::ListAcceleratorTypes(
+    google::cloud::tpu::v1::
+        ListAcceleratorTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::tpu::v1::AcceleratorType>>();
 }
@@ -111,6 +112,7 @@ TpuConnection::GetAcceleratorType(
 
 std::shared_ptr<TpuConnection> MakeTpuConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  TpuPolicyOptionList>(options, __func__);
   options = tpu_internal::TpuDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -121,23 +123,5 @@ std::shared_ptr<TpuConnection> MakeTpuConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tpu
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace tpu_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<tpu::TpuConnection> MakeTpuConnection(
-    std::shared_ptr<TpuStub> stub, Options options) {
-  options = TpuDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<tpu_internal::TpuConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace tpu_internal
 }  // namespace cloud
 }  // namespace google

@@ -17,7 +17,6 @@
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/subscription_builder.h"
-#include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/topic_admin_client.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -29,26 +28,12 @@
 #include <utility>
 
 namespace {
-std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator) {
-  return google::cloud::pubsub_testing::RandomTopicId(generator,
-                                                      "cloud-cpp-samples");
-}
 
-std::string RandomSubscriptionId(
-    google::cloud::internal::DefaultPRNG& generator) {
-  return google::cloud::pubsub_testing::RandomSubscriptionId(
-      generator, "cloud-cpp-samples");
-}
-
-std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator) {
-  return google::cloud::pubsub_testing::RandomSnapshotId(generator,
-                                                         "cloud-cpp-samples");
-}
-
-std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator) {
-  return google::cloud::pubsub_testing::RandomSchemaId(generator,
-                                                       "cloud-cpp-samples");
-}
+using ::google::cloud::pubsub::examples::RandomSchemaId;
+using ::google::cloud::pubsub::examples::RandomSnapshotId;
+using ::google::cloud::pubsub::examples::RandomSubscriptionId;
+using ::google::cloud::pubsub::examples::RandomTopicId;
+using ::google::cloud::pubsub::examples::UsingEmulator;
 
 auto constexpr kWaitTimeout = std::chrono::minutes(1);
 
@@ -178,7 +163,7 @@ void UpdateTopic(google::cloud::pubsub::TopicAdminClient client,
         pubsub::TopicBuilder(
             pubsub::Topic(std::move(project_id), std::move(topic_id)))
             .add_label("test-key", "test-value"));
-    if (!topic) return;  // TODO(#4792) - emulator lacks UpdateTopic()
+    if (!topic) throw std::move(topic).status();
 
     std::cout << "The topic was successfully updated: " << topic->DebugString()
               << "\n";
@@ -235,7 +220,7 @@ void DetachSubscription(google::cloud::pubsub::TopicAdminClient client,
      std::string subscription_id) {
     auto response = client.DetachSubscription(pubsub::Subscription(
         std::move(project_id), std::move(subscription_id)));
-    if (!response.ok()) return;  // TODO(#4792) - not implemented in emulator
+    if (!response.ok()) throw std::move(response).status();
 
     std::cout << "The subscription was successfully detached: "
               << response->DebugString() << "\n";
@@ -302,6 +287,30 @@ void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void CreateSubscriptionWithExactlyOnceDelivery(
+    google::cloud::pubsub::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  // [START pubsub_create_subscription_with_exactly_once_delivery]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& topic_id, std::string const& subscription_id) {
+    auto sub = client.CreateSubscription(
+        pubsub::Topic(project_id, topic_id),
+        pubsub::Subscription(project_id, subscription_id),
+        pubsub::SubscriptionBuilder{}.enable_exactly_once_delivery(true));
+    if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The subscription already exists\n";
+      return;
+    }
+    if (!sub) throw std::runtime_error(sub.status().message());
+
+    std::cout << "The subscription was successfully created: "
+              << sub->DebugString() << "\n";
+  }
+  // [END pubsub_create_subscription_with_exactly_once_delivery]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
 void CreateFilteredSubscription(
     google::cloud::pubsub::SubscriptionAdminClient client,
     std::vector<std::string> const& argv) {
@@ -352,6 +361,32 @@ void CreatePushSubscription(
               << sub->DebugString() << "\n";
   }
   //! [END pubsub_create_push_subscription] [create-push-subscription]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
+}
+
+void CreateBigQuerySubscription(
+    google::cloud::pubsub::SubscriptionAdminClient client,
+    std::vector<std::string> const& argv) {
+  //! [START pubsub_create_bigquery_subscription] [create-bigquery-subscription]
+  namespace pubsub = ::google::cloud::pubsub;
+  [](pubsub::SubscriptionAdminClient client, std::string const& project_id,
+     std::string const& topic_id, std::string const& subscription_id,
+     std::string const& table_id) {
+    auto sub = client.CreateSubscription(
+        pubsub::Topic(project_id, std::move(topic_id)),
+        pubsub::Subscription(project_id, std::move(subscription_id)),
+        pubsub::SubscriptionBuilder{}.set_bigquery_config(
+            pubsub::BigQueryConfigBuilder{}.set_table(table_id)));
+    if (sub.status().code() == google::cloud::StatusCode::kAlreadyExists) {
+      std::cout << "The subscription already exists\n";
+      return;
+    }
+    if (!sub) throw std::runtime_error(sub.status().message());
+
+    std::cout << "The subscription was successfully created: "
+              << sub->DebugString() << "\n";
+  }
+  //! [END pubsub_create_bigquery_subscription] [create-bigquery-subscription]
   (std::move(client), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
@@ -433,7 +468,7 @@ void UpdateDeadLetterSubscription(
             pubsub::SubscriptionBuilder::MakeDeadLetterPolicy(
                 pubsub::Topic(project_id, dead_letter_topic_id),
                 dead_letter_delivery_attempts)));
-    if (!sub) return;  // TODO(#4792) - emulator lacks UpdateSubscription()
+    if (!sub) throw std::move(sub).status();
 
     std::cout << "The subscription has been updated to: " << sub->DebugString()
               << "\n";
@@ -483,7 +518,7 @@ void RemoveDeadLetterPolicy(
     auto sub = client.UpdateSubscription(
         pubsub::Subscription(project_id, std::move(subscription_id)),
         pubsub::SubscriptionBuilder{}.clear_dead_letter_policy());
-    if (!sub) return;  // TODO(#4792) - emulator lacks UpdateSubscription()
+    if (!sub) throw std::move(sub).status();
 
     std::cout << "The subscription has been updated to: " << sub->DebugString()
               << "\n";
@@ -635,7 +670,7 @@ void UpdateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
     auto snap = client.UpdateSnapshot(
         pubsub::Snapshot(project_id, std::move(snapshot_id)),
         pubsub::SnapshotBuilder{}.add_label("samples-cpp", "gcp"));
-    if (!snap.ok()) return;  // TODO(#4792) - emulator lacks UpdateSnapshot()
+    if (!snap.ok()) throw std::move(snap).status();
 
     std::cout << "The snapshot was successfully updated: "
               << snap->DebugString() << "\n";
@@ -800,7 +835,7 @@ void CreateProtobufSchema(google::cloud::pubsub::SchemaAdminClient client,
       std::cout << "The schema already exists\n";
       return;
     }
-    if (!schema) return;  // TODO(#4792) - protobuf schema support in emulator
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema successfully created: " << schema->DebugString()
               << "\n";
   }
@@ -884,7 +919,7 @@ void ValidateAvroSchema(google::cloud::pubsub::SchemaAdminClient client,
       ]
     })js";
     auto schema = client.ValidateAvroSchema(project_id, kDefinition);
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema is valid\n";
   }
   //! [validate-avro-schema]
@@ -906,7 +941,7 @@ void ValidateProtobufSchema(google::cloud::pubsub::SchemaAdminClient client,
         }
         )pfile";
     auto schema = client.ValidateProtobufSchema(project_id, kDefinition);
-    if (!schema) return;  // TODO(#4792) - protobuf schema support in emulator
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema is valid\n";
   }
   //! [validate-protobuf-schema]
@@ -942,7 +977,7 @@ void ValidateMessageAvro(google::cloud::pubsub::SchemaAdminClient client,
     })js";
     auto schema = client.ValidateMessageWithAvro(
         google::pubsub::v1::JSON, kMessage, project_id, kDefinition);
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     std::cout << "Message is valid\n";
   }
   //! [validate-message-avro]
@@ -969,7 +1004,7 @@ void ValidateMessageProtobuf(google::cloud::pubsub::SchemaAdminClient client,
     )pfile";
     auto schema = client.ValidateMessageWithProtobuf(
         google::pubsub::v1::BINARY, message, project_id, kDefinition);
-    if (!schema) return;  // TODO(#4792) - protobuf schema support in emulator
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema is valid\n";
   }
   //! [validate-message-protobuf]
@@ -989,7 +1024,7 @@ void ValidateMessageNamedSchema(google::cloud::pubsub::SchemaAdminClient client,
     auto schema = client.ValidateMessageWithNamedSchema(
         google::pubsub::v1::BINARY, message,
         pubsub::Schema(project_id, schema_id));
-    if (!schema) return;  // TODO(#4792) - protobuf schema support in emulator
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema is valid\n";
   }
   //! [validate-message-named-schema]
@@ -1114,7 +1149,7 @@ google::cloud::future<google::cloud::Status> SubscribeProtobufRecords(
     auto session = subscriber.Subscribe(
         [](pubsub::Message const& m, pubsub::AckHandler h) {
           google::cloud::pubsub::samples::State state;
-          state.ParseFromString(m.data());
+          state.ParseFromString(std::string{m.data()});
           std::cout << "Message contents: " << state.DebugString() << "\n";
           std::move(h).ack();
         });
@@ -1298,6 +1333,42 @@ void Subscribe(google::cloud::pubsub::Subscriber subscriber,
   EventCounter::Instance().Wait(
       [initial](std::int64_t count) { return count > initial; },
       sample(std::move(subscriber)), __func__);
+}
+
+void ExactlyOnceSubscribe(google::cloud::pubsub::Subscriber subscriber,
+                          std::vector<std::string> const&) {
+  auto const initial = EventCounter::Instance().Current();
+  //! [START pubsub_subscriber_exactly_once] [exactly-once-subscribe]
+  namespace pubsub = ::google::cloud::pubsub;
+  auto sample = [](pubsub::Subscriber subscriber) {
+    return subscriber.Subscribe(
+        [&](pubsub::Message const& m, pubsub::ExactlyOnceAckHandler h) {
+          std::cout << "Received message " << m << "\n";
+          std::move(h).ack().then([id = m.message_id()](auto f) {
+            auto status = f.get();
+            std::cout << "Message id " << id
+                      << " ack() completed with status=" << status << "\n";
+          });
+          PleaseIgnoreThisSimplifiesTestingTheSamples();
+        });
+  };
+  //! [END pubsub_subscriber_exactly_once] [exactly-once-subscribe]
+  EventCounter::Instance().Wait(
+      [initial](std::int64_t count) { return count > initial; },
+      sample(std::move(subscriber)), __func__);
+}
+
+void Pull(google::cloud::pubsub::Subscriber subscriber,
+          std::vector<std::string> const&) {
+  //! [START pubsub_subscriber_sync_pull] [pull]
+  [](google::cloud::pubsub::Subscriber subscriber) {
+    auto response = subscriber.Pull();
+    if (!response) throw std::move(response).status();
+    std::cout << "Received message " << response->message << "\n";
+    std::move(response->handler).ack();
+  }
+  //! [END pubsub_subscriber_sync_pull] [pull]
+  (std::move(subscriber));
 }
 
 void SubscribeErrorListener(google::cloud::pubsub::Subscriber subscriber,
@@ -1569,6 +1640,40 @@ void PublisherDisableRetries(std::vector<std::string> const& argv) {
   (argv.at(0), argv.at(1));
 }
 
+void PublishWithCompression(std::vector<std::string> const& argv) {
+  namespace examples = ::google::cloud::testing_util;
+  if (argv.size() != 2) {
+    throw examples::Usage{"publish-with-compression <project-id> <topic-id>"};
+  }
+  //! [START pubsub_publisher_with_compression]
+  namespace g = ::google::cloud;
+  namespace pubsub = ::google::cloud::pubsub;
+  [](std::string project_id, std::string topic_id) {
+    auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
+    auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
+        std::move(topic),
+        g::Options{}
+            // Compress any batch of messages over 10 bytes. By default, no
+            // messages are compressed, set this to 0 to compress all batches,
+            // regardless of their size.
+            .set<pubsub::CompressionThresholdOption>(10)
+            // Compress using the GZIP algorithm. By default, the library uses
+            // GRPC_COMPRESS_DEFLATE.
+            .set<pubsub::CompressionAlgorithmOption>(GRPC_COMPRESS_GZIP)));
+    auto message_id = publisher.Publish(
+        pubsub::MessageBuilder{}.SetData("Hello World!").Build());
+    auto done = message_id.then([](g::future<g::StatusOr<std::string>> f) {
+      auto id = f.get();
+      if (!id) throw std::runtime_error(id.status().message());
+      std::cout << "Hello World! published with id=" << *id << "\n";
+    });
+    // Block until the message is published
+    done.get();
+  }
+  //! [END pubsub_publisher_with_compression]
+  (argv.at(0), argv.at(1));
+}
+
 void CustomBatchPublisher(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
   if (argv.size() != 2) {
@@ -1582,9 +1687,9 @@ void CustomBatchPublisher(std::vector<std::string> const& argv) {
   using ::google::cloud::StatusOr;
   [](std::string project_id, std::string topic_id) {
     auto topic = pubsub::Topic(std::move(project_id), std::move(topic_id));
-    // By default the publisher will flush a batch after 10ms, after it contains
-    // more than 100 message, or after it contains more than 1MiB of data,
-    // whichever comes first. This changes those defaults.
+    // By default, the publisher will flush a batch after 10ms, after it
+    // contains more than 100 message, or after it contains more than 1MiB of
+    // data, whichever comes first. This changes those defaults.
     auto publisher = pubsub::Publisher(pubsub::MakePublisherConnection(
         std::move(topic),
         Options{}
@@ -1892,10 +1997,6 @@ void AutoRunProtobuf(
   std::cout << "\nRunning ValidateMessageNamed() sample" << std::endl;
   ValidateMessageNamedSchema(schema_admin, {project_id, proto_schema_id});
 
-  // TODO(#4792) - the CreateSchema() operation would have failed, what follows
-  //    would fail and stop all the other examples.
-  if (google::cloud::pubsub::examples::UsingEmulator()) return;
-
   std::cout << "\nRunning CreateTopicWithSchema() sample [proto]" << std::endl;
   auto const proto_topic_id = RandomTopicId(generator);
   CreateTopicWithSchema(topic_admin_client, {project_id, proto_topic_id,
@@ -1942,7 +2043,6 @@ void AutoRunProtobuf(
 
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
-  using ::google::cloud::pubsub::examples::UsingEmulator;
 
   if (!argv.empty()) throw examples::Usage{"auto"};
   examples::CheckEnvironmentVariablesAreSet({
@@ -1954,14 +2054,28 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto generator = google::cloud::internal::MakeDefaultPRNG();
   auto const topic_id = RandomTopicId(generator);
   auto const subscription_id = RandomSubscriptionId(generator);
+  auto const exactly_once_subscription_id = RandomSubscriptionId(generator);
   auto const filtered_subscription_id = RandomSubscriptionId(generator);
   auto const push_subscription_id = RandomSubscriptionId(generator);
+  auto const bigquery_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_subscription_id = RandomSubscriptionId(generator);
   auto const ordering_topic_id = "ordering-" + RandomTopicId(generator);
   auto const dead_letter_subscription_id = RandomSubscriptionId(generator);
   auto const dead_letter_topic_id = "dead-letter-" + RandomTopicId(generator);
 
   auto const snapshot_id = RandomSnapshotId(generator);
+
+  auto ignore_emulator_failures = [](auto lambda) {
+    using ::google::cloud::StatusCode;
+    try {
+      lambda();
+    } catch (google::cloud::Status const& s) {
+      if (UsingEmulator() && s.code() == StatusCode::kUnimplemented) return;
+      throw;
+    } catch (...) {
+      throw;
+    }
+  };
 
   google::cloud::pubsub::TopicAdminClient topic_admin_client(
       google::cloud::pubsub::MakeTopicAdminConnection());
@@ -1981,7 +2095,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   GetTopic(topic_admin_client, {project_id, topic_id});
 
   std::cout << "\nRunning UpdateTopic() sample" << std::endl;
-  UpdateTopic(topic_admin_client, {project_id, topic_id});
+  ignore_emulator_failures([&] {
+    UpdateTopic(topic_admin_client, {project_id, topic_id});
+  });
 
   std::cout << "\nRunning the StatusOr example" << std::endl;
   ExampleStatusOr(topic_admin_client, {project_id});
@@ -2004,6 +2120,20 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateFilteredSubscription() sample [2]" << std::endl;
   CreateFilteredSubscription(subscription_admin_client,
                              {project_id, topic_id, filtered_subscription_id});
+
+  std::cout
+      << "\nRunning CreateSubscriptionWithExactlyOnceDelivery() sample [1]"
+      << std::endl;
+  CreateSubscriptionWithExactlyOnceDelivery(
+      subscription_admin_client,
+      {project_id, topic_id, exactly_once_subscription_id});
+
+  std::cout
+      << "\nRunning CreateSubscriptionWithExactlyOnceDelivery() sample [2]"
+      << std::endl;
+  CreateSubscriptionWithExactlyOnceDelivery(
+      subscription_admin_client,
+      {project_id, topic_id, exactly_once_subscription_id});
 
   std::cout << "\nRunning ListTopicSubscriptions() sample" << std::endl;
   ListTopicSubscriptions(topic_admin_client, {project_id, topic_id});
@@ -2046,8 +2176,8 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning CreateTopic() sample [4]" << std::endl;
   CreateTopic(topic_admin_client, {project_id, dead_letter_topic_id});
 
-  // Hardcode this number as it does not really matter. The other samples pick
-  // something between 10 and 15.
+  // Hardcode this number as it does not really matter. The other samples
+  // pick something between 10 and 15.
   auto constexpr kDeadLetterDeliveryAttempts = 15;
 
   std::cout << "\nRunning CreateDeadLetterSubscription() sample" << std::endl;
@@ -2059,10 +2189,12 @@ void AutoRun(std::vector<std::string> const& argv) {
   auto constexpr kUpdatedDeadLetterDeliveryAttempts = 20;
 
   std::cout << "\nRunning UpdateDeadLetterSubscription() sample" << std::endl;
-  UpdateDeadLetterSubscription(
-      subscription_admin_client,
-      {project_id, dead_letter_subscription_id, dead_letter_topic_id,
-       std::to_string(kUpdatedDeadLetterDeliveryAttempts)});
+  ignore_emulator_failures([&] {
+    UpdateDeadLetterSubscription(
+        subscription_admin_client,
+        {project_id, dead_letter_subscription_id, dead_letter_topic_id,
+         std::to_string(kUpdatedDeadLetterDeliveryAttempts)});
+  });
 
   std::cout << "\nRunning CreateSnapshot() sample [1]" << std::endl;
   CreateSnapshot(subscription_admin_client,
@@ -2079,7 +2211,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   GetSnapshot(subscription_admin_client, {project_id, snapshot_id});
 
   std::cout << "\nRunning UpdateSnapshot() sample" << std::endl;
-  UpdateSnapshot(subscription_admin_client, {project_id, snapshot_id});
+  ignore_emulator_failures([&] {
+    UpdateSnapshot(subscription_admin_client, {project_id, snapshot_id});
+  });
 
   std::cout << "\nRunning ListSnapshots() sample" << std::endl;
   ListSnapshots(subscription_admin_client, {project_id});
@@ -2098,10 +2232,14 @@ void AutoRun(std::vector<std::string> const& argv) {
   SeekWithTimestamp(subscription_admin_client,
                     {project_id, subscription_id, "2"});
 
-  AutoRunAvro(project_id, generator, topic_admin_client,
-              subscription_admin_client);
-  AutoRunProtobuf(project_id, generator, topic_admin_client,
-                  subscription_admin_client);
+  ignore_emulator_failures([&] {
+    AutoRunAvro(project_id, generator, topic_admin_client,
+                subscription_admin_client);
+  });
+  ignore_emulator_failures([&] {
+    AutoRunProtobuf(project_id, generator, topic_admin_client,
+                    subscription_admin_client);
+  });
 
   auto topic = google::cloud::pubsub::Topic(project_id, topic_id);
   auto publisher = google::cloud::pubsub::Publisher(
@@ -2119,6 +2257,11 @@ void AutoRun(std::vector<std::string> const& argv) {
       google::cloud::pubsub::MakeSubscriberConnection(
           dead_letter_subscription));
 
+  auto exactly_once_subscriber = google::cloud::pubsub::Subscriber(
+      google::cloud::pubsub::MakeSubscriberConnection(
+          google::cloud::pubsub::Subscription(project_id,
+                                              exactly_once_subscription_id)));
+
   auto filtered_subscriber = google::cloud::pubsub::Subscriber(
       google::cloud::pubsub::MakeSubscriberConnection(
           google::cloud::pubsub::Subscription(project_id,
@@ -2132,6 +2275,13 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning Subscribe() sample" << std::endl;
   Subscribe(subscriber, {});
+
+  std::cout << "\nRunning ExactlyOnceSubscribe() sample" << std::endl;
+  ExactlyOnceSubscribe(exactly_once_subscriber, {});
+
+  std::cout << "\nRunning Pull() sample" << std::endl;
+  PublishHelper(publisher, "Pull()", 1);
+  Pull(subscriber, {});
 
   std::cout << "\nRunning Subscribe(filtered) sample" << std::endl;
   PublishHelper(publisher, "Subscribe(filtered)", 8);
@@ -2151,8 +2301,10 @@ void AutoRun(std::vector<std::string> const& argv) {
   ReceiveDeadLetterDeliveryAttempt(dead_letter_subscriber, {});
 
   std::cout << "\nRunning RemoveDeadLetterPolicy() sample" << std::endl;
-  RemoveDeadLetterPolicy(subscription_admin_client,
-                         {project_id, dead_letter_subscription_id});
+  ignore_emulator_failures([&] {
+    RemoveDeadLetterPolicy(subscription_admin_client,
+                           {project_id, dead_letter_subscription_id});
+  });
 
   std::cout << "\nRunning the CustomThreadPoolPublisher() sample" << std::endl;
   CustomThreadPoolPublisher({project_id, topic_id});
@@ -2169,6 +2321,9 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning the PublisherDisableRetries() sample" << std::endl;
   PublisherDisableRetries({project_id, topic_id});
+
+  std::cout << "\nRunning the PublishWithCompression() sample" << std::endl;
+  PublishWithCompression({project_id, topic_id});
 
   std::cout << "\nRunning the CustomBatchPublisher() sample" << std::endl;
   CustomBatchPublisher({project_id, topic_id});
@@ -2209,7 +2364,9 @@ void AutoRun(std::vector<std::string> const& argv) {
   SubscriberRetrySettings({project_id, subscription_id});
 
   std::cout << "\nRunning DetachSubscription() sample" << std::endl;
-  DetachSubscription(topic_admin_client, {project_id, subscription_id});
+  ignore_emulator_failures([&] {
+    DetachSubscription(topic_admin_client, {project_id, subscription_id});
+  });
 
   std::cout << "\nRunning DeleteSubscription() sample [2]" << std::endl;
   DeleteSubscription(subscription_admin_client,
@@ -2224,6 +2381,10 @@ void AutoRun(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning DeleteSubscription() sample [5]" << std::endl;
   DeleteSubscription(subscription_admin_client, {project_id, subscription_id});
+
+  std::cout << "\nRunning DeleteSubscription() sample [6] " << std::endl;
+  DeleteSubscription(subscription_admin_client,
+                     {project_id, bigquery_subscription_id});
 
   std::cout << "\nRunning DeleteTopic() sample [1]" << std::endl;
   DeleteTopic(topic_admin_client, {project_id, dead_letter_topic_id});
@@ -2276,9 +2437,17 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
           {"project-id", "topic-id", "subscription-id"},
           CreateFilteredSubscription),
       CreateSubscriptionAdminCommand(
+          "create-subscription-with-exactly-once-delivery",
+          {"project-id", "topic-id", "subscription-id"},
+          CreateSubscriptionWithExactlyOnceDelivery),
+      CreateSubscriptionAdminCommand(
           "create-push-subscription",
           {"project-id", "topic-id", "subscription-id", "endpoint"},
           CreatePushSubscription),
+      CreateSubscriptionAdminCommand(
+          "create-bigquery-subscription",
+          {"project-id", "topic-id", "subscription-id", "table-id"},
+          CreateBigQuerySubscription),
       CreateSubscriptionAdminCommand(
           "create-ordering-subscription",
           {"project-id", "topic-id", "subscription-id"},
@@ -2367,6 +2536,9 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       CreatePublisherCommand("publish-ordering-key", {}, PublishOrderingKey),
       CreatePublisherCommand("resume-ordering-key", {}, ResumeOrderingKey),
       CreateSubscriberCommand("subscribe", {}, Subscribe),
+      CreateSubscriberCommand("exactly-once-subscribe", {},
+                              ExactlyOnceSubscribe),
+      CreateSubscriberCommand("pull", {}, Pull),
       CreateSubscriberCommand("subscribe-error-listener", {},
                               SubscribeErrorListener),
       CreateSubscriberCommand("subscribe-custom-attributes", {},
@@ -2378,6 +2550,7 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
       {"publisher-flow-control", PublisherFlowControl},
       {"publisher-retry-settings", PublisherRetrySettings},
       {"publisher-disable-retry", PublisherDisableRetries},
+      {"publish-with-compression", PublishWithCompression},
       {"custom-batch-publisher", CustomBatchPublisher},
       {"custom-thread-pool-subscriber", CustomThreadPoolSubscriber},
       {"subscriber-concurrency-control", SubscriberConcurrencyControl},

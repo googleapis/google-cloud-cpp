@@ -188,14 +188,16 @@ TEST(ObjectMetadataTest, IOStream) {
 
 /// @test Verify that ObjectMetadataJsonForCompose works as expected.
 TEST(ObjectMetadataTest, JsonForComposeEmpty) {
-  nlohmann::json actual = ObjectMetadataJsonForCompose(ObjectMetadata());
+  nlohmann::json actual =
+      internal::ObjectMetadataJsonForCompose(ObjectMetadata());
   nlohmann::json expected({});
   EXPECT_EQ(expected, actual);
 }
 
 /// @test Verify that ObjectMetadataJsonForCompose() works as expected.
 TEST(ObjectMetadataTest, JsonForCompose) {
-  auto actual = ObjectMetadataJsonForCompose(CreateObjectMetadataForTest());
+  auto actual =
+      internal::ObjectMetadataJsonForCompose(CreateObjectMetadataForTest());
 
   nlohmann::json expected = {
       {"acl",
@@ -224,14 +226,15 @@ TEST(ObjectMetadataTest, JsonForCompose) {
 
 /// @test Verify that ObjectMetadataJsonForCopy works as expected.
 TEST(ObjectMetadataTest, JsonForCopyEmpty) {
-  nlohmann::json actual = ObjectMetadataJsonForCopy(ObjectMetadata());
+  nlohmann::json actual = internal::ObjectMetadataJsonForCopy(ObjectMetadata());
   nlohmann::json expected({});
   EXPECT_EQ(expected, actual);
 }
 
 /// @test Verify that ObjectMetadataJsonForCopy() works as expected.
 TEST(ObjectMetadataTest, JsonForCopy) {
-  auto actual = ObjectMetadataJsonForCopy(CreateObjectMetadataForTest());
+  auto actual =
+      internal::ObjectMetadataJsonForCopy(CreateObjectMetadataForTest());
 
   nlohmann::json expected = {
       {"acl",
@@ -260,14 +263,16 @@ TEST(ObjectMetadataTest, JsonForCopy) {
 
 /// @test Verify that ObjectMetadataJsonForInsert works as expected.
 TEST(ObjectMetadataTest, JsonForInsertEmpty) {
-  nlohmann::json actual = ObjectMetadataJsonForInsert(ObjectMetadata());
+  nlohmann::json actual =
+      internal::ObjectMetadataJsonForInsert(ObjectMetadata());
   nlohmann::json expected({});
   EXPECT_EQ(expected, actual);
 }
 
 /// @test Verify that ObjectMetadataJsonForInsert() works as expected.
 TEST(ObjectMetadataTest, JsonForInsert) {
-  auto actual = ObjectMetadataJsonForInsert(CreateObjectMetadataForTest());
+  auto actual =
+      internal::ObjectMetadataJsonForInsert(CreateObjectMetadataForTest());
 
   nlohmann::json expected = {
       {"acl",
@@ -298,14 +303,16 @@ TEST(ObjectMetadataTest, JsonForInsert) {
 
 /// @test Verify that `ObjectMetadataJsonForRewrite()` works as expected.
 TEST(ObjectMetadataTest, JsonForRewriteEmpty) {
-  nlohmann::json actual = ObjectMetadataJsonForRewrite(ObjectMetadata());
+  nlohmann::json actual =
+      internal::ObjectMetadataJsonForRewrite(ObjectMetadata());
   nlohmann::json expected({});
   EXPECT_EQ(expected, actual);
 }
 
 /// @test Verify that `ObjectMetadataJsonForRewrite()` works as expected.
 TEST(ObjectMetadataTest, JsonForRewrite) {
-  auto actual = ObjectMetadataJsonForRewrite(CreateObjectMetadataForTest());
+  auto actual =
+      internal::ObjectMetadataJsonForRewrite(CreateObjectMetadataForTest());
 
   nlohmann::json expected = {
       {"acl",
@@ -334,7 +341,8 @@ TEST(ObjectMetadataTest, JsonForRewrite) {
 
 /// @test Verify that ObjectMetadataJsonForUpdate works as expected.
 TEST(ObjectMetadataTest, JsonForUpdateEmpty) {
-  nlohmann::json actual = ObjectMetadataJsonForUpdate(ObjectMetadata());
+  nlohmann::json actual =
+      internal::ObjectMetadataJsonForUpdate(ObjectMetadata());
   nlohmann::json expected({{"eventBasedHold", false}});
   EXPECT_EQ(expected, actual);
 }
@@ -342,7 +350,7 @@ TEST(ObjectMetadataTest, JsonForUpdateEmpty) {
 /// @test Verify that ObjectMetadataJsonForUpdate works as expected.
 TEST(ObjectMetadataTest, JsonForUpdate) {
   auto tested = CreateObjectMetadataForTest();
-  nlohmann::json actual = ObjectMetadataJsonForUpdate(tested);
+  nlohmann::json actual = internal::ObjectMetadataJsonForUpdate(tested);
 
   // Create a JSON object with only the writeable fields, because this is what
   // will be encoded in JsonPayloadForUpdate(). Before adding a new field,

@@ -18,7 +18,6 @@
 
 #include "google/cloud/iot/device_manager_client.h"
 #include "google/cloud/iot/device_manager_options.h"
-#include "google/cloud/iot/internal/device_manager_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,9 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DeviceManagerClient::DeviceManagerClient(
     std::shared_ptr<DeviceManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          iot_internal::DeviceManagerDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DeviceManagerClient::~DeviceManagerClient() = default;
 
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
@@ -266,9 +264,11 @@ StatusOr<google::iam::v1::Policy> DeviceManagerClient::SetIamPolicy(
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
-  auto backoff_policy = internal::CurrentOptions()
-                            .get<DeviceManagerBackoffPolicyOption>()
-                            ->clone();
+  auto backoff_policy =
+      internal::CurrentOptions().get<DeviceManagerBackoffPolicyOption>();
+  if (backoff_policy != nullptr) {
+    backoff_policy = backoff_policy->clone();
+  }
   for (;;) {
     auto recent = connection_->GetIamPolicy(get_request);
     if (!recent) {
@@ -280,7 +280,8 @@ StatusOr<google::iam::v1::Policy> DeviceManagerClient::SetIamPolicy(
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result || result.status().code() != StatusCode::kAborted) {
+    if (result || result.status().code() != StatusCode::kAborted ||
+        backoff_policy == nullptr) {
       return result;
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());

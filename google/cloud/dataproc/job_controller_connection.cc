@@ -23,6 +23,7 @@
 #include "google/cloud/dataproc/job_controller_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -75,11 +76,13 @@ Status JobControllerConnection::DeleteJob(
 }
 
 std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  JobControllerPolicyOptionList>(options,
                                                                 __func__);
-  options = dataproc_internal::JobControllerDefaultOptions(std::move(options));
+  options = dataproc_internal::JobControllerDefaultOptions(location,
+                                                           std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultJobControllerStub(
       background->cq(), options);
@@ -87,25 +90,12 @@ std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace dataproc_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<dataproc::JobControllerConnection> MakeJobControllerConnection(
-    std::shared_ptr<JobControllerStub> stub, Options options) {
-  options = JobControllerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<dataproc_internal::JobControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+std::shared_ptr<JobControllerConnection> MakeJobControllerConnection(
+    Options options) {
+  return MakeJobControllerConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc_internal
+}  // namespace dataproc
 }  // namespace cloud
 }  // namespace google

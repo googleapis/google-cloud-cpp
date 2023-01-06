@@ -29,6 +29,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -128,12 +129,15 @@ TEST_F(CreateSignedPolicyDocRPCTest, SignRemote) {
   EXPECT_CALL(*mock_, SignBlob)
       .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
       .WillOnce([&expected_signed_blob](internal::SignBlobRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         return make_status_or(
             internal::SignBlobResponse{"test-key-id", expected_signed_blob});
       });
   auto client = ClientForMock();
-  auto actual =
-      client.CreateSignedPolicyDocument(CreatePolicyDocumentForTest());
+  auto actual = client.CreateSignedPolicyDocument(
+      CreatePolicyDocumentForTest(),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(actual->signature, expected_signed_blob);
 }
@@ -185,7 +189,7 @@ TEST(CreateSignedPolicyDocTest, SignV4) {
   auto client = CreateClientForTest();
   auto actual = client.GenerateSignedPostPolicyV4(
       CreatePolicyDocumentV4ForTest(), AddExtensionFieldOption(),
-      PredefinedAcl(), Scheme());
+      PredefinedAcl(), Scheme(), Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ("https://storage.googleapis.com/test-bucket/", actual->url);

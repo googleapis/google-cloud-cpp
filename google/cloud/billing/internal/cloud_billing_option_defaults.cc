@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options CloudBillingDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_BILLING_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CLOUD_BILLING_AUTHORITY",
       "cloudbilling.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

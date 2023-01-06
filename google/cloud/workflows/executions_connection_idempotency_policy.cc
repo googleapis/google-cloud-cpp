@@ -30,48 +30,35 @@ using ::google::cloud::Idempotency;
 ExecutionsConnectionIdempotencyPolicy::
     ~ExecutionsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultExecutionsConnectionIdempotencyPolicy
-    : public ExecutionsConnectionIdempotencyPolicy {
- public:
-  ~DefaultExecutionsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>
+ExecutionsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ExecutionsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ExecutionsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultExecutionsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency ExecutionsConnectionIdempotencyPolicy::ListExecutions(
+    google::cloud::workflows::executions::v1::
+        ListExecutionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListExecutions(
-      google::cloud::workflows::executions::v1::ListExecutionsRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ExecutionsConnectionIdempotencyPolicy::CreateExecution(
+    google::cloud::workflows::executions::v1::CreateExecutionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateExecution(
-      google::cloud::workflows::executions::v1::CreateExecutionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ExecutionsConnectionIdempotencyPolicy::GetExecution(
+    google::cloud::workflows::executions::v1::GetExecutionRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetExecution(
-      google::cloud::workflows::executions::v1::GetExecutionRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency CancelExecution(
-      google::cloud::workflows::executions::v1::CancelExecutionRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ExecutionsConnectionIdempotencyPolicy::CancelExecution(
+    google::cloud::workflows::executions::v1::CancelExecutionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ExecutionsConnectionIdempotencyPolicy>
 MakeDefaultExecutionsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultExecutionsConnectionIdempotencyPolicy>();
+  return absl::make_unique<ExecutionsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

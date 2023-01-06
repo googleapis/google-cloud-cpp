@@ -23,6 +23,7 @@
 #include "google/cloud/cloudbuild/internal/cloud_build_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -49,9 +50,9 @@ CloudBuildConnection::GetBuild(
 }
 
 StreamRange<google::devtools::cloudbuild::v1::Build>
-    CloudBuildConnection::ListBuilds(
-        google::devtools::cloudbuild::v1::
-            ListBuildsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudBuildConnection::ListBuilds(
+    google::devtools::cloudbuild::v1::
+        ListBuildsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::Build>>();
 }
@@ -91,9 +92,9 @@ CloudBuildConnection::GetBuildTrigger(
 }
 
 StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
-    CloudBuildConnection::ListBuildTriggers(
-        google::devtools::cloudbuild::v1::
-            ListBuildTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudBuildConnection::ListBuildTriggers(
+    google::devtools::cloudbuild::v1::
+        ListBuildTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>>();
 }
@@ -155,9 +156,9 @@ CloudBuildConnection::UpdateWorkerPool(
 }
 
 StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
-    CloudBuildConnection::ListWorkerPools(
-        google::devtools::cloudbuild::v1::
-            ListWorkerPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudBuildConnection::ListWorkerPools(
+    google::devtools::cloudbuild::v1::
+        ListWorkerPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::devtools::cloudbuild::v1::WorkerPool>>();
 }
@@ -165,6 +166,7 @@ StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
 std::shared_ptr<CloudBuildConnection> MakeCloudBuildConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudBuildPolicyOptionList>(options, __func__);
   options = cloudbuild_internal::CloudBuildDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -176,23 +178,5 @@ std::shared_ptr<CloudBuildConnection> MakeCloudBuildConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloudbuild
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace cloudbuild_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<cloudbuild::CloudBuildConnection> MakeCloudBuildConnection(
-    std::shared_ptr<CloudBuildStub> stub, Options options) {
-  options = CloudBuildDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<cloudbuild_internal::CloudBuildConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace cloudbuild_internal
 }  // namespace cloud
 }  // namespace google

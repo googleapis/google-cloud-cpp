@@ -23,6 +23,7 @@
 #include "google/cloud/scheduler/internal/cloud_scheduler_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudSchedulerConnection::~CloudSchedulerConnection() = default;
 
 StreamRange<google::cloud::scheduler::v1::Job>
-    CloudSchedulerConnection::ListJobs(
-        google::cloud::scheduler::v1::
-            ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudSchedulerConnection::ListJobs(
+    google::cloud::scheduler::v1::
+        ListJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::scheduler::v1::Job>>();
 }
@@ -80,6 +81,7 @@ StatusOr<google::cloud::scheduler::v1::Job> CloudSchedulerConnection::RunJob(
 std::shared_ptr<CloudSchedulerConnection> MakeCloudSchedulerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudSchedulerPolicyOptionList>(options,
                                                                  __func__);
   options =
@@ -93,24 +95,5 @@ std::shared_ptr<CloudSchedulerConnection> MakeCloudSchedulerConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace scheduler
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace scheduler_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<scheduler::CloudSchedulerConnection>
-MakeCloudSchedulerConnection(std::shared_ptr<CloudSchedulerStub> stub,
-                             Options options) {
-  options = CloudSchedulerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<scheduler_internal::CloudSchedulerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace scheduler_internal
 }  // namespace cloud
 }  // namespace google

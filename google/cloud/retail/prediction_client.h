@@ -66,16 +66,16 @@ class PredictionServiceClient {
       Options opts = {});
   ~PredictionServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   PredictionServiceClient(PredictionServiceClient const&) = default;
   PredictionServiceClient& operator=(PredictionServiceClient const&) = default;
   PredictionServiceClient(PredictionServiceClient&&) = default;
   PredictionServiceClient& operator=(PredictionServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(PredictionServiceClient const& a,
                          PredictionServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -84,22 +84,22 @@ class PredictionServiceClient {
                          PredictionServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Makes a recommendation prediction.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::PredictRequest,google/cloud/retail/v2/prediction_service.proto#L50}
+  /// @googleapis_link{google::cloud::retail::v2::PredictRequest,google/cloud/retail/v2/prediction_service.proto#L55}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::PredictResponse,google/cloud/retail/v2/prediction_service.proto#L159}
+  /// @googleapis_link{google::cloud::retail::v2::PredictResponse,google/cloud/retail/v2/prediction_service.proto#L191}
   ///
   /// [google.cloud.retail.v2.PredictRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/prediction_service.proto#L50}
+  /// @googleapis_reference_link{google/cloud/retail/v2/prediction_service.proto#L55}
   /// [google.cloud.retail.v2.PredictResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/prediction_service.proto#L159}
+  /// @googleapis_reference_link{google/cloud/retail/v2/prediction_service.proto#L191}
   ///
   StatusOr<google::cloud::retail::v2::PredictResponse> Predict(
       google::cloud::retail::v2::PredictRequest const& request,

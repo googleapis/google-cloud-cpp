@@ -23,6 +23,7 @@
 #include "google/cloud/binaryauthorization/system_policy_v1_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -42,6 +43,7 @@ SystemPolicyV1Connection::GetSystemPolicy(
 std::shared_ptr<SystemPolicyV1Connection> MakeSystemPolicyV1Connection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  SystemPolicyV1PolicyOptionList>(options,
                                                                  __func__);
   options = binaryauthorization_internal::SystemPolicyV1DefaultOptions(
@@ -56,25 +58,5 @@ std::shared_ptr<SystemPolicyV1Connection> MakeSystemPolicyV1Connection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace binaryauthorization_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<binaryauthorization::SystemPolicyV1Connection>
-MakeSystemPolicyV1Connection(std::shared_ptr<SystemPolicyV1Stub> stub,
-                             Options options) {
-  options = SystemPolicyV1DefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      binaryauthorization_internal::SystemPolicyV1ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace binaryauthorization_internal
 }  // namespace cloud
 }  // namespace google

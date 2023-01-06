@@ -39,6 +39,13 @@ class PublisherStub {
       grpc::ClientContext& context,
       google::cloud::eventarc::publishing::v1::
           PublishChannelConnectionEventsRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+  PublishEvents(
+      grpc::ClientContext& context,
+      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+          request) = 0;
 };
 
 class DefaultPublisherStub : public PublisherStub {
@@ -55,6 +62,12 @@ class DefaultPublisherStub : public PublisherStub {
       grpc::ClientContext& client_context,
       google::cloud::eventarc::publishing::v1::
           PublishChannelConnectionEventsRequest const& request) override;
+
+  StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+  PublishEvents(
+      grpc::ClientContext& client_context,
+      google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+          request) override;
 
  private:
   std::unique_ptr<

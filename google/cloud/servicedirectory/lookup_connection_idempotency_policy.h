@@ -32,15 +32,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class LookupServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~LookupServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~LookupServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<LookupServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ResolveService(
       google::cloud::servicedirectory::v1::ResolveServiceRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<LookupServiceConnectionIdempotencyPolicy>

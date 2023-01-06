@@ -70,16 +70,16 @@ class ProfilerServiceClient {
       std::shared_ptr<ProfilerServiceConnection> connection, Options opts = {});
   ~ProfilerServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   ProfilerServiceClient(ProfilerServiceClient const&) = default;
   ProfilerServiceClient& operator=(ProfilerServiceClient const&) = default;
   ProfilerServiceClient(ProfilerServiceClient&&) = default;
   ProfilerServiceClient& operator=(ProfilerServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(ProfilerServiceClient const& a,
                          ProfilerServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -88,7 +88,7 @@ class ProfilerServiceClient {
                          ProfilerServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// CreateProfile creates a new profile resource in the online mode.

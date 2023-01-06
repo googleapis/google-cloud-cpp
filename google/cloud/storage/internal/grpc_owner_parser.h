@@ -15,24 +15,20 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OWNER_PARSER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_OWNER_PARSER_H
 
-#include "google/cloud/storage/internal/common_metadata.h"
+#include "google/cloud/storage/owner.h"
 #include "google/cloud/storage/version.h"
 #include <google/storage/v2/storage.pb.h>
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-struct GrpcOwnerParser {
-  static google::storage::v2::Owner ToProto(Owner);
-  static Owner FromProto(google::storage::v2::Owner);
-};
+google::storage::v2::Owner ToProto(storage::Owner);
+storage::Owner FromProto(google::storage::v2::Owner);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 

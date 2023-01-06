@@ -17,6 +17,9 @@
 
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/completion_queue.h"
+#include <grpcpp/grpcpp.h>
+#include <memory>
 #include <mutex>
 #include <vector>
 
@@ -25,11 +28,16 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class StorageRoundRobin : public StorageStub {
+class StorageRoundRobin
+    : public StorageStub,
+      public std::enable_shared_from_this<StorageRoundRobin> {
  public:
   explicit StorageRoundRobin(std::vector<std::shared_ptr<StorageStub>> children)
       : children_(std::move(children)) {}
   ~StorageRoundRobin() override = default;
+
+  void StartRefreshLoop(google::cloud::CompletionQueue cq,
+                        std::vector<std::shared_ptr<grpc::Channel>> channels);
 
   Status DeleteBucket(
       grpc::ClientContext& context,
@@ -68,6 +76,22 @@ class StorageRoundRobin : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::UpdateBucketRequest const& request) override;
 
+  Status DeleteNotification(
+      grpc::ClientContext& context,
+      google::storage::v2::DeleteNotificationRequest const& request) override;
+
+  StatusOr<google::storage::v2::Notification> GetNotification(
+      grpc::ClientContext& context,
+      google::storage::v2::GetNotificationRequest const& request) override;
+
+  StatusOr<google::storage::v2::Notification> CreateNotification(
+      grpc::ClientContext& context,
+      google::storage::v2::CreateNotificationRequest const& request) override;
+
+  StatusOr<google::storage::v2::ListNotificationsResponse> ListNotifications(
+      grpc::ClientContext& context,
+      google::storage::v2::ListNotificationsRequest const& request) override;
+
   StatusOr<google::storage::v2::Object> ComposeObject(
       grpc::ClientContext& context,
       google::storage::v2::ComposeObjectRequest const& request) override;
@@ -75,6 +99,11 @@ class StorageRoundRobin : public StorageStub {
   Status DeleteObject(
       grpc::ClientContext& context,
       google::storage::v2::DeleteObjectRequest const& request) override;
+
+  StatusOr<google::storage::v2::CancelResumableWriteResponse>
+  CancelResumableWrite(
+      grpc::ClientContext& context,
+      google::storage::v2::CancelResumableWriteRequest const& request) override;
 
   StatusOr<google::storage::v2::Object> GetObject(
       grpc::ClientContext& context,
@@ -114,12 +143,69 @@ class StorageRoundRobin : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::GetServiceAccountRequest const& request) override;
 
+  StatusOr<google::storage::v2::CreateHmacKeyResponse> CreateHmacKey(
+      grpc::ClientContext& context,
+      google::storage::v2::CreateHmacKeyRequest const& request) override;
+
+  Status DeleteHmacKey(
+      grpc::ClientContext& context,
+      google::storage::v2::DeleteHmacKeyRequest const& request) override;
+
+  StatusOr<google::storage::v2::HmacKeyMetadata> GetHmacKey(
+      grpc::ClientContext& context,
+      google::storage::v2::GetHmacKeyRequest const& request) override;
+
+  StatusOr<google::storage::v2::ListHmacKeysResponse> ListHmacKeys(
+      grpc::ClientContext& context,
+      google::storage::v2::ListHmacKeysRequest const& request) override;
+
+  StatusOr<google::storage::v2::HmacKeyMetadata> UpdateHmacKey(
+      grpc::ClientContext& context,
+      google::storage::v2::UpdateHmacKeyRequest const& request) override;
+
+  future<Status> AsyncDeleteObject(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::DeleteObjectRequest const& request) override;
+
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      google::storage::v2::ReadObjectResponse>>
+  AsyncReadObject(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::ReadObjectRequest const& request) override;
+
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>>
+  AsyncWriteObject(google::cloud::CompletionQueue const& cq,
+                   std::unique_ptr<grpc::ClientContext> context) override;
+
+  future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
+  AsyncStartResumableWrite(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::StartResumableWriteRequest const& request) override;
+
+  future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
+  AsyncQueryWriteStatus(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::QueryWriteStatusRequest const& request) override;
+
  private:
   std::shared_ptr<StorageStub> Child();
+  std::weak_ptr<StorageRoundRobin> WeakFromThis() { return shared_from_this(); }
+  void Refresh(std::size_t index,
+               std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq);
+  void OnRefresh(
+      std::size_t index,
+      std::weak_ptr<google::cloud::internal::CompletionQueueImpl> wcq, bool ok);
 
   std::vector<std::shared_ptr<StorageStub>> const children_;
   std::mutex mu_;
   std::size_t current_ = 0;
+  std::vector<std::shared_ptr<grpc::Channel>> channels_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

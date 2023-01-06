@@ -17,7 +17,6 @@
 // source: google/devtools/cloudtrace/v2/tracing.proto
 
 #include "google/cloud/trace/trace_client.h"
-#include "google/cloud/trace/internal/trace_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TraceServiceClient::TraceServiceClient(
     std::shared_ptr<TraceServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          trace_internal::TraceServiceDefaultOptions(connection_->options()))) {
-}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TraceServiceClient::~TraceServiceClient() = default;
 
 Status TraceServiceClient::BatchWriteSpans(

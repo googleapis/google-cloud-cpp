@@ -17,11 +17,13 @@
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/openssl_util.h"
-#include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/oauth2_service_account_credentials.h"
+#include "google/cloud/internal/sha256_hash.h"
 #include "google/cloud/optional.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
@@ -38,9 +40,13 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
 namespace oauth2 {
-/// Object to hold information used to instantiate an ServiceAccountCredentials.
+
+/**
+ * Object to hold information used to instantiate an ServiceAccountCredentials.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 struct ServiceAccountCredentialsInfo {
   std::string client_email;
   std::string private_key_id;
@@ -52,7 +58,12 @@ struct ServiceAccountCredentialsInfo {
   absl::optional<std::string> subject;
 };
 
-/// Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
+/**
+ * Parses the contents of a JSON keyfile into a ServiceAccountCredentialsInfo.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
+
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
@@ -65,13 +76,19 @@ StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountCredentials(
  * @note Note that P12 keyfiles do not contain the `client_email` for the
  * service account, the application must obtain this through some other means
  * and provide them to the function.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 StatusOr<ServiceAccountCredentialsInfo> ParseServiceAccountP12File(
     std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
-/// Parses a refresh response JSON string and uses the current time to create a
-/// TemporaryToken.
+/**
+ * Parses a refresh response JSON string and uses the current time to create a
+ * TemporaryToken.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseServiceAccountRefreshResponse(
     storage::internal::HttpResponse const& response,
@@ -85,6 +102,8 @@ ParseServiceAccountRefreshResponse(
  * https://cloud.google.com/endpoints/docs/frameworks/java/troubleshoot-jwt
  *
  * @see https://tools.ietf.org/html/rfc7523
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 std::pair<std::string, std::string> AssertionComponentsFromInfo(
     ServiceAccountCredentialsInfo const& info,
@@ -94,17 +113,62 @@ std::pair<std::string, std::string> AssertionComponentsFromInfo(
  * Given a key and a JSON header and payload, creates a JWT assertion string.
  *
  * @see https://tools.ietf.org/html/rfc7519
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 std::string MakeJWTAssertion(std::string const& header,
                              std::string const& payload,
                              std::string const& pem_contents);
 
-/// Uses a ServiceAccountCredentialsInfo and the current time to construct a
-/// JWT assertion. The assertion combined with the grant type is used to create
-/// the refresh payload.
+/**
+ * Uses a ServiceAccountCredentialsInfo and the current time to construct a JWT
+ * assertion.
+ *
+ * The assertion combined with the grant type is used to create the refresh
+ * payload.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 std::string CreateServiceAccountRefreshPayload(
     ServiceAccountCredentialsInfo const& info, std::string const& grant_type,
     std::chrono::system_clock::time_point now);
+
+/**
+ * Make a self-signed JWT from the service account.
+ *
+ * [Self-signed JWTs] bypass the intermediate step of exchanging client
+ * assertions for OAuth tokens. The advantages of self-signed JTWs include:
+ *
+ * - They are more efficient, as they require more or less the same amount of
+ *   local work, and save a round-trip to the token endpoint, typically
+ *   https://oauth2.googleapis.com/token.
+ * - While this service is extremely reliable, removing external dependencies in
+ *   the critical path almost always improves reliability.
+ * - They work better in VPC-SC environments and other environments with limited
+ *   Internet access.
+ *
+ * @warning At this time only scope-based self-signed JWTs are supported.
+ *
+ * [Self-signed JWTs]: https://google.aip.dev/auth/4111
+ *
+ * @param info the parsed service account information, see
+ * `ParseServiceAccountCredentials()`
+ * @param tp the current time
+ * @return a bearer token for authentication.  Include this value in the
+ *   `Authorization` header with the "Bearer" type.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
+StatusOr<std::string> MakeSelfSignedJWT(
+    ServiceAccountCredentialsInfo const& info,
+    std::chrono::system_clock::time_point tp);
+
+/**
+ * Return true if we need to use the OAuth path to create tokens
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
+bool ServiceAccountUseOAuth(ServiceAccountCredentialsInfo const& info);
 
 /**
  * Wrapper class for Google OAuth 2.0 service account credentials.
@@ -118,7 +182,7 @@ std::string CreateServiceAccountRefreshPayload(
  * can be obtained by calling the AuthorizationHeader() method; if the current
  * access token is invalid or nearing expiration, this will class will first
  * obtain a new access token before returning the Authorization header string.
-
+ *
  * @see https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  * for an overview of using service accounts with Google's OAuth 2.0 system.
  *
@@ -130,10 +194,60 @@ std::string CreateServiceAccountRefreshPayload(
  *     overridden except for testing.
  * @tparam ClockType a dependency injection point to fetch the current time.
  *     This should generally not be overridden except for testing.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
           typename ClockType = std::chrono::system_clock>
+class ServiceAccountCredentials;
+
+/// @copydoc ServiceAccountCredentials
+template <>
+class ServiceAccountCredentials<storage::internal::CurlRequestBuilder,
+                                std::chrono::system_clock>
+    : public Credentials {
+ public:
+  explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info)
+      : ServiceAccountCredentials(std::move(info), {}) {}
+  ServiceAccountCredentials(ServiceAccountCredentialsInfo info,
+                            ChannelOptions const& options);
+
+  StatusOr<std::string> AuthorizationHeader() override {
+    return oauth2_internal::AuthorizationHeaderJoined(*impl_);
+  }
+
+  /**
+   * Create a RSA SHA256 signature of the blob using the Credential object.
+   *
+   * @param signing_account the desired service account which should sign
+   *   @p blob. If not set, uses this object's account. If set, it must match
+   *   this object's service account.
+   * @param blob the string to sign. Note that sometimes the application must
+   *   Base64-encode the data before signing.
+   * @return the signed blob as raw bytes. An error if the @p signing_account
+   *     does not match the email for the credential's account.
+   *
+   * @deprecated Prefer using the unified credentials documented in @ref guac
+   */
+  StatusOr<std::vector<std::uint8_t>> SignBlob(
+      SigningAccount const& signing_account,
+      std::string const& blob) const override {
+    return impl_->SignBlob((signing_account.has_value()
+                                ? signing_account.value()
+                                : absl::optional<std::string>(absl::nullopt)),
+                           blob);
+  }
+
+  std::string AccountEmail() const override { return impl_->AccountEmail(); }
+  std::string KeyId() const override { return impl_->KeyId(); }
+
+ private:
+  std::unique_ptr<oauth2_internal::ServiceAccountCredentials> impl_;
+};
+
+/// @copydoc ServiceAccountCredentials
+template <typename HttpRequestBuilderType, typename ClockType>
 class ServiceAccountCredentials : public Credentials {
  public:
   explicit ServiceAccountCredentials(ServiceAccountCredentialsInfo info)
@@ -160,6 +274,8 @@ class ServiceAccountCredentials : public Credentials {
    *   Base64-encode the data before signing.
    * @return the signed blob as raw bytes. An error if the @p signing_account
    *     does not match the email for the credential's account.
+   *
+   * @deprecated Prefer using the unified credentials documented in @ref guac
    */
   StatusOr<std::vector<std::uint8_t>> SignBlob(
       SigningAccount const& signing_account,
@@ -178,7 +294,14 @@ class ServiceAccountCredentials : public Credentials {
   std::string KeyId() const override { return info_.private_key_id; }
 
  private:
+  bool UseOAuth() const { return ServiceAccountUseOAuth(info_); }
+
   StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() {
+    if (UseOAuth()) return RefreshOAuth();
+    return RefreshSelfSigned();
+  }
+
+  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshOAuth() const {
     HttpRequestBuilderType builder(
         info_.token_uri,
         storage::internal::GetDefaultCurlHandleFactory(options_));
@@ -198,6 +321,16 @@ class ServiceAccountCredentials : public Credentials {
     return ParseServiceAccountRefreshResponse(*response, clock_.now());
   }
 
+  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> RefreshSelfSigned()
+      const {
+    auto const tp = clock_.now();
+    auto token = MakeSelfSignedJWT(info_, tp);
+    if (!token) return std::move(token).status();
+    return RefreshingCredentialsWrapper::TemporaryToken{
+        "Authorization: Bearer " + *token,
+        tp + GoogleOAuthAccessTokenLifetime()};
+  }
+
   ServiceAccountCredentialsInfo info_;
   Options options_;
   mutable std::mutex mu_;
@@ -206,6 +339,13 @@ class ServiceAccountCredentials : public Credentials {
 };
 
 }  // namespace oauth2
+
+namespace internal {
+
+oauth2_internal::ServiceAccountCredentialsInfo MapServiceAccountCredentialsInfo(
+    oauth2::ServiceAccountCredentialsInfo info);
+
+}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud

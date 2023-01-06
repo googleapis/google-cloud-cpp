@@ -23,6 +23,7 @@
 #include "google/cloud/monitoring/internal/dashboards_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -41,9 +42,9 @@ DashboardsServiceConnection::CreateDashboard(
 }
 
 StreamRange<google::monitoring::dashboard::v1::Dashboard>
-    DashboardsServiceConnection::ListDashboards(
-        google::monitoring::dashboard::v1::
-            ListDashboardsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DashboardsServiceConnection::ListDashboards(
+    google::monitoring::dashboard::v1::
+        ListDashboardsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::dashboard::v1::Dashboard>>();
 }
@@ -68,6 +69,7 @@ DashboardsServiceConnection::UpdateDashboard(
 std::shared_ptr<DashboardsServiceConnection> MakeDashboardsServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  DashboardsServicePolicyOptionList>(options,
                                                                     __func__);
   options =
@@ -81,24 +83,5 @@ std::shared_ptr<DashboardsServiceConnection> MakeDashboardsServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::DashboardsServiceConnection>
-MakeDashboardsServiceConnection(std::shared_ptr<DashboardsServiceStub> stub,
-                                Options options) {
-  options = DashboardsServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<monitoring_internal::DashboardsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
 }  // namespace cloud
 }  // namespace google

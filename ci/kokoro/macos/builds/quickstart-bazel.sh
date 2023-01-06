@@ -24,7 +24,7 @@ source module ci/lib/io.sh
 # NOTE: In this file use the command `bazelisk` rather than bazel, because
 # Kokoro has both installed and we want to make sure to use the former.
 io::log_h2 "Using bazel version"
-: "${USE_BAZEL_VERSION:="5.0.0"}"
+: "${USE_BAZEL_VERSION:="6.0.0"}"
 export USE_BAZEL_VERSION
 bazelisk version || rm -fr "$HOME"/Library/Caches/bazelisk || bazelisk version
 # Kokoro needs bazel to be shutdown here, otherwise it will hang. This shutdown
@@ -53,8 +53,12 @@ if [[ -r "${CREDENTIALS_FILE}" ]]; then
     # Reduce the timeout for the remote cache from the 60s default:
     #     https://docs.bazel.build/versions/main/command-line-reference.html#flag--remote_timeout
     # If the build machine has network problems we would rather build locally
-    # over blocking the build for 60s
-    "--remote_timeout=3"
+    # over blocking the build for 60s. When adjusting this parameter, keep in
+    # mind that:
+    # - Some of the objects in the cache in the ~60MiB range.
+    # - Without tuning uploads run in the 50 MiB/s range, and downloads in
+    #   the 150 MiB/s range.
+    "--remote_timeout=5"
   )
   bazel_args+=("--google_credentials=${CREDENTIALS_FILE}")
   # See https://docs.bazel.build/versions/main/remote-caching.html#known-issues

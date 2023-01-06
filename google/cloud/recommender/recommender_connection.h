@@ -45,6 +45,18 @@ using RecommenderLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         recommender_internal::RecommenderRetryTraits>;
 
+/**
+ * The `RecommenderConnection` object for `RecommenderClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `RecommenderClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `RecommenderClient`.
+ *
+ * To create a concrete instance, see `MakeRecommenderConnection()`.
+ *
+ * For mocking, see `recommender_mocks::MockRecommenderConnection`.
+ */
 class RecommenderConnection {
  public:
   virtual ~RecommenderConnection() = 0;
@@ -83,26 +95,54 @@ class RecommenderConnection {
   MarkRecommendationFailed(
       google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
           request);
+
+  virtual StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  GetRecommenderConfig(
+      google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  UpdateRecommenderConfig(
+      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  GetInsightTypeConfig(
+      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  UpdateInsightTypeConfig(
+      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+          request);
 };
 
+/**
+ * A factory function to construct an object of type `RecommenderConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of RecommenderClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `RecommenderConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::recommender::RecommenderPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `RecommenderConnection` created by
+ * this function.
+ */
 std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace recommender_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<recommender::RecommenderConnection> MakeRecommenderConnection(
-    std::shared_ptr<RecommenderStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace recommender_internal
 }  // namespace cloud
 }  // namespace google
 

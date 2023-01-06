@@ -49,6 +49,21 @@ using CertificateAuthorityServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         privateca_internal::CertificateAuthorityServiceRetryTraits>;
 
+/**
+ * The `CertificateAuthorityServiceConnection` object for
+ * `CertificateAuthorityServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CertificateAuthorityServiceClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `CertificateAuthorityServiceClient`.
+ *
+ * To create a concrete instance, see
+ * `MakeCertificateAuthorityServiceConnection()`.
+ *
+ * For mocking, see
+ * `privateca_mocks::MockCertificateAuthorityServiceConnection`.
+ */
 class CertificateAuthorityServiceConnection {
  public:
   virtual ~CertificateAuthorityServiceConnection() = 0;
@@ -212,25 +227,34 @@ class CertificateAuthorityServiceConnection {
           UpdateCertificateTemplateRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `CertificateAuthorityServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * CertificateAuthorityServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `CertificateAuthorityServiceConnection`. Expected options are any of
+ * the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::privateca::CertificateAuthorityServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the
+ * `CertificateAuthorityServiceConnection` created by this function.
+ */
 std::shared_ptr<CertificateAuthorityServiceConnection>
 MakeCertificateAuthorityServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace privateca_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<privateca::CertificateAuthorityServiceConnection>
-MakeCertificateAuthorityServiceConnection(
-    std::shared_ptr<CertificateAuthorityServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace privateca_internal
 }  // namespace cloud
 }  // namespace google
 

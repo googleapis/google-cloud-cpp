@@ -96,6 +96,15 @@ CloudMemcacheMetadata::AsyncApplyParameters(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+CloudMemcacheMetadata::AsyncRescheduleMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  SetMetadata(*context, "instance=" + request.instance());
+  return child_->AsyncRescheduleMaintenance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 CloudMemcacheMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -125,9 +134,8 @@ void CloudMemcacheMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

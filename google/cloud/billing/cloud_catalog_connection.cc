@@ -23,6 +23,7 @@
 #include "google/cloud/billing/internal/cloud_catalog_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudCatalogConnection::~CloudCatalogConnection() = default;
 
 StreamRange<google::cloud::billing::v1::Service>
-    CloudCatalogConnection::ListServices(
-        google::cloud::billing::v1::
-            ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudCatalogConnection::ListServices(
+    google::cloud::billing::v1::
+        ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::Service>>();
 }
@@ -52,6 +53,7 @@ StreamRange<google::cloud::billing::v1::Sku> CloudCatalogConnection::ListSkus(
 std::shared_ptr<CloudCatalogConnection> MakeCloudCatalogConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudCatalogPolicyOptionList>(options,
                                                                __func__);
   options = billing_internal::CloudCatalogDefaultOptions(std::move(options));
@@ -64,23 +66,5 @@ std::shared_ptr<CloudCatalogConnection> MakeCloudCatalogConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace billing_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<billing::CloudCatalogConnection> MakeCloudCatalogConnection(
-    std::shared_ptr<CloudCatalogStub> stub, Options options) {
-  options = CloudCatalogDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<billing_internal::CloudCatalogConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace billing_internal
 }  // namespace cloud
 }  // namespace google

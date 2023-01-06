@@ -15,12 +15,16 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_TABLE_H
 
-#include "google/cloud/bigtable/async_row_reader.h"
 #include "google/cloud/bigtable/completion_queue.h"
 #include "google/cloud/bigtable/data_client.h"
+#include "google/cloud/bigtable/data_connection.h"
 #include "google/cloud/bigtable/filters.h"
 #include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/internal/defaults.h"
+#include "google/cloud/bigtable/internal/legacy_async_row_reader.h"
+#include "google/cloud/bigtable/mutation_branch.h"
 #include "google/cloud/bigtable/mutations.h"
+#include "google/cloud/bigtable/options.h"
 #include "google/cloud/bigtable/read_modify_write_rule.h"
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/row_key_sample.h"
@@ -28,9 +32,12 @@
 #include "google/cloud/bigtable/row_set.h"
 #include "google/cloud/bigtable/rpc_backoff_policy.h"
 #include "google/cloud/bigtable/rpc_retry_policy.h"
+#include "google/cloud/bigtable/table_resource.h"
 #include "google/cloud/bigtable/version.h"
 #include "google/cloud/future.h"
 #include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/group_options.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/meta/type_traits.h"
@@ -41,15 +48,6 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-/// The branch taken by a Table::CheckAndMutateRow operation.
-enum class MutationBranch {
-  /// The predicate provided to CheckAndMutateRow did not match and the
-  /// `false_mutations` (if any) were applied.
-  kPredicateNotMatched,
-  /// The predicate provided to CheckAndMutateRow matched and the
-  /// `true_mutations` (if any) were applied.
-  kPredicateMatched,
-};
 
 class MutationBatcher;
 
@@ -183,6 +181,39 @@ class Table {
 
  public:
   /**
+   * Constructs a `Table` object.
+   *
+   * @param conn the connection to the Cloud Bigtable service. See
+   *     `MakeDataConnection()` for how to create a connection. To mock the
+   *     behavior of `Table` in your tests, use a
+   *     `bigtable_mocks::MockDataConnection`.
+   * @param tr identifies the table resource by its project, instance, and table
+   *     ids.
+   * @param options Configuration options for the table. Use
+   *     `AppProfileIdOption` to supply an app profile for the `Table`
+   *     operations. Or configure retry / backoff / idempotency policies with
+   *     the options enumerated in `DataPolicyOptionList`.
+   *
+   * @par Example Using AppProfile
+   * @snippet bigtable_hello_app_profile.cc read with app profile
+   *
+   * @par Idempotency Policy Example
+   * @snippet data_snippets.cc apply relaxed idempotency
+   *
+   * @par Modified Retry Policy Example
+   * @snippet data_snippets.cc apply custom retry
+   */
+  explicit Table(std::shared_ptr<bigtable::DataConnection> conn,
+                 TableResource tr, Options options = {})
+      : table_(std::move(tr)),
+        table_name_(table_.FullName()),
+        connection_(std::move(conn)),
+        options_(google::cloud::internal::MergeOptions(std::move(options),
+                                                       connection_->options())),
+        metadata_update_policy_(bigtable_internal::MakeMetadataUpdatePolicy(
+            table_name_, app_profile_id())) {}
+
+  /**
    * Constructor with default policies.
    *
    * @param client how to communicate with Cloud Bigtable, including
@@ -202,30 +233,22 @@ class Table {
    * API.
    * @param table_id the table id within the instance defined by client.  The
    *     full table name is `client->instance_name() + '/tables/' + table_id`.
-   *
-   * @par Example
-   * @snippet bigtable_hello_app_profile.cc cbt namespace
-   *
-   * @par Example Using AppProfile
-   * @snippet bigtable_hello_app_profile.cc read with app profile
    */
   Table(std::shared_ptr<DataClient> client, std::string app_profile_id,
         std::string const& table_id)
       : client_(std::move(client)),
-        app_profile_id_(std::move(app_profile_id)),
-        project_id_(client_->project_id()),
-        instance_id_(client_->instance_id()),
-        table_name_(TableName(project_id_, instance_id_, table_id)),
-        table_id_(table_id),
+        table_(client_->project_id(), client_->instance_id(), table_id),
+        table_name_(table_.FullName()),
         rpc_retry_policy_prototype_(
             bigtable::DefaultRPCRetryPolicy(internal::kBigtableLimits)),
         rpc_backoff_policy_prototype_(
             bigtable::DefaultRPCBackoffPolicy(internal::kBigtableLimits)),
-        metadata_update_policy_(
-            MetadataUpdatePolicy(table_name_, MetadataParamTypes::TABLE_NAME)),
         idempotent_mutation_policy_(
             bigtable::DefaultIdempotentMutationPolicy()),
-        background_threads_(client_->BackgroundThreadsFactory()()) {}
+        background_threads_(client_->BackgroundThreadsFactory()()),
+        options_(Options{}.set<AppProfileIdOption>(std::move(app_profile_id))),
+        metadata_update_policy_(bigtable_internal::MakeMetadataUpdatePolicy(
+            table_name_, this->app_profile_id())) {}
 
   /**
    * Constructor with explicit policies.
@@ -273,12 +296,6 @@ class Table {
    * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
    *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
    *     LimitedTimeRetryPolicy.
-   *
-   * @par Idempotency Policy Example
-   * @snippet data_snippets.cc apply relaxed idempotency
-   *
-   * @par Modified Retry Policy Example
-   * @snippet data_snippets.cc apply custom retry
    */
   template <
       typename... Policies,
@@ -336,12 +353,6 @@ class Table {
    * @see SafeIdempotentMutationPolicy, AlwaysRetryMutationPolicy,
    *     ExponentialBackoffPolicy, LimitedErrorCountRetryPolicy,
    *     LimitedTimeRetryPolicy.
-   *
-   * @par Idempotency Policy Example
-   * @snippet data_snippets.cc apply relaxed idempotency
-   *
-   * @par Modified Retry Policy Example
-   * @snippet data_snippets.cc apply custom retry
    */
   template <
       typename... Policies,
@@ -353,10 +364,16 @@ class Table {
   }
 
   std::string const& table_name() const { return table_name_; }
-  std::string const& app_profile_id() const { return app_profile_id_; }
-  std::string const& project_id() const { return project_id_; }
-  std::string const& instance_id() const { return instance_id_; }
-  std::string const& table_id() const { return table_id_; }
+  std::string const& app_profile_id() const {
+    return options_.get<AppProfileIdOption>();
+  }
+  std::string const& project_id() const {
+    return table_.instance().project_id();
+  }
+  std::string const& instance_id() const {
+    return table_.instance().instance_id();
+  }
+  std::string const& table_id() const { return table_.table_id(); }
 
   /**
    * Returns a Table that reuses the connection and configuration of this
@@ -366,8 +383,13 @@ class Table {
    */
   Table WithNewTarget(std::string project_id, std::string instance_id,
                       std::string table_id) const {
-    return WithNewTarget(std::move(project_id), std::move(instance_id),
-                         app_profile_id_, std::move(table_id));
+    auto table = *this;
+    table.table_ = TableResource(std::move(project_id), std::move(instance_id),
+                                 std::move(table_id));
+    table.table_name_ = table.table_.FullName();
+    table.metadata_update_policy_ = bigtable_internal::MakeMetadataUpdatePolicy(
+        table.table_name_, table.app_profile_id());
+    return table;
   }
 
   /**
@@ -377,14 +399,12 @@ class Table {
   Table WithNewTarget(std::string project_id, std::string instance_id,
                       std::string app_profile_id, std::string table_id) const {
     auto table = *this;
-    table.instance_id_ = std::move(instance_id);
-    table.project_id_ = std::move(project_id);
-    table.table_id_ = std::move(table_id);
-    table.app_profile_id_ = std::move(app_profile_id);
-    table.table_name_ =
-        TableName(table.project_id_, table.instance_id_, table.table_id_);
-    table.metadata_update_policy_ =
-        MetadataUpdatePolicy(table.table_name_, MetadataParamTypes::TABLE_NAME);
+    table.table_ = TableResource(std::move(project_id), std::move(instance_id),
+                                 std::move(table_id));
+    table.table_name_ = table.table_.FullName();
+    table.options_.set<AppProfileIdOption>(std::move(app_profile_id));
+    table.metadata_update_policy_ = bigtable_internal::MakeMetadataUpdatePolicy(
+        table.table_name_, table.app_profile_id());
     return table;
   }
 
@@ -395,6 +415,8 @@ class Table {
    *     then discards) the data in the mutation.  In general, a
    *     `SingleRowMutation` can be used to modify and/or delete multiple cells,
    *     across different columns and column families.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @return status of the operation.
    *
@@ -410,7 +432,7 @@ class Table {
    * @par Example
    * @snippet data_snippets.cc apply
    */
-  Status Apply(SingleRowMutation mut);
+  Status Apply(SingleRowMutation mut, Options opts = {});
 
   /**
    * Makes asynchronous attempts to apply the mutation to a row.
@@ -420,9 +442,11 @@ class Table {
    *     is not subject to any SLA or deprecation policy.
    *
    * @param mut the mutation. Note that this function takes ownership
-   * (and then discards) the data in the mutation.  In general, a
+   *     (and then discards) the data in the mutation.  In general, a
    *     `SingleRowMutation` can be used to modify and/or delete
-   * multiple cells, across different columns and column families.
+   *     multiple cells, across different columns and column families.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @par Idempotency
    * This operation is idempotent if the provided mutations are idempotent. Note
@@ -432,7 +456,7 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc async-apply
    */
-  future<Status> AsyncApply(SingleRowMutation mut);
+  future<Status> AsyncApply(SingleRowMutation mut, Options opts = {});
 
   /**
    * Attempts to apply mutations to multiple rows.
@@ -448,18 +472,14 @@ class Table {
    * It is possible that some mutations may not be attempted at all. These
    * mutations are considered failing and will be returned.
    *
-   * @note The retry policy is only impacted by the result of the gRPC stream.
-   *     Let's say you have a `LimitedErrorCountRetryPolicy` of 2. If an
-   *     idempotent mutation fails with a retryable error and the stream itself
-   *     succeeds, it may be retried more than 2 times. Only when the stream
-   *     fails twice will we give up and consider the mutation to be failed.
-   *
    * @note This function takes ownership (and then discards) the data in the
    *     mutation. In general, a `BulkMutation` can modify multiple rows, and
    *     the modifications for each row can change (or create) multiple cells,
    *     across different columns and column families.
    *
    * @param mut the mutations
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    * @returns a list of failed mutations
    *
    * @par Idempotency
@@ -475,7 +495,7 @@ class Table {
    * @par Example
    * @snippet data_snippets.cc bulk apply
    */
-  std::vector<FailedMutation> BulkApply(BulkMutation mut);
+  std::vector<FailedMutation> BulkApply(BulkMutation mut, Options opts = {});
 
   /**
    * Makes asynchronous attempts to apply mutations to multiple rows.
@@ -491,18 +511,14 @@ class Table {
    * It is possible that some mutations may not be attempted at all. These
    * mutations are considered failing and will be returned.
    *
-   * @note The retry policy is only impacted by the result of the gRPC stream.
-   *     Let's say you have a `LimitedErrorCountRetryPolicy` of 2. If an
-   *     idempotent mutation fails with a retryable error and the stream itself
-   *     succeeds, it may be retried more than 2 times. Only when the stream
-   *     fails twice will we give up and consider the mutation to be failed.
-   *
    * @note This function takes ownership (and then discards) the data in the
    *     mutation. In general, a `BulkMutation` can modify multiple rows, and
    *     the modifications for each row can change (or create) multiple cells,
    *     across different columns and column families.
    *
    * @param mut the mutations
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    * @returns a future to be filled with a list of failed mutations, when the
    *     operation is complete.
    *
@@ -519,13 +535,16 @@ class Table {
    * @par Example
    * @snippet data_async_snippets.cc bulk async-bulk-apply
    */
-  future<std::vector<FailedMutation>> AsyncBulkApply(BulkMutation mut);
+  future<std::vector<FailedMutation>> AsyncBulkApply(BulkMutation mut,
+                                                     Options opts = {});
 
   /**
    * Reads a set of rows from the table.
    *
    * @param row_set the rows to read from.
    * @param filter is applied on the server-side to data in the rows.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @par Idempotency
    * This is a read-only operation and therefore it is always idempotent.
@@ -540,7 +559,7 @@ class Table {
    * @par Example
    * @snippet read_snippets.cc read rows
    */
-  RowReader ReadRows(RowSet row_set, Filter filter);
+  RowReader ReadRows(RowSet row_set, Filter filter, Options opts = {});
 
   /**
    * Reads a limited set of rows from the table.
@@ -550,6 +569,8 @@ class Table {
    *     number or zero. Use `ReadRows(RowSet, Filter)` to read all matching
    *     rows.
    * @param filter is applied on the server-side to data in the rows.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @par Idempotency
    * This is a read-only operation and therefore it is always idempotent.
@@ -564,7 +585,8 @@ class Table {
    * @par Example
    * @snippet read_snippets.cc read rows with limit
    */
-  RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter);
+  RowReader ReadRows(RowSet row_set, std::int64_t rows_limit, Filter filter,
+                     Options opts = {});
 
   /**
    * Read and return a single row from the table.
@@ -572,6 +594,8 @@ class Table {
    * @param row_key the row to read.
    * @param filter a filter expression, can be used to select a subset of the
    *     column families and columns in the row.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    * @returns a tuple, the first element is a boolean, with value `false` if the
    *     row does not exist.  If the first element is `true` the second element
    *     has the contents of the Row.  Note that the contents may be empty
@@ -588,7 +612,8 @@ class Table {
    * @par Example
    * @snippet read_snippets.cc read row
    */
-  StatusOr<std::pair<bool, Row>> ReadRow(std::string row_key, Filter filter);
+  StatusOr<std::pair<bool, Row>> ReadRow(std::string row_key, Filter filter,
+                                         Options opts = {});
 
   /**
    * Atomic test-and-set for a row using filter expressions.
@@ -602,6 +627,8 @@ class Table {
    * @param filter the filter expression.
    * @param true_mutations the mutations for the "filter passed" case.
    * @param false_mutations the mutations for the "filter did not pass" case.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    * @returns true if the filter passed.
    *
    * @par Idempotency
@@ -620,7 +647,7 @@ class Table {
    */
   StatusOr<MutationBranch> CheckAndMutateRow(
       std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
-      std::vector<Mutation> false_mutations);
+      std::vector<Mutation> false_mutations, Options opts = {});
 
   /**
    * Make an asynchronous request to conditionally mutate a row.
@@ -637,6 +664,8 @@ class Table {
    *     true
    * @param false_mutations the mutations which will be performed if @p filter
    *     is false
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @par Idempotency
    * This operation is always treated as non-idempotent.
@@ -651,7 +680,7 @@ class Table {
    */
   future<StatusOr<MutationBranch>> AsyncCheckAndMutateRow(
       std::string row_key, Filter filter, std::vector<Mutation> true_mutations,
-      std::vector<Mutation> false_mutations);
+      std::vector<Mutation> false_mutations, Options opts = {});
 
   /**
    * Sample of the row keys in the table, including approximate data sizes.
@@ -671,7 +700,7 @@ class Table {
    * @par Examples
    * @snippet data_snippets.cc sample row keys
    */
-  StatusOr<std::vector<bigtable::RowKeySample>> SampleRows();
+  StatusOr<std::vector<bigtable::RowKeySample>> SampleRows(Options opts = {});
 
   /**
    * Asynchronously obtains a sample of the row keys in the table, including
@@ -694,13 +723,16 @@ class Table {
    * @par Examples
    * @snippet data_async_snippets.cc async sample row keys
    */
-  future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows();
+  future<StatusOr<std::vector<bigtable::RowKeySample>>> AsyncSampleRows(
+      Options opts = {});
 
   /**
    * Atomically read and modify the row in the server, returning the
    * resulting row
    *
-   * @tparam Args this is zero or more ReadModifyWriteRules to apply on a row
+   * @tparam Args this is zero or more ReadModifyWriteRules to apply on a row.
+   *     Options to override the class-level options, such as retry, backoff,
+   *     and idempotency policies are also be passed via this parameter pack.
    * @param row_key the row to read
    * @param rule to modify the row. Two types of rules are applied here
    *     AppendValue which will read the existing value and append the
@@ -708,7 +740,10 @@ class Table {
    *     IncrementAmount which will read the existing uint64 big-endian-int
    *     and add the value provided.
    *     Both rules accept the family and column identifier to modify.
-   * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
+   * @param rules_and_options is the zero or more ReadModifyWriteRules to apply
+   *     on a row. Options to override the class-level options, such as retry,
+   *     backoff, and idempotency policies are also be passed via this parameter
+   *     pack.
    * @returns the new contents of all modified cells.
    *
    * @par Idempotency
@@ -725,21 +760,25 @@ class Table {
   template <typename... Args>
   StatusOr<Row> ReadModifyWriteRow(std::string row_key,
                                    bigtable::ReadModifyWriteRule rule,
-                                   Args&&... rules) {
+                                   Args&&... rules_and_options) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
 
     // Generate a better compile time error message than the default one
     // if the types do not match
     static_assert(
-        absl::conjunction<
-            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
+        absl::conjunction<absl::disjunction<
+            std::is_convertible<Args, bigtable::ReadModifyWriteRule>,
+            std::is_same<typename std::decay<Args>::type, Options>>...>::value,
         "The arguments passed to ReadModifyWriteRow(row_key,...) must be "
-        "convertible to bigtable::ReadModifyWriteRule");
+        "convertible to bigtable::ReadModifyWriteRule, or of type "
+        "google::cloud::Options");
 
     *request.add_rules() = std::move(rule).as_proto();
-    AddRules(request, std::forward<Args>(rules)...);
-    return ReadModifyWriteRowImpl(std::move(request));
+    AddRules(request, std::forward<Args>(rules_and_options)...);
+    auto opts = google::cloud::internal::GroupOptions(
+        std::forward<Args>(rules_and_options)...);
+    return ReadModifyWriteRowImpl(std::move(request), std::move(opts));
   }
 
   /**
@@ -749,15 +788,20 @@ class Table {
    *     Bigtable. These APIs might be changed in backward-incompatible ways. It
    *     is not subject to any SLA or deprecation policy.
    *
+   * @tparam Args this is zero or more ReadModifyWriteRules to apply on a row.
+   *     Options to override the class-level options, such as retry, backoff,
+   *     and idempotency policies are also be passed via this parameter pack.
    * @param row_key the row key on which modification will be performed
-   *
    * @param rule to modify the row. Two types of rules are applied here
    *     AppendValue which will read the existing value and append the
    *     text provided to the value.
    *     IncrementAmount which will read the existing uint64 big-endian-int
    *     and add the value provided.
    *     Both rules accept the family and column identifier to modify.
-   * @param rules is the zero or more ReadModifyWriteRules to apply on a row.
+   * @param rules_and_options is the zero or more ReadModifyWriteRules to apply
+   *     on a row. Options to override the class-level options, such as retry,
+   *     backoff, and idempotency policies are also be passed via this parameter
+   *     pack.
    * @returns a future, that becomes satisfied when the operation completes,
    *     at that point the future has the contents of all modified cells.
    *
@@ -774,21 +818,25 @@ class Table {
   template <typename... Args>
   future<StatusOr<Row>> AsyncReadModifyWriteRow(
       std::string row_key, bigtable::ReadModifyWriteRule rule,
-      Args&&... rules) {
+      Args&&... rules_and_options) {
     ::google::bigtable::v2::ReadModifyWriteRowRequest request;
     request.set_row_key(std::move(row_key));
 
     // Generate a better compile time error message than the default one
     // if the types do not match
     static_assert(
-        absl::conjunction<
-            std::is_convertible<Args, bigtable::ReadModifyWriteRule>...>::value,
+        absl::conjunction<absl::disjunction<
+            std::is_convertible<Args, bigtable::ReadModifyWriteRule>,
+            std::is_same<typename std::decay<Args>::type, Options>>...>::value,
         "The arguments passed to AsyncReadModifyWriteRow(row_key,...) must be "
-        "convertible to bigtable::ReadModifyWriteRule");
+        "convertible to bigtable::ReadModifyWriteRule, or of type "
+        "google::cloud::Options");
 
     *request.add_rules() = std::move(rule).as_proto();
-    AddRules(request, std::forward<Args>(rules)...);
-    return AsyncReadModifyWriteRowImpl(std::move(request));
+    AddRules(request, std::forward<Args>(rules_and_options)...);
+    auto opts = google::cloud::internal::GroupOptions(
+        std::forward<Args>(rules_and_options)...);
+    return AsyncReadModifyWriteRowImpl(std::move(request), std::move(opts));
   }
 
   /**
@@ -809,6 +857,8 @@ class Table {
    *     results are undefined
    * @param row_set the rows to read from.
    * @param filter is applied on the server-side to data in the rows.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @tparam RowFunctor the type of the @p on_row callback.
    * @tparam FinishFunctor the type of the @p on_finish callback.
@@ -823,10 +873,9 @@ class Table {
    */
   template <typename RowFunctor, typename FinishFunctor>
   void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
-                     Filter filter) {
+                     Filter filter, Options opts = {}) {
     AsyncReadRows(std::move(on_row), std::move(on_finish), std::move(row_set),
-                  AsyncRowReader<RowFunctor, FinishFunctor>::NO_ROWS_LIMIT,
-                  std::move(filter));
+                  RowReader::NO_ROWS_LIMIT, std::move(filter), std::move(opts));
   }
 
   /**
@@ -850,6 +899,8 @@ class Table {
    *     number or zero. Use `AsyncReadRows(RowSet, Filter)` to
    *     read all matching rows.
    * @param filter is applied on the server-side to data in the rows.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    *
    * @tparam RowFunctor the type of the @p on_row callback.
    * @tparam FinishFunctor the type of the @p on_finish callback.
@@ -865,13 +916,55 @@ class Table {
    * @snippet data_async_snippets.cc async read rows with limit
    */
   template <typename RowFunctor, typename FinishFunctor>
-  void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish, RowSet row_set,
-                     std::int64_t rows_limit, Filter filter) {
-    AsyncRowReader<RowFunctor, FinishFunctor>::Create(
-        background_threads_->cq(), client_, app_profile_id_, table_name_,
-        std::move(on_row), std::move(on_finish), std::move(row_set), rows_limit,
-        std::move(filter), clone_rpc_retry_policy(), clone_rpc_backoff_policy(),
-        metadata_update_policy_,
+  void AsyncReadRows(RowFunctor on_row, FinishFunctor on_finish,
+                     // NOLINTNEXTLINE(performance-unnecessary-value-param)
+                     RowSet row_set, std::int64_t rows_limit, Filter filter,
+                     Options opts = {}) {
+    static_assert(
+        google::cloud::internal::is_invocable<RowFunctor, bigtable::Row>::value,
+        "RowFunctor must be invocable with Row.");
+    static_assert(
+        google::cloud::internal::is_invocable<FinishFunctor, Status>::value,
+        "FinishFunctor must be invocable with Status.");
+    static_assert(
+        std::is_same<
+            google::cloud::internal::invoke_result_t<RowFunctor, bigtable::Row>,
+            future<bool>>::value,
+        "RowFunctor should return a future<bool>.");
+
+    auto on_row_ptr = std::make_shared<RowFunctor>(std::move(on_row));
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    auto on_row_fn = [on_row_ptr](Row row) {
+      return (*on_row_ptr)(std::move(row));
+    };
+
+    auto on_finish_ptr = std::make_shared<FinishFunctor>(std::move(on_finish));
+    // NOLINTNEXTLINE(performance-unnecessary-value-param)
+    auto on_finish_fn = [on_finish_ptr](Status status) {
+      return (*on_finish_ptr)(std::move(status));
+    };
+
+    if (connection_) {
+      google::cloud::internal::OptionsSpan span(
+          google::cloud::internal::MergeOptions(std::move(opts), options_));
+      connection_->AsyncReadRows(table_name_, std::move(on_row_fn),
+                                 std::move(on_finish_fn), std::move(row_set),
+                                 rows_limit, std::move(filter));
+      return;
+    }
+    if (!google::cloud::internal::IsEmpty(opts)) {
+      on_finish_fn(
+          Status(StatusCode::kInvalidArgument,
+                 "Per-operation options only apply to `Table`s constructed "
+                 "with a `DataConnection`."));
+      return;
+    }
+
+    bigtable_internal::LegacyAsyncRowReader::Create(
+        background_threads_->cq(), client_, app_profile_id(), table_name_,
+        std::move(on_row_fn), std::move(on_finish_fn), std::move(row_set),
+        rows_limit, std::move(filter), clone_rpc_retry_policy(),
+        clone_rpc_backoff_policy(), metadata_update_policy_,
         absl::make_unique<bigtable::internal::ReadRowsParserFactory>());
   }
 
@@ -885,6 +978,8 @@ class Table {
    * @param row_key the row to read.
    * @param filter a filter expression, can be used to select a subset of the
    *     column families and columns in the row.
+   * @param opts (Optional) Override the class-level options, such as retry,
+   *     backoff, and idempotency policies.
    * @returns a future satisfied when the operation completes, fails
    *     permanently or keeps failing transiently, but the retry policy has been
    *     exhausted. The future will return a tuple. The first element is a
@@ -905,17 +1000,18 @@ class Table {
    * @snippet data_async_snippets.cc async read row
    */
   future<StatusOr<std::pair<bool, Row>>> AsyncReadRow(std::string row_key,
-                                                      Filter filter);
+                                                      Filter filter,
+                                                      Options opts = {});
 
  private:
   /**
    * Send request ReadModifyWriteRowRequest to modify the row and get it back
    */
   StatusOr<Row> ReadModifyWriteRowImpl(
-      ::google::bigtable::v2::ReadModifyWriteRowRequest request);
+      ::google::bigtable::v2::ReadModifyWriteRowRequest request, Options opts);
 
   future<StatusOr<Row>> AsyncReadModifyWriteRowImpl(
-      ::google::bigtable::v2::ReadModifyWriteRowRequest request);
+      ::google::bigtable::v2::ReadModifyWriteRowRequest request, Options opts);
 
   void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest&) {
     // no-op for empty list
@@ -925,6 +1021,12 @@ class Table {
   void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest& request,
                 bigtable::ReadModifyWriteRule rule, Args&&... args) {
     *request.add_rules() = std::move(rule).as_proto();
+    AddRules(request, std::forward<Args>(args)...);
+  }
+
+  template <typename... Args>
+  void AddRules(google::bigtable::v2::ReadModifyWriteRowRequest& request,
+                Options const&, Args&&... args) {
     AddRules(request, std::forward<Args>(args)...);
   }
 
@@ -968,16 +1070,15 @@ class Table {
 
   friend class MutationBatcher;
   std::shared_ptr<DataClient> client_;
-  std::string app_profile_id_;
-  std::string project_id_;
-  std::string instance_id_;
+  TableResource table_;
   std::string table_name_;
-  std::string table_id_;
   std::shared_ptr<RPCRetryPolicy const> rpc_retry_policy_prototype_;
   std::shared_ptr<RPCBackoffPolicy const> rpc_backoff_policy_prototype_;
-  MetadataUpdatePolicy metadata_update_policy_;
   std::shared_ptr<IdempotentMutationPolicy> idempotent_mutation_policy_;
   std::shared_ptr<BackgroundThreads> background_threads_;
+  std::shared_ptr<DataConnection> connection_;
+  Options options_;
+  MetadataUpdatePolicy metadata_update_policy_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

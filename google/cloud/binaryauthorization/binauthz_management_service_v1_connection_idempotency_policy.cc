@@ -30,67 +30,56 @@ using ::google::cloud::Idempotency;
 BinauthzManagementServiceV1ConnectionIdempotencyPolicy::
     ~BinauthzManagementServiceV1ConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy
-    : public BinauthzManagementServiceV1ConnectionIdempotencyPolicy {
- public:
-  ~DefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
+BinauthzManagementServiceV1ConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<
+      BinauthzManagementServiceV1ConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
-  clone() const override {
-    return absl::make_unique<
-        DefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency BinauthzManagementServiceV1ConnectionIdempotencyPolicy::GetPolicy(
+    google::cloud::binaryauthorization::v1::GetPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetPolicy(
-      google::cloud::binaryauthorization::v1::GetPolicyRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+BinauthzManagementServiceV1ConnectionIdempotencyPolicy::UpdatePolicy(
+    google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency UpdatePolicy(
-      google::cloud::binaryauthorization::v1::UpdatePolicyRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+BinauthzManagementServiceV1ConnectionIdempotencyPolicy::CreateAttestor(
+    google::cloud::binaryauthorization::v1::CreateAttestorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateAttestor(
-      google::cloud::binaryauthorization::v1::CreateAttestorRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BinauthzManagementServiceV1ConnectionIdempotencyPolicy::GetAttestor(
+    google::cloud::binaryauthorization::v1::GetAttestorRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetAttestor(
-      google::cloud::binaryauthorization::v1::GetAttestorRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+BinauthzManagementServiceV1ConnectionIdempotencyPolicy::UpdateAttestor(
+    google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency UpdateAttestor(
-      google::cloud::binaryauthorization::v1::UpdateAttestorRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+BinauthzManagementServiceV1ConnectionIdempotencyPolicy::ListAttestors(
+    google::cloud::binaryauthorization::v1::ListAttestorsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListAttestors(
-      google::cloud::binaryauthorization::v1::ListAttestorsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency DeleteAttestor(
-      google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+BinauthzManagementServiceV1ConnectionIdempotencyPolicy::DeleteAttestor(
+    google::cloud::binaryauthorization::v1::DeleteAttestorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<BinauthzManagementServiceV1ConnectionIdempotencyPolicy>
 MakeDefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultBinauthzManagementServiceV1ConnectionIdempotencyPolicy>();
+      BinauthzManagementServiceV1ConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

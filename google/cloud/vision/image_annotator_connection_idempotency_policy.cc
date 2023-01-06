@@ -30,46 +30,34 @@ using ::google::cloud::Idempotency;
 ImageAnnotatorConnectionIdempotencyPolicy::
     ~ImageAnnotatorConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultImageAnnotatorConnectionIdempotencyPolicy
-    : public ImageAnnotatorConnectionIdempotencyPolicy {
- public:
-  ~DefaultImageAnnotatorConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>
+ImageAnnotatorConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ImageAnnotatorConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultImageAnnotatorConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency ImageAnnotatorConnectionIdempotencyPolicy::BatchAnnotateImages(
+    google::cloud::vision::v1::BatchAnnotateImagesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchAnnotateImages(
-      google::cloud::vision::v1::BatchAnnotateImagesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ImageAnnotatorConnectionIdempotencyPolicy::BatchAnnotateFiles(
+    google::cloud::vision::v1::BatchAnnotateFilesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchAnnotateFiles(
-      google::cloud::vision::v1::BatchAnnotateFilesRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ImageAnnotatorConnectionIdempotencyPolicy::AsyncBatchAnnotateImages(
+    google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AsyncBatchAnnotateImages(
-      google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency AsyncBatchAnnotateFiles(
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ImageAnnotatorConnectionIdempotencyPolicy::AsyncBatchAnnotateFiles(
+    google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>
 MakeDefaultImageAnnotatorConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultImageAnnotatorConnectionIdempotencyPolicy>();
+  return absl::make_unique<ImageAnnotatorConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -15,7 +15,6 @@
 //! [START bigquerystorage_quickstart]
 #include "google/cloud/bigquery/bigquery_read_client.h"
 #include <iostream>
-#include <stdexcept>
 
 namespace {
 void ProcessRowsInAvroFormat(
@@ -51,7 +50,7 @@ int main(int argc, char* argv[]) try {
   read_session.set_table(table_name);
   auto session =
       client.CreateReadSession(project_name, read_session, kMaxReadStreams);
-  if (!session) throw std::runtime_error(session.status().message());
+  if (!session) throw std::move(session).status();
 
   // Read rows from the ReadSession.
   constexpr int kRowOffset = 0;
@@ -67,8 +66,8 @@ int main(int argc, char* argv[]) try {
 
   std::cout << num_rows << " rows read from table: " << table_name << "\n";
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 //! [END bigquerystorage_quickstart]

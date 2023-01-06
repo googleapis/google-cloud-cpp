@@ -23,6 +23,7 @@
 #include "google/cloud/datamigration/internal/data_migration_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataMigrationServiceConnection::~DataMigrationServiceConnection() = default;
 
 StreamRange<google::cloud::clouddms::v1::MigrationJob>
-    DataMigrationServiceConnection::ListMigrationJobs(
-        google::cloud::clouddms::v1::
-            ListMigrationJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DataMigrationServiceConnection::ListMigrationJobs(
+    google::cloud::clouddms::v1::
+        ListMigrationJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::clouddms::v1::MigrationJob>>();
 }
@@ -127,9 +128,9 @@ DataMigrationServiceConnection::GenerateSshScript(
 }
 
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
-    DataMigrationServiceConnection::ListConnectionProfiles(
-        google::cloud::clouddms::v1::
-            ListConnectionProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+DataMigrationServiceConnection::ListConnectionProfiles(
+    google::cloud::clouddms::v1::
+        ListConnectionProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::clouddms::v1::ConnectionProfile>>();
 }
@@ -167,6 +168,7 @@ DataMigrationServiceConnection::DeleteConnectionProfile(
 std::shared_ptr<DataMigrationServiceConnection>
 MakeDataMigrationServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  DataMigrationServicePolicyOptionList>(
       options, __func__);
   options = datamigration_internal::DataMigrationServiceDefaultOptions(
@@ -181,25 +183,5 @@ MakeDataMigrationServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datamigration
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace datamigration_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<datamigration::DataMigrationServiceConnection>
-MakeDataMigrationServiceConnection(
-    std::shared_ptr<DataMigrationServiceStub> stub, Options options) {
-  options = DataMigrationServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      datamigration_internal::DataMigrationServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datamigration_internal
 }  // namespace cloud
 }  // namespace google

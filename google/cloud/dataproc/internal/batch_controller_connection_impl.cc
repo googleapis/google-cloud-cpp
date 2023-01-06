@@ -37,14 +37,13 @@ BatchControllerConnectionImpl::BatchControllerConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dataproc_internal::BatchControllerDefaultOptions(
-                                  BatchControllerConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      BatchControllerConnection::options())) {}
 
 future<StatusOr<google::cloud::dataproc::v1::Batch>>
 BatchControllerConnectionImpl::CreateBatch(
     google::cloud::dataproc::v1::CreateBatchRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::Batch>(
       background_->cq(), request,
@@ -85,7 +84,7 @@ StreamRange<google::cloud::dataproc::v1::Batch>
 BatchControllerConnectionImpl::ListBatches(
     google::cloud::dataproc::v1::ListBatchesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<dataproc::BatchControllerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

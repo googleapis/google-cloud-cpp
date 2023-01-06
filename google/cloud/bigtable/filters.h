@@ -18,6 +18,7 @@
 #include "google/cloud/bigtable/version.h"
 #include "absl/meta/type_traits.h"
 #include <google/bigtable/v2/data.pb.h>
+#include <google/protobuf/util/message_differencer.h>
 #include <chrono>
 #include <string>
 
@@ -25,6 +26,7 @@ namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Define the interfaces to create filter expressions.
  *
@@ -56,6 +58,14 @@ class Filter {
   Filter& operator=(Filter&&) = default;
   Filter(Filter const&) = default;
   Filter& operator=(Filter const&) = default;
+
+  friend bool operator==(Filter const& a, Filter const& b) noexcept {
+    return google::protobuf::util::MessageDifferencer::Equivalent(a.filter_,
+                                                                  b.filter_);
+  }
+  friend bool operator!=(Filter const& a, Filter const& b) noexcept {
+    return !(a == b);
+  }
 
   /// Return a filter that passes on all data.
   static Filter PassAllFilter() {

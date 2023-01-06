@@ -17,7 +17,6 @@
 // source: google/cloud/workflows/executions/v1/executions.proto
 
 #include "google/cloud/workflows/executions_client.h"
-#include "google/cloud/workflows/internal/executions_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ExecutionsClient::ExecutionsClient(
     std::shared_ptr<ExecutionsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), workflows_internal::ExecutionsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ExecutionsClient::~ExecutionsClient() = default;
 
 StreamRange<google::cloud::workflows::executions::v1::Execution>

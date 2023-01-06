@@ -46,6 +46,18 @@ using GroupServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         monitoring_internal::GroupServiceRetryTraits>;
 
+/**
+ * The `GroupServiceConnection` object for `GroupServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `GroupServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `GroupServiceClient`.
+ *
+ * To create a concrete instance, see `MakeGroupServiceConnection()`.
+ *
+ * For mocking, see `monitoring_mocks::MockGroupServiceConnection`.
+ */
 class GroupServiceConnection {
  public:
   virtual ~GroupServiceConnection() = 0;
@@ -71,24 +83,32 @@ class GroupServiceConnection {
       google::monitoring::v3::ListGroupMembersRequest request);
 };
 
+/**
+ * A factory function to construct an object of type `GroupServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of GroupServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `GroupServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::monitoring::GroupServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `GroupServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<GroupServiceConnection> MakeGroupServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::GroupServiceConnection> MakeGroupServiceConnection(
-    std::shared_ptr<GroupServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
 }  // namespace cloud
 }  // namespace google
 

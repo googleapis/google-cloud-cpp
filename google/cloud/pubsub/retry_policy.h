@@ -28,7 +28,6 @@ struct RetryTraits {
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
     return status.code() != StatusCode::kOk &&
            status.code() != StatusCode::kAborted &&
-           status.code() != StatusCode::kDeadlineExceeded &&
            status.code() != StatusCode::kInternal &&
            status.code() != StatusCode::kUnavailable &&
            status.code() != StatusCode::kResourceExhausted;

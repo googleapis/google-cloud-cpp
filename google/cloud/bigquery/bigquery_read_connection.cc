@@ -23,6 +23,7 @@
 #include "google/cloud/bigquery/internal/bigquery_read_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -66,6 +67,7 @@ BigQueryReadConnection::SplitReadStream(
 std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BigQueryReadPolicyOptionList>(options,
                                                                __func__);
   options = bigquery_internal::BigQueryReadDefaultOptions(std::move(options));
@@ -79,24 +81,5 @@ std::shared_ptr<BigQueryReadConnection> MakeBigQueryReadConnection(
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace bigquery
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace bigquery_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<bigquery::BigQueryReadConnection> MakeBigQueryReadConnection(
-    std::shared_ptr<BigQueryReadStub> stub, Options options) {
-  options = BigQueryReadDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<bigquery_internal::BigQueryReadConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
-}  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

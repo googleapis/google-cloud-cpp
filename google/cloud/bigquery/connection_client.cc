@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/connection/v1/connection.proto
 
 #include "google/cloud/bigquery/connection_client.h"
-#include "google/cloud/bigquery/internal/connection_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ConnectionServiceClient::ConnectionServiceClient(
     std::shared_ptr<ConnectionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), bigquery_internal::ConnectionServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ConnectionServiceClient::~ConnectionServiceClient() = default;
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>

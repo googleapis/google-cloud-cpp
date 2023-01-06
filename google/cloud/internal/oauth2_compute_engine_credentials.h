@@ -16,8 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_COMPUTE_ENGINE_CREDENTIALS_H
 
 #include "google/cloud/internal/oauth2_credentials.h"
-#include "google/cloud/internal/oauth2_refreshing_credentials_wrapper.h"
-#include "google/cloud/internal/rest_client.h"
+#include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <chrono>
@@ -39,11 +38,20 @@ struct ServiceAccountMetadata {
 StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
     rest_internal::RestResponse& response);
 
-/// Parses a refresh response JSON string into an authorization header. The
-/// header and the current time (for the expiration) form a TemporaryToken.
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-ParseComputeEngineRefreshResponse(rest_internal::RestResponse& response,
-                                  std::chrono::system_clock::time_point now);
+/**
+ * Parses a metadata server response JSON string into a ServiceAccountMetadata.
+ *
+ * This function ignores all parsing errors, the data is purely informational,
+ * it is better to just return nothing than to fail authentication because some
+ * (most likely unused) data was not available or the service returned a
+ * malformed response.
+ */
+ServiceAccountMetadata ParseMetadataServerResponse(std::string const& payload);
+
+/// Parses a refresh response JSON string into an access token.
+StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
+    rest_internal::RestResponse& response,
+    std::chrono::system_clock::time_point now);
 
 /**
  * Wrapper class for Google OAuth 2.0 GCE instance service account credentials.
@@ -54,20 +62,21 @@ ParseComputeEngineRefreshResponse(rest_internal::RestResponse& response,
  * should usually be created via the convenience methods declared in
  * google_credentials.h.
  *
- * An HTTP Authorization header, with an access token as its value, can be
- * obtained by calling the AuthorizationHeader() method; if the current access
- * token is invalid or nearing expiration, this class will first obtain a new
- * access token before returning the Authorization header string.
+ * Most GCE instance have a single `default` service account. The default
+ * constructor (and the initialization via helpers) uses this account. Note that
+ * some GCE instances have no service account associated with them, in which
+ * case this class will never return a valid token. Some GCE instances have
+ * multiple alternative service accounts. At this time there is no way to
+ * request these accounts via the factory functions in
+ * `google/cloud/credentials.h`.
  *
  * @see https://cloud.google.com/compute/docs/authentication#using for details
  * on how to get started with Compute Engine service account credentials.
  */
 class ComputeEngineCredentials : public Credentials {
  public:
-  using CurrentTimeFn =
-      std::function<std::chrono::time_point<std::chrono::system_clock>()>;
-
-  explicit ComputeEngineCredentials();
+  explicit ComputeEngineCredentials(Options options,
+                                    HttpClientFactory client_factory);
 
   /**
    * Creates an instance of ComputeEngineCredentials.
@@ -75,18 +84,13 @@ class ComputeEngineCredentials : public Credentials {
    * @param rest_client a dependency injection point. It makes it possible to
    *     mock internal libcurl wrappers. This should generally not be overridden
    *     except for testing.
-   * @param current_time_fn a dependency injection point to fetch the current
-   *     time. This should generally not be overridden except for testing.
    */
-  explicit ComputeEngineCredentials(
-      std::string service_account_email, Options options = {},
-      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr,
-      CurrentTimeFn current_time_fn = std::chrono::system_clock::now);
+  explicit ComputeEngineCredentials(std::string service_account_email,
+                                    Options options,
+                                    HttpClientFactory client_factory);
 
-  /**
-   * Returns a key value pair for an "Authorization" header.
-   */
-  StatusOr<std::pair<std::string, std::string>> AuthorizationHeader() override;
+  StatusOr<internal::AccessToken> GetToken(
+      std::chrono::system_clock::time_point tp) override;
 
   /**
    * Returns the current Service Account email.
@@ -115,35 +119,22 @@ class ComputeEngineCredentials : public Credentials {
 
  private:
   /**
-   * Sends an HTTP GET request to the GCE metadata server.
-   *
-   * @see https://cloud.google.com/compute/docs/storing-retrieving-metadata for
-   * an overview of retrieving information from the GCE metadata server.
-   */
-  StatusOr<std::unique_ptr<rest_internal::RestResponse>>
-  DoMetadataServerGetRequest(std::string const& path, bool recursive) const;
-
-  /**
    * Fetches metadata for an instance's service account.
    *
    * @see
    * https://cloud.google.com/compute/docs/access/create-enable-service-accounts-for-instances
    * for more details.
    */
-  Status RetrieveServiceAccountInfo() const;
+  std::string RetrieveServiceAccountInfo() const;
+  std::string RetrieveServiceAccountInfo(
+      std::lock_guard<std::mutex> const&) const;
 
-  /**
-   * Attempts to refresh the credentials.
-   */
-  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh() const;
-
+  Options options_;
+  HttpClientFactory client_factory_;
   mutable std::mutex mu_;
-  CurrentTimeFn current_time_fn_;
-  std::unique_ptr<rest_internal::RestClient> rest_client_;
-  RefreshingCredentialsWrapper refreshing_creds_;
+  mutable bool metadata_retrieved_ = false;
   mutable std::set<std::string> scopes_;
   mutable std::string service_account_email_;
-  Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

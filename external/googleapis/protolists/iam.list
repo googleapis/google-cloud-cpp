@@ -2,3 +2,5 @@
 @com_google_googleapis//google/iam/admin/v1:iam.proto
 @com_google_googleapis//google/iam/credentials/v1:common.proto
 @com_google_googleapis//google/iam/credentials/v1:iamcredentials.proto
+@com_google_googleapis//google/iam/v2:deny.proto
+@com_google_googleapis//google/iam/v2:policy.proto

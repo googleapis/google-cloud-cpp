@@ -32,23 +32,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class TopicStatsServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~TopicStatsServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~TopicStatsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ComputeMessageStats(
-      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const&
-          request) = 0;
+      google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request);
 
   virtual google::cloud::Idempotency ComputeHeadCursor(
-      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const&
-          request) = 0;
+      google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request);
 
   virtual google::cloud::Idempotency ComputeTimeCursor(
-      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const&
-          request) = 0;
+      google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request);
 };
 
 std::unique_ptr<TopicStatsServiceConnectionIdempotencyPolicy>

@@ -21,11 +21,15 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
+
 TEST(InstanceAdminClientTest, CreateDefaultClient) {
   auto admin_client = CreateDefaultInstanceAdminClient("test-project", {});
   ASSERT_TRUE(admin_client);
   EXPECT_EQ("test-project", admin_client->project());
 }
+
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 TEST(InstanceAdminClientTest, MakeClient) {
   auto admin_client = MakeInstanceAdminClient("test-project");

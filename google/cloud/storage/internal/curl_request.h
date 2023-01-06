@@ -69,16 +69,18 @@ class CurlRequest {
                            std::size_t nitems);
 
   std::string url_;
-  CurlHeaders headers_ = CurlHeaders(nullptr, &curl_slist_free_all);
+  rest_internal::CurlHeaders headers_ =
+      rest_internal::CurlHeaders(nullptr, &curl_slist_free_all);
   std::string user_agent_;
   std::string http_version_;
   std::string response_payload_;
-  CurlReceivedHeaders received_headers_;
+  rest_internal::CurlReceivedHeaders received_headers_;
   bool logging_enabled_ = false;
   CurlHandle::SocketOptions socket_options_;
   std::chrono::seconds transfer_stall_timeout_;
+  std::uint32_t transfer_stall_minimum_rate_;
   CurlHandle handle_;
-  std::shared_ptr<CurlHandleFactory> factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> factory_;
 };
 
 }  // namespace internal

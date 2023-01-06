@@ -37,8 +37,7 @@ CompletionServiceConnectionImpl::CompletionServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options), retail_internal::CompletionServiceDefaultOptions(
-                                  CompletionServiceConnection::options()))) {}
+          std::move(options), CompletionServiceConnection::options())) {}
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
 CompletionServiceConnectionImpl::CompleteQuery(
@@ -56,7 +55,7 @@ CompletionServiceConnectionImpl::CompleteQuery(
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>
 CompletionServiceConnectionImpl::ImportCompletionData(
     google::cloud::retail::v2::ImportCompletionDataRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::retail::v2::ImportCompletionDataResponse>(
       background_->cq(), request,

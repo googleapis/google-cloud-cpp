@@ -17,4 +17,5 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_common_benchmarks = [
+    "options_benchmark.cc",
 ]

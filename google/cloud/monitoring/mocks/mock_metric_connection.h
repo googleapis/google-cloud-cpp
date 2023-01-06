@@ -27,6 +27,21 @@ namespace cloud {
 namespace monitoring_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `MetricServiceConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `MetricServiceClient`. To do so,
+ * construct an object of type `MetricServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockMetricServiceConnection : public monitoring::MetricServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
@@ -72,6 +87,10 @@ class MockMetricServiceConnection : public monitoring::MetricServiceConnection {
               (override));
 
   MOCK_METHOD(Status, CreateServiceTimeSeries,
+              (google::monitoring::v3::CreateTimeSeriesRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<Status>, AsyncCreateTimeSeries,
               (google::monitoring::v3::CreateTimeSeriesRequest const& request),
               (override));
 };

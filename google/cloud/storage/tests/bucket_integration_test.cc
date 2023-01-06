@@ -23,8 +23,6 @@
 #include <gmock/gmock.h>
 #include <chrono>
 #include <thread>
-// TODO(#5929) - remove once deprecated functions are removed
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
@@ -35,9 +33,13 @@ namespace {
 using ::google::cloud::storage::testing::AclEntityNames;
 using ::google::cloud::testing_util::ContainsOnce;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
+using ::testing::IsSubsetOf;
 using ::testing::Not;
+using ::testing::Property;
 using ::testing::UnorderedElementsAreArray;
 
 class BucketIntegrationTest
@@ -96,13 +98,15 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
       << "Test aborted. The bucket <" << bucket_name << "> already exists."
       << " This is unexpected as the test generates a random bucket name.";
 
-  auto insert_meta = client->CreateBucketForProject(bucket_name, project_id_,
-                                                    BucketMetadata());
+  // Always request a full projection as this works with REST and gRPC
+  auto insert_meta = client->CreateBucketForProject(
+      bucket_name, project_id_, BucketMetadata(), Projection::Full());
   ASSERT_STATUS_OK(insert_meta);
   EXPECT_EQ(bucket_name, insert_meta->name());
   EXPECT_THAT(list_bucket_names(), ContainsOnce(bucket_name));
 
-  StatusOr<BucketMetadata> get_meta = client->GetBucketMetadata(bucket_name);
+  StatusOr<BucketMetadata> get_meta =
+      client->GetBucketMetadata(bucket_name, Projection::Full());
   ASSERT_STATUS_OK(get_meta);
   EXPECT_EQ(*insert_meta, *get_meta);
 
@@ -141,12 +145,32 @@ TEST_F(BucketIntegrationTest, BasicCRUD) {
   patched = client->PatchBucket(
       bucket_name, BucketMetadataPatchBuilder().ResetWebsite().ResetBilling());
   ASSERT_STATUS_OK(patched);
-  EXPECT_FALSE(patched->has_billing());
+  // It does not matter if the `billing` compound is set. Only that it has the
+  // same effect as-if it was not set, i.e., it has the default value.
+  EXPECT_EQ(patched->billing_as_optional().value_or(BucketBilling{false}),
+            BucketBilling{false});
   EXPECT_FALSE(patched->has_website());
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
   EXPECT_THAT(list_bucket_names(), Not(Contains(bucket_name)));
+}
+
+TEST_F(BucketIntegrationTest, CreateDuplicate) {
+  StatusOr<Client> client = MakeBucketIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+  auto const bucket_name = MakeRandomBucketName();
+  auto metadata = client->CreateBucketForProject(bucket_name, project_id_,
+                                                 BucketMetadata());
+  ASSERT_STATUS_OK(metadata);
+  ScheduleForDelete(*metadata);
+  EXPECT_EQ(bucket_name, metadata->name());
+  // Wait at least 2 seconds before trying to create / delete another bucket.
+  if (!UsingEmulator()) std::this_thread::sleep_for(std::chrono::seconds(2));
+
+  auto dup = client->CreateBucketForProject(bucket_name, project_id_,
+                                            BucketMetadata());
+  EXPECT_THAT(dup, StatusIs(StatusCode::kAlreadyExists));
 }
 
 TEST_F(BucketIntegrationTest, CreatePredefinedAcl) {
@@ -262,6 +286,9 @@ TEST_F(BucketIntegrationTest, PatchLifecycleConditions) {
 }
 
 TEST_F(BucketIntegrationTest, FullPatch) {
+  // TODO(#9801) - enable in production.
+  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
+
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -402,7 +429,7 @@ TEST_F(BucketIntegrationTest, FullPatch) {
   ASSERT_STATUS_OK(status);
 }
 
-// @test Verify that we can set the iam_configuration() in a Bucket.
+/// @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
@@ -435,7 +462,7 @@ TEST_F(BucketIntegrationTest, UniformBucketLevelAccessPatch) {
   ASSERT_STATUS_OK(status);
 }
 
-// @test Verify that we can set the iam_configuration() in a Bucket.
+/// @test Verify that we can set the iam_configuration() in a Bucket.
 TEST_F(BucketIntegrationTest, PublicAccessPreventionPatch) {
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
@@ -467,8 +494,11 @@ TEST_F(BucketIntegrationTest, PublicAccessPreventionPatch) {
   ASSERT_STATUS_OK(status);
 }
 
-// @test Verify that we can set the RPO in a Bucket.
+/// @test Verify that we can set the RPO in a Bucket.
 TEST_F(BucketIntegrationTest, RpoPatch) {
+  // TODO(#9802) - enable in production.
+  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
+
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -497,6 +527,39 @@ TEST_F(BucketIntegrationTest, RpoPatch) {
   ASSERT_STATUS_OK(status);
 }
 
+/// @test Verify that we can use MatchesPrefixes() and MatchesSuffixes()
+TEST_F(BucketIntegrationTest, MatchesPrefixSuffixPatch) {
+  auto const bucket_name = MakeRandomBucketName();
+  auto client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto const insert_meta = client->CreateBucketForProject(
+      bucket_name, project_id_, BucketMetadata(), PredefinedAcl("private"),
+      PredefinedDefaultObjectAcl("projectPrivate"), Projection("full"));
+  ASSERT_STATUS_OK(insert_meta);
+  ScheduleForDelete(*insert_meta);
+
+  // Patch the lifecycle().
+  auto lifecycle =
+      insert_meta->lifecycle_as_optional().value_or(BucketLifecycle{});
+  lifecycle.rule.emplace_back(
+      LifecycleRule::ConditionConjunction(
+          LifecycleRule::MaxAge(30),
+          LifecycleRule::MatchesPrefixes({"p1/", "p2/"}),
+          LifecycleRule::MatchesSuffixes({".test", ".bad"})),
+      LifecycleRule::Delete());
+
+  auto patched = client->PatchBucket(
+      bucket_name, BucketMetadataPatchBuilder().SetLifecycle(lifecycle));
+  ASSERT_STATUS_OK(patched);
+
+  ASSERT_TRUE(patched->has_lifecycle()) << "patched=" << *patched;
+  ASSERT_EQ(patched->lifecycle(), lifecycle);
+
+  auto status = client->DeleteBucket(bucket_name);
+  ASSERT_STATUS_OK(status);
+}
+
 TEST_F(BucketIntegrationTest, GetMetadata) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -515,8 +578,9 @@ TEST_F(BucketIntegrationTest, GetMetadataFields) {
   auto metadata = client->GetBucketMetadata(bucket_name_, Fields("name"));
   ASSERT_STATUS_OK(metadata);
   EXPECT_EQ(bucket_name_, metadata->name());
-  EXPECT_TRUE(metadata->id().empty());
-  EXPECT_TRUE(metadata->kind().empty());
+  // This field is normally returned by JSON and gRPC. In this case it should be
+  // empty, because we only requested the `name` field.
+  EXPECT_THAT(metadata->storage_class(), IsEmpty());
 }
 
 TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationMatchSuccess) {
@@ -569,6 +633,9 @@ TEST_F(BucketIntegrationTest, GetMetadataIfMetagenerationNotMatchFailure) {
 }
 
 TEST_F(BucketIntegrationTest, AccessControlCRUD) {
+  // TODO(#9800) - enable in production.
+  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
+
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -640,6 +707,9 @@ TEST_F(BucketIntegrationTest, AccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
+  // TODO(#9800) - enable in production
+  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
+
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -709,6 +779,9 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
 }
 
 TEST_F(BucketIntegrationTest, NotificationsCRUD) {
+  // TODO(#9806) - enable when gRPC implements these operations.
+  if (UsingGrpc() && !UsingEmulator()) GTEST_SKIP();
+
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -753,62 +826,6 @@ TEST_F(BucketIntegrationTest, NotificationsCRUD) {
   ASSERT_STATUS_OK(status);
 }
 
-TEST_F(BucketIntegrationTest, IamCRUD) {
-  std::string bucket_name = MakeRandomBucketName();
-  StatusOr<Client> client = MakeBucketIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  // Create a new bucket to run the test.
-  auto meta = client->CreateBucketForProject(bucket_name, project_id_,
-                                             BucketMetadata());
-  ASSERT_STATUS_OK(meta);
-
-  StatusOr<IamPolicy> policy = client->GetBucketIamPolicy(bucket_name);
-  ASSERT_STATUS_OK(policy);
-  auto const& bindings = policy->bindings;
-  // There must always be at least an OWNER for the Bucket.
-  ASSERT_FALSE(bindings.end() ==
-               bindings.find("roles/storage.legacyBucketOwner"));
-
-  StatusOr<std::vector<BucketAccessControl>> acl =
-      client->ListBucketAcl(bucket_name);
-  ASSERT_STATUS_OK(acl);
-  // Unfortunately we cannot compare the values in the ACL to the values in the
-  // IamPolicy directly. The ids for entities have different formats, for
-  // example: in ACL 'project-editors-123456789' and in IAM
-  // 'projectEditors:my-project'. We can compare the counts though:
-  std::set<std::string> expected_owners;
-  for (auto const& entry : *acl) {
-    if (entry.role() == "OWNER") {
-      expected_owners.insert(entry.entity());
-    }
-  }
-  std::set<std::string> actual_owners =
-      bindings.at("roles/storage.legacyBucketOwner");
-  EXPECT_EQ(expected_owners.size(), actual_owners.size());
-
-  IamPolicy update = *policy;
-  update.bindings.AddMember("roles/storage.objectViewer",
-                            "allAuthenticatedUsers");
-
-  StatusOr<IamPolicy> updated_policy =
-      client->SetBucketIamPolicy(bucket_name, update);
-  ASSERT_STATUS_OK(updated_policy);
-  EXPECT_EQ(update.bindings, updated_policy->bindings);
-  EXPECT_NE(update.etag, updated_policy->etag);
-
-  std::vector<std::string> expected_permissions{
-      "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
-  StatusOr<std::vector<std::string>> actual_permissions =
-      client->TestBucketIamPermissions(bucket_name, expected_permissions);
-  ASSERT_STATUS_OK(actual_permissions);
-  EXPECT_THAT(*actual_permissions,
-              UnorderedElementsAreArray(expected_permissions));
-
-  auto status = client->DeleteBucket(bucket_name);
-  ASSERT_STATUS_OK(status);
-}
-
 TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   std::string bucket_name = MakeRandomBucketName();
   StatusOr<Client> client = MakeBucketIntegrationTestClient();
@@ -824,13 +841,10 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   ASSERT_STATUS_OK(policy);
   auto const& bindings = policy->bindings();
   // There must always be at least an OWNER for the Bucket.
-  ASSERT_TRUE(google::cloud::internal::ContainsIf(
-      bindings, [](NativeIamBinding const& binding) {
-        return binding.role() == "roles/storage.legacyBucketOwner";
-      }));
+  ASSERT_THAT(bindings, Contains(Property(&NativeIamBinding::role,
+                                          "roles/storage.legacyBucketOwner")));
 
-  StatusOr<std::vector<BucketAccessControl>> acl =
-      client->ListBucketAcl(bucket_name);
+  auto acl = client->ListBucketAcl(bucket_name);
   ASSERT_STATUS_OK(acl);
   // Unfortunately we cannot compare the values in the ACL to the values in the
   // IamPolicy directly. The ids for entities have different formats, for
@@ -855,9 +869,7 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
   NativeIamPolicy update = *policy;
   bool role_updated = false;
   for (auto& binding : update.bindings()) {
-    if (binding.role() != "roles/storage.objectViewer") {
-      continue;
-    }
+    if (binding.role() != "roles/storage.objectViewer") continue;
     role_updated = true;
     auto& members = binding.members();
     if (!google::cloud::internal::Contains(members, "allAuthenticatedUsers")) {
@@ -875,11 +887,18 @@ TEST_F(BucketIntegrationTest, NativeIamCRUD) {
 
   std::vector<std::string> expected_permissions{
       "storage.objects.list", "storage.objects.get", "storage.objects.delete"};
-  StatusOr<std::vector<std::string>> actual_permissions =
+  auto const actual_permissions =
       client->TestBucketIamPermissions(bucket_name, expected_permissions);
   ASSERT_STATUS_OK(actual_permissions);
-  EXPECT_THAT(*actual_permissions,
-              UnorderedElementsAreArray(expected_permissions));
+  EXPECT_THAT(*actual_permissions, Not(IsEmpty()));
+  // In most runs, you would find that `actual_permissions` is equal to
+  // `expected_permissions`. But testing for this is inherently flaky. It can
+  // take up to 7 minutes for IAM changes to propagate through the systems.
+  //     https://cloud.google.com/iam/docs/faq#access_revoke
+  EXPECT_THAT(*actual_permissions, IsSubsetOf(expected_permissions));
+  if (UsingEmulator()) {
+    EXPECT_THAT(*actual_permissions, expected_permissions);
+  }
 
   auto status = client->DeleteBucket(bucket_name);
   ASSERT_STATUS_OK(status);
@@ -991,25 +1010,26 @@ TEST_F(BucketIntegrationTest, PatchFailure) {
   ASSERT_FALSE(status.ok()) << "value=" << status.value();
 }
 
-TEST_F(BucketIntegrationTest, GetBucketIamPolicyFailure) {
+TEST_F(BucketIntegrationTest, GetNativeBucketIamPolicyFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to get information about a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-  auto policy = client->GetBucketIamPolicy(bucket_name);
+  auto policy = client->GetNativeBucketIamPolicy(bucket_name);
   EXPECT_THAT(policy, Not(IsOk())) << "value=" << policy.value();
 }
 
-TEST_F(BucketIntegrationTest, SetBucketIamPolicyFailure) {
+TEST_F(BucketIntegrationTest, SetNativeBucketIamPolicyFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
   std::string bucket_name = MakeRandomBucketName();
 
   // Try to set the IAM policy on a bucket that does not exist, or at least it
   // is very unlikely to exist, the name is random.
-  auto policy = client->SetBucketIamPolicy(bucket_name, IamPolicy{});
+  auto policy =
+      client->SetNativeBucketIamPolicy(bucket_name, NativeIamPolicy{{}, ""});
   EXPECT_THAT(policy, Not(IsOk())) << "value=" << policy.value();
 }
 

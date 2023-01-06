@@ -44,7 +44,7 @@ StatusOr<google::cloud::resourcemanager::v3::ListFoldersResponse>
 FoldersMetadata::ListFolders(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::ListFoldersRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListFolders(context, request);
 }
 
@@ -52,7 +52,7 @@ StatusOr<google::cloud::resourcemanager::v3::SearchFoldersResponse>
 FoldersMetadata::SearchFolders(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::SearchFoldersRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->SearchFolders(context, request);
 }
 
@@ -61,7 +61,7 @@ FoldersMetadata::AsyncCreateFolder(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::CreateFolderRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncCreateFolder(cq, std::move(context), request);
 }
 
@@ -153,9 +153,8 @@ void FoldersMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

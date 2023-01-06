@@ -31,8 +31,7 @@ class MetadataUpdatePolicyTest : public testing::EmbeddedServerTestFixture {};
 
 using ::testing::HasSubstr;
 
-/// @test A test for setting metadata when table is known.
-TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerParamTableName) {
+TEST_F(MetadataUpdatePolicyTest, TableMetadata) {
   grpc::string expected = "table_name=" + std::string(kTableName);
   auto reader = table_->ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
   // lets make the RPC call to send metadata
@@ -44,8 +43,7 @@ TEST_F(MetadataUpdatePolicyTest, RunWithEmbeddedServerParamTableName) {
   EXPECT_EQ(expected, range.first->second);
 }
 
-/// @test A test for setting metadata when table is known.
-TEST_F(MetadataUpdatePolicyTest, ModifiedTableName) {
+TEST_F(MetadataUpdatePolicyTest, TableWithNewTargetMetadata) {
   std::string const other_project_id = "other-project";
   std::string const other_instance_id = "other-instance";
   std::string const other_table_id = "other-table";
@@ -75,6 +73,44 @@ TEST_F(MetadataUpdatePolicyTest, SimpleDefault) {
   EXPECT_THAT(created.api_client_header(), HasSubstr("gccl/"));
   EXPECT_THAT(created.api_client_header(),
               AnyOf(HasSubstr("-noex-"), HasSubstr("-ex-")));
+}
+
+TEST_F(MetadataUpdatePolicyTest, TableAppProfileMetadata) {
+  auto table = Table(data_client_, "profile", kTableId);
+  grpc::string expected =
+      "table_name=" + std::string(kTableName) + "&app_profile_id=profile";
+  auto reader = table.ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
+  // lets make the RPC call to send metadata
+  reader.begin();
+  // Get metadata from embedded server
+  auto client_metadata = bigtable_service_.client_metadata();
+  auto range = client_metadata.equal_range("x-goog-request-params");
+  ASSERT_EQ(1, std::distance(range.first, range.second));
+  EXPECT_EQ(expected, range.first->second);
+}
+
+/// @test A test for setting metadata when table is known.
+TEST_F(MetadataUpdatePolicyTest, TableWithNewTargetAppProfileMetadata) {
+  auto table =
+      table_->WithNewTarget(kProjectId, kInstanceId, "profile", kTableId);
+  grpc::string expected =
+      "table_name=" + std::string(kTableName) + "&app_profile_id=profile";
+  auto reader = table.ReadRows(RowSet("row1"), 1, Filter::PassAllFilter());
+  // lets make the RPC call to send metadata
+  reader.begin();
+  // Get metadata from embedded server
+  auto client_metadata = bigtable_service_.client_metadata();
+  auto range = client_metadata.equal_range("x-goog-request-params");
+  ASSERT_EQ(1, std::distance(range.first, range.second));
+  EXPECT_EQ(expected, range.first->second);
+}
+
+TEST(MakeMetadataUpdatePolicyTest, AppProfileRouting) {
+  auto m = bigtable_internal::MakeMetadataUpdatePolicy("table", "");
+  EXPECT_EQ(m.value(), "table_name=table");
+
+  m = bigtable_internal::MakeMetadataUpdatePolicy("table", "profile");
+  EXPECT_EQ(m.value(), "table_name=table&app_profile_id=profile");
 }
 
 }  // namespace

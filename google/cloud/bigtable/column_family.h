@@ -19,6 +19,7 @@
 #include "absl/meta/type_traits.h"
 #include <google/bigtable/admin/v2/bigtable_table_admin.pb.h>
 #include <google/bigtable/admin/v2/table.pb.h>
+#include <google/protobuf/util/message_differencer.h>
 #include <chrono>
 #include <memory>
 #include <string>
@@ -149,6 +150,14 @@ class GcRule {
   GcRule& operator=(GcRule const&) = default;
   //@}
 
+  friend bool operator==(GcRule const& a, GcRule const& b) noexcept {
+    return google::protobuf::util::MessageDifferencer::Equivalent(a.gc_rule_,
+                                                                  b.gc_rule_);
+  }
+  friend bool operator!=(GcRule const& a, GcRule const& b) noexcept {
+    return !(a == b);
+  }
+
  private:
   GcRule() = default;
 
@@ -213,6 +222,16 @@ class ColumnFamilyModification {
   ColumnFamilyModification& operator=(ColumnFamilyModification const&) =
       default;
   //@}
+
+  friend bool operator==(ColumnFamilyModification const& a,
+                         ColumnFamilyModification const& b) noexcept {
+    return google::protobuf::util::MessageDifferencer::Equivalent(a.mod_,
+                                                                  b.mod_);
+  }
+  friend bool operator!=(ColumnFamilyModification const& a,
+                         ColumnFamilyModification const& b) noexcept {
+    return !(a == b);
+  }
 
  private:
   ColumnFamilyModification() = default;

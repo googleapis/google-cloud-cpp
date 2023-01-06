@@ -14,50 +14,44 @@
 # limitations under the License.
 # ~~~
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10...3.24)
 
 # Define the project name and where to report bugs.
 set(PACKAGE_BUGREPORT "https://github.com/googleapis/google-cloud-cpp/issues")
 
-# Enable support for SelectMSVCRuntime
-if (NOT (CMAKE_VERSION VERSION_LESS 3.15))
-    cmake_policy(SET CMP0091 NEW)
-endif ()
 project(
     google-cloud-cpp
-    VERSION 1.37.0
-    LANGUAGES CXX C)
+    VERSION 2.7.0
+    LANGUAGES CXX)
+set(PROJECT_VERSION_PRE_RELEASE "rc")
 
-# Allow applications to override the CMAKE_CXX_STANDARD, but if not set use 11.
-if (NOT CMAKE_CXX_STANDARD)
-    set(CMAKE_CXX_STANDARD 11)
+if (NOT "${PROJECT_VERSION_PRE_RELEASE}" STREQUAL "")
+    set(PROJECT_VERSION "${PROJECT_VERSION}-${PROJECT_VERSION_PRE_RELEASE}")
 endif ()
-if (CMAKE_CXX_STANDARD VERSION_LESS 11)
+
+if (APPLE AND NOT DEFINED CMAKE_CXX_STANDARD)
+    # AppleClang defaults to C++98, so we bump it to C++14.
     message(
-        FATAL_ERROR
-            "CMAKE_CXX_STANDARD must be >= 11, was ${CMAKE_CXX_STANDARD}")
+        WARNING
+            "CMAKE_CXX_STANDARD was undefined, defaulting to C++14."
+            "To select the desired standard use something like the following:"
+            "\n"
+            "    cmake -DCMAKE_CXX_STANDARD=17 ..."
+            "\n"
+            "For more details, see "
+            "https://cmake.org/cmake/help/latest/variable/CMAKE_CXX_STANDARD.html"
+    )
+    set(CMAKE_CXX_STANDARD 14)
 endif ()
-
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.3)
         message(
-            FATAL_ERROR
-                "GCC version must be at least 5.0. Older versions either lack"
-                " C++11 support or have bugs that prevent us from using them.")
-    elseif (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.3)
-        message(
-            WARNING "The `google-cloud-cpp` library is tested with GCC >= 6.3."
+            WARNING "The `google-cloud-cpp` library is tested with GCC >= 7.3."
                     " We will consider patches for older versions.")
     endif ()
 elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.8)
-        message(
-            FATAL_ERROR
-                "Clang version must be at least 3.8. Older versions either lack"
-                " C++11 support or have bugs that prevent us from using them.")
-    elseif (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)
+    if (CMAKE_CXX_COMPILER_VERSION VERSION_LESS 6.0)
         message(
             WARNING
                 "The `google-cloud-cpp` library is tested with Clang >= 6.0."
@@ -131,6 +125,35 @@ option(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS
        "Use main as the version part for refdoc relative links" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_USE_MAIN_FOR_REFDOC_LINKS)
 
+set(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL
+    ""
+    CACHE
+        STRING
+        [==[
+Override the default URL for the googleapis protos. google-cloud-cpp needs the
+proto and gRPC definitions for most Google Cloud services. By default these
+definitions are downloaded from GitHub. In some environments, this may not be
+possible. This variable can be used to use a local directory, or a local
+tarball, with the proto definitions.
+
+If you override this variable, you must ensure the proto definitions match the
+expectations in google-cloud-cpp. Using the same SHA is the recommended
+practice. Using older SHAs is **NOT** supported, and will almost certainly
+result in build problems. You may be able to use a more recent SHA of the
+protos, but do not expect that new features will become exposed via the C++
+client libraries.
+]==])
+mark_as_advanced(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL)
+set(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH
+    ""
+    CACHE
+        STRING
+        [==[
+Override the hash for the googleapis protos tarball. See
+GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL for details.
+]==])
+mark_as_advanced(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH)
+
 include(CMakeDependentOption)
 
 option(GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE "Enable building the Bigtable library."
@@ -165,7 +188,7 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_IAM)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_LOGGING)
-mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GENERATOR)
+mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
 
 set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT OFF)
 if (experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
@@ -191,6 +214,9 @@ function (google_cloud_cpp_enable_deps)
     endif ()
     if (containeranalysis IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE grafeas)
+    endif ()
+    if (pubsublite IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE pubsub)
     endif ()
     set(GOOGLE_CLOUD_CPP_ENABLE
         "${GOOGLE_CLOUD_CPP_ENABLE}"
@@ -254,20 +280,37 @@ add_custom_target(doxygen-docs)
 find_package(absl CONFIG REQUIRED)
 if (${GOOGLE_CLOUD_CPP_ENABLE_GRPC})
     find_package(gRPC REQUIRED QUIET)
-    find_package(ProtobufWithTargets REQUIRED QUIET)
+    find_package(Protobuf REQUIRED QUIET)
     add_subdirectory(external/googleapis)
 endif ()
 
 # The only case where REST support is not needed is when not compiling services
 # with REST interfaces.
 set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION ON)
-if (NOT storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+if (NOT storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE
+    AND NOT experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE
+    AND NOT generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
     set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION OFF)
 endif ()
 cmake_dependent_option(
     GOOGLE_CLOUD_CPP_ENABLE_REST "Enable building the REST transport library."
     ON "GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION" OFF)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_REST)
+
+# Detect incompatible flags and let the customer know what to do.
+if (storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND NOT
+                                                GOOGLE_CLOUD_CPP_ENABLE_REST)
+    message(
+        FATAL_ERROR
+            "If storage is enabled (e.g. -DGOOGLE_CLOUD_CPP_ENABLE=storage),"
+            " the REST library cannot be disabled,"
+            " i.e., you cannot set -DGOOGLE_CLOUD_CPP_ENABLE_REST=OFF."
+            " If you do want to use the storage library,"
+            " then do not use -DGOOGLE_CLOUD_CPP_ENABLE_REST=OFF."
+            " If you do not want to use the storage library,"
+            " then provide a -DGOOGLE_CLOUD_CPP_ENABLE=... list and do not"
+            " include storage in that list.")
+endif ()
 
 # Enable testing in this directory so we can do a top-level `make test`. This
 # also includes the BUILD_TESTING option, which is on by default.
@@ -299,6 +342,7 @@ function (google_cloud_cpp_enable_features)
             if (NOT ("storage" IN_LIST GOOGLE_CLOUD_CPP_ENABLE))
                 add_subdirectory(google/cloud/storage)
             endif ()
+        elseif ("${feature}" STREQUAL "experimental-opentelemetry")
         else ()
             if (NOT IS_DIRECTORY
                 "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}"
@@ -316,6 +360,8 @@ function (google_cloud_cpp_enable_features)
             if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
                 AND IS_DIRECTORY
                     "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}/samples"
+                AND EXISTS
+                    "${CMAKE_CURRENT_SOURCE_DIR}/google/cloud/${feature}/samples/CMakeLists.txt"
             )
                 add_subdirectory(google/cloud/${feature}/samples)
             endif ()
@@ -340,7 +386,7 @@ if (GOOGLE_CLOUD_CPP_ENABLE_EXAMPLES
     AND iam IN_LIST GOOGLE_CLOUD_CPP_ENABLE
     AND spanner IN_LIST GOOGLE_CLOUD_CPP_ENABLE
     AND storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-    add_subdirectory(google/cloud/examples)
+    add_subdirectory(examples)
 endif ()
 
 # Obsolete / retired flags and options. Removing them just cleans up a bit of

@@ -65,7 +65,7 @@ extern "C" std::size_t CurlRequestOnReadData(char* ptr, std::size_t size,
 }
 
 CurlRequest::~CurlRequest() {
-  if (factory_) factory_->CleanupHandle(std::move(handle_));
+  if (factory_) CurlHandle::ReturnToPool(*factory_, std::move(handle_));
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeRequest(std::string const& payload) && {
@@ -103,12 +103,7 @@ Status CurlRequest::OnError(Status status) {
 }
 
 StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
-  // We get better performance using a slightly larger buffer (128KiB) than the
-  // default buffer size set by libcurl (16KiB)
-  auto constexpr kDefaultBufferSize = 128 * 1024L;
-
   response_payload_.clear();
-  handle_.SetOption(CURLOPT_BUFFERSIZE, kDefaultBufferSize);
   handle_.SetOption(CURLOPT_URL, url_.c_str());
   handle_.SetOption(CURLOPT_HTTPHEADER, headers_.get());
   handle_.SetOption(CURLOPT_USERAGENT, user_agent_.c_str());
@@ -117,7 +112,7 @@ StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   handle_.EnableLogging(logging_enabled_);
   handle_.SetSocketCallback(socket_options_);
   handle_.SetOptionUnchecked(CURLOPT_HTTP_VERSION,
-                             VersionToCurlCode(http_version_));
+                             rest_internal::VersionToCurlCode(http_version_));
   handle_.SetOption(CURLOPT_WRITEFUNCTION, &CurlRequestOnWriteData);
   handle_.SetOption(CURLOPT_WRITEDATA, this);
   handle_.SetOption(CURLOPT_HEADERFUNCTION, &CurlRequestOnHeaderData);
@@ -125,10 +120,12 @@ StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   if (transfer_stall_timeout_.count() != 0) {
     // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
     auto const timeout = static_cast<long>(transfer_stall_timeout_.count());
+    // NOLINTNEXTLINE(google-runtime-int) - libcurl *requires* `long`
+    auto const limit = static_cast<long>(transfer_stall_minimum_rate_);
     handle_.SetOption(CURLOPT_CONNECTTIMEOUT, timeout);
     // Timeout if the request sends or receives less than 1 byte/second (i.e.
     // effectively no bytes) for `transfer_stall_timeout_` seconds.
-    handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, 1L);
+    handle_.SetOption(CURLOPT_LOW_SPEED_LIMIT, limit);
     handle_.SetOption(CURLOPT_LOW_SPEED_TIME, timeout);
   }
   auto status = handle_.EasyPerform();
@@ -137,6 +134,7 @@ StatusOr<HttpResponse> CurlRequest::MakeRequestImpl() {
   if (logging_enabled_) handle_.FlushDebug(__func__);
   auto code = handle_.GetResponseCode();
   if (!code.ok()) return std::move(code).status();
+  received_headers_.emplace(":curl-peer", handle_.GetPeer());
   return HttpResponse{code.value(), std::move(response_payload_),
                       std::move(received_headers_)};
 }
@@ -149,7 +147,8 @@ std::size_t CurlRequest::OnWriteData(char* contents, std::size_t size,
 
 std::size_t CurlRequest::OnHeaderData(char* contents, std::size_t size,
                                       std::size_t nitems) {
-  return CurlAppendHeaderData(received_headers_, contents, size * nitems);
+  return rest_internal::CurlAppendHeaderData(received_headers_, contents,
+                                             size * nitems);
 }
 
 }  // namespace internal

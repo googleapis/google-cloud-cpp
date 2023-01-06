@@ -35,9 +35,8 @@ CloudBillingConnectionImpl::CloudBillingConnectionImpl(
     std::shared_ptr<billing_internal::CloudBillingStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), billing_internal::CloudBillingDefaultOptions(
-                                  CloudBillingConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      CloudBillingConnection::options())) {}
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingConnectionImpl::GetBillingAccount(
@@ -57,7 +56,7 @@ StreamRange<google::cloud::billing::v1::BillingAccount>
 CloudBillingConnectionImpl::ListBillingAccounts(
     google::cloud::billing::v1::ListBillingAccountsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<billing::CloudBillingRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -118,7 +117,7 @@ StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
 CloudBillingConnectionImpl::ListProjectBillingInfo(
     google::cloud::billing::v1::ListProjectBillingInfoRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<billing::CloudBillingRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

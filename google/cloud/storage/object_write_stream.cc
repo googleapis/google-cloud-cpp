@@ -24,11 +24,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 std::unique_ptr<internal::ObjectWriteStreambuf> MakeErrorStreambuf() {
   return absl::make_unique<internal::ObjectWriteStreambuf>(
-      absl::make_unique<internal::ResumableUploadSessionError>(
-          Status(StatusCode::kUnimplemented, "null stream")),
-      /*max_buffer_size=*/0, internal::CreateNullHashFunction(),
-      internal::HashValues{}, internal::CreateNullHashValidator(),
-      AutoFinalizeConfig::kDisabled);
+      Status(StatusCode::kUnimplemented, "null stream"));
 }
 }  // namespace
 static_assert(std::is_move_assignable<ObjectWriteStream>::value,
@@ -62,8 +58,9 @@ ObjectWriteStream::ObjectWriteStream(ObjectWriteStream&& rhs) noexcept
       metadata_(std::move(rhs.metadata_)),
       headers_(std::move(rhs.headers_)),
       payload_(std::move(rhs.payload_)) {
-  rhs.buf_ = MakeErrorStreambuf();
-  rhs.set_rdbuf(rhs.buf_.get());
+  auto buf = MakeErrorStreambuf();
+  rhs.set_rdbuf(buf.get());  // NOLINT(bugprone-use-after-move)
+  rhs.buf_ = std::move(buf);
   set_rdbuf(buf_.get());
   if (!buf_) {
     setstate(std::ios::badbit | std::ios::eofbit);
@@ -93,7 +90,7 @@ void ObjectWriteStream::CloseBuf() {
     setstate(std::ios_base::badbit);
     return;
   }
-  headers_ = {};
+  headers_ = std::move(response->request_metadata);
   if (response->payload.has_value()) {
     metadata_ = *std::move(response->payload);
   }

@@ -30,32 +30,24 @@ using ::google::cloud::Idempotency;
 SpeechConnectionIdempotencyPolicy::~SpeechConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultSpeechConnectionIdempotencyPolicy
-    : public SpeechConnectionIdempotencyPolicy {
- public:
-  ~DefaultSpeechConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<SpeechConnectionIdempotencyPolicy>
+SpeechConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<SpeechConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<SpeechConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultSpeechConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency SpeechConnectionIdempotencyPolicy::Recognize(
+    google::cloud::speech::v1::RecognizeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency Recognize(
-      google::cloud::speech::v1::RecognizeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency LongRunningRecognize(
-      google::cloud::speech::v1::LongRunningRecognizeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency SpeechConnectionIdempotencyPolicy::LongRunningRecognize(
+    google::cloud::speech::v1::LongRunningRecognizeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<SpeechConnectionIdempotencyPolicy>
 MakeDefaultSpeechConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultSpeechConnectionIdempotencyPolicy>();
+  return absl::make_unique<SpeechConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

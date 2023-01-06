@@ -20,6 +20,7 @@
 #include "google/cloud/version.h"
 #include "absl/functional/function_ref.h"
 #include <curl/curl.h>
+#include <cstdint>
 #include <string>
 #include <type_traits>
 
@@ -28,43 +29,7 @@ namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class CurlHandle;
 class CurlHandleFactory;
-
-void AssertOptionSuccessImpl(
-    CURLcode e, CURLoption opt, char const* where,
-    absl::FunctionRef<std::string()> const& format_parameter);
-
-inline void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where,
-                                char const* param) {
-  if (e == CURLE_OK) return;
-  AssertOptionSuccessImpl(e, opt, where,
-                          [param] { return std::string{param}; });
-}
-
-inline void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where,
-                                std::intmax_t param) {
-  if (e == CURLE_OK) return;
-  AssertOptionSuccessImpl(e, opt, where,
-                          [param] { return std::to_string(param); });
-}
-
-inline void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where,
-                                std::nullptr_t) {
-  if (e == CURLE_OK) return;
-  AssertOptionSuccessImpl(e, opt, where, [] { return "nullptr"; });
-}
-
-template <typename T,
-          typename std::enable_if<!std::is_integral<T>::value, int>::type = 0>
-void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where, T) {
-  if (e == CURLE_OK) return;
-  AssertOptionSuccessImpl(e, opt, where, [] {
-    return std::string{"a value of type="} + typeid(T).name();
-  });
-}
-
-CurlHandle GetCurlHandle(std::shared_ptr<CurlHandleFactory> const& factory);
 
 /**
  * Wraps CURL* handles in a safer C++ interface.
@@ -75,6 +40,10 @@ CurlHandle GetCurlHandle(std::shared_ptr<CurlHandleFactory> const& factory);
  */
 class CurlHandle {
  public:
+  static CurlHandle MakeFromPool(CurlHandleFactory& factory);
+  static void ReturnToPool(CurlHandleFactory& factory, CurlHandle h);
+  static void DiscardFromPool(CurlHandleFactory& factory, CurlHandle h);
+
   explicit CurlHandle();
   ~CurlHandle();
 
@@ -108,14 +77,14 @@ class CurlHandle {
   }
 
   template <typename T>
-  void SetOption(CURLoption option, T&& param) {
+  Status SetOption(CURLoption option, T&& param) {
     auto e = curl_easy_setopt(handle_.get(), option, std::forward<T>(param));
-    AssertOptionSuccess(e, option, __func__, param);
+    return AsStatus(e, __func__);
   }
 
-  void SetOption(CURLoption option, std::nullptr_t) {
+  Status SetOption(CURLoption option, std::nullptr_t) {
     auto e = curl_easy_setopt(handle_.get(), option, nullptr);
-    AssertOptionSuccess(e, option, __func__, nullptr);
+    return AsStatus(e, __func__);
   }
 
   /**
@@ -170,10 +139,7 @@ class CurlHandle {
  private:
   explicit CurlHandle(CurlPtr ptr) : handle_(std::move(ptr)) {}
 
-  friend class CurlHandleFactory;
   friend class CurlImpl;
-  friend CurlHandle GetCurlHandle(
-      std::shared_ptr<CurlHandleFactory> const& factory);
 
   CurlPtr handle_;
   std::shared_ptr<DebugInfo> debug_info_;

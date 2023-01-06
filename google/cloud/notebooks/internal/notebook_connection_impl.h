@@ -89,6 +89,11 @@ class NotebookServiceConnectionImpl
       google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request)
       override;
 
+  StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+  UpdateInstanceMetadataItems(
+      google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+          request) override;
+
   future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
   DeleteInstance(google::cloud::notebooks::v1::DeleteInstanceRequest const&
                      request) override;
@@ -125,6 +130,10 @@ class NotebookServiceConnectionImpl
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>> RollbackInstance(
       google::cloud::notebooks::v1::RollbackInstanceRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::notebooks::v1::Instance>> DiagnoseInstance(
+      google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request)
       override;
 
   future<StatusOr<google::cloud::notebooks::v1::Instance>>

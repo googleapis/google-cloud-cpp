@@ -30,6 +30,15 @@ OsLoginServiceAuth::OsLoginServiceAuth(
     std::shared_ptr<OsLoginServiceStub> child)
     : auth_(std::move(auth)), child_(std::move(child)) {}
 
+StatusOr<google::cloud::oslogin::common::SshPublicKey>
+OsLoginServiceAuth::CreateSshPublicKey(
+    grpc::ClientContext& context,
+    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateSshPublicKey(context, request);
+}
+
 Status OsLoginServiceAuth::DeletePosixAccount(
     grpc::ClientContext& context,
     google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {

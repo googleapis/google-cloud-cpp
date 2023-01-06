@@ -34,6 +34,14 @@ OsLoginServiceMetadata::OsLoginServiceMetadata(
       api_client_header_(
           google::cloud::internal::ApiClientHeader("generator")) {}
 
+StatusOr<google::cloud::oslogin::common::SshPublicKey>
+OsLoginServiceMetadata::CreateSshPublicKey(
+    grpc::ClientContext& context,
+    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->CreateSshPublicKey(context, request);
+}
+
 Status OsLoginServiceMetadata::DeletePosixAccount(
     grpc::ClientContext& context,
     google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {
@@ -93,9 +101,8 @@ void OsLoginServiceMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

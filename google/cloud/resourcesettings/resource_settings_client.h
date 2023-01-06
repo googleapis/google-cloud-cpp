@@ -76,18 +76,18 @@ class ResourceSettingsServiceClient {
       Options opts = {});
   ~ResourceSettingsServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   ResourceSettingsServiceClient(ResourceSettingsServiceClient const&) = default;
   ResourceSettingsServiceClient& operator=(
       ResourceSettingsServiceClient const&) = default;
   ResourceSettingsServiceClient(ResourceSettingsServiceClient&&) = default;
   ResourceSettingsServiceClient& operator=(ResourceSettingsServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(ResourceSettingsServiceClient const& a,
                          ResourceSettingsServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -96,7 +96,7 @@ class ResourceSettingsServiceClient {
                          ResourceSettingsServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all the settings that are available on the Cloud resource `parent`.

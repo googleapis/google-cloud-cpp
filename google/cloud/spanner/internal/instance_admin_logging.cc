@@ -21,14 +21,15 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace gcsa = ::google::spanner::admin::instance::v1;
+namespace gsai = ::google::spanner::admin::instance;
+
 using ::google::cloud::internal::LogWrapper;
 
-StatusOr<gcsa::Instance> InstanceAdminLogging::GetInstance(
-    grpc::ClientContext& context, gcsa::GetInstanceRequest const& request) {
+StatusOr<gsai::v1::Instance> InstanceAdminLogging::GetInstance(
+    grpc::ClientContext& context, gsai::v1::GetInstanceRequest const& request) {
   return LogWrapper(
       [this](grpc::ClientContext& context,
-             gcsa::GetInstanceRequest const& request) {
+             gsai::v1::GetInstanceRequest const& request) {
         return child_->GetInstance(context, request);
       },
       context, request, __func__, tracing_options_);
@@ -37,10 +38,10 @@ StatusOr<gcsa::Instance> InstanceAdminLogging::GetInstance(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminLogging::AsyncCreateInstance(
     CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-    gcsa::CreateInstanceRequest const& request) {
+    gsai::v1::CreateInstanceRequest const& request) {
   return LogWrapper(
       [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-             gcsa::CreateInstanceRequest const& request) {
+             gsai::v1::CreateInstanceRequest const& request) {
         return child_->AsyncCreateInstance(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
@@ -49,53 +50,55 @@ InstanceAdminLogging::AsyncCreateInstance(
 future<StatusOr<google::longrunning::Operation>>
 InstanceAdminLogging::AsyncUpdateInstance(
     CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-    gcsa::UpdateInstanceRequest const& request) {
+    gsai::v1::UpdateInstanceRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-             gcsa::UpdateInstanceRequest const& request) {
+             gsai::v1::UpdateInstanceRequest const& request) {
         return child_->AsyncUpdateInstance(cq, std::move(context), request);
       },
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
 Status InstanceAdminLogging::DeleteInstance(
-    grpc::ClientContext& context, gcsa::DeleteInstanceRequest const& request) {
+    grpc::ClientContext& context,
+    gsai::v1::DeleteInstanceRequest const& request) {
   return LogWrapper(
       [this](grpc::ClientContext& context,
-             gcsa::DeleteInstanceRequest const& request) {
+             gsai::v1::DeleteInstanceRequest const& request) {
         return child_->DeleteInstance(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<gcsa::InstanceConfig> InstanceAdminLogging::GetInstanceConfig(
+StatusOr<gsai::v1::InstanceConfig> InstanceAdminLogging::GetInstanceConfig(
     grpc::ClientContext& context,
-    gcsa::GetInstanceConfigRequest const& request) {
+    gsai::v1::GetInstanceConfigRequest const& request) {
   return LogWrapper(
       [this](grpc::ClientContext& context,
-             gcsa::GetInstanceConfigRequest const& request) {
+             gsai::v1::GetInstanceConfigRequest const& request) {
         return child_->GetInstanceConfig(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<gcsa::ListInstanceConfigsResponse>
+StatusOr<gsai::v1::ListInstanceConfigsResponse>
 InstanceAdminLogging::ListInstanceConfigs(
     grpc::ClientContext& context,
-    gcsa::ListInstanceConfigsRequest const& request) {
+    gsai::v1::ListInstanceConfigsRequest const& request) {
   return LogWrapper(
       [this](grpc::ClientContext& context,
-             gcsa::ListInstanceConfigsRequest const& request) {
+             gsai::v1::ListInstanceConfigsRequest const& request) {
         return child_->ListInstanceConfigs(context, request);
       },
       context, request, __func__, tracing_options_);
 }
 
-StatusOr<gcsa::ListInstancesResponse> InstanceAdminLogging::ListInstances(
-    grpc::ClientContext& context, gcsa::ListInstancesRequest const& request) {
+StatusOr<gsai::v1::ListInstancesResponse> InstanceAdminLogging::ListInstances(
+    grpc::ClientContext& context,
+    gsai::v1::ListInstancesRequest const& request) {
   return LogWrapper(
       [this](grpc::ClientContext& context,
-             gcsa::ListInstancesRequest const& request) {
+             gsai::v1::ListInstancesRequest const& request) {
         return child_->ListInstances(context, request);
       },
       context, request, __func__, tracing_options_);

@@ -19,11 +19,16 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 std::string version_string() {
   static auto const* const kVersion = new auto([] {
     std::ostringstream os;
     os << "v" << version_major() << "." << version_minor() << "."
        << version_patch();
+    char const* pre_release = version_pre_release();
+    if (*pre_release != '\0') {
+      os << "-" << pre_release;
+    }
     auto metadata = google::cloud::internal::build_metadata();
     if (!metadata.empty()) {
       os << "+" << metadata;
@@ -32,6 +37,7 @@ std::string version_string() {
   }());
   return *kVersion;
 }
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google

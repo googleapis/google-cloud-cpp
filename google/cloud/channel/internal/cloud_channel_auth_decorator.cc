@@ -99,7 +99,7 @@ CloudChannelServiceAuth::AsyncProvisionCloudIdentity(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::ProvisionCloudIdentityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -155,7 +155,7 @@ CloudChannelServiceAuth::AsyncCreateEntitlement(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::CreateEntitlementRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -174,7 +174,7 @@ CloudChannelServiceAuth::AsyncChangeParameters(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::ChangeParametersRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -193,7 +193,7 @@ CloudChannelServiceAuth::AsyncChangeRenewalSettings(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::ChangeRenewalSettingsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -213,7 +213,7 @@ CloudChannelServiceAuth::AsyncChangeOffer(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::ChangeOfferRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -232,7 +232,7 @@ CloudChannelServiceAuth::AsyncStartPaidService(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::StartPaidServiceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -251,7 +251,7 @@ CloudChannelServiceAuth::AsyncSuspendEntitlement(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::SuspendEntitlementRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -270,7 +270,7 @@ CloudChannelServiceAuth::AsyncCancelEntitlement(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::CancelEntitlementRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -289,7 +289,7 @@ CloudChannelServiceAuth::AsyncActivateEntitlement(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::ActivateEntitlementRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -309,7 +309,7 @@ CloudChannelServiceAuth::AsyncTransferEntitlements(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::channel::v1::TransferEntitlementsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -330,7 +330,7 @@ CloudChannelServiceAuth::AsyncTransferEntitlementsToGoogle(
     google::cloud::channel::v1::TransferEntitlementsToGoogleRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -380,6 +380,104 @@ CloudChannelServiceAuth::UpdateChannelPartnerLink(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateChannelPartnerLink(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceAuth::GetCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetCustomerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ListCustomerRepricingConfigsResponse>
+CloudChannelServiceAuth::ListCustomerRepricingConfigs(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListCustomerRepricingConfigs(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceAuth::CreateCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateCustomerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceAuth::UpdateCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateCustomerRepricingConfig(context, request);
+}
+
+Status CloudChannelServiceAuth::DeleteCustomerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteCustomerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceAuth::GetChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetChannelPartnerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse>
+CloudChannelServiceAuth::ListChannelPartnerRepricingConfigs(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListChannelPartnerRepricingConfigs(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceAuth::CreateChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::
+        CreateChannelPartnerRepricingConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateChannelPartnerRepricingConfig(context, request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceAuth::UpdateChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::
+        UpdateChannelPartnerRepricingConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateChannelPartnerRepricingConfig(context, request);
+}
+
+Status CloudChannelServiceAuth::DeleteChannelPartnerRepricingConfig(
+    grpc::ClientContext& context,
+    google::cloud::channel::v1::
+        DeleteChannelPartnerRepricingConfigRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteChannelPartnerRepricingConfig(context, request);
 }
 
 StatusOr<google::cloud::channel::v1::Offer>
@@ -469,7 +567,7 @@ CloudChannelServiceAuth::AsyncGetOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -486,7 +584,7 @@ future<Status> CloudChannelServiceAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

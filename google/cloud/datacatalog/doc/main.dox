@@ -5,14 +5,16 @@
 An idiomatic C++ client library for the [Google Cloud Data Catalog API][cloud-service-docs],
 a fully managed and highly scalable data discovery and metadata management service.
 
-This library is **experimental**. Its APIs are subject to change without notice.
+While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
-This library requires a C++11 compiler. It is supported (and tested) on multiple
+This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The [README][github-readme]
 on [GitHub][github-link] provides detailed instructions to install the necessary
 dependencies, as well as how to compile the client library.
 
-### Setting up your repo
+@tableofcontents{HTML:2}
+
+## Setting up your repo
 
 In order to use the Google Cloud Data Catalog API C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
@@ -38,6 +40,22 @@ which should give you a taste of the Google Cloud Data Catalog API C++ client li
 
 ## Environment Variables
 
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_DATA_CATALOG_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "datacatalog.googleapis.com")
+  used by `MakeDataCatalogConnection()`.
+
+- `GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "datacatalog.googleapis.com")
+  used by `MakePolicyTagManagerConnection()`.
+
+- `GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_SERIALIZATION_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "datacatalog.googleapis.com")
+  used by `MakePolicyTagManagerSerializationConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,
@@ -56,7 +74,7 @@ which should give you a taste of the Google Cloud Data Catalog API C++ client li
   actually print anything until the application sets a backend or it sets this
   environment variable.
 
-### Error Handling
+## Error Handling
 
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
@@ -75,7 +93,52 @@ It will return the `T` value or throw on error.
 For operations that do not return a value the library simply returns
 `google::cloud::Status`.
 
-### Retry, Backoff, and Idempotency Policies.
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `datacatalog::DataCatalogClient`:
+
+@snippet data_catalog_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [datacatalog::DataCatalogClient](@ref datacatalog::DataCatalogClient-endpoint-snippet)
+ [datacatalog::PolicyTagManagerClient](@ref datacatalog::PolicyTagManagerClient-endpoint-snippet)
+ [datacatalog::PolicyTagManagerSerializationClient](@ref datacatalog::PolicyTagManagerSerializationClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+<!-- inject-service-account-snippet-start -->
+@snippet data_catalog_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [datacatalog::DataCatalogClient](@ref datacatalog::DataCatalogClient-service-account-snippet)
+ [datacatalog::PolicyTagManagerClient](@ref datacatalog::PolicyTagManagerClient-service-account-snippet)
+ [datacatalog::PolicyTagManagerSerializationClient](@ref datacatalog::PolicyTagManagerSerializationClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
@@ -89,3 +152,42 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/datacatalog/quickstart/README%2Emd
 
 */
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page datacatalog::DataCatalogClient-endpoint-snippet Override datacatalog::DataCatalogClient Endpoint Configuration
+
+@snippet google/cloud/datacatalog/samples/data_catalog_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page datacatalog::DataCatalogClient-service-account-snippet Override datacatalog::DataCatalogClient Authentication Defaults
+
+@snippet google/cloud/datacatalog/samples/data_catalog_client_samples.cc with-service-account
+
+*/
+
+/*! @page datacatalog::PolicyTagManagerClient-endpoint-snippet Override datacatalog::PolicyTagManagerClient Endpoint Configuration
+
+@snippet google/cloud/datacatalog/samples/policy_tag_manager_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page datacatalog::PolicyTagManagerClient-service-account-snippet Override datacatalog::PolicyTagManagerClient Authentication Defaults
+
+@snippet google/cloud/datacatalog/samples/policy_tag_manager_client_samples.cc with-service-account
+
+*/
+
+/*! @page datacatalog::PolicyTagManagerSerializationClient-endpoint-snippet Override datacatalog::PolicyTagManagerSerializationClient Endpoint Configuration
+
+@snippet google/cloud/datacatalog/samples/policy_tag_manager_serialization_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page datacatalog::PolicyTagManagerSerializationClient-service-account-snippet Override datacatalog::PolicyTagManagerSerializationClient Authentication Defaults
+
+@snippet google/cloud/datacatalog/samples/policy_tag_manager_serialization_client_samples.cc with-service-account
+
+*/
+// <!-- inject-endpoint-pages-end -->

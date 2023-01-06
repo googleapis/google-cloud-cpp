@@ -23,6 +23,7 @@
 #include "google/cloud/resourcesettings/resource_settings_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -36,9 +37,9 @@ ResourceSettingsServiceConnection::~ResourceSettingsServiceConnection() =
     default;
 
 StreamRange<google::cloud::resourcesettings::v1::Setting>
-    ResourceSettingsServiceConnection::ListSettings(
-        google::cloud::resourcesettings::v1::
-            ListSettingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ResourceSettingsServiceConnection::ListSettings(
+    google::cloud::resourcesettings::v1::
+        ListSettingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcesettings::v1::Setting>>();
 }
@@ -58,6 +59,7 @@ ResourceSettingsServiceConnection::UpdateSetting(
 std::shared_ptr<ResourceSettingsServiceConnection>
 MakeResourceSettingsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ResourceSettingsServicePolicyOptionList>(
       options, __func__);
   options = resourcesettings_internal::ResourceSettingsServiceDefaultOptions(
@@ -73,25 +75,5 @@ MakeResourceSettingsServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace resourcesettings_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<resourcesettings::ResourceSettingsServiceConnection>
-MakeResourceSettingsServiceConnection(
-    std::shared_ptr<ResourceSettingsServiceStub> stub, Options options) {
-  options = ResourceSettingsServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      resourcesettings_internal::ResourceSettingsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcesettings_internal
 }  // namespace cloud
 }  // namespace google

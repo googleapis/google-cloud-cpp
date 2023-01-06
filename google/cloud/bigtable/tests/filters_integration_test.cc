@@ -22,6 +22,7 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using ::testing::ContainerEq;
 
 using FilterIntegrationTest =
@@ -58,7 +59,6 @@ using FilterIntegrationTest =
  */
 void CreateComplexRows(Table& table, std::string const& prefix) {
   namespace bt = bigtable;
-  using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
 
   bt::BulkMutation mutation;
   // Prepare a set of rows, with different numbers of cells, columns, and
@@ -95,7 +95,7 @@ void CreateComplexRows(Table& table, std::string const& prefix) {
 };
 
 TEST_F(FilterIntegrationTest, PassAll) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const row_key = "pass-all-row-key";
   std::vector<Cell> expected{
       {row_key, "family1", "c", 0, "v-c-0-0"},
@@ -112,7 +112,7 @@ TEST_F(FilterIntegrationTest, PassAll) {
 }
 
 TEST_F(FilterIntegrationTest, BlockAll) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const row_key = "block-all-row-key";
   std::vector<Cell> created{
       {row_key, "family1", "c", 0, "v-c-0-0"},
@@ -130,7 +130,7 @@ TEST_F(FilterIntegrationTest, BlockAll) {
 }
 
 TEST_F(FilterIntegrationTest, Latest) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const row_key = "latest-row-key";
   std::vector<Cell> created{
       {row_key, "family1", "c", 0, "v-c-0-0"},
@@ -155,7 +155,7 @@ TEST_F(FilterIntegrationTest, Latest) {
 }
 
 TEST_F(FilterIntegrationTest, FamilyRegex) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const row_key = "family-regex-row-key";
   std::vector<Cell> created{
       {row_key, "family1", "c2", 0, "bar"},
@@ -178,7 +178,7 @@ TEST_F(FilterIntegrationTest, FamilyRegex) {
 }
 
 TEST_F(FilterIntegrationTest, ColumnRegex) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const row_key = "column-regex-row-key";
   std::vector<Cell> created{
       {row_key, "family1", "abc", 0, "bar"},
@@ -201,7 +201,7 @@ TEST_F(FilterIntegrationTest, ColumnRegex) {
 }
 
 TEST_F(FilterIntegrationTest, ColumnRange) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const row_key = "column-range-row-key";
   std::vector<Cell> created{
       {row_key, "family1", "a00", 0, "bar"},
@@ -223,7 +223,7 @@ TEST_F(FilterIntegrationTest, ColumnRange) {
 }
 
 TEST_F(FilterIntegrationTest, TimestampRange) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const row_key = "timestamp-range-row-key";
   std::vector<Cell> created{
       {row_key, "family1", "c0", 1000, "v1000"},
@@ -247,7 +247,7 @@ TEST_F(FilterIntegrationTest, TimestampRange) {
 }
 
 TEST_F(FilterIntegrationTest, RowKeysRegex) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const row_key = "row-key-regex-row-key";
   std::vector<Cell> created{
       {row_key + "/abc0", "family1", "c0", 1000, "v1000"},
@@ -267,7 +267,7 @@ TEST_F(FilterIntegrationTest, RowKeysRegex) {
 }
 
 TEST_F(FilterIntegrationTest, ValueRegex) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const prefix = "value-regex-prefix";
   std::vector<Cell> created{
       {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
@@ -288,7 +288,7 @@ TEST_F(FilterIntegrationTest, ValueRegex) {
 }
 
 TEST_F(FilterIntegrationTest, ValueRange) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const prefix = "value-range-prefix";
   std::vector<Cell> created{
       {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
@@ -311,7 +311,7 @@ TEST_F(FilterIntegrationTest, ValueRange) {
 }
 
 TEST_F(FilterIntegrationTest, CellsRowLimit) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const prefix = "cell-row-limit-prefix";
   ASSERT_NO_FATAL_FAILURE(CreateComplexRows(table, prefix));
 
@@ -332,7 +332,7 @@ TEST_F(FilterIntegrationTest, CellsRowLimit) {
 }
 
 TEST_F(FilterIntegrationTest, CellsRowOffset) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const prefix = "cell-row-offset-prefix";
   ASSERT_NO_FATAL_FAILURE(CreateComplexRows(table, prefix));
 
@@ -353,9 +353,7 @@ TEST_F(FilterIntegrationTest, CellsRowOffset) {
 }
 
 TEST_F(FilterIntegrationTest, RowSample) {
-  using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
-
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const prefix = "row-sample-prefix";
 
   int constexpr kRowCount = 20000;
@@ -410,7 +408,7 @@ TEST_F(FilterIntegrationTest, RowSample) {
 }
 
 TEST_F(FilterIntegrationTest, StripValueTransformer) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const prefix = "strip-value-transformer-prefix";
   std::vector<Cell> created{
       {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
@@ -435,7 +433,7 @@ TEST_F(FilterIntegrationTest, StripValueTransformer) {
 }
 
 TEST_F(FilterIntegrationTest, ApplyLabelTransformer) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const prefix = "apply-label-transformer-prefix";
   std::vector<Cell> created{
       {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
@@ -460,7 +458,7 @@ TEST_F(FilterIntegrationTest, ApplyLabelTransformer) {
 }
 
 TEST_F(FilterIntegrationTest, Condition) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const prefix = "condition-prefix";
   std::vector<Cell> created{
       {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
@@ -488,7 +486,7 @@ TEST_F(FilterIntegrationTest, Condition) {
 }
 
 TEST_F(FilterIntegrationTest, Chain) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const prefix = "chain-prefix";
   std::vector<Cell> created{
       {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
@@ -512,7 +510,7 @@ TEST_F(FilterIntegrationTest, Chain) {
 }
 
 TEST_F(FilterIntegrationTest, ChainFromRange) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const prefix = "chain-prefix";
   std::vector<Cell> created{
       {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
@@ -536,7 +534,7 @@ TEST_F(FilterIntegrationTest, ChainFromRange) {
 }
 
 TEST_F(FilterIntegrationTest, Interleave) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const prefix = "interleave-prefix";
   std::vector<Cell> created{
       {prefix + "/abc0", "family1", "c0", 1000, "v1000"},
@@ -564,7 +562,7 @@ TEST_F(FilterIntegrationTest, Interleave) {
 }
 
 TEST_F(FilterIntegrationTest, InterleaveFromRange) {
-  auto table = GetTable();
+  auto table = GetTable("with-data-connection");
   std::string const prefix = "interleave-prefix";
   std::vector<Cell> created{
       {prefix + "/abc0", "family1", "c0", 1000, "v1000"},

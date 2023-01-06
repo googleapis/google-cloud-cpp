@@ -120,6 +120,13 @@ class VmMigrationStub {
           request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>>
+  AsyncUpgradeAppliance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::vmmigration::v1::UpgradeApplianceRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>>
   AsyncCreateMigratingVm(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -388,6 +395,12 @@ class DefaultVmMigrationStub : public VmMigrationStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
           request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpgradeAppliance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateMigratingVm(
       google::cloud::CompletionQueue& cq,

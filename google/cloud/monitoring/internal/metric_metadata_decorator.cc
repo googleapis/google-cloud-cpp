@@ -105,6 +105,14 @@ Status MetricServiceMetadata::CreateServiceTimeSeries(
   return child_->CreateServiceTimeSeries(context, request);
 }
 
+future<Status> MetricServiceMetadata::AsyncCreateTimeSeries(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncCreateTimeSeries(cq, std::move(context), request);
+}
+
 void MetricServiceMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
@@ -118,9 +126,8 @@ void MetricServiceMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

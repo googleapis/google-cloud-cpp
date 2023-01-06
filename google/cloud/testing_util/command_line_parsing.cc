@@ -61,8 +61,9 @@ std::chrono::seconds ParseDuration(std::string const& val) {
 
 absl::optional<bool> ParseBoolean(std::string const& val) {
   auto lower = val;
-  std::transform(lower.begin(), lower.end(), lower.begin(),
-                 [](char x) { return static_cast<char>(std::tolower(x)); });
+  std::transform(
+      lower.begin(), lower.end(), lower.begin(),
+      [](unsigned char x) { return static_cast<char>(std::tolower(x)); });
   if (lower == "true") return true;
   if (lower == "false") return false;
   return {};
@@ -128,7 +129,7 @@ std::vector<std::string> OptionsParse(std::vector<OptionDescriptor> const& desc,
     // Try to match `argument` against the options in `desc`
     bool matched = false;
     for (auto const& d : desc) {
-      if (argument.rfind(d.option, 0) != 0) {
+      if (!absl::StartsWith(argument, d.option)) {
         // Not a match, keep searching
         continue;
       }

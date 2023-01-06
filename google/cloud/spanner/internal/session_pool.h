@@ -21,7 +21,6 @@
 #include "google/cloud/spanner/internal/session.h"
 #include "google/cloud/spanner/internal/spanner_stub.h"
 #include "google/cloud/spanner/retry_policy.h"
-#include "google/cloud/spanner/session_pool_options.h"
 #include "google/cloud/spanner/version.h"
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/completion_queue.h"
@@ -144,9 +143,11 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
                         WaitForSessionAllocation wait);  // LOCKS_EXCLUDED(mu_)
   Status CreateSessionsSync(std::shared_ptr<Channel> const& channel,
                             std::map<std::string, std::string> const& labels,
+                            std::string const& role,
                             int num_sessions);  // LOCKS_EXCLUDED(mu_)
   void CreateSessionsAsync(std::shared_ptr<Channel> const& channel,
                            std::map<std::string, std::string> const& labels,
+                           std::string const& role,
                            int num_sessions);  // LOCKS_EXCLUDED(mu_)
 
   SessionHolder MakeSessionHolder(std::unique_ptr<Session> session,
@@ -158,7 +159,7 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   AsyncBatchCreateSessions(CompletionQueue& cq,
                            std::shared_ptr<SpannerStub> const& stub,
                            std::map<std::string, std::string> const& labels,
-                           int num_sessions);
+                           std::string const& role, int num_sessions);
   future<Status> AsyncDeleteSession(CompletionQueue& cq,
                                     std::shared_ptr<SpannerStub> const& stub,
                                     std::string session_name);
@@ -174,6 +175,9 @@ class SessionPool : public std::enable_shared_from_this<SessionPool> {
   void DoBackgroundWork();
   void MaintainPoolSize();
   void RefreshExpiringSessions();
+
+  // Remove the named session from the pool (if it is present).
+  void Erase(std::string const& session_name);
 
   spanner::Database const db_;
   google::cloud::CompletionQueue cq_;

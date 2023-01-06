@@ -21,10 +21,10 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 Status RetryLoopError(char const* loop_message, char const* location,
-                      Status const& last_status) {
+                      Status const& status) {
   std::ostringstream os;
-  os << loop_message << " " << location << ": " << last_status.message();
-  return Status(last_status.code(), std::move(os).str());
+  os << loop_message << " " << location << ": " << status.message();
+  return Status(status.code(), std::move(os).str(), status.error_info());
 }
 
 }  // namespace internal

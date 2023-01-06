@@ -23,6 +23,7 @@
 #include "google/cloud/dataproc/internal/batch_controller_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -49,9 +50,9 @@ BatchControllerConnection::GetBatch(
 }
 
 StreamRange<google::cloud::dataproc::v1::Batch>
-    BatchControllerConnection::ListBatches(
-        google::cloud::dataproc::v1::
-            ListBatchesRequest) {  // NOLINT(performance-unnecessary-value-param)
+BatchControllerConnection::ListBatches(
+    google::cloud::dataproc::v1::
+        ListBatchesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::Batch>>();
 }
@@ -62,12 +63,13 @@ Status BatchControllerConnection::DeleteBatch(
 }
 
 std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BatchControllerPolicyOptionList>(options,
                                                                   __func__);
-  options =
-      dataproc_internal::BatchControllerDefaultOptions(std::move(options));
+  options = dataproc_internal::BatchControllerDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultBatchControllerStub(
       background->cq(), options);
@@ -75,26 +77,12 @@ std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace dataproc_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<dataproc::BatchControllerConnection>
-MakeBatchControllerConnection(std::shared_ptr<BatchControllerStub> stub,
-                              Options options) {
-  options = BatchControllerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<dataproc_internal::BatchControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
+    Options options) {
+  return MakeBatchControllerConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc_internal
+}  // namespace dataproc
 }  // namespace cloud
 }  // namespace google

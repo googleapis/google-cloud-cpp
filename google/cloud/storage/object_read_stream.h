@@ -15,10 +15,10 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_READ_STREAM_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_READ_STREAM_H
 
+#include "google/cloud/storage/headers_map.h"
 #include "google/cloud/storage/internal/object_read_streambuf.h"
 #include "google/cloud/storage/version.h"
 #include <istream>
-#include <map>
 #include <memory>
 #include <string>
 
@@ -26,9 +26,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/// Represents the headers returned in a streaming upload or download operation.
-using HeadersMap = std::multimap<std::string, std::string>;
 
 /**
  * Defines a `std::basic_istream<char>` to read from a GCS Object.
@@ -128,12 +125,9 @@ class ObjectReadStream : public std::basic_istream<char> {
    *
    * @warning The contents of these headers may change without notice. Unless
    *     documented in the API, headers may be removed or added by the service.
-   *     Also note that the client library uses both the XML and JSON API,
-   *     choosing between them based on the feature set (some functionality is
-   *     only available through the JSON API), and performance.  Consequently,
-   *     the headers may be different on requests using different features.
-   *     Likewise, the headers may change from one version of the library to the
-   *     next, as we find more (or different) opportunities for optimization.
+   *     Furthermore, the headers may change from one version of the library to
+   *     the next, as we find more (or different) opportunities for
+   *     optimization.
    */
   HeadersMap const& headers() const { return buf_->headers(); }
 
@@ -148,7 +142,7 @@ class ObjectReadStream : public std::basic_istream<char> {
    * want to use the generation number to guarantee all the downloads are
    * actually referencing the same object.  One could do this by first querying
    * the metadata before the first download, but this is less efficient as it
-   * requires one additional server roundtrip.
+   * requires one additional server round trip.
    *
    * Note that all these attributes are `absl::optional<>`, as the attributes
    * may not be known (or exist) if there is an error during the download. If

@@ -40,6 +40,10 @@ endfunction ()
 
 function (google_cloud_cpp_add_common_options target)
     google_cloud_cpp_silence_warnings_in_deps(${target})
+    # Require C++ >= 14.  Note that this is a *minimum* requirement. It is still
+    # possible to compile the library (and its dependencies) with C++17 or
+    # higher.
+    target_compile_features(${target} PUBLIC cxx_std_14)
     if (MSVC)
         target_compile_options(${target} PRIVATE "/W3")
         if (GOOGLE_CLOUD_CPP_ENABLE_WERROR)

@@ -13,9 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
+#include "google/cloud/bigtable/app_profile_config.h"
 #include "google/cloud/bigtable/iam_binding.h"
 #include "google/cloud/bigtable/iam_policy.h"
 #include "google/cloud/bigtable/resource_names.h"
+#include "google/cloud/bigtable/testing/random_names.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/algorithm.h"
@@ -32,8 +34,6 @@
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
 #include <gmock/gmock.h>
-// TODO(#5929) - remove once deprecated functions are removed
-#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
@@ -41,9 +41,9 @@ namespace bigtable_admin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::bigtable::testing::RandomInstanceId;
 using ::google::cloud::internal::GetEnv;
 using ::google::cloud::testing_util::ContainsOnce;
-using ::google::cloud::testing_util::IsOk;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::IsEmpty;
@@ -146,12 +146,8 @@ protobuf::FieldMask Mask(std::string const& path) {
 
 /// @test Verify that default InstanceAdmin::ListClusters works as expected.
 TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
-  auto const id_1 =
-      "it-" + google::cloud::internal::Sample(
-                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
-  auto const id_2 =
-      "it-" + google::cloud::internal::Sample(
-                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto const id_1 = RandomInstanceId(generator_);
+  auto const id_2 = RandomInstanceId(generator_);
   auto const project_name = Project(project_id_).FullName();
   auto const name_1 = bigtable::InstanceName(project_id_, id_1);
   auto const name_2 = bigtable::InstanceName(project_id_, id_2);
@@ -186,9 +182,7 @@ TEST_F(InstanceAdminIntegrationTest, ListAllClustersTest) {
 
 /// @test Verify that AppProfile CRUD operations work as expected.
 TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
-  auto const instance_id =
-      "it-" + google::cloud::internal::Sample(
-                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto const instance_id = RandomInstanceId(generator_);
   auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
 
   auto config = IntegrationTestConfig(project_id_, instance_id, zone_a_,
@@ -225,11 +219,15 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
   EXPECT_THAT(*profiles, Not(Contains(name_1)));
   EXPECT_THAT(*profiles, Not(Contains(name_2)));
 
-  auto profile_1 = client_.CreateAppProfile(instance_name, id_1, {});
+  auto ap_1 = bigtable::AppProfileConfig::MultiClusterUseAny(id_1).as_proto();
+  ap_1.set_parent(instance_name);
+  auto profile_1 = client_.CreateAppProfile(ap_1);
   ASSERT_STATUS_OK(profile_1);
   EXPECT_EQ(profile_1->name(), name_1);
 
-  auto profile_2 = client_.CreateAppProfile(instance_name, id_2, {});
+  auto ap_2 = bigtable::AppProfileConfig::MultiClusterUseAny(id_2).as_proto();
+  ap_2.set_parent(instance_name);
+  auto profile_2 = client_.CreateAppProfile(ap_2);
   ASSERT_STATUS_OK(profile_2);
   EXPECT_EQ(profile_2->name(), name_2);
 
@@ -282,9 +280,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteAppProfile) {
 
 /// @test Verify that Instance CRUD operations work as expected.
 TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
-  auto const instance_id =
-      "it-" + google::cloud::internal::Sample(
-                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto const instance_id = RandomInstanceId(generator_);
   auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
 
   // Create instance
@@ -303,7 +299,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
   EXPECT_EQ(instance->name(), instance_name);
 
   // Update instance
-  auto const updated_display_name = instance_id + " updated";
+  auto const updated_display_name = instance_id.substr(0, 22) + " updated";
   instance->set_display_name(updated_display_name);
   instance =
       client_.PartialUpdateInstance(*std::move(instance), Mask("display_name"))
@@ -326,9 +322,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteInstanceTest) {
 
 /// @test Verify that cluster CRUD operations work as expected.
 TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
-  auto const instance_id =
-      "it-" + google::cloud::internal::Sample(
-                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto const instance_id = RandomInstanceId(generator_);
   auto const cluster_id = instance_id + "-cl2";
   auto const project_name = Project(project_id_).FullName();
   auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
@@ -385,9 +379,7 @@ TEST_F(InstanceAdminIntegrationTest, CreateListGetDeleteClusterTest) {
 
 /// @test Verify that IAM Policy APIs work as expected.
 TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
-  auto const instance_id =
-      "it-" + google::cloud::internal::Sample(
-                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto const instance_id = RandomInstanceId(generator_);
   auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
 
   // Create instance
@@ -397,10 +389,10 @@ TEST_F(InstanceAdminIntegrationTest, SetGetTestIamAPIsTest) {
   auto iam_policy = bigtable::IamPolicy({bigtable::IamBinding(
       "roles/bigtable.reader", {"serviceAccount:" + service_account_})});
 
-  auto initial_policy = client_.SetIamPolicy(instance_id, iam_policy);
+  auto initial_policy = client_.SetIamPolicy(instance_name, iam_policy);
   ASSERT_STATUS_OK(initial_policy);
 
-  auto fetched_policy = client_.GetIamPolicy(instance_id);
+  auto fetched_policy = client_.GetIamPolicy(instance_name);
   ASSERT_STATUS_OK(fetched_policy);
 
   EXPECT_EQ(initial_policy->version(), fetched_policy->version());
@@ -423,9 +415,7 @@ TEST_F(InstanceAdminIntegrationTest,
   testing_util::ScopedEnvironment env = {"GOOGLE_CLOUD_CPP_ENABLE_TRACING",
                                          absl::nullopt};
   testing_util::ScopedLog log;
-  auto const instance_id =
-      "it-" + google::cloud::internal::Sample(
-                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto const instance_id = RandomInstanceId(generator_);
   auto const project_name = Project(project_id_).FullName();
   auto const instance_name = bigtable::InstanceName(project_id_, instance_id);
 
@@ -448,7 +438,7 @@ TEST_F(InstanceAdminIntegrationTest,
   EXPECT_EQ(instance->name(), instance_name);
 
   // Update instance
-  auto const updated_display_name = instance_id + " updated";
+  auto const updated_display_name = instance_id.substr(0, 22) + " updated";
   instance->set_display_name(updated_display_name);
   instance =
       client.PartialUpdateInstance(*instance, Mask("display_name")).get();
@@ -487,9 +477,7 @@ TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
       Options{}.set<GrpcCompletionQueueOption>(cq)));
 
   // CompletionQueue `cq` is not being `Run()`, so this should never finish.
-  auto const instance_id =
-      "it-" + google::cloud::internal::Sample(
-                  generator_, 8, "abcdefghijklmnopqrstuvwxyz0123456789");
+  auto const instance_id = RandomInstanceId(generator_);
   auto instance_fut = client.CreateInstance(IntegrationTestConfig(
       project_id_, instance_id, zone_a_, btadmin::Instance::PRODUCTION, 3));
 

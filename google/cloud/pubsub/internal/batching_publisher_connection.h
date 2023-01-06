@@ -33,6 +33,8 @@ class BatchingPublisherConnection
     : public pubsub::PublisherConnection,
       public std::enable_shared_from_this<BatchingPublisherConnection> {
  public:
+  ~BatchingPublisherConnection() override;
+
   static std::shared_ptr<BatchingPublisherConnection> Create(
       pubsub::Topic topic, Options opts, std::string ordering_key,
       std::shared_ptr<BatchSink> sink, CompletionQueue cq) {
@@ -79,6 +81,7 @@ class BatchingPublisherConnection
   google::pubsub::v1::PublishRequest pending_;
   std::size_t current_bytes_ = 0;
   std::chrono::system_clock::time_point batch_expiration_;
+  future<void> timer_;
 
   Status corked_on_status_;
 };

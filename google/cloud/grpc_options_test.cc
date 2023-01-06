@@ -32,6 +32,7 @@ using ::testing::ContainsRegex;
 using ::testing::IsEmpty;
 using ::testing::IsNull;
 using ::testing::NotNull;
+using ms = std::chrono::milliseconds;
 using ThreadPool = internal::AutomaticallyCreatedBackgroundThreads;
 
 // Tests a generic option by setting it, then getting it.
@@ -107,8 +108,29 @@ TEST(GrpcChannelArguments, MakeChannelArguments) {
   expected.SetString("foo", "bar");
   expected.SetString("baz", "quux");
   expected.SetUserAgentPrefix("user_agent");
+  expected.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS,
+                  static_cast<int>(ms(std::chrono::hours(24)).count()));
+  expected.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS,
+                  static_cast<int>(ms(std::chrono::seconds(60)).count()));
 
   CheckGrpcChannelArguments(expected, internal::MakeChannelArguments(opts));
+}
+
+TEST(GrpcChannelArguments, MakeChannelArgumentsOverrideDefaults) {
+  grpc::ChannelArguments args;
+  args.SetInt(GRPC_ARG_KEEPALIVE_TIME_MS, 1000);
+  args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, 2000);
+  auto options = Options{}.set<GrpcChannelArgumentsNativeOption>(args);
+
+  auto keepalive_time =
+      internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIME_MS);
+  ASSERT_TRUE(keepalive_time.has_value());
+  EXPECT_EQ(keepalive_time, 1000);
+
+  auto keepalive_timeout =
+      internal::GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS);
+  ASSERT_TRUE(keepalive_timeout.has_value());
+  EXPECT_EQ(keepalive_timeout, 2000);
 }
 
 TEST(GrpcChannelArguments, GetIntChannelArgument) {
@@ -164,7 +186,6 @@ TEST(GrpcOptionList, GrpcBackgroundThreadPoolSizeOption) {
 }
 
 TEST(GrpcOptionList, GrpcCompletionQueueOption) {
-  using ms = std::chrono::milliseconds;
   CompletionQueue cq;
   auto background = internal::MakeBackgroundThreadsFactory(
       Options{}.set<GrpcCompletionQueueOption>(cq))();

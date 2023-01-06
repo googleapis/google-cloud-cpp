@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 namespace storage_proto = ::google::storage::v2;
@@ -42,10 +41,11 @@ TEST(GrpcBucketAccessControlParser, FromProto) {
        project_number: "test-project-number"
        team: "test-team"
      }
-     )""",
+     etag: "test-etag")""",
                                                             &input));
 
-  auto const expected = BucketAccessControlParser::FromString(R"""({
+  auto const expected =
+      storage::internal::BucketAccessControlParser::FromString(R"""({
      "role": "test-role",
      "id": "test-id",
      "kind": "storage#bucketAccessControl",
@@ -57,16 +57,17 @@ TEST(GrpcBucketAccessControlParser, FromProto) {
      "projectTeam": {
        "projectNumber": "test-project-number",
        "team": "test-team"
-     }
+     },
+     "etag": "test-etag"
   })""");
   ASSERT_STATUS_OK(expected);
 
-  auto actual = GrpcBucketAccessControlParser::FromProto(input, "test-bucket");
+  auto actual = FromProto(input, "test-bucket");
   EXPECT_EQ(*expected, actual);
 }
 
 TEST(GrpcBucketAccessControlParser, ToProtoSimple) {
-  auto acl = BucketAccessControlParser::FromString(R"""({
+  auto acl = storage::internal::BucketAccessControlParser::FromString(R"""({
      "role": "test-role",
      "id": "test-id",
      "kind": "storage#bucketAccessControl",
@@ -78,10 +79,11 @@ TEST(GrpcBucketAccessControlParser, ToProtoSimple) {
      "projectTeam": {
        "projectNumber": "test-project-number",
        "team": "test-team"
-     }
+     },
+     "etag": "test-etag"
   })""");
   ASSERT_STATUS_OK(acl);
-  auto actual = GrpcBucketAccessControlParser::ToProto(*acl);
+  auto actual = ToProto(*acl);
 
   storage_proto::BucketAccessControl expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
@@ -95,17 +97,17 @@ TEST(GrpcBucketAccessControlParser, ToProtoSimple) {
        project_number: "test-project-number"
        team: "test-team"
      }
-     )""",
+     etag: "test-etag")""",
                                                             &expected));
 
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
 TEST(GrpcBucketAccessControlParser, MinimalFields) {
-  BucketAccessControl acl;
+  storage::BucketAccessControl acl;
   acl.set_role("test-role");
   acl.set_entity("test-entity");
-  auto actual = GrpcBucketAccessControlParser::ToProto(acl);
+  auto actual = ToProto(acl);
 
   storage_proto::BucketAccessControl expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
@@ -117,9 +119,14 @@ TEST(GrpcBucketAccessControlParser, MinimalFields) {
   EXPECT_THAT(actual, IsProtoEqual(expected));
 }
 
+TEST(GrpcBucketAccessControlParser, Role) {
+  auto const patch =
+      storage::BucketAccessControlPatchBuilder().set_role("test-role");
+  EXPECT_EQ("test-role", Role(patch));
+}
+
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

@@ -28,7 +28,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Publish messages to the Cloud Pub/Sub service.
  *
- * This class is used to publish message to a given topic, with a fixed
+ * This class is used to publish messages to a fixed topic, with a fixed
  * configuration such as credentials, batching, background threads, etc.
  * Applications that publish messages to multiple topics need to create separate
  * instances of this class. Applications wanting to publish events with
@@ -97,24 +97,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class Publisher {
  public:
-  explicit Publisher(std::shared_ptr<PublisherConnection> connection,
-                     PublisherOptions const& options = {});
+  explicit Publisher(std::shared_ptr<PublisherConnection> connection)
+      : connection_(std::move(connection)) {}
 
-  //@{
   Publisher(Publisher const&) = default;
   Publisher& operator=(Publisher const&) = default;
   Publisher(Publisher&&) = default;
   Publisher& operator=(Publisher&&) = default;
-  //@}
 
-  //@{
   friend bool operator==(Publisher const& a, Publisher const& b) {
     return a.connection_ == b.connection_;
   }
   friend bool operator!=(Publisher const& a, Publisher const& b) {
     return !(a == b);
   }
-  //@}
 
   /**
    * Publishes a message to this publisher's topic
@@ -141,7 +137,9 @@ class Publisher {
    * @snippet samples.cc publisher-retry-settings
    *
    * @return a future that becomes satisfied when the message is published or on
-   *     a unrecoverable error.
+   *     a unrecoverable error. On success, the future is satisfied with the
+   *     server-assigned ID of the message. IDs are guaranteed to be unique
+   *     within the topic.
    */
   future<StatusOr<std::string>> Publish(Message m) {
     return connection_->Publish({std::move(m)});
@@ -186,6 +184,13 @@ class Publisher {
   void ResumePublish(std::string ordering_key) {
     connection_->ResumePublish({std::move(ordering_key)});
   }
+
+  /// @deprecated Use `Publisher(connection)` and provide any configuration
+  ///     options when initializing the @p connection object.
+  GOOGLE_CLOUD_CPP_DEPRECATED("use `Publisher(connection)` instead")
+  explicit Publisher(std::shared_ptr<PublisherConnection> connection,
+                     PublisherOptions const& /* options*/)
+      : Publisher(std::move(connection)) {}
 
  private:
   std::shared_ptr<PublisherConnection> connection_;

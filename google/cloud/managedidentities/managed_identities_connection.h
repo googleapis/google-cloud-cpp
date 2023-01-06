@@ -49,6 +49,21 @@ using ManagedIdentitiesServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         managedidentities_internal::ManagedIdentitiesServiceRetryTraits>;
 
+/**
+ * The `ManagedIdentitiesServiceConnection` object for
+ * `ManagedIdentitiesServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ManagedIdentitiesServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ManagedIdentitiesServiceClient`.
+ *
+ * To create a concrete instance, see
+ * `MakeManagedIdentitiesServiceConnection()`.
+ *
+ * For mocking, see
+ * `managedidentities_mocks::MockManagedIdentitiesServiceConnection`.
+ */
 class ManagedIdentitiesServiceConnection {
  public:
   virtual ~ManagedIdentitiesServiceConnection() = 0;
@@ -98,25 +113,35 @@ class ManagedIdentitiesServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `ManagedIdentitiesServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * ManagedIdentitiesServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `ManagedIdentitiesServiceConnection`. Expected options are any of
+ * the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * -
+ * `google::cloud::managedidentities::ManagedIdentitiesServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `ManagedIdentitiesServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<ManagedIdentitiesServiceConnection>
 MakeManagedIdentitiesServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace managedidentities_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<managedidentities::ManagedIdentitiesServiceConnection>
-MakeManagedIdentitiesServiceConnection(
-    std::shared_ptr<ManagedIdentitiesServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace managedidentities_internal
 }  // namespace cloud
 }  // namespace google
 

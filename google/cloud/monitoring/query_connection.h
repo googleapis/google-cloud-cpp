@@ -46,6 +46,18 @@ using QueryServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         monitoring_internal::QueryServiceRetryTraits>;
 
+/**
+ * The `QueryServiceConnection` object for `QueryServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `QueryServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `QueryServiceClient`.
+ *
+ * To create a concrete instance, see `MakeQueryServiceConnection()`.
+ *
+ * For mocking, see `monitoring_mocks::MockQueryServiceConnection`.
+ */
 class QueryServiceConnection {
  public:
   virtual ~QueryServiceConnection() = 0;
@@ -56,24 +68,32 @@ class QueryServiceConnection {
       google::monitoring::v3::QueryTimeSeriesRequest request);
 };
 
+/**
+ * A factory function to construct an object of type `QueryServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of QueryServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `QueryServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::monitoring::QueryServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `QueryServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<QueryServiceConnection> MakeQueryServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::QueryServiceConnection> MakeQueryServiceConnection(
-    std::shared_ptr<QueryServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
 }  // namespace cloud
 }  // namespace google
 

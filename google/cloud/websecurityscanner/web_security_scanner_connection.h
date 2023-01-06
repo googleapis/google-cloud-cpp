@@ -46,6 +46,19 @@ using WebSecurityScannerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         websecurityscanner_internal::WebSecurityScannerRetryTraits>;
 
+/**
+ * The `WebSecurityScannerConnection` object for `WebSecurityScannerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `WebSecurityScannerClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `WebSecurityScannerClient`.
+ *
+ * To create a concrete instance, see `MakeWebSecurityScannerConnection()`.
+ *
+ * For mocking, see
+ * `websecurityscanner_mocks::MockWebSecurityScannerConnection`.
+ */
 class WebSecurityScannerConnection {
  public:
   virtual ~WebSecurityScannerConnection() = 0;
@@ -107,25 +120,34 @@ class WebSecurityScannerConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `WebSecurityScannerConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * WebSecurityScannerClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `WebSecurityScannerConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::websecurityscanner::WebSecurityScannerPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `WebSecurityScannerConnection`
+ * created by this function.
+ */
 std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace websecurityscanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<websecurityscanner::WebSecurityScannerConnection>
-MakeWebSecurityScannerConnection(std::shared_ptr<WebSecurityScannerStub> stub,
-                                 Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace websecurityscanner_internal
 }  // namespace cloud
 }  // namespace google
 

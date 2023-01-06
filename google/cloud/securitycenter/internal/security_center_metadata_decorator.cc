@@ -91,6 +91,15 @@ Status SecurityCenterMetadata::DeleteNotificationConfig(
   return child_->DeleteNotificationConfig(context, request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterMetadata::GetBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetBigQueryExport(context, request);
+}
+
 StatusOr<google::iam::v1::Policy> SecurityCenterMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
@@ -294,6 +303,42 @@ SecurityCenterMetadata::UpdateSecurityMarks(
   return child_->UpdateSecurityMarks(context, request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterMetadata::CreateBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->CreateBigQueryExport(context, request);
+}
+
+Status SecurityCenterMetadata::DeleteBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DeleteBigQueryExport(context, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterMetadata::UpdateBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+        request) {
+  SetMetadata(context,
+              "big_query_export.name=" + request.big_query_export().name());
+  return child_->UpdateBigQueryExport(context, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
+SecurityCenterMetadata::ListBigQueryExports(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListBigQueryExports(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SecurityCenterMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -324,9 +369,8 @@ void SecurityCenterMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

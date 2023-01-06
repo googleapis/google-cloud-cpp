@@ -23,6 +23,7 @@
 #include "google/cloud/logging/logging_service_v2_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -46,17 +47,17 @@ LoggingServiceV2Connection::WriteLogEntries(
 }
 
 StreamRange<google::logging::v2::LogEntry>
-    LoggingServiceV2Connection::ListLogEntries(
-        google::logging::v2::
-            ListLogEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+LoggingServiceV2Connection::ListLogEntries(
+    google::logging::v2::
+        ListLogEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::logging::v2::LogEntry>>();
 }
 
 StreamRange<google::api::MonitoredResourceDescriptor>
-    LoggingServiceV2Connection::ListMonitoredResourceDescriptors(
-        google::logging::v2::
-            ListMonitoredResourceDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+LoggingServiceV2Connection::ListMonitoredResourceDescriptors(
+    google::logging::v2::
+        ListMonitoredResourceDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::MonitoredResourceDescriptor>>();
 }
@@ -71,7 +72,7 @@ StreamRange<std::string> LoggingServiceV2Connection::ListLogs(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::logging::v2::TailLogEntriesRequest,
     google::logging::v2::TailLogEntriesResponse>>
-LoggingServiceV2Connection::AsyncTailLogEntries(ExperimentalTag) {
+LoggingServiceV2Connection::AsyncTailLogEntries() {
   return absl::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
           google::logging::v2::TailLogEntriesRequest,
@@ -79,9 +80,18 @@ LoggingServiceV2Connection::AsyncTailLogEntries(ExperimentalTag) {
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+LoggingServiceV2Connection::AsyncWriteLogEntries(
+    google::logging::v2::WriteLogEntriesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::logging::v2::WriteLogEntriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  LoggingServiceV2PolicyOptionList>(options,
                                                                    __func__);
   options =
@@ -95,24 +105,5 @@ std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace logging_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<logging::LoggingServiceV2Connection>
-MakeLoggingServiceV2Connection(std::shared_ptr<LoggingServiceV2Stub> stub,
-                               Options options) {
-  options = LoggingServiceV2DefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<logging_internal::LoggingServiceV2ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace logging_internal
 }  // namespace cloud
 }  // namespace google

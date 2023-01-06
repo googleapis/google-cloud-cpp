@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -26,7 +25,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 using ::google::cloud::internal::GetEnv;
@@ -40,16 +38,12 @@ using ::testing::Not;
 using ::testing::Pair;
 using ::testing::UnorderedElementsAre;
 
-// When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
-// actually just run against the regular GCS REST API. That is fine.
 class GrpcBucketMetadataIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest {};
 
 TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
   ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                 "metadata");
-  // TODO(#7257) - restore gRPC integration tests against production
-  if (!UsingEmulator()) GTEST_SKIP();
 
   auto const project_name = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_THAT(project_name, Not(IsEmpty()))
@@ -79,8 +73,12 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
   EXPECT_EQ(get->location_type(), insert->location_type());
   EXPECT_EQ(get->storage_class(), insert->storage_class());
 
+  // We need to set the retention policy or the request to lock the retention
+  // policy (see below) will fail.
   auto patch = client->PatchBucket(
-      bucket_name, BucketMetadataPatchBuilder{}.SetLabel("l0", "k0"));
+      bucket_name, BucketMetadataPatchBuilder{}
+                       .SetLabel("l0", "k0")
+                       .SetRetentionPolicy(std::chrono::seconds(30)));
   ASSERT_STATUS_OK(patch);
   EXPECT_THAT(patch->labels(), ElementsAre(Pair("l0", "k0")));
 
@@ -93,8 +91,10 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
   auto locked =
       client->LockBucketRetentionPolicy(bucket_name, updated->metageneration());
   ASSERT_STATUS_OK(locked);
-  EXPECT_FALSE(updated->has_retention_policy());
-  EXPECT_TRUE(locked->has_retention_policy());
+  ASSERT_TRUE(updated->has_retention_policy());
+  ASSERT_TRUE(locked->has_retention_policy());
+  EXPECT_FALSE(updated->retention_policy().is_locked);
+  EXPECT_TRUE(locked->retention_policy().is_locked);
 
   // Create a second bucket to make the list more interesting.
   auto bucket_name_2 = MakeRandomBucketName();
@@ -118,7 +118,6 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
                  std::back_inserter(roles),
                  [](NativeIamBinding const& b) { return b.role(); });
   EXPECT_THAT(roles, IsSupersetOf({"roles/storage.legacyBucketOwner",
-                                   "roles/storage.legacyBucketWriter",
                                    "roles/storage.legacyBucketReader"}));
 
   auto new_policy = *policy;
@@ -138,10 +137,7 @@ TEST_F(GrpcBucketMetadataIntegrationTest, ObjectMetadataCRUD) {
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC

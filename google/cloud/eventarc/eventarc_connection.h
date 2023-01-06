@@ -48,6 +48,18 @@ using EventarcLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         eventarc_internal::EventarcRetryTraits>;
 
+/**
+ * The `EventarcConnection` object for `EventarcClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `EventarcClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `EventarcClient`.
+ *
+ * To create a concrete instance, see `MakeEventarcConnection()`.
+ *
+ * For mocking, see `eventarc_mocks::MockEventarcConnection`.
+ */
 class EventarcConnection {
  public:
   virtual ~EventarcConnection() = 0;
@@ -68,26 +80,83 @@ class EventarcConnection {
 
   virtual future<StatusOr<google::cloud::eventarc::v1::Trigger>> DeleteTrigger(
       google::cloud::eventarc::v1::DeleteTriggerRequest const& request);
+
+  virtual StatusOr<google::cloud::eventarc::v1::Channel> GetChannel(
+      google::cloud::eventarc::v1::GetChannelRequest const& request);
+
+  virtual StreamRange<google::cloud::eventarc::v1::Channel> ListChannels(
+      google::cloud::eventarc::v1::ListChannelsRequest request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> CreateChannel(
+      google::cloud::eventarc::v1::CreateChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> UpdateChannel(
+      google::cloud::eventarc::v1::UpdateChannelRequest const& request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::Channel>> DeleteChannel(
+      google::cloud::eventarc::v1::DeleteChannelRequest const& request);
+
+  virtual StatusOr<google::cloud::eventarc::v1::Provider> GetProvider(
+      google::cloud::eventarc::v1::GetProviderRequest const& request);
+
+  virtual StreamRange<google::cloud::eventarc::v1::Provider> ListProviders(
+      google::cloud::eventarc::v1::ListProvidersRequest request);
+
+  virtual StatusOr<google::cloud::eventarc::v1::ChannelConnection>
+  GetChannelConnection(
+      google::cloud::eventarc::v1::GetChannelConnectionRequest const& request);
+
+  virtual StreamRange<google::cloud::eventarc::v1::ChannelConnection>
+  ListChannelConnections(
+      google::cloud::eventarc::v1::ListChannelConnectionsRequest request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  CreateChannelConnection(
+      google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::eventarc::v1::ChannelConnection>>
+  DeleteChannelConnection(
+      google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+  GetGoogleChannelConfig(
+      google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+  UpdateGoogleChannelConfig(
+      google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+          request);
 };
 
+/**
+ * A factory function to construct an object of type `EventarcConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of EventarcClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `EventarcConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::eventarc::EventarcPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `EventarcConnection` created by
+ * this function.
+ */
 std::shared_ptr<EventarcConnection> MakeEventarcConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace eventarc_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<eventarc::EventarcConnection> MakeEventarcConnection(
-    std::shared_ptr<EventarcStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace eventarc_internal
 }  // namespace cloud
 }  // namespace google
 

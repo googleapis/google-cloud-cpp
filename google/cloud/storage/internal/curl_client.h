@@ -17,7 +17,6 @@
 
 #include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/internal/raw_client.h"
-#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/random.h"
@@ -64,29 +63,10 @@ class CurlClient : public RawClient,
   CurlClient& operator=(CurlClient const& rhs) = delete;
   CurlClient& operator=(CurlClient&& rhs) = delete;
 
-  using LockFunction =
-      std::function<void(CURL*, curl_lock_data, curl_lock_access)>;
-  using UnlockFunction = std::function<void(CURL*, curl_lock_data)>;
-
-  //@{
-  /// @name Implement the CurlResumableSession operations.
-  // Note that these member functions are not inherited from RawClient, they are
-  // called only by `CurlResumableUploadSession`, because the retry loop for
-  // them is very different from the standard retry loop. Also note that some of
-  // these member functions are virtual, but only because we need to override
-  // them in the *library* unit tests.
-  virtual StatusOr<ResumableUploadResponse> UploadChunk(
-      UploadChunkRequest const&);
-  virtual StatusOr<ResumableUploadResponse> QueryResumableUpload(
-      QueryResumableUploadRequest const&);
-  StatusOr<std::unique_ptr<ResumableUploadSession>>
-  FullyRestoreResumableSession(ResumableUploadRequest const& request,
-                               std::string const& session_id);
-  //@}
-
   ClientOptions const& client_options() const override {
     return backwards_compatibility_options_;
   }
+  Options options() const override;
 
   StatusOr<ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) override;
@@ -99,12 +79,8 @@ class CurlClient : public RawClient,
       UpdateBucketRequest const& request) override;
   StatusOr<BucketMetadata> PatchBucket(
       PatchBucketRequest const& request) override;
-  StatusOr<IamPolicy> GetBucketIamPolicy(
-      GetBucketIamPolicyRequest const& request) override;
   StatusOr<NativeIamPolicy> GetNativeBucketIamPolicy(
       GetBucketIamPolicyRequest const& request) override;
-  StatusOr<IamPolicy> SetBucketIamPolicy(
-      SetBucketIamPolicyRequest const& request) override;
   StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(
       SetNativeBucketIamPolicyRequest const& request) override;
   StatusOr<TestBucketIamPermissionsResponse> TestBucketIamPermissions(
@@ -128,10 +104,15 @@ class CurlClient : public RawClient,
       PatchObjectRequest const& request) override;
   StatusOr<ObjectMetadata> ComposeObject(
       ComposeObjectRequest const& request) override;
-  StatusOr<std::unique_ptr<ResumableUploadSession>> CreateResumableSession(
+
+  StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
       ResumableUploadRequest const& request) override;
+  StatusOr<QueryResumableUploadResponse> QueryResumableUpload(
+      QueryResumableUploadRequest const& request) override;
   StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) override;
+  StatusOr<QueryResumableUploadResponse> UploadChunk(
+      UploadChunkRequest const& request) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
@@ -211,15 +192,10 @@ class CurlClient : public RawClient,
   Status SetupBuilder(CurlRequestBuilder& builder, Request const& request,
                       char const* method);
 
-  StatusOr<ObjectMetadata> InsertObjectMediaXml(
-      InsertObjectMediaRequest const& request);
-  StatusOr<std::unique_ptr<ObjectReadSource>> ReadObjectXml(
-      ReadObjectRangeRequest const& request);
-
   /// Insert an object using uploadType=multipart.
   StatusOr<ObjectMetadata> InsertObjectMediaMultipart(
       InsertObjectMediaRequest const& request);
-  std::string PickBoundary(std::string const& text_to_avoid);
+  std::string MakeBoundary();
 
   /// Insert an object using uploadType=media.
   StatusOr<ObjectMetadata> InsertObjectMediaSimple(
@@ -232,15 +208,14 @@ class CurlClient : public RawClient,
   std::string const upload_endpoint_;
   std::string const xml_endpoint_;
   std::string const iam_endpoint_;
-  bool const xml_enabled_;
 
   std::mutex mu_;
   google::cloud::internal::DefaultPRNG generator_;  // GUARDED_BY(mu_);
 
-  std::shared_ptr<CurlHandleFactory> storage_factory_;
-  std::shared_ptr<CurlHandleFactory> upload_factory_;
-  std::shared_ptr<CurlHandleFactory> xml_upload_factory_;
-  std::shared_ptr<CurlHandleFactory> xml_download_factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> storage_factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> upload_factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> xml_upload_factory_;
+  std::shared_ptr<rest_internal::CurlHandleFactory> xml_download_factory_;
 };
 
 }  // namespace internal

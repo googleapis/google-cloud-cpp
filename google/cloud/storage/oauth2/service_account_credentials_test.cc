@@ -19,16 +19,16 @@
 #include "google/cloud/storage/testing/mock_http_request.h"
 #include "google/cloud/storage/testing/write_base64.h"
 #include "google/cloud/internal/filesystem.h"
+#include "google/cloud/internal/openssl_util.h"
 #include "google/cloud/internal/random.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/mock_fake_clock.h"
+#include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <chrono>
-#include <cstdlib>
-#include <cstring>
 #include <fstream>
 
 namespace google {
@@ -38,26 +38,32 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
 namespace {
 
+using ::google::cloud::internal::SignUsingSha256;
+using ::google::cloud::internal::UrlsafeBase64Decode;
 using ::google::cloud::storage::internal::HttpResponse;
 using ::google::cloud::storage::testing::kP12KeyFileContents;
 using ::google::cloud::storage::testing::kP12ServiceAccountId;
+using ::google::cloud::storage::testing::kWellFormattedKey;
 using ::google::cloud::storage::testing::MockHttpRequest;
 using ::google::cloud::storage::testing::MockHttpRequestBuilder;
 using ::google::cloud::storage::testing::WriteBase64AsBinary;
 using ::google::cloud::testing_util::FakeClock;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::ScopedEnvironment;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::An;
 using ::testing::AtLeast;
+using ::testing::ElementsAreArray;
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::Return;
-using ::testing::StartsWith;
 using ::testing::StrEq;
 
-constexpr char kAltScopeForTest[] =
+constexpr char kScopeForTest0[] =
     "https://www.googleapis.com/auth/devstorage.full_control";
+constexpr char kScopeForTest1[] =
+    "https://www.googleapis.com/auth/cloud-platform";
 // This "magic" assertion below was generated from helper script,
 // "make_jwt_assertion_for_test_data.py". Note that when our JSON library dumps
 // a string representation, the keys are always in alphabetical order; our
@@ -66,29 +72,40 @@ constexpr char kAltScopeForTest[] =
 // different Base64-encoded string, and thus a different assertion string.
 constexpr char kExpectedAssertionParam[] =
     R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL29hdXRoMi5nb29nbGVhcGlzLmNvbS90b2tlbiIsImV4cCI6MTUzMDA2MzkyNCwiaWF0IjoxNTMwMDYwMzI0LCJpc3MiOiJmb28tZW1haWxAZm9vLXByb2plY3QuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvY2xvdWQtcGxhdGZvcm0ifQ.OtL40PSxdAB9rxRkXj-UeyuMhQCoT10WJY4ccOrPXriwm-DRl5AMgbBkQvVmWeYuPMTiFKWz_CMMBjVc3lFPW015eHvKT5r3ySGra1i8hJ9cDsWO7SdIGB-l00G-BdRxVEhN8U4C20eUhlvhtjXemOwlCFrKjF22rJB-ChiKy84rXs3O-Hz0dWmsSZPfVD9q-2S2vJdr9vz7NoP-fCmpxhQ3POVocYb-2OEM5c4Uo_e7lQTX3bRtVc19wz_wrTu9wMMMRYt52K8WPoWPURt7qpjHX88_EitXMzH-cJUQoDsgIoZ6vDlQMs7_nqNfgrlsGWHpPoSoGgvJMg1vJbzVLw)""";
-// This "magic" assertion is generated in a similar manner, but specifies a
-// non-default scope set and subject string (values used can be found in the
-// kAltScopeForTest and kSubjectForGrant variables).
-constexpr char kExpectedAssertionWithOptionalArgsParam[] =
-    R"""(assertion=eyJhbGciOiJSUzI1NiIsImtpZCI6ImExYTExMWFhMTExMWExMWExMWExMWFhMTExYTExMWExYTExMTExMTEiLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJodHRwczovL29hdXRoMi5nb29nbGVhcGlzLmNvbS90b2tlbiIsImV4cCI6MTUzMDA2MzkyNCwiaWF0IjoxNTMwMDYwMzI0LCJpc3MiOiJmb28tZW1haWxAZm9vLXByb2plY3QuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvZGV2c3RvcmFnZS5mdWxsX2NvbnRyb2wiLCJzdWIiOiJ1c2VyQGZvby5iYXIifQ.D2sZntI1C0yF3LE3R0mssmidj8e9m5VU6UwzIUvDIG6yAxQLDRWK_gEdPW7etJ1xklIDwPEk0WgEsiu9pP89caPig0nK-bih7f1vbpRBTx4Vke07roW3DpFCLXFgaEXhKJYbzoYOJ62H_oBbQISC9qSF841sqEHmbjOqj5rSAR43wJm9H9juDT8apGpDNVCJM5pSo99NprLCvxUXuCBnacEsSQwbbZlLHfmBdyrllJsumx8RgFd22laEHsgPAMTxP-oM2iyf3fBEs2s1Dj7GxdWdpG6D9abJA6Hs8H1HqSwwyEWTXH6v_SPMYGsN1hIMTAWbO7J11bdHdjxo0hO5CA)""";
 constexpr std::time_t kFixedJwtTimestamp = 1530060324;
 constexpr char kGrantParamUnescaped[] =
     "urn:ietf:params:oauth:grant-type:jwt-bearer";
 constexpr char kGrantParamEscaped[] =
     "urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer";
-constexpr char kJsonKeyfileContents[] = R"""({
-      "type": "service_account",
-      "project_id": "foo-project",
-      "private_key_id": "a1a111aa1111a11a11a11aa111a111a1a1111111",
-      "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCltiF2oP3KJJ+S\ntTc1McylY+TuAi3AdohX7mmqIjd8a3eBYDHs7FlnUrFC4CRijCr0rUqYfg2pmk4a\n6TaKbQRAhWDJ7XD931g7EBvCtd8+JQBNWVKnP9ByJUaO0hWVniM50KTsWtyX3up/\nfS0W2R8Cyx4yvasE8QHH8gnNGtr94iiORDC7De2BwHi/iU8FxMVJAIyDLNfyk0hN\neheYKfIDBgJV2v6VaCOGWaZyEuD0FJ6wFeLybFBwibrLIBE5Y/StCrZoVZ5LocFP\nT4o8kT7bU6yonudSCyNMedYmqHj/iF8B2UN1WrYx8zvoDqZk0nxIglmEYKn/6U7U\ngyETGcW9AgMBAAECggEAC231vmkpwA7JG9UYbviVmSW79UecsLzsOAZnbtbn1VLT\nPg7sup7tprD/LXHoyIxK7S/jqINvPU65iuUhgCg3Rhz8+UiBhd0pCH/arlIdiPuD\n2xHpX8RIxAq6pGCsoPJ0kwkHSw8UTnxPV8ZCPSRyHV71oQHQgSl/WjNhRi6PQroB\nSqc/pS1m09cTwyKQIopBBVayRzmI2BtBxyhQp9I8t5b7PYkEZDQlbdq0j5Xipoov\n9EW0+Zvkh1FGNig8IJ9Wp+SZi3rd7KLpkyKPY7BK/g0nXBkDxn019cET0SdJOHQG\nDiHiv4yTRsDCHZhtEbAMKZEpku4WxtQ+JjR31l8ueQKBgQDkO2oC8gi6vQDcx/CX\nZ23x2ZUyar6i0BQ8eJFAEN+IiUapEeCVazuxJSt4RjYfwSa/p117jdZGEWD0GxMC\n+iAXlc5LlrrWs4MWUc0AHTgXna28/vii3ltcsI0AjWMqaybhBTTNbMFa2/fV2OX2\nUimuFyBWbzVc3Zb9KAG4Y7OmJQKBgQC5324IjXPq5oH8UWZTdJPuO2cgRsvKmR/r\n9zl4loRjkS7FiOMfzAgUiXfH9XCnvwXMqJpuMw2PEUjUT+OyWjJONEK4qGFJkbN5\n3ykc7p5V7iPPc7Zxj4mFvJ1xjkcj+i5LY8Me+gL5mGIrJ2j8hbuv7f+PWIauyjnp\nNx/0GVFRuQKBgGNT4D1L7LSokPmFIpYh811wHliE0Fa3TDdNGZnSPhaD9/aYyy78\nLkxYKuT7WY7UVvLN+gdNoVV5NsLGDa4cAV+CWPfYr5PFKGXMT/Wewcy1WOmJ5des\nAgMC6zq0TdYmMBN6WpKUpEnQtbmh3eMnuvADLJWxbH3wCkg+4xDGg2bpAoGAYRNk\nMGtQQzqoYNNSkfus1xuHPMA8508Z8O9pwKU795R3zQs1NAInpjI1sOVrNPD7Ymwc\nW7mmNzZbxycCUL/yzg1VW4P1a6sBBYGbw1SMtWxun4ZbnuvMc2CTCh+43/1l+FHe\nMmt46kq/2rH2jwx5feTbOE6P6PINVNRJh/9BDWECgYEAsCWcH9D3cI/QDeLG1ao7\nrE2NcknP8N783edM07Z/zxWsIsXhBPY3gjHVz2LDl+QHgPWhGML62M0ja/6SsJW3\nYvLLIc82V7eqcVJTZtaFkuht68qu/Jn1ezbzJMJ4YXDYo1+KFi+2CAGR06QILb+I\nlUtj+/nH3HDQjM4ltYfTPUg=\n-----END PRIVATE KEY-----\n",
-      "client_email": "foo-email@foo-project.iam.gserviceaccount.com",
-      "client_id": "100000000000000000001",
-      "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-      "token_uri": "https://oauth2.googleapis.com/token",
-      "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-      "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/foo-email%40foo-project.iam.gserviceaccount.com"
-})""";
+
+auto constexpr kProjectId = "foo-project";
+auto constexpr kPrivateKeyId = "a1a111aa1111a11a11a11aa111a111a1a1111111";
+auto constexpr kClientEmail = "foo-email@foo-project.iam.gserviceaccount.com";
+auto constexpr kClientId = "100000000000000000001";
+auto constexpr kAuthUri = "https://accounts.google.com/o/oauth2/auth";
+auto constexpr kTokenUri = "https://oauth2.googleapis.com/token";
+auto constexpr kAuthProviderX509CerlUrl =
+    "https://www.googleapis.com/oauth2/v1/certs";
+auto constexpr kClientX509CertUrl =
+    "https://www.googleapis.com/robot/v1/metadata/x509/"
+    "foo-email%40foo-project.iam.gserviceaccount.com";
 constexpr char kSubjectForGrant[] = "user@foo.bar";
+
+std::string MakeTestContents() {
+  return nlohmann::json{
+      {"type", "service_account"},
+      {"project_id", kProjectId},
+      {"private_key_id", kPrivateKeyId},
+      {"private_key", kWellFormattedKey},
+      {"client_email", kClientEmail},
+      {"client_id", kClientId},
+      {"auth_uri", kAuthUri},
+      {"token_uri", kTokenUri},
+      {"auth_provider_x509_cert_url", kAuthProviderX509CerlUrl},
+      {"client_x509_cert_url", kClientX509CertUrl},
+  }
+      .dump();
+}
 
 class ServiceAccountCredentialsTest : public ::testing::Test {
  protected:
@@ -112,73 +129,31 @@ class ServiceAccountCredentialsTest : public ::testing::Test {
       google::cloud::internal::MakeDefaultPRNG();
 };
 
-void CheckInfoYieldsExpectedAssertion(ServiceAccountCredentialsInfo const& info,
-                                      std::string const& assertion) {
-  auto mock_request = std::make_shared<MockHttpRequest::Impl>();
-  std::string response = R"""({
-      "token_type": "Type",
-      "access_token": "access-token-value",
-      "expires_in": 1234
-  })""";
-  EXPECT_CALL(*mock_request, MakeRequest)
-      .WillOnce([response, assertion](std::string const& payload) {
-        EXPECT_THAT(payload, HasSubstr(assertion));
-        // Hard-coded in this order in ServiceAccountCredentials class.
-        EXPECT_THAT(payload,
-                    HasSubstr(std::string("grant_type=") + kGrantParamEscaped));
-        return HttpResponse{200, response, {}};
-      });
-
-  auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest()).WillOnce([mock_request] {
-    MockHttpRequest result;
-    result.mock = mock_request;
-    return result;
-  });
-
-  std::string expected_header =
-      "Content-Type: application/x-www-form-urlencoded";
-  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)));
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint(), _, _))
-      .Times(1);
-  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
-      .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
-        EXPECT_EQ(kGrantParamUnescaped, s);
-        auto t = std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
-        std::copy(kGrantParamEscaped,
-                  kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
-        return t;
-      });
-
-  ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
-      info);
-  // Calls Refresh to obtain the access token for our authorization header.
-  EXPECT_EQ("Authorization: Type access-token-value",
-            credentials.AuthorizationHeader().value());
-}
-
-/// @test Verify that we can create service account credentials from a keyfile.
-TEST_F(ServiceAccountCredentialsTest,
-       RefreshingSendsCorrectRequestBodyAndParsesResponse) {
-  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+TEST_F(ServiceAccountCredentialsTest, MultipleScopes) {
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
-  CheckInfoYieldsExpectedAssertion(*info, kExpectedAssertionParam);
-}
+  auto expected_info = *info;
+  // .scopes is a `std::set<std::string>` so we need to preserve order.
+  ASSERT_LT(std::string{kScopeForTest1}, kScopeForTest0);
+  expected_info.scopes = {std::string{kScopeForTest1} + " " + kScopeForTest0};
+  expected_info.subject = std::string(kSubjectForGrant);
+  auto const now = std::chrono::system_clock::now();
+  auto const expected_components =
+      AssertionComponentsFromInfo(expected_info, now);
 
-/// @test Verify that we can create service account credentials from a keyfile.
-TEST_F(ServiceAccountCredentialsTest,
-       RefreshingSendsCorrectRequestBodyAndParsesResponseForNonDefaultVals) {
-  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_STATUS_OK(info);
-  info->scopes = {kAltScopeForTest};
-  info->subject = std::string(kSubjectForGrant);
-  CheckInfoYieldsExpectedAssertion(*info,
-                                   kExpectedAssertionWithOptionalArgsParam);
+  auto actual_info = *info;
+  actual_info.scopes = {kScopeForTest0, kScopeForTest1};
+  actual_info.subject = std::string(kSubjectForGrant);
+  auto const actual_components = AssertionComponentsFromInfo(actual_info, now);
+  EXPECT_EQ(actual_components, expected_components);
 }
 
 /// @test Verify that we refresh service account credentials appropriately.
 TEST_F(ServiceAccountCredentialsTest,
        RefreshCalledOnlyWhenAccessTokenIsMissingOrInvalid) {
+  ScopedEnvironment disable_self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
+
   // Prepare two responses, the first one is used but becomes immediately
   // expired, resulting in another refresh next time the caller tries to get
   // an authorization header.
@@ -221,7 +196,7 @@ TEST_F(ServiceAccountCredentialsTest,
         return t;
       });
 
-  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   ServiceAccountCredentials<MockHttpRequestBuilder> credentials(*info);
   // Calls Refresh to obtain the access token for our authorization header.
@@ -362,106 +337,12 @@ TEST_F(ServiceAccountCredentialsTest, ParseOptionalField) {
   ASSERT_STATUS_OK(actual.status());
 }
 
-/// @test Verify that refreshing a credential updates the timestamps.
-TEST_F(ServiceAccountCredentialsTest, RefreshingUpdatesTimestamps) {
-  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
-  ASSERT_STATUS_OK(info);
-
-  // NOLINTNEXTLINE(google-runtime-int)
-  auto make_request_assertion = [&info](long timestamp) {
-    return [timestamp, &info](std::string const& p) {
-      std::string const prefix =
-          std::string("grant_type=") + kGrantParamEscaped + "&assertion=";
-      EXPECT_THAT(p, StartsWith(prefix));
-
-      std::string assertion = p.substr(prefix.size());
-
-      std::vector<std::string> const tokens = absl::StrSplit(assertion, '.');
-      std::string const& encoded_header = tokens[0];
-      std::string const& encoded_payload = tokens[1];
-
-      auto header_bytes = internal::UrlsafeBase64Decode(encoded_header).value();
-      std::string header_str{header_bytes.begin(), header_bytes.end()};
-      auto payload_bytes =
-          internal::UrlsafeBase64Decode(encoded_payload).value();
-      std::string payload_str{payload_bytes.begin(), payload_bytes.end()};
-
-      auto header = nlohmann::json::parse(header_str);
-      EXPECT_EQ("RS256", header.value("alg", ""));
-      EXPECT_EQ("JWT", header.value("typ", ""));
-      EXPECT_EQ(info->private_key_id, header.value("kid", ""));
-
-      auto payload = nlohmann::json::parse(payload_str);
-      EXPECT_EQ(timestamp, payload.value("iat", 0));
-      EXPECT_EQ(timestamp + 3600, payload.value("exp", 0));
-      EXPECT_EQ(info->client_email, payload.value("iss", ""));
-      EXPECT_EQ(info->token_uri, payload.value("aud", ""));
-
-      // Hard-coded in this order in ServiceAccountCredentials class.
-      std::string token = "mock-token-value-" + std::to_string(timestamp);
-      nlohmann::json response{{"token_type", "Mock-Type"},
-                              {"access_token", token},
-                              {"expires_in", 3600}};
-      return HttpResponse{200, response.dump(), {}};
-    };
-  };
-
-  // Setup the mock request / response for the first Refresh().
-  auto const clock_value_1 = 10000;
-  auto const clock_value_2 = 20000;
-
-  auto mock_builder = MockHttpRequestBuilder::mock_;
-  EXPECT_CALL(*mock_builder, BuildRequest())
-      .WillOnce([&] {
-        MockHttpRequest result;
-        EXPECT_CALL(*result.mock, MakeRequest)
-            .WillOnce(make_request_assertion(clock_value_1));
-        return result;
-      })
-      .WillOnce([&] {
-        MockHttpRequest result;
-        EXPECT_CALL(*result.mock, MakeRequest)
-            .WillOnce(make_request_assertion(clock_value_2));
-        return result;
-      });
-
-  std::string expected_header =
-      "Content-Type: application/x-www-form-urlencoded";
-  EXPECT_CALL(*mock_builder, AddHeader(StrEq(expected_header)))
-      .Times(AtLeast(1));
-  EXPECT_CALL(*mock_builder, Constructor(GoogleOAuthRefreshEndpoint(), _, _))
-      .Times(AtLeast(1));
-  EXPECT_CALL(*mock_builder, MakeEscapedString(An<std::string const&>()))
-      .WillRepeatedly([](std::string const& s) -> std::unique_ptr<char[]> {
-        EXPECT_EQ(kGrantParamUnescaped, s);
-        auto t = std::unique_ptr<char[]>(new char[sizeof(kGrantParamEscaped)]);
-        std::copy(kGrantParamEscaped,
-                  kGrantParamEscaped + sizeof(kGrantParamEscaped), t.get());
-        return t;
-      });
-
-  FakeClock::now_value_ = clock_value_1;
-  ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
-      *info);
-  // Call Refresh to obtain the access token for our authorization header.
-  auto authorization_header = credentials.AuthorizationHeader();
-  ASSERT_STATUS_OK(authorization_header);
-  EXPECT_EQ("Authorization: Mock-Type mock-token-value-10000",
-            *authorization_header);
-
-  // Advance the clock past the expiration time of the token and then get a
-  // new header.
-  FakeClock::now_value_ = clock_value_2;
-  EXPECT_GT(clock_value_2 - clock_value_1, 2 * 3600);
-  authorization_header = credentials.AuthorizationHeader();
-  ASSERT_STATUS_OK(authorization_header);
-  EXPECT_EQ("Authorization: Mock-Type mock-token-value-20000",
-            *authorization_header);
-}
-
 /// @test Verify that the options are used in the constructor.
 TEST_F(ServiceAccountCredentialsTest, UsesCARootsInfo) {
-  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  ScopedEnvironment disable_self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
+
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
 
   auto mock_builder = MockHttpRequestBuilder::mock_;
@@ -506,7 +387,7 @@ TEST_F(ServiceAccountCredentialsTest, UsesCARootsInfo) {
 
 /// @test Verify that we can create sign blobs using a service account.
 TEST_F(ServiceAccountCredentialsTest, SignBlob) {
-  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
       *info);
@@ -540,7 +421,7 @@ x-goog-meta-foo:bar,baz
 
 /// @test Verify that signing blobs fails with invalid e-mail.
 TEST_F(ServiceAccountCredentialsTest, SignBlobFailure) {
-  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
       *info);
@@ -555,7 +436,7 @@ TEST_F(ServiceAccountCredentialsTest, SignBlobFailure) {
 
 /// @test Verify that we can get the client id from a service account.
 TEST_F(ServiceAccountCredentialsTest, ClientId) {
-  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   ServiceAccountCredentials<MockHttpRequestBuilder, FakeClock> credentials(
       *info);
@@ -617,6 +498,11 @@ TEST_F(ServiceAccountCredentialsTest, ParseSimpleP12) {
   WriteBase64AsBinary(filename, kP12KeyFileContents);
 
   auto info = ParseServiceAccountP12File(filename);
+  if (info.status().code() == StatusCode::kInvalidArgument &&
+      absl::StrContains(info.status().message(), "error:0308010C")) {
+    // With OpenSSL 3.0 the PKCS#12 files may not be supported by default.
+    GTEST_SKIP();
+  }
   ASSERT_STATUS_OK(info);
 
   EXPECT_EQ(kP12ServiceAccountId, info->client_email);
@@ -666,8 +552,12 @@ TEST_F(ServiceAccountCredentialsTest, CreateFromP12ValidFile) {
   std::string filename = CreateRandomFileName() + ".p12";
   WriteBase64AsBinary(filename, kP12KeyFileContents);
 
-  // Loading an empty file should fail.
   auto actual = CreateServiceAccountCredentialsFromP12FilePath(filename);
+  if (actual.status().code() == StatusCode::kInvalidArgument &&
+      absl::StrContains(actual.status().message(), "error:0308010C")) {
+    // With OpenSSL 3.0 the PKCS#12 files may not be supported by default.
+    GTEST_SKIP();
+  }
   EXPECT_STATUS_OK(actual);
 
   EXPECT_EQ(0, std::remove(filename.c_str()));
@@ -676,7 +566,7 @@ TEST_F(ServiceAccountCredentialsTest, CreateFromP12ValidFile) {
 /// @test Verify we can obtain JWT assertion components given the info parsed
 /// from a keyfile.
 TEST_F(ServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
-  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   auto const clock_value_1 = 10000;
   FakeClock::now_value_ = clock_value_1;
@@ -697,7 +587,7 @@ TEST_F(ServiceAccountCredentialsTest, AssertionComponentsFromInfo) {
 /// @test Verify we can construct a JWT assertion given the info parsed from a
 /// keyfile.
 TEST_F(ServiceAccountCredentialsTest, MakeJWTAssertion) {
-  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   FakeClock::reset_clock(kFixedJwtTimestamp);
   auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
@@ -723,7 +613,7 @@ TEST_F(ServiceAccountCredentialsTest, MakeJWTAssertion) {
 /// @test Verify we can construct a service account refresh payload given the
 /// info parsed from a keyfile.
 TEST_F(ServiceAccountCredentialsTest, CreateServiceAccountRefreshPayload) {
-  auto info = ParseServiceAccountCredentials(kJsonKeyfileContents, "test");
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
   ASSERT_STATUS_OK(info);
   FakeClock::reset_clock(kFixedJwtTimestamp);
   auto components = AssertionComponentsFromInfo(*info, FakeClock::now());
@@ -733,12 +623,15 @@ TEST_F(ServiceAccountCredentialsTest, CreateServiceAccountRefreshPayload) {
       *info, kGrantParamEscaped, FakeClock::now());
 
   EXPECT_THAT(actual_payload, HasSubstr(std::string("assertion=") + assertion));
-  EXPECT_THAT(actual_payload, HasSubstr(kGrantParamEscaped));
+  EXPECT_THAT(actual_payload, HasSubstr(kGrantParamUnescaped));
 }
 
 /// @test Parsing a refresh response with missing fields results in failure.
 TEST_F(ServiceAccountCredentialsTest,
        ParseServiceAccountRefreshResponseInvalid) {
+  ScopedEnvironment disable_self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
+
   std::string r1 = R"""({})""";
   // Does not have access_token.
   std::string r2 = R"""({
@@ -770,6 +663,9 @@ TEST_F(ServiceAccountCredentialsTest,
 
 /// @test Parsing a refresh response yields a TemporaryToken.
 TEST_F(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
+  ScopedEnvironment disable_self_signed_jwt(
+      "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT", "1");
+
   std::string r1 = R"""({
     "token_type": "Type",
     "access_token": "access-token-r1",
@@ -788,6 +684,141 @@ TEST_F(ServiceAccountCredentialsTest, ParseServiceAccountRefreshResponse) {
           .count(),
       FakeClock::now_value_ + expires_in);
   EXPECT_EQ(token.token, "Authorization: Type access-token-r1");
+}
+
+TEST_F(ServiceAccountCredentialsTest, MakeSelfSignedJWT) {
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
+  ASSERT_STATUS_OK(info);
+  auto const now = std::chrono::system_clock::now();
+  auto actual = MakeSelfSignedJWT(*info, now);
+  ASSERT_STATUS_OK(actual);
+
+  std::vector<std::string> components = absl::StrSplit(*actual, '.');
+  std::vector<std::string> decoded(components.size());
+  std::transform(components.begin(), components.end(), decoded.begin(),
+                 [](std::string const& e) {
+                   auto v = UrlsafeBase64Decode(e).value();
+                   return std::string{v.begin(), v.end()};
+                 });
+  ASSERT_THAT(3, decoded.size());
+  auto const header = nlohmann::json::parse(decoded[0], nullptr);
+  ASSERT_FALSE(header.is_null()) << "header=" << decoded[0];
+  auto const payload = nlohmann::json::parse(decoded[1], nullptr);
+  ASSERT_FALSE(payload.is_null()) << "payload=" << decoded[1];
+
+  auto const expected_header = nlohmann::json{
+      {"alg", "RS256"}, {"typ", "JWT"}, {"kid", info->private_key_id}};
+
+  auto const iat =
+      std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch());
+  auto const exp = iat + std::chrono::hours(1);
+  auto const expected_payload = nlohmann::json{
+      {"iss", info->client_email},
+      {"sub", info->client_email},
+      {"iat", iat.count()},
+      {"exp", exp.count()},
+      {"scope", "https://www.googleapis.com/auth/cloud-platform"},
+  };
+
+  ASSERT_EQ(expected_header, header) << "header=" << header;
+  ASSERT_EQ(expected_payload, payload) << "payload=" << payload;
+
+  auto signature =
+      SignUsingSha256(components[0] + '.' + components[1], info->private_key);
+  ASSERT_STATUS_OK(signature);
+  EXPECT_THAT(*signature,
+              ElementsAreArray(decoded[2].begin(), decoded[2].end()));
+}
+
+TEST_F(ServiceAccountCredentialsTest, MakeSelfSignedJWTWithScopes) {
+  auto info = ParseServiceAccountCredentials(MakeTestContents(), "test");
+  ASSERT_STATUS_OK(info);
+  info->scopes = std::set<std::string>{"test-only-s1", "test-only-s2"};
+
+  auto const now = std::chrono::system_clock::now();
+  auto actual = MakeSelfSignedJWT(*info, now);
+  ASSERT_STATUS_OK(actual);
+
+  std::vector<std::string> components = absl::StrSplit(*actual, '.');
+  std::vector<std::string> decoded(components.size());
+  std::transform(components.begin(), components.end(), decoded.begin(),
+                 [](std::string const& e) {
+                   auto v = UrlsafeBase64Decode(e).value();
+                   return std::string{v.begin(), v.end()};
+                 });
+  ASSERT_THAT(3, decoded.size());
+  auto const header = nlohmann::json::parse(decoded[0], nullptr);
+  ASSERT_FALSE(header.is_null()) << "header=" << decoded[0];
+  auto const payload = nlohmann::json::parse(decoded[1], nullptr);
+  ASSERT_FALSE(payload.is_null()) << "payload=" << decoded[1];
+
+  auto const expected_header = nlohmann::json{
+      {"alg", "RS256"}, {"typ", "JWT"}, {"kid", info->private_key_id}};
+
+  auto const iat =
+      std::chrono::duration_cast<std::chrono::seconds>(now.time_since_epoch());
+  auto const exp = iat + std::chrono::hours(1);
+  auto const expected_payload = nlohmann::json{
+      {"iss", info->client_email},
+      {"sub", info->client_email},
+      {"iat", iat.count()},
+      {"exp", exp.count()},
+      {"scope", "test-only-s1 test-only-s2"},
+  };
+
+  ASSERT_EQ(expected_header, header) << "header=" << header;
+  ASSERT_EQ(expected_payload, payload) << "payload=" << payload;
+
+  auto signature =
+      SignUsingSha256(components[0] + '.' + components[1], info->private_key);
+  ASSERT_STATUS_OK(signature);
+  EXPECT_THAT(*signature,
+              ElementsAreArray(decoded[2].begin(), decoded[2].end()));
+}
+
+TEST_F(ServiceAccountCredentialsTest, UseOauth) {
+  std::string filename = CreateRandomFileName() + ".p12";
+  WriteBase64AsBinary(filename, kP12KeyFileContents);
+
+  auto p12_info = ParseServiceAccountP12File(filename);
+  EXPECT_EQ(0, std::remove(filename.c_str()));
+
+  auto json_info_without_scopes =
+      ParseServiceAccountCredentials(MakeTestContents(), "test");
+  ASSERT_STATUS_OK(json_info_without_scopes);
+  ASSERT_FALSE(json_info_without_scopes->scopes.has_value());
+  auto json_info_with_scopes = *json_info_without_scopes;
+  json_info_with_scopes.scopes =
+      std::set<std::string>{{GoogleOAuthScopeCloudPlatform()}};
+
+  struct TestCase {
+    std::string name;
+    ServiceAccountCredentialsInfo info;
+    absl::optional<std::string> environment;
+    bool expected;
+  };
+
+  std::vector<TestCase> cases = {
+      {"JSON/with-scopes/no-env", json_info_with_scopes, absl::nullopt, true},
+      {"JSON/with-scopes/env", json_info_with_scopes, "1", true},
+      {"JSON/no-scopes/no-env", *json_info_without_scopes, absl::nullopt,
+       false},
+      {"JSON/no-scopes/env", *json_info_without_scopes, "1", true},
+  };
+  if (p12_info) {
+    // Some environments do not support PKCS$12, we need to test the other
+    // cases.
+    cases.push_back({"P12/no-env", *p12_info, absl::nullopt, true});
+    cases.push_back({"P12/env", *p12_info, "1", true});
+  }
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Testing for " + test.name);
+    ScopedEnvironment env(
+        "GOOGLE_CLOUD_CPP_EXPERIMENTAL_DISABLE_SELF_SIGNED_JWT",
+        test.environment);
+    EXPECT_EQ(test.expected, ServiceAccountUseOAuth(test.info));
+  }
 }
 
 }  // namespace

@@ -23,6 +23,7 @@
 #include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -66,9 +67,9 @@ BinauthzManagementServiceV1Connection::UpdateAttestor(
 }
 
 StreamRange<google::cloud::binaryauthorization::v1::Attestor>
-    BinauthzManagementServiceV1Connection::ListAttestors(
-        google::cloud::binaryauthorization::v1::
-            ListAttestorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+BinauthzManagementServiceV1Connection::ListAttestors(
+    google::cloud::binaryauthorization::v1::
+        ListAttestorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::binaryauthorization::v1::Attestor>>();
 }
@@ -81,6 +82,7 @@ Status BinauthzManagementServiceV1Connection::DeleteAttestor(
 std::shared_ptr<BinauthzManagementServiceV1Connection>
 MakeBinauthzManagementServiceV1Connection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BinauthzManagementServiceV1PolicyOptionList>(
       options, __func__);
   options =
@@ -96,25 +98,5 @@ MakeBinauthzManagementServiceV1Connection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace binaryauthorization_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<binaryauthorization::BinauthzManagementServiceV1Connection>
-MakeBinauthzManagementServiceV1Connection(
-    std::shared_ptr<BinauthzManagementServiceV1Stub> stub, Options options) {
-  options = BinauthzManagementServiceV1DefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      binaryauthorization_internal::BinauthzManagementServiceV1ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace binaryauthorization_internal
 }  // namespace cloud
 }  // namespace google

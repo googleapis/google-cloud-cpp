@@ -16,6 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_TYPE_LIST_H
 
 #include "google/cloud/version.h"
+#include "absl/meta/type_traits.h"
+#include <tuple>
+#include <type_traits>
 #include <utility>
 
 namespace google {
@@ -83,6 +86,31 @@ struct TypeListCat<TypeList<Ts...>, TypeList<Us...>> {
 template <typename T1, typename T2, typename... T>
 struct TypeListCat<T1, T2, T...> {
   using Type = TypeListCatT<TypeListCatT<T1, T2>, T...>;
+};
+
+template <typename List, typename T>
+struct TypeListHasType;
+
+template <typename... Us, typename T>
+struct TypeListHasType<TypeList<Us...>, T>
+    : absl::disjunction<std::is_same<T, Us>...> {};
+
+template <template <typename> class Predicate, typename List>
+struct TypeListFilter;
+
+template <template <typename> class Predicate, typename Head, typename... Ts>
+struct TypeListFilter<Predicate, std::tuple<Head, Ts...>> {
+  using type = std::conditional_t<
+      Predicate<Head>::value,
+      decltype(std::tuple_cat(std::declval<std::tuple<Head>>(),
+                              std::declval<typename TypeListFilter<
+                                  Predicate, std::tuple<Ts...>>::type>())),
+      typename TypeListFilter<Predicate, std::tuple<Ts...>>::type>;
+};
+
+template <template <typename> class Predicate>
+struct TypeListFilter<Predicate, std::tuple<>> {
+  using type = std::tuple<>;
 };
 
 }  // namespace internal

@@ -45,6 +45,18 @@ using QuotaControllerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         servicecontrol_internal::QuotaControllerRetryTraits>;
 
+/**
+ * The `QuotaControllerConnection` object for `QuotaControllerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `QuotaControllerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `QuotaControllerClient`.
+ *
+ * To create a concrete instance, see `MakeQuotaControllerConnection()`.
+ *
+ * For mocking, see `servicecontrol_mocks::MockQuotaControllerConnection`.
+ */
 class QuotaControllerConnection {
  public:
   virtual ~QuotaControllerConnection() = 0;
@@ -56,25 +68,33 @@ class QuotaControllerConnection {
       google::api::servicecontrol::v1::AllocateQuotaRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `QuotaControllerConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of QuotaControllerClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `QuotaControllerConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::servicecontrol::QuotaControllerPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `QuotaControllerConnection` created
+ * by this function.
+ */
 std::shared_ptr<QuotaControllerConnection> MakeQuotaControllerConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicecontrol
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace servicecontrol_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<servicecontrol::QuotaControllerConnection>
-MakeQuotaControllerConnection(std::shared_ptr<QuotaControllerStub> stub,
-                              Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace servicecontrol_internal
 }  // namespace cloud
 }  // namespace google
 

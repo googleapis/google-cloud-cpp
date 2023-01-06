@@ -23,6 +23,7 @@
 #include "google/cloud/eventarc/publisher_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -41,8 +42,15 @@ PublisherConnection::PublishChannelConnectionEvents(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+PublisherConnection::PublishEvents(
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<PublisherConnection> MakePublisherConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PublisherPolicyOptionList>(options, __func__);
   options = eventarc_internal::PublisherDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -54,23 +62,5 @@ std::shared_ptr<PublisherConnection> MakePublisherConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace eventarc
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace eventarc_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<eventarc::PublisherConnection> MakePublisherConnection(
-    std::shared_ptr<PublisherStub> stub, Options options) {
-  options = PublisherDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<eventarc_internal::PublisherConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace eventarc_internal
 }  // namespace cloud
 }  // namespace google

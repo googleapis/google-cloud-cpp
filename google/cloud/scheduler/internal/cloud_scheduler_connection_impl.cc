@@ -36,15 +36,14 @@ CloudSchedulerConnectionImpl::CloudSchedulerConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), scheduler_internal::CloudSchedulerDefaultOptions(
-                                  CloudSchedulerConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      CloudSchedulerConnection::options())) {}
 
 StreamRange<google::cloud::scheduler::v1::Job>
 CloudSchedulerConnectionImpl::ListJobs(
     google::cloud::scheduler::v1::ListJobsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<scheduler::CloudSchedulerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

@@ -17,12 +17,14 @@
 
 #include "google/cloud/bigtable/version.h"
 #include <google/bigtable/v2/data.pb.h>
+#include <google/protobuf/util/message_differencer.h>
 #include <string>
 
 namespace google {
 namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Define the interfaces to create ReadWriteModifyRule operations.
  *
@@ -38,6 +40,16 @@ class ReadModifyWriteRule {
   ReadModifyWriteRule& operator=(ReadModifyWriteRule&&) = default;
   ReadModifyWriteRule(ReadModifyWriteRule const&) = default;
   ReadModifyWriteRule& operator=(ReadModifyWriteRule const&) = default;
+
+  friend bool operator==(ReadModifyWriteRule const& a,
+                         ReadModifyWriteRule const& b) noexcept {
+    return google::protobuf::util::MessageDifferencer::Equivalent(a.rule_,
+                                                                  b.rule_);
+  }
+  friend bool operator!=(ReadModifyWriteRule const& a,
+                         ReadModifyWriteRule const& b) noexcept {
+    return !(a == b);
+  }
 
   /// Create an operation that appends a string value.
   static ReadModifyWriteRule AppendValue(std::string family_name,

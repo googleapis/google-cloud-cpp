@@ -17,7 +17,6 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/raw_client.h"
-#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include <gmock/gmock.h>
 #include <string>
 
@@ -33,9 +32,15 @@ class MockClient : public google::cloud::storage::internal::RawClient {
             google::cloud::storage::oauth2::CreateAnonymousCredentials()) {
     EXPECT_CALL(*this, client_options())
         .WillRepeatedly(::testing::ReturnRef(client_options_));
+    EXPECT_CALL(*this, options)
+        .WillRepeatedly(
+            ::testing::Return(storage::internal::DefaultOptionsWithCredentials(
+                Options{}.set<UnifiedCredentialsOption>(
+                    MakeInsecureCredentials()))));
   }
 
   MOCK_METHOD(ClientOptions const&, client_options, (), (const, override));
+  MOCK_METHOD(Options, options, (), (const, override));
   MOCK_METHOD(StatusOr<internal::ListBucketsResponse>, ListBuckets,
               (internal::ListBucketsRequest const&), (override));
   MOCK_METHOD(StatusOr<storage::BucketMetadata>, CreateBucket,
@@ -48,12 +53,8 @@ class MockClient : public google::cloud::storage::internal::RawClient {
               (internal::UpdateBucketRequest const&), (override));
   MOCK_METHOD(StatusOr<storage::BucketMetadata>, PatchBucket,
               (internal::PatchBucketRequest const&), (override));
-  MOCK_METHOD(StatusOr<IamPolicy>, GetBucketIamPolicy,
-              (internal::GetBucketIamPolicyRequest const&), (override));
   MOCK_METHOD(StatusOr<NativeIamPolicy>, GetNativeBucketIamPolicy,
               (internal::GetBucketIamPolicyRequest const&), (override));
-  MOCK_METHOD(StatusOr<IamPolicy>, SetBucketIamPolicy,
-              (internal::SetBucketIamPolicyRequest const&), (override));
   MOCK_METHOD(StatusOr<NativeIamPolicy>, SetNativeBucketIamPolicy,
               (internal::SetNativeBucketIamPolicyRequest const&), (override));
   MOCK_METHOD(StatusOr<internal::TestBucketIamPermissionsResponse>,
@@ -82,13 +83,17 @@ class MockClient : public google::cloud::storage::internal::RawClient {
               (internal::ComposeObjectRequest const&), (override));
   MOCK_METHOD(StatusOr<internal::RewriteObjectResponse>, RewriteObject,
               (internal::RewriteObjectRequest const&), (override));
-  MOCK_METHOD(StatusOr<std::unique_ptr<internal::ResumableUploadSession>>,
-              CreateResumableSession, (internal::ResumableUploadRequest const&),
+
+  MOCK_METHOD(StatusOr<internal::CreateResumableUploadResponse>,
+              CreateResumableUpload, (internal::ResumableUploadRequest const&),
               (override));
-  MOCK_METHOD(StatusOr<std::unique_ptr<internal::ResumableUploadSession>>,
-              RestoreResumableSession, (std::string const&), (override));
+  MOCK_METHOD(StatusOr<internal::QueryResumableUploadResponse>,
+              QueryResumableUpload,
+              (internal::QueryResumableUploadRequest const&), (override));
   MOCK_METHOD(StatusOr<internal::EmptyResponse>, DeleteResumableUpload,
               (internal::DeleteResumableUploadRequest const&), (override));
+  MOCK_METHOD(StatusOr<internal::QueryResumableUploadResponse>, UploadChunk,
+              (internal::UploadChunkRequest const&), (override));
 
   MOCK_METHOD(StatusOr<internal::ListBucketAclResponse>, ListBucketAcl,
               (internal::ListBucketAclRequest const&), (override));
@@ -159,24 +164,6 @@ class MockClient : public google::cloud::storage::internal::RawClient {
 
  private:
   ClientOptions client_options_;
-};
-
-class MockResumableUploadSession
-    : public google::cloud::storage::internal::ResumableUploadSession {
- public:
-  MOCK_METHOD(StatusOr<internal::ResumableUploadResponse>, UploadChunk,
-              (internal::ConstBufferSequence const&), (override));
-  MOCK_METHOD(StatusOr<internal::ResumableUploadResponse>, UploadFinalChunk,
-              (internal::ConstBufferSequence const&, std::uint64_t,
-               internal::HashValues const&),
-              (override));
-  MOCK_METHOD(StatusOr<internal::ResumableUploadResponse>, ResetSession, (),
-              (override));
-  MOCK_METHOD(std::uint64_t, next_expected_byte, (), (const, override));
-  MOCK_METHOD(std::string const&, session_id, (), (const, override));
-  MOCK_METHOD(bool, done, (), (const, override));
-  MOCK_METHOD(StatusOr<internal::ResumableUploadResponse> const&, last_response,
-              (), (const, override));
 };
 
 class MockObjectReadSource : public internal::ObjectReadSource {

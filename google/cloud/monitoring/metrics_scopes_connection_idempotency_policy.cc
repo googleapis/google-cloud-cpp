@@ -30,48 +30,38 @@ using ::google::cloud::Idempotency;
 MetricsScopesConnectionIdempotencyPolicy::
     ~MetricsScopesConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultMetricsScopesConnectionIdempotencyPolicy
-    : public MetricsScopesConnectionIdempotencyPolicy {
- public:
-  ~DefaultMetricsScopesConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy>
+MetricsScopesConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<MetricsScopesConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultMetricsScopesConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency MetricsScopesConnectionIdempotencyPolicy::GetMetricsScope(
+    google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetMetricsScope(
-      google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+MetricsScopesConnectionIdempotencyPolicy::ListMetricsScopesByMonitoredProject(
+    google::monitoring::metricsscope::v1::
+        ListMetricsScopesByMonitoredProjectRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListMetricsScopesByMonitoredProject(
-      google::monitoring::metricsscope::v1::
-          ListMetricsScopesByMonitoredProjectRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency MetricsScopesConnectionIdempotencyPolicy::CreateMonitoredProject(
+    google::monitoring::metricsscope::v1::
+        CreateMonitoredProjectRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateMonitoredProject(
-      google::monitoring::metricsscope::v1::
-          CreateMonitoredProjectRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteMonitoredProject(
-      google::monitoring::metricsscope::v1::
-          DeleteMonitoredProjectRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency MetricsScopesConnectionIdempotencyPolicy::DeleteMonitoredProject(
+    google::monitoring::metricsscope::v1::
+        DeleteMonitoredProjectRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<MetricsScopesConnectionIdempotencyPolicy>
 MakeDefaultMetricsScopesConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultMetricsScopesConnectionIdempotencyPolicy>();
+  return absl::make_unique<MetricsScopesConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

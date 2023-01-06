@@ -221,36 +221,6 @@ ServiceManagerLogging::GenerateConfigReport(
 }
 
 future<StatusOr<google::longrunning::Operation>>
-ServiceManagerLogging::AsyncEnableService(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::api::servicemanagement::v1::EnableServiceRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
-             google::api::servicemanagement::v1::EnableServiceRequest const&
-                 request) {
-        return child_->AsyncEnableService(cq, std::move(context), request);
-      },
-      cq, std::move(context), request, __func__, tracing_options_);
-}
-
-future<StatusOr<google::longrunning::Operation>>
-ServiceManagerLogging::AsyncDisableService(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::api::servicemanagement::v1::DisableServiceRequest const& request) {
-  return google::cloud::internal::LogWrapper(
-      [this](google::cloud::CompletionQueue& cq,
-             std::unique_ptr<grpc::ClientContext> context,
-             google::api::servicemanagement::v1::DisableServiceRequest const&
-                 request) {
-        return child_->AsyncDisableService(cq, std::move(context), request);
-      },
-      cq, std::move(context), request, __func__, tracing_options_);
-}
-
-future<StatusOr<google::longrunning::Operation>>
 ServiceManagerLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

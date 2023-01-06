@@ -66,16 +66,16 @@ class CloudCatalogClient {
       std::shared_ptr<CloudCatalogConnection> connection, Options opts = {});
   ~CloudCatalogClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   CloudCatalogClient(CloudCatalogClient const&) = default;
   CloudCatalogClient& operator=(CloudCatalogClient const&) = default;
   CloudCatalogClient(CloudCatalogClient&&) = default;
   CloudCatalogClient& operator=(CloudCatalogClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(CloudCatalogClient const& a,
                          CloudCatalogClient const& b) {
     return a.connection_ == b.connection_;
@@ -84,7 +84,7 @@ class CloudCatalogClient {
                          CloudCatalogClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all public cloud services.
@@ -92,12 +92,12 @@ class CloudCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::Service,google/cloud/billing/v1/cloud_catalog.proto#L59}
+  /// @googleapis_link{google::cloud::billing::v1::Service,google/cloud/billing/v1/cloud_catalog.proto#L61}
   ///
   /// [google.cloud.billing.v1.ListServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L260}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L292}
   /// [google.cloud.billing.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L59}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L61}
   ///
   StreamRange<google::cloud::billing::v1::Service> ListServices(
       Options opts = {});
@@ -106,16 +106,16 @@ class CloudCatalogClient {
   /// Lists all public cloud services.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::ListServicesRequest,google/cloud/billing/v1/cloud_catalog.proto#L260}
+  /// @googleapis_link{google::cloud::billing::v1::ListServicesRequest,google/cloud/billing/v1/cloud_catalog.proto#L292}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::Service,google/cloud/billing/v1/cloud_catalog.proto#L59}
+  /// @googleapis_link{google::cloud::billing::v1::Service,google/cloud/billing/v1/cloud_catalog.proto#L61}
   ///
   /// [google.cloud.billing.v1.ListServicesRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L260}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L292}
   /// [google.cloud.billing.v1.Service]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L59}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L61}
   ///
   StreamRange<google::cloud::billing::v1::Service> ListServices(
       google::cloud::billing::v1::ListServicesRequest request,
@@ -129,12 +129,12 @@ class CloudCatalogClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::Sku,google/cloud/billing/v1/cloud_catalog.proto#L82}
+  /// @googleapis_link{google::cloud::billing::v1::Sku,google/cloud/billing/v1/cloud_catalog.proto#L84}
   ///
   /// [google.cloud.billing.v1.ListSkusRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L282}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L314}
   /// [google.cloud.billing.v1.Sku]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L82}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L84}
   ///
   StreamRange<google::cloud::billing::v1::Sku> ListSkus(
       std::string const& parent, Options opts = {});
@@ -143,16 +143,16 @@ class CloudCatalogClient {
   /// Lists all publicly available SKUs for a given cloud service.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::billing::v1::ListSkusRequest,google/cloud/billing/v1/cloud_catalog.proto#L282}
+  /// @googleapis_link{google::cloud::billing::v1::ListSkusRequest,google/cloud/billing/v1/cloud_catalog.proto#L314}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::billing::v1::Sku,google/cloud/billing/v1/cloud_catalog.proto#L82}
+  /// @googleapis_link{google::cloud::billing::v1::Sku,google/cloud/billing/v1/cloud_catalog.proto#L84}
   ///
   /// [google.cloud.billing.v1.ListSkusRequest]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L282}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L314}
   /// [google.cloud.billing.v1.Sku]:
-  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L82}
+  /// @googleapis_reference_link{google/cloud/billing/v1/cloud_catalog.proto#L84}
   ///
   StreamRange<google::cloud::billing::v1::Sku> ListSkus(
       google::cloud::billing::v1::ListSkusRequest request, Options opts = {});

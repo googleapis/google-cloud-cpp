@@ -36,10 +36,19 @@ using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::DescriptorPool;
 using ::google::protobuf::FileDescriptor;
 using ::google::protobuf::FileDescriptorProto;
+using ::google::protobuf::MethodDescriptor;
+using ::testing::_;
+using ::testing::AllOf;
+using ::testing::Contains;
+using ::testing::ElementsAre;
 using ::testing::Eq;
+using ::testing::Field;
 using ::testing::HasSubstr;
+using ::testing::Matcher;
 using ::testing::Not;
+using ::testing::Pair;
 using ::testing::Return;
+using ::testing::UnorderedElementsAre;
 
 class StringSourceTree : public google::protobuf::compiler::SourceTree {
  public:
@@ -187,6 +196,43 @@ TEST_F(CreateServiceVarsTest, AdditionalGrpcHeaderPathsEmpty) {
   EXPECT_THAT(iter->second, Eq(""));
 }
 
+TEST_F(CreateServiceVarsTest, ForwardingHeaderPaths) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto");
+  service_vars_ = CreateServiceVars(
+      *service_file_descriptor->service(0),
+      {std::make_pair("product_path", "google/cloud/frobber/v1/"),
+       std::make_pair("forwarding_product_path", "google/cloud/frobber/")});
+  EXPECT_THAT(
+      service_vars_,
+      AllOf(Contains(Pair("forwarding_client_header_path",
+                          "google/cloud/frobber/frobber_client.h")),
+            Contains(Pair("forwarding_connection_header_path",
+                          "google/cloud/frobber/frobber_connection.h")),
+            Contains(Pair("forwarding_idempotency_policy_header_path",
+                          "google/cloud/frobber/"
+                          "frobber_connection_idempotency_policy.h")),
+            Contains(
+                Pair("forwarding_mock_connection_header_path",
+                     "google/cloud/frobber/mocks/mock_frobber_connection.h")),
+            Contains(Pair("forwarding_options_header_path",
+                          "google/cloud/frobber/frobber_options.h"))));
+  EXPECT_THAT(
+      service_vars_,
+      AllOf(Contains(Pair("client_header_path",
+                          "google/cloud/frobber/v1/frobber_client.h")),
+            Contains(Pair("connection_header_path",
+                          "google/cloud/frobber/v1/frobber_connection.h")),
+            Contains(Pair("idempotency_policy_header_path",
+                          "google/cloud/frobber/v1/"
+                          "frobber_connection_idempotency_policy.h")),
+            Contains(Pair(
+                "mock_connection_header_path",
+                "google/cloud/frobber/v1/mocks/mock_frobber_connection.h")),
+            Contains(Pair("options_header_path",
+                          "google/cloud/frobber/v1/frobber_options.h"))));
+}
+
 TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/cloud/frobber/v1/frobber.proto");
@@ -203,6 +249,7 @@ TEST_P(CreateServiceVarsTest, KeySetCorrectly) {
 INSTANTIATE_TEST_SUITE_P(
     ServiceVars, CreateServiceVarsTest,
     testing::Values(
+        std::make_pair("product_options_page", "google-cloud-frobber-options"),
         std::make_pair("additional_pb_header_paths",
                        "google/cloud/add1.pb.h,google/cloud/add2.pb.h"),
         std::make_pair("class_comment_block",
@@ -474,6 +521,20 @@ char const* const kServiceProto =
     "    };\n"
     "    option (google.api.method_signature) = \"namespace\";\n"
     "  }\n"
+    "  // Leading comments about rpc Method9.\n"
+    "  rpc Method9(PaginatedInput) returns (PaginatedOutput) {\n"
+    "    option (google.api.http) = {\n"
+    "       get: \"/v1/foo\"\n"
+    "       body: \"*\"\n"
+    "    };\n"
+    "  }\n"
+    "  // Leading comments about rpc Method10.\n"
+    "  rpc Method10(Bar) returns (Empty) {\n"
+    "    option (google.api.method_signature) = \"name\";\n"
+    "    option (google.api.method_signature) = \"parent\";\n"
+    "    option (google.api.method_signature) = \"name,parent,number\";\n"
+    "    option (google.api.method_signature) = \"name,title,number\";\n"
+    "  }\n"
     "}\n";
 
 struct MethodVarsTestValues {
@@ -580,14 +641,72 @@ TEST_F(CreateMethodVarsTest, SkipMethodsWithDeprecatedFields) {
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_vars = vars_.find("google.protobuf.Service.Method6");
   ASSERT_NE(method_vars, vars_.end());
-  EXPECT_EQ(method_vars->second.find("method_signature0"),
-            method_vars->second.end());
-  EXPECT_NE(method_vars->second.find("method_signature1"),
-            method_vars->second.end());
-  EXPECT_EQ(method_vars->second.find("method_signature2"),
-            method_vars->second.end());
-  EXPECT_NE(method_vars->second.find("method_signature3"),
-            method_vars->second.end());
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature0", _))));
+  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature1", _)));
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature2", _))));
+  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature3", _)));
+}
+
+TEST_F(CreateMethodVarsTest, SkipMethodOverloadsWithDuplicateSignatures) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
+  auto method_vars = vars_.find("google.protobuf.Service.Method10");
+  ASSERT_NE(method_vars, vars_.end());
+  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature0", _)));
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature1", _))));
+  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature2", _)));
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature3", _))));
+}
+
+TEST_F(CreateMethodVarsTest, ParseHttpExtensionWithPrefixAndSuffix) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(5);
+  auto info = ParseHttpExtension(*method);
+  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
+  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  EXPECT_THAT(extension_info.url_path,
+              Eq("/v1/{parent=projects/*/instances/*}/databases"));
+  EXPECT_THAT(extension_info.request_field_name, Eq("parent"));
+  EXPECT_THAT(extension_info.url_substitution, Eq("projects/*/instances/*"));
+  EXPECT_THAT(extension_info.body, Eq("*"));
+  EXPECT_THAT(extension_info.http_verb, Eq("Post"));
+  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/"));
+  EXPECT_THAT(extension_info.path_suffix, Eq("/databases"));
+}
+
+TEST_F(CreateMethodVarsTest, ParseHttpExtensionWithOnlyPrefix) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(1);
+  auto info = ParseHttpExtension(*method);
+  ASSERT_TRUE(absl::holds_alternative<HttpExtensionInfo>(info));
+  auto extension_info = absl::get<HttpExtensionInfo>(info);
+  EXPECT_THAT(extension_info.url_path,
+              Eq("/v1/{name=projects/*/instances/*/backups/*}"));
+  EXPECT_THAT(extension_info.request_field_name, Eq("name"));
+  EXPECT_THAT(extension_info.url_substitution,
+              Eq("projects/*/instances/*/backups/*"));
+  EXPECT_THAT(extension_info.body, Eq(""));
+  EXPECT_THAT(extension_info.http_verb, Eq("Delete"));
+  EXPECT_THAT(extension_info.path_prefix, Eq("/v1/"));
+  EXPECT_THAT(extension_info.path_suffix, Eq(""));
+}
+
+TEST_F(CreateMethodVarsTest, ParseHttpExtensionSimpleInfo) {
+  FileDescriptor const* service_file_descriptor =
+      pool_.FindFileByName("google/foo/v1/service.proto");
+  MethodDescriptor const* method =
+      service_file_descriptor->service(0)->method(9);
+  auto info = ParseHttpExtension(*method);
+  ASSERT_TRUE(absl::holds_alternative<HttpSimpleInfo>(info));
+  auto extension_info = absl::get<HttpSimpleInfo>(info);
+  EXPECT_THAT(extension_info.url_path, Eq("/v1/foo"));
+  EXPECT_THAT(extension_info.body, Eq("*"));
+  EXPECT_THAT(extension_info.http_verb, Eq("Get"));
 }
 
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
@@ -595,9 +714,9 @@ TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
       pool_.FindFileByName("google/foo/v1/service.proto");
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_iter = vars_.find(GetParam().method);
-  EXPECT_TRUE(method_iter != vars_.end());
-  auto iter = method_iter->second.find(GetParam().vars_key);
-  EXPECT_EQ(iter->second, GetParam().expected_value);
+  ASSERT_TRUE(method_iter != vars_.end());
+  EXPECT_THAT(method_iter->second,
+              Contains(Pair(GetParam().vars_key, GetParam().expected_value)));
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -620,6 +739,9 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Empty,google/"
                              "foo/v1/service.proto#L31}"),
+        MethodVarsTestValues("google.protobuf.Service.Method0",
+                             "method_http_query_parameters",
+                             "google.protobuf.Service.Method0"),
         // Method1
         MethodVarsTestValues("google.protobuf.Service.Method1", "method_name",
                              "Method1"),
@@ -633,6 +755,8 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
                              "foo/v1/service.proto#L16}"),
+        MethodVarsTestValues("google.protobuf.Service.Method1",
+                             "method_http_query_parameters", ""),
         // Method2
         MethodVarsTestValues("google.protobuf.Service.Method2",
                              "longrunning_metadata_type",
@@ -662,6 +786,8 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_longrunning_deduced_return_doxygen_link",
                              "@googleapis_link{google::protobuf::Bar,google/"
                              "foo/v1/service.proto#L16}"),
+        MethodVarsTestValues("google.protobuf.Service.Method2",
+                             "method_http_query_parameters", ""),
         // Method3
         MethodVarsTestValues("google.protobuf.Service.Method3",
                              "longrunning_metadata_type",
@@ -745,6 +871,9 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_request_body", "*"),
         MethodVarsTestValues("google.protobuf.Service.Method5",
                              "default_idempotency", "kNonIdempotent"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method5", "method_rest_path",
+            "absl::StrCat(\"/v1/\", request.parent(), \"/databases\")"),
         // Method6
         MethodVarsTestValues("google.protobuf.Service.Method6",
                              "method_request_param_key", "name"),
@@ -764,6 +893,10 @@ INSTANTIATE_TEST_SUITE_P(
         MethodVarsTestValues(
             "google.protobuf.Service.Method6", "method_request_setters1",
             "  *request.mutable_labels() = {labels.begin(), labels.end()};\n"),
+        MethodVarsTestValues("google.protobuf.Service.Method6",
+                             "method_http_query_parameters",
+                             R"""(,
+      {std::make_pair("not_used_anymore", request.not_used_anymore())})"""),
         // Method7
         MethodVarsTestValues("google.protobuf.Service.Method7",
                              "longrunning_metadata_type",
@@ -792,7 +925,17 @@ INSTANTIATE_TEST_SUITE_P(
                              "method_request_param_key", "namespace.name"),
         MethodVarsTestValues("google.protobuf.Service.Method8",
                              "method_request_param_value",
-                             "namespace_().name()")),
+                             "namespace_().name()"),
+        MethodVarsTestValues(
+            "google.protobuf.Service.Method8", "method_rest_path",
+            "absl::StrCat(\"/v1/\", request.namespace_().name(), \"\")"),
+        // Method9
+        MethodVarsTestValues("google.protobuf.Service.Method9",
+                             "method_http_query_parameters",
+                             R"""(,
+      {std::make_pair("page_size", std::to_string(request.page_size())),
+       std::make_pair("page_token", request.page_token()),
+       std::make_pair("name", request.name())})""")),
     [](testing::TestParamInfo<CreateMethodVarsTest::ParamType> const& info) {
       std::vector<std::string> pieces = absl::StrSplit(info.param.method, '.');
       return pieces.back() + "_" + info.param.vars_key;
@@ -904,6 +1047,248 @@ TEST_F(PrintMethodTest, ExactlyOnePattern) {
   auto result = PrintMethod(*service_file_descriptor->service(0)->method(0),
                             printer, {}, patterns, "some_file", 42);
   EXPECT_THAT(result, IsOk());
+}
+
+// We factor out the protobuf mumbo jumbo to keep the tests concise and
+// self-contained. The protobuf objects must be in scope for the duration of a
+// test. To achieve this, we pass in a `test` lambda which is invoked in this
+// method.
+void RunRoutingTest(std::string const& service_proto,
+                    std::function<void(FileDescriptor const*)> const& test) {
+  auto constexpr kServiceBoilerPlate = R"""(
+syntax = "proto3";
+package google.protobuf;
+import "google/api/routing.proto";
+)""";
+
+  auto constexpr kRoutingProto = R"""(
+syntax = "proto3";
+package google.api;
+import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.MethodOptions {
+  google.api.RoutingRule routing = 72295729;
+}
+message RoutingRule {
+  repeated RoutingParameter routing_parameters = 2;
+}
+message RoutingParameter {
+  string field = 1;
+  string path_template = 2;
+}
+)""";
+
+  StringSourceTree source_tree(std::map<std::string, std::string>{
+      {"google/api/routing.proto", kRoutingProto},
+      {"google/cloud/foo/service.proto", kServiceBoilerPlate + service_proto}});
+  google::protobuf::compiler::SourceTreeDescriptorDatabase source_tree_db(
+      &source_tree);
+  google::protobuf::SimpleDescriptorDatabase simple_db;
+  FileDescriptorProto file_proto;
+  // we need descriptor.proto to be accessible by the pool
+  // since our test file imports it
+  FileDescriptorProto::descriptor()->file()->CopyTo(&file_proto);
+  simple_db.Add(file_proto);
+  google::protobuf::MergedDescriptorDatabase merged_db(&simple_db,
+                                                       &source_tree_db);
+  AbortingErrorCollector collector;
+  DescriptorPool pool(&merged_db, &collector);
+
+  // Run the test
+  test(pool.FindFileByName("google/cloud/foo/service.proto"));
+}
+
+Matcher<RoutingParameter const&> RP(std::string const& field_name,
+                                    std::string const& pattern) {
+  return AllOf(Field(&RoutingParameter::field_name, field_name),
+               Field(&RoutingParameter::pattern, pattern));
+}
+
+TEST(ParseExplicitRoutingHeaderTest, NoRouting) {
+  auto constexpr kProto = R"""(
+message Foo {
+  string foo = 1;
+  string bar = 2;
+}
+
+service Service0 {
+  rpc Method0(Foo) returns (Foo) {}
+}
+)""";
+
+  RunRoutingTest(kProto, [](FileDescriptor const* fd) {
+    auto const& method = *fd->service(0)->method(0);
+    auto info = ParseExplicitRoutingHeader(method);
+    EXPECT_THAT(info, UnorderedElementsAre());
+  });
+}
+
+TEST(ParseExplicitRoutingHeaderTest, Regex) {
+  auto constexpr kProto = R"""(
+message Foo {
+  string foo = 1;
+  string bar = 2;
+}
+
+service Service0 {
+  rpc Method0(Foo) returns (Foo) {
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "foo"
+        path_template: "projects/*/{routing_key=instances/*}/**"
+      }
+    };
+  }
+}
+)""";
+
+  RunRoutingTest(kProto, [](FileDescriptor const* fd) {
+    auto const& method = *fd->service(0)->method(0);
+    auto info = ParseExplicitRoutingHeader(method);
+    EXPECT_THAT(
+        info,
+        UnorderedElementsAre(Pair(
+            "routing_key",
+            ElementsAre(RP("foo", "projects/[^/]+/(instances/[^/]+)/.*")))));
+  });
+}
+
+TEST(ParseExplicitRoutingHeaderTest, NoPathTemplate) {
+  auto constexpr kProto = R"""(
+message Foo {
+  string foo = 1;
+  string bar = 2;
+}
+
+service Service0 {
+  rpc Method0(Foo) returns (Foo) {
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "foo"
+      }
+    };
+  }
+}
+)""";
+
+  RunRoutingTest(kProto, [](FileDescriptor const* fd) {
+    auto const& method = *fd->service(0)->method(0);
+    auto info = ParseExplicitRoutingHeader(method);
+    // When the path template is not present, we should use the field name as
+    // the routing parameter key, and our regex should have one capture group
+    // that matches all.
+    EXPECT_THAT(info, UnorderedElementsAre(
+                          Pair("foo", ElementsAre(RP("foo", "(.*)")))));
+  });
+}
+
+TEST(ParseExplicitRoutingHeaderTest, OrderReversed) {
+  auto constexpr kProto = R"""(
+message Foo {
+  string foo = 1;
+  string bar = 2;
+}
+
+service Service0 {
+  rpc Method0(Foo) returns (Foo) {
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "foo"
+        path_template: "{routing_key=foo-path-1}"
+      }
+      routing_parameters {
+        field: "bar"
+        path_template: "{routing_key=bar-path-2}"
+      }
+      routing_parameters {
+        field: "foo"
+        path_template: "{routing_key=foo-path-3}"
+      }
+    };
+  }
+}
+)""";
+
+  RunRoutingTest(kProto, [](FileDescriptor const* fd) {
+    auto const& method = *fd->service(0)->method(0);
+    auto info = ParseExplicitRoutingHeader(method);
+    EXPECT_THAT(
+        info, UnorderedElementsAre(
+                  Pair("routing_key", ElementsAre(RP("foo", "(foo-path-3)"),
+                                                  RP("bar", "(bar-path-2)"),
+                                                  RP("foo", "(foo-path-1)")))));
+  });
+}
+
+TEST(ParseExplicitRoutingHeaderTest, GroupsByRoutingKey) {
+  auto constexpr kProto = R"""(
+message Foo {
+  string foo = 1;
+  string bar = 2;
+}
+
+service Service0 {
+  rpc Method0(Foo) returns (Foo) {
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "foo"
+        path_template: "{routing_key1=foo-path-1}"
+      }
+      routing_parameters {
+        field: "foo"
+        path_template: "{routing_key2=foo-path-2}"
+      }
+      routing_parameters {
+        field: "bar"
+        path_template: "{routing_key1=bar-path-3}"
+      }
+      routing_parameters {
+        field: "bar"
+        path_template: "{routing_key2=bar-path-4}"
+      }
+    };
+  }
+}
+)""";
+
+  RunRoutingTest(kProto, [](FileDescriptor const* fd) {
+    auto const& method = *fd->service(0)->method(0);
+    auto info = ParseExplicitRoutingHeader(method);
+    EXPECT_THAT(
+        info,
+        UnorderedElementsAre(
+            Pair("routing_key1", ElementsAre(RP("bar", "(bar-path-3)"),
+                                             RP("foo", "(foo-path-1)"))),
+            Pair("routing_key2", ElementsAre(RP("bar", "(bar-path-4)"),
+                                             RP("foo", "(foo-path-2)")))));
+  });
+}
+
+TEST(ParseExplicitRoutingHeaderTest, HandlesFieldNameConflict) {
+  auto constexpr kProto = R"""(
+message Foo {
+  string namespace = 1;
+}
+
+service Service0 {
+  rpc Method0(Foo) returns (Foo) {
+    option (google.api.routing) = {
+      routing_parameters {
+        field: "namespace"
+      }
+    };
+  }
+}
+)""";
+
+  RunRoutingTest(kProto, [](FileDescriptor const* fd) {
+    auto const& method = *fd->service(0)->method(0);
+    auto info = ParseExplicitRoutingHeader(method);
+    // Note that while the field name has been modified so that it does not
+    // conflict with the C++ keyword, the routing key must not change.
+    EXPECT_THAT(info, UnorderedElementsAre(Pair(
+                          "namespace", ElementsAre(RP("namespace_", "(.*)")))));
+  });
 }
 
 }  // namespace

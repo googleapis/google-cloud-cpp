@@ -38,15 +38,13 @@ CloudFilestoreManagerConnectionImpl::CloudFilestoreManagerConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          filestore_internal::CloudFilestoreManagerDefaultOptions(
-              CloudFilestoreManagerConnection::options()))) {}
+          std::move(options), CloudFilestoreManagerConnection::options())) {}
 
 StreamRange<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerConnectionImpl::ListInstances(
     google::cloud::filestore::v1::ListInstancesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<filestore::CloudFilestoreManagerRetryPolicy const>(
           retry_policy());
@@ -92,7 +90,7 @@ CloudFilestoreManagerConnectionImpl::GetInstance(
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerConnectionImpl::CreateInstance(
     google::cloud::filestore::v1::CreateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::filestore::v1::Instance>(
       background_->cq(), request,
@@ -122,7 +120,7 @@ CloudFilestoreManagerConnectionImpl::CreateInstance(
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerConnectionImpl::UpdateInstance(
     google::cloud::filestore::v1::UpdateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::filestore::v1::Instance>(
       background_->cq(), request,
@@ -152,7 +150,7 @@ CloudFilestoreManagerConnectionImpl::UpdateInstance(
 future<StatusOr<google::cloud::filestore::v1::Instance>>
 CloudFilestoreManagerConnectionImpl::RestoreInstance(
     google::cloud::filestore::v1::RestoreInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::filestore::v1::Instance>(
       background_->cq(), request,
@@ -182,7 +180,7 @@ CloudFilestoreManagerConnectionImpl::RestoreInstance(
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerConnectionImpl::DeleteInstance(
     google::cloud::filestore::v1::DeleteInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::common::OperationMetadata>(
       background_->cq(), request,
@@ -213,7 +211,7 @@ StreamRange<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerConnectionImpl::ListBackups(
     google::cloud::filestore::v1::ListBackupsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<filestore::CloudFilestoreManagerRetryPolicy const>(
           retry_policy());
@@ -257,7 +255,7 @@ CloudFilestoreManagerConnectionImpl::GetBackup(
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerConnectionImpl::CreateBackup(
     google::cloud::filestore::v1::CreateBackupRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::filestore::v1::Backup>(
       background_->cq(), request,
@@ -285,7 +283,7 @@ CloudFilestoreManagerConnectionImpl::CreateBackup(
 future<StatusOr<google::cloud::common::OperationMetadata>>
 CloudFilestoreManagerConnectionImpl::DeleteBackup(
     google::cloud::filestore::v1::DeleteBackupRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::common::OperationMetadata>(
       background_->cq(), request,
@@ -313,7 +311,7 @@ CloudFilestoreManagerConnectionImpl::DeleteBackup(
 future<StatusOr<google::cloud::filestore::v1::Backup>>
 CloudFilestoreManagerConnectionImpl::UpdateBackup(
     google::cloud::filestore::v1::UpdateBackupRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::filestore::v1::Backup>(
       background_->cq(), request,

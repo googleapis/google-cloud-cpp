@@ -20,6 +20,7 @@ namespace google {
 namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 using ::testing::HasSubstr;
 using ::testing::Not;
 using ::testing::StartsWith;
@@ -42,13 +43,23 @@ TEST(SpannerVersionTest, Format) {
 
 /// @test Verify the version does not contain build info for release builds.
 TEST(SpannerVersionTest, NoBuildInfoInRelease) {
-  if (!google::cloud::internal::build_metadata().empty()) {
+  if (google::cloud::internal::build_metadata().empty()) {
+    EXPECT_THAT(VersionString(), Not(HasSubstr("+")));
+  } else {
     EXPECT_THAT(google::cloud::internal::build_metadata(), Not(HasSubstr("@")));
     EXPECT_THAT(VersionString(),
                 HasSubstr("+" + google::cloud::internal::build_metadata()));
-    return;
   }
-  EXPECT_THAT(VersionString(), Not(HasSubstr("+")));
+}
+
+/// @test Verify the version does not contain a pre-release for release builds.
+TEST(SpannerVersionTest, NoPreReleaseInRelease) {
+  char const* pre_release = VersionPreRelease();
+  if (*pre_release == '\0') {
+    EXPECT_THAT(VersionString(), Not(HasSubstr("-")));
+  } else {
+    EXPECT_THAT(VersionString(), HasSubstr(std::string{"-"} + pre_release));
+  }
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -32,18 +32,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class TraceServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~TraceServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~TraceServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<TraceServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency BatchWriteSpans(
-      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const&
-          request) = 0;
+      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request);
 
   virtual google::cloud::Idempotency CreateSpan(
-      google::devtools::cloudtrace::v2::Span const& request) = 0;
+      google::devtools::cloudtrace::v2::Span const& request);
 };
 
 std::unique_ptr<TraceServiceConnectionIdempotencyPolicy>

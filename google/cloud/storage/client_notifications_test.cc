@@ -30,6 +30,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -59,13 +60,15 @@ TEST_F(NotificationsTest, ListNotifications) {
       .WillOnce(Return(
           StatusOr<internal::ListNotificationsResponse>(TransientError())))
       .WillOnce([&expected](internal::ListNotificationsRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
 
         return make_status_or(internal::ListNotificationsResponse{expected});
       });
   auto client = ClientForMock();
-  StatusOr<std::vector<NotificationMetadata>> actual =
-      client.ListNotifications("test-bucket");
+  StatusOr<std::vector<NotificationMetadata>> actual = client.ListNotifications(
+      "test-bucket", Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, actual.value());
 }
@@ -103,6 +106,8 @@ TEST_F(NotificationsTest, CreateNotification) {
   EXPECT_CALL(*mock_, CreateNotification)
       .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce([&expected](internal::CreateNotificationRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_THAT(r.json_payload(), HasSubstr("test-topic-1"));
         EXPECT_THAT(r.json_payload(), HasSubstr("JSON_API_V1"));
@@ -116,7 +121,8 @@ TEST_F(NotificationsTest, CreateNotification) {
       "test-bucket", "test-topic-1", payload_format::JsonApiV1(),
       NotificationMetadata()
           .set_object_name_prefix("test-object-prefix-")
-          .append_event_type(event_type::ObjectFinalize()));
+          .append_event_type(event_type::ObjectFinalize()),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, actual.value());
 }
@@ -160,6 +166,8 @@ TEST_F(NotificationsTest, GetNotification) {
   EXPECT_CALL(*mock_, GetNotification)
       .WillOnce(Return(StatusOr<NotificationMetadata>(TransientError())))
       .WillOnce([&expected](internal::GetNotificationRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());
 
@@ -167,7 +175,8 @@ TEST_F(NotificationsTest, GetNotification) {
       });
   auto client = ClientForMock();
   StatusOr<NotificationMetadata> actual =
-      client.GetNotification("test-bucket", "test-notification-1");
+      client.GetNotification("test-bucket", "test-notification-1",
+                             Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, actual.value());
 }
@@ -197,13 +206,17 @@ TEST_F(NotificationsTest, DeleteNotification) {
   EXPECT_CALL(*mock_, DeleteNotification)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteNotificationRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("test-notification-1", r.notification_id());
 
         return make_status_or(internal::EmptyResponse{});
       });
   auto client = ClientForMock();
-  auto status = client.DeleteNotification("test-bucket", "test-notification-1");
+  auto status =
+      client.DeleteNotification("test-bucket", "test-notification-1",
+                                Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(status);
 }
 

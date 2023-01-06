@@ -45,6 +45,18 @@ using TopicStatsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         pubsublite_internal::TopicStatsServiceRetryTraits>;
 
+/**
+ * The `TopicStatsServiceConnection` object for `TopicStatsServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `TopicStatsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `TopicStatsServiceClient`.
+ *
+ * To create a concrete instance, see `MakeTopicStatsServiceConnection()`.
+ *
+ * For mocking, see `pubsublite_mocks::MockTopicStatsServiceConnection`.
+ */
 class TopicStatsServiceConnection {
  public:
   virtual ~TopicStatsServiceConnection() = 0;
@@ -64,25 +76,34 @@ class TopicStatsServiceConnection {
       google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `TopicStatsServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * TopicStatsServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `TopicStatsServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::pubsublite::TopicStatsServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `TopicStatsServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<TopicStatsServiceConnection> MakeTopicStatsServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace pubsublite_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<pubsublite::TopicStatsServiceConnection>
-MakeTopicStatsServiceConnection(std::shared_ptr<TopicStatsServiceStub> stub,
-                                Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
 

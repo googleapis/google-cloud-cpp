@@ -23,6 +23,7 @@
 #include "google/cloud/container/internal/cluster_manager_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -163,6 +164,11 @@ ClusterManagerConnection::DeleteNodePool(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+Status ClusterManagerConnection::CompleteNodePoolUpgrade(
+    google::container::v1::CompleteNodePoolUpgradeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::container::v1::Operation>
 ClusterManagerConnection::RollbackNodePoolUpgrade(
     google::container::v1::RollbackNodePoolUpgradeRequest const&) {
@@ -217,9 +223,9 @@ ClusterManagerConnection::SetMaintenancePolicy(
 }
 
 StreamRange<google::container::v1::UsableSubnetwork>
-    ClusterManagerConnection::ListUsableSubnetworks(
-        google::container::v1::
-            ListUsableSubnetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
+ClusterManagerConnection::ListUsableSubnetworks(
+    google::container::v1::
+        ListUsableSubnetworksRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::container::v1::UsableSubnetwork>>();
 }
@@ -227,6 +233,7 @@ StreamRange<google::container::v1::UsableSubnetwork>
 std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ClusterManagerPolicyOptionList>(options,
                                                                  __func__);
   options =
@@ -240,24 +247,5 @@ std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace container_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<container::ClusterManagerConnection>
-MakeClusterManagerConnection(std::shared_ptr<ClusterManagerStub> stub,
-                             Options options) {
-  options = ClusterManagerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<container_internal::ClusterManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
 }  // namespace cloud
 }  // namespace google

@@ -31,21 +31,38 @@ namespace cloud {
 namespace logging {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-logging-options
+ */
 struct LoggingServiceV2RetryPolicyOption {
   using Type = std::shared_ptr<LoggingServiceV2RetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-logging-options
+ */
 struct LoggingServiceV2BackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-logging-options
+ */
 struct LoggingServiceV2ConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<LoggingServiceV2ConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to LoggingServiceV2.
+ *
+ * @ingroup google-cloud-logging-options
+ */
 using LoggingServiceV2PolicyOptionList =
     OptionList<LoggingServiceV2RetryPolicyOption,
                LoggingServiceV2BackoffPolicyOption,

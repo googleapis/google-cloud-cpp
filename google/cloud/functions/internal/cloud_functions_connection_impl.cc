@@ -38,15 +38,13 @@ CloudFunctionsServiceConnectionImpl::CloudFunctionsServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          functions_internal::CloudFunctionsServiceDefaultOptions(
-              CloudFunctionsServiceConnection::options()))) {}
+          std::move(options), CloudFunctionsServiceConnection::options())) {}
 
 StreamRange<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceConnectionImpl::ListFunctions(
     google::cloud::functions::v1::ListFunctionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<functions::CloudFunctionsServiceRetryPolicy const>(
           retry_policy());
@@ -92,7 +90,7 @@ CloudFunctionsServiceConnectionImpl::GetFunction(
 future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceConnectionImpl::CreateFunction(
     google::cloud::functions::v1::CreateFunctionRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::functions::v1::CloudFunction>(
       background_->cq(), request,
@@ -122,7 +120,7 @@ CloudFunctionsServiceConnectionImpl::CreateFunction(
 future<StatusOr<google::cloud::functions::v1::CloudFunction>>
 CloudFunctionsServiceConnectionImpl::UpdateFunction(
     google::cloud::functions::v1::UpdateFunctionRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::functions::v1::CloudFunction>(
       background_->cq(), request,
@@ -152,7 +150,7 @@ CloudFunctionsServiceConnectionImpl::UpdateFunction(
 future<StatusOr<google::cloud::functions::v1::OperationMetadataV1>>
 CloudFunctionsServiceConnectionImpl::DeleteFunction(
     google::cloud::functions::v1::DeleteFunctionRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::functions::v1::OperationMetadataV1>(
       background_->cq(), request,

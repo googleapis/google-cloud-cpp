@@ -29,75 +29,69 @@ using ::google::cloud::Idempotency;
 
 TpuConnectionIdempotencyPolicy::~TpuConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultTpuConnectionIdempotencyPolicy
-    : public TpuConnectionIdempotencyPolicy {
- public:
-  ~DefaultTpuConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<TpuConnectionIdempotencyPolicy>
+TpuConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<TpuConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<TpuConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultTpuConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency TpuConnectionIdempotencyPolicy::ListNodes(
+    google::cloud::tpu::v1::ListNodesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListNodes(google::cloud::tpu::v1::ListNodesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency TpuConnectionIdempotencyPolicy::GetNode(
+    google::cloud::tpu::v1::GetNodeRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetNode(google::cloud::tpu::v1::GetNodeRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency TpuConnectionIdempotencyPolicy::CreateNode(
+    google::cloud::tpu::v1::CreateNodeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateNode(
-      google::cloud::tpu::v1::CreateNodeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TpuConnectionIdempotencyPolicy::DeleteNode(
+    google::cloud::tpu::v1::DeleteNodeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteNode(
-      google::cloud::tpu::v1::DeleteNodeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TpuConnectionIdempotencyPolicy::ReimageNode(
+    google::cloud::tpu::v1::ReimageNodeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ReimageNode(
-      google::cloud::tpu::v1::ReimageNodeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TpuConnectionIdempotencyPolicy::StopNode(
+    google::cloud::tpu::v1::StopNodeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StopNode(
-      google::cloud::tpu::v1::StopNodeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TpuConnectionIdempotencyPolicy::StartNode(
+    google::cloud::tpu::v1::StartNodeRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StartNode(
-      google::cloud::tpu::v1::StartNodeRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency TpuConnectionIdempotencyPolicy::ListTensorFlowVersions(
+    google::cloud::tpu::v1::ListTensorFlowVersionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListTensorFlowVersions(
-      google::cloud::tpu::v1::ListTensorFlowVersionsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency TpuConnectionIdempotencyPolicy::GetTensorFlowVersion(
+    google::cloud::tpu::v1::GetTensorFlowVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetTensorFlowVersion(
-      google::cloud::tpu::v1::GetTensorFlowVersionRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency TpuConnectionIdempotencyPolicy::ListAcceleratorTypes(
+    google::cloud::tpu::v1::ListAcceleratorTypesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListAcceleratorTypes(
-      google::cloud::tpu::v1::ListAcceleratorTypesRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency GetAcceleratorType(
-      google::cloud::tpu::v1::GetAcceleratorTypeRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency TpuConnectionIdempotencyPolicy::GetAcceleratorType(
+    google::cloud::tpu::v1::GetAcceleratorTypeRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<TpuConnectionIdempotencyPolicy>
 MakeDefaultTpuConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultTpuConnectionIdempotencyPolicy>();
+  return absl::make_unique<TpuConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

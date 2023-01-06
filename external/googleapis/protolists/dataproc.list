@@ -2,6 +2,7 @@
 @com_google_googleapis//google/cloud/dataproc/v1:batches.proto
 @com_google_googleapis//google/cloud/dataproc/v1:clusters.proto
 @com_google_googleapis//google/cloud/dataproc/v1:jobs.proto
+@com_google_googleapis//google/cloud/dataproc/v1:node_groups.proto
 @com_google_googleapis//google/cloud/dataproc/v1:operations.proto
 @com_google_googleapis//google/cloud/dataproc/v1:shared.proto
 @com_google_googleapis//google/cloud/dataproc/v1:workflow_templates.proto

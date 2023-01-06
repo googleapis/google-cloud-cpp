@@ -31,21 +31,38 @@ namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-pubsublite-options
+ */
 struct TopicStatsServiceRetryPolicyOption {
   using Type = std::shared_ptr<TopicStatsServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-pubsublite-options
+ */
 struct TopicStatsServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-pubsublite-options
+ */
 struct TopicStatsServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<TopicStatsServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to TopicStatsService.
+ *
+ * @ingroup google-cloud-pubsublite-options
+ */
 using TopicStatsServicePolicyOptionList =
     OptionList<TopicStatsServiceRetryPolicyOption,
                TopicStatsServiceBackoffPolicyOption,

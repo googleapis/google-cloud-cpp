@@ -46,7 +46,7 @@ DatabaseAdminAuth::AsyncCreateDatabase(
     google::spanner::admin::database::v1::CreateDatabaseRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -75,7 +75,7 @@ DatabaseAdminAuth::AsyncUpdateDatabaseDdl(
     google::spanner::admin::database::v1::UpdateDatabaseDdlRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -137,7 +137,7 @@ DatabaseAdminAuth::AsyncCreateBackup(
     std::unique_ptr<grpc::ClientContext> context,
     google::spanner::admin::database::v1::CreateBackupRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -147,6 +147,25 @@ DatabaseAdminAuth::AsyncCreateBackup(
           return make_ready_future(ReturnType(std::move(context).status()));
         }
         return child->AsyncCreateBackup(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DatabaseAdminAuth::AsyncCopyBackup(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCopyBackup(cq, *std::move(context), request);
       });
 }
 
@@ -192,7 +211,7 @@ DatabaseAdminAuth::AsyncRestoreDatabase(
     google::spanner::admin::database::v1::RestoreDatabaseRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -225,13 +244,23 @@ DatabaseAdminAuth::ListBackupOperations(
   return child_->ListBackupOperations(context, request);
 }
 
+StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
+DatabaseAdminAuth::ListDatabaseRoles(
+    grpc::ClientContext& context,
+    google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListDatabaseRoles(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DatabaseAdminAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -248,7 +277,7 @@ future<Status> DatabaseAdminAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

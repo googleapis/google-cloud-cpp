@@ -30,34 +30,34 @@ class ObjectMetadata { public:
 
 **Decision**:
 
-* For string fields where there is no semantic difference between an empty
+- For string fields where there is no semantic difference between an empty
   string and the field not present we just use `std::string<>`.
-* For array fields where there is no semantic difference between field not
+- For array fields where there is no semantic difference between field not
   present and an empty array we just use `std::vector<>`.
-* For integer and boolean fields we default to `0` (and `false`) if the field
+- For integer and boolean fields we default to `0` (and `false`) if the field
   is not present.
-* For object fields we default to wrapping the field in `optional<>`.
+- For object fields we default to wrapping the field in `optional<>`.
 
 For fields wrapped in `optional<>` we offer convenience functions to make it
 easier to operate on these fields. For a field called `foo` these are:
 
-* `has_foo()` returns true if the field is set.
-* `foo()` returns the field value if set, the behavior is undefined if the value
+- `has_foo()` returns true if the field is set.
+- `foo()` returns the field value if set, the behavior is undefined if the value
   is not set.
-* `foo_as_optional()` returns the optional field.
-* `reset_foo()` resets the field (for writable fields).
-* `set_foo()` sets the field (for writable fields).
+- `foo_as_optional()` returns the optional field.
+- `reset_foo()` resets the field (for writable fields).
+- `set_foo()` sets the field (for writable fields).
 
 **Consequences**: The advantage of this approach is that most fields are easy
 to use most of the time. The disadvantage of this approach include:
 
-* The ambiguity when the application filters the returned fields, the value
+- The ambiguity when the application filters the returned fields, the value
   may be the default value because the client did not get the field.
-* As applications change over time and they start filtering different fields
+- As applications change over time and they start filtering different fields
   the code may assume that the value of a field is valid, but it has a default
   value. With optionals the application should crash during testing, or may
   be programmed defensively since the start.
-* It also requires more thought designing the classes a field has different
+- It also requires more thought designing the classes a field has different
   semantics for "not there" vs. "the default value".
 
 **Reference**

@@ -18,10 +18,11 @@
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/internal/json_parsing.h"
+#include "google/cloud/internal/make_status.h"
 #include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/parse_rfc3339.h"
 #include "google/cloud/internal/rest_client.h"
-#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/log.h"
 #include "google/cloud/options.h"
@@ -32,22 +33,19 @@ namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+using ::google::cloud::internal::InvalidArgumentError;
+
 MinimalIamCredentialsRestStub::MinimalIamCredentialsRestStub(
     std::shared_ptr<oauth2_internal::Credentials> credentials, Options options,
-    std::shared_ptr<rest_internal::RestClient> rest_client)
-    : endpoint_(options.get<rest_internal::RestEndpointOption>()),
-      credentials_(std::move(credentials)),
-      rest_client_(std::move(rest_client)),
-      options_(std::move(options)) {
-  if (!rest_client_) {
-    rest_client_ = rest_internal::MakeDefaultRestClient(endpoint_, options_);
-  }
-}
+    HttpClientFactory client_factory)
+    : credentials_(std::move(credentials)),
+      options_(std::move(options)),
+      client_factory_(std::move(client_factory)) {}
 
 StatusOr<google::cloud::internal::AccessToken>
 MinimalIamCredentialsRestStub::GenerateAccessToken(
     GenerateAccessTokenRequest const& request) {
-  auto auth_header = credentials_->AuthorizationHeader();
+  auto auth_header = AuthorizationHeader(*credentials_);
   if (!auth_header) return std::move(auth_header).status();
 
   rest_internal::RestRequest rest_request;
@@ -60,33 +58,22 @@ MinimalIamCredentialsRestStub::GenerateAccessToken(
       {"lifetime", std::to_string(request.lifetime.count()) + "s"},
   };
 
-  auto response = rest_client_->Post(rest_request, {payload.dump()});
-
+  auto client = client_factory_(options_);
+  auto response = client->Post(rest_request, {payload.dump()});
   if (!response) return std::move(response).status();
-  if ((*response)->StatusCode() >=
-      rest_internal::HttpStatusCode::kMinNotSuccess) {
-    return AsStatus(std::move(**response));
-  }
-  auto response_payload =
-      rest_internal::ReadAll(std::move(**response).ExtractPayload());
-  if (!response_payload.ok()) return response_payload.status();
-  auto parsed = nlohmann::json::parse(*response_payload, nullptr);
-  if (parsed.is_null() || parsed.count("accessToken") == 0 ||
-      parsed.count("expireTime") == 0) {
-    return Status(StatusCode::kUnknown,
-                  "invalid response from service <" + parsed.dump() + ">");
-  }
-  auto expire_time = google::cloud::internal::ParseRfc3339(
-      parsed["expireTime"].get<std::string>());
-  if (!expire_time) return std::move(expire_time).status();
-  return google::cloud::internal::AccessToken{
-      parsed["accessToken"].get<std::string>(), *expire_time};
+  return ParseGenerateAccessTokenResponse(
+      **response,
+      internal::ErrorContext(
+          {{"gcloud-cpp.root.class", "MinimalIamCredentialsRestStub"},
+           {"gcloud-cpp.root.function", __func__},
+           {"serviceAccount", request.service_account}}));
 }
 
 std::string MinimalIamCredentialsRestStub::MakeRequestPath(
     GenerateAccessTokenRequest const& request) {
-  return absl::StrCat("projects/-/serviceAccounts/", request.service_account,
-                      ":generateAccessToken");
+  return absl::StrCat(
+      "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/",
+      request.service_account, ":generateAccessToken");
 }
 
 MinimalIamCredentialsRestLogging::MinimalIamCredentialsRestLogging(
@@ -114,19 +101,44 @@ MinimalIamCredentialsRestLogging::GenerateAccessToken(
   return response;
 }
 
+StatusOr<internal::AccessToken> ParseGenerateAccessTokenResponse(
+    rest_internal::RestResponse& response,
+    google::cloud::internal::ErrorContext const& ec) {
+  if (IsHttpError(response)) return AsStatus(std::move(response));
+  auto response_payload =
+      rest_internal::ReadAll(std::move(response).ExtractPayload());
+  if (!response_payload) return std::move(response_payload).status();
+  auto parsed = nlohmann::json::parse(*response_payload, nullptr, false);
+  if (!parsed.is_object()) {
+    return InvalidArgumentError("cannot parse response as a JSON object",
+                                GCP_ERROR_INFO().WithContext(ec));
+  }
+  auto token = ValidateStringField(parsed, "accessToken",
+                                   "GenerateAccessToken() response", ec);
+  if (!token) return std::move(token).status();
+  auto expire_time_field = ValidateStringField(
+      parsed, "expireTime", "GenerateAccessToken() response", ec);
+  if (!expire_time_field) return std::move(expire_time_field).status();
+  auto expire_time = google::cloud::internal::ParseRfc3339(*expire_time_field);
+  if (!expire_time) {
+    return InvalidArgumentError(
+        "invalid format for `expireTime` field in `GenerateAccessToken() "
+        "response`",
+        GCP_ERROR_INFO().WithContext(ec));
+  }
+  return google::cloud::internal::AccessToken{*std::move(token), *expire_time};
+}
+
 std::shared_ptr<MinimalIamCredentialsRest> MakeMinimalIamCredentialsRestStub(
-    std::shared_ptr<oauth2_internal::Credentials> credentials,
-    Options options) {
-  options = google::cloud::internal::MergeOptions(
-      Options{}.set<rest_internal::RestEndpointOption>(
-          "https://iamcredentials.googleapis.com/v1/"),
-      std::move(options));
+    std::shared_ptr<oauth2_internal::Credentials> credentials, Options options,
+    HttpClientFactory client_factory) {
   auto enable_logging =
       options.get<TracingComponentsOption>().count("rpc") != 0 ||
       options.get<TracingComponentsOption>().count("raw-client") != 0;
   std::shared_ptr<MinimalIamCredentialsRest> stub =
-      std::make_shared<MinimalIamCredentialsRestStub>(std::move(credentials),
-                                                      std::move(options));
+      std::make_shared<MinimalIamCredentialsRestStub>(
+          std::move(credentials), std::move(options),
+          std::move(client_factory));
   if (enable_logging) {
     stub = std::make_shared<MinimalIamCredentialsRestLogging>(std::move(stub));
   }

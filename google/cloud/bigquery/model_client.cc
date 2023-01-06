@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/v2/model.proto
 
 #include "google/cloud/bigquery/model_client.h"
-#include "google/cloud/bigquery/internal/model_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ModelServiceClient::ModelServiceClient(
     std::shared_ptr<ModelServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), bigquery_internal::ModelServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ModelServiceClient::~ModelServiceClient() = default;
 
 StatusOr<google::cloud::bigquery::v2::Model> ModelServiceClient::GetModel(

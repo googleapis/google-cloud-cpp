@@ -17,7 +17,6 @@
 // source: google/cloud/functions/v1/functions.proto
 
 #include "google/cloud/functions/cloud_functions_client.h"
-#include "google/cloud/functions/internal/cloud_functions_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudFunctionsServiceClient::CloudFunctionsServiceClient(
     std::shared_ptr<CloudFunctionsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          functions_internal::CloudFunctionsServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudFunctionsServiceClient::~CloudFunctionsServiceClient() = default;
 
 StreamRange<google::cloud::functions::v1::CloudFunction>

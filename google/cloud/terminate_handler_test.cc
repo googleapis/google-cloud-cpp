@@ -15,6 +15,7 @@
 #include "google/cloud/terminate_handler.h"
 #include <gtest/gtest.h>
 #include <iostream>
+#include <string>
 
 using ::google::cloud::GetTerminateHandler;
 using ::google::cloud::SetTerminateHandler;
@@ -22,7 +23,8 @@ using ::google::cloud::Terminate;
 using ::google::cloud::TerminateHandler;
 
 namespace {
-const std::string kHandlerMsg = "Custom handler invoked. Extra description: ";
+
+constexpr char kHandlerMsg[] = "Custom handler invoked. Extra description: ";
 
 void CustomHandler(char const* msg) {
   std::cerr << kHandlerMsg << msg << "\n";
@@ -30,38 +32,42 @@ void CustomHandler(char const* msg) {
 }
 
 void CustomHandlerOld(char const*) { abort(); }
+
 }  // namespace
 
 TEST(TerminateHandler, UnsetTerminates) {
-  GetTerminateHandler();
   EXPECT_DEATH_IF_SUPPORTED(Terminate("Test"),
                             "Aborting because exceptions are disabled: Test");
 }
 
 TEST(TerminateHandler, SettingGettingWorks) {
-  SetTerminateHandler(&CustomHandler);
+  auto orig = SetTerminateHandler(&CustomHandler);
   TerminateHandler set_handler = GetTerminateHandler();
   ASSERT_TRUE(CustomHandler == *set_handler.target<void (*)(char const*)>())
       << "The handler objects should be equal.";
+  SetTerminateHandler(orig);
 }
 
 TEST(TerminateHandler, OldHandlerIsReturned) {
-  SetTerminateHandler(&CustomHandlerOld);
+  auto orig = SetTerminateHandler(&CustomHandlerOld);
   TerminateHandler old_handler = SetTerminateHandler(CustomHandler);
   ASSERT_TRUE(CustomHandlerOld == *old_handler.target<void (*)(char const*)>())
       << "The handler objects should be equal.";
+  SetTerminateHandler(orig);
 }
 
 TEST(TerminateHandler, TerminateTerminates) {
-  SetTerminateHandler(&CustomHandler);
-  EXPECT_DEATH_IF_SUPPORTED(Terminate("details"), kHandlerMsg + "details");
+  auto orig = SetTerminateHandler(&CustomHandler);
+  const std::string expected = std::string(kHandlerMsg) + "details";
+  EXPECT_DEATH_IF_SUPPORTED(Terminate("details"), expected);
+  SetTerminateHandler(orig);
 }
 
 TEST(TerminateHandler, NoAbortAborts) {
-  SetTerminateHandler([](char const*) {});
+  auto orig = SetTerminateHandler([](char const*) {});
   const std::string expected =
       "Aborting because the installed terminate "
       "handler returned. Error details: details";
-
   EXPECT_DEATH_IF_SUPPORTED(Terminate("details"), expected);
+  SetTerminateHandler(orig);
 }

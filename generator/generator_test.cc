@@ -141,7 +141,7 @@ TEST_F(GeneratorTest, BadCommandLineArgs) {
 }
 
 TEST_F(GeneratorTest, GenerateServicesSuccess) {
-  int constexpr kNumMockOutputStreams = 22;
+  int constexpr kNumMockOutputStreams = 23;
   std::vector<std::unique_ptr<generator_testing::MockZeroCopyOutputStream>>
       mock_outputs(kNumMockOutputStreams);
   for (auto& output : mock_outputs) {

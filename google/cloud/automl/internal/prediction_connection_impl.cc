@@ -37,8 +37,7 @@ PredictionServiceConnectionImpl::PredictionServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options), automl_internal::PredictionServiceDefaultOptions(
-                                  PredictionServiceConnection::options()))) {}
+          std::move(options), PredictionServiceConnection::options())) {}
 
 StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceConnectionImpl::Predict(
@@ -55,7 +54,7 @@ PredictionServiceConnectionImpl::Predict(
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>
 PredictionServiceConnectionImpl::BatchPredict(
     google::cloud::automl::v1::BatchPredictRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::BatchPredictResult>(
       background_->cq(), request,

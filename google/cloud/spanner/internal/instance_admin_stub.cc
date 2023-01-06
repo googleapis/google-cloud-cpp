@@ -29,15 +29,14 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace gcsa = ::google::spanner::admin::instance::v1;
-namespace giam = ::google::iam::v1;
+namespace gsai = ::google::spanner::admin::instance;
 
 InstanceAdminStub::~InstanceAdminStub() = default;
 
 class DefaultInstanceAdminStub : public InstanceAdminStub {
  public:
   DefaultInstanceAdminStub(
-      std::unique_ptr<gcsa::InstanceAdmin::StubInterface> instance_admin,
+      std::unique_ptr<gsai::v1::InstanceAdmin::StubInterface> instance_admin,
       std::unique_ptr<google::longrunning::Operations::StubInterface>
           operations)
       : instance_admin_(std::move(instance_admin)),
@@ -45,10 +44,10 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
 
   ~DefaultInstanceAdminStub() override = default;
 
-  StatusOr<gcsa::Instance> GetInstance(
+  StatusOr<gsai::v1::Instance> GetInstance(
       grpc::ClientContext& context,
-      gcsa::GetInstanceRequest const& request) override {
-    gcsa::Instance response;
+      gsai::v1::GetInstanceRequest const& request) override {
+    gsai::v1::Instance response;
     auto status = instance_admin_->GetInstance(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
@@ -58,10 +57,10 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncCreateInstance(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-      gcsa::CreateInstanceRequest const& request) override {
+      gsai::v1::CreateInstanceRequest const& request) override {
     return cq.MakeUnaryRpc(
         [this](grpc::ClientContext* context,
-               gcsa::CreateInstanceRequest const& request,
+               gsai::v1::CreateInstanceRequest const& request,
                grpc::CompletionQueue* cq) {
           return instance_admin_->AsyncCreateInstance(context, request, cq);
         },
@@ -70,18 +69,19 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
 
   future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstance(
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
-      gcsa::UpdateInstanceRequest const& request) override {
+      gsai::v1::UpdateInstanceRequest const& request) override {
     return cq.MakeUnaryRpc(
         [this](grpc::ClientContext* context,
-               gcsa::UpdateInstanceRequest const& request,
+               gsai::v1::UpdateInstanceRequest const& request,
                grpc::CompletionQueue* cq) {
           return instance_admin_->AsyncUpdateInstance(context, request, cq);
         },
         request, std::move(context));
   }
 
-  Status DeleteInstance(grpc::ClientContext& context,
-                        gcsa::DeleteInstanceRequest const& request) override {
+  Status DeleteInstance(
+      grpc::ClientContext& context,
+      gsai::v1::DeleteInstanceRequest const& request) override {
     google::protobuf::Empty response;
     grpc::Status status =
         instance_admin_->DeleteInstance(&context, request, &response);
@@ -91,10 +91,10 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return google::cloud::Status();
   }
 
-  StatusOr<gcsa::InstanceConfig> GetInstanceConfig(
+  StatusOr<gsai::v1::InstanceConfig> GetInstanceConfig(
       grpc::ClientContext& context,
-      gcsa::GetInstanceConfigRequest const& request) override {
-    gcsa::InstanceConfig response;
+      gsai::v1::GetInstanceConfigRequest const& request) override {
+    gsai::v1::InstanceConfig response;
     auto status =
         instance_admin_->GetInstanceConfig(&context, request, &response);
     if (!status.ok()) {
@@ -103,10 +103,10 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return response;
   }
 
-  StatusOr<gcsa::ListInstanceConfigsResponse> ListInstanceConfigs(
+  StatusOr<gsai::v1::ListInstanceConfigsResponse> ListInstanceConfigs(
       grpc::ClientContext& context,
-      gcsa::ListInstanceConfigsRequest const& request) override {
-    gcsa::ListInstanceConfigsResponse response;
+      gsai::v1::ListInstanceConfigsRequest const& request) override {
+    gsai::v1::ListInstanceConfigsResponse response;
     auto status =
         instance_admin_->ListInstanceConfigs(&context, request, &response);
     if (!status.ok()) {
@@ -115,10 +115,10 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return response;
   }
 
-  StatusOr<gcsa::ListInstancesResponse> ListInstances(
+  StatusOr<gsai::v1::ListInstancesResponse> ListInstances(
       grpc::ClientContext& context,
-      gcsa::ListInstancesRequest const& request) override {
-    gcsa::ListInstancesResponse response;
+      gsai::v1::ListInstancesRequest const& request) override {
+    gsai::v1::ListInstancesResponse response;
     auto status = instance_admin_->ListInstances(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
@@ -126,10 +126,10 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return response;
   }
 
-  StatusOr<giam::Policy> GetIamPolicy(
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& context,
-      giam::GetIamPolicyRequest const& request) override {
-    giam::Policy response;
+      google::iam::v1::GetIamPolicyRequest const& request) override {
+    google::iam::v1::Policy response;
     auto status = instance_admin_->GetIamPolicy(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
@@ -137,10 +137,10 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return response;
   }
 
-  StatusOr<giam::Policy> SetIamPolicy(
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
       grpc::ClientContext& context,
-      giam::SetIamPolicyRequest const& request) override {
-    giam::Policy response;
+      google::iam::v1::SetIamPolicyRequest const& request) override {
+    google::iam::v1::Policy response;
     auto status = instance_admin_->SetIamPolicy(&context, request, &response);
     if (!status.ok()) {
       return google::cloud::MakeStatusFromRpcError(status);
@@ -148,10 +148,10 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
     return response;
   }
 
-  StatusOr<giam::TestIamPermissionsResponse> TestIamPermissions(
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       grpc::ClientContext& context,
-      giam::TestIamPermissionsRequest const& request) override {
-    giam::TestIamPermissionsResponse response;
+      google::iam::v1::TestIamPermissionsRequest const& request) override {
+    google::iam::v1::TestIamPermissionsResponse response;
     auto status =
         instance_admin_->TestIamPermissions(&context, request, &response);
     if (!status.ok()) {
@@ -189,7 +189,7 @@ class DefaultInstanceAdminStub : public InstanceAdminStub {
   }
 
  private:
-  std::unique_ptr<gcsa::InstanceAdmin::StubInterface> instance_admin_;
+  std::unique_ptr<gsai::v1::InstanceAdmin::StubInterface> instance_admin_;
   std::unique_ptr<google::longrunning::Operations::StubInterface> operations_;
 };
 
@@ -199,7 +199,7 @@ std::shared_ptr<InstanceAdminStub> CreateDefaultInstanceAdminStub(
   auto channel =
       grpc::CreateCustomChannel(opts.get<EndpointOption>(),
                                 opts.get<GrpcCredentialOption>(), channel_args);
-  auto spanner_grpc_stub = gcsa::InstanceAdmin::NewStub(channel);
+  auto spanner_grpc_stub = gsai::v1::InstanceAdmin::NewStub(channel);
   auto longrunning_grpc_stub =
       google::longrunning::Operations::NewStub(channel);
 

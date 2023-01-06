@@ -23,6 +23,7 @@
 #include "google/cloud/vision/product_search_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -41,9 +42,9 @@ ProductSearchConnection::CreateProductSet(
 }
 
 StreamRange<google::cloud::vision::v1::ProductSet>
-    ProductSearchConnection::ListProductSets(
-        google::cloud::vision::v1::
-            ListProductSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ProductSearchConnection::ListProductSets(
+    google::cloud::vision::v1::
+        ListProductSetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::ProductSet>>();
 }
@@ -72,9 +73,9 @@ ProductSearchConnection::CreateProduct(
 }
 
 StreamRange<google::cloud::vision::v1::Product>
-    ProductSearchConnection::ListProducts(
-        google::cloud::vision::v1::
-            ListProductsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ProductSearchConnection::ListProducts(
+    google::cloud::vision::v1::
+        ListProductsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::Product>>();
 }
@@ -108,9 +109,9 @@ Status ProductSearchConnection::DeleteReferenceImage(
 }
 
 StreamRange<google::cloud::vision::v1::ReferenceImage>
-    ProductSearchConnection::ListReferenceImages(
-        google::cloud::vision::v1::
-            ListReferenceImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ProductSearchConnection::ListReferenceImages(
+    google::cloud::vision::v1::
+        ListReferenceImagesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::ReferenceImage>>();
 }
@@ -132,9 +133,9 @@ Status ProductSearchConnection::RemoveProductFromProductSet(
 }
 
 StreamRange<google::cloud::vision::v1::Product>
-    ProductSearchConnection::ListProductsInProductSet(
-        google::cloud::vision::v1::
-            ListProductsInProductSetRequest) {  // NOLINT(performance-unnecessary-value-param)
+ProductSearchConnection::ListProductsInProductSet(
+    google::cloud::vision::v1::
+        ListProductsInProductSetRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vision::v1::Product>>();
 }
@@ -158,6 +159,7 @@ ProductSearchConnection::PurgeProducts(
 std::shared_ptr<ProductSearchConnection> MakeProductSearchConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ProductSearchPolicyOptionList>(options,
                                                                 __func__);
   options = vision_internal::ProductSearchDefaultOptions(std::move(options));
@@ -170,23 +172,5 @@ std::shared_ptr<ProductSearchConnection> MakeProductSearchConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace vision_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<vision::ProductSearchConnection> MakeProductSearchConnection(
-    std::shared_ptr<ProductSearchStub> stub, Options options) {
-  options = ProductSearchDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<vision_internal::ProductSearchConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace vision_internal
 }  // namespace cloud
 }  // namespace google

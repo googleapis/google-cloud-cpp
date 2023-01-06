@@ -31,8 +31,8 @@ struct SessionPoolFriendForTest {
                            CompletionQueue& cq,
                            std::shared_ptr<SpannerStub> const& stub,
                            std::map<std::string, std::string> const& labels,
-                           int num_sessions) {
-    return session_pool->AsyncBatchCreateSessions(cq, stub, labels,
+                           std::string const& role, int num_sessions) {
+    return session_pool->AsyncBatchCreateSessions(cq, stub, labels, role,
                                                   num_sessions);
   }
 
@@ -73,10 +73,11 @@ TEST_F(SessionPoolIntegrationTest, SessionAsyncCRUD) {
 
   // Make an asynchronous request, but immediately block until the response
   // arrives
+  auto constexpr kSessionCreatorRole = "public";
   auto constexpr kNumTestSession = 4;
   auto create_response =
       spanner_internal::SessionPoolFriendForTest::AsyncBatchCreateSessions(
-          session_pool, cq, stub, {}, kNumTestSession)
+          session_pool, cq, stub, {}, kSessionCreatorRole, kNumTestSession)
           .get();
   ASSERT_STATUS_OK(create_response);
   EXPECT_EQ(kNumTestSession, create_response->session_size());

@@ -16,20 +16,21 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_GRPC_CONFIGURE_CLIENT_CONTEXT_H
 
 #include "google/cloud/storage/internal/generic_request.h"
+#include "google/cloud/storage/internal/object_requests.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/grpc_options.h"
 #include <grpcpp/client_context.h>
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 /**
  * Inject request query parameters into grpc::ClientContext.
  *
  * The REST API has a number of "standard" query parameters that are not part of
- * the gRPC request body, instead they are send via metadata headers in the gRPC
+ * the gRPC request body, instead they are sent via metadata headers in the gRPC
  * request.
  *
  * @see https://cloud.google.com/apis/docs/system-parameters
@@ -44,24 +45,44 @@ void ApplyQueryParameters(grpc::ClientContext& context, Request const& request,
   // the `UserIp` value into the `quota_user` field, and overwrite it if
   // `QuotaUser` is also set. A bit bizarre, but at least it is backwards
   // compatible.
-  if (request.template HasOption<QuotaUser>()) {
+  if (request.template HasOption<storage::QuotaUser>()) {
+    context.AddMetadata(
+        "x-goog-quota-user",
+        request.template GetOption<storage::QuotaUser>().value());
+  } else if (request.template HasOption<storage::UserIp>()) {
     context.AddMetadata("x-goog-quota-user",
-                        request.template GetOption<QuotaUser>().value());
-  } else if (request.template HasOption<UserIp>()) {
-    context.AddMetadata("x-goog-quota-user",
-                        request.template GetOption<UserIp>().value());
+                        request.template GetOption<storage::UserIp>().value());
   }
 
-  if (request.template HasOption<Fields>()) {
-    auto field_mask = request.template GetOption<Fields>().value();
+  if (request.template HasOption<storage::Fields>()) {
+    auto field_mask = request.template GetOption<storage::Fields>().value();
     if (!prefix.empty()) field_mask = prefix + "(" + field_mask + ")";
     context.AddMetadata("x-goog-fieldmask", std::move(field_mask));
   }
+
+  google::cloud::internal::ConfigureContext(
+      context, google::cloud::internal::CurrentOptions());
 }
 
-}  // namespace internal
+/**
+ * The generated `StorageMetadata` stub can not handle dynamic routing headers
+ * for client side streaming. So we manually match and extract the headers in
+ * this function.
+ */
+void ApplyRoutingHeaders(
+    grpc::ClientContext& context,
+    storage::internal::InsertObjectMediaRequest const& request);
+
+/**
+ * The generated `StorageMetadata` stub can not handle dynamic routing headers
+ * for client side streaming. So we manually match and extract the headers in
+ * this function.
+ */
+void ApplyRoutingHeaders(grpc::ClientContext& context,
+                         storage::internal::UploadChunkRequest const& request);
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 

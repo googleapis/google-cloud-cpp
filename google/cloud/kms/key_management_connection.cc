@@ -23,6 +23,7 @@
 #include "google/cloud/kms/key_management_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,33 +36,33 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 KeyManagementServiceConnection::~KeyManagementServiceConnection() = default;
 
 StreamRange<google::cloud::kms::v1::KeyRing>
-    KeyManagementServiceConnection::ListKeyRings(
-        google::cloud::kms::v1::
-            ListKeyRingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+KeyManagementServiceConnection::ListKeyRings(
+    google::cloud::kms::v1::
+        ListKeyRingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::KeyRing>>();
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKey>
-    KeyManagementServiceConnection::ListCryptoKeys(
-        google::cloud::kms::v1::
-            ListCryptoKeysRequest) {  // NOLINT(performance-unnecessary-value-param)
+KeyManagementServiceConnection::ListCryptoKeys(
+    google::cloud::kms::v1::
+        ListCryptoKeysRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::CryptoKey>>();
 }
 
 StreamRange<google::cloud::kms::v1::CryptoKeyVersion>
-    KeyManagementServiceConnection::ListCryptoKeyVersions(
-        google::cloud::kms::v1::
-            ListCryptoKeyVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+KeyManagementServiceConnection::ListCryptoKeyVersions(
+    google::cloud::kms::v1::
+        ListCryptoKeyVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::CryptoKeyVersion>>();
 }
 
 StreamRange<google::cloud::kms::v1::ImportJob>
-    KeyManagementServiceConnection::ListImportJobs(
-        google::cloud::kms::v1::
-            ListImportJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+KeyManagementServiceConnection::ListImportJobs(
+    google::cloud::kms::v1::
+        ListImportJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::kms::v1::ImportJob>>();
 }
@@ -201,6 +202,7 @@ KeyManagementServiceConnection::GenerateRandomBytes(
 std::shared_ptr<KeyManagementServiceConnection>
 MakeKeyManagementServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  KeyManagementServicePolicyOptionList>(
       options, __func__);
   options =
@@ -214,24 +216,5 @@ MakeKeyManagementServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace kms_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<kms::KeyManagementServiceConnection>
-MakeKeyManagementServiceConnection(
-    std::shared_ptr<KeyManagementServiceStub> stub, Options options) {
-  options = KeyManagementServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<kms_internal::KeyManagementServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace kms_internal
 }  // namespace cloud
 }  // namespace google

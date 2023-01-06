@@ -48,6 +48,18 @@ using VmMigrationLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         vmmigration_internal::VmMigrationRetryTraits>;
 
+/**
+ * The `VmMigrationConnection` object for `VmMigrationClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `VmMigrationClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `VmMigrationClient`.
+ *
+ * To create a concrete instance, see `MakeVmMigrationConnection()`.
+ *
+ * For mocking, see `vmmigration_mocks::MockVmMigrationConnection`.
+ */
 class VmMigrationConnection {
  public:
   virtual ~VmMigrationConnection() = 0;
@@ -111,6 +123,11 @@ class VmMigrationConnection {
   DeleteDatacenterConnector(
       google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest const&
           request);
+
+  virtual future<
+      StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
+  UpgradeAppliance(
+      google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request);
 
   virtual future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
   CreateMigratingVm(
@@ -233,24 +250,32 @@ class VmMigrationConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type `VmMigrationConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of VmMigrationClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `VmMigrationConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::vmmigration::VmMigrationPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `VmMigrationConnection` created by
+ * this function.
+ */
 std::shared_ptr<VmMigrationConnection> MakeVmMigrationConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace vmmigration_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<vmmigration::VmMigrationConnection> MakeVmMigrationConnection(
-    std::shared_ptr<VmMigrationStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace vmmigration_internal
 }  // namespace cloud
 }  // namespace google
 

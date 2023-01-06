@@ -49,6 +49,20 @@ using AssuredWorkloadsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         assuredworkloads_internal::AssuredWorkloadsServiceRetryTraits>;
 
+/**
+ * The `AssuredWorkloadsServiceConnection` object for
+ * `AssuredWorkloadsServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AssuredWorkloadsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AssuredWorkloadsServiceClient`.
+ *
+ * To create a concrete instance, see `MakeAssuredWorkloadsServiceConnection()`.
+ *
+ * For mocking, see
+ * `assuredworkloads_mocks::MockAssuredWorkloadsServiceConnection`.
+ */
 class AssuredWorkloadsServiceConnection {
  public:
   virtual ~AssuredWorkloadsServiceConnection() = 0;
@@ -65,6 +79,11 @@ class AssuredWorkloadsServiceConnection {
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
           request);
 
+  virtual StatusOr<
+      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+  RestrictAllowedResources(google::cloud::assuredworkloads::v1::
+                               RestrictAllowedResourcesRequest const& request);
+
   virtual Status DeleteWorkload(
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
           request);
@@ -75,27 +94,49 @@ class AssuredWorkloadsServiceConnection {
   virtual StreamRange<google::cloud::assuredworkloads::v1::Workload>
   ListWorkloads(
       google::cloud::assuredworkloads::v1::ListWorkloadsRequest request);
+
+  virtual StreamRange<google::cloud::assuredworkloads::v1::Violation>
+  ListViolations(
+      google::cloud::assuredworkloads::v1::ListViolationsRequest request);
+
+  virtual StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
+      google::cloud::assuredworkloads::v1::GetViolationRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+  AcknowledgeViolation(
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+          request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `AssuredWorkloadsServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * AssuredWorkloadsServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `AssuredWorkloadsServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::assuredworkloads::AssuredWorkloadsServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `AssuredWorkloadsServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<AssuredWorkloadsServiceConnection>
 MakeAssuredWorkloadsServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace assuredworkloads
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace assuredworkloads_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<assuredworkloads::AssuredWorkloadsServiceConnection>
-MakeAssuredWorkloadsServiceConnection(
-    std::shared_ptr<AssuredWorkloadsServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace assuredworkloads_internal
 }  // namespace cloud
 }  // namespace google
 

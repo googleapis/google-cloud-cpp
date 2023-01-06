@@ -23,6 +23,7 @@
 #include "google/cloud/apigeeconnect/internal/connection_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ConnectionServiceConnection::~ConnectionServiceConnection() = default;
 
 StreamRange<google::cloud::apigeeconnect::v1::Connection>
-    ConnectionServiceConnection::ListConnections(
-        google::cloud::apigeeconnect::v1::
-            ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ConnectionServiceConnection::ListConnections(
+    google::cloud::apigeeconnect::v1::
+        ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apigeeconnect::v1::Connection>>();
 }
@@ -45,6 +46,7 @@ StreamRange<google::cloud::apigeeconnect::v1::Connection>
 std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ConnectionServicePolicyOptionList>(options,
                                                                     __func__);
   options = apigeeconnect_internal::ConnectionServiceDefaultOptions(
@@ -59,25 +61,5 @@ std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigeeconnect
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace apigeeconnect_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<apigeeconnect::ConnectionServiceConnection>
-MakeConnectionServiceConnection(std::shared_ptr<ConnectionServiceStub> stub,
-                                Options options) {
-  options = ConnectionServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      apigeeconnect_internal::ConnectionServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace apigeeconnect_internal
 }  // namespace cloud
 }  // namespace google

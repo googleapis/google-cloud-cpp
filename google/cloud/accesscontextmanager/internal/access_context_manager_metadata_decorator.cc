@@ -39,7 +39,7 @@ AccessContextManagerMetadata::ListAccessPolicies(
     grpc::ClientContext& context,
     google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListAccessPolicies(context, request);
 }
 
@@ -57,7 +57,7 @@ AccessContextManagerMetadata::AsyncCreateAccessPolicy(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncCreateAccessPolicy(cq, std::move(context), request);
 }
 
@@ -262,6 +262,28 @@ AccessContextManagerMetadata::AsyncDeleteGcpUserAccessBinding(
                                                  request);
 }
 
+StatusOr<google::iam::v1::Policy> AccessContextManagerMetadata::SetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->SetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::Policy> AccessContextManagerMetadata::GetIamPolicy(
+    grpc::ClientContext& context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->GetIamPolicy(context, request);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AccessContextManagerMetadata::TestIamPermissions(
+    grpc::ClientContext& context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  SetMetadata(context, "resource=" + request.resource());
+  return child_->TestIamPermissions(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AccessContextManagerMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -292,9 +314,8 @@ void AccessContextManagerMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

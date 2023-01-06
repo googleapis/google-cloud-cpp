@@ -23,6 +23,7 @@
 #include "google/cloud/talent/internal/completion_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -42,6 +43,7 @@ CompletionConnection::CompleteQuery(
 std::shared_ptr<CompletionConnection> MakeCompletionConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CompletionPolicyOptionList>(options, __func__);
   options = talent_internal::CompletionDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -53,23 +55,5 @@ std::shared_ptr<CompletionConnection> MakeCompletionConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace talent_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<talent::CompletionConnection> MakeCompletionConnection(
-    std::shared_ptr<CompletionStub> stub, Options options) {
-  options = CompletionDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<talent_internal::CompletionConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace talent_internal
 }  // namespace cloud
 }  // namespace google

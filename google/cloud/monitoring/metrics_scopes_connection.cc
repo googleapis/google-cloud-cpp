@@ -23,6 +23,7 @@
 #include "google/cloud/monitoring/metrics_scopes_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -68,6 +69,7 @@ MetricsScopesConnection::DeleteMonitoredProject(
 std::shared_ptr<MetricsScopesConnection> MakeMetricsScopesConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  MetricsScopesPolicyOptionList>(options,
                                                                 __func__);
   options =
@@ -81,24 +83,5 @@ std::shared_ptr<MetricsScopesConnection> MakeMetricsScopesConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::MetricsScopesConnection>
-MakeMetricsScopesConnection(std::shared_ptr<MetricsScopesStub> stub,
-                            Options options) {
-  options = MetricsScopesDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<monitoring_internal::MetricsScopesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
 }  // namespace cloud
 }  // namespace google

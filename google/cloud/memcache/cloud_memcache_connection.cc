@@ -23,6 +23,7 @@
 #include "google/cloud/memcache/internal/cloud_memcache_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudMemcacheConnection::~CloudMemcacheConnection() = default;
 
 StreamRange<google::cloud::memcache::v1::Instance>
-    CloudMemcacheConnection::ListInstances(
-        google::cloud::memcache::v1::
-            ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudMemcacheConnection::ListInstances(
+    google::cloud::memcache::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::memcache::v1::Instance>>();
 }
@@ -88,9 +89,18 @@ CloudMemcacheConnection::ApplyParameters(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnection::RescheduleMaintenance(
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::memcache::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<CloudMemcacheConnection> MakeCloudMemcacheConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudMemcachePolicyOptionList>(options,
                                                                 __func__);
   options = memcache_internal::CloudMemcacheDefaultOptions(std::move(options));
@@ -103,23 +113,5 @@ std::shared_ptr<CloudMemcacheConnection> MakeCloudMemcacheConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace memcache
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace memcache_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<memcache::CloudMemcacheConnection> MakeCloudMemcacheConnection(
-    std::shared_ptr<CloudMemcacheStub> stub, Options options) {
-  options = CloudMemcacheDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<memcache_internal::CloudMemcacheConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace memcache_internal
 }  // namespace cloud
 }  // namespace google

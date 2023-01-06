@@ -67,6 +67,15 @@ google::cloud::testing_util::Commands::value_type CreateSchemaAdminCommand(
 
 bool UsingEmulator();
 
+std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator);
+
+std::string RandomSubscriptionId(
+    google::cloud::internal::DefaultPRNG& generator);
+
+std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator);
+
+std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator);
+
 }  // namespace examples
 }  // namespace pubsub
 }  // namespace cloud

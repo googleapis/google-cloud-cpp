@@ -118,6 +118,13 @@ bool ObjectReadStreambuf::ValidateHashes(char const* function_name) {
   // This function is called once the stream is "closed" (either an explicit
   // `Close()` call or a permanent error). After this point the validator is
   // not usable.
+
+  // If there are any data transformations, such as decompressive transcoding,
+  // then the computed hashes will not match the returned hashes.  GCS always
+  // returns the hashes of the **stored** data, which are different from the
+  // hashes of the **returned** data under transcoding.
+  if (transformation().has_value()) return true;
+
   auto function = std::move(hash_function_);
   auto validator = std::move(hash_validator_);
   hash_validator_result_ =
@@ -200,6 +207,7 @@ std::streamsize ObjectReadStreambuf::xsgetn(char* s, std::streamsize count) {
   if (!metageneration_) metageneration_ = std::move(read->metageneration);
   if (!storage_class_) storage_class_ = std::move(read->storage_class);
   if (!size_) size_ = std::move(read->size);
+  if (!transformation_) transformation_ = std::move(read->transformation);
   return run_validator_if_closed(Status());
 }
 

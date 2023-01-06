@@ -27,9 +27,9 @@ using ::testing::StartsWith;
 TEST(StorageExamplesCommon, RandomBucket) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const actual_1 = MakeRandomBucketName(generator);
-  EXPECT_THAT(actual_1, StartsWith("cloud-cpp-testing-examples"));
+  EXPECT_THAT(actual_1, StartsWith(BucketPrefix()));
   auto const actual_2 = MakeRandomBucketName(generator);
-  EXPECT_THAT(actual_2, StartsWith("cloud-cpp-testing-examples"));
+  EXPECT_THAT(actual_2, StartsWith(BucketPrefix()));
   EXPECT_NE(actual_1, actual_2);
 }
 

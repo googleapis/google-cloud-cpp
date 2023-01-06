@@ -39,7 +39,11 @@ class CurlHttpPayload : public HttpPayload {
   CurlHttpPayload& operator=(CurlHttpPayload const&) = delete;
   CurlHttpPayload& operator=(CurlHttpPayload&&) = default;
 
+  bool HasUnreadData() const override;
+
   StatusOr<std::size_t> Read(absl::Span<char> buffer) override;
+
+  std::multimap<std::string, std::string> headers() const;
 
  private:
   friend class CurlRestResponse;

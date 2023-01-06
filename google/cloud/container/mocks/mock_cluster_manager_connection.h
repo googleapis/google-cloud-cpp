@@ -27,6 +27,21 @@ namespace cloud {
 namespace container_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `ClusterManagerConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `ClusterManagerClient`. To do so,
+ * construct an object of type `ClusterManagerClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockClusterManagerConnection
     : public container::ClusterManagerConnection {
  public:
@@ -125,6 +140,11 @@ class MockClusterManagerConnection
   MOCK_METHOD(StatusOr<google::container::v1::Operation>, DeleteNodePool,
               (google::container::v1::DeleteNodePoolRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      Status, CompleteNodePoolUpgrade,
+      (google::container::v1::CompleteNodePoolUpgradeRequest const& request),
+      (override));
 
   MOCK_METHOD(
       StatusOr<google::container::v1::Operation>, RollbackNodePoolUpgrade,

@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/binary_data_as_debug_string.h"
+#include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/internal/strerror.h"
 #include "google/cloud/log.h"
 #ifdef _WIN32
@@ -29,44 +30,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::storage::internal::BinaryDataAsDebugString;
-
-std::size_t const kMaxDataDebugSize = 48;
+using ::google::cloud::rest_internal::DebugInData;
+using ::google::cloud::rest_internal::DebugInfo;
+using ::google::cloud::rest_internal::DebugOutData;
+using ::google::cloud::rest_internal::DebugRecvHeader;
+using ::google::cloud::rest_internal::DebugSendHeader;
 
 extern "C" int CurlHandleDebugCallback(CURL*, curl_infotype type, char* data,
                                        std::size_t size, void* userptr) {
   auto* debug_info = reinterpret_cast<CurlHandle::DebugInfo*>(userptr);
   switch (type) {
     case CURLINFO_TEXT:
-      debug_info->buffer += "== curl(Info): " + std::string(data, size);
+      debug_info->buffer += DebugInfo(data, size);
       break;
     case CURLINFO_HEADER_IN:
-      debug_info->buffer += "<< curl(Recv Header): " + std::string(data, size);
+      debug_info->buffer += DebugRecvHeader(data, size);
       break;
     case CURLINFO_HEADER_OUT:
-      debug_info->buffer += ">> curl(Send Header): " + std::string(data, size);
+      debug_info->buffer += DebugSendHeader(data, size);
       break;
     case CURLINFO_DATA_IN:
       ++debug_info->recv_count;
       if (size == 0) {
         ++debug_info->recv_zero_count;
-      } else {
-        debug_info->buffer += ">> curl(Recv Data): size=";
-        debug_info->buffer += std::to_string(size) + "\n";
-        debug_info->buffer +=
-            BinaryDataAsDebugString(data, size, kMaxDataDebugSize);
       }
+      debug_info->buffer += DebugInData(data, size);
       break;
     case CURLINFO_DATA_OUT:
       ++debug_info->send_count;
       if (size == 0) {
         ++debug_info->send_zero_count;
-      } else {
-        debug_info->buffer += ">> curl(Send Data): size=";
-        debug_info->buffer += std::to_string(size) + "\n";
-        debug_info->buffer +=
-            BinaryDataAsDebugString(data, size, kMaxDataDebugSize);
       }
+      debug_info->buffer += DebugOutData(data, size);
       break;
     case CURLINFO_SSL_DATA_IN:
     case CURLINFO_SSL_DATA_OUT:
@@ -127,16 +122,27 @@ extern "C" int CurlSetSocketOptions(void* userdata, curl_socket_t curlfd,
 
 }  // namespace
 
-void AssertOptionSuccessImpl(
-    CURLcode e, CURLoption opt, char const* where,
-    absl::FunctionRef<std::string()> const& format_parameter) {
-  GCP_LOG(FATAL) << where << "() - error [" << e
-                 << "] while setting curl option [" << opt << "] to ["
-                 << format_parameter()
-                 << "], error description=" << curl_easy_strerror(e);
+CurlHandle CurlHandle::MakeFromPool(rest_internal::CurlHandleFactory& factory) {
+  return CurlHandle(CurlHandle::InternalOnly{}, factory.CreateHandle());
 }
 
-CurlHandle::CurlHandle() : handle_(curl_easy_init(), &curl_easy_cleanup) {
+void CurlHandle::ReturnToPool(rest_internal::CurlHandleFactory& factory,
+                              CurlHandle h) {
+  rest_internal::CurlPtr tmp(nullptr, curl_easy_cleanup);
+  h.handle_.swap(tmp);
+  factory.CleanupHandle(std::move(tmp),
+                        rest_internal::HandleDisposition::kKeep);
+}
+
+void CurlHandle::DiscardFromPool(rest_internal::CurlHandleFactory& factory,
+                                 CurlHandle h) {
+  rest_internal::CurlPtr tmp(nullptr, curl_easy_cleanup);
+  h.handle_.swap(tmp);
+  factory.CleanupHandle(std::move(tmp),
+                        rest_internal::HandleDisposition::kDiscard);
+}
+
+CurlHandle::CurlHandle() : handle_(rest_internal::MakeCurlPtr()) {
   if (handle_.get() == nullptr) {
     google::cloud::internal::ThrowRuntimeError("Cannot initialize CURL handle");
   }

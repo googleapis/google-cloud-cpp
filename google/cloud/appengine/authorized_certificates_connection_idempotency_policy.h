@@ -32,30 +32,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AuthorizedCertificatesConnectionIdempotencyPolicy {
  public:
-  virtual ~AuthorizedCertificatesConnectionIdempotencyPolicy() = 0;
+  virtual ~AuthorizedCertificatesConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency ListAuthorizedCertificates(
-      google::appengine::v1::ListAuthorizedCertificatesRequest request) = 0;
+      google::appengine::v1::ListAuthorizedCertificatesRequest request);
 
   virtual google::cloud::Idempotency GetAuthorizedCertificate(
-      google::appengine::v1::GetAuthorizedCertificateRequest const&
-          request) = 0;
+      google::appengine::v1::GetAuthorizedCertificateRequest const& request);
 
   virtual google::cloud::Idempotency CreateAuthorizedCertificate(
-      google::appengine::v1::CreateAuthorizedCertificateRequest const&
-          request) = 0;
+      google::appengine::v1::CreateAuthorizedCertificateRequest const& request);
 
   virtual google::cloud::Idempotency UpdateAuthorizedCertificate(
-      google::appengine::v1::UpdateAuthorizedCertificateRequest const&
-          request) = 0;
+      google::appengine::v1::UpdateAuthorizedCertificateRequest const& request);
 
   virtual google::cloud::Idempotency DeleteAuthorizedCertificate(
-      google::appengine::v1::DeleteAuthorizedCertificateRequest const&
-          request) = 0;
+      google::appengine::v1::DeleteAuthorizedCertificateRequest const& request);
 };
 
 std::unique_ptr<AuthorizedCertificatesConnectionIdempotencyPolicy>

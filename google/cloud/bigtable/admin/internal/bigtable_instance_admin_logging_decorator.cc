@@ -291,6 +291,19 @@ BigtableInstanceAdminLogging::TestIamPermissions(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse>
+BigtableInstanceAdminLogging::ListHotTablets(
+    grpc::ClientContext& context,
+    google::bigtable::admin::v2::ListHotTabletsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::bigtable::admin::v2::ListHotTabletsRequest const& request) {
+        return child_->ListHotTablets(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 BigtableInstanceAdminLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -23,6 +23,7 @@
 #include "google/cloud/composer/internal/image_versions_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ImageVersionsConnection::~ImageVersionsConnection() = default;
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
-    ImageVersionsConnection::ListImageVersions(
-        google::cloud::orchestration::airflow::service::v1::
-            ListImageVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ImageVersionsConnection::ListImageVersions(
+    google::cloud::orchestration::airflow::service::v1::
+        ListImageVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::orchestration::airflow::service::v1::ImageVersion>>();
 }
@@ -45,6 +46,7 @@ StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
 std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ImageVersionsPolicyOptionList>(options,
                                                                 __func__);
   options = composer_internal::ImageVersionsDefaultOptions(std::move(options));
@@ -57,23 +59,5 @@ std::shared_ptr<ImageVersionsConnection> MakeImageVersionsConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace composer_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<composer::ImageVersionsConnection> MakeImageVersionsConnection(
-    std::shared_ptr<ImageVersionsStub> stub, Options options) {
-  options = ImageVersionsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<composer_internal::ImageVersionsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace composer_internal
 }  // namespace cloud
 }  // namespace google

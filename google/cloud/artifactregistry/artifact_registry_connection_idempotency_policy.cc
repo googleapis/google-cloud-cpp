@@ -30,43 +30,153 @@ using ::google::cloud::Idempotency;
 ArtifactRegistryConnectionIdempotencyPolicy::
     ~ArtifactRegistryConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultArtifactRegistryConnectionIdempotencyPolicy
-    : public ArtifactRegistryConnectionIdempotencyPolicy {
- public:
-  ~DefaultArtifactRegistryConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>
+ArtifactRegistryConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ArtifactRegistryConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultArtifactRegistryConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListDockerImages(
+    google::devtools::artifactregistry::v1::
+        ListDockerImagesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListDockerImages(
-      google::devtools::artifactregistry::v1::ListDockerImagesRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetDockerImage(
+    google::devtools::artifactregistry::v1::GetDockerImageRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListRepositories(
-      google::devtools::artifactregistry::v1::ListRepositoriesRequest)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ImportAptArtifacts(
+    google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetRepository(
-      google::devtools::artifactregistry::v1::GetRepositoryRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ImportYumArtifacts(
+    google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListRepositories(
+    google::devtools::artifactregistry::v1::
+        ListRepositoriesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetRepository(
+    google::devtools::artifactregistry::v1::GetRepositoryRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::CreateRepository(
+    google::devtools::artifactregistry::v1::CreateRepositoryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateRepository(
+    google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteRepository(
+    google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListPackages(
+    google::devtools::artifactregistry::v1::ListPackagesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetPackage(
+    google::devtools::artifactregistry::v1::GetPackageRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeletePackage(
+    google::devtools::artifactregistry::v1::DeletePackageRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListVersions(
+    google::devtools::artifactregistry::v1::ListVersionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetVersion(
+    google::devtools::artifactregistry::v1::GetVersionRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteVersion(
+    google::devtools::artifactregistry::v1::DeleteVersionRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListFiles(
+    google::devtools::artifactregistry::v1::ListFilesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetFile(
+    google::devtools::artifactregistry::v1::GetFileRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::ListTags(
+    google::devtools::artifactregistry::v1::ListTagsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetTag(
+    google::devtools::artifactregistry::v1::GetTagRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::CreateTag(
+    google::devtools::artifactregistry::v1::CreateTagRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateTag(
+    google::devtools::artifactregistry::v1::UpdateTagRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::DeleteTag(
+    google::devtools::artifactregistry::v1::DeleteTagRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return request.policy().etag().empty() ? Idempotency::kNonIdempotent
+                                         : Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::GetProjectSettings(
+    google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
+Idempotency ArtifactRegistryConnectionIdempotencyPolicy::UpdateProjectSettings(
+    google::devtools::artifactregistry::v1::
+        UpdateProjectSettingsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ArtifactRegistryConnectionIdempotencyPolicy>
 MakeDefaultArtifactRegistryConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultArtifactRegistryConnectionIdempotencyPolicy>();
+  return absl::make_unique<ArtifactRegistryConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

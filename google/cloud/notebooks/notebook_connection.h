@@ -49,6 +49,18 @@ using NotebookServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         notebooks_internal::NotebookServiceRetryTraits>;
 
+/**
+ * The `NotebookServiceConnection` object for `NotebookServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `NotebookServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `NotebookServiceClient`.
+ *
+ * To create a concrete instance, see `MakeNotebookServiceConnection()`.
+ *
+ * For mocking, see `notebooks_mocks::MockNotebookServiceConnection`.
+ */
 class NotebookServiceConnection {
  public:
   virtual ~NotebookServiceConnection() = 0;
@@ -92,6 +104,12 @@ class NotebookServiceConnection {
   SetInstanceLabels(
       google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request);
 
+  virtual StatusOr<
+      google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+  UpdateInstanceMetadataItems(
+      google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+          request);
+
   virtual future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
   DeleteInstance(
       google::cloud::notebooks::v1::DeleteInstanceRequest const& request);
@@ -127,6 +145,10 @@ class NotebookServiceConnection {
   virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
   RollbackInstance(
       google::cloud::notebooks::v1::RollbackInstanceRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
+  DiagnoseInstance(
+      google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Instance>>
   UpgradeInstanceInternal(
@@ -181,25 +203,33 @@ class NotebookServiceConnection {
       google::cloud::notebooks::v1::CreateExecutionRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `NotebookServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of NotebookServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `NotebookServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::notebooks::NotebookServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `NotebookServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<NotebookServiceConnection> MakeNotebookServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace notebooks_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<notebooks::NotebookServiceConnection>
-MakeNotebookServiceConnection(std::shared_ptr<NotebookServiceStub> stub,
-                              Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace notebooks_internal
 }  // namespace cloud
 }  // namespace google
 

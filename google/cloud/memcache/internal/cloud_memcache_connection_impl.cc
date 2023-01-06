@@ -36,15 +36,14 @@ CloudMemcacheConnectionImpl::CloudMemcacheConnectionImpl(
     std::shared_ptr<memcache_internal::CloudMemcacheStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), memcache_internal::CloudMemcacheDefaultOptions(
-                                  CloudMemcacheConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      CloudMemcacheConnection::options())) {}
 
 StreamRange<google::cloud::memcache::v1::Instance>
 CloudMemcacheConnectionImpl::ListInstances(
     google::cloud::memcache::v1::ListInstancesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<memcache::CloudMemcacheRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -89,7 +88,7 @@ CloudMemcacheConnectionImpl::GetInstance(
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::CreateInstance(
     google::cloud::memcache::v1::CreateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
       background_->cq(), request,
@@ -119,7 +118,7 @@ CloudMemcacheConnectionImpl::CreateInstance(
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::UpdateInstance(
     google::cloud::memcache::v1::UpdateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
       background_->cq(), request,
@@ -149,7 +148,7 @@ CloudMemcacheConnectionImpl::UpdateInstance(
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::UpdateParameters(
     google::cloud::memcache::v1::UpdateParametersRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
       background_->cq(), request,
@@ -179,7 +178,7 @@ CloudMemcacheConnectionImpl::UpdateParameters(
 future<StatusOr<google::cloud::memcache::v1::OperationMetadata>>
 CloudMemcacheConnectionImpl::DeleteInstance(
     google::cloud::memcache::v1::DeleteInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::OperationMetadata>(
       background_->cq(), request,
@@ -209,7 +208,7 @@ CloudMemcacheConnectionImpl::DeleteInstance(
 future<StatusOr<google::cloud::memcache::v1::Instance>>
 CloudMemcacheConnectionImpl::ApplyParameters(
     google::cloud::memcache::v1::ApplyParametersRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::memcache::v1::Instance>(
       background_->cq(), request,
@@ -233,6 +232,37 @@ CloudMemcacheConnectionImpl::ApplyParameters(
           google::cloud::memcache::v1::Instance>,
       retry_policy(), backoff_policy(),
       idempotency_policy()->ApplyParameters(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheConnectionImpl::RescheduleMaintenance(
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::memcache::v1::Instance>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return stub->AsyncRescheduleMaintenance(cq, std::move(context),
+                                                request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::memcache::v1::Instance>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->RescheduleMaintenance(request), polling_policy(),
       __func__);
 }
 

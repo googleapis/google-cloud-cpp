@@ -17,7 +17,6 @@
 // source: google/cloud/vpcaccess/v1/vpc_access.proto
 
 #include "google/cloud/vpcaccess/vpc_access_client.h"
-#include "google/cloud/vpcaccess/internal/vpc_access_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 VpcAccessServiceClient::VpcAccessServiceClient(
     std::shared_ptr<VpcAccessServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), vpcaccess_internal::VpcAccessServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 VpcAccessServiceClient::~VpcAccessServiceClient() = default;
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>

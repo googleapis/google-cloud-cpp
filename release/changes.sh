@@ -48,7 +48,7 @@ function filter_messages() {
       continue
     fi
     # Likely uninteresting changes.
-    if grep -qP "^(ci|chore|test|testing|cleanup|refactor)\b" <<<"${message}"; then
+    if grep -qP "^(ci|chore|test|testing|cleanup|refactor|impl)\b" <<<"${message}"; then
       continue
     fi
     echo "${message}"
@@ -64,7 +64,7 @@ function print_changelog() {
   shift 2
   if [[ $# -gt 0 ]]; then
     printf "\n### [%s](%s)\n\n" "${title}" "${url}"
-    printf "* %s\n" "${changelog[@]}"
+    printf -- "- %s\n" "${changelog[@]}"
   fi
 }
 
@@ -73,11 +73,17 @@ last_tag="$(git describe --tags --abbrev=0 upstream/main)"
 
 # The format is: <title>,<path>[,<extra path> ...]
 sections=(
+  "Assured Workloads,google/cloud/assuredworkloads"
+  "Batch,google/cloud/batch"
+  "Beyond Corp,google/cloud/beyondcorp"
   "BigQuery,google/cloud/bigquery"
   "Bigtable,google/cloud/bigtable"
+  "Cloud Asset,google/cloud/asset"
+  "Cloud Run,google/cloud/run"
   "IAM,google/cloud/iam"
   "Pub/Sub,google/cloud/pubsub"
   "Spanner,google/cloud/spanner"
+  "Stackdriver Debugger,google/cloud/debugger"
   "Storage,google/cloud/storage"
 )
 
@@ -90,7 +96,7 @@ for section in "${sections[@]}"; do
   title="$(cut -f1 -d, <<<"${section}")"
   path="$(cut -f2 -d, <<<"${section}")"
   mapfile -d ' ' -t extra < <(cut -f3 -d, <<<"${section}")
-  url="https://github.com/googleapis/google-cloud-cpp/blob/main/${path}/README.md"
+  url="/${path}/README.md"
   mapfile -t messages < <(list_changes "${last_tag}" "${path}" "${extra[@]}")
   mapfile -t changelog < <(filter_messages "${messages[@]}")
   print_changelog "${title}" "${url}" "${changelog[@]}"

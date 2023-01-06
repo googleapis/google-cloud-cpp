@@ -31,21 +31,38 @@ namespace cloud {
 namespace webrisk {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-webrisk-options
+ */
 struct WebRiskServiceRetryPolicyOption {
   using Type = std::shared_ptr<WebRiskServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-webrisk-options
+ */
 struct WebRiskServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-webrisk-options
+ */
 struct WebRiskServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<WebRiskServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to WebRiskService.
+ *
+ * @ingroup google-cloud-webrisk-options
+ */
 using WebRiskServicePolicyOptionList =
     OptionList<WebRiskServiceRetryPolicyOption,
                WebRiskServiceBackoffPolicyOption,

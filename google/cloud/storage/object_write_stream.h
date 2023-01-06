@@ -15,9 +15,9 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_WRITE_STREAM_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OBJECT_WRITE_STREAM_H
 
+#include "google/cloud/storage/headers_map.h"
 #include "google/cloud/storage/internal/object_write_streambuf.h"
 #include "google/cloud/storage/version.h"
-#include <map>
 #include <memory>
 #include <ostream>
 #include <string>
@@ -26,9 +26,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/// Represents the headers returned in a streaming upload or download operation.
-using HeadersMap = std::multimap<std::string, std::string>;
 
 /**
  * Defines a `std::basic_ostream<char>` to write to a GCS object.
@@ -235,12 +232,9 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    *
    * @warning The contents of these headers may change without notice. Unless
    *     documented in the API, headers may be removed or added by the service.
-   *     Also note that the client library uses both the XML and JSON API,
-   *     choosing between them based on the feature set (some functionality is
-   *     only available through the JSON API), and performance.  Consequently,
-   *     the headers may be different on requests using different features.
-   *     Likewise, the headers may change from one version of the library to the
-   *     next, as we find more (or different) opportunities for optimization.
+   *     Furthermore, he headers may change from one version of the library to
+   *     the next, as we find more (or different) opportunities for
+   *     optimization.
    */
   HeadersMap const& headers() const { return headers_; }
 

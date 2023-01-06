@@ -87,18 +87,18 @@ class CloudFilestoreManagerClient {
       Options opts = {});
   ~CloudFilestoreManagerClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   CloudFilestoreManagerClient(CloudFilestoreManagerClient const&) = default;
   CloudFilestoreManagerClient& operator=(CloudFilestoreManagerClient const&) =
       default;
   CloudFilestoreManagerClient(CloudFilestoreManagerClient&&) = default;
   CloudFilestoreManagerClient& operator=(CloudFilestoreManagerClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(CloudFilestoreManagerClient const& a,
                          CloudFilestoreManagerClient const& b) {
     return a.connection_ == b.connection_;
@@ -107,7 +107,7 @@ class CloudFilestoreManagerClient {
                          CloudFilestoreManagerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all instances in a project for either a specified location

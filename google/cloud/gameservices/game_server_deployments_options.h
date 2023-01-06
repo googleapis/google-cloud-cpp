@@ -31,27 +31,49 @@ namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-gameservices-options
+ */
 struct GameServerDeploymentsServiceRetryPolicyOption {
   using Type = std::shared_ptr<GameServerDeploymentsServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-gameservices-options
+ */
 struct GameServerDeploymentsServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct GameServerDeploymentsServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-gameservices-options
+ */
 struct GameServerDeploymentsServiceConnectionIdempotencyPolicyOption {
   using Type =
       std::shared_ptr<GameServerDeploymentsServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-gameservices-options
+ */
+struct GameServerDeploymentsServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to GameServerDeploymentsService.
+ *
+ * @ingroup google-cloud-gameservices-options
+ */
 using GameServerDeploymentsServicePolicyOptionList =
     OptionList<GameServerDeploymentsServiceRetryPolicyOption,
                GameServerDeploymentsServiceBackoffPolicyOption,

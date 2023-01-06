@@ -14,7 +14,6 @@
 
 #include "google/cloud/retail/catalog_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -30,12 +29,12 @@ int main(int argc, char* argv[]) try {
   auto const location =
       "projects/" + std::string(argv[1]) + "/locations/global";
   for (auto r : client.ListCatalogs(location)) {
-    if (!r) throw std::runtime_error(r.status().message());
+    if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

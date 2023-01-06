@@ -35,6 +35,15 @@ std::vector<std::pair<std::string, std::string>> const& SnakeCaseExceptions() {
   return kExceptions;
 }
 
+void FormatProductPath(std::string& path) {
+  if (path.front() == '/') {
+    path = path.substr(1);
+  }
+  if (path.back() != '/') {
+    path += '/';
+  }
+}
+
 Status ProcessArgProductPath(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   auto product_path =
@@ -46,14 +55,7 @@ Status ProcessArgProductPath(
     return Status(StatusCode::kInvalidArgument,
                   "--cpp_codegen_opt=product_path=<path> must be specified.");
   }
-
-  auto& path = product_path->second;
-  if (path.front() == '/') {
-    path = path.substr(1);
-  }
-  if (path.back() != '/') {
-    path += '/';
-  }
+  FormatProductPath(product_path->second);
   return {};
 }
 
@@ -123,6 +125,19 @@ void ProcessArgEmulatorEndpointEnvVar(
   }
 }
 
+void ProcessArgEndpointLocationStyle(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  auto endpoint_location_style =
+      std::find_if(command_line_args.begin(), command_line_args.end(),
+                   [](std::pair<std::string, std::string> const& p) {
+                     return p.first == "endpoint_location_style";
+                   });
+  if (endpoint_location_style == command_line_args.end()) {
+    command_line_args.emplace_back("endpoint_location_style",
+                                   "LOCATION_INDEPENDENT");
+  }
+}
+
 void ProcessArgGenerateAsyncRpc(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   ProcessRepeated("gen_async_rpc", "gen_async_rpcs", command_line_args);
@@ -138,6 +153,16 @@ void ProcessArgAdditionalProtoFiles(
     std::vector<std::pair<std::string, std::string>>& command_line_args) {
   ProcessRepeated("additional_proto_file", "additional_proto_files",
                   command_line_args);
+}
+
+void ProcessArgForwardingProductPath(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  auto path = std::find_if(command_line_args.begin(), command_line_args.end(),
+                           [](std::pair<std::string, std::string> const& p) {
+                             return p.first == "forwarding_product_path";
+                           });
+  if (path == command_line_args.end() || path->second.empty()) return;
+  FormatProductPath(path->second);
 }
 
 }  // namespace
@@ -230,9 +255,11 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgOmitRpc(command_line_args);
   ProcessArgServiceEndpointEnvVar(command_line_args);
   ProcessArgEmulatorEndpointEnvVar(command_line_args);
+  ProcessArgEndpointLocationStyle(command_line_args);
   ProcessArgGenerateAsyncRpc(command_line_args);
   ProcessArgRetryGrpcStatusCode(command_line_args);
   ProcessArgAdditionalProtoFiles(command_line_args);
+  ProcessArgForwardingProductPath(command_line_args);
   return command_line_args;
 }
 

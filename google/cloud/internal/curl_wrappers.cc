@@ -13,9 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/internal/curl_wrappers.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/throw_delegate.h"
 #include "google/cloud/log.h"
+#include "absl/strings/match.h"
 #include <openssl/crypto.h>
 #include <openssl/opensslv.h>
 #include <algorithm>
@@ -47,7 +49,7 @@ namespace {
 std::vector<std::mutex> ssl_locks;
 
 // A callback to lock and unlock the mutexes needed by the SSL library.
-extern "C" void SslLockingCb(int mode, int type, char const*, int) {
+extern "C" void RestSslLockingCb(int mode, int type, char const*, int) {
   if ((mode & CRYPTO_LOCK) != 0) {
     ssl_locks[type].lock();
   } else {
@@ -86,7 +88,7 @@ void InitializeSslLocking(bool enable_ssl_callbacks) {
                  [](char x) { return x == '/' ? ' ' : x; });
   // LibreSSL seems to be using semantic versioning, so just check the major
   // version.
-  if (expected_prefix.rfind("LibreSSL 2", 0) == 0) {
+  if (absl::StartsWith(expected_prefix, "LibreSSL 2")) {
     expected_prefix = "LibreSSL 2";
   }
 #ifdef OPENSSL_VERSION
@@ -98,7 +100,7 @@ void InitializeSslLocking(bool enable_ssl_callbacks) {
   // that the major version matches (e.g. LibreSSL), and (b) because the
   // `openssl_v` string sometimes reads `OpenSSL 1.1.0 May 2018` while the
   // string reported by libcurl would be `OpenSSL/1.1.0`, sigh...
-  if (openssl_v.rfind(expected_prefix, 0) != 0) {
+  if (!absl::StartsWith(openssl_v, expected_prefix)) {
     std::ostringstream os;
     os << "Mismatched versions of OpenSSL linked in libcurl vs. the version"
        << " linked by the Google Cloud Storage C++ library.\n"
@@ -123,7 +125,7 @@ void InitializeSslLocking(bool enable_ssl_callbacks) {
   GCP_LOG(INFO) << "Installing SSL locking callbacks.";
   ssl_locks =
       std::vector<std::mutex>(static_cast<std::size_t>(CRYPTO_num_locks()));
-  CRYPTO_set_locking_callback(SslLockingCb);
+  CRYPTO_set_locking_callback(RestSslLockingCb);
 
   // The documentation also recommends calling CRYPTO_THREADID_set_callback() to
   // setup a function to return thread ids as integers (or pointers). Writing a
@@ -167,6 +169,17 @@ class CurlInitializer {
   CurlInitializer() { curl_global_init(CURL_GLOBAL_ALL); }
   ~CurlInitializer() { curl_global_cleanup(); }
 };
+
+std::size_t constexpr kMaxDebugLength = 128;
+
+std::string CleanupDebugData(char const* data, std::size_t size) {
+  auto const n = (std::min)(size, kMaxDebugLength);
+  auto text = std::string{data, n};
+  std::transform(text.begin(), text.end(), text.begin(),
+                 [](unsigned char c) { return std::isprint(c) ? c : '.'; });
+  return text;
+}
+
 }  // namespace
 
 std::string CurlSslLibraryId() {
@@ -180,8 +193,8 @@ bool SslLibraryNeedsLocking(std::string const& curl_ssl_id) {
   //    https://curl.haxx.se/libcurl/c/threadsafe.html
   // Only these library prefixes require special configuration for using safely
   // with multiple threads.
-  return (curl_ssl_id.rfind("OpenSSL/1.0", 0) == 0 ||
-          curl_ssl_id.rfind("LibreSSL/2", 0) == 0);
+  return (absl::StartsWith(curl_ssl_id, "OpenSSL/1.0") ||
+          absl::StartsWith(curl_ssl_id, "LibreSSL/2"));
 }
 
 long VersionToCurlCode(std::string const& v) {  // NOLINT(google-runtime-int)
@@ -210,6 +223,15 @@ bool SslLockingCallbacksInstalled() {
 #endif  // GOOGLE_CLOUD_CPP_SSL_REQUIRES_LOCKS
 }
 
+CurlPtr MakeCurlPtr() {
+  auto handle = CurlPtr(curl_easy_init(), &curl_easy_cleanup);
+  // We get better performance using a slightly larger buffer (128KiB) than the
+  // default buffer size set by libcurl (16KiB).  We ignore errors because
+  // failing to set this parameter just affects performance by a small amount.
+  (void)curl_easy_setopt(handle.get(), CURLOPT_BUFFERSIZE, 128 * 1024L);
+  return handle;
+}
+
 std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
                                  char const* data, std::size_t size) {
   if (size <= 2) {
@@ -228,38 +250,88 @@ std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
     header_value = std::string(separator + 2, data + size - 2);
   }
   std::transform(header_name.begin(), header_name.end(), header_name.begin(),
-                 [](char x) { return std::tolower(x); });
+                 [](unsigned char x) { return std::tolower(x); });
   received_headers.emplace(std::move(header_name), std::move(header_value));
   return size;
 }
 
+std::string DebugInfo(char const* data, std::size_t size) {
+  return absl::StrCat("== curl(Info): ", absl::string_view{data, size});
+}
+
+std::string DebugRecvHeader(char const* data, std::size_t size) {
+  return absl::StrCat("<< curl(Recv Header): ", absl::string_view{data, size});
+}
+
+std::string DebugSendHeader(char const* data, std::size_t size) {
+  // libcurl delivers multiple headers in a single payload, separated by '\n'.
+  auto const payload = absl::string_view{data, size};
+  // We want to truncate the portion of the payload following this ": Bearer" to
+  // at most 32 characters, skipping everything else until any newline.
+  auto const bearer = absl::string_view{": Bearer "};
+  auto const limit = bearer.size() + 32;
+  auto const bearer_pos = payload.find(bearer);
+  if (bearer_pos != std::string::npos) {
+    auto const nl_pos = payload.find('\n', bearer_pos);
+    auto const prefix = payload.substr(0, bearer_pos);
+    auto trailer = absl::string_view{};
+    auto body = payload.substr(bearer_pos);
+    if (nl_pos != std::string::npos) {
+      trailer = payload.substr(nl_pos);
+      body = payload.substr(bearer_pos, nl_pos - bearer_pos);
+    }
+    auto const* marker = body.size() > limit ? "...<truncated>..." : "";
+    body = absl::ClippedSubstr(std::move(body), 0, limit);
+    return absl::StrCat(">> curl(Send Header): ", prefix, body, marker,
+                        trailer);
+  }
+  return absl::StrCat(">> curl(Send Header): ", payload);
+}
+
+std::string DebugInData(char const* data, std::size_t size) {
+  return absl::StrCat("<< curl(Recv Data): size=", size,
+                      " data=", CleanupDebugData(data, size), "\n");
+}
+
+std::string DebugOutData(char const* data, std::size_t size) {
+  return absl::StrCat(">> curl(Send Data): size=", size,
+                      " data=", CleanupDebugData(data, size), "\n");
+}
+
+Options CurlInitializeOptions(Options options) {
+  return google::cloud::internal::MergeOptions(
+      std::move(options), Options{}
+                              .set<EnableCurlSigpipeHandlerOption>(true)
+                              .set<EnableCurlSslLockingOption>(true));
+}
+
 void CurlInitializeOnce(Options const& options) {
   static CurlInitializer curl_initializer;
-  static bool const kInitialized = [&options]() {
+  static bool const kInitialized = [](Options const& options) {
     // The Google Cloud Storage C++ client library depends on libcurl, which
-    // depends on many different SSL libraries, depending on the library the
-    // library needs to take action to be thread-safe. More details can be
-    // found here:
+    // can use different SSL libraries. Depending on the SSL implementation,
+    // we need to take action to be thread-safe. More details can be found here:
     //
     //     https://curl.haxx.se/libcurl/c/threadsafe.html
     //
     InitializeSslLocking(options.get<EnableCurlSslLockingOption>());
 
-    // libcurl recommends turning on CURLOPT_NOSIGNAL for multi-threaded
-    // applications: "Note that setting CURLOPT_NOSIGNAL to 0L will not work in
-    // a threaded situation as there will be race where libcurl risks restoring
-    // the former signal handler while another thread should still ignore it."
+    // libcurl recommends turning on `CURLOPT_NOSIGNAL` for threaded
+    // applications: "Note that setting `CURLOPT_NOSIGNAL` to 0L will not work
+    // in a threaded situation as there will be race where libcurl risks
+    // restoring the former signal handler while another thread should still
+    // ignore it."
     //
-    // libcurl further recommends that we setup our own signal handler for
-    // SIGPIPE when using multiple threads: "When CURLOPT_NOSIGNAL is set to
-    // 1L, your application needs to deal with the risk of a SIGPIPE (that at
+    // libcurl further recommends that we set up our own signal handler for
+    // SIGPIPE when using multiple threads: "When `CURLOPT_NOSIGNAL` is set to
+    // 1L, your application needs to deal with the risk of a `SIGPIPE` (that at
     // least the OpenSSL backend can trigger)".
     //
     //     https://curl.haxx.se/libcurl/c/threadsafe.html
     //
     InitializeSigPipeHandler(options.get<EnableCurlSigpipeHandlerOption>());
     return true;
-  }();
+  }(CurlInitializeOptions(options));
   static_cast<void>(kInitialized);
 }
 

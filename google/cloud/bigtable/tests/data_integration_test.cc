@@ -27,15 +27,21 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::chrono_literals::operator"" _ms;
+using ::google::cloud::bigtable::testing::TableIntegrationTest;
+using ::google::cloud::testing_util::chrono_literals::operator"" _ms;  // NOLINT
 using ::std::chrono::duration_cast;
 using ::std::chrono::microseconds;
 using ::std::chrono::milliseconds;
 using ::testing::Contains;
 using ::testing::HasSubstr;
 
-using DataIntegrationTest =
-    ::google::cloud::bigtable::testing::TableIntegrationTest;
+class DataIntegrationTest : public TableIntegrationTest,
+                            public ::testing::WithParamInterface<std::string> {
+};
+
+INSTANTIATE_TEST_SUITE_P(, DataIntegrationTest,
+                         ::testing::Values("with-data-connection",
+                                           "with-data-client"));
 
 /// Use Table::Apply() to insert a single row.
 void Apply(Table& table, std::string const& row_key,
@@ -76,8 +82,8 @@ std::string const kFamily2 = "family2";
 std::string const kFamily3 = "family3";
 std::string const kFamily4 = "family4";
 
-TEST_F(DataIntegrationTest, TableApply) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableApply) {
+  auto table = GetTable(GetParam());
 
   std::string const row_key = "row-key-1";
   std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
@@ -90,8 +96,8 @@ TEST_F(DataIntegrationTest, TableApply) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTest, TableBulkApply) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableBulkApply) {
+  auto table = GetTable(GetParam());
 
   std::vector<Cell> created{{"row-key-1", kFamily4, "c0", 1000, "v1000"},
                             {"row-key-1", kFamily4, "c1", 2000, "v2000"},
@@ -115,9 +121,9 @@ TEST_F(DataIntegrationTest, TableBulkApply) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTest, TableSingleRow) {
+TEST_P(DataIntegrationTest, TableSingleRow) {
   std::string const row_key = "row-key-1";
-  auto table = GetTable();
+  auto table = GetTable(GetParam());
 
   auto mutation =
       SingleRowMutation(row_key, SetCell(kFamily4, "c1", 1_ms, "V1000"),
@@ -132,8 +138,8 @@ TEST_F(DataIntegrationTest, TableSingleRow) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTest, TableReadRowTest) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadRowTest) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
 
@@ -149,8 +155,8 @@ TEST_F(DataIntegrationTest, TableReadRowTest) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadRowNotExistTest) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
 
@@ -162,8 +168,8 @@ TEST_F(DataIntegrationTest, TableReadRowNotExistTest) {
   EXPECT_FALSE(row_cell->first);
 }
 
-TEST_F(DataIntegrationTest, TableReadRowsAllRows) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadRowsAllRows) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const row_key3(1024, '3');    // a long key
@@ -194,8 +200,8 @@ TEST_F(DataIntegrationTest, TableReadRowsAllRows) {
   CheckEqualUnordered(created, MoveCellsFromReader(read4));
 }
 
-TEST_F(DataIntegrationTest, TableReadRowsPartialRows) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadRowsPartialRows) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const row_key3 = "row-key-3";
@@ -236,8 +242,8 @@ TEST_F(DataIntegrationTest, TableReadRowsPartialRows) {
   }
 }
 
-TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadRowsNoRows) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const row_key3 = "row-key-3";
@@ -262,23 +268,22 @@ TEST_F(DataIntegrationTest, TableReadRowsNoRows) {
   CheckEqualUnordered(expected, MoveCellsFromReader(read3));
 }
 
-TEST_F(DataIntegrationTest, TableReadRowsWrongTable) {
-  std::string const table_id = RandomTableId();
+TEST_P(DataIntegrationTest, TableReadRowsWrongTable) {
+  auto table = GetTable(GetParam());
+  auto other_table = table.WithNewTarget(table.project_id(),
+                                         table.instance_id(), RandomTableId());
 
-  Table table(data_client_, table_id);
-
-  auto read1 = table.ReadRows(RowSet(RowRange::InfiniteRange()),
-                              Filter::PassAllFilter());
+  auto read1 = other_table.ReadRows(RowSet(RowRange::InfiniteRange()),
+                                    Filter::PassAllFilter());
 
   auto it = read1.begin();
   ASSERT_NE(read1.end(), it);
-  EXPECT_FALSE(*it);
-  ++it;
+  EXPECT_FALSE(*it++);
   EXPECT_EQ(read1.end(), it);
 }
 
-TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableCheckAndMutateRowPass) {
+  auto table = GetTable(GetParam());
   std::string const key = "row-key";
 
   std::vector<Cell> created{{key, kFamily4, "c1", 0, "v1000"}};
@@ -295,8 +300,8 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowPass) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTest, TableCheckAndMutateRowFail) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableCheckAndMutateRowFail) {
+  auto table = GetTable(GetParam());
   std::string const key = "row-key";
 
   std::vector<Cell> created{{key, kFamily4, "c1", 0, "v1000"}};
@@ -313,8 +318,8 @@ TEST_F(DataIntegrationTest, TableCheckAndMutateRowFail) {
   CheckEqualUnordered(expected, actual);
 }
 
-TEST_F(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
+  auto table = GetTable(GetParam());
   std::string const row_key1 = "row-key-1";
   std::string const row_key2 = "row-key-2";
   std::string const add_suffix1 = "-suffix";
@@ -349,8 +354,8 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteAppendValueTest) {
                       actual_cells_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTest, TableReadModifyWriteRowIncrementAmountTest) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadModifyWriteRowIncrementAmountTest) {
+  auto table = GetTable(GetParam());
   std::string const key = "row-key";
 
   // An initial; big-endian int64 number with value 0.
@@ -376,8 +381,8 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteRowIncrementAmountTest) {
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
+  auto table = GetTable(GetParam());
   std::string const key = "row-key";
 
   std::string v1("\x00\x00\x00\x00\x00\x00\x00\x00", 8);
@@ -420,8 +425,8 @@ TEST_F(DataIntegrationTest, TableReadModifyWriteRowMultipleTest) {
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTest, TableCellValueInt64Test) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableCellValueInt64Test) {
+  auto table = GetTable(GetParam());
   std::string const key = "row-key";
 
   std::vector<Cell> created{{key, kFamily1, "c1", 0, 42},
@@ -455,8 +460,8 @@ TEST_F(DataIntegrationTest, TableCellValueInt64Test) {
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
-  auto table = GetTable();
+TEST_P(DataIntegrationTest, TableReadMultipleCellsBigValue) {
+  auto table = GetTable(GetParam());
 
   std::string const row_key = "row-key-1";
   // cell vector contains 4 cells of 32 MiB each, or 128 MiB (without
@@ -507,7 +512,7 @@ TEST_F(DataIntegrationTest, TableReadMultipleCellsBigValue) {
   CheckEqualUnordered(expected_ignore_timestamp, actual_ignore_timestamp);
 }
 
-TEST_F(DataIntegrationTest, TableApplyWithLogging) {
+TEST_P(DataIntegrationTest, TableApplyWithLogging) {
   // In our ci builds, we set GOOGLE_CLOUD_CPP_ENABLE_TRACING to log our tests,
   // by default. We should unset this variable and create a fresh client in
   // order to have a conclusive test.
@@ -516,29 +521,36 @@ TEST_F(DataIntegrationTest, TableApplyWithLogging) {
   testing_util::ScopedLog log;
   auto const table_id = testing::TableTestEnvironment::table_id();
 
-  std::shared_ptr<bigtable::DataClient> data_client =
-      bigtable::MakeDataClient(project_id(), instance_id(),
-                               Options{}.set<TracingComponentsOption>({"rpc"}));
-
-  Table table(data_client, table_id);
+  // Make a `Table` with an implementation that depends on the test's value
+  // parameter.
+  auto make_table = [&](Options const& options) {
+    if (GetParam() == "with-data-connection") {
+      auto conn = MakeDataConnection(options);
+      return Table(std::move(conn),
+                   TableResource(project_id(), instance_id(), table_id));
+    }
+    auto data_client = MakeDataClient(project_id(), instance_id(), options);
+    return Table(std::move(data_client), table_id);
+  };
 
   std::string const row_key = "row-key-1";
   std::vector<Cell> created{{row_key, kFamily4, "c0", 1000, "v1000"},
                             {row_key, kFamily4, "c1", 2000, "v2000"}};
-  Apply(table, row_key, created);
-  std::vector<Cell> expected{{row_key, kFamily4, "c0", 1000, "v1000"},
-                             {row_key, kFamily4, "c1", 2000, "v2000"}};
 
-  auto actual = ReadRows(table, Filter::PassAllFilter());
-  CheckEqualUnordered(expected, actual);
+  // Verify that a logging client logs.
+  auto logging_table =
+      make_table(Options{}.set<TracingComponentsOption>({"rpc"}));
+  Apply(logging_table, row_key, created);
   EXPECT_THAT(log.ExtractLines(), Contains(HasSubstr("MutateRow")));
 
   // Verify that a normal client does not log.
-  auto no_logging_client =
-      Table(MakeDataClient(project_id(), instance_id()), table_id);
-  Apply(no_logging_client, row_key, created);
+  auto no_logging_table = make_table(Options{});
+  Apply(no_logging_table, row_key, created);
   EXPECT_THAT(log.ExtractLines(), Not(Contains(HasSubstr("MutateRow"))));
 }
+
+// TODO(#8800) - remove after deprecation is complete
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 TEST(ConnectionRefresh, Disabled) {
   auto data_client = bigtable::MakeDataClient(
@@ -605,6 +617,9 @@ TEST(ConnectionRefresh, Frequent) {
                             {row_key, kFamily4, "c1", 2000, "v2000"}};
   Apply(table, row_key, created);
 }
+
+// TODO(#8800) - remove after deprecation is complete
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

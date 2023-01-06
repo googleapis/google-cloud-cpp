@@ -23,10 +23,13 @@
 #include "google/cloud/artifactregistry/internal/artifact_registry_retry_traits.h"
 #include "google/cloud/artifactregistry/internal/artifact_registry_stub.h"
 #include "google/cloud/backoff_policy.h"
+#include "google/cloud/future.h"
 #include "google/cloud/options.h"
+#include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
+#include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
 
 namespace google {
@@ -46,6 +49,18 @@ using ArtifactRegistryLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         artifactregistry_internal::ArtifactRegistryRetryTraits>;
 
+/**
+ * The `ArtifactRegistryConnection` object for `ArtifactRegistryClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ArtifactRegistryClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ArtifactRegistryClient`.
+ *
+ * To create a concrete instance, see `MakeArtifactRegistryConnection()`.
+ *
+ * For mocking, see `artifactregistry_mocks::MockArtifactRegistryConnection`.
+ */
 class ArtifactRegistryConnection {
  public:
   virtual ~ArtifactRegistryConnection() = 0;
@@ -56,6 +71,23 @@ class ArtifactRegistryConnection {
   ListDockerImages(
       google::devtools::artifactregistry::v1::ListDockerImagesRequest request);
 
+  virtual StatusOr<google::devtools::artifactregistry::v1::DockerImage>
+  GetDockerImage(
+      google::devtools::artifactregistry::v1::GetDockerImageRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportAptArtifactsResponse>>
+  ImportAptArtifacts(
+      google::devtools::artifactregistry::v1::ImportAptArtifactsRequest const&
+          request);
+
+  virtual future<StatusOr<
+      google::devtools::artifactregistry::v1::ImportYumArtifactsResponse>>
+  ImportYumArtifacts(
+      google::devtools::artifactregistry::v1::ImportYumArtifactsRequest const&
+          request);
+
   virtual StreamRange<google::devtools::artifactregistry::v1::Repository>
   ListRepositories(
       google::devtools::artifactregistry::v1::ListRepositoriesRequest request);
@@ -64,27 +96,116 @@ class ArtifactRegistryConnection {
   GetRepository(
       google::devtools::artifactregistry::v1::GetRepositoryRequest const&
           request);
+
+  virtual future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
+  CreateRepository(
+      google::devtools::artifactregistry::v1::CreateRepositoryRequest const&
+          request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Repository>
+  UpdateRepository(
+      google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
+          request);
+
+  virtual future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteRepository(
+      google::devtools::artifactregistry::v1::DeleteRepositoryRequest const&
+          request);
+
+  virtual StreamRange<google::devtools::artifactregistry::v1::Package>
+  ListPackages(
+      google::devtools::artifactregistry::v1::ListPackagesRequest request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Package> GetPackage(
+      google::devtools::artifactregistry::v1::GetPackageRequest const& request);
+
+  virtual future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeletePackage(
+      google::devtools::artifactregistry::v1::DeletePackageRequest const&
+          request);
+
+  virtual StreamRange<google::devtools::artifactregistry::v1::Version>
+  ListVersions(
+      google::devtools::artifactregistry::v1::ListVersionsRequest request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Version> GetVersion(
+      google::devtools::artifactregistry::v1::GetVersionRequest const& request);
+
+  virtual future<
+      StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
+  DeleteVersion(
+      google::devtools::artifactregistry::v1::DeleteVersionRequest const&
+          request);
+
+  virtual StreamRange<google::devtools::artifactregistry::v1::File> ListFiles(
+      google::devtools::artifactregistry::v1::ListFilesRequest request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::File> GetFile(
+      google::devtools::artifactregistry::v1::GetFileRequest const& request);
+
+  virtual StreamRange<google::devtools::artifactregistry::v1::Tag> ListTags(
+      google::devtools::artifactregistry::v1::ListTagsRequest request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Tag> GetTag(
+      google::devtools::artifactregistry::v1::GetTagRequest const& request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Tag> CreateTag(
+      google::devtools::artifactregistry::v1::CreateTagRequest const& request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::Tag> UpdateTag(
+      google::devtools::artifactregistry::v1::UpdateTagRequest const& request);
+
+  virtual Status DeleteTag(
+      google::devtools::artifactregistry::v1::DeleteTagRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
+  GetProjectSettings(
+      google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
+          request);
+
+  virtual StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
+  UpdateProjectSettings(google::devtools::artifactregistry::v1::
+                            UpdateProjectSettingsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `ArtifactRegistryConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of ArtifactRegistryClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `ArtifactRegistryConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::artifactregistry::ArtifactRegistryPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `ArtifactRegistryConnection` created
+ * by this function.
+ */
 std::shared_ptr<ArtifactRegistryConnection> MakeArtifactRegistryConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace artifactregistry
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace artifactregistry_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<artifactregistry::ArtifactRegistryConnection>
-MakeArtifactRegistryConnection(std::shared_ptr<ArtifactRegistryStub> stub,
-                               Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace artifactregistry_internal
 }  // namespace cloud
 }  // namespace google
 

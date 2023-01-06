@@ -29,8 +29,9 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+namespace gsad = ::google::spanner::admin::database;
+
 using ::google::cloud::testing_util::ValidateMetadataFixture;
-namespace gcsa = ::google::spanner::admin::database::v1;
 
 class DatabaseAdminMetadataTest : public ::testing::Test {
  protected:
@@ -41,10 +42,10 @@ class DatabaseAdminMetadataTest : public ::testing::Test {
 
   void TearDown() override {}
 
-  Status IsContextMDValid(grpc::ClientContext& context,
-                          std::string const& method) {
+  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
+                        google::protobuf::Message const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
-        context, method, google::cloud::internal::ApiClientHeader());
+        context, method, request, google::cloud::internal::ApiClientHeader());
   }
 
   static Status TransientError() {
@@ -59,18 +60,18 @@ TEST_F(DatabaseAdminMetadataTest, CreateDatabase) {
   EXPECT_CALL(*mock_, AsyncCreateDatabase)
       .WillOnce([this](CompletionQueue&,
                        std::unique_ptr<grpc::ClientContext> context,
-                       gcsa::CreateDatabaseRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(*context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "CreateDatabase"));
+                       gsad::v1::CreateDatabaseRequest const& request) {
+        IsContextMDValid(*context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "CreateDatabase",
+                         request);
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
-  gcsa::CreateDatabaseRequest request;
+  gsad::v1::CreateDatabaseRequest request;
   request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
@@ -84,18 +85,18 @@ TEST_F(DatabaseAdminMetadataTest, UpdateDatabase) {
   EXPECT_CALL(*mock_, AsyncUpdateDatabaseDdl)
       .WillOnce([this](CompletionQueue&,
                        std::unique_ptr<grpc::ClientContext> context,
-                       gcsa::UpdateDatabaseDdlRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(*context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "UpdateDatabaseDdl"));
+                       gsad::v1::UpdateDatabaseDdlRequest const& request) {
+        IsContextMDValid(*context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "UpdateDatabaseDdl",
+                         request);
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
-  gcsa::UpdateDatabaseDdlRequest request;
+  gsad::v1::UpdateDatabaseDdlRequest request;
   request.set_database(
       google::cloud::spanner::Database(
           google::cloud::spanner::Instance(
@@ -110,17 +111,17 @@ TEST_F(DatabaseAdminMetadataTest, UpdateDatabase) {
 TEST_F(DatabaseAdminMetadataTest, DropDatabase) {
   EXPECT_CALL(*mock_, DropDatabase)
       .WillOnce([this](grpc::ClientContext& context,
-                       gcsa::DropDatabaseRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "DropDatabase"));
+                       gsad::v1::DropDatabaseRequest const& request) {
+        IsContextMDValid(context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "DropDatabase",
+                         request);
         return TransientError();
       });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::DropDatabaseRequest request;
+  gsad::v1::DropDatabaseRequest request;
   request.set_database(
       google::cloud::spanner::Database(
           google::cloud::spanner::Instance(
@@ -134,17 +135,17 @@ TEST_F(DatabaseAdminMetadataTest, DropDatabase) {
 TEST_F(DatabaseAdminMetadataTest, ListDatabases) {
   EXPECT_CALL(*mock_, ListDatabases)
       .WillOnce([this](grpc::ClientContext& context,
-                       gcsa::ListDatabasesRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "ListDatabases"));
+                       gsad::v1::ListDatabasesRequest const& request) {
+        IsContextMDValid(context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "ListDatabases",
+                         request);
         return TransientError();
       });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::ListDatabasesRequest request;
+  gsad::v1::ListDatabasesRequest request;
   request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
@@ -157,18 +158,18 @@ TEST_F(DatabaseAdminMetadataTest, RestoreDatabase) {
   EXPECT_CALL(*mock_, AsyncRestoreDatabase)
       .WillOnce([this](CompletionQueue&,
                        std::unique_ptr<grpc::ClientContext> context,
-                       gcsa::RestoreDatabaseRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(*context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "RestoreDatabase"));
+                       gsad::v1::RestoreDatabaseRequest const& request) {
+        IsContextMDValid(*context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "RestoreDatabase",
+                         request);
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
-  gcsa::RestoreDatabaseRequest request;
+  gsad::v1::RestoreDatabaseRequest request;
   request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
@@ -181,11 +182,11 @@ TEST_F(DatabaseAdminMetadataTest, RestoreDatabase) {
 TEST_F(DatabaseAdminMetadataTest, GetIamPolicy) {
   EXPECT_CALL(*mock_, GetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
-                       google::iam::v1::GetIamPolicyRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "GetIamPolicy"));
+                       google::iam::v1::GetIamPolicyRequest const& request) {
+        IsContextMDValid(context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "GetIamPolicy",
+                         request);
         return TransientError();
       });
 
@@ -205,11 +206,11 @@ TEST_F(DatabaseAdminMetadataTest, GetIamPolicy) {
 TEST_F(DatabaseAdminMetadataTest, SetIamPolicy) {
   EXPECT_CALL(*mock_, SetIamPolicy)
       .WillOnce([this](grpc::ClientContext& context,
-                       google::iam::v1::SetIamPolicyRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "SetIamPolicy"));
+                       google::iam::v1::SetIamPolicyRequest const& request) {
+        IsContextMDValid(context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "SetIamPolicy",
+                         request);
         return TransientError();
       });
 
@@ -234,14 +235,15 @@ TEST_F(DatabaseAdminMetadataTest, SetIamPolicy) {
 
 TEST_F(DatabaseAdminMetadataTest, TestIamPermissions) {
   EXPECT_CALL(*mock_, TestIamPermissions)
-      .WillOnce([this](grpc::ClientContext& context,
-                       google::iam::v1::TestIamPermissionsRequest const&) {
-        EXPECT_STATUS_OK(
+      .WillOnce(
+          [this](grpc::ClientContext& context,
+                 google::iam::v1::TestIamPermissionsRequest const& request) {
             IsContextMDValid(context,
                              "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "TestIamPermissions"));
-        return TransientError();
-      });
+                             "TestIamPermissions",
+                             request);
+            return TransientError();
+          });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
@@ -260,18 +262,18 @@ TEST_F(DatabaseAdminMetadataTest, CreateBackup) {
   EXPECT_CALL(*mock_, AsyncCreateBackup)
       .WillOnce([this](CompletionQueue&,
                        std::unique_ptr<grpc::ClientContext> context,
-                       gcsa::CreateBackupRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(*context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "CreateBackup"));
+                       gsad::v1::CreateBackupRequest const& request) {
+        IsContextMDValid(*context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "CreateBackup",
+                         request);
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
-  gcsa::CreateBackupRequest request;
+  gsad::v1::CreateBackupRequest request;
   request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
@@ -283,18 +285,18 @@ TEST_F(DatabaseAdminMetadataTest, CreateBackup) {
 
 TEST_F(DatabaseAdminMetadataTest, GetBackup) {
   EXPECT_CALL(*mock_, GetBackup)
-      .WillOnce(
-          [this](grpc::ClientContext& context, gcsa::GetBackupRequest const&) {
-            EXPECT_STATUS_OK(IsContextMDValid(
-                context,
-                "google.spanner.admin.database.v1.DatabaseAdmin."
-                "GetBackup"));
-            return TransientError();
-          });
+      .WillOnce([this](grpc::ClientContext& context,
+                       gsad::v1::GetBackupRequest const& request) {
+        IsContextMDValid(context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "GetBackup",
+                         request);
+        return TransientError();
+      });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::GetBackupRequest request;
+  gsad::v1::GetBackupRequest request;
   request.set_name(
       google::cloud::spanner::Backup(
           google::cloud::spanner::Instance(
@@ -308,17 +310,17 @@ TEST_F(DatabaseAdminMetadataTest, GetBackup) {
 TEST_F(DatabaseAdminMetadataTest, DeleteBackup) {
   EXPECT_CALL(*mock_, DeleteBackup)
       .WillOnce([this](grpc::ClientContext& context,
-                       gcsa::DeleteBackupRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "DeleteBackup"));
+                       gsad::v1::DeleteBackupRequest const& request) {
+        IsContextMDValid(context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "DeleteBackup",
+                         request);
         return TransientError();
       });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::DeleteBackupRequest request;
+  gsad::v1::DeleteBackupRequest request;
   request.set_name(
       google::cloud::spanner::Backup(
           google::cloud::spanner::Instance(
@@ -332,17 +334,17 @@ TEST_F(DatabaseAdminMetadataTest, DeleteBackup) {
 TEST_F(DatabaseAdminMetadataTest, ListBackups) {
   EXPECT_CALL(*mock_, ListBackups)
       .WillOnce([this](grpc::ClientContext& context,
-                       gcsa::ListBackupsRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "ListBackups"));
+                       gsad::v1::ListBackupsRequest const& request) {
+        IsContextMDValid(context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "ListBackups",
+                         request);
         return TransientError();
       });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::ListBackupsRequest request;
+  gsad::v1::ListBackupsRequest request;
   request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
@@ -354,17 +356,17 @@ TEST_F(DatabaseAdminMetadataTest, ListBackups) {
 TEST_F(DatabaseAdminMetadataTest, UpdateBackup) {
   EXPECT_CALL(*mock_, UpdateBackup)
       .WillOnce([this](grpc::ClientContext& context,
-                       gcsa::UpdateBackupRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "UpdateBackup"));
+                       gsad::v1::UpdateBackupRequest const& request) {
+        IsContextMDValid(context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "UpdateBackup",
+                         request);
         return TransientError();
       });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::UpdateBackupRequest request;
+  gsad::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(
       google::cloud::spanner::Backup(
           google::cloud::spanner::Instance(
@@ -378,17 +380,17 @@ TEST_F(DatabaseAdminMetadataTest, UpdateBackup) {
 TEST_F(DatabaseAdminMetadataTest, ListBackupOperations) {
   EXPECT_CALL(*mock_, ListBackupOperations)
       .WillOnce([this](grpc::ClientContext& context,
-                       gcsa::ListBackupOperationsRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "ListBackupOperations"));
+                       gsad::v1::ListBackupOperationsRequest const& request) {
+        IsContextMDValid(context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "ListBackupOperations",
+                         request);
         return TransientError();
       });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::ListBackupOperationsRequest request;
+  gsad::v1::ListBackupOperationsRequest request;
   request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
@@ -400,17 +402,17 @@ TEST_F(DatabaseAdminMetadataTest, ListBackupOperations) {
 TEST_F(DatabaseAdminMetadataTest, ListDatabaseOperations) {
   EXPECT_CALL(*mock_, ListDatabaseOperations)
       .WillOnce([this](grpc::ClientContext& context,
-                       gcsa::ListDatabaseOperationsRequest const&) {
-        EXPECT_STATUS_OK(
-            IsContextMDValid(context,
-                             "google.spanner.admin.database.v1.DatabaseAdmin."
-                             "ListDatabaseOperations"));
+                       gsad::v1::ListDatabaseOperationsRequest const& request) {
+        IsContextMDValid(context,
+                         "google.spanner.admin.database.v1.DatabaseAdmin."
+                         "ListDatabaseOperations",
+                         request);
         return TransientError();
       });
 
   DatabaseAdminMetadata stub(mock_);
   grpc::ClientContext context;
-  gcsa::ListDatabaseOperationsRequest request;
+  gsad::v1::ListDatabaseOperationsRequest request;
   request.set_parent(
       google::cloud::spanner::Instance(
           google::cloud::Project("test-project-id"), "test-instance-id")
@@ -421,14 +423,15 @@ TEST_F(DatabaseAdminMetadataTest, ListDatabaseOperations) {
 
 TEST_F(DatabaseAdminMetadataTest, GetOperation) {
   EXPECT_CALL(*mock_, AsyncGetOperation)
-      .WillOnce([this](CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
-                       google::longrunning::GetOperationRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            *context, "google.longrunning.Operations.GetOperation"));
-        return make_ready_future(
-            StatusOr<google::longrunning::Operation>(TransientError()));
-      });
+      .WillOnce(
+          [this](CompletionQueue&, std::unique_ptr<grpc::ClientContext> context,
+                 google::longrunning::GetOperationRequest const& request) {
+            IsContextMDValid(*context,
+                             "google.longrunning.Operations.GetOperation",
+                             request);
+            return make_ready_future(
+                StatusOr<google::longrunning::Operation>(TransientError()));
+          });
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;
@@ -441,13 +444,14 @@ TEST_F(DatabaseAdminMetadataTest, GetOperation) {
 
 TEST_F(DatabaseAdminMetadataTest, CancelOperation) {
   EXPECT_CALL(*mock_, AsyncCancelOperation)
-      .WillOnce([this](CompletionQueue&,
-                       std::unique_ptr<grpc::ClientContext> context,
-                       google::longrunning::CancelOperationRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
-            *context, "google.longrunning.Operations.CancelOperation"));
-        return make_ready_future(TransientError());
-      });
+      .WillOnce(
+          [this](CompletionQueue&, std::unique_ptr<grpc::ClientContext> context,
+                 google::longrunning::CancelOperationRequest const& request) {
+            IsContextMDValid(*context,
+                             "google.longrunning.Operations.CancelOperation",
+                             request);
+            return make_ready_future(TransientError());
+          });
 
   DatabaseAdminMetadata stub(mock_);
   CompletionQueue cq;

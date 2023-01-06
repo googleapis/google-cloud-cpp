@@ -27,6 +27,21 @@ namespace cloud {
 namespace spanner_admin_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `DatabaseAdminConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `DatabaseAdminClient`. To do so,
+ * construct an object of type `DatabaseAdminClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockDatabaseAdminConnection
     : public spanner_admin::DatabaseAdminConnection {
  public:
@@ -90,6 +105,12 @@ class MockDatabaseAdminConnection
               (override));
 
   MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::database::v1::Backup>>,
+      CopyBackup,
+      (google::spanner::admin::database::v1::CopyBackupRequest const& request),
+      (override));
+
+  MOCK_METHOD(
       StatusOr<google::spanner::admin::database::v1::Backup>, GetBackup,
       (google::spanner::admin::database::v1::GetBackupRequest const& request),
       (override));
@@ -127,6 +148,12 @@ class MockDatabaseAdminConnection
               (google::spanner::admin::database::v1::ListBackupOperationsRequest
                    request),
               (override));
+
+  MOCK_METHOD(
+      StreamRange<google::spanner::admin::database::v1::DatabaseRole>,
+      ListDatabaseRoles,
+      (google::spanner::admin::database::v1::ListDatabaseRolesRequest request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

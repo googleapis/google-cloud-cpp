@@ -17,7 +17,6 @@
 // source: google/cloud/resourcemanager/v3/organizations.proto
 
 #include "google/cloud/resourcemanager/organizations_client.h"
-#include "google/cloud/resourcemanager/internal/organizations_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OrganizationsClient::OrganizationsClient(
     std::shared_ptr<OrganizationsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          resourcemanager_internal::OrganizationsDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 OrganizationsClient::~OrganizationsClient() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Organization>

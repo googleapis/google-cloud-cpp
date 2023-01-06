@@ -23,6 +23,7 @@
 #include "google/cloud/policytroubleshooter/internal/iam_checker_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -43,6 +44,7 @@ IamCheckerConnection::TroubleshootIamPolicy(
 std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  IamCheckerPolicyOptionList>(options, __func__);
   options = policytroubleshooter_internal::IamCheckerDefaultOptions(
       std::move(options));
@@ -56,25 +58,5 @@ std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace policytroubleshooter_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<policytroubleshooter::IamCheckerConnection>
-MakeIamCheckerConnection(std::shared_ptr<IamCheckerStub> stub,
-                         Options options) {
-  options = IamCheckerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      policytroubleshooter_internal::IamCheckerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace policytroubleshooter_internal
 }  // namespace cloud
 }  // namespace google

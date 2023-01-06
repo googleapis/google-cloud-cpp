@@ -8,13 +8,15 @@ and automate Google Cloud and HTTP-based API services with serverless workflows.
 
 While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
 
-This library requires a C++11 compiler. It is supported (and tested) on multiple
+This library requires a C++14 compiler. It is supported (and tested) on multiple
 Linux distributions, as well as Windows and macOS. The
 [README][github-readme] on [GitHub][github-link] provides detailed
 instructions to install the necessary dependencies, as well as how to compile
 the client library.
 
-### Setting up your repo
+@tableofcontents{HTML:2}
+
+## Setting up your repo
 
 In order to use the Workflow Executions API C++ client library from your own code,
 you'll need to configure your build system to discover and compile the Cloud
@@ -40,6 +42,18 @@ which should give you a taste of the Workflow Executions API C++ client library 
 
 ## Environment Variables
 
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_EXECUTIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "workflowexecutions.googleapis.com")
+  used by `MakeExecutionsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_WORKFLOWS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "workflows.googleapis.com")
+  used by `MakeWorkflowsConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
+
 - `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
   calls. The library injects an additional Stub decorator that prints each gRPC
   request and response.  Unless you have configured your own logging backend,
@@ -58,7 +72,7 @@ which should give you a taste of the Workflow Executions API C++ client library 
   actually print anything until the application sets a backend or it sets this
   environment variable.
 
-### Error Handling
+## Error Handling
 
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
@@ -77,7 +91,50 @@ It will return the `T` value or throw on error.
 For operations that do not return a value the library simply returns
 `google::cloud::Status`.
 
-### Retry, Backoff, and Idempotency Policies.
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `workflows::ExecutionsClient`:
+
+@snippet executions_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [workflows::ExecutionsClient](@ref workflows::ExecutionsClient-endpoint-snippet)
+ [workflows::WorkflowsClient](@ref workflows::WorkflowsClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+<!-- inject-service-account-snippet-start -->
+@snippet executions_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [workflows::ExecutionsClient](@ref workflows::ExecutionsClient-service-account-snippet)
+ [workflows::WorkflowsClient](@ref workflows::WorkflowsClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+## Retry, Backoff, and Idempotency Policies.
 
 The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
@@ -90,3 +147,30 @@ can override the default policies.
 [github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/workflows/quickstart/README%2Emd
 
 */
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page workflows::ExecutionsClient-endpoint-snippet Override workflows::ExecutionsClient Endpoint Configuration
+
+@snippet google/cloud/workflows/samples/executions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page workflows::ExecutionsClient-service-account-snippet Override workflows::ExecutionsClient Authentication Defaults
+
+@snippet google/cloud/workflows/samples/executions_client_samples.cc with-service-account
+
+*/
+
+/*! @page workflows::WorkflowsClient-endpoint-snippet Override workflows::WorkflowsClient Endpoint Configuration
+
+@snippet google/cloud/workflows/samples/workflows_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page workflows::WorkflowsClient-service-account-snippet Override workflows::WorkflowsClient Authentication Defaults
+
+@snippet google/cloud/workflows/samples/workflows_client_samples.cc with-service-account
+
+*/
+// <!-- inject-endpoint-pages-end -->

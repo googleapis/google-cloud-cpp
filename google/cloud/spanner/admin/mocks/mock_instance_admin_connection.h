@@ -27,6 +27,21 @@ namespace cloud {
 namespace spanner_admin_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `InstanceAdminConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `InstanceAdminClient`. To do so,
+ * construct an object of type `InstanceAdminClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockInstanceAdminConnection
     : public spanner_admin::InstanceAdminConnection {
  public:
@@ -42,6 +57,32 @@ class MockInstanceAdminConnection
       StatusOr<google::spanner::admin::instance::v1::InstanceConfig>,
       GetInstanceConfig,
       (google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
+      CreateInstanceConfig,
+      (google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>,
+      UpdateInstanceConfig,
+      (google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteInstanceConfig,
+      (google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::longrunning::Operation>, ListInstanceConfigOperations,
+      (google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
            request),
       (override));
 

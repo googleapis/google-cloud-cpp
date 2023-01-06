@@ -15,6 +15,9 @@
 #include "google/cloud/pubsub/publisher_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/scoped_log.h"
+// This file contains the tests for deprecated functions, we need to disable
+// the warnings
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 #include <gmock/gmock.h>
 
 namespace google {

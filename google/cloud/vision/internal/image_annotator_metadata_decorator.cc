@@ -38,7 +38,7 @@ StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorMetadata::BatchAnnotateImages(
     grpc::ClientContext& context,
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->BatchAnnotateImages(context, request);
 }
 
@@ -46,7 +46,7 @@ StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 ImageAnnotatorMetadata::BatchAnnotateFiles(
     grpc::ClientContext& context,
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->BatchAnnotateFiles(context, request);
 }
 
@@ -55,7 +55,7 @@ ImageAnnotatorMetadata::AsyncAsyncBatchAnnotateImages(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncAsyncBatchAnnotateImages(cq, std::move(context), request);
 }
 
@@ -64,7 +64,7 @@ ImageAnnotatorMetadata::AsyncAsyncBatchAnnotateFiles(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncAsyncBatchAnnotateFiles(cq, std::move(context), request);
 }
 
@@ -98,9 +98,8 @@ void ImageAnnotatorMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

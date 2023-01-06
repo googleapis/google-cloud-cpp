@@ -32,26 +32,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class UserEventServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~UserEventServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~UserEventServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency WriteUserEvent(
-      google::cloud::retail::v2::WriteUserEventRequest const& request) = 0;
+      google::cloud::retail::v2::WriteUserEventRequest const& request);
 
   virtual google::cloud::Idempotency CollectUserEvent(
-      google::cloud::retail::v2::CollectUserEventRequest const& request) = 0;
+      google::cloud::retail::v2::CollectUserEventRequest const& request);
 
   virtual google::cloud::Idempotency PurgeUserEvents(
-      google::cloud::retail::v2::PurgeUserEventsRequest const& request) = 0;
+      google::cloud::retail::v2::PurgeUserEventsRequest const& request);
 
   virtual google::cloud::Idempotency ImportUserEvents(
-      google::cloud::retail::v2::ImportUserEventsRequest const& request) = 0;
+      google::cloud::retail::v2::ImportUserEventsRequest const& request);
 
   virtual google::cloud::Idempotency RejoinUserEvents(
-      google::cloud::retail::v2::RejoinUserEventsRequest const& request) = 0;
+      google::cloud::retail::v2::RejoinUserEventsRequest const& request);
 };
 
 std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy>

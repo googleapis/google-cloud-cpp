@@ -7,7 +7,7 @@ Storage APIs.  These snippets are referenced from the Doxygen documentation.
 
 These examples are compiled as part of the build for the Google Cloud C++
 Libraries.  The instructions on how to compile the code are in the
-[top-level README](../../../../README.md) file.
+[top-level README](/README.md) file.
 
 ## Running the Samples
 

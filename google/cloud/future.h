@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_H
 
+#include "google/cloud/internal/future_coroutines.h"
 #include "google/cloud/internal/future_then_impl.h"
 
 #endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_FUTURE_H

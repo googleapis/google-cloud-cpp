@@ -18,12 +18,14 @@
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/testing/random_names.h"
 #include "google/cloud/internal/random.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include "google/cloud/testing_util/timer.h"
 #include <chrono>
 #include <cstdint>
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -33,7 +35,6 @@ namespace storage_benchmarks {
 
 using ::google::cloud::storage::testing::MakeRandomData;
 using ::google::cloud::storage::testing::MakeRandomFileName;
-using ::google::cloud::storage::testing::MakeRandomObjectName;
 using ::google::cloud::testing_util::kGB;
 using ::google::cloud::testing_util::kGiB;
 using ::google::cloud::testing_util::kKB;
@@ -58,19 +59,49 @@ void DeleteAllObjects(google::cloud::storage::Client client,
 // protocol, but it is easier to represent it as such in the benchmark.
 enum class ApiName {
   kApiJson,
-  kApiXml,
   kApiGrpc,
-  kApiRawJson,
-  kApiRawXml,
-  kApiRawGrpc,
 };
 char const* ToString(ApiName api);
 
 StatusOr<ApiName> ParseApiName(std::string const& val);
 
+// We want to compare the following alternatives.
+//
+// - Raw (no C++ client library) JSON Download
+// - Raw gRPC Download
+// - Raw gRPC+DirectPath Download
+// - JSON Download
+// - gRPC Download
+// - gRPC+DirectPath Download
+// - JSON Upload
+// - gRPC Upload
+// - gRPC+DirectPath Upload
+//
+// We will model this with 3 dimensions for each experiment:
+// - Direction: Upload vs. Download
+// - Library: Raw vs. Client library
+// - Transport: JSON vs. gRPC vs. gRPC+DirectPath
+//
+// Some combinations are simply not implemented and ignored when building the
+// set of experiments.
+enum class ExperimentLibrary { kRaw, kCppClient };
+enum class ExperimentTransport {
+  kDirectPath,
+  kGrpc,
+  kJson,
+  kJsonV2,
+};
+
+StatusOr<ExperimentLibrary> ParseExperimentLibrary(std::string const& val);
+StatusOr<ExperimentTransport> ParseExperimentTransport(std::string const& val);
+
+std::string ToString(ExperimentLibrary v);
+std::string ToString(ExperimentTransport v);
+
 std::string RandomBucketPrefix();
 
 std::string MakeRandomBucketName(google::cloud::internal::DefaultPRNG& gen);
+std::string MakeRandomObjectName(google::cloud::internal::DefaultPRNG& gen);
 
 template <typename Rep, typename Period>
 std::string FormatBandwidthGbPerSecond(
@@ -85,6 +116,25 @@ std::string FormatBandwidthGbPerSecond(
   os << std::fixed << std::setprecision(2) << bandwidth;
   return std::move(os).str();
 }
+
+// Print any well-known options.
+void PrintOptions(std::ostream& os, std::string const& prefix,
+                  Options const& options);
+
+// Format a timestamp
+std::string FormatTimestamp(std::chrono::system_clock::time_point tp);
+
+// The current time, formatted
+inline std::string CurrentTime() {
+  return FormatTimestamp(std::chrono::system_clock::now());
+}
+
+absl::optional<std::string> GetLabel(std::string const& labels,
+                                     std::string const& prefix);
+absl::optional<std::string> Zone(std::string const& labels);
+absl::optional<std::string> Job(std::string const& labels);
+absl::optional<std::string> Task(std::string const& labels);
+std::string AddDefaultLabels(std::string const& labels);
 
 }  // namespace storage_benchmarks
 }  // namespace cloud

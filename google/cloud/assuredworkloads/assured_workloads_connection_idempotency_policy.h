@@ -32,30 +32,43 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AssuredWorkloadsServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~AssuredWorkloadsServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~AssuredWorkloadsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency CreateWorkload(
       google::cloud::assuredworkloads::v1::CreateWorkloadRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateWorkload(
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
-          request) = 0;
+          request);
+
+  virtual google::cloud::Idempotency RestrictAllowedResources(
+      google::cloud::assuredworkloads::v1::
+          RestrictAllowedResourcesRequest const& request);
 
   virtual google::cloud::Idempotency DeleteWorkload(
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetWorkload(
-      google::cloud::assuredworkloads::v1::GetWorkloadRequest const&
-          request) = 0;
+      google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request);
 
   virtual google::cloud::Idempotency ListWorkloads(
-      google::cloud::assuredworkloads::v1::ListWorkloadsRequest request) = 0;
+      google::cloud::assuredworkloads::v1::ListWorkloadsRequest request);
+
+  virtual google::cloud::Idempotency ListViolations(
+      google::cloud::assuredworkloads::v1::ListViolationsRequest request);
+
+  virtual google::cloud::Idempotency GetViolation(
+      google::cloud::assuredworkloads::v1::GetViolationRequest const& request);
+
+  virtual google::cloud::Idempotency AcknowledgeViolation(
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+          request);
 };
 
 std::unique_ptr<AssuredWorkloadsServiceConnectionIdempotencyPolicy>

@@ -48,6 +48,18 @@ using VersionsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         appengine_internal::VersionsRetryTraits>;
 
+/**
+ * The `VersionsConnection` object for `VersionsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `VersionsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `VersionsClient`.
+ *
+ * To create a concrete instance, see `MakeVersionsConnection()`.
+ *
+ * For mocking, see `appengine_mocks::MockVersionsConnection`.
+ */
 class VersionsConnection {
  public:
   virtual ~VersionsConnection() = 0;
@@ -70,24 +82,32 @@ class VersionsConnection {
   DeleteVersion(google::appengine::v1::DeleteVersionRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `VersionsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of VersionsClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `VersionsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::appengine::VersionsPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `VersionsConnection` created by
+ * this function.
+ */
 std::shared_ptr<VersionsConnection> MakeVersionsConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace appengine_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<appengine::VersionsConnection> MakeVersionsConnection(
-    std::shared_ptr<VersionsStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace appengine_internal
 }  // namespace cloud
 }  // namespace google
 

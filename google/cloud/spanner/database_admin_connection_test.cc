@@ -35,6 +35,8 @@ namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+namespace gsad = ::google::spanner::admin::database;
+
 using ::google::cloud::spanner_testing::MockDatabaseAdminStub;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::google::cloud::testing_util::StatusIs;
@@ -45,7 +47,6 @@ using ::testing::AtMost;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
 using ::testing::Return;
-namespace gcsa = ::google::spanner::admin::database::v1;
 
 std::shared_ptr<DatabaseAdminConnection> CreateTestingConnection(
     std::shared_ptr<spanner_internal::DatabaseAdminStub> mock) {
@@ -71,7 +72,7 @@ TEST(DatabaseAdminConnectionTest, CreateDatabaseSuccess) {
 
   EXPECT_CALL(*mock, AsyncCreateDatabase)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::CreateDatabaseRequest const& request) {
+                   gsad::v1::CreateDatabaseRequest const& request) {
         EXPECT_FALSE(request.has_encryption_config());
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
@@ -86,9 +87,9 @@ TEST(DatabaseAdminConnectionTest, CreateDatabaseSuccess) {
         google::longrunning::Operation op;
         op.set_name(r.name());
         op.set_done(true);
-        gcsa::Database response;
+        gsad::v1::Database response;
         response.set_name(database_name);
-        response.set_state(gcsa::Database::READY);
+        response.set_state(gsad::v1::Database::READY);
         op.mutable_response()->PackFrom(response);
         return make_ready_future(make_status_or(std::move(op)));
       });
@@ -100,7 +101,7 @@ TEST(DatabaseAdminConnectionTest, CreateDatabaseSuccess) {
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), database_name);
-  EXPECT_EQ(response->state(), gcsa::Database::READY);
+  EXPECT_EQ(response->state(), gsad::v1::Database::READY);
   EXPECT_FALSE(response->has_encryption_config());
 }
 
@@ -112,7 +113,7 @@ TEST(DatabaseAdminClientTest, CreateDatabaseWithEncryption) {
 
   EXPECT_CALL(*mock, AsyncCreateDatabase)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::CreateDatabaseRequest const& request) {
+                   gsad::v1::CreateDatabaseRequest const& request) {
         EXPECT_TRUE(request.has_encryption_config());
         if (request.has_encryption_config()) {
           EXPECT_EQ(request.encryption_config().kms_key_name(),
@@ -132,9 +133,9 @@ TEST(DatabaseAdminClientTest, CreateDatabaseWithEncryption) {
         google::longrunning::Operation op;
         op.set_name(r.name());
         op.set_done(true);
-        gcsa::Database response;
+        gsad::v1::Database response;
         response.set_name(database_name);
-        response.set_state(gcsa::Database::READY);
+        response.set_state(gsad::v1::Database::READY);
         response.mutable_encryption_config()->set_kms_key_name(
             "projects/test-project/locations/some-location/keyRings/"
             "a-key-ring/cryptoKeys/some-key-name");
@@ -152,7 +153,7 @@ TEST(DatabaseAdminClientTest, CreateDatabaseWithEncryption) {
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), database_name);
-  EXPECT_EQ(response->state(), gcsa::Database::READY);
+  EXPECT_EQ(response->state(), gsad::v1::Database::READY);
   EXPECT_TRUE(response->has_encryption_config());
   if (response->has_encryption_config()) {
     EXPECT_EQ(
@@ -169,7 +170,7 @@ TEST(DatabaseAdminConnectionTest, HandleCreateDatabaseError) {
 
   EXPECT_CALL(*mock, AsyncCreateDatabase)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::CreateDatabaseRequest const&) {
+                   gsad::v1::CreateDatabaseRequest const&) {
         return make_ready_future(StatusOr<google::longrunning::Operation>(
             Status(StatusCode::kPermissionDenied, "uh-oh")));
       });
@@ -203,17 +204,17 @@ TEST(DatabaseAdminConnectionTest, GetDatabase) {
     earliest_version_time { seconds: 1625696199 nanos: 123456789 }
     default_leader: "us-east5"
   )pb";
-  gcsa::Database expected_response;
+  gsad::v1::Database expected_response;
   ASSERT_TRUE(TextFormat::ParseFromString(kResponseText, &expected_response));
 
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   EXPECT_CALL(*mock, GetDatabase)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce(
-          [&](grpc::ClientContext&, gcsa::GetDatabaseRequest const& request) {
-            EXPECT_EQ(request.name(), expected_response.name());
-            return expected_response;
-          });
+      .WillOnce([&](grpc::ClientContext&,
+                    gsad::v1::GetDatabaseRequest const& request) {
+        EXPECT_EQ(request.name(), expected_response.name());
+        return expected_response;
+      });
 
   auto conn = CreateTestingConnection(std::move(mock));
   auto response =
@@ -257,13 +258,14 @@ TEST(DatabaseAdminConnectionTest, GetDatabaseDdlSuccess) {
 
   EXPECT_CALL(*mock, GetDatabaseDdl)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
-      .WillOnce([&expected_name](grpc::ClientContext&,
-                                 gcsa::GetDatabaseDdlRequest const& request) {
-        EXPECT_EQ(expected_name, request.database());
-        gcsa::GetDatabaseDdlResponse response;
-        response.add_statements("CREATE DATABASE test-database");
-        return response;
-      });
+      .WillOnce(
+          [&expected_name](grpc::ClientContext&,
+                           gsad::v1::GetDatabaseDdlRequest const& request) {
+            EXPECT_EQ(expected_name, request.database());
+            gsad::v1::GetDatabaseDdlResponse response;
+            response.add_statements("CREATE DATABASE test-database");
+            return response;
+          });
 
   auto conn = CreateTestingConnection(std::move(mock));
   auto response = conn->GetDatabaseDdl(
@@ -306,7 +308,7 @@ TEST(DatabaseAdminConnectionTest, UpdateDatabaseSuccess) {
 
   EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::UpdateDatabaseDdlRequest const&) {
+                   gsad::v1::UpdateDatabaseDdlRequest const&) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
@@ -319,7 +321,7 @@ TEST(DatabaseAdminConnectionTest, UpdateDatabaseSuccess) {
         google::longrunning::Operation op;
         op.set_name(r.name());
         op.set_done(true);
-        gcsa::UpdateDatabaseDdlMetadata metadata;
+        gsad::v1::UpdateDatabaseDdlMetadata metadata;
         metadata.set_database("test-database");
         op.mutable_metadata()->PackFrom(metadata);
         return make_ready_future(make_status_or(std::move(op)));
@@ -341,7 +343,7 @@ TEST(DatabaseAdminConnectionTest, UpdateDatabaseErrorInPoll) {
 
   EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::UpdateDatabaseDdlRequest const&) {
+                   gsad::v1::UpdateDatabaseDdlRequest const&) {
         return make_ready_future(StatusOr<google::longrunning::Operation>(
             Status(StatusCode::kPermissionDenied, "uh-oh")));
       });
@@ -360,7 +362,7 @@ TEST(DatabaseAdminConnectionTest, CreateDatabaseErrorInPoll) {
 
   EXPECT_CALL(*mock, AsyncCreateDatabase)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::CreateDatabaseRequest const&) {
+                   gsad::v1::CreateDatabaseRequest const&) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
@@ -390,7 +392,7 @@ TEST(DatabaseAdminConnectionTest, UpdateDatabaseGetOperationError) {
 
   EXPECT_CALL(*mock, AsyncUpdateDatabaseDdl)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::UpdateDatabaseDdlRequest const&) {
+                   gsad::v1::UpdateDatabaseDdlRequest const&) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
@@ -521,7 +523,7 @@ TEST(DatabaseAdminConnectionTest, ListDatabases) {
         default_leader: "us-east5"
       )pb",
   };
-  gcsa::Database expected_databases[5];
+  gsad::v1::Database expected_databases[5];
   ASSERT_TRUE(
       TextFormat::ParseFromString(kDatabaseText[0], &expected_databases[0]));
   ASSERT_TRUE(
@@ -537,41 +539,41 @@ TEST(DatabaseAdminConnectionTest, ListDatabases) {
   std::string const expected_parent = in.FullName();
   auto mock = std::make_shared<MockDatabaseAdminStub>();
   EXPECT_CALL(*mock, ListDatabases)
-      .WillOnce(
-          [&](grpc::ClientContext&, gcsa::ListDatabasesRequest const& request) {
-            EXPECT_EQ(expected_parent, request.parent());
-            EXPECT_TRUE(request.page_token().empty());
+      .WillOnce([&](grpc::ClientContext&,
+                    gsad::v1::ListDatabasesRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_TRUE(request.page_token().empty());
 
-            gcsa::ListDatabasesResponse page;
-            page.set_next_page_token("page-1");
-            *page.add_databases() = expected_databases[0];
-            *page.add_databases() = expected_databases[1];
-            return make_status_or(page);
-          })
-      .WillOnce(
-          [&](grpc::ClientContext&, gcsa::ListDatabasesRequest const& request) {
-            EXPECT_EQ(expected_parent, request.parent());
-            EXPECT_EQ("page-1", request.page_token());
+        gsad::v1::ListDatabasesResponse page;
+        page.set_next_page_token("page-1");
+        *page.add_databases() = expected_databases[0];
+        *page.add_databases() = expected_databases[1];
+        return make_status_or(page);
+      })
+      .WillOnce([&](grpc::ClientContext&,
+                    gsad::v1::ListDatabasesRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_EQ("page-1", request.page_token());
 
-            gcsa::ListDatabasesResponse page;
-            page.set_next_page_token("page-2");
-            *page.add_databases() = expected_databases[2];
-            *page.add_databases() = expected_databases[3];
-            return make_status_or(page);
-          })
-      .WillOnce(
-          [&](grpc::ClientContext&, gcsa::ListDatabasesRequest const& request) {
-            EXPECT_EQ(expected_parent, request.parent());
-            EXPECT_EQ("page-2", request.page_token());
+        gsad::v1::ListDatabasesResponse page;
+        page.set_next_page_token("page-2");
+        *page.add_databases() = expected_databases[2];
+        *page.add_databases() = expected_databases[3];
+        return make_status_or(page);
+      })
+      .WillOnce([&](grpc::ClientContext&,
+                    gsad::v1::ListDatabasesRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_EQ("page-2", request.page_token());
 
-            gcsa::ListDatabasesResponse page;
-            page.clear_next_page_token();
-            *page.add_databases() = expected_databases[4];
-            return make_status_or(page);
-          });
+        gsad::v1::ListDatabasesResponse page;
+        page.clear_next_page_token();
+        *page.add_databases() = expected_databases[4];
+        return make_status_or(page);
+      });
 
   auto conn = CreateTestingConnection(std::move(mock));
-  std::vector<gcsa::Database> actual_databases;
+  std::vector<gsad::v1::Database> actual_databases;
   for (auto const& database : conn->ListDatabases({in})) {
     ASSERT_STATUS_OK(database);
     actual_databases.push_back(*database);
@@ -621,7 +623,7 @@ TEST(DatabaseAdminConnectionTest, RestoreDatabaseSuccess) {
 
   EXPECT_CALL(*mock, AsyncRestoreDatabase)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::RestoreDatabaseRequest const& request) {
+                   gsad::v1::RestoreDatabaseRequest const& request) {
         EXPECT_EQ(request.database_id(), "test-database");
         EXPECT_FALSE(request.has_encryption_config());
         google::longrunning::Operation op;
@@ -637,9 +639,9 @@ TEST(DatabaseAdminConnectionTest, RestoreDatabaseSuccess) {
         google::longrunning::Operation op;
         op.set_name(r.name());
         op.set_done(true);
-        gcsa::Database response;
+        gsad::v1::Database response;
         response.set_name(database_name);
-        response.set_state(gcsa::Database::READY);
+        response.set_state(gsad::v1::Database::READY);
         op.mutable_response()->PackFrom(response);
         return make_ready_future(make_status_or(std::move(op)));
       });
@@ -652,7 +654,7 @@ TEST(DatabaseAdminConnectionTest, RestoreDatabaseSuccess) {
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), database_name);
-  EXPECT_EQ(response->state(), gcsa::Database::READY);
+  EXPECT_EQ(response->state(), gsad::v1::Database::READY);
   EXPECT_FALSE(response->has_encryption_config());
 }
 
@@ -664,12 +666,12 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseWithEncryption) {
 
   EXPECT_CALL(*mock, AsyncRestoreDatabase)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::RestoreDatabaseRequest const& request) {
+                   gsad::v1::RestoreDatabaseRequest const& request) {
         EXPECT_EQ(request.database_id(), "test-database");
         EXPECT_TRUE(request.has_encryption_config());
         if (request.has_encryption_config()) {
           EXPECT_EQ(request.encryption_config().encryption_type(),
-                    gcsa::RestoreDatabaseEncryptionConfig::
+                    gsad::v1::RestoreDatabaseEncryptionConfig::
                         CUSTOMER_MANAGED_ENCRYPTION);
           EXPECT_EQ(request.encryption_config().kms_key_name(),
                     "projects/test-project/locations/some-location/keyRings/"
@@ -688,9 +690,9 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseWithEncryption) {
         google::longrunning::Operation op;
         op.set_name(r.name());
         op.set_done(true);
-        gcsa::Database response;
+        gsad::v1::Database response;
         response.set_name(database_name);
-        response.set_state(gcsa::Database::READY);
+        response.set_state(gsad::v1::Database::READY);
         response.mutable_encryption_config()->set_kms_key_name(
             "projects/test-project/locations/some-location/keyRings/"
             "a-key-ring/cryptoKeys/restore-key-name");
@@ -710,7 +712,7 @@ TEST(DatabaseAdminClientTest, RestoreDatabaseWithEncryption) {
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), database_name);
-  EXPECT_EQ(response->state(), gcsa::Database::READY);
+  EXPECT_EQ(response->state(), gsad::v1::Database::READY);
   EXPECT_TRUE(response->has_encryption_config());
   if (response->has_encryption_config()) {
     EXPECT_EQ(
@@ -727,7 +729,7 @@ TEST(DatabaseAdminConnectionTest, HandleRestoreDatabaseError) {
 
   EXPECT_CALL(*mock, AsyncRestoreDatabase)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::RestoreDatabaseRequest const&) {
+                   gsad::v1::RestoreDatabaseRequest const&) {
         return make_ready_future(StatusOr<google::longrunning::Operation>(
             Status(StatusCode::kPermissionDenied, "uh-oh")));
       });
@@ -952,7 +954,7 @@ TEST(DatabaseAdminConnectionTest, CreateBackupSuccess) {
   EXPECT_CALL(*mock, AsyncCreateBackup)
       .WillOnce([&dbase, &expire_time, &version_time](
                     CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                    gcsa::CreateBackupRequest const& request) {
+                    gsad::v1::CreateBackupRequest const& request) {
         EXPECT_EQ(request.parent(), dbase.instance().FullName());
         EXPECT_EQ(request.backup_id(), "test-backup");
         auto const& backup = request.backup();
@@ -972,9 +974,9 @@ TEST(DatabaseAdminConnectionTest, CreateBackupSuccess) {
         google::longrunning::Operation op;
         op.set_name(r.name());
         op.set_done(true);
-        gcsa::Backup response;
+        gsad::v1::Backup response;
         response.set_name("test-backup");
-        response.set_state(gcsa::Backup::READY);
+        response.set_state(gsad::v1::Backup::READY);
         *response.mutable_expire_time() =
             expire_time.get<protobuf::Timestamp>().value();
         *response.mutable_version_time() =
@@ -993,7 +995,7 @@ TEST(DatabaseAdminConnectionTest, CreateBackupSuccess) {
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), "test-backup");
-  EXPECT_EQ(response->state(), gcsa::Backup::READY);
+  EXPECT_EQ(response->state(), gsad::v1::Backup::READY);
   EXPECT_EQ(MakeTimestamp(response->expire_time()).value(), expire_time);
   EXPECT_EQ(MakeTimestamp(response->version_time()).value(), version_time);
   EXPECT_GT(MakeTimestamp(response->create_time()).value(), version_time);
@@ -1007,15 +1009,15 @@ TEST(DatabaseAdminClientTest, CreateBackupWithEncryption) {
 
   EXPECT_CALL(*mock, AsyncCreateBackup)
       .WillOnce([&dbase](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                         gcsa::CreateBackupRequest const& request) {
+                         gsad::v1::CreateBackupRequest const& request) {
         EXPECT_EQ(request.parent(), dbase.instance().FullName());
         EXPECT_EQ(request.backup_id(), "test-backup");
         EXPECT_EQ(request.backup().database(), dbase.FullName());
         EXPECT_TRUE(request.has_encryption_config());
         if (request.has_encryption_config()) {
-          EXPECT_EQ(
-              request.encryption_config().encryption_type(),
-              gcsa::CreateBackupEncryptionConfig::GOOGLE_DEFAULT_ENCRYPTION);
+          EXPECT_EQ(request.encryption_config().encryption_type(),
+                    gsad::v1::CreateBackupEncryptionConfig::
+                        GOOGLE_DEFAULT_ENCRYPTION);
           EXPECT_THAT(request.encryption_config().kms_key_name(), IsEmpty());
         }
         google::longrunning::Operation op;
@@ -1030,11 +1032,11 @@ TEST(DatabaseAdminClientTest, CreateBackupWithEncryption) {
         google::longrunning::Operation op;
         op.set_name(r.name());
         op.set_done(true);
-        gcsa::Backup response;
+        gsad::v1::Backup response;
         response.set_name("test-backup");
-        response.set_state(gcsa::Backup::READY);
+        response.set_state(gsad::v1::Backup::READY);
         response.mutable_encryption_info()->set_encryption_type(
-            gcsa::EncryptionInfo::GOOGLE_DEFAULT_ENCRYPTION);
+            gsad::v1::EncryptionInfo::GOOGLE_DEFAULT_ENCRYPTION);
         op.mutable_response()->PackFrom(response);
         return make_ready_future(make_status_or(std::move(op)));
       });
@@ -1045,11 +1047,11 @@ TEST(DatabaseAdminClientTest, CreateBackupWithEncryption) {
   auto response = fut.get();
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), "test-backup");
-  EXPECT_EQ(response->state(), gcsa::Backup::READY);
+  EXPECT_EQ(response->state(), gsad::v1::Backup::READY);
   EXPECT_TRUE(response->has_encryption_info());
   if (response->has_encryption_info()) {
     EXPECT_EQ(response->encryption_info().encryption_type(),
-              gcsa::EncryptionInfo::GOOGLE_DEFAULT_ENCRYPTION);
+              gsad::v1::EncryptionInfo::GOOGLE_DEFAULT_ENCRYPTION);
     EXPECT_THAT(response->encryption_info().kms_key_version(), IsEmpty());
   }
 }
@@ -1061,7 +1063,7 @@ TEST(DatabaseAdminConnectionTest, CreateBackupCancel) {
 
   EXPECT_CALL(*mock, AsyncCreateBackup)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::CreateBackupRequest const&) {
+                   gsad::v1::CreateBackupRequest const&) {
         google::longrunning::Operation op;
         op.set_name("test-operation-name");
         op.set_done(false);
@@ -1112,7 +1114,7 @@ TEST(DatabaseAdminConnectionTest, HandleCreateBackupError) {
 
   EXPECT_CALL(*mock, AsyncCreateBackup)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::CreateBackupRequest const&) {
+                   gsad::v1::CreateBackupRequest const&) {
         return make_ready_future(StatusOr<google::longrunning::Operation>(
             Status(StatusCode::kPermissionDenied, "uh-oh")));
       });
@@ -1134,11 +1136,11 @@ TEST(DatabaseAdminConnectionTest, GetBackupSuccess) {
   EXPECT_CALL(*mock, GetBackup)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&expected_name](grpc::ClientContext&,
-                                 gcsa::GetBackupRequest const& request) {
+                                 gsad::v1::GetBackupRequest const& request) {
         EXPECT_EQ(expected_name, request.name());
-        gcsa::Backup response;
+        gsad::v1::Backup response;
         response.set_name(request.name());
-        response.set_state(gcsa::Backup::READY);
+        response.set_state(gsad::v1::Backup::READY);
         return response;
       });
 
@@ -1147,7 +1149,7 @@ TEST(DatabaseAdminConnectionTest, GetBackupSuccess) {
       {Backup(Instance("test-project", "test-instance"), "test-backup")
            .FullName()});
   ASSERT_STATUS_OK(response);
-  EXPECT_EQ(gcsa::Backup::READY, response->state());
+  EXPECT_EQ(gsad::v1::Backup::READY, response->state());
   EXPECT_EQ(expected_name, response->name());
   EXPECT_FALSE(response->has_encryption_info());
 }
@@ -1161,13 +1163,13 @@ TEST(DatabaseAdminClientTest, GetBackupWithEncryption) {
   EXPECT_CALL(*mock, GetBackup)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&expected_name](grpc::ClientContext&,
-                                 gcsa::GetBackupRequest const& request) {
+                                 gsad::v1::GetBackupRequest const& request) {
         EXPECT_EQ(expected_name, request.name());
-        gcsa::Backup response;
+        gsad::v1::Backup response;
         response.set_name(request.name());
-        response.set_state(gcsa::Backup::READY);
+        response.set_state(gsad::v1::Backup::READY);
         response.mutable_encryption_info()->set_encryption_type(
-            gcsa::EncryptionInfo::CUSTOMER_MANAGED_ENCRYPTION);
+            gsad::v1::EncryptionInfo::CUSTOMER_MANAGED_ENCRYPTION);
         response.mutable_encryption_info()->set_kms_key_version(
             "projects/test-project/locations/some-location/keyRings/a-key-ring/"
             "cryptoKeys/a-key-name/cryptoKeyVersions/1");
@@ -1180,11 +1182,11 @@ TEST(DatabaseAdminClientTest, GetBackupWithEncryption) {
            .FullName()});
   ASSERT_STATUS_OK(response);
   EXPECT_EQ(response->name(), expected_name);
-  EXPECT_EQ(response->state(), gcsa::Backup::READY);
+  EXPECT_EQ(response->state(), gsad::v1::Backup::READY);
   EXPECT_TRUE(response->has_encryption_info());
   if (response->has_encryption_info()) {
     EXPECT_EQ(response->encryption_info().encryption_type(),
-              gcsa::EncryptionInfo::CUSTOMER_MANAGED_ENCRYPTION);
+              gsad::v1::EncryptionInfo::CUSTOMER_MANAGED_ENCRYPTION);
     EXPECT_EQ(
         response->encryption_info().kms_key_version(),
         "projects/test-project/locations/some-location/keyRings/a-key-ring/"
@@ -1230,7 +1232,7 @@ TEST(DatabaseAdminConnectionTest, DeleteBackupSuccess) {
   EXPECT_CALL(*mock, DeleteBackup)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&expected_name](grpc::ClientContext&,
-                                 gcsa::DeleteBackupRequest const& request) {
+                                 gsad::v1::DeleteBackupRequest const& request) {
         EXPECT_EQ(expected_name, request.name());
         return google::cloud::Status();
       });
@@ -1274,38 +1276,41 @@ TEST(DatabaseAdminConnectionTest, ListBackups) {
   std::string const expected_parent = in.FullName();
 
   EXPECT_CALL(*mock, ListBackups)
-      .WillOnce([&expected_parent](grpc::ClientContext&,
-                                   gcsa::ListBackupsRequest const& request) {
-        EXPECT_EQ(expected_parent, request.parent());
-        EXPECT_TRUE(request.page_token().empty());
+      .WillOnce(
+          [&expected_parent](grpc::ClientContext&,
+                             gsad::v1::ListBackupsRequest const& request) {
+            EXPECT_EQ(expected_parent, request.parent());
+            EXPECT_TRUE(request.page_token().empty());
 
-        gcsa::ListBackupsResponse page;
-        page.set_next_page_token("page-1");
-        page.add_backups()->set_name("backup-1");
-        page.add_backups()->set_name("backup-2");
-        return make_status_or(page);
-      })
-      .WillOnce([&expected_parent](grpc::ClientContext&,
-                                   gcsa::ListBackupsRequest const& request) {
-        EXPECT_EQ(expected_parent, request.parent());
-        EXPECT_EQ("page-1", request.page_token());
+            gsad::v1::ListBackupsResponse page;
+            page.set_next_page_token("page-1");
+            page.add_backups()->set_name("backup-1");
+            page.add_backups()->set_name("backup-2");
+            return make_status_or(page);
+          })
+      .WillOnce(
+          [&expected_parent](grpc::ClientContext&,
+                             gsad::v1::ListBackupsRequest const& request) {
+            EXPECT_EQ(expected_parent, request.parent());
+            EXPECT_EQ("page-1", request.page_token());
 
-        gcsa::ListBackupsResponse page;
-        page.set_next_page_token("page-2");
-        page.add_backups()->set_name("backup-3");
-        page.add_backups()->set_name("backup-4");
-        return make_status_or(page);
-      })
-      .WillOnce([&expected_parent](grpc::ClientContext&,
-                                   gcsa::ListBackupsRequest const& request) {
-        EXPECT_EQ(expected_parent, request.parent());
-        EXPECT_EQ("page-2", request.page_token());
+            gsad::v1::ListBackupsResponse page;
+            page.set_next_page_token("page-2");
+            page.add_backups()->set_name("backup-3");
+            page.add_backups()->set_name("backup-4");
+            return make_status_or(page);
+          })
+      .WillOnce(
+          [&expected_parent](grpc::ClientContext&,
+                             gsad::v1::ListBackupsRequest const& request) {
+            EXPECT_EQ(expected_parent, request.parent());
+            EXPECT_EQ("page-2", request.page_token());
 
-        gcsa::ListBackupsResponse page;
-        page.clear_next_page_token();
-        page.add_backups()->set_name("backup-5");
-        return make_status_or(page);
-      });
+            gsad::v1::ListBackupsResponse page;
+            page.clear_next_page_token();
+            page.add_backups()->set_name("backup-5");
+            return make_status_or(page);
+          });
 
   auto conn = CreateTestingConnection(std::move(mock));
   std::vector<std::string> actual_names;
@@ -1355,11 +1360,11 @@ TEST(DatabaseAdminConnectionTest, UpdateBackupSuccess) {
   EXPECT_CALL(*mock, UpdateBackup)
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&expected_name](grpc::ClientContext&,
-                                 gcsa::UpdateBackupRequest const& request) {
+                                 gsad::v1::UpdateBackupRequest const& request) {
         EXPECT_EQ(expected_name, request.backup().name());
-        gcsa::Backup response;
+        gsad::v1::Backup response;
         response.set_name(request.backup().name());
-        response.set_state(gcsa::Backup::READY);
+        response.set_state(gsad::v1::Backup::READY);
         return response;
       });
 
@@ -1370,7 +1375,7 @@ TEST(DatabaseAdminConnectionTest, UpdateBackupSuccess) {
           .FullName());
   auto response = conn->UpdateBackup({request});
   EXPECT_STATUS_OK(response);
-  EXPECT_EQ(gcsa::Backup::READY, response->state());
+  EXPECT_EQ(gsad::v1::Backup::READY, response->state());
   EXPECT_EQ(expected_name, response->name());
 }
 
@@ -1408,41 +1413,41 @@ TEST(DatabaseAdminConnectionTest, ListBackupOperations) {
   std::string const expected_parent = in.FullName();
 
   EXPECT_CALL(*mock, ListBackupOperations)
-      .WillOnce(
-          [&expected_parent](grpc::ClientContext&,
-                             gcsa::ListBackupOperationsRequest const& request) {
-            EXPECT_EQ(expected_parent, request.parent());
-            EXPECT_TRUE(request.page_token().empty());
+      .WillOnce([&expected_parent](
+                    grpc::ClientContext&,
+                    gsad::v1::ListBackupOperationsRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_TRUE(request.page_token().empty());
 
-            gcsa::ListBackupOperationsResponse page;
-            page.set_next_page_token("page-1");
-            page.add_operations()->set_name("op-1");
-            page.add_operations()->set_name("op-2");
-            return make_status_or(page);
-          })
-      .WillOnce(
-          [&expected_parent](grpc::ClientContext&,
-                             gcsa::ListBackupOperationsRequest const& request) {
-            EXPECT_EQ(expected_parent, request.parent());
-            EXPECT_EQ("page-1", request.page_token());
+        gsad::v1::ListBackupOperationsResponse page;
+        page.set_next_page_token("page-1");
+        page.add_operations()->set_name("op-1");
+        page.add_operations()->set_name("op-2");
+        return make_status_or(page);
+      })
+      .WillOnce([&expected_parent](
+                    grpc::ClientContext&,
+                    gsad::v1::ListBackupOperationsRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_EQ("page-1", request.page_token());
 
-            gcsa::ListBackupOperationsResponse page;
-            page.set_next_page_token("page-2");
-            page.add_operations()->set_name("op-3");
-            page.add_operations()->set_name("op-4");
-            return make_status_or(page);
-          })
-      .WillOnce(
-          [&expected_parent](grpc::ClientContext&,
-                             gcsa::ListBackupOperationsRequest const& request) {
-            EXPECT_EQ(expected_parent, request.parent());
-            EXPECT_EQ("page-2", request.page_token());
+        gsad::v1::ListBackupOperationsResponse page;
+        page.set_next_page_token("page-2");
+        page.add_operations()->set_name("op-3");
+        page.add_operations()->set_name("op-4");
+        return make_status_or(page);
+      })
+      .WillOnce([&expected_parent](
+                    grpc::ClientContext&,
+                    gsad::v1::ListBackupOperationsRequest const& request) {
+        EXPECT_EQ(expected_parent, request.parent());
+        EXPECT_EQ("page-2", request.page_token());
 
-            gcsa::ListBackupOperationsResponse page;
-            page.clear_next_page_token();
-            page.add_operations()->set_name("op-5");
-            return make_status_or(page);
-          });
+        gsad::v1::ListBackupOperationsResponse page;
+        page.clear_next_page_token();
+        page.add_operations()->set_name("op-5");
+        return make_status_or(page);
+      });
 
   auto conn = CreateTestingConnection(std::move(mock));
   std::vector<std::string> actual_names;
@@ -1492,11 +1497,11 @@ TEST(DatabaseAdminConnectionTest, ListDatabaseOperations) {
   EXPECT_CALL(*mock, ListDatabaseOperations)
       .WillOnce([&expected_parent](
                     grpc::ClientContext&,
-                    gcsa::ListDatabaseOperationsRequest const& request) {
+                    gsad::v1::ListDatabaseOperationsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_TRUE(request.page_token().empty());
 
-        gcsa::ListDatabaseOperationsResponse page;
+        gsad::v1::ListDatabaseOperationsResponse page;
         page.set_next_page_token("page-1");
         page.add_operations()->set_name("op-1");
         page.add_operations()->set_name("op-2");
@@ -1504,11 +1509,11 @@ TEST(DatabaseAdminConnectionTest, ListDatabaseOperations) {
       })
       .WillOnce([&expected_parent](
                     grpc::ClientContext&,
-                    gcsa::ListDatabaseOperationsRequest const& request) {
+                    gsad::v1::ListDatabaseOperationsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_EQ("page-1", request.page_token());
 
-        gcsa::ListDatabaseOperationsResponse page;
+        gsad::v1::ListDatabaseOperationsResponse page;
         page.set_next_page_token("page-2");
         page.add_operations()->set_name("op-3");
         page.add_operations()->set_name("op-4");
@@ -1516,11 +1521,11 @@ TEST(DatabaseAdminConnectionTest, ListDatabaseOperations) {
       })
       .WillOnce([&expected_parent](
                     grpc::ClientContext&,
-                    gcsa::ListDatabaseOperationsRequest const& request) {
+                    gsad::v1::ListDatabaseOperationsRequest const& request) {
         EXPECT_EQ(expected_parent, request.parent());
         EXPECT_EQ("page-2", request.page_token());
 
-        gcsa::ListDatabaseOperationsResponse page;
+        gsad::v1::ListDatabaseOperationsResponse page;
         page.clear_next_page_token();
         page.add_operations()->set_name("op-5");
         return make_status_or(page);

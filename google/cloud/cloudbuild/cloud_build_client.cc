@@ -17,7 +17,6 @@
 // source: google/devtools/cloudbuild/v1/cloudbuild.proto
 
 #include "google/cloud/cloudbuild/cloud_build_client.h"
-#include "google/cloud/cloudbuild/internal/cloud_build_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudBuildClient::CloudBuildClient(
     std::shared_ptr<CloudBuildConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), cloudbuild_internal::CloudBuildDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudBuildClient::~CloudBuildClient() = default;
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>

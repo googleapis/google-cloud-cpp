@@ -200,23 +200,17 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
   EXPECT_EQ(0, get_ddl_result->statements_size());
 
   std::vector<std::string> statements;
-  if (!emulator_) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (!emulator_) {  // version_retention_period
     statements.push_back("ALTER DATABASE `" + database_.database_id() +
                          "` SET OPTIONS (version_retention_period='7d')");
   }
   statements.emplace_back(R"""(
         CREATE TABLE Singers (
-          SingerId   INT64 NOT NULL,
-          FirstName  STRING(1024),
-          LastName   STRING(1024),
-          SingerInfo BYTES(MAX)
-      )""");
-  if (!emulator_) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    statements.back().append(R"""(,SingerDetails JSON)""");
-  }
-  statements.back().append(R"""(
+          SingerId      INT64 NOT NULL,
+          FirstName     STRING(1024),
+          LastName      STRING(1024),
+          SingerInfo    BYTES(MAX),
+          SingerDetails JSON
         ) PRIMARY KEY (SingerId)
       )""");
   auto metadata = client_.UpdateDatabase(database_, statements).get();
@@ -239,20 +233,8 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
           ON Singers(SingerDetails)
       )""");
   metadata = client_.UpdateDatabase(database_, statements).get();
-  if (!emulator_) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    EXPECT_THAT(metadata,
-                StatusIs(StatusCode::kFailedPrecondition,
-                         AllOf(HasSubstr("Index SingersByDetail"),
-                               HasSubstr("column of unsupported type JSON"))));
-  } else {
-    EXPECT_THAT(
-        metadata,
-        StatusIs(
-            StatusCode::kInvalidArgument,
-            AllOf(HasSubstr("Index SingersByDetail"),
-                  HasSubstr("column SingerDetails which does not exist"))));
-  }
+  EXPECT_THAT(metadata, StatusIs(StatusCode::kFailedPrecondition,
+                                 HasSubstr("SingersByDetail")));
 
   // Verify that a JSON column cannot be used as a primary key.
   statements.clear();
@@ -262,15 +244,9 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
         ) PRIMARY KEY (Key)
       )""");
   metadata = client_.UpdateDatabase(database_, statements).get();
-  if (!emulator_) {
-    // TODO(#6873): Remove this check when the emulator supports JSON.
-    EXPECT_THAT(metadata,
-                StatusIs(StatusCode::kInvalidArgument,
-                         AllOf(HasSubstr("Key has type JSON"),
-                               HasSubstr("part of the primary key"))));
-  } else {
-    EXPECT_THAT(metadata, Not(IsOk()));
-  }
+  EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
+                                 AllOf(HasSubstr("Key has type JSON"),
+                                       HasSubstr("part of the primary key"))));
 
   EXPECT_TRUE(DatabaseExists()) << "Database " << database_;
   auto drop_status = client_.DropDatabase(database_);
@@ -288,8 +264,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodCreate) {
               {absl::StrCat("ALTER DATABASE `", database_.database_id(),
                             "` SET OPTIONS (version_retention_period='7d')")})
           .get();
-  if (emulator_) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (emulator_) {  // version_retention_period
     EXPECT_THAT(database, Not(IsOk()));
     return;
   }
@@ -334,8 +309,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
       client_.CreateDatabase(database_, /*extra_statements=*/{}).get();
   ASSERT_THAT(database, IsOk());
   EXPECT_EQ(database_.FullName(), database->name());
-  if (emulator_) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (emulator_) {  // version_retention_period
     EXPECT_EQ("", database->version_retention_period());
   } else {
     EXPECT_NE("", database->version_retention_period());  // default value
@@ -349,8 +323,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
               {absl::StrCat("ALTER DATABASE `", database_.database_id(),
                             "` SET OPTIONS (version_retention_period='7d')")})
           .get();
-  if (emulator_) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (emulator_) {  // version_retention_period
     EXPECT_THAT(update, Not(IsOk()));
   } else {
     ASSERT_THAT(update, IsOk());
@@ -363,8 +336,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   auto get = client_.GetDatabase(database_);
   ASSERT_THAT(get, IsOk());
   EXPECT_EQ(database->name(), get->name());
-  if (emulator_) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (emulator_) {  // version_retention_period
     EXPECT_EQ("", get->version_retention_period());
   } else {
     EXPECT_EQ("7d", get->version_retention_period());
@@ -380,8 +352,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   }();
   ASSERT_THAT(list_db, IsOk());
   EXPECT_EQ(database->name(), list_db->name());
-  if (emulator_) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (emulator_) {  // version_retention_period
     EXPECT_EQ("", list_db->version_retention_period());
   } else {
     EXPECT_EQ("7d", list_db->version_retention_period());
@@ -390,8 +361,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdate) {
   // Verify that version_retention_period is returned from GetDatabaseDdl().
   auto ddl = client_.GetDatabaseDdl(database_);
   ASSERT_THAT(ddl, IsOk());
-  if (emulator_) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (emulator_) {  // version_retention_period
   } else {
     EXPECT_THAT(ddl->statements(),
                 Contains(ContainsRegex("version_retention_period *= *'7d'")));
@@ -408,8 +378,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
       client_.CreateDatabase(database_, /*extra_statements=*/{}).get();
   ASSERT_THAT(database, IsOk());
   EXPECT_EQ(database_.FullName(), database->name());
-  if (emulator_) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (emulator_) {  // version_retention_period
     EXPECT_EQ("", database->version_retention_period());
   } else {
     EXPECT_NE("", database->version_retention_period());  // default value
@@ -418,8 +387,7 @@ TEST_F(DatabaseAdminClientTest, VersionRetentionPeriodUpdateFailure) {
   auto get0 = client_.GetDatabase(database_);
   ASSERT_THAT(get0, IsOk());
   EXPECT_EQ(database->name(), get0->name());
-  if (emulator_) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (emulator_) {  // version_retention_period
     EXPECT_EQ("", get0->version_retention_period());
   } else {
     EXPECT_NE("", get0->version_retention_period());  // default value

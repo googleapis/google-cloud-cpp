@@ -162,6 +162,20 @@ DefaultNotebookServiceStub::AsyncSetInstanceLabels(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+DefaultNotebookServiceStub::UpdateInstanceMetadataItems(
+    grpc::ClientContext& client_context,
+    google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+        request) {
+  google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse response;
+  auto status = grpc_stub_->UpdateInstanceMetadataItems(&client_context,
+                                                        request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultNotebookServiceStub::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -285,6 +299,21 @@ DefaultNotebookServiceStub::AsyncRollbackInstance(
           google::cloud::notebooks::v1::RollbackInstanceRequest const& request,
           grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncRollbackInstance(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultNotebookServiceStub::AsyncDiagnoseInstance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncDiagnoseInstance(context, request, cq);
       },
       request, std::move(context));
 }

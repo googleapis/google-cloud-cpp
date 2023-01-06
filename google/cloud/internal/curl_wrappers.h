@@ -35,6 +35,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Hold a CURL* handle and automatically clean it up.
 using CurlPtr = std::unique_ptr<CURL, decltype(&curl_easy_cleanup)>;
 
+/// Create a new (wrapped) CURL* with one-time configuration options set.
+CurlPtr MakeCurlPtr();
+
 /// Hold a CURLM* handle and automatically clean it up.
 using CurlMulti = std::unique_ptr<CURLM, decltype(&curl_multi_cleanup)>;
 
@@ -47,10 +50,19 @@ using CurlReceivedHeaders = std::multimap<std::string, std::string>;
 std::size_t CurlAppendHeaderData(CurlReceivedHeaders& received_headers,
                                  char const* data, std::size_t size);
 
+std::string DebugInfo(char const* data, std::size_t size);
+std::string DebugRecvHeader(char const* data, std::size_t size);
+std::string DebugSendHeader(char const* data, std::size_t size);
+std::string DebugInData(char const* data, std::size_t size);
+std::string DebugOutData(char const* data, std::size_t size);
+
 using CurlShare = std::unique_ptr<CURLSH, decltype(&curl_share_cleanup)>;
 
 /// Returns true if the SSL locking callbacks are installed.
 bool SslLockingCallbacksInstalled();
+
+/// Return the default global options
+Options CurlInitializeOptions(Options options);
 
 /// Initializes (if needed) the SSL locking callbacks.
 void CurlInitializeOnce(Options const& options);

@@ -51,6 +51,11 @@ class ManagedNotebookServiceStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateRuntime(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncDeleteRuntime(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -76,12 +81,29 @@ class ManagedNotebookServiceStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpgradeRuntime(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>>
   AsyncReportRuntimeEvent(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const&
           request) = 0;
+
+  virtual StatusOr<
+      google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+  RefreshRuntimeTokenInternal(
+      grpc::ClientContext& context,
+      google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+          request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncDiagnoseRuntime(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -119,6 +141,12 @@ class DefaultManagedNotebookServiceStub : public ManagedNotebookServiceStub {
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateRuntime(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::notebooks::v1::UpdateRuntimeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncDeleteRuntime(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -148,10 +176,28 @@ class DefaultManagedNotebookServiceStub : public ManagedNotebookServiceStub {
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpgradeRuntime(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncReportRuntimeEvent(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request)
+      override;
+
+  StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+  RefreshRuntimeTokenInternal(
+      grpc::ClientContext& client_context,
+      google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncDiagnoseRuntime(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -68,16 +68,16 @@ class ServiceControllerClient {
       Options opts = {});
   ~ServiceControllerClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   ServiceControllerClient(ServiceControllerClient const&) = default;
   ServiceControllerClient& operator=(ServiceControllerClient const&) = default;
   ServiceControllerClient(ServiceControllerClient&&) = default;
   ServiceControllerClient& operator=(ServiceControllerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(ServiceControllerClient const& a,
                          ServiceControllerClient const& b) {
     return a.connection_ == b.connection_;
@@ -86,7 +86,7 @@ class ServiceControllerClient {
                          ServiceControllerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Checks whether an operation on a service should be allowed to proceed
@@ -108,16 +108,16 @@ class ServiceControllerClient {
   /// [Cloud IAM](https://cloud.google.com/iam).
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicecontrol::v1::CheckRequest,google/api/servicecontrol/v1/service_controller.proto#L94}
+  /// @googleapis_link{google::api::servicecontrol::v1::CheckRequest,google/api/servicecontrol/v1/service_controller.proto#L93}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicecontrol::v1::CheckResponse,google/api/servicecontrol/v1/service_controller.proto#L115}
+  /// @googleapis_link{google::api::servicecontrol::v1::CheckResponse,google/api/servicecontrol/v1/service_controller.proto#L114}
   ///
   /// [google.api.servicecontrol.v1.CheckRequest]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L94}
+  /// @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L93}
   /// [google.api.servicecontrol.v1.CheckResponse]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L115}
+  /// @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L114}
   ///
   StatusOr<google::api::servicecontrol::v1::CheckResponse> Check(
       google::api::servicecontrol::v1::CheckRequest const& request,
@@ -141,16 +141,16 @@ class ServiceControllerClient {
   /// [Google Cloud IAM](https://cloud.google.com/iam).
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicecontrol::v1::ReportRequest,google/api/servicecontrol/v1/service_controller.proto#L190}
+  /// @googleapis_link{google::api::servicecontrol::v1::ReportRequest,google/api/servicecontrol/v1/service_controller.proto#L189}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicecontrol::v1::ReportResponse,google/api/servicecontrol/v1/service_controller.proto#L221}
+  /// @googleapis_link{google::api::servicecontrol::v1::ReportResponse,google/api/servicecontrol/v1/service_controller.proto#L220}
   ///
   /// [google.api.servicecontrol.v1.ReportRequest]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L190}
+  /// @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L189}
   /// [google.api.servicecontrol.v1.ReportResponse]:
-  /// @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L221}
+  /// @googleapis_reference_link{google/api/servicecontrol/v1/service_controller.proto#L220}
   ///
   StatusOr<google::api::servicecontrol::v1::ReportResponse> Report(
       google::api::servicecontrol::v1::ReportRequest const& request,

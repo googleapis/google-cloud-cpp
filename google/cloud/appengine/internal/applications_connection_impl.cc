@@ -35,9 +35,8 @@ ApplicationsConnectionImpl::ApplicationsConnectionImpl(
     std::shared_ptr<appengine_internal::ApplicationsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), appengine_internal::ApplicationsDefaultOptions(
-                                  ApplicationsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ApplicationsConnection::options())) {}
 
 StatusOr<google::appengine::v1::Application>
 ApplicationsConnectionImpl::GetApplication(
@@ -55,7 +54,7 @@ ApplicationsConnectionImpl::GetApplication(
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsConnectionImpl::CreateApplication(
     google::appengine::v1::CreateApplicationRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::Application>(
       background_->cq(), request,
@@ -84,7 +83,7 @@ ApplicationsConnectionImpl::CreateApplication(
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsConnectionImpl::UpdateApplication(
     google::appengine::v1::UpdateApplicationRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::Application>(
       background_->cq(), request,
@@ -113,7 +112,7 @@ ApplicationsConnectionImpl::UpdateApplication(
 future<StatusOr<google::appengine::v1::Application>>
 ApplicationsConnectionImpl::RepairApplication(
     google::appengine::v1::RepairApplicationRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::Application>(
       background_->cq(), request,

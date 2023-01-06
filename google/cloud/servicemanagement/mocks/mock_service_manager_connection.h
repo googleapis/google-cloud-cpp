@@ -27,6 +27,21 @@ namespace cloud {
 namespace servicemanagement_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `ServiceManagerConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `ServiceManagerClient`. To do so,
+ * construct an object of type `ServiceManagerClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockServiceManagerConnection
     : public servicemanagement::ServiceManagerConnection {
  public:
@@ -110,21 +125,6 @@ class MockServiceManagerConnection
           google::api::servicemanagement::v1::GenerateConfigReportResponse>,
       GenerateConfigReport,
       (google::api::servicemanagement::v1::GenerateConfigReportRequest const&
-           request),
-      (override));
-
-  MOCK_METHOD(
-      future<
-          StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>,
-      EnableService,
-      (google::api::servicemanagement::v1::EnableServiceRequest const& request),
-      (override));
-
-  MOCK_METHOD(
-      future<
-          StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>,
-      DisableService,
-      (google::api::servicemanagement::v1::DisableServiceRequest const&
            request),
       (override));
 };

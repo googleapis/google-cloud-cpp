@@ -38,15 +38,13 @@ ResourceSettingsServiceConnectionImpl::ResourceSettingsServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          resourcesettings_internal::ResourceSettingsServiceDefaultOptions(
-              ResourceSettingsServiceConnection::options()))) {}
+          std::move(options), ResourceSettingsServiceConnection::options())) {}
 
 StreamRange<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceConnectionImpl::ListSettings(
     google::cloud::resourcesettings::v1::ListSettingsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       resourcesettings::ResourceSettingsServiceRetryPolicy const>(
       retry_policy());

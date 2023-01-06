@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM fedora:34
+FROM fedora:36
 ARG NCPU=4
 
 ## [BEGIN packaging.md]
@@ -25,7 +25,7 @@ RUN dnf makecache && \
         openssl-devel patch unzip tar wget zip zlib-devel
 # ```
 
-# Fedora 34 includes packages for gRPC and Protobuf, but they are not
+# Fedora 36 includes packages for gRPC and Protobuf, but they are not
 # recent enough to support the protos published by Google Cloud. The indirect
 # dependencies of libcurl, Protobuf, and gRPC are recent enough for our needs.
 
@@ -51,7 +51,7 @@ RUN curl -sSL https://pkgconfig.freedesktop.org/releases/pkg-config-0.29.2.tar.g
 # ```
 
 # The following steps will install libraries and tools in `/usr/local`. By
-# default pkg-config does not search in these directories.
+# default, pkg-config does not search in these directories.
 
 # ```bash
 ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib64/pkgconfig
@@ -61,17 +61,27 @@ ENV PKG_CONFIG_PATH=/usr/local/lib64/pkgconfig:/usr/local/lib/pkgconfig:/usr/lib
 
 # We need a recent version of Abseil.
 
+# :warning: By default, Abseil's ABI changes depending on whether it is used
+# with C++ >= 17 enabled or not. Installing Abseil with the default
+# configuration is error-prone, unless you can guarantee that all the code using
+# Abseil (gRPC, google-cloud-cpp, your own code, etc.) is compiled with the same
+# C++ version. We recommend that you switch the default configuration to pin
+# Abseil's ABI to the version used at compile time. In this case, the compiler
+# defaults to C++17. Nevertheless, gRPC compiles with C++11 and depends on
+# some of the Abseil polyfills, such as `absl::string_view`. Therefore, we
+# pin Abseil's ABI to always use the polyfills. See [abseil/abseil-cpp#696]
+# for more information.
+
 # ```bash
 WORKDIR /var/tmp/build/abseil-cpp
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
-      -DCMAKE_CXX_STANDARD=11 \
-      -H. -Bcmake-out && \
+      -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -92,7 +102,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
         -DCRC32C_BUILD_TESTS=OFF \
         -DCRC32C_BUILD_BENCHMARKS=OFF \
         -DCRC32C_USE_GLOG=OFF \
-        -H. -Bcmake-out && \
+        -S . -B cmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
@@ -107,15 +117,15 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE=Release \
       -DBUILD_SHARED_LIBS=yes \
       -DBUILD_TESTING=OFF \
       -DJSON_BuildTests=OFF \
-      -H. -Bcmake-out/nlohmann/json && \
-    cmake --build cmake-out/nlohmann/json --target install -- -j ${NCPU:-4} && \
+      -S . -B cmake-out && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 # ```
 
@@ -128,28 +138,29 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
 
 # ```bash
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.19.4.tar.gz | \
+RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -S . -B cmake-out && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 # ```
 
 # #### gRPC
 
-# Finally we build gRPC from source also:
+# Finally, we build gRPC from source:
 
 # ```bash
 WORKDIR /var/tmp/build/grpc
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
+RUN curl -sSL https://github.com/grpc/grpc/archive/v1.51.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
-        -DBUILD_SHARED_LIBS=ON \
+        -DBUILD_SHARED_LIBS=yes \
         -DgRPC_INSTALL=ON \
         -DgRPC_BUILD_TESTS=OFF \
         -DgRPC_ABSL_PROVIDER=package \
@@ -158,7 +169,7 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
         -DgRPC_RE2_PROVIDER=package \
         -DgRPC_SSL_PROVIDER=package \
         -DgRPC_ZLIB_PROVIDER=package \
-        -H. -Bcmake-out && \
+        -S . -B cmake-out && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
 # ```

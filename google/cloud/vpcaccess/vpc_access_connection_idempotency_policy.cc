@@ -30,45 +30,34 @@ using ::google::cloud::Idempotency;
 VpcAccessServiceConnectionIdempotencyPolicy::
     ~VpcAccessServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultVpcAccessServiceConnectionIdempotencyPolicy
-    : public VpcAccessServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultVpcAccessServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy>
+VpcAccessServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<VpcAccessServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultVpcAccessServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency VpcAccessServiceConnectionIdempotencyPolicy::CreateConnector(
+    google::cloud::vpcaccess::v1::CreateConnectorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateConnector(
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency VpcAccessServiceConnectionIdempotencyPolicy::GetConnector(
+    google::cloud::vpcaccess::v1::GetConnectorRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetConnector(
-      google::cloud::vpcaccess::v1::GetConnectorRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency VpcAccessServiceConnectionIdempotencyPolicy::ListConnectors(
+    google::cloud::vpcaccess::v1::ListConnectorsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListConnectors(
-      google::cloud::vpcaccess::v1::ListConnectorsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency DeleteConnector(
-      google::cloud::vpcaccess::v1::DeleteConnectorRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency VpcAccessServiceConnectionIdempotencyPolicy::DeleteConnector(
+    google::cloud::vpcaccess::v1::DeleteConnectorRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy>
 MakeDefaultVpcAccessServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultVpcAccessServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<VpcAccessServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

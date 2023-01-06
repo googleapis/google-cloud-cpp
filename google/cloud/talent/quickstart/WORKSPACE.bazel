@@ -14,7 +14,7 @@
 
 # A minimal WORKSPACE file showing how to use the Cloud Talent Solution API
 # C++ client library in Bazel-based projects.
-workspace(name = "talent_quickstart")
+workspace(name = "qs")
 
 # Add the necessary Starlark functions to fetch google-cloud-cpp.
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
@@ -22,15 +22,15 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 # Fetch the Google Cloud C++ libraries.
 # NOTE: Update this version and SHA256 as needed.
 http_archive(
-    name = "com_github_googleapis_google_cloud_cpp",
-    sha256 = "a7e51bfffb95a377094b2ae7e3b9f715a68ed931c48992c7273b2fae989c029c",
-    strip_prefix = "google-cloud-cpp-1.36.0",
-    url = "https://github.com/googleapis/google-cloud-cpp/archive/v1.36.0.tar.gz",
+    name = "google_cloud_cpp",
+    sha256 = "56b2dcbb30c14335f2c0d9a77ac46a9ef780acf78eaa17a03db474c54a4acb2c",
+    strip_prefix = "google-cloud-cpp-2.6.0",
+    url = "https://github.com/googleapis/google-cloud-cpp/archive/v2.6.0.tar.gz",
 )
 
 # Load indirect dependencies due to
 #     https://github.com/bazelbuild/bazel/issues/1943
-load("@com_github_googleapis_google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
+load("@google_cloud_cpp//bazel:google_cloud_cpp_deps.bzl", "google_cloud_cpp_deps")
 
 google_cloud_cpp_deps()
 

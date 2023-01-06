@@ -45,6 +45,18 @@ using EventServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         talent_internal::EventServiceRetryTraits>;
 
+/**
+ * The `EventServiceConnection` object for `EventServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `EventServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `EventServiceClient`.
+ *
+ * To create a concrete instance, see `MakeEventServiceConnection()`.
+ *
+ * For mocking, see `talent_mocks::MockEventServiceConnection`.
+ */
 class EventServiceConnection {
  public:
   virtual ~EventServiceConnection() = 0;
@@ -55,24 +67,32 @@ class EventServiceConnection {
       google::cloud::talent::v4::CreateClientEventRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `EventServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of EventServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `EventServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::talent::EventServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `EventServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<EventServiceConnection> MakeEventServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace talent_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<talent::EventServiceConnection> MakeEventServiceConnection(
-    std::shared_ptr<EventServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace talent_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -170,6 +170,15 @@ class AccessContextManagerConnectionImpl
       google::identity::accesscontextmanager::v1::
           DeleteGcpUserAccessBindingRequest const& request) override;
 
+  StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request) override;
+
+  StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
+      google::iam::v1::TestIamPermissionsRequest const& request) override;
+
  private:
   std::unique_ptr<accesscontextmanager::AccessContextManagerRetryPolicy>
   retry_policy() {

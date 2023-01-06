@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/service_service.proto
 
 #include "google/cloud/monitoring/service_monitoring_client.h"
-#include "google/cloud/monitoring/internal/service_monitoring_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ ServiceMonitoringServiceClient::ServiceMonitoringServiceClient(
     std::shared_ptr<ServiceMonitoringServiceConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          monitoring_internal::ServiceMonitoringServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ServiceMonitoringServiceClient::~ServiceMonitoringServiceClient() = default;
 
 StatusOr<google::monitoring::v3::Service>

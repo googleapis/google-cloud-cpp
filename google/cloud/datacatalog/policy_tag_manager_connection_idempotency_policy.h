@@ -32,53 +32,50 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class PolicyTagManagerConnectionIdempotencyPolicy {
  public:
-  virtual ~PolicyTagManagerConnectionIdempotencyPolicy() = 0;
+  virtual ~PolicyTagManagerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<PolicyTagManagerConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateTaxonomy(
-      google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) = 0;
+      google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request);
 
   virtual google::cloud::Idempotency DeleteTaxonomy(
-      google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) = 0;
+      google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request);
 
   virtual google::cloud::Idempotency UpdateTaxonomy(
-      google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) = 0;
+      google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request);
 
   virtual google::cloud::Idempotency ListTaxonomies(
-      google::cloud::datacatalog::v1::ListTaxonomiesRequest request) = 0;
+      google::cloud::datacatalog::v1::ListTaxonomiesRequest request);
 
   virtual google::cloud::Idempotency GetTaxonomy(
-      google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) = 0;
+      google::cloud::datacatalog::v1::GetTaxonomyRequest const& request);
 
   virtual google::cloud::Idempotency CreatePolicyTag(
-      google::cloud::datacatalog::v1::CreatePolicyTagRequest const&
-          request) = 0;
+      google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request);
 
   virtual google::cloud::Idempotency DeletePolicyTag(
-      google::cloud::datacatalog::v1::DeletePolicyTagRequest const&
-          request) = 0;
+      google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request);
 
   virtual google::cloud::Idempotency UpdatePolicyTag(
-      google::cloud::datacatalog::v1::UpdatePolicyTagRequest const&
-          request) = 0;
+      google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request);
 
   virtual google::cloud::Idempotency ListPolicyTags(
-      google::cloud::datacatalog::v1::ListPolicyTagsRequest request) = 0;
+      google::cloud::datacatalog::v1::ListPolicyTagsRequest request);
 
   virtual google::cloud::Idempotency GetPolicyTag(
-      google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) = 0;
+      google::cloud::datacatalog::v1::GetPolicyTagRequest const& request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+      google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<PolicyTagManagerConnectionIdempotencyPolicy>

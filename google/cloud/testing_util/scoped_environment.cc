@@ -14,7 +14,7 @@
 
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/setenv.h"
+#include "google/cloud/testing_util/setenv.h"
 
 namespace google {
 namespace cloud {
@@ -25,11 +25,11 @@ ScopedEnvironment::ScopedEnvironment(std::string variable,
                                      absl::optional<std::string> const& value)
     : variable_(std::move(variable)),
       prev_value_(internal::GetEnv(variable_.c_str())) {
-  internal::SetEnv(variable_.c_str(), value);
+  SetEnv(variable_.c_str(), value);
 }
 
 ScopedEnvironment::~ScopedEnvironment() {
-  internal::SetEnv(variable_.c_str(), std::move(prev_value_));
+  SetEnv(variable_.c_str(), std::move(prev_value_));
 }
 
 }  // namespace testing_util

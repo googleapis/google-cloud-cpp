@@ -23,6 +23,7 @@
 #include "google/cloud/spanner/admin/internal/instance_admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InstanceAdminConnection::~InstanceAdminConnection() = default;
 
 StreamRange<google::spanner::admin::instance::v1::InstanceConfig>
-    InstanceAdminConnection::ListInstanceConfigs(
-        google::spanner::admin::instance::v1::
-            ListInstanceConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+InstanceAdminConnection::ListInstanceConfigs(
+    google::spanner::admin::instance::v1::
+        ListInstanceConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::spanner::admin::instance::v1::InstanceConfig>>();
 }
@@ -48,10 +49,39 @@ InstanceAdminConnection::GetInstanceConfig(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminConnection::CreateInstanceConfig(
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+InstanceAdminConnection::UpdateInstanceConfig(
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+Status InstanceAdminConnection::DeleteInstanceConfig(
+    google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::longrunning::Operation>
+InstanceAdminConnection::ListInstanceConfigOperations(
+    google::spanner::admin::instance::v1::
+        ListInstanceConfigOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::longrunning::Operation>>();
+}
+
 StreamRange<google::spanner::admin::instance::v1::Instance>
-    InstanceAdminConnection::ListInstances(
-        google::spanner::admin::instance::v1::
-            ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+InstanceAdminConnection::ListInstances(
+    google::spanner::admin::instance::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::spanner::admin::instance::v1::Instance>>();
 }
@@ -102,6 +132,7 @@ InstanceAdminConnection::TestIamPermissions(
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  InstanceAdminPolicyOptionList>(options,
                                                                 __func__);
   options =
@@ -116,25 +147,5 @@ std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace spanner_admin_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<spanner_admin::InstanceAdminConnection>
-MakeInstanceAdminConnection(std::shared_ptr<InstanceAdminStub> stub,
-                            Options options) {
-  options = InstanceAdminDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<spanner_admin_internal::InstanceAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
-}  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

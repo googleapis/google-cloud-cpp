@@ -68,23 +68,23 @@ class TpuClient {
                      Options opts = {});
   ~TpuClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   TpuClient(TpuClient const&) = default;
   TpuClient& operator=(TpuClient const&) = default;
   TpuClient(TpuClient&&) = default;
   TpuClient& operator=(TpuClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(TpuClient const& a, TpuClient const& b) {
     return a.connection_ == b.connection_;
   }
   friend bool operator!=(TpuClient const& a, TpuClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists nodes.
@@ -251,7 +251,7 @@ class TpuClient {
       Options opts = {});
 
   ///
-  /// Stops a node.
+  /// Stops a node, this operation is only available with single TPU nodes.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::tpu::v1::StopNodeRequest,google/cloud/tpu/v1/cloud_tpu.proto#L422}

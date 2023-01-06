@@ -39,7 +39,7 @@ StorageTransferServiceMetadata::GetGoogleServiceAccount(
     grpc::ClientContext& context,
     google::storagetransfer::v1::GetGoogleServiceAccountRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->GetGoogleServiceAccount(context, request);
 }
 
@@ -47,7 +47,7 @@ StatusOr<google::storagetransfer::v1::TransferJob>
 StorageTransferServiceMetadata::CreateTransferJob(
     grpc::ClientContext& context,
     google::storagetransfer::v1::CreateTransferJobRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->CreateTransferJob(context, request);
 }
 
@@ -71,7 +71,7 @@ StatusOr<google::storagetransfer::v1::ListTransferJobsResponse>
 StorageTransferServiceMetadata::ListTransferJobs(
     grpc::ClientContext& context,
     google::storagetransfer::v1::ListTransferJobsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListTransferJobs(context, request);
 }
 
@@ -97,6 +97,52 @@ StorageTransferServiceMetadata::AsyncRunTransferJob(
     google::storagetransfer::v1::RunTransferJobRequest const& request) {
   SetMetadata(*context, "job_name=" + request.job_name());
   return child_->AsyncRunTransferJob(cq, std::move(context), request);
+}
+
+Status StorageTransferServiceMetadata::DeleteTransferJob(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::DeleteTransferJobRequest const& request) {
+  SetMetadata(context, "job_name=" + request.job_name());
+  return child_->DeleteTransferJob(context, request);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceMetadata::CreateAgentPool(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::CreateAgentPoolRequest const& request) {
+  SetMetadata(context, "project_id=" + request.project_id());
+  return child_->CreateAgentPool(context, request);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceMetadata::UpdateAgentPool(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::UpdateAgentPoolRequest const& request) {
+  SetMetadata(context, "agent_pool.name=" + request.agent_pool().name());
+  return child_->UpdateAgentPool(context, request);
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceMetadata::GetAgentPool(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::GetAgentPoolRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetAgentPool(context, request);
+}
+
+StatusOr<google::storagetransfer::v1::ListAgentPoolsResponse>
+StorageTransferServiceMetadata::ListAgentPools(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::ListAgentPoolsRequest const& request) {
+  SetMetadata(context, "project_id=" + request.project_id());
+  return child_->ListAgentPools(context, request);
+}
+
+Status StorageTransferServiceMetadata::DeleteAgentPool(
+    grpc::ClientContext& context,
+    google::storagetransfer::v1::DeleteAgentPoolRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DeleteAgentPool(context, request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -129,9 +175,8 @@ void StorageTransferServiceMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

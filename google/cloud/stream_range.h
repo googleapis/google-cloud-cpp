@@ -69,8 +69,7 @@ StreamRange<T> MakeStreamRange(StreamReader<T>);
  * access iterators that will work with any normal C++ constructs and
  * algorithms that accept [Input Iterators][input-iter-link].
  *
- * Callers should only consume/iterate this range. There is no public way for a
- * caller to construct a non-empty instance.
+ * Callers should only consume/iterate this range.
  *
  * @par Example: Iterating a range of 10 integers
  *
@@ -80,9 +79,16 @@ StreamRange<T> MakeStreamRange(StreamReader<T>);
  *
  * StreamRange<int> sr = MakeRangeFromOneTo(10);
  * for (StatusOr<int> const& x : sr) {
- *   std::cout << *x << "\n";
+ *   if (!x) {
+ *     std::cerr << "Fail: " << x.status() << "\n";
+ *   } else {
+ *     std::cout << *x << "\n";
+ *   }
  * }
  * @endcode
+ *
+ * @note To construct a `StreamRange<T>` for testing (e.g. to mock a
+ * `Connection::ListFoo` call), see #google::cloud::mocks::MakeStreamRange.
  *
  * [input-iter-link]: https://en.cppreference.com/w/cpp/named_req/InputIterator
  */

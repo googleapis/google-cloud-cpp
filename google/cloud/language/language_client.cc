@@ -17,7 +17,6 @@
 // source: google/cloud/language/v1/language_service.proto
 
 #include "google/cloud/language/language_client.h"
-#include "google/cloud/language/internal/language_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 LanguageServiceClient::LanguageServiceClient(
     std::shared_ptr<LanguageServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), language_internal::LanguageServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 LanguageServiceClient::~LanguageServiceClient() = default;
 
 StatusOr<google::cloud::language::v1::AnalyzeSentimentResponse>

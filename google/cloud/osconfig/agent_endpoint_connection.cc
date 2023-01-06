@@ -23,6 +23,7 @@
 #include "google/cloud/osconfig/internal/agent_endpoint_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -82,6 +83,7 @@ AgentEndpointServiceConnection::ReportInventory(
 std::shared_ptr<AgentEndpointServiceConnection>
 MakeAgentEndpointServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AgentEndpointServicePolicyOptionList>(
       options, __func__);
   options =
@@ -96,25 +98,5 @@ MakeAgentEndpointServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace osconfig_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<osconfig::AgentEndpointServiceConnection>
-MakeAgentEndpointServiceConnection(
-    std::shared_ptr<AgentEndpointServiceStub> stub, Options options) {
-  options = AgentEndpointServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      osconfig_internal::AgentEndpointServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace osconfig_internal
 }  // namespace cloud
 }  // namespace google

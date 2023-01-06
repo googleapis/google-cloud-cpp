@@ -34,9 +34,8 @@ PublisherConnectionImpl::PublisherConnectionImpl(
     std::shared_ptr<eventarc_internal::PublisherStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), eventarc_internal::PublisherDefaultOptions(
-                                  PublisherConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      PublisherConnection::options())) {}
 
 StatusOr<google::cloud::eventarc::publishing::v1::
              PublishChannelConnectionEventsResponse>
@@ -51,6 +50,20 @@ PublisherConnectionImpl::PublishChannelConnectionEvents(
                  PublishChannelConnectionEventsRequest const& request) {
         return stub_->PublishChannelConnectionEvents(context, request);
       },
+      request, __func__);
+}
+
+StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
+PublisherConnectionImpl::PublishEvents(
+    google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->PublishEvents(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+              request) { return stub_->PublishEvents(context, request); },
       request, __func__);
 }
 

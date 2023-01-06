@@ -36,6 +36,7 @@ Options BinauthzManagementServiceV1DefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_BINAUTHZ_MANAGEMENT_SERVICE_V1_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_BINAUTHZ_MANAGEMENT_SERVICE_V1_AUTHORITY",
       "binaryauthorization.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

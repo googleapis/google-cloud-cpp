@@ -50,6 +50,8 @@ class ConnectionGenerator : public ServiceCodeGenerator {
  private:
   Status GenerateHeader() override;
   Status GenerateCc() override;
+
+  std::string ConnectionFactoryFunctionArguments() const;
 };
 
 }  // namespace generator_internal

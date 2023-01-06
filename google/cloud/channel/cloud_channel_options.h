@@ -31,26 +31,48 @@ namespace cloud {
 namespace channel {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-channel-options
+ */
 struct CloudChannelServiceRetryPolicyOption {
   using Type = std::shared_ptr<CloudChannelServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-channel-options
+ */
 struct CloudChannelServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct CloudChannelServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-channel-options
+ */
 struct CloudChannelServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<CloudChannelServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-channel-options
+ */
+struct CloudChannelServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to CloudChannelService.
+ *
+ * @ingroup google-cloud-channel-options
+ */
 using CloudChannelServicePolicyOptionList =
     OptionList<CloudChannelServiceRetryPolicyOption,
                CloudChannelServiceBackoffPolicyOption,

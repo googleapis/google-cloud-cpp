@@ -53,6 +53,19 @@ StatusOr<google::cloud::redis::v1::Instance> DefaultCloudRedisStub::GetInstance(
   return response;
 }
 
+StatusOr<google::cloud::redis::v1::InstanceAuthString>
+DefaultCloudRedisStub::GetInstanceAuthString(
+    grpc::ClientContext& client_context,
+    google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
+  google::cloud::redis::v1::InstanceAuthString response;
+  auto status =
+      grpc_stub_->GetInstanceAuthString(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultCloudRedisStub::AsyncCreateInstance(
     google::cloud::CompletionQueue& cq,
@@ -147,6 +160,21 @@ DefaultCloudRedisStub::AsyncDeleteInstance(
              google::cloud::redis::v1::DeleteInstanceRequest const& request,
              grpc::CompletionQueue* cq) {
         return grpc_stub_->AsyncDeleteInstance(context, request, cq);
+      },
+      request, std::move(context));
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DefaultCloudRedisStub::AsyncRescheduleMaintenance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](
+          grpc::ClientContext* context,
+          google::cloud::redis::v1::RescheduleMaintenanceRequest const& request,
+          grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncRescheduleMaintenance(context, request, cq);
       },
       request, std::move(context));
 }

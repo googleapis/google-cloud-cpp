@@ -36,15 +36,14 @@ DataCatalogConnectionImpl::DataCatalogConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), datacatalog_internal::DataCatalogDefaultOptions(
-                                  DataCatalogConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      DataCatalogConnection::options())) {}
 
 StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
 DataCatalogConnectionImpl::SearchCatalog(
     google::cloud::datacatalog::v1::SearchCatalogRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<datacatalog::DataCatalogRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -126,7 +125,7 @@ StreamRange<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogConnectionImpl::ListEntryGroups(
     google::cloud::datacatalog::v1::ListEntryGroupsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<datacatalog::DataCatalogRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -226,7 +225,7 @@ StreamRange<google::cloud::datacatalog::v1::Entry>
 DataCatalogConnectionImpl::ListEntries(
     google::cloud::datacatalog::v1::ListEntriesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<datacatalog::DataCatalogRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -251,6 +250,34 @@ DataCatalogConnectionImpl::ListEntries(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+}
+
+StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+DataCatalogConnectionImpl::ModifyEntryOverview(
+    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ModifyEntryOverview(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
+                 request) {
+        return stub_->ModifyEntryOverview(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::datacatalog::v1::Contacts>
+DataCatalogConnectionImpl::ModifyEntryContacts(
+    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ModifyEntryContacts(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
+                 request) {
+        return stub_->ModifyEntryContacts(context, request);
+      },
+      request, __func__);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
@@ -426,7 +453,7 @@ StreamRange<google::cloud::datacatalog::v1::Tag>
 DataCatalogConnectionImpl::ListTags(
     google::cloud::datacatalog::v1::ListTagsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<datacatalog::DataCatalogRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -451,6 +478,33 @@ DataCatalogConnectionImpl::ListTags(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+}
+
+StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+DataCatalogConnectionImpl::StarEntry(
+    google::cloud::datacatalog::v1::StarEntryRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->StarEntry(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::datacatalog::v1::StarEntryRequest const& request) {
+        return stub_->StarEntry(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+DataCatalogConnectionImpl::UnstarEntry(
+    google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UnstarEntry(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
+        return stub_->UnstarEntry(context, request);
+      },
+      request, __func__);
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogConnectionImpl::SetIamPolicy(

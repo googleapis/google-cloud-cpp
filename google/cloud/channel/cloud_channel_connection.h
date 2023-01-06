@@ -49,6 +49,18 @@ using CloudChannelServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         channel_internal::CloudChannelServiceRetryTraits>;
 
+/**
+ * The `CloudChannelServiceConnection` object for `CloudChannelServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CloudChannelServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `CloudChannelServiceClient`.
+ *
+ * To create a concrete instance, see `MakeCloudChannelServiceConnection()`.
+ *
+ * For mocking, see `channel_mocks::MockCloudChannelServiceConnection`.
+ */
 class CloudChannelServiceConnection {
  public:
   virtual ~CloudChannelServiceConnection() = 0;
@@ -156,6 +168,53 @@ class CloudChannelServiceConnection {
       google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
           request);
 
+  virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  GetCustomerRepricingConfig(
+      google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
+  ListCustomerRepricingConfigs(
+      google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request);
+
+  virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  CreateCustomerRepricingConfig(
+      google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  UpdateCustomerRepricingConfig(
+      google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+          request);
+
+  virtual Status DeleteCustomerRepricingConfig(
+      google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  GetChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  ListChannelPartnerRepricingConfigs(
+      google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
+          request);
+
+  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  CreateChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          CreateChannelPartnerRepricingConfigRequest const& request);
+
+  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  UpdateChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          UpdateChannelPartnerRepricingConfigRequest const& request);
+
+  virtual Status DeleteChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          DeleteChannelPartnerRepricingConfigRequest const& request);
+
   virtual StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
       google::cloud::channel::v1::LookupOfferRequest const& request);
 
@@ -188,25 +247,34 @@ class CloudChannelServiceConnection {
       google::cloud::channel::v1::ListSubscribersRequest request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `CloudChannelServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * CloudChannelServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `CloudChannelServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::channel::CloudChannelServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `CloudChannelServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<CloudChannelServiceConnection>
 MakeCloudChannelServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace channel
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace channel_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<channel::CloudChannelServiceConnection>
-MakeCloudChannelServiceConnection(std::shared_ptr<CloudChannelServiceStub> stub,
-                                  Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace channel_internal
 }  // namespace cloud
 }  // namespace google
 

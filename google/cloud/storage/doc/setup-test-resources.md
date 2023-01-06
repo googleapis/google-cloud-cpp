@@ -171,7 +171,6 @@ gcloud projects add-iam-policy-binding ${PROJECT_ID} \
 If you are using a service account to access GCP (as opposed to an authorized
 user), then replace the previous command with:
 
-
 ```console
 gcloud projects add-iam-policy-binding ${PROJECT_ID} \
   --member serviceAccount:$(gcloud config get-value account) \

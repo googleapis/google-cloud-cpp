@@ -100,6 +100,44 @@ RecommenderMetadata::MarkRecommendationFailed(
   return child_->MarkRecommendationFailed(context, request);
 }
 
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderMetadata::GetRecommenderConfig(
+    grpc::ClientContext& context,
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetRecommenderConfig(context, request);
+}
+
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderMetadata::UpdateRecommenderConfig(
+    grpc::ClientContext& context,
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+        request) {
+  SetMetadata(context,
+              "recommender_config.name=" + request.recommender_config().name());
+  return child_->UpdateRecommenderConfig(context, request);
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderMetadata::GetInsightTypeConfig(
+    grpc::ClientContext& context,
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetInsightTypeConfig(context, request);
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderMetadata::UpdateInsightTypeConfig(
+    grpc::ClientContext& context,
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+        request) {
+  SetMetadata(context, "insight_type_config.name=" +
+                           request.insight_type_config().name());
+  return child_->UpdateInsightTypeConfig(context, request);
+}
+
 void RecommenderMetadata::SetMetadata(grpc::ClientContext& context,
                                       std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
@@ -113,9 +151,8 @@ void RecommenderMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

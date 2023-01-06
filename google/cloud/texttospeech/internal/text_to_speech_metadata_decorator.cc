@@ -38,7 +38,7 @@ StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechMetadata::ListVoices(
     grpc::ClientContext& context,
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListVoices(context, request);
 }
 
@@ -46,7 +46,7 @@ StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 TextToSpeechMetadata::SynthesizeSpeech(
     grpc::ClientContext& context,
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->SynthesizeSpeech(context, request);
 }
 
@@ -63,9 +63,8 @@ void TextToSpeechMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

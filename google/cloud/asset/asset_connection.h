@@ -49,6 +49,18 @@ using AssetServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         asset_internal::AssetServiceRetryTraits>;
 
+/**
+ * The `AssetServiceConnection` object for `AssetServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AssetServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AssetServiceClient`.
+ *
+ * To create a concrete instance, see `MakeAssetServiceConnection()`.
+ *
+ * For mocking, see `asset_mocks::MockAssetServiceConnection`.
+ */
 class AssetServiceConnection {
  public:
   virtual ~AssetServiceConnection() = 0;
@@ -100,26 +112,58 @@ class AssetServiceConnection {
 
   virtual StatusOr<google::cloud::asset::v1::AnalyzeMoveResponse> AnalyzeMove(
       google::cloud::asset::v1::AnalyzeMoveRequest const& request);
+
+  virtual StatusOr<google::cloud::asset::v1::QueryAssetsResponse> QueryAssets(
+      google::cloud::asset::v1::QueryAssetsRequest const& request);
+
+  virtual StatusOr<google::cloud::asset::v1::SavedQuery> CreateSavedQuery(
+      google::cloud::asset::v1::CreateSavedQueryRequest const& request);
+
+  virtual StatusOr<google::cloud::asset::v1::SavedQuery> GetSavedQuery(
+      google::cloud::asset::v1::GetSavedQueryRequest const& request);
+
+  virtual StreamRange<google::cloud::asset::v1::SavedQuery> ListSavedQueries(
+      google::cloud::asset::v1::ListSavedQueriesRequest request);
+
+  virtual StatusOr<google::cloud::asset::v1::SavedQuery> UpdateSavedQuery(
+      google::cloud::asset::v1::UpdateSavedQueryRequest const& request);
+
+  virtual Status DeleteSavedQuery(
+      google::cloud::asset::v1::DeleteSavedQueryRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+  BatchGetEffectiveIamPolicies(
+      google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+          request);
 };
 
+/**
+ * A factory function to construct an object of type `AssetServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of AssetServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `AssetServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::asset::AssetServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `AssetServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace asset_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<asset::AssetServiceConnection> MakeAssetServiceConnection(
-    std::shared_ptr<AssetServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_internal
 }  // namespace cloud
 }  // namespace google
 

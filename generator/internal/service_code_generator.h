@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTERNAL_SERVICE_CODE_GENERATOR_H
 
 #include "google/cloud/status.h"
+#include "generator/generator_config.pb.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/descriptor_utils.h"
 #include "generator/internal/generator_interface.h"
@@ -54,6 +55,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
  protected:
   using MethodDescriptorList = std::vector<
       std::reference_wrapper<google::protobuf::MethodDescriptor const>>;
+  using ServiceConfiguration =
+      google::cloud::cpp::generator::ServiceConfiguration;
 
   virtual Status GenerateHeader() = 0;
   virtual Status GenerateCc() = 0;
@@ -72,6 +75,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
   void CcSystemIncludes(std::vector<std::string> const& system_includes);
 
   Status HeaderOpenNamespaces(NamespaceType ns_type = NamespaceType::kNormal);
+  Status HeaderOpenForwardingNamespaces(
+      NamespaceType ns_type = NamespaceType::kNormal);
   void HeaderCloseNamespaces();
   Status CcOpenNamespaces(NamespaceType ns_type = NamespaceType::kNormal);
   void CcCloseNamespaces();
@@ -91,6 +96,17 @@ class ServiceCodeGenerator : public GeneratorInterface {
                        char const* file, int line);
   void CcPrintMethod(google::protobuf::MethodDescriptor const& method,
                      char const* file, int line, std::string const& text);
+
+  /**
+   * How the endpoint for the service might depend upon its location.
+   */
+  ServiceConfiguration::EndpointLocationStyle EndpointLocationStyle() const;
+
+  /**
+   * Whether a service is experimental. If true, we add the `ExperimentalTag` to
+   * certain APIs.
+   */
+  bool IsExperimental() const;
 
   /**
    * Determines if the service contains at least one method that returns a
@@ -122,6 +138,18 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool HasStreamingReadMethod() const;
 
   /**
+   * Determines if we need to generate at least one asynchronous streaming read
+   * RPC.
+   */
+  bool HasAsynchronousStreamingReadMethod() const;
+
+  /**
+   * Determines if we need to generate at least one asynchronous streaming write
+   * RPC.
+   */
+  bool HasAsynchronousStreamingWriteMethod() const;
+
+  /**
    * Determines if the service contains at least once rpc with a stream
    * request.
    */
@@ -133,6 +161,12 @@ class ServiceCodeGenerator : public GeneratorInterface {
   bool HasBidirStreamingMethod() const;
 
   /**
+   * Determines if the service contains at least one RPC with a
+   * google.api.routing annotation.
+   */
+  bool HasExplicitRoutingMethod() const;
+
+  /**
    * Determines if any of the method signatures has any Protocol Buffer
    * Well-Known Types per
    * https://developers.google.com/protocol-buffers/docs/reference/google.protobuf
@@ -141,13 +175,11 @@ class ServiceCodeGenerator : public GeneratorInterface {
   std::vector<std::string> MethodSignatureWellKnownProtobufTypeIncludes() const;
 
   /**
-   * Because method signatures are removed if they contain deprecated fields,
-   * the number of method signatures to emit may be fewer than the number in
-   * the proto file.
+   * Method signatures are omitted if they contain deprecated fields, or if the
+   * overload set conflicts with a previous method signature.
    */
-  bool IsDeprecatedMethodSignature(
-      google::protobuf::MethodDescriptor const& method,
-      int method_signature_number) const;
+  bool OmitMethodSignature(google::protobuf::MethodDescriptor const& method,
+                           int method_signature_number) const;
 
  private:
   void SetMethods();
@@ -159,8 +191,8 @@ class ServiceCodeGenerator : public GeneratorInterface {
   static void GenerateSystemIncludes(Printer& p,
                                      std::vector<std::string> system_includes);
 
-  Status OpenNamespaces(Printer& p,
-                        NamespaceType ns_type = NamespaceType::kNormal);
+  Status OpenNamespaces(Printer& p, NamespaceType ns_type,
+                        std::string const& product_path_var);
   void CloseNamespaces(Printer& p);
 
   google::protobuf::ServiceDescriptor const* service_descriptor_;

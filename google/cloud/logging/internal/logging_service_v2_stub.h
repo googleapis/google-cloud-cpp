@@ -21,6 +21,7 @@
 
 #include "google/cloud/async_streaming_read_write_rpc.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/logging/v2/logging.grpc.pb.h>
@@ -64,6 +65,12 @@ class LoggingServiceV2Stub {
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries(google::cloud::CompletionQueue const& cq,
                       std::unique_ptr<grpc::ClientContext> context) = 0;
+
+  virtual future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+  AsyncWriteLogEntries(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::logging::v2::WriteLogEntriesRequest const& request) = 0;
 };
 
 class DefaultLoggingServiceV2Stub : public LoggingServiceV2Stub {
@@ -100,6 +107,12 @@ class DefaultLoggingServiceV2Stub : public LoggingServiceV2Stub {
       google::logging::v2::TailLogEntriesResponse>>
   AsyncTailLogEntries(google::cloud::CompletionQueue const& cq,
                       std::unique_ptr<grpc::ClientContext> context) override;
+
+  future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+  AsyncWriteLogEntries(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::logging::v2::WriteLogEntriesRequest const& request) override;
 
  private:
   std::unique_ptr<google::logging::v2::LoggingServiceV2::StubInterface>

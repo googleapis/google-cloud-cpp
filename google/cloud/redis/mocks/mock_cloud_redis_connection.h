@@ -27,6 +27,21 @@ namespace cloud {
 namespace redis_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `CloudRedisConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `CloudRedisClient`. To do so,
+ * construct an object of type `CloudRedisClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockCloudRedisConnection : public redis::CloudRedisConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
@@ -38,6 +53,12 @@ class MockCloudRedisConnection : public redis::CloudRedisConnection {
   MOCK_METHOD(StatusOr<google::cloud::redis::v1::Instance>, GetInstance,
               (google::cloud::redis::v1::GetInstanceRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::redis::v1::InstanceAuthString>,
+      GetInstanceAuthString,
+      (google::cloud::redis::v1::GetInstanceAuthStringRequest const& request),
+      (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::redis::v1::Instance>>,
               CreateInstance,
@@ -73,6 +94,12 @@ class MockCloudRedisConnection : public redis::CloudRedisConnection {
               DeleteInstance,
               (google::cloud::redis::v1::DeleteInstanceRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::redis::v1::Instance>>,
+      RescheduleMaintenance,
+      (google::cloud::redis::v1::RescheduleMaintenanceRequest const& request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

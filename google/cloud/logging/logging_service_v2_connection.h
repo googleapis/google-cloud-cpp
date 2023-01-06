@@ -23,7 +23,6 @@
 #include "google/cloud/logging/internal/logging_service_v2_stub.h"
 #include "google/cloud/logging/logging_service_v2_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
@@ -48,6 +47,18 @@ using LoggingServiceV2LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         logging_internal::LoggingServiceV2RetryTraits>;
 
+/**
+ * The `LoggingServiceV2Connection` object for `LoggingServiceV2Client`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `LoggingServiceV2Client`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `LoggingServiceV2Client`.
+ *
+ * To create a concrete instance, see `MakeLoggingServiceV2Connection()`.
+ *
+ * For mocking, see `logging_mocks::MockLoggingServiceV2Connection`.
+ */
 class LoggingServiceV2Connection {
  public:
   virtual ~LoggingServiceV2Connection() = 0;
@@ -73,28 +84,40 @@ class LoggingServiceV2Connection {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::logging::v2::TailLogEntriesRequest,
       google::logging::v2::TailLogEntriesResponse>>
-      AsyncTailLogEntries(ExperimentalTag);
+  AsyncTailLogEntries();
+
+  virtual future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+  AsyncWriteLogEntries(
+      google::logging::v2::WriteLogEntriesRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `LoggingServiceV2Connection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of LoggingServiceV2Client.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `LoggingServiceV2Connection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::logging::LoggingServiceV2PolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `LoggingServiceV2Connection` created
+ * by this function.
+ */
 std::shared_ptr<LoggingServiceV2Connection> MakeLoggingServiceV2Connection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace logging_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<logging::LoggingServiceV2Connection>
-MakeLoggingServiceV2Connection(std::shared_ptr<LoggingServiceV2Stub> stub,
-                               Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace logging_internal
 }  // namespace cloud
 }  // namespace google
 

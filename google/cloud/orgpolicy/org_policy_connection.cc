@@ -23,6 +23,7 @@
 #include "google/cloud/orgpolicy/org_policy_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,17 +36,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OrgPolicyConnection::~OrgPolicyConnection() = default;
 
 StreamRange<google::cloud::orgpolicy::v2::Constraint>
-    OrgPolicyConnection::ListConstraints(
-        google::cloud::orgpolicy::v2::
-            ListConstraintsRequest) {  // NOLINT(performance-unnecessary-value-param)
+OrgPolicyConnection::ListConstraints(
+    google::cloud::orgpolicy::v2::
+        ListConstraintsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::orgpolicy::v2::Constraint>>();
 }
 
 StreamRange<google::cloud::orgpolicy::v2::Policy>
-    OrgPolicyConnection::ListPolicies(
-        google::cloud::orgpolicy::v2::
-            ListPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+OrgPolicyConnection::ListPolicies(
+    google::cloud::orgpolicy::v2::
+        ListPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::orgpolicy::v2::Policy>>();
 }
@@ -80,6 +81,7 @@ Status OrgPolicyConnection::DeletePolicy(
 
 std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  OrgPolicyPolicyOptionList>(options, __func__);
   options = orgpolicy_internal::OrgPolicyDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -91,23 +93,5 @@ std::shared_ptr<OrgPolicyConnection> MakeOrgPolicyConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace orgpolicy
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace orgpolicy_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<orgpolicy::OrgPolicyConnection> MakeOrgPolicyConnection(
-    std::shared_ptr<OrgPolicyStub> stub, Options options) {
-  options = OrgPolicyDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<orgpolicy_internal::OrgPolicyConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace orgpolicy_internal
 }  // namespace cloud
 }  // namespace google

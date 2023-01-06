@@ -24,6 +24,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/command_line_parsing.h"
 #include "absl/memory/memory.h"
+#include "absl/strings/match.h"
 #include <chrono>
 #include <iostream>
 #include <limits>
@@ -148,6 +149,11 @@ bool ExperimentCompleted(Config const& config,
 void PublisherTask(Config const& config, ExperimentFlowControl& flow_control,
                    int task);
 
+std::vector<pubsub::Subscription> CreateSubscriptions(
+    pubsub::SubscriptionAdminClient subscription_admin,
+    google::cloud::internal::DefaultPRNG& generator, Config const& config,
+    pubsub::Topic const& topic);
+
 class Cleanup {
  public:
   Cleanup() = default;
@@ -213,18 +219,8 @@ int main(int argc, char* argv[]) {
             << std::endl;
 
   auto const topic = pubsub::Topic(config->project_id, config->topic_id);
-  auto const subscriptions = [&] {
-    std::vector<pubsub::Subscription> subscriptions;
-    for (int i = 0; i != config->subscription_count; ++i) {
-      auto sub = pubsub::Subscription(
-          config->project_id,
-          google::cloud::pubsub_testing::RandomSubscriptionId(generator));
-      auto create = subscription_admin.CreateSubscription(topic, sub);
-      if (!create) continue;
-      subscriptions.push_back(std::move(sub));
-    }
-    return subscriptions;
-  }();
+  auto const subscriptions =
+      CreateSubscriptions(subscription_admin, generator, *config, topic);
   if (subscriptions.empty()) {
     std::cerr << "Could not create any subscriptions\n";
     return 1;
@@ -253,15 +249,11 @@ int main(int argc, char* argv[]) {
     sessions.clear();
   };
 
-  auto tasks = [&] {
-    std::vector<std::thread> tasks(config->publisher_count);
-    int task_id = 0;
-    std::generate(tasks.begin(), tasks.end(), [&] {
-      return std::thread{PublisherTask, std::cref(*config),
-                         std::ref(flow_control), task_id++};
-    });
-    return tasks;
-  }();
+  std::vector<std::thread> tasks(config->publisher_count);
+  std::generate(tasks.begin(), tasks.end(), [&, task_id = 0]() mutable {
+    return std::thread{PublisherTask, std::cref(*config),
+                       std::ref(flow_control), task_id++};
+  });
 
   auto ts = [] {
     return google::cloud::internal::FormatRfc3339(
@@ -307,24 +299,23 @@ int main(int argc, char* argv[]) {
     sessions[idx] = subscribers[idx]->Subscribe(handler);
 
     auto const now = std::chrono::steady_clock::now();
-    if (now >= report_deadline) {
-      report_deadline = now + report_interval;
-      auto const samples = flow_control.ClearSamples();
-      if (samples.empty()) {
-        std::cout << "# " << ts() << ',';
-        flow_control.Debug(std::cout);
-        std::cout << std::endl;
-      } else {
-        auto const p = std::minmax_element(samples.begin(), samples.end());
-        auto const sum = std::accumulate(samples.begin(), samples.end(),
-                                         std::chrono::microseconds{0});
-        auto const mean = sum / samples.size();
-        auto const received_count = flow_control.ReceivedCount();
-        std::cout << ts() << ',' << received_count << ',' << samples.size()
-                  << ',' << p.first->count() << ',' << p.second->count() << ','
-                  << mean.count() << std::endl;
-      }
+    if (now < report_deadline) continue;
+    report_deadline = now + report_interval;
+    auto const samples = flow_control.ClearSamples();
+    if (samples.empty()) {
+      std::cout << "# " << ts() << ',';
+      flow_control.Debug(std::cout);
+      std::cout << std::endl;
+      continue;
     }
+    auto const p = std::minmax_element(samples.begin(), samples.end());
+    auto const sum = std::accumulate(samples.begin(), samples.end(),
+                                     std::chrono::microseconds{0});
+    auto const mean = sum / samples.size();
+    auto const received_count = flow_control.ReceivedCount();
+    std::cout << ts() << ',' << received_count << ',' << samples.size() << ','
+              << p.first->count() << ',' << p.second->count() << ','
+              << mean.count() << std::endl;
   }
 
   flow_control.Shutdown();
@@ -450,7 +441,7 @@ void PublisherTask(Config const& config, ExperimentFlowControl& flow_control,
       publisher = make_publisher();
     }
     auto message = flow_control.GenerateMessage(task);
-    auto const shutdown = message.data().rfind("shutdown:", 0) == 0;
+    auto const shutdown = absl::StartsWith(message.data(), "shutdown:");
     last_publish = publisher.Publish(std::move(message))
                        .then([&flow_control](future<StatusOr<std::string>> f) {
                          flow_control.Published(f.get().ok());
@@ -459,6 +450,22 @@ void PublisherTask(Config const& config, ExperimentFlowControl& flow_control,
   }
   publisher.Flush();
   if (last_publish.valid()) last_publish.get();
+}
+
+std::vector<pubsub::Subscription> CreateSubscriptions(
+    pubsub::SubscriptionAdminClient subscription_admin,
+    google::cloud::internal::DefaultPRNG& generator, Config const& config,
+    pubsub::Topic const& topic) {
+  std::vector<pubsub::Subscription> subscriptions;
+  for (int i = 0; i != config.subscription_count; ++i) {
+    auto sub = pubsub::Subscription(
+        config.project_id,
+        google::cloud::pubsub_testing::RandomSubscriptionId(generator));
+    auto create = subscription_admin.CreateSubscription(topic, sub);
+    if (!create) continue;
+    subscriptions.push_back(std::move(sub));
+  }
+  return subscriptions;
 }
 
 using ::google::cloud::internal::GetEnv;

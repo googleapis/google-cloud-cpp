@@ -17,7 +17,6 @@
 // source: google/cloud/notebooks/v1/service.proto
 
 #include "google/cloud/notebooks/notebook_client.h"
-#include "google/cloud/notebooks/internal/notebook_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NotebookServiceClient::NotebookServiceClient(
     std::shared_ptr<NotebookServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), notebooks_internal::NotebookServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 NotebookServiceClient::~NotebookServiceClient() = default;
 
 StreamRange<google::cloud::notebooks::v1::Instance>
@@ -134,6 +132,15 @@ NotebookServiceClient::SetInstanceLabels(
   return connection_->SetInstanceLabels(request);
 }
 
+StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+NotebookServiceClient::UpdateInstanceMetadataItems(
+    google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateInstanceMetadataItems(request);
+}
+
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
 NotebookServiceClient::DeleteInstance(std::string const& name, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -221,6 +228,26 @@ NotebookServiceClient::RollbackInstance(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RollbackInstance(request);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Instance>>
+NotebookServiceClient::DiagnoseInstance(
+    std::string const& name,
+    google::cloud::notebooks::v1::DiagnosticConfig const& diagnostic_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::notebooks::v1::DiagnoseInstanceRequest request;
+  request.set_name(name);
+  *request.mutable_diagnostic_config() = diagnostic_config;
+  return connection_->DiagnoseInstance(request);
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Instance>>
+NotebookServiceClient::DiagnoseInstance(
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DiagnoseInstance(request);
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>

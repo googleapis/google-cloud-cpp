@@ -267,17 +267,47 @@ std::ostream& operator<<(std::ostream& os, SourceEncryptionKey const& rhs);
  */
 template <typename Generator>
 EncryptionKeyData CreateKeyFromGenerator(Generator& gen) {
-  constexpr int kKeySize = 256 / std::numeric_limits<unsigned char>::digits;
-
-  // NOLINTNEXTLINE(readability-identifier-naming)
-  constexpr auto minchar = (std::numeric_limits<char>::min)();
-  // NOLINTNEXTLINE(readability-identifier-naming)
-  constexpr auto maxchar = (std::numeric_limits<char>::max)();
-  std::uniform_int_distribution<int> uni(minchar, maxchar);
+  auto constexpr kKeySize = 256 / std::numeric_limits<unsigned char>::digits;
+  auto constexpr kMinChar = (std::numeric_limits<char>::min)();
+  auto constexpr kMaxChar = (std::numeric_limits<char>::max)();
+  std::uniform_int_distribution<int> uni(kMinChar, kMaxChar);
   std::string key(static_cast<std::size_t>(kKeySize), ' ');
   std::generate_n(key.begin(), key.size(),
                   [&uni, &gen] { return static_cast<char>(uni(gen)); });
   return EncryptionDataFromBinaryKey(key);
+}
+
+/**
+ * Modify the accepted encodings.
+ *
+ * When using HTTP, GCS decompresses gzip-encoded objects by default:
+ *
+ *     https://cloud.google.com/storage/docs/transcoding
+ *
+ * Setting this option to `gzip` disables automatic decompression. This can be
+ * useful for applications wanting to operate with the compressed data. Setting
+ * this option to `identity`, or not setting this option, returns decompressed
+ * data.
+ *
+ * @note Note that decompressive transcoding only apply to objects that are
+ *     compressed with `gzip` and have their `content_encoding()` attribute set
+ *     accordingly. At the time of this writing GCS does not decompress objects
+ *     stored with other compression algorithms, nor does it detect the object
+ *     compression based on the object name or its contents.
+ *
+ * @see `AcceptEncodingGzip()` is a helper function to disable decompressive
+ *     encoding.
+ */
+struct AcceptEncoding
+    : public internal::WellKnownHeader<AcceptEncoding, std::string> {
+  using WellKnownHeader<AcceptEncoding, std::string>::WellKnownHeader;
+  static char const* header_name() { return "Accept-Encoding"; }
+};
+
+inline AcceptEncoding AcceptEncodingGzip() { return AcceptEncoding("gzip"); }
+
+inline AcceptEncoding AcceptEncodingIdentity() {
+  return AcceptEncoding("identity");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

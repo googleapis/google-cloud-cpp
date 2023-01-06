@@ -28,6 +28,7 @@
 #include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -46,6 +47,20 @@ using AutoscalingPolicyServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dataproc_internal::AutoscalingPolicyServiceRetryTraits>;
 
+/**
+ * The `AutoscalingPolicyServiceConnection` object for
+ * `AutoscalingPolicyServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AutoscalingPolicyServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AutoscalingPolicyServiceClient`.
+ *
+ * To create a concrete instance, see
+ * `MakeAutoscalingPolicyServiceConnection()`.
+ *
+ * For mocking, see `dataproc_mocks::MockAutoscalingPolicyServiceConnection`.
+ */
 class AutoscalingPolicyServiceConnection {
  public:
   virtual ~AutoscalingPolicyServiceConnection() = 0;
@@ -75,25 +90,46 @@ class AutoscalingPolicyServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `AutoscalingPolicyServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * AutoscalingPolicyServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `AutoscalingPolicyServiceConnection`. Expected options are any of
+ * the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::dataproc::AutoscalingPolicyServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param location Sets the prefix for the default `EndpointOption` value.
+ * @param options (optional) Configure the `AutoscalingPolicyServiceConnection`
+ * created by this function.
+ */
+std::shared_ptr<AutoscalingPolicyServiceConnection>
+MakeAutoscalingPolicyServiceConnection(std::string const& location,
+                                       Options options = {});
+
+/**
+ * A backwards-compatible version of the previous factory function.  Unless
+ * the service also offers a global endpoint, the default value of the
+ * `EndpointOption` may be useless, in which case it must be overridden.
+ *
+ * @deprecated Please use the `location` overload instead.
+ */
 std::shared_ptr<AutoscalingPolicyServiceConnection>
 MakeAutoscalingPolicyServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace dataproc_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<dataproc::AutoscalingPolicyServiceConnection>
-MakeAutoscalingPolicyServiceConnection(
-    std::shared_ptr<AutoscalingPolicyServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc_internal
 }  // namespace cloud
 }  // namespace google
 

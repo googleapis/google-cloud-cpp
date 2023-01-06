@@ -59,9 +59,9 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
       credentials.value("token_uri", default_token_uri)};
 }
 
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-ParseAuthorizedUserRefreshResponse(rest_internal::RestResponse& response,
-                                   std::chrono::system_clock::time_point now) {
+StatusOr<internal::AccessToken> ParseAuthorizedUserRefreshResponse(
+    rest_internal::RestResponse& response,
+    std::chrono::system_clock::time_point now) {
   auto status_code = response.StatusCode();
   auto payload = rest_internal::ReadAll(std::move(response).ExtractPayload());
   if (!payload.ok()) return std::move(payload).status();
@@ -73,56 +73,37 @@ ParseAuthorizedUserRefreshResponse(rest_internal::RestResponse& response,
     auto error_payload =
         *payload +
         "Could not find all required fields in response (access_token,"
-        " id_token, expires_in, token_type).";
+        " id_token, expires_in, token_type) while trying to obtain an access"
+        " token for service account credentials.";
     return AsStatus(status_code, error_payload);
   }
-  std::string header_value = access_token.value("token_type", "");
-  header_value += ' ';
-  header_value += access_token.value("access_token", "");
-  auto expires_in =
-      std::chrono::seconds(access_token.value("expires_in", int(0)));
-  auto new_expiration = now + expires_in;
-  return RefreshingCredentialsWrapper::TemporaryToken{
-      std::make_pair("Authorization", std::move(header_value)), new_expiration};
+  auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
+  return internal::AccessToken{access_token.value("access_token", ""),
+                               now + expires_in};
 }
 
 AuthorizedUserCredentials::AuthorizedUserCredentials(
     AuthorizedUserCredentialsInfo info, Options options,
-    std::unique_ptr<rest_internal::RestClient> rest_client,
-    CurrentTimeFn current_time_fn)
+    HttpClientFactory client_factory)
     : info_(std::move(info)),
       options_(std::move(options)),
-      current_time_fn_(std::move(current_time_fn)),
-      rest_client_(std::move(rest_client)) {
-  if (!rest_client_) {
-    rest_client_ =
-        rest_internal::MakeDefaultRestClient(info_.token_uri, options_);
-  }
-}
+      client_factory_(std::move(client_factory)) {}
 
-StatusOr<std::pair<std::string, std::string>>
-AuthorizedUserCredentials::AuthorizationHeader() {
-  std::unique_lock<std::mutex> lock(mu_);
-  return refreshing_creds_.AuthorizationHeader([this] { return Refresh(); });
-}
-
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-AuthorizedUserCredentials::Refresh() {
+StatusOr<internal::AccessToken> AuthorizedUserCredentials::GetToken(
+    std::chrono::system_clock::time_point tp) {
   rest_internal::RestRequest request;
+  request.SetPath(info_.token_uri);
   request.AddHeader("content-type", "application/x-www-form-urlencoded");
   std::vector<std::pair<std::string, std::string>> form_data;
   form_data.emplace_back("grant_type", "refresh_token");
   form_data.emplace_back("client_id", info_.client_id);
   form_data.emplace_back("client_secret", info_.client_secret);
   form_data.emplace_back("refresh_token", info_.refresh_token);
-  StatusOr<std::unique_ptr<rest_internal::RestResponse>> response =
-      rest_client_->Post(request, form_data);
+  auto client = client_factory_(options_);
+  auto response = client->Post(request, form_data);
   if (!response.ok()) return std::move(response).status();
-  std::unique_ptr<rest_internal::RestResponse> real_response =
-      std::move(response.value());
-  if (real_response->StatusCode() >= 300)
-    return AsStatus(std::move(*real_response));
-  return ParseAuthorizedUserRefreshResponse(*real_response, current_time_fn_());
+  if (IsHttpError(**response)) return AsStatus(std::move(**response));
+  return ParseAuthorizedUserRefreshResponse(**response, tp);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

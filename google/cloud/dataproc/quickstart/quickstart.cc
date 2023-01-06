@@ -15,35 +15,28 @@
 #include "google/cloud/dataproc/cluster_controller_client.h"
 #include "google/cloud/common_options.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
     std::cerr << "Usage: " << argv[0] << " project-id region\n";
     return 1;
   }
-
-  namespace gc = ::google::cloud;
-  namespace dataproc = ::google::cloud::dataproc;
-
   std::string const project_id = argv[1];
   std::string const region = argv[2];
 
-  gc::Options options;
-  if (region != "global") {
-    options.set<gc::EndpointOption>(region + "-dataproc.googleapis.com:443");
-  }
+  namespace dataproc = ::google::cloud::dataproc;
 
   auto client = dataproc::ClusterControllerClient(
-      dataproc::MakeClusterControllerConnection(options));
+      dataproc::MakeClusterControllerConnection(region == "global" ? ""
+                                                                   : region));
 
   for (auto c : client.ListClusters(project_id, region)) {
-    if (!c) throw std::runtime_error(c.status().message());
+    if (!c) throw std::move(c).status();
     std::cout << c->cluster_name() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

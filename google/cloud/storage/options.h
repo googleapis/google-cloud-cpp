@@ -23,6 +23,7 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/options.h"
 #include <chrono>
+#include <cstdint>
 #include <memory>
 #include <string>
 
@@ -30,6 +31,7 @@ namespace google {
 namespace cloud {
 namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Set the HTTP version used by the client.
  *
@@ -43,10 +45,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * - "2.0": use HTTP/2 with our without TLS.
  *
  * [libcurl's default]: https://curl.se/libcurl/c/CURLOPT_HTTP_VERSION.html
+ *
+ * @ingroup storage-options
  */
 struct HttpVersionOption {
   using Type = std::string;
 };
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_experimental
 
@@ -64,24 +69,48 @@ struct CAPathOption {
   using Type = std::string;
 };
 
+/// This is only intended for testing of the library. Not for public use.
+struct UseRestClientOption {
+  using Type = bool;
+};
+
 }  // namespace internal
 
-/// Configure the REST endpoint for the GCS client library.
+/**
+ * Configure the REST endpoint for the GCS client library.
+ *
+ * @ingroup storage-options
+ */
 struct RestEndpointOption {
   using Type = std::string;
 };
 
-/// Configure the IAM endpoint for the GCS client library.
+/**
+ * Configure the IAM endpoint for the GCS client library.
+ *
+ * @ingroup storage-options
+ */
 struct IamEndpointOption {
   using Type = std::string;
 };
 
-/// Configure oauth2::Credentials for the GCS client library.
+/**
+ * Configure oauth2::Credentials for the GCS client library.
+ *
+ * @ingroup storage-options
+ *
+ * @deprecated prefer using `google::cloud::UnifiedCredentialsOption` and the
+ *     unified credentials documented in @ref guac
+ */
 struct Oauth2CredentialsOption {
   using Type = std::shared_ptr<oauth2::Credentials>;
 };
 
-/// Set the Google Cloud Platform project id.
+/**
+ * Set the Google Cloud Platform project id.
+ *
+ * @ingroup storage-options
+ */
 struct ProjectIdOption {
   using Type = std::string;
 };
@@ -92,18 +121,25 @@ struct ProjectIdOption {
  * The C++ client library uses this value to limit the growth of the
  * connection pool. Once an operation (a RPC or a download) completes the
  * connection used for that operation is returned to the pool. If the pool is
- * full the connection is immediately released. If the pool has room the
- * connection is cached for the next RPC or download.
+ * full one or more connections are released. Otherwise, the connection is
+ * cached for use in following RPCs or downloads.
  *
- * @note The behavior of this pool may change in the future, depending on the
- * low-level implementation details of the library.
+ * @note Setting this value to 0 disables connection pooling.
  *
- * @note The library does not create connections proactively, setting a high
- * value may result in very few connections if your application does not need
- * them.
+ * @warning The behavior of the connection pool may change in the future, only
+ *   the maximum number of handles in use can be controlled by the application.
+ *   The information about which handles are released and when is for
+ *   informational purposes only.
  *
- * @warning The library may create more connections than this option configures,
- * for example if your application requests many simultaneous downloads.
+ * The library does not create connections proactively, setting a high value
+ * may result in very few connections if your application does not need them.
+ * The library may create more connections than this option configures, for
+ * example if your application requests many simultaneous downloads. When the
+ * pool is full, the library typically releases older connections first, and
+ * tries to reuse newer connections if they are available. The library may
+ * release more than one connection when the pool becomes full.
+ *
+ * @ingroup storage-options
  */
 struct ConnectionPoolSizeOption {
   using Type = std::size_t;
@@ -116,9 +152,11 @@ struct ConnectionPoolSizeOption {
  * this option controls the size of the in-memory buffer kept to satisfy any I/O
  * requests.
  *
- * Applications seeking optional performance for downloads should avoid
+ * Applications seeking optimal performance for downloads should avoid
  * formatted I/O, and prefer using `std::istream::read()`. This option has no
  * effect in that case.
+ *
+ * @ingroup storage-options
  */
 struct DownloadBufferSizeOption {
   using Type = std::size_t;
@@ -132,9 +170,11 @@ struct DownloadBufferSizeOption {
  * uploaded. Note that GCS only accepts chunks in multiples of 256KiB, so this
  * option is always rounded up to the next such multiple.
  *
- * Applications seeking optional performance for downloads should avoid
+ * Applications seeking optimal performance for downloads should avoid
  * formatted I/O, and prefer using `std::istream::write()`. This option has no
  * effect in that case.
+ *
+ * @ingroup storage-options
  */
 struct UploadBufferSizeOption {
   using Type = std::size_t;
@@ -148,6 +188,8 @@ struct UploadBufferSizeOption {
  * memory (we are ignoring memory mapped files in this discussion). The library
  * automatically switches to resumable upload for files larger than this
  * threshold.
+ *
+ * @ingroup storage-options
  */
 struct MaximumSimpleUploadSizeOption {
   using Type = std::size_t;
@@ -215,9 +257,23 @@ struct MaximumCurlSocketSendSizeOption {
  * work, as the timeout would be too large to be useful. For small requests,
  * this is as effective as a timeout parameter, but maybe unfamiliar and thus
  * harder to reason about.
+ *
+ * @ingroup storage-options
  */
 struct TransferStallTimeoutOption {
   using Type = std::chrono::seconds;
+};
+
+/**
+ * The minimum accepted bytes/second transfer rate.
+ *
+ * If the average rate is below this value for the `TransferStallTimeoutOption`
+ * then the transfer is aborted.
+ *
+ * @ingroup storage-options
+ */
+struct TransferStallMinimumRateOption {
+  using Type = std::int32_t;
 };
 
 /**
@@ -233,22 +289,48 @@ struct TransferStallTimeoutOption {
  * work, as the timeout would be too large to be useful. For small requests,
  * this is as effective as a timeout parameter, but maybe unfamiliar and thus
  * harder to reason about.
+ *
+ * @ingroup storage-options
  */
 struct DownloadStallTimeoutOption {
   using Type = std::chrono::seconds;
 };
 
-/// Set the retry policy for a GCS client.
+/**
+ * The minimum accepted bytes/second download rate.
+ *
+ * If the average rate is below this value for the `DownloadStallTimeoutOption`
+ * then the download is aborted.
+ *
+ * @ingroup storage-options
+ */
+struct DownloadStallMinimumRateOption {
+  using Type = std::int32_t;
+};
+
+/**
+ * Set the retry policy for a GCS client.
+ *
+ * @ingroup storage-options
+ */
 struct RetryPolicyOption {
   using Type = std::shared_ptr<RetryPolicy>;
 };
 
-/// Set the backoff policy for a GCS client.
+/**
+ * Set the backoff policy for a GCS client.
+ *
+ * @ingroup storage-options
+ */
 struct BackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Set the idempotency policy for a GCS client.
+/**
+ * Set the idempotency policy for a GCS client.
+ *
+ * @ingroup storage-options
+ */
 struct IdempotencyPolicyOption {
   using Type = std::shared_ptr<IdempotencyPolicy>;
 };

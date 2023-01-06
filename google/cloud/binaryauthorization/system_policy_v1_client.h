@@ -65,16 +65,16 @@ class SystemPolicyV1Client {
       std::shared_ptr<SystemPolicyV1Connection> connection, Options opts = {});
   ~SystemPolicyV1Client();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   SystemPolicyV1Client(SystemPolicyV1Client const&) = default;
   SystemPolicyV1Client& operator=(SystemPolicyV1Client const&) = default;
   SystemPolicyV1Client(SystemPolicyV1Client&&) = default;
   SystemPolicyV1Client& operator=(SystemPolicyV1Client&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(SystemPolicyV1Client const& a,
                          SystemPolicyV1Client const& b) {
     return a.connection_ == b.connection_;
@@ -83,7 +83,7 @@ class SystemPolicyV1Client {
                          SystemPolicyV1Client const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Gets the current system policy in the specified location.
@@ -94,12 +94,12 @@ class SystemPolicyV1Client {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L33}
+  /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
   /// [google.cloud.binaryauthorization.v1.GetSystemPolicyRequest]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L258}
   /// [google.cloud.binaryauthorization.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L33}
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
       std::string const& name, Options opts = {});
@@ -112,12 +112,12 @@ class SystemPolicyV1Client {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L33}
+  /// @googleapis_link{google::cloud::binaryauthorization::v1::Policy,google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
   /// [google.cloud.binaryauthorization.v1.GetSystemPolicyRequest]:
   /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/service.proto#L258}
   /// [google.cloud.binaryauthorization.v1.Policy]:
-  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L33}
+  /// @googleapis_reference_link{google/cloud/binaryauthorization/v1/resources.proto#L32}
   ///
   StatusOr<google::cloud::binaryauthorization::v1::Policy> GetSystemPolicy(
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&

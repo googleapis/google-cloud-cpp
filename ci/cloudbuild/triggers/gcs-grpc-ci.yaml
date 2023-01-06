@@ -3,11 +3,12 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^(master|main|v\d+\..*)$
+    branch: ^main$
 name: gcs-grpc-ci
 substitutions:
   _BUILD_NAME: gcs-grpc
-  _DISTRO: fedora-34
+  _DISTRO: fedora-36-bazel
   _TRIGGER_TYPE: ci
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - ci

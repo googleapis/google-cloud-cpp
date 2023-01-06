@@ -27,6 +27,21 @@ namespace cloud {
 namespace bigtable_admin_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `BigtableInstanceAdminConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `BigtableInstanceAdminClient`. To do
+ * so, construct an object of type `BigtableInstanceAdminClient` with an
+ * instance of this class. Then use the Google Test framework functions to
+ * program the behavior of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockBigtableInstanceAdminConnection
     : public bigtable_admin::BigtableInstanceAdminConnection {
  public:
@@ -129,6 +144,11 @@ class MockBigtableInstanceAdminConnection
   MOCK_METHOD(StatusOr<google::iam::v1::TestIamPermissionsResponse>,
               TestIamPermissions,
               (google::iam::v1::TestIamPermissionsRequest const& request),
+              (override));
+
+  MOCK_METHOD(StreamRange<google::bigtable::admin::v2::HotTablet>,
+              ListHotTablets,
+              (google::bigtable::admin::v2::ListHotTabletsRequest request),
               (override));
 };
 

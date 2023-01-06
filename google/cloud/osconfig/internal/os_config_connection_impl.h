@@ -84,6 +84,18 @@ class OsConfigServiceConnectionImpl
       google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request)
       override;
 
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> UpdatePatchDeployment(
+      google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request)
+      override;
+
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> PausePatchDeployment(
+      google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request)
+      override;
+
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> ResumePatchDeployment(
+      google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request)
+      override;
+
  private:
   std::unique_ptr<osconfig::OsConfigServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

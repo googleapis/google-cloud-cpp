@@ -16,44 +16,56 @@ package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-SOURCE_GLOB = "**/*.cc"
+service_dirs = [
+    "",
+    "v1/",
+]
 
-MOCK_SOURCE_GLOB = "mocks/*.cc"
+src_dirs = service_dirs + [d + "internal/" for d in service_dirs]
 
-HEADER_GLOB = "**/*.h"
+filegroup(
+    name = "srcs",
+    srcs = glob([d + "*.cc" for d in src_dirs]),
+)
 
-MOCK_HEADER_GLOB = "mocks/*.h"
+filegroup(
+    name = "hdrs",
+    srcs = glob([d + "*.h" for d in src_dirs]),
+)
+
+filegroup(
+    name = "mocks",
+    srcs = glob([d + "mocks/*.h" for d in service_dirs]),
+)
 
 cc_library(
     name = "google_cloud_cpp_accessapproval",
-    srcs = glob(
-        include = [SOURCE_GLOB],
-        exclude = [MOCK_SOURCE_GLOB],
-    ),
-    hdrs = glob(
-        include = [HEADER_GLOB],
-        exclude = [MOCK_HEADER_GLOB],
-    ),
+    srcs = [":srcs"],
+    hdrs = [":hdrs"],
     visibility = ["//:__pkg__"],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:common",
+        "//:grpc_utils",
         "@com_google_googleapis//google/cloud/accessapproval/v1:accessapproval_cc_grpc",
     ],
 )
 
 cc_library(
     name = "google_cloud_cpp_accessapproval_mocks",
-    srcs = glob(
-        include = [MOCK_SOURCE_GLOB],
-    ),
-    hdrs = glob(
-        include = [MOCK_HEADER_GLOB],
-    ),
+    hdrs = [":mocks"],
     visibility = ["//:__pkg__"],
     deps = [
         ":google_cloud_cpp_accessapproval",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "@com_google_googletest//:gtest",
     ],
 )
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    tags = ["integration-test"],
+    deps = [
+        "//:accessapproval",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob([d + "samples/*.cc" for d in service_dirs])]

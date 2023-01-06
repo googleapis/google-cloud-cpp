@@ -21,41 +21,27 @@
 
 #include "generator/integration_tests/golden/golden_thing_admin_connection.h"
 #include "generator/integration_tests/golden/golden_thing_admin_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "generator/integration_tests/golden/v1/golden_thing_admin_options.h"
 
 namespace google {
 namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
-struct GoldenThingAdminRetryPolicyOption {
-  using Type = std::shared_ptr<GoldenThingAdminRetryPolicy>;
-};
+/// @deprecated Use golden_v1::GoldenThingAdminPollingPolicyOption directly.
+using ::google::cloud::golden_v1::GoldenThingAdminPollingPolicyOption;
 
-/// Option to use with `google::cloud::Options`.
-struct GoldenThingAdminBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use golden_v1::GoldenThingAdminBackoffPolicyOption directly.
+using ::google::cloud::golden_v1::GoldenThingAdminBackoffPolicyOption;
 
-/// Option to use with `google::cloud::Options`.
-struct GoldenThingAdminPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
+/// @deprecated Use golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::golden_v1::GoldenThingAdminConnectionIdempotencyPolicyOption;
 
-/// Option to use with `google::cloud::Options`.
-struct GoldenThingAdminConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<GoldenThingAdminConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use golden_v1::GoldenThingAdminPolicyOptionList directly.
+using ::google::cloud::golden_v1::GoldenThingAdminPolicyOptionList;
 
-using GoldenThingAdminPolicyOptionList =
-    OptionList<GoldenThingAdminRetryPolicyOption,
-               GoldenThingAdminBackoffPolicyOption,
-               GoldenThingAdminPollingPolicyOption,
-               GoldenThingAdminConnectionIdempotencyPolicyOption>;
+/// @deprecated Use golden_v1::GoldenThingAdminRetryPolicyOption directly.
+using ::google::cloud::golden_v1::GoldenThingAdminRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden

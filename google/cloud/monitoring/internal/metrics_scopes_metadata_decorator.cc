@@ -49,7 +49,7 @@ MetricsScopesMetadata::ListMetricsScopesByMonitoredProject(
     grpc::ClientContext& context,
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListMetricsScopesByMonitoredProject(context, request);
 }
 
@@ -103,9 +103,8 @@ void MetricsScopesMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

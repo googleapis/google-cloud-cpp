@@ -15,6 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_H
 
+#include "google/cloud/pubsub/ack_handler.h"
+#include "google/cloud/pubsub/exactly_once_ack_handler.h"
 #include "google/cloud/pubsub/message.h"
 #include "google/cloud/pubsub/subscriber_connection.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -88,14 +90,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class Subscriber {
  public:
-  explicit Subscriber(std::shared_ptr<SubscriberConnection> connection)
-      : connection_(std::move(connection)) {}
+  explicit Subscriber(std::shared_ptr<SubscriberConnection> connection,
+                      Options opts = {});
 
   /**
    * Creates a new session to receive messages from @p subscription.
-   *
-   * @note Callable must be `CopyConstructible`, as @p cb will be stored in a
-   *   [`std::function<>`][std-function-link].
    *
    * @par Idempotency
    * @parblock
@@ -114,25 +113,77 @@ class Subscriber {
    * @par Example
    * @snippet samples.cc subscribe
    *
-   * @param cb the callable invoked when messages are received. This must be
-   *     usable to construct a
-   *     `std::function<void(pubsub::Message, pubsub::AckHandler)>`.
+   * @param cb the callable invoked when messages are received.
+   * @param opts any option overrides to use in this call.  These options take
+   *   precedence over the options passed in the constructor, and over any
+   *   options provided in the `PublisherConnection` initialization.
    * @return a future that is satisfied when the session will no longer receive
    *     messages. For example, because there was an unrecoverable error trying
    *     to receive data. Calling `.cancel()` in this object will (eventually)
    *     terminate the session and satisfy the future.
-   *
-   * [std-function-link]:
-   * https://en.cppreference.com/w/cpp/utility/functional/function
    */
-  template <typename Callable>
-  future<Status> Subscribe(Callable&& cb) {
-    std::function<void(Message, AckHandler)> f(std::forward<Callable>(cb));
-    return connection_->Subscribe({std::move(f)});
-  }
+  future<Status> Subscribe(ApplicationCallback cb, Options opts = {});
+
+  /**
+   * Creates a new session to receive messages from @p subscription using
+   * exactly-once delivery.
+   *
+   * @par Idempotency
+   * @parblock
+   * This is an idempotent operation; it only reads messages from the service.
+   * Will make multiple attempts to start a connection to the service, subject
+   * to the retry policies configured in the `SubscriberConnection`. Once a
+   * successful connection is established the library will try to resume the
+   * connection even if the connection fails with a permanent error. Resuming
+   * the connection is subject to the retry policies as described earlier.
+   *
+   * Note that calling `ExactlyOnceAckHandler::ack()` and/or
+   * `ExactlyOnceAckHandler::nack()` have their own rules with respect to
+   * retrying. Check the documentation of these functions for details.
+   * @endparblock
+   *
+   * @par Example
+   * @snippet samples.cc exactly-once-subscribe
+   *
+   * @param cb the callable invoked when messages are received.
+   * @param opts any option overrides to use in this call.  These options take
+   *   precedence over the options passed in the constructor, and over any
+   *   options provided in the `PublisherConnection` initialization.
+   * @return a future that is satisfied when the session will no longer receive
+   *     messages. For example, because there was an unrecoverable error trying
+   *     to receive data. Calling `.cancel()` in this object will (eventually)
+   *     terminate the session and satisfy the future.
+   */
+  future<Status> Subscribe(ExactlyOnceApplicationCallback cb,
+                           Options opts = {});
+
+  /**
+   * Pulls one message from @p subscription.
+   *
+   * @par Idempotency
+   * @parblock
+   * This is an idempotent operation; it only reads messages from the service.
+   * It will make multiple attempts to pull a message from the service, subject
+   * to the retry policies configured in the `SubscriberConnection`.
+   *
+   * Note that calling `PullAckHandler::ack()` and/or `PullAckHandler::nack()`
+   * have their own rules with respect to retrying.
+   * @endparblock
+   *
+   * @par Example
+   * @snippet samples.cc pull
+   *
+   * @param opts any option overrides to use in this call.  These options take
+   *   precedence over the options passed in the constructor, and over any
+   *   options provided in the `PublisherConnection` initialization.
+   * @return a response including the message and a `PullAckHandler` to notify
+   *     the library when the message has been successfully handled.
+   */
+  StatusOr<PullResponse> Pull(Options opts = {});
 
  private:
   std::shared_ptr<SubscriberConnection> connection_;
+  google::cloud::Options options_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

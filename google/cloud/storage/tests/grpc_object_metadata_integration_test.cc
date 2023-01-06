@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
@@ -25,7 +24,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 using ::google::cloud::internal::GetEnv;
@@ -43,7 +41,7 @@ class GrpcObjectMetadataIntegrationTest
 TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
   ScopedEnvironment grpc_config("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
                                 "metadata");
-  // TODO(#7257) - restore gRPC integration tests against production
+  // TODO(#9805) - restore gRPC integration tests against production
   if (!UsingEmulator()) GTEST_SKIP();
 
   auto const bucket_name =
@@ -59,18 +57,16 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
   auto copy_name = MakeRandomObjectName();
   auto compose_name = MakeRandomObjectName();
 
+  // Use the full projection to get consistent behavior out of gRPC and REST.
   auto insert = client->InsertObject(bucket_name, object_name, LoremIpsum(),
-                                     IfGenerationMatch(0));
+                                     IfGenerationMatch(0), Projection::Full());
   ASSERT_STATUS_OK(insert);
   ScheduleForDelete(*insert);
 
-  auto get = client->GetObjectMetadata(bucket_name, object_name);
+  auto get =
+      client->GetObjectMetadata(bucket_name, object_name, Projection::Full());
   ASSERT_STATUS_OK(get);
-  auto sans_acls = [](ObjectMetadata meta) {
-    meta.set_acl({});
-    return meta;
-  };
-  EXPECT_EQ(sans_acls(*insert), sans_acls(*get));
+  EXPECT_EQ(*insert, *get);
 
   std::vector<std::string> names;
   for (auto const& object : client->ListObjects(bucket_name)) {
@@ -121,10 +117,7 @@ TEST_F(GrpcObjectMetadataIntegrationTest, ObjectMetadataCRUD) {
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC

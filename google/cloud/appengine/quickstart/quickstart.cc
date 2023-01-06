@@ -14,7 +14,6 @@
 
 #include "google/cloud/appengine/services_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -28,12 +27,12 @@ int main(int argc, char* argv[]) try {
   ::google::appengine::v1::ListServicesRequest request;
   request.set_parent(std::string{"apps/"} + argv[1]);
   for (auto r : client.ListServices(request)) {
-    if (!r) throw std::runtime_error(r.status().message());
+    if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

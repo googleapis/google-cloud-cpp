@@ -18,7 +18,6 @@
 
 #include "google/cloud/datacatalog/data_catalog_client.h"
 #include "google/cloud/datacatalog/data_catalog_options.h"
-#include "google/cloud/datacatalog/internal/data_catalog_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,9 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataCatalogClient::DataCatalogClient(
     std::shared_ptr<DataCatalogConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), datacatalog_internal::DataCatalogDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DataCatalogClient::~DataCatalogClient() = default;
 
 StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
@@ -254,6 +252,22 @@ DataCatalogClient::ListEntries(
     google::cloud::datacatalog::v1::ListEntriesRequest request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListEntries(std::move(request));
+}
+
+StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+DataCatalogClient::ModifyEntryOverview(
+    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ModifyEntryOverview(request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::Contacts>
+DataCatalogClient::ModifyEntryContacts(
+    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ModifyEntryContacts(request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
@@ -522,6 +536,38 @@ StreamRange<google::cloud::datacatalog::v1::Tag> DataCatalogClient::ListTags(
   return connection_->ListTags(std::move(request));
 }
 
+StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+DataCatalogClient::StarEntry(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datacatalog::v1::StarEntryRequest request;
+  request.set_name(name);
+  return connection_->StarEntry(request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+DataCatalogClient::StarEntry(
+    google::cloud::datacatalog::v1::StarEntryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->StarEntry(request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+DataCatalogClient::UnstarEntry(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::datacatalog::v1::UnstarEntryRequest request;
+  request.set_name(name);
+  return connection_->UnstarEntry(request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+DataCatalogClient::UnstarEntry(
+    google::cloud::datacatalog::v1::UnstarEntryRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UnstarEntry(request);
+}
+
 StatusOr<google::iam::v1::Policy> DataCatalogClient::SetIamPolicy(
     std::string const& resource, google::iam::v1::Policy const& policy,
     Options opts) {
@@ -542,7 +588,10 @@ StatusOr<google::iam::v1::Policy> DataCatalogClient::SetIamPolicy(
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
   auto backoff_policy =
-      internal::CurrentOptions().get<DataCatalogBackoffPolicyOption>()->clone();
+      internal::CurrentOptions().get<DataCatalogBackoffPolicyOption>();
+  if (backoff_policy != nullptr) {
+    backoff_policy = backoff_policy->clone();
+  }
   for (;;) {
     auto recent = connection_->GetIamPolicy(get_request);
     if (!recent) {
@@ -554,7 +603,8 @@ StatusOr<google::iam::v1::Policy> DataCatalogClient::SetIamPolicy(
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result || result.status().code() != StatusCode::kAborted) {
+    if (result || result.status().code() != StatusCode::kAborted ||
+        backoff_policy == nullptr) {
       return result;
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());

@@ -18,7 +18,6 @@
 
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/admin/bigtable_table_admin_options.h"
-#include "google/cloud/bigtable/admin/internal/bigtable_table_admin_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,10 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BigtableTableAdminClient::BigtableTableAdminClient(
     std::shared_ptr<BigtableTableAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          bigtable_admin_internal::BigtableTableAdminDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 BigtableTableAdminClient::~BigtableTableAdminClient() = default;
 
 StatusOr<google::bigtable::admin::v2::Table>
@@ -85,6 +82,25 @@ StatusOr<google::bigtable::admin::v2::Table> BigtableTableAdminClient::GetTable(
   return connection_->GetTable(request);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminClient::UpdateTable(
+    google::bigtable::admin::v2::Table const& table,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UpdateTableRequest request;
+  *request.mutable_table() = table;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateTable(request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminClient::UpdateTable(
+    google::bigtable::admin::v2::UpdateTableRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateTable(request);
+}
+
 Status BigtableTableAdminClient::DeleteTable(std::string const& name,
                                              Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -98,6 +114,22 @@ Status BigtableTableAdminClient::DeleteTable(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteTable(request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminClient::UndeleteTable(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::UndeleteTableRequest request;
+  request.set_name(name);
+  return connection_->UndeleteTable(request);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminClient::UndeleteTable(
+    google::bigtable::admin::v2::UndeleteTableRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UndeleteTable(request);
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
@@ -291,9 +323,11 @@ StatusOr<google::iam::v1::Policy> BigtableTableAdminClient::SetIamPolicy(
   get_request.set_resource(resource);
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
-  auto backoff_policy = internal::CurrentOptions()
-                            .get<BigtableTableAdminBackoffPolicyOption>()
-                            ->clone();
+  auto backoff_policy =
+      internal::CurrentOptions().get<BigtableTableAdminBackoffPolicyOption>();
+  if (backoff_policy != nullptr) {
+    backoff_policy = backoff_policy->clone();
+  }
   for (;;) {
     auto recent = connection_->GetIamPolicy(get_request);
     if (!recent) {
@@ -305,7 +339,8 @@ StatusOr<google::iam::v1::Policy> BigtableTableAdminClient::SetIamPolicy(
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result || result.status().code() != StatusCode::kAborted) {
+    if (result || result.status().code() != StatusCode::kAborted ||
+        backoff_policy == nullptr) {
       return result;
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());

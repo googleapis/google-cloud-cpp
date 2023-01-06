@@ -23,6 +23,7 @@
 #include "google/cloud/appengine/internal/authorized_domains_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AuthorizedDomainsConnection::~AuthorizedDomainsConnection() = default;
 
 StreamRange<google::appengine::v1::AuthorizedDomain>
-    AuthorizedDomainsConnection::ListAuthorizedDomains(
-        google::appengine::v1::
-            ListAuthorizedDomainsRequest) {  // NOLINT(performance-unnecessary-value-param)
+AuthorizedDomainsConnection::ListAuthorizedDomains(
+    google::appengine::v1::
+        ListAuthorizedDomainsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::AuthorizedDomain>>();
 }
@@ -45,6 +46,7 @@ StreamRange<google::appengine::v1::AuthorizedDomain>
 std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AuthorizedDomainsPolicyOptionList>(options,
                                                                     __func__);
   options =
@@ -58,24 +60,5 @@ std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace appengine_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<appengine::AuthorizedDomainsConnection>
-MakeAuthorizedDomainsConnection(std::shared_ptr<AuthorizedDomainsStub> stub,
-                                Options options) {
-  options = AuthorizedDomainsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<appengine_internal::AuthorizedDomainsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace appengine_internal
 }  // namespace cloud
 }  // namespace google

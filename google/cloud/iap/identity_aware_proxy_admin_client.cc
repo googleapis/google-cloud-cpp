@@ -17,7 +17,6 @@
 // source: google/cloud/iap/v1/service.proto
 
 #include "google/cloud/iap/identity_aware_proxy_admin_client.h"
-#include "google/cloud/iap/internal/identity_aware_proxy_admin_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ IdentityAwareProxyAdminServiceClient::IdentityAwareProxyAdminServiceClient(
     std::shared_ptr<IdentityAwareProxyAdminServiceConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          iap_internal::IdentityAwareProxyAdminServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 IdentityAwareProxyAdminServiceClient::~IdentityAwareProxyAdminServiceClient() =
     default;
 
@@ -71,6 +68,94 @@ IdentityAwareProxyAdminServiceClient::UpdateIapSettings(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateIapSettings(request);
+}
+
+StreamRange<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceClient::ListTunnelDestGroups(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::iap::v1::ListTunnelDestGroupsRequest request;
+  request.set_parent(parent);
+  return connection_->ListTunnelDestGroups(request);
+}
+
+StreamRange<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceClient::ListTunnelDestGroups(
+    google::cloud::iap::v1::ListTunnelDestGroupsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListTunnelDestGroups(std::move(request));
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceClient::CreateTunnelDestGroup(
+    std::string const& parent,
+    google::cloud::iap::v1::TunnelDestGroup const& tunnel_dest_group,
+    std::string const& tunnel_dest_group_id, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::iap::v1::CreateTunnelDestGroupRequest request;
+  request.set_parent(parent);
+  *request.mutable_tunnel_dest_group() = tunnel_dest_group;
+  request.set_tunnel_dest_group_id(tunnel_dest_group_id);
+  return connection_->CreateTunnelDestGroup(request);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceClient::CreateTunnelDestGroup(
+    google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateTunnelDestGroup(request);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceClient::GetTunnelDestGroup(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::iap::v1::GetTunnelDestGroupRequest request;
+  request.set_name(name);
+  return connection_->GetTunnelDestGroup(request);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceClient::GetTunnelDestGroup(
+    google::cloud::iap::v1::GetTunnelDestGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetTunnelDestGroup(request);
+}
+
+Status IdentityAwareProxyAdminServiceClient::DeleteTunnelDestGroup(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::iap::v1::DeleteTunnelDestGroupRequest request;
+  request.set_name(name);
+  return connection_->DeleteTunnelDestGroup(request);
+}
+
+Status IdentityAwareProxyAdminServiceClient::DeleteTunnelDestGroup(
+    google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteTunnelDestGroup(request);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceClient::UpdateTunnelDestGroup(
+    google::cloud::iap::v1::TunnelDestGroup const& tunnel_dest_group,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::iap::v1::UpdateTunnelDestGroupRequest request;
+  *request.mutable_tunnel_dest_group() = tunnel_dest_group;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdateTunnelDestGroup(request);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceClient::UpdateTunnelDestGroup(
+    google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateTunnelDestGroup(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

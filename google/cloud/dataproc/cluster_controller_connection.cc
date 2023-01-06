@@ -23,6 +23,7 @@
 #include "google/cloud/dataproc/internal/cluster_controller_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -81,9 +82,9 @@ ClusterControllerConnection::GetCluster(
 }
 
 StreamRange<google::cloud::dataproc::v1::Cluster>
-    ClusterControllerConnection::ListClusters(
-        google::cloud::dataproc::v1::
-            ListClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
+ClusterControllerConnection::ListClusters(
+    google::cloud::dataproc::v1::
+        ListClustersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::Cluster>>();
 }
@@ -97,12 +98,13 @@ ClusterControllerConnection::DiagnoseCluster(
 }
 
 std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
-    Options options) {
+    std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ClusterControllerPolicyOptionList>(options,
                                                                     __func__);
-  options =
-      dataproc_internal::ClusterControllerDefaultOptions(std::move(options));
+  options = dataproc_internal::ClusterControllerDefaultOptions(
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultClusterControllerStub(
       background->cq(), options);
@@ -110,26 +112,12 @@ std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace dataproc_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<dataproc::ClusterControllerConnection>
-MakeClusterControllerConnection(std::shared_ptr<ClusterControllerStub> stub,
-                                Options options) {
-  options = ClusterControllerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<dataproc_internal::ClusterControllerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+std::shared_ptr<ClusterControllerConnection> MakeClusterControllerConnection(
+    Options options) {
+  return MakeClusterControllerConnection(std::string{}, std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc_internal
+}  // namespace dataproc
 }  // namespace cloud
 }  // namespace google

@@ -114,6 +114,34 @@ void DisableBucketLifecycleManagement(google::cloud::storage::Client client,
   (std::move(client), argv.at(0));
 }
 
+void SetLifecycleAbortMultipartUpload(google::cloud::storage::Client client,
+                                      std::vector<std::string> const& argv) {
+  // [START storage_set_lifecycle_abort_multipart_upload]
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name) {
+    auto metadata = client.GetBucketMetadata(bucket_name);
+    if (!metadata) throw std::runtime_error(metadata.status().message());
+
+    auto lifecycle = metadata->has_lifecycle() ? metadata->lifecycle()
+                                               : gcs::BucketLifecycle{};
+    lifecycle.rule.emplace_back(
+        gcs::LifecycleRule::MaxAge(7),
+        gcs::LifecycleRule::AbortIncompleteMultipartUpload());
+
+    auto patched = client.PatchBucket(
+        bucket_name,
+        gcs::BucketMetadataPatchBuilder().SetLifecycle(std::move(lifecycle)),
+        gcs::IfMetagenerationMatch(metadata->metageneration()));
+    if (!patched) throw std::runtime_error(metadata.status().message());
+
+    std::cout << "Added new lifecycle rule on bucket " << bucket_name
+              << "\nThe updated metadata is: " << *patched << ".\n";
+  }
+  // [END storage_set_lifecycle_abort_multipart_upload]
+  (std::move(client), argv.at(0));
+}
+
 void RunAll(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::storage::examples;
   namespace gcs = ::google::cloud::storage;
@@ -142,6 +170,10 @@ void RunAll(std::vector<std::string> const& argv) {
 
   std::cout << "\nRunning GetBucketLifecycleManagement() example" << std::endl;
   GetBucketLifecycleManagement(client, {bucket_name});
+
+  std::cout << "\nRunning SetLifecycleAbortMultipartUpload() example"
+            << std::endl;
+  SetLifecycleAbortMultipartUpload(client, {bucket_name});
 
   std::cout << "\nRunning DisableBucketLifecycleManagement() example"
             << std::endl;
@@ -173,6 +205,8 @@ int main(int argc, char* argv[]) {
                  EnableBucketLifecycleManagement),
       make_entry("disable-bucket-lifecycle-management", {},
                  DisableBucketLifecycleManagement),
+      make_entry("set-lifecycle-abort-multipart-upload", {},
+                 SetLifecycleAbortMultipartUpload),
       {"auto", RunAll},
   });
   return example.Run(argc, argv);

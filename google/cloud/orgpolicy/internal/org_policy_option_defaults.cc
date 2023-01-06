@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options OrgPolicyDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ORG_POLICY_ENDPOINT", "",
-      "orgpolicy.googleapis.com");
+      "GOOGLE_CLOUD_CPP_ORG_POLICY_AUTHORITY", "orgpolicy.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<orgpolicy::OrgPolicyRetryPolicyOption>()) {

@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/uptime_service.proto
 
 #include "google/cloud/monitoring/uptime_check_client.h"
-#include "google/cloud/monitoring/internal/uptime_check_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 UptimeCheckServiceClient::UptimeCheckServiceClient(
     std::shared_ptr<UptimeCheckServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          monitoring_internal::UptimeCheckServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 UptimeCheckServiceClient::~UptimeCheckServiceClient() = default;
 
 StreamRange<google::monitoring::v3::UptimeCheckConfig>

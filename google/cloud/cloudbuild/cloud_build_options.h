@@ -31,26 +31,48 @@ namespace cloud {
 namespace cloudbuild {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-cloudbuild-options
+ */
 struct CloudBuildRetryPolicyOption {
   using Type = std::shared_ptr<CloudBuildRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-cloudbuild-options
+ */
 struct CloudBuildBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct CloudBuildPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-cloudbuild-options
+ */
 struct CloudBuildConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<CloudBuildConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-cloudbuild-options
+ */
+struct CloudBuildPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to CloudBuild.
+ *
+ * @ingroup google-cloud-cloudbuild-options
+ */
 using CloudBuildPolicyOptionList =
     OptionList<CloudBuildRetryPolicyOption, CloudBuildBackoffPolicyOption,
                CloudBuildPollingPolicyOption,

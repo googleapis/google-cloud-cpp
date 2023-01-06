@@ -16,16 +16,20 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_BIGTABLE_VERSION_H
 
 #include "google/cloud/bigtable/version_info.h"
-#include "google/cloud/internal/attributes.h"
 #include "google/cloud/version.h"
 #include <string>
 
-#define GOOGLE_CLOUD_CPP_BIGTABLE_IAM_DEPRECATED(alternative)                  \
-  GOOGLE_CLOUD_CPP_DEPRECATED(                                                 \
-      "this function predates IAM conditions and does not work with policies " \
-      "that include IAM conditions. Please use " alternative                   \
-      " instead. The function will be removed on 2022-04-01 or shortly "       \
-      "after. See GitHub issue #5929 for more information.")
+#define GOOGLE_CLOUD_CPP_BIGTABLE_DATA_CLIENT_DEPRECATED(name)              \
+  GOOGLE_CLOUD_CPP_DEPRECATED(                                              \
+      "google::cloud::bigtable::DataClient::" name                          \
+      " is deprecated, and will be removed on or shortly after 2023-05-01." \
+      " See GitHub issue #8800 for more information.")
+
+#define GOOGLE_CLOUD_CPP_BIGTABLE_ROW_READER_CTOR_DEPRECATED()             \
+  GOOGLE_CLOUD_CPP_DEPRECATED(                                             \
+      "RowReader public constructors have been deprecated. They are "      \
+      " scheduled for deletion on 2023-05-01. Please use the `RowReader` " \
+      "returned by `Table::ReadRows()`.")
 
 // This preprocessor symbol is deprecated and should never be used anywhere. It
 // exists solely for backward compatibility to avoid breaking anyone who may
@@ -39,6 +43,7 @@ namespace cloud {
  */
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * The Cloud Bigtable C++ Client major version.
  *
@@ -60,10 +65,19 @@ int constexpr version_minor() { return google::cloud::version_minor(); }
  */
 int constexpr version_patch() { return google::cloud::version_patch(); }
 
+/**
+ * The Cloud Bigtable C++ Client pre-release version.
+ *
+ * @see https://semver.org/spec/v2.0.0.html for details.
+ */
+constexpr char const* version_pre_release() {
+  return google::cloud::version_pre_release();
+}
+
 /// A single integer representing the Major/Minor/Patch version.
 int constexpr version() { return google::cloud::version(); }
 
-/// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
+/// The version as a string, in MAJOR.MINOR.PATCH[-PRE][+gitrev] format.
 std::string version_string();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -31,21 +31,38 @@ namespace cloud {
 namespace language {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-language-options
+ */
 struct LanguageServiceRetryPolicyOption {
   using Type = std::shared_ptr<LanguageServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-language-options
+ */
 struct LanguageServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-language-options
+ */
 struct LanguageServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<LanguageServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to LanguageService.
+ *
+ * @ingroup google-cloud-language-options
+ */
 using LanguageServicePolicyOptionList =
     OptionList<LanguageServiceRetryPolicyOption,
                LanguageServiceBackoffPolicyOption,

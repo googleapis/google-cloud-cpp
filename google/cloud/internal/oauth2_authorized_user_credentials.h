@@ -18,14 +18,11 @@
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/internal/oauth2_credentials.h"
-#include "google/cloud/internal/oauth2_refreshing_credentials_wrapper.h"
-#include "google/cloud/internal/rest_client.h"
+#include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/version.h"
 #include <chrono>
-#include <iostream>
-#include <mutex>
 #include <string>
 
 namespace google {
@@ -46,11 +43,10 @@ StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
 
-/// Parses a refresh response JSON string into an authorization header. The
-/// header and the current time (for the expiration) form a TemporaryToken.
-StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
-ParseAuthorizedUserRefreshResponse(rest_internal::RestResponse& response,
-                                   std::chrono::system_clock::time_point now);
+/// Parses a refresh response JSON string into an access token.
+StatusOr<internal::AccessToken> ParseAuthorizedUserRefreshResponse(
+    rest_internal::RestResponse& response,
+    std::chrono::system_clock::time_point now);
 
 /**
  * Wrapper class for Google OAuth 2.0 user account credentials.
@@ -71,37 +67,27 @@ ParseAuthorizedUserRefreshResponse(rest_internal::RestResponse& response,
  */
 class AuthorizedUserCredentials : public Credentials {
  public:
-  using CurrentTimeFn =
-      std::function<std::chrono::time_point<std::chrono::system_clock>()>;
-
   /**
    * Creates an instance of AuthorizedUserCredentials.
    *
    * @param rest_client a dependency injection point. It makes it possible to
    *     mock internal REST types. This should generally not be overridden
    *     except for testing.
-   * @param current_time_fn a dependency injection point to fetch the current
-   *     time. This should generally not be overridden except for testing.
    */
-  explicit AuthorizedUserCredentials(
-      AuthorizedUserCredentialsInfo info, Options options = {},
-      std::unique_ptr<rest_internal::RestClient> rest_client = nullptr,
-      CurrentTimeFn current_time_fn = std::chrono::system_clock::now);
+  explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,
+                                     Options options,
+                                     HttpClientFactory client_factory);
 
   /**
    * Returns a key value pair for an "Authorization" header.
    */
-  StatusOr<std::pair<std::string, std::string>> AuthorizationHeader() override;
+  StatusOr<internal::AccessToken> GetToken(
+      std::chrono::system_clock::time_point tp) override;
 
  private:
-  StatusOr<RefreshingCredentialsWrapper::TemporaryToken> Refresh();
-
   AuthorizedUserCredentialsInfo info_;
   Options options_;
-  CurrentTimeFn current_time_fn_;
-  std::unique_ptr<rest_internal::RestClient> rest_client_;
-  mutable std::mutex mu_;
-  RefreshingCredentialsWrapper refreshing_creds_;
+  HttpClientFactory client_factory_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

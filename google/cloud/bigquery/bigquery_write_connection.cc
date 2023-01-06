@@ -23,6 +23,7 @@
 #include "google/cloud/bigquery/internal/bigquery_write_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -42,7 +43,7 @@ BigQueryWriteConnection::CreateWriteStream(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     google::cloud::bigquery::storage::v1::AppendRowsRequest,
     google::cloud::bigquery::storage::v1::AppendRowsResponse>>
-BigQueryWriteConnection::AsyncAppendRows(ExperimentalTag) {
+BigQueryWriteConnection::AsyncAppendRows() {
   return absl::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
           google::cloud::bigquery::storage::v1::AppendRowsRequest,
@@ -78,6 +79,7 @@ BigQueryWriteConnection::FlushRows(
 std::shared_ptr<BigQueryWriteConnection> MakeBigQueryWriteConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BigQueryWritePolicyOptionList>(options,
                                                                 __func__);
   options = bigquery_internal::BigQueryWriteDefaultOptions(std::move(options));
@@ -90,23 +92,5 @@ std::shared_ptr<BigQueryWriteConnection> MakeBigQueryWriteConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace bigquery_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<bigquery::BigQueryWriteConnection> MakeBigQueryWriteConnection(
-    std::shared_ptr<BigQueryWriteStub> stub, Options options) {
-  options = BigQueryWriteDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<bigquery_internal::BigQueryWriteConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

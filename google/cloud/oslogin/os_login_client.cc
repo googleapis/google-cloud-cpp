@@ -17,7 +17,6 @@
 // source: google/cloud/oslogin/v1/oslogin.proto
 
 #include "google/cloud/oslogin/os_login_client.h"
-#include "google/cloud/oslogin/internal/os_login_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OsLoginServiceClient::OsLoginServiceClient(
     std::shared_ptr<OsLoginServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), oslogin_internal::OsLoginServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 OsLoginServiceClient::~OsLoginServiceClient() = default;
+
+StatusOr<google::cloud::oslogin::common::SshPublicKey>
+OsLoginServiceClient::CreateSshPublicKey(
+    std::string const& parent,
+    google::cloud::oslogin::common::SshPublicKey const& ssh_public_key,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::oslogin::v1::CreateSshPublicKeyRequest request;
+  request.set_parent(parent);
+  *request.mutable_ssh_public_key() = ssh_public_key;
+  return connection_->CreateSshPublicKey(request);
+}
+
+StatusOr<google::cloud::oslogin::common::SshPublicKey>
+OsLoginServiceClient::CreateSshPublicKey(
+    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateSshPublicKey(request);
+}
 
 Status OsLoginServiceClient::DeletePosixAccount(std::string const& name,
                                                 Options opts) {

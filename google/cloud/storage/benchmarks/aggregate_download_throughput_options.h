@@ -33,12 +33,9 @@ struct AggregateDownloadThroughputOptions {
   int repeats_per_iteration = 1;
   std::int64_t read_size = 0;  // 0 means "read the whole file"
   std::size_t read_buffer_size = 4 * kMiB;
-  ApiName api = ApiName::kApiGrpc;
-  int grpc_channel_count = 0;
-  std::string grpc_plugin_config;
-  std::string rest_http_version;
+  std::string api;
   bool client_per_thread = false;
-  std::chrono::seconds download_stall_timeout = std::chrono::seconds(60);
+  Options client_options;
   bool exit_after_parse = false;
 };
 

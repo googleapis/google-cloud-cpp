@@ -23,6 +23,8 @@
 #include "absl/types/optional.h"
 #include <gmock/gmock.h>
 #include <thread>
+// ClientOptions is deprecated. We need to suppress the compiler warnings.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {

@@ -23,6 +23,7 @@
 #include "google/cloud/trace/trace_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -47,6 +48,7 @@ TraceServiceConnection::CreateSpan(
 std::shared_ptr<TraceServiceConnection> MakeTraceServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  TraceServicePolicyOptionList>(options,
                                                                __func__);
   options = trace_internal::TraceServiceDefaultOptions(std::move(options));
@@ -59,23 +61,5 @@ std::shared_ptr<TraceServiceConnection> MakeTraceServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace trace_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<trace::TraceServiceConnection> MakeTraceServiceConnection(
-    std::shared_ptr<TraceServiceStub> stub, Options options) {
-  options = TraceServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<trace_internal::TraceServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace trace_internal
 }  // namespace cloud
 }  // namespace google

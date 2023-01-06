@@ -45,6 +45,18 @@ using DataCatalogLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         datacatalog_internal::DataCatalogRetryTraits>;
 
+/**
+ * The `DataCatalogConnection` object for `DataCatalogClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DataCatalogClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DataCatalogClient`.
+ *
+ * To create a concrete instance, see `MakeDataCatalogConnection()`.
+ *
+ * For mocking, see `datacatalog_mocks::MockDataCatalogConnection`.
+ */
 class DataCatalogConnection {
  public:
   virtual ~DataCatalogConnection() = 0;
@@ -87,6 +99,16 @@ class DataCatalogConnection {
 
   virtual StreamRange<google::cloud::datacatalog::v1::Entry> ListEntries(
       google::cloud::datacatalog::v1::ListEntriesRequest request);
+
+  virtual StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+  ModifyEntryOverview(
+      google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::datacatalog::v1::Contacts>
+  ModifyEntryContacts(
+      google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
+          request);
 
   virtual StatusOr<google::cloud::datacatalog::v1::TagTemplate>
   CreateTagTemplate(
@@ -138,6 +160,13 @@ class DataCatalogConnection {
   virtual StreamRange<google::cloud::datacatalog::v1::Tag> ListTags(
       google::cloud::datacatalog::v1::ListTagsRequest request);
 
+  virtual StatusOr<google::cloud::datacatalog::v1::StarEntryResponse> StarEntry(
+      google::cloud::datacatalog::v1::StarEntryRequest const& request);
+
+  virtual StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+  UnstarEntry(
+      google::cloud::datacatalog::v1::UnstarEntryRequest const& request);
+
   virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request);
 
@@ -148,24 +177,32 @@ class DataCatalogConnection {
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `DataCatalogConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of DataCatalogClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `DataCatalogConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::datacatalog::DataCatalogPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `DataCatalogConnection` created by
+ * this function.
+ */
 std::shared_ptr<DataCatalogConnection> MakeDataCatalogConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace datacatalog_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<datacatalog::DataCatalogConnection> MakeDataCatalogConnection(
-    std::shared_ptr<DataCatalogStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datacatalog_internal
 }  // namespace cloud
 }  // namespace google
 

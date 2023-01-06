@@ -31,21 +31,38 @@ namespace cloud {
 namespace eventarc {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-eventarc-options
+ */
 struct PublisherRetryPolicyOption {
   using Type = std::shared_ptr<PublisherRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-eventarc-options
+ */
 struct PublisherBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-eventarc-options
+ */
 struct PublisherConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<PublisherConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to Publisher.
+ *
+ * @ingroup google-cloud-eventarc-options
+ */
 using PublisherPolicyOptionList =
     OptionList<PublisherRetryPolicyOption, PublisherBackoffPolicyOption,
                PublisherConnectionIdempotencyPolicyOption>;

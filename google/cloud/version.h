@@ -20,13 +20,6 @@
 #include "google/cloud/internal/version_info.h"
 #include <string>
 
-#define GOOGLE_CLOUD_CPP_IAM_DEPRECATED                                    \
-  GOOGLE_CLOUD_CPP_DEPRECATED(                                             \
-      "this type predates IAM conditions and does not work with policies " \
-      "that include IAM conditions. The functions that use this type are " \
-      "deprecated and will be be removed on 2022-04-01 or shortly "        \
-      "after. See GitHub issue #5929 for more information.")
-
 #define GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa) v##Ma##_##Mi##_##Pa
 #define GOOGLE_CLOUD_CPP_VEVAL(Ma, Mi, Pa) GOOGLE_CLOUD_CPP_VCONCAT(Ma, Mi, Pa)
 #define GOOGLE_CLOUD_CPP_NS                              \
@@ -63,26 +56,36 @@ namespace google {
  */
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
- * The Google Cloud Storage C++ Client major version.
+ * The Google Cloud C++ Client major version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
 int constexpr version_major() { return GOOGLE_CLOUD_CPP_VERSION_MAJOR; }
 
 /**
- * The Google Cloud Storage C++ Client minor version.
+ * The Google Cloud C++ Client minor version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
 int constexpr version_minor() { return GOOGLE_CLOUD_CPP_VERSION_MINOR; }
 
 /**
- * The Google Cloud Storage C++ Client patch version.
+ * The Google Cloud C++ Client patch version.
  *
  * @see https://semver.org/spec/v2.0.0.html for details.
  */
 int constexpr version_patch() { return GOOGLE_CLOUD_CPP_VERSION_PATCH; }
+
+/**
+ * The Google Cloud C++ Client pre-release version.
+ *
+ * @see https://semver.org/spec/v2.0.0.html for details.
+ */
+constexpr char const* version_pre_release() {
+  return GOOGLE_CLOUD_CPP_VERSION_PRE_RELEASE;
+}
 
 namespace internal {
 auto constexpr kMaxMinorVersions = 100;
@@ -100,7 +103,7 @@ int constexpr version() {
          version_patch();
 }
 
-/// The version as a string, in MAJOR.MINOR.PATCH+gitrev format.
+/// The version as a string, in MAJOR.MINOR.PATCH[-PRE][+gitrev] format.
 std::string version_string();
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

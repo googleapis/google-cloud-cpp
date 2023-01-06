@@ -46,6 +46,18 @@ using CloudCatalogLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         billing_internal::CloudCatalogRetryTraits>;
 
+/**
+ * The `CloudCatalogConnection` object for `CloudCatalogClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CloudCatalogClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CloudCatalogClient`.
+ *
+ * To create a concrete instance, see `MakeCloudCatalogConnection()`.
+ *
+ * For mocking, see `billing_mocks::MockCloudCatalogConnection`.
+ */
 class CloudCatalogConnection {
  public:
   virtual ~CloudCatalogConnection() = 0;
@@ -59,24 +71,32 @@ class CloudCatalogConnection {
       google::cloud::billing::v1::ListSkusRequest request);
 };
 
+/**
+ * A factory function to construct an object of type `CloudCatalogConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of CloudCatalogClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `CloudCatalogConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::billing::CloudCatalogPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `CloudCatalogConnection` created by
+ * this function.
+ */
 std::shared_ptr<CloudCatalogConnection> MakeCloudCatalogConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace billing_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<billing::CloudCatalogConnection> MakeCloudCatalogConnection(
-    std::shared_ptr<CloudCatalogStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace billing_internal
 }  // namespace cloud
 }  // namespace google
 

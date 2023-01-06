@@ -33,6 +33,11 @@ class OsLoginServiceStub {
  public:
   virtual ~OsLoginServiceStub() = 0;
 
+  virtual StatusOr<google::cloud::oslogin::common::SshPublicKey>
+  CreateSshPublicKey(
+      grpc::ClientContext& context,
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) = 0;
+
   virtual Status DeletePosixAccount(
       grpc::ClientContext& context,
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) = 0;
@@ -67,6 +72,11 @@ class DefaultOsLoginServiceStub : public OsLoginServiceStub {
       std::unique_ptr<google::cloud::oslogin::v1::OsLoginService::StubInterface>
           grpc_stub)
       : grpc_stub_(std::move(grpc_stub)) {}
+
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
+      grpc::ClientContext& client_context,
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request)
+      override;
 
   Status DeletePosixAccount(
       grpc::ClientContext& client_context,

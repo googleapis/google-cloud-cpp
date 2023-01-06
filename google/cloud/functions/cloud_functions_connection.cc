@@ -23,6 +23,7 @@
 #include "google/cloud/functions/internal/cloud_functions_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudFunctionsServiceConnection::~CloudFunctionsServiceConnection() = default;
 
 StreamRange<google::cloud::functions::v1::CloudFunction>
-    CloudFunctionsServiceConnection::ListFunctions(
-        google::cloud::functions::v1::
-            ListFunctionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudFunctionsServiceConnection::ListFunctions(
+    google::cloud::functions::v1::
+        ListFunctionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::functions::v1::CloudFunction>>();
 }
@@ -109,6 +110,7 @@ CloudFunctionsServiceConnection::TestIamPermissions(
 std::shared_ptr<CloudFunctionsServiceConnection>
 MakeCloudFunctionsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudFunctionsServicePolicyOptionList>(
       options, __func__);
   options = functions_internal::CloudFunctionsServiceDefaultOptions(
@@ -123,25 +125,5 @@ MakeCloudFunctionsServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace functions
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace functions_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<functions::CloudFunctionsServiceConnection>
-MakeCloudFunctionsServiceConnection(
-    std::shared_ptr<CloudFunctionsServiceStub> stub, Options options) {
-  options = CloudFunctionsServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      functions_internal::CloudFunctionsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace functions_internal
 }  // namespace cloud
 }  // namespace google

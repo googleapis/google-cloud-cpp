@@ -23,6 +23,7 @@
 #include "google/cloud/bigquery/internal/connection_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -47,9 +48,9 @@ ConnectionServiceConnection::GetConnection(
 }
 
 StreamRange<google::cloud::bigquery::connection::v1::Connection>
-    ConnectionServiceConnection::ListConnections(
-        google::cloud::bigquery::connection::v1::
-            ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ConnectionServiceConnection::ListConnections(
+    google::cloud::bigquery::connection::v1::
+        ListConnectionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::bigquery::connection::v1::Connection>>();
 }
@@ -84,6 +85,7 @@ ConnectionServiceConnection::TestIamPermissions(
 std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ConnectionServicePolicyOptionList>(options,
                                                                     __func__);
   options =
@@ -97,24 +99,5 @@ std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace bigquery_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<bigquery::ConnectionServiceConnection>
-MakeConnectionServiceConnection(std::shared_ptr<ConnectionServiceStub> stub,
-                                Options options) {
-  options = ConnectionServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<bigquery_internal::ConnectionServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google

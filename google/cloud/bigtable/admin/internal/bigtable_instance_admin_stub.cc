@@ -286,6 +286,18 @@ DefaultBigtableInstanceAdminStub::TestIamPermissions(
   return response;
 }
 
+StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse>
+DefaultBigtableInstanceAdminStub::ListHotTablets(
+    grpc::ClientContext& client_context,
+    google::bigtable::admin::v2::ListHotTabletsRequest const& request) {
+  google::bigtable::admin::v2::ListHotTabletsResponse response;
+  auto status = grpc_stub_->ListHotTablets(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultBigtableInstanceAdminStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -14,11 +14,13 @@
 
 #include "google/cloud/pubsub/subscription_admin_connection.h"
 #include "google/cloud/pubsub/internal/defaults.h"
-#include "google/cloud/pubsub/internal/subscriber_auth.h"
-#include "google/cloud/pubsub/internal/subscriber_logging.h"
-#include "google/cloud/pubsub/internal/subscriber_metadata.h"
+#include "google/cloud/pubsub/internal/subscriber_auth_decorator.h"
+#include "google/cloud/pubsub/internal/subscriber_logging_decorator.h"
+#include "google/cloud/pubsub/internal/subscriber_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
+#include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
 #include "google/cloud/pubsub/options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include <memory>
@@ -268,8 +270,7 @@ std::shared_ptr<pubsub_internal::SubscriberStub> DecorateSubscriptionAdminStub(
   if (internal::Contains(tracing, "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
     stub = std::make_shared<pubsub_internal::SubscriberLogging>(
-        std::move(stub), opts.get<GrpcTracingOptionsOption>(),
-        internal::Contains(tracing, "rpc-streams"));
+        std::move(stub), opts.get<GrpcTracingOptionsOption>(), tracing);
   }
   return stub;
 }
@@ -351,6 +352,7 @@ std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
     Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PolicyOptionList>(opts, __func__);
   opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
   auto background = internal::MakeBackgroundThreadsFactory(opts)();

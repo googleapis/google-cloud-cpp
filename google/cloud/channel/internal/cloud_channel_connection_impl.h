@@ -159,6 +159,54 @@ class CloudChannelServiceConnectionImpl
       google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
           request) override;
 
+  StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  GetCustomerRepricingConfig(
+      google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+          request) override;
+
+  StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
+  ListCustomerRepricingConfigs(
+      google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request)
+      override;
+
+  StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  CreateCustomerRepricingConfig(
+      google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  UpdateCustomerRepricingConfig(
+      google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+          request) override;
+
+  Status DeleteCustomerRepricingConfig(
+      google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  GetChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+          request) override;
+
+  StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  ListChannelPartnerRepricingConfigs(
+      google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
+          request) override;
+
+  StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  CreateChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          CreateChannelPartnerRepricingConfigRequest const& request) override;
+
+  StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  UpdateChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          UpdateChannelPartnerRepricingConfigRequest const& request) override;
+
+  Status DeleteChannelPartnerRepricingConfig(
+      google::cloud::channel::v1::
+          DeleteChannelPartnerRepricingConfigRequest const& request) override;
+
   StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
       google::cloud::channel::v1::LookupOfferRequest const& request) override;
 

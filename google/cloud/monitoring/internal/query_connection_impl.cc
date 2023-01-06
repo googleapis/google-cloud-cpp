@@ -36,15 +36,14 @@ QueryServiceConnectionImpl::QueryServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), monitoring_internal::QueryServiceDefaultOptions(
-                                  QueryServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      QueryServiceConnection::options())) {}
 
 StreamRange<google::monitoring::v3::TimeSeriesData>
 QueryServiceConnectionImpl::QueryTimeSeries(
     google::monitoring::v3::QueryTimeSeriesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<monitoring::QueryServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

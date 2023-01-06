@@ -20,6 +20,10 @@ namespace cloud {
 namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+PublisherOptions::PublisherOptions() {
+  opts_ = pubsub_internal::DefaultPublisherOptionsOnly(Options{});
+}
+
 PublisherOptions::PublisherOptions(Options opts) {
   internal::CheckExpectedOptions<PublisherOptionList>(opts, __func__);
   opts_ = pubsub_internal::DefaultPublisherOptionsOnly(std::move(opts));

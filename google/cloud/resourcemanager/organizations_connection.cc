@@ -23,6 +23,7 @@
 #include "google/cloud/resourcemanager/organizations_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -41,9 +42,9 @@ OrganizationsConnection::GetOrganization(
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Organization>
-    OrganizationsConnection::SearchOrganizations(
-        google::cloud::resourcemanager::v3::
-            SearchOrganizationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+OrganizationsConnection::SearchOrganizations(
+    google::cloud::resourcemanager::v3::
+        SearchOrganizationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Organization>>();
 }
@@ -67,6 +68,7 @@ OrganizationsConnection::TestIamPermissions(
 std::shared_ptr<OrganizationsConnection> MakeOrganizationsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  OrganizationsPolicyOptionList>(options,
                                                                 __func__);
   options =
@@ -81,25 +83,5 @@ std::shared_ptr<OrganizationsConnection> MakeOrganizationsConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace resourcemanager_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<resourcemanager::OrganizationsConnection>
-MakeOrganizationsConnection(std::shared_ptr<OrganizationsStub> stub,
-                            Options options) {
-  options = OrganizationsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      resourcemanager_internal::OrganizationsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager_internal
 }  // namespace cloud
 }  // namespace google

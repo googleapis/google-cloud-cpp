@@ -23,6 +23,7 @@
 #include "google/cloud/videointelligence/video_intelligence_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -45,6 +46,7 @@ VideoIntelligenceServiceConnection::AnnotateVideo(
 std::shared_ptr<VideoIntelligenceServiceConnection>
 MakeVideoIntelligenceServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  VideoIntelligenceServicePolicyOptionList>(
       options, __func__);
   options = videointelligence_internal::VideoIntelligenceServiceDefaultOptions(
@@ -60,25 +62,5 @@ MakeVideoIntelligenceServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace videointelligence_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<videointelligence::VideoIntelligenceServiceConnection>
-MakeVideoIntelligenceServiceConnection(
-    std::shared_ptr<VideoIntelligenceServiceStub> stub, Options options) {
-  options = VideoIntelligenceServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      videointelligence_internal::VideoIntelligenceServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace videointelligence_internal
 }  // namespace cloud
 }  // namespace google

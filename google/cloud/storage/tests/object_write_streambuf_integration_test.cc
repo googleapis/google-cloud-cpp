@@ -46,16 +46,17 @@ class ObjectWriteStreambufIntegrationTest
     ResumableUploadRequest request(bucket_name_, object_name);
     request.set_multiple_options(IfGenerationMatch(0));
 
-    StatusOr<std::unique_ptr<ResumableUploadSession>> session =
-        internal::ClientImplDetails::GetRawClient(*client)
-            ->CreateResumableSession(request);
-    ASSERT_STATUS_OK(session);
+    auto raw_client = internal::ClientImplDetails::GetRawClient(*client);
+    // Normally this is done by `storage::Client`, but here we are intentionally
+    // bypassing it.
+    google::cloud::internal::OptionsSpan const span(raw_client->options());
+    auto create = raw_client->CreateResumableUpload(request);
+    ASSERT_STATUS_OK(create);
 
+    auto constexpr kTestUploadBufferSize = 16 * 1024 * 1024L;
     ObjectWriteStream writer(absl::make_unique<ObjectWriteStreambuf>(
-        *std::move(session),
-        internal::ClientImplDetails::GetRawClient(*client)
-            ->client_options()
-            .upload_buffer_size(),
+        raw_client, request, std::move(create->upload_id), /*committed_size=*/0,
+        /*metadata=*/absl::nullopt, kTestUploadBufferSize,
         CreateNullHashFunction(), HashValues{}, CreateNullHashValidator(),
         AutoFinalizeConfig::kEnabled));
 

@@ -35,7 +35,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options SecretManagerServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SECRET_MANAGER_SERVICE_ENDPOINT",
-      "", "secretmanager.googleapis.com");
+      "", "GOOGLE_CLOUD_CPP_SECRET_MANAGER_SERVICE_AUTHORITY",
+      "secretmanager.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<secretmanager::SecretManagerServiceRetryPolicyOption>()) {

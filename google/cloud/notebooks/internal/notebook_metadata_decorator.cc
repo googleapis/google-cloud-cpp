@@ -117,6 +117,15 @@ NotebookServiceMetadata::AsyncSetInstanceLabels(
   return child_->AsyncSetInstanceLabels(cq, std::move(context), request);
 }
 
+StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+NotebookServiceMetadata::UpdateInstanceMetadataItems(
+    grpc::ClientContext& context,
+    google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->UpdateInstanceMetadataItems(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceMetadata::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
@@ -194,6 +203,15 @@ NotebookServiceMetadata::AsyncRollbackInstance(
     google::cloud::notebooks::v1::RollbackInstanceRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncRollbackInstance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+NotebookServiceMetadata::AsyncDiagnoseInstance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDiagnoseInstance(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -347,9 +365,8 @@ void NotebookServiceMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

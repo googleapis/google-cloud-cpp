@@ -32,40 +32,39 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ConnectionServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~ConnectionServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~ConnectionServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateConnection(
       google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetConnection(
       google::cloud::bigquery::connection::v1::GetConnectionRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListConnections(
-      google::cloud::bigquery::connection::v1::ListConnectionsRequest
-          request) = 0;
+      google::cloud::bigquery::connection::v1::ListConnectionsRequest request);
 
   virtual google::cloud::Idempotency UpdateConnection(
       google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteConnection(
       google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+      google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<ConnectionServiceConnectionIdempotencyPolicy>

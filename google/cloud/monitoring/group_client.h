@@ -75,16 +75,16 @@ class GroupServiceClient {
       std::shared_ptr<GroupServiceConnection> connection, Options opts = {});
   ~GroupServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   GroupServiceClient(GroupServiceClient const&) = default;
   GroupServiceClient& operator=(GroupServiceClient const&) = default;
   GroupServiceClient(GroupServiceClient&&) = default;
   GroupServiceClient& operator=(GroupServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(GroupServiceClient const& a,
                          GroupServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -93,7 +93,7 @@ class GroupServiceClient {
                          GroupServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the existing groups.
@@ -289,12 +289,12 @@ class GroupServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::MonitoredResource,google/api/monitored_resource.proto#L85}
+  /// @googleapis_link{google::api::MonitoredResource,google/api/monitored_resource.proto#L90}
   ///
   /// [google.monitoring.v3.ListGroupMembersRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L242}
   /// [google.api.MonitoredResource]:
-  /// @googleapis_reference_link{google/api/monitored_resource.proto#L85}
+  /// @googleapis_reference_link{google/api/monitored_resource.proto#L90}
   ///
   StreamRange<google::api::MonitoredResource> ListGroupMembers(
       std::string const& name, Options opts = {});
@@ -307,12 +307,12 @@ class GroupServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::MonitoredResource,google/api/monitored_resource.proto#L85}
+  /// @googleapis_link{google::api::MonitoredResource,google/api/monitored_resource.proto#L90}
   ///
   /// [google.monitoring.v3.ListGroupMembersRequest]:
   /// @googleapis_reference_link{google/monitoring/v3/group_service.proto#L242}
   /// [google.api.MonitoredResource]:
-  /// @googleapis_reference_link{google/api/monitored_resource.proto#L85}
+  /// @googleapis_reference_link{google/api/monitored_resource.proto#L90}
   ///
   StreamRange<google::api::MonitoredResource> ListGroupMembers(
       google::monitoring::v3::ListGroupMembersRequest request,

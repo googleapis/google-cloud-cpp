@@ -13,13 +13,59 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
+#include "google/cloud/pubsub/internal/exactly_once_policies.h"
+#include "google/cloud/pubsub/internal/extend_leases_with_retry.h"
+#include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/log.h"
+#include <iterator>
 #include <ostream>
 
 namespace google {
 namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+// NOLINTNEXTLINE(misc-no-recursion)
+future<std::vector<Status>> WaitAll(std::vector<future<Status>> v) {
+  if (v.empty()) return make_ready_future(std::vector<Status>{});
+  auto back = std::move(v.back());
+  v.pop_back();
+  return WaitAll(std::move(v)).then([b = std::move(back)](auto f) mutable {
+    return b.then([list = f.get()](auto g) mutable {
+      list.push_back(g.get());
+      return list;
+    });
+  });
+}
+
+future<Status> Reduce(std::vector<future<Status>> v) {
+  return WaitAll(std::move(v)).then([](auto f) {
+    auto ready = f.get();
+    for (auto& s : ready) {
+      if (!s.ok()) return std::move(s);
+    }
+    return Status{};
+  });
+}
+
+}  // namespace
+
+StreamingSubscriptionBatchSource::StreamingSubscriptionBatchSource(
+    CompletionQueue cq,
+    std::shared_ptr<SessionShutdownManager> shutdown_manager,
+    std::shared_ptr<SubscriberStub> stub, std::string subscription_full_name,
+    std::string client_id, Options opts)
+    : cq_(std::move(cq)),
+      shutdown_manager_(std::move(shutdown_manager)),
+      stub_(std::move(stub)),
+      subscription_full_name_(std::move(subscription_full_name)),
+      client_id_(std::move(client_id)),
+      options_(std::move(opts)),
+      max_outstanding_messages_(
+          options_.get<pubsub::MaxOutstandingMessagesOption>()),
+      max_outstanding_bytes_(options_.get<pubsub::MaxOutstandingBytesOption>()),
+      min_deadline_time_(options_.get<pubsub::MinDeadlineExtensionOption>()),
+      max_deadline_time_(options_.get<pubsub::MaxDeadlineTimeOption>()) {}
 
 void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
   std::unique_lock<std::mutex> lk(mu_);
@@ -27,7 +73,6 @@ void StreamingSubscriptionBatchSource::Start(BatchCallback callback) {
   callback_ = std::move(callback);
   lk.unlock();
 
-  StartWriteTimer();
   shutdown_manager_->StartOperation(__func__, "stream", [this] {
     StartStream(options_.get<pubsub::RetryPolicyOption>()->clone(),
                 options_.get<pubsub::BackoffPolicyOption>()->clone());
@@ -43,28 +88,56 @@ void StreamingSubscriptionBatchSource::Shutdown() {
   if (stream_) stream_->Cancel();
 }
 
-void StreamingSubscriptionBatchSource::AckMessage(std::string const& ack_id) {
+future<Status> StreamingSubscriptionBatchSource::AckMessage(
+    std::string const& ack_id) {
   internal::OptionsSpan span(options_);
-
   google::pubsub::v1::AcknowledgeRequest request;
   request.set_subscription(subscription_full_name_);
   *request.add_ack_ids() = ack_id;
-  (void)stub_->AsyncAcknowledge(cq_, absl::make_unique<grpc::ClientContext>(),
-                                request);
+
+  std::unique_lock<std::mutex> lk(mu_);
+  if (exactly_once_delivery_enabled_.value_or(false)) {
+    lk.unlock();
+    auto retry = absl::make_unique<ExactlyOnceRetryPolicy>(ack_id);
+    return google::cloud::internal::AsyncRetryLoop(
+        std::move(retry), ExactlyOnceBackoffPolicy(), Idempotency::kIdempotent,
+        cq_,
+        [stub = stub_](auto& cq, auto context, auto const& request) {
+          return stub->AsyncAcknowledge(cq, std::move(context), request);
+        },
+        std::move(request), __func__);
+  }
+  lk.unlock();
+  return stub_->AsyncAcknowledge(cq_, absl::make_unique<grpc::ClientContext>(),
+                                 request);
 }
 
-void StreamingSubscriptionBatchSource::NackMessage(std::string const& ack_id) {
+future<Status> StreamingSubscriptionBatchSource::NackMessage(
+    std::string const& ack_id) {
   internal::OptionsSpan span(options_);
-
   google::pubsub::v1::ModifyAckDeadlineRequest request;
   request.set_subscription(subscription_full_name_);
   *request.add_ack_ids() = ack_id;
   request.set_ack_deadline_seconds(0);
-  (void)stub_->AsyncModifyAckDeadline(
+
+  std::unique_lock<std::mutex> lk(mu_);
+  if (exactly_once_delivery_enabled_.value_or(false)) {
+    lk.unlock();
+    auto retry = absl::make_unique<ExactlyOnceRetryPolicy>(ack_id);
+    return google::cloud::internal::AsyncRetryLoop(
+        std::move(retry), ExactlyOnceBackoffPolicy(), Idempotency::kIdempotent,
+        cq_,
+        [stub = stub_](auto& cq, auto context, auto const& request) {
+          return stub->AsyncModifyAckDeadline(cq, std::move(context), request);
+        },
+        std::move(request), __func__);
+  }
+  lk.unlock();
+  return stub_->AsyncModifyAckDeadline(
       cq_, absl::make_unique<grpc::ClientContext>(), request);
 }
 
-void StreamingSubscriptionBatchSource::BulkNack(
+future<Status> StreamingSubscriptionBatchSource::BulkNack(
     std::vector<std::string> ack_ids) {
   internal::OptionsSpan span(options_);
 
@@ -72,17 +145,44 @@ void StreamingSubscriptionBatchSource::BulkNack(
   request.set_subscription(subscription_full_name_);
   for (auto& a : ack_ids) *request.add_ack_ids() = std::move(a);
   request.set_ack_deadline_seconds(0);
-  (void)stub_->AsyncModifyAckDeadline(
-      cq_, absl::make_unique<grpc::ClientContext>(), request);
+
+  auto requests =
+      SplitModifyAckDeadline(std::move(request), kMaxAckIdsPerMessage);
+  if (requests.size() == 1) {
+    return stub_->AsyncModifyAckDeadline(
+        cq_, absl::make_unique<grpc::ClientContext>(), requests.front());
+  }
+
+  std::vector<future<Status>> pending(requests.size());
+  std::transform(requests.begin(), requests.end(), pending.begin(),
+                 [this](auto const& request) {
+                   return stub_->AsyncModifyAckDeadline(
+                       cq_, absl::make_unique<grpc::ClientContext>(), request);
+                 });
+  return Reduce(std::move(pending));
 }
 
 void StreamingSubscriptionBatchSource::ExtendLeases(
     std::vector<std::string> ack_ids, std::chrono::seconds extension) {
-  std::unique_lock<std::mutex> lk(mu_);
+  google::pubsub::v1::ModifyAckDeadlineRequest request;
+  request.set_subscription(subscription_full_name_);
+  request.set_ack_deadline_seconds(
+      static_cast<std::int32_t>(extension.count()));
   for (auto& a : ack_ids) {
-    deadlines_queue_.emplace_back(std::move(a), extension);
+    request.add_ack_ids(std::move(a));
   }
-  DrainQueues(std::move(lk), false);
+  std::unique_lock<std::mutex> lk(mu_);
+  auto split = SplitModifyAckDeadline(std::move(request), kMaxAckIdsPerMessage);
+  if (exactly_once_delivery_enabled_.value_or(false)) {
+    lk.unlock();
+    for (auto& r : split) (void)ExtendLeasesWithRetry(stub_, cq_, std::move(r));
+    return;
+  }
+  lk.unlock();
+  for (auto& r : split) {
+    (void)stub_->AsyncModifyAckDeadline(
+        cq_, absl::make_unique<grpc::ClientContext>(), r);
+  }
 }
 
 void StreamingSubscriptionBatchSource::StartStream(
@@ -103,8 +203,10 @@ void StreamingSubscriptionBatchSource::StartStream(
   // these steps in an asynchronous retry loop.
 
   auto request = InitialRequest();
-  auto stream = stub_->AsyncStreamingPull(
-      cq_, absl::make_unique<grpc::ClientContext>(), request);
+  auto context = absl::make_unique<grpc::ClientContext>();
+  context->AddMetadata("x-goog-request-params",
+                       "subscription=" + request.subscription());
+  auto stream = stub_->AsyncStreamingPull(cq_, std::move(context));
   if (!stream) {
     OnRetryFailure(Status(StatusCode::kUnknown, "null stream"));
     return;
@@ -276,10 +378,22 @@ void StreamingSubscriptionBatchSource::OnRead(
   std::unique_lock<std::mutex> lk(mu_);
   pending_read_ = false;
   if (response && stream_state_ == StreamState::kActive && !shutdown_) {
+    auto update_stream_deadline = false;
+    if (response->has_subscription_properties()) {
+      auto const enabled =
+          response->subscription_properties().exactly_once_delivery_enabled();
+      if (exactly_once_delivery_enabled_ != enabled) {
+        exactly_once_delivery_enabled_ = enabled;
+        update_stream_deadline = true;
+      }
+    }
     lk.unlock();
     callback_(*std::move(response));
-    cq_.RunAsync([weak] {
-      if (auto self = weak.lock()) self->ReadLoop();
+    cq_.RunAsync([weak, update_stream_deadline] {
+      auto self = weak.lock();
+      if (!self) return;
+      if (update_stream_deadline) self->UpdateStreamDeadline();
+      self->ReadLoop();
     });
     return;
   }
@@ -300,7 +414,7 @@ void StreamingSubscriptionBatchSource::ShutdownStream(
   lk.unlock();
   auto weak = WeakFromThis();
   // There are no pending reads or writes, and something (probable a read or
-  // write error) recommends we shutdown the stream
+  // write error) recommends we shut down the stream
   stream->Finish().then([weak, stream](future<Status> f) {
     if (auto self = weak.lock()) self->OnFinish(f.get());
   });
@@ -319,23 +433,21 @@ void StreamingSubscriptionBatchSource::OnFinish(Status status) {
   });
 }
 
-void StreamingSubscriptionBatchSource::DrainQueues(
-    std::unique_lock<std::mutex> lk, bool /*force_flush*/) {
-  if (deadlines_queue_.empty()) return;
+void StreamingSubscriptionBatchSource::UpdateStreamDeadline() {
+  std::unique_lock<std::mutex> lk(mu_);
   if (stream_state_ != StreamState::kActive || pending_write_) return;
   auto stream = stream_;
   pending_write_ = true;
 
-  std::vector<std::pair<std::string, std::chrono::seconds>> deadlines;
-  deadlines.swap(deadlines_queue_);
+  auto stream_ack_deadline = std::chrono::seconds(0);
+  if (exactly_once_delivery_enabled_.value_or(false)) {
+    stream_ack_deadline = min_deadline_time_;
+  }
   lk.unlock();
 
   google::pubsub::v1::StreamingPullRequest request;
-  for (auto& d : deadlines) {
-    request.add_modify_deadline_ack_ids(std::move(d.first));
-    request.add_modify_deadline_seconds(
-        static_cast<std::int32_t>(d.second.count()));
-  }
+  request.set_stream_ack_deadline_seconds(
+      static_cast<std::int32_t>(stream_ack_deadline.count()));
   // Note that we do not use `AsyncRetryLoop()` here. The ack/nack pipeline is
   // best-effort anyway, there is no guarantee that the server will act on any
   // of these.
@@ -350,25 +462,9 @@ void StreamingSubscriptionBatchSource::OnWrite(bool ok) {
   std::unique_lock<std::mutex> lk(mu_);
   pending_write_ = false;
   if (ok && stream_state_ == StreamState::kActive && !shutdown_) {
-    DrainQueues(std::move(lk), false);
     return;
   }
   ShutdownStream(std::move(lk), ok ? "state" : "write error");
-}
-
-void StreamingSubscriptionBatchSource::StartWriteTimer() {
-  auto weak = WeakFromThis();
-  using F = future<StatusOr<std::chrono::system_clock::time_point>>;
-  cq_.MakeRelativeTimer(ack_batching_config_.max_hold_time).then([weak](F f) {
-    if (auto self = weak.lock()) self->OnWriteTimer(f.get().status());
-  });
-}
-
-void StreamingSubscriptionBatchSource::OnWriteTimer(Status const& s) {
-  if (!s.ok()) return;
-  std::unique_lock<std::mutex> lk(mu_);
-  DrainQueues(std::move(lk), true);
-  StartWriteTimer();
 }
 
 std::ostream& operator<<(std::ostream& os,
@@ -400,6 +496,30 @@ void StreamingSubscriptionBatchSource::ChangeState(
                  << " stream=" << (stream_ ? "not-null" : "null")
                  << " status=" << status_;
   stream_state_ = s;
+}
+
+std::vector<google::pubsub::v1::ModifyAckDeadlineRequest>
+SplitModifyAckDeadline(google::pubsub::v1::ModifyAckDeadlineRequest request,
+                       int max_ack_ids) {
+  // We expect this to be the common case.
+  if (request.ack_ids_size() <= max_ack_ids) return {std::move(request)};
+
+  std::vector<google::pubsub::v1::ModifyAckDeadlineRequest> result;
+  auto& source = *request.mutable_ack_ids();
+  while (request.ack_ids_size() > max_ack_ids) {
+    google::pubsub::v1::ModifyAckDeadlineRequest r;
+    r.set_subscription(request.subscription());
+    r.set_ack_deadline_seconds(request.ack_deadline_seconds());
+
+    auto begin = source.begin();
+    auto end = std::next(source.begin(), max_ack_ids);
+    r.mutable_ack_ids()->Reserve(max_ack_ids);
+    for (auto i = begin; i != end; ++i) r.add_ack_ids(std::move(*i));
+    source.erase(begin, end);
+    result.push_back(std::move(r));
+  }
+  if (!request.ack_ids().empty()) result.push_back(std::move(request));
+  return result;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -133,6 +133,20 @@ Status IAMMetadata::DeleteServiceAccountKey(
   return child_->DeleteServiceAccountKey(context, request);
 }
 
+Status IAMMetadata::DisableServiceAccountKey(
+    grpc::ClientContext& context,
+    google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DisableServiceAccountKey(context, request);
+}
+
+Status IAMMetadata::EnableServiceAccountKey(
+    grpc::ClientContext& context,
+    google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->EnableServiceAccountKey(context, request);
+}
+
 StatusOr<google::iam::v1::Policy> IAMMetadata::GetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::GetIamPolicyRequest const& request) {
@@ -159,14 +173,14 @@ StatusOr<google::iam::admin::v1::QueryGrantableRolesResponse>
 IAMMetadata::QueryGrantableRoles(
     grpc::ClientContext& context,
     google::iam::admin::v1::QueryGrantableRolesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->QueryGrantableRoles(context, request);
 }
 
 StatusOr<google::iam::admin::v1::ListRolesResponse> IAMMetadata::ListRoles(
     grpc::ClientContext& context,
     google::iam::admin::v1::ListRolesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListRoles(context, request);
 }
 
@@ -209,7 +223,7 @@ StatusOr<google::iam::admin::v1::QueryTestablePermissionsResponse>
 IAMMetadata::QueryTestablePermissions(
     grpc::ClientContext& context,
     google::iam::admin::v1::QueryTestablePermissionsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->QueryTestablePermissions(context, request);
 }
 
@@ -217,14 +231,14 @@ StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
 IAMMetadata::QueryAuditableServices(
     grpc::ClientContext& context,
     google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->QueryAuditableServices(context, request);
 }
 
 StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMMetadata::LintPolicy(
     grpc::ClientContext& context,
     google::iam::admin::v1::LintPolicyRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->LintPolicy(context, request);
 }
 
@@ -241,9 +255,8 @@ void IAMMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

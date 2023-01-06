@@ -46,6 +46,18 @@ using UptimeCheckServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         monitoring_internal::UptimeCheckServiceRetryTraits>;
 
+/**
+ * The `UptimeCheckServiceConnection` object for `UptimeCheckServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `UptimeCheckServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `UptimeCheckServiceClient`.
+ *
+ * To create a concrete instance, see `MakeUptimeCheckServiceConnection()`.
+ *
+ * For mocking, see `monitoring_mocks::MockUptimeCheckServiceConnection`.
+ */
 class UptimeCheckServiceConnection {
  public:
   virtual ~UptimeCheckServiceConnection() = 0;
@@ -75,25 +87,34 @@ class UptimeCheckServiceConnection {
       google::monitoring::v3::ListUptimeCheckIpsRequest request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `UptimeCheckServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * UptimeCheckServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `UptimeCheckServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::monitoring::UptimeCheckServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `UptimeCheckServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<UptimeCheckServiceConnection> MakeUptimeCheckServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::UptimeCheckServiceConnection>
-MakeUptimeCheckServiceConnection(std::shared_ptr<UptimeCheckServiceStub> stub,
-                                 Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
 }  // namespace cloud
 }  // namespace google
 

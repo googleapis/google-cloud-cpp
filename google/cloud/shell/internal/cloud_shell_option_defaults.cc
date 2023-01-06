@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options CloudShellServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_SHELL_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CLOUD_SHELL_SERVICE_AUTHORITY",
       "cloudshell.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

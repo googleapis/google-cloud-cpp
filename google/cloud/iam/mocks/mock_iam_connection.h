@@ -27,6 +27,21 @@ namespace cloud {
 namespace iam_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `IAMConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `IAMClient`. To do so,
+ * construct an object of type `IAMClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockIAMConnection : public iam::IAMConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
@@ -98,6 +113,16 @@ class MockIAMConnection : public iam::IAMConnection {
   MOCK_METHOD(
       Status, DeleteServiceAccountKey,
       (google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DisableServiceAccountKey,
+      (google::iam::admin::v1::DisableServiceAccountKeyRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, EnableServiceAccountKey,
+      (google::iam::admin::v1::EnableServiceAccountKeyRequest const& request),
       (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, GetIamPolicy,

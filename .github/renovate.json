@@ -12,9 +12,10 @@
       ],
       "matchStrings": [
         "https://github\\.com/(?<depName>.*?)/archive/(?<currentValue>.*?)\\.tar\\.gz",
-        "https://github\\.com/(?<depName>.*?)/releases/download/(?<currentValue>[^/]+)/bazelisk-linux-amd64"
+        "https://github\\.com/(?<depName>.*?)/releases/download/(?<currentValue>[^/]+)/bazelisk-linux-"
       ],
-      "datasourceTemplate": "github-releases"
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "loose"
     },
     {
       "fileMatch": [
@@ -28,7 +29,51 @@
       ],
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "bazelbuild/bazel",
-      "versioningTemplate": "semver"
+      "versioningTemplate": "loose"
+    }
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["com_google_absl", "abseil/abseil-cpp"],
+      "groupName": "Abseil",
+      "versioning": "loose",
+      "ignoreUnstable": false
+    },
+    {
+      "matchPackageNames": ["com_google_protobuf", "protocolbuffers/protobuf"],
+      "groupName": "Protobuf",
+      "versioning": "loose",
+      "ignoreUnstable": false
+    },
+    {
+      "matchPackageNames": ["com_github_grpc_grpc", "grpc/grpc"],
+      "groupName": "gRPC",
+      "versioning": "loose",
+      "ignoreUnstable": false
+    },
+    {
+      "matchPackageNames": ["com_github_nlohmann_json", "nlohmann/json"],
+      "groupName": "JSON",
+      "versioning": "loose"
+    },
+    {
+      "matchPackageNames": ["io_opentelemetry_cpp", "open-telemetry/opentelemetry-cpp"],
+      "groupName": "OpenTelemetry",
+      "versioning": "loose"
+    },
+    {
+      "matchPackageNames": ["com_google_benchmark", "google/benchmark"],
+      "groupName": "Benchmark",
+      "versioning": "loose"
+    },
+    {
+      "matchPackageNames": ["com_google_googletest", "google/googletest"],
+      "groupName": "GoogleTest",
+      "versioning": "regex:^release-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$"
+    },
+    {
+      "matchManagers": ["pip_requirements"],
+      "schedule": ["before 12pm on Tuesday"]
     }
   ],
   "ignoreDeps": [

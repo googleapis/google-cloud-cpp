@@ -49,6 +49,19 @@ using ManagedNotebookServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         notebooks_internal::ManagedNotebookServiceRetryTraits>;
 
+/**
+ * The `ManagedNotebookServiceConnection` object for
+ * `ManagedNotebookServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ManagedNotebookServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ManagedNotebookServiceClient`.
+ *
+ * To create a concrete instance, see `MakeManagedNotebookServiceConnection()`.
+ *
+ * For mocking, see `notebooks_mocks::MockManagedNotebookServiceConnection`.
+ */
 class ManagedNotebookServiceConnection {
  public:
   virtual ~ManagedNotebookServiceConnection() = 0;
@@ -63,6 +76,9 @@ class ManagedNotebookServiceConnection {
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> CreateRuntime(
       google::cloud::notebooks::v1::CreateRuntimeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>> UpdateRuntime(
+      google::cloud::notebooks::v1::UpdateRuntimeRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
   DeleteRuntime(
@@ -81,29 +97,52 @@ class ManagedNotebookServiceConnection {
       google::cloud::notebooks::v1::ResetRuntimeRequest const& request);
 
   virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+  UpgradeRuntime(
+      google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>>
   ReportRuntimeEvent(
       google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request);
+
+  virtual StatusOr<
+      google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+  RefreshRuntimeTokenInternal(
+      google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+          request);
+
+  virtual future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+  DiagnoseRuntime(
+      google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `ManagedNotebookServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * ManagedNotebookServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `ManagedNotebookServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::notebooks::ManagedNotebookServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `ManagedNotebookServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<ManagedNotebookServiceConnection>
 MakeManagedNotebookServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace notebooks_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<notebooks::ManagedNotebookServiceConnection>
-MakeManagedNotebookServiceConnection(
-    std::shared_ptr<ManagedNotebookServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace notebooks_internal
 }  // namespace cloud
 }  // namespace google
 

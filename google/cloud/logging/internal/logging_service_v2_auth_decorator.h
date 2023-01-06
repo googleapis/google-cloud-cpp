@@ -66,6 +66,12 @@ class LoggingServiceV2Auth : public LoggingServiceV2Stub {
   AsyncTailLogEntries(google::cloud::CompletionQueue const& cq,
                       std::unique_ptr<grpc::ClientContext> context) override;
 
+  future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+  AsyncWriteLogEntries(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::logging::v2::WriteLogEntriesRequest const& request) override;
+
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;
   std::shared_ptr<LoggingServiceV2Stub> child_;

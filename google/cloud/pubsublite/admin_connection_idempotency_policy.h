@@ -32,76 +32,68 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AdminServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~AdminServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~AdminServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<AdminServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateTopic(
-      google::cloud::pubsublite::v1::CreateTopicRequest const& request) = 0;
+      google::cloud::pubsublite::v1::CreateTopicRequest const& request);
 
   virtual google::cloud::Idempotency GetTopic(
-      google::cloud::pubsublite::v1::GetTopicRequest const& request) = 0;
+      google::cloud::pubsublite::v1::GetTopicRequest const& request);
 
   virtual google::cloud::Idempotency GetTopicPartitions(
-      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const&
-          request) = 0;
+      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request);
 
   virtual google::cloud::Idempotency ListTopics(
-      google::cloud::pubsublite::v1::ListTopicsRequest request) = 0;
+      google::cloud::pubsublite::v1::ListTopicsRequest request);
 
   virtual google::cloud::Idempotency UpdateTopic(
-      google::cloud::pubsublite::v1::UpdateTopicRequest const& request) = 0;
+      google::cloud::pubsublite::v1::UpdateTopicRequest const& request);
 
   virtual google::cloud::Idempotency DeleteTopic(
-      google::cloud::pubsublite::v1::DeleteTopicRequest const& request) = 0;
+      google::cloud::pubsublite::v1::DeleteTopicRequest const& request);
 
   virtual google::cloud::Idempotency ListTopicSubscriptions(
-      google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request) = 0;
+      google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request);
 
   virtual google::cloud::Idempotency CreateSubscription(
-      google::cloud::pubsublite::v1::CreateSubscriptionRequest const&
-          request) = 0;
+      google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request);
 
   virtual google::cloud::Idempotency GetSubscription(
-      google::cloud::pubsublite::v1::GetSubscriptionRequest const& request) = 0;
+      google::cloud::pubsublite::v1::GetSubscriptionRequest const& request);
 
   virtual google::cloud::Idempotency ListSubscriptions(
-      google::cloud::pubsublite::v1::ListSubscriptionsRequest request) = 0;
+      google::cloud::pubsublite::v1::ListSubscriptionsRequest request);
 
   virtual google::cloud::Idempotency UpdateSubscription(
-      google::cloud::pubsublite::v1::UpdateSubscriptionRequest const&
-          request) = 0;
+      google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request);
 
   virtual google::cloud::Idempotency DeleteSubscription(
-      google::cloud::pubsublite::v1::DeleteSubscriptionRequest const&
-          request) = 0;
+      google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request);
 
   virtual google::cloud::Idempotency SeekSubscription(
-      google::cloud::pubsublite::v1::SeekSubscriptionRequest const&
-          request) = 0;
+      google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request);
 
   virtual google::cloud::Idempotency CreateReservation(
-      google::cloud::pubsublite::v1::CreateReservationRequest const&
-          request) = 0;
+      google::cloud::pubsublite::v1::CreateReservationRequest const& request);
 
   virtual google::cloud::Idempotency GetReservation(
-      google::cloud::pubsublite::v1::GetReservationRequest const& request) = 0;
+      google::cloud::pubsublite::v1::GetReservationRequest const& request);
 
   virtual google::cloud::Idempotency ListReservations(
-      google::cloud::pubsublite::v1::ListReservationsRequest request) = 0;
+      google::cloud::pubsublite::v1::ListReservationsRequest request);
 
   virtual google::cloud::Idempotency UpdateReservation(
-      google::cloud::pubsublite::v1::UpdateReservationRequest const&
-          request) = 0;
+      google::cloud::pubsublite::v1::UpdateReservationRequest const& request);
 
   virtual google::cloud::Idempotency DeleteReservation(
-      google::cloud::pubsublite::v1::DeleteReservationRequest const&
-          request) = 0;
+      google::cloud::pubsublite::v1::DeleteReservationRequest const& request);
 
   virtual google::cloud::Idempotency ListReservationTopics(
-      google::cloud::pubsublite::v1::ListReservationTopicsRequest request) = 0;
+      google::cloud::pubsublite::v1::ListReservationTopicsRequest request);
 };
 
 std::unique_ptr<AdminServiceConnectionIdempotencyPolicy>

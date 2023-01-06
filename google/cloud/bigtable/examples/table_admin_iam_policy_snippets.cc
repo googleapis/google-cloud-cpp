@@ -155,12 +155,8 @@ void RunAll(std::vector<std::string> const& argv) {
   // Create a table to run the tests on.
   google::bigtable::admin::v2::Table t;
   auto& families = *t.mutable_column_families();
-  google::bigtable::admin::v2::GcRule gc1;
-  gc1.set_max_num_versions(10);
-  *families["fam"].mutable_gc_rule() = std::move(gc1);
-  google::bigtable::admin::v2::GcRule gc2;
-  gc2.set_max_num_versions(3);
-  *families["foo"].mutable_gc_rule() = std::move(gc2);
+  families["fam"].mutable_gc_rule()->set_max_num_versions(10);
+  families["foo"].mutable_gc_rule()->set_max_num_versions(3);
 
   auto table = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                  table_id, std::move(t));

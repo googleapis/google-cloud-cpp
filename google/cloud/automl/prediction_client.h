@@ -70,16 +70,16 @@ class PredictionServiceClient {
       Options opts = {});
   ~PredictionServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   PredictionServiceClient(PredictionServiceClient const&) = default;
   PredictionServiceClient& operator=(PredictionServiceClient const&) = default;
   PredictionServiceClient(PredictionServiceClient&&) = default;
   PredictionServiceClient& operator=(PredictionServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(PredictionServiceClient const& a,
                          PredictionServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -88,7 +88,7 @@ class PredictionServiceClient {
                          PredictionServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Perform an online prediction. The prediction result is directly

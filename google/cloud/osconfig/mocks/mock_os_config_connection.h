@@ -27,6 +27,21 @@ namespace cloud {
 namespace osconfig_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `OsConfigServiceConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `OsConfigServiceClient`. To do so,
+ * construct an object of type `OsConfigServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockOsConfigServiceConnection
     : public osconfig::OsConfigServiceConnection {
  public:
@@ -76,6 +91,24 @@ class MockOsConfigServiceConnection
 
   MOCK_METHOD(Status, DeletePatchDeployment,
               (google::cloud::osconfig::v1::DeletePatchDeploymentRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
+              UpdatePatchDeployment,
+              (google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
+      PausePatchDeployment,
+      (google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::osconfig::v1::PatchDeployment>,
+              ResumePatchDeployment,
+              (google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&
                    request),
               (override));
 };

@@ -107,6 +107,20 @@ DefaultLoggingServiceV2Stub::AsyncTailLogEntries(
       });
 }
 
+future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+DefaultLoggingServiceV2Stub::AsyncWriteLogEntries(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::logging::v2::WriteLogEntriesRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::logging::v2::WriteLogEntriesRequest const& request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncWriteLogEntries(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace logging_internal
 }  // namespace cloud

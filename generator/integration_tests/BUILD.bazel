@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
@@ -30,6 +30,7 @@ proto_library(
         "@com_google_googleapis//google/api:client_proto",
         "@com_google_googleapis//google/api:field_behavior_proto",
         "@com_google_googleapis//google/api:resource_proto",
+        "@com_google_googleapis//google/api:routing_proto",
         "@com_google_googleapis//google/iam/v1:iam_policy_proto",
         "@com_google_googleapis//google/iam/v1:policy_proto",
         "@com_google_googleapis//google/longrunning:operations_proto",
@@ -60,3 +61,98 @@ cc_grpc_library(
     grpc_only = True,
     deps = [":google_cloud_cpp_generator_testing_cc_proto"],
 )
+
+filegroup(
+    name = "golden_srcs",
+    srcs = glob([
+        "golden/v1/*.cc",
+        "golden/v1/internal/*.cc",
+    ]),
+)
+
+filegroup(
+    name = "golden_hdrs",
+    srcs = glob([
+        "golden/*.h",
+        "golden/mocks/*.h",
+        "golden/v1/*.h",
+        "golden/v1/internal/*.h",
+        "golden/v1/mocks/*.h",
+    ]),
+)
+
+cc_library(
+    name = "google_cloud_cpp_generator_golden",
+    srcs = [
+        ":golden_srcs",
+    ],
+    hdrs = [
+        ":golden_hdrs",
+    ],
+    copts = [
+        "-I$(BINDIR)",
+    ],
+    visibility = [":__subpackages__"],
+    deps = [
+        ":google_cloud_cpp_generator_testing_cc_grpc",
+        ":google_cloud_cpp_generator_testing_cc_proto",
+        "//:common",
+        "//:grpc_utils",
+        "//google/cloud:google_cloud_cpp_rest_internal",
+        "//google/cloud:google_cloud_cpp_rest_protobuf_internal",
+        "@com_google_absl//absl/memory",
+        "@com_google_absl//absl/strings",
+        "@com_google_googleapis//google/longrunning:longrunning_cc_grpc",
+        "@com_google_protobuf//:protoc_lib",
+    ],
+)
+
+filegroup(
+    name = "test_mocks",
+    srcs = glob(["tests/mock_*.h"]),
+)
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [
+        test,
+        ":test_mocks",
+    ],
+    copts = [
+        "-I$(BINDIR)",
+    ],
+    deps = [
+        ":google_cloud_cpp_generator_golden",
+        "//:common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in glob(["tests/*.cc"])]
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    copts = [
+        "-I$(BINDIR)",
+    ],
+    tags = ["integration-test"],
+    deps = [
+        ":google_cloud_cpp_generator_golden",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob(["golden/v1/samples/*.cc"])]
+
+[cc_test(
+    name = benchmark.replace("/", "_").replace(".cc", ""),
+    srcs = [benchmark],
+    copts = [
+        "-I$(BINDIR)",
+    ],
+    tags = ["benchmark"],
+    deps = [
+        ":google_cloud_cpp_generator_golden",
+        "@com_google_benchmark//:benchmark_main",
+    ],
+) for benchmark in glob(["benchmarks/*.cc"])]

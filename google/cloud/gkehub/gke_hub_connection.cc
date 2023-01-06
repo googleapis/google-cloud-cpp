@@ -23,6 +23,7 @@
 #include "google/cloud/gkehub/internal/gke_hub_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GkeHubConnection::~GkeHubConnection() = default;
 
 StreamRange<google::cloud::gkehub::v1::Membership>
-    GkeHubConnection::ListMemberships(
-        google::cloud::gkehub::v1::
-            ListMembershipsRequest) {  // NOLINT(performance-unnecessary-value-param)
+GkeHubConnection::ListMemberships(
+    google::cloud::gkehub::v1::
+        ListMembershipsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gkehub::v1::Membership>>();
 }
@@ -115,6 +116,7 @@ GkeHubConnection::GenerateConnectManifest(
 
 std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  GkeHubPolicyOptionList>(options, __func__);
   options = gkehub_internal::GkeHubDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -126,23 +128,5 @@ std::shared_ptr<GkeHubConnection> MakeGkeHubConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gkehub
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace gkehub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<gkehub::GkeHubConnection> MakeGkeHubConnection(
-    std::shared_ptr<GkeHubStub> stub, Options options) {
-  options = GkeHubDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<gkehub_internal::GkeHubConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gkehub_internal
 }  // namespace cloud
 }  // namespace google

@@ -24,12 +24,13 @@ fi # include guard
 
 source module ci/etc/integration-tests-config.sh
 source module ci/lib/io.sh
+source module ci/cloudbuild/builds/lib/git.sh
 
 # To run the integration tests we need to install the dependencies for the storage emulator
 export PATH="${HOME}/.local/bin:${PATH}"
 python3 -m pip uninstall -y --quiet googleapis-storage-testbench
 python3 -m pip install --upgrade --user --quiet --disable-pip-version-check \
-  "git+https://github.com/googleapis/storage-testbench@v0.15.0"
+  "git+https://github.com/googleapis/storage-testbench@v0.31.0"
 
 # Some of the tests will need a valid roots.pem file.
 rm -f /dev/shm/roots.pem
@@ -52,6 +53,7 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_PROJECT=${GOOGLE_CLOUD_PROJECT}"
     "--test_env=GOOGLE_CLOUD_CPP_TEST_REGION=${GOOGLE_CLOUD_CPP_TEST_REGION}"
     "--test_env=GOOGLE_CLOUD_CPP_TEST_ZONE=${GOOGLE_CLOUD_CPP_TEST_ZONE}"
+    "--test_env=GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE=${GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE}"
     "--test_env=GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES=${GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES}"
     "--test_env=GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG=${GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG}"
     "--test_env=GOOGLE_CLOUD_CPP_ENABLE_TRACING=${GOOGLE_CLOUD_CPP_ENABLE_TRACING}"
@@ -87,8 +89,8 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY=${GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY}"
-    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME}"
+    "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME=${GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME}"
     "--test_env=GOOGLE_CLOUD_CPP_STORAGE_TEST_ROOTS_PEM=/dev/shm/roots.pem"
     # We only set these environment variables on GCB-based builds, as the
     # corresponding endpoints (e.g., https://private.googleapis.com) are not
@@ -100,6 +102,7 @@ function integration::bazel_args() {
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=${GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID}"
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT}"
     "--test_env=GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT:-}"
+    "--test_env=GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY=${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY:-}"
   )
 
   # Adds environment variables that need to reference a specific service
@@ -153,6 +156,8 @@ function integration::bazel_with_emulators() {
     "google/cloud/iam/..."
     # Logging integration tests
     "google/cloud/logging/..."
+    # Pub/Sub Lite integration tests
+    "google/cloud/pubsublite/..."
     # Unified Rest Credentials test
     "google/cloud:internal_unified_rest_credentials_integration_test"
   )
@@ -213,7 +218,7 @@ function integration::bazel_with_emulators() {
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_HTTP_URL=${hello_world_http}" \
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_GRPC_URL=${hello_world_grpc}" \
     "--test_env=GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT=${GOOGLE_CLOUD_CPP_TEST_HELLO_WORLD_SERVICE_ACCOUNT}" \
-    //google/cloud/examples/...
+    //examples/...
 
   local bazel_output_base
   if echo "${args[@]}" | grep -w -q -- "--config=msan"; then
@@ -274,7 +279,7 @@ function integration::ctest_with_emulators() {
   "google/cloud/bigtable/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 
-  io::log_h2 "Running Rest integration tests (with emulator)"
+  io::log_h2 "Running REST integration tests (with emulator)"
   "google/cloud/internal/ci/${EMULATOR_SCRIPT}" \
     "${cmake_out}" "${ctest_args[@]}" -L integration-test-emulator
 }

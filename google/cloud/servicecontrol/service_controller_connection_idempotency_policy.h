@@ -32,17 +32,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ServiceControllerConnectionIdempotencyPolicy {
  public:
-  virtual ~ServiceControllerConnectionIdempotencyPolicy() = 0;
+  virtual ~ServiceControllerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ServiceControllerConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency Check(
-      google::api::servicecontrol::v1::CheckRequest const& request) = 0;
+      google::api::servicecontrol::v1::CheckRequest const& request);
 
   virtual google::cloud::Idempotency Report(
-      google::api::servicecontrol::v1::ReportRequest const& request) = 0;
+      google::api::servicecontrol::v1::ReportRequest const& request);
 };
 
 std::unique_ptr<ServiceControllerConnectionIdempotencyPolicy>

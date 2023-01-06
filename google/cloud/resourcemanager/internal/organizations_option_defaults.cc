@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options OrganizationsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ORGANIZATIONS_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ORGANIZATIONS_AUTHORITY",
       "cloudresourcemanager.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

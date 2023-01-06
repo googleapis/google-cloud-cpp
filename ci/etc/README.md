@@ -27,4 +27,4 @@ cbt -project "${GOOGLE_CLOUD_PROJECT}" -instance test-instance \
 ## Storage
 
 The instructions for setting up storage resources are found in
-[doc/setup-test-resources.md](../../google/cloud/storage/doc/setup-test-resources.md).
+[doc/setup-test-resources.md](/google/cloud/storage/doc/setup-test-resources.md).

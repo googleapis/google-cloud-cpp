@@ -123,6 +123,10 @@ class ClusterManagerStub {
       grpc::ClientContext& context,
       google::container::v1::DeleteNodePoolRequest const& request) = 0;
 
+  virtual Status CompleteNodePoolUpgrade(
+      grpc::ClientContext& context,
+      google::container::v1::CompleteNodePoolUpgradeRequest const& request) = 0;
+
   virtual StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
       grpc::ClientContext& context,
       google::container::v1::RollbackNodePoolUpgradeRequest const& request) = 0;
@@ -261,6 +265,11 @@ class DefaultClusterManagerStub : public ClusterManagerStub {
   StatusOr<google::container::v1::Operation> DeleteNodePool(
       grpc::ClientContext& client_context,
       google::container::v1::DeleteNodePoolRequest const& request) override;
+
+  Status CompleteNodePoolUpgrade(
+      grpc::ClientContext& client_context,
+      google::container::v1::CompleteNodePoolUpgradeRequest const& request)
+      override;
 
   StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
       grpc::ClientContext& client_context,

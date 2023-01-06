@@ -18,43 +18,52 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Access Approval API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Access Approval API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "accessapproval_internal"
-                            "accessapproval_testing" "examples")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXCLUDE_SYMBOLS "internal")
+set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/quickstart")
+
+unset(mocks_globs)
+unset(source_globs)
+set(service_dirs "" "v1/")
+foreach (dir IN LISTS service_dirs)
+    string(REPLACE "/" "_" ns "${dir}")
+    list(APPEND source_globs "${dir}*.h" "${dir}*.cc" "${dir}internal/*")
+    list(APPEND mocks_globs "${dir}mocks/*.h")
+    list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "accessapproval_${ns}internal")
+    if (NOT dir STREQUAL "")
+        list(APPEND DOXYGEN_EXAMPLE_PATH
+             "${CMAKE_CURRENT_SOURCE_DIR}/${dir}samples")
+    endif ()
+endforeach ()
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::accessapproval_protos)
 
 include(GoogleCloudCppCommon)
 
-set(EXTERNAL_GOOGLEAPIS_SOURCE
-    "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
 find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
 if (PROTO_INCLUDE_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
 endif ()
 
 include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/accessapproval.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/accessapproval.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_accessapproval_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/accessapproval/v1/accessapproval.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_accessapproval_protos # cmake-format: sort
+    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(accessapproval_protos)
-target_link_libraries(
-    google_cloud_cpp_accessapproval_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos)
+target_link_libraries(google_cloud_cpp_accessapproval_protos
+                      PUBLIC ${proto_deps})
 
 file(
     GLOB source_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "*.h" "*.cc" "internal/*.h" "internal/*.cc")
+    ${source_globs})
 list(SORT source_files)
 add_library(google_cloud_cpp_accessapproval ${source_files})
 target_include_directories(
@@ -69,13 +78,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_accessapproval)
 set_target_properties(
     google_cloud_cpp_accessapproval
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-accessapproval
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::accessapproval
+               VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_accessapproval
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-accessapproval ALIAS
+add_library(google-cloud-cpp::accessapproval ALIAS
             google_cloud_cpp_accessapproval)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -85,7 +94,7 @@ add_library(google-cloud-cpp::experimental-accessapproval ALIAS
 file(
     GLOB relative_mock_files
     RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}"
-    "mocks/*.h")
+    ${mocks_globs})
 list(SORT relative_mock_files)
 set(mock_files)
 foreach (file IN LISTS relative_mock_files)
@@ -95,11 +104,11 @@ add_library(google_cloud_cpp_accessapproval_mocks INTERFACE)
 target_sources(google_cloud_cpp_accessapproval_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_accessapproval_mocks
-    INTERFACE google-cloud-cpp::experimental-accessapproval GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::accessapproval GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(
     google_cloud_cpp_accessapproval_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-accessapproval_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::accessapproval_mocks)
 target_include_directories(
     google_cloud_cpp_accessapproval_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -111,7 +120,7 @@ target_compile_options(google_cloud_cpp_accessapproval_mocks
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(accessapproval_quickstart "quickstart/quickstart.cc")
     target_link_libraries(accessapproval_quickstart
-                          PRIVATE google-cloud-cpp::experimental-accessapproval)
+                          PRIVATE google-cloud-cpp::accessapproval)
     google_cloud_cpp_add_common_options(accessapproval_quickstart)
     add_test(
         NAME accessapproval_quickstart
@@ -166,25 +175,13 @@ google_cloud_cpp_install_headers("google_cloud_cpp_accessapproval"
 google_cloud_cpp_install_headers("google_cloud_cpp_accessapproval_mocks"
                                  "include/google/cloud/accessapproval")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The Access Approval API C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to use the Access Approval API.")
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_accessapproval")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common"
-              " google_cloud_cpp_accessapproval_protos")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/accessapproval/config.pc.in"
-               "google_cloud_cpp_accessapproval.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_accessapproval.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    accessapproval
+    "The Access Approval API C++ Client Library"
+    "Provides C++ APIs to use the Access Approval API."
+    "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common"
+    " google_cloud_cpp_accessapproval_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -202,5 +199,12 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_accessapproval"
     COMPONENT google_cloud_cpp_development)
 
-external_googleapis_install_pc("google_cloud_cpp_accessapproval_protos"
-                               "${PROJECT_SOURCE_DIR}/external/googleapis")
+external_googleapis_install_pc("google_cloud_cpp_accessapproval_protos")
+
+# google-cloud-cpp::accessapproval must be defined before we can add the
+# samples.
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    foreach (dir IN LISTS service_dirs)
+        google_cloud_cpp_add_samples_relative("accessapproval" "${dir}samples/")
+    endforeach ()
+endif ()

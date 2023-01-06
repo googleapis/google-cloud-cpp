@@ -62,6 +62,23 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&,
                google::storage::v2::UpdateBucketRequest const&),
               (override));
+  MOCK_METHOD(Status, DeleteNotification,
+              (grpc::ClientContext&,
+               google::storage::v2::DeleteNotificationRequest const&),
+              (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::Notification>, GetNotification,
+              (grpc::ClientContext&,
+               google::storage::v2::GetNotificationRequest const&),
+              (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::Notification>, CreateNotification,
+              (grpc::ClientContext&,
+               google::storage::v2::CreateNotificationRequest const&),
+              (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::ListNotificationsResponse>,
+              ListNotifications,
+              (grpc::ClientContext&,
+               google::storage::v2::ListNotificationsRequest const&),
+              (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Object>, ComposeObject,
               (grpc::ClientContext&,
                google::storage::v2::ComposeObjectRequest const&),
@@ -69,6 +86,11 @@ class MockStorageStub : public storage_internal::StorageStub {
   MOCK_METHOD(Status, DeleteObject,
               (grpc::ClientContext&,
                google::storage::v2::DeleteObjectRequest const&),
+              (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::CancelResumableWriteResponse>,
+              CancelResumableWrite,
+              (grpc::ClientContext&,
+               google::storage::v2::CancelResumableWriteRequest const&),
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::Object>, GetObject,
               (grpc::ClientContext&,
@@ -109,6 +131,59 @@ class MockStorageStub : public storage_internal::StorageStub {
               (grpc::ClientContext&,
                google::storage::v2::GetServiceAccountRequest const&),
               (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::CreateHmacKeyResponse>,
+              CreateHmacKey,
+              (grpc::ClientContext&,
+               google::storage::v2::CreateHmacKeyRequest const&),
+              (override));
+  MOCK_METHOD(Status, DeleteHmacKey,
+              (grpc::ClientContext&,
+               google::storage::v2::DeleteHmacKeyRequest const&),
+              (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::HmacKeyMetadata>, GetHmacKey,
+              (grpc::ClientContext&,
+               google::storage::v2::GetHmacKeyRequest const&),
+              (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::ListHmacKeysResponse>, ListHmacKeys,
+              (grpc::ClientContext&,
+               google::storage::v2::ListHmacKeysRequest const&),
+              (override));
+  MOCK_METHOD(StatusOr<google::storage::v2::HmacKeyMetadata>, UpdateHmacKey,
+              (grpc::ClientContext&,
+               google::storage::v2::UpdateHmacKeyRequest const&),
+              (override));
+  MOCK_METHOD(future<Status>, AsyncDeleteObject,
+              (google::cloud::CompletionQueue&,
+               std::unique_ptr<grpc::ClientContext>,
+               google::storage::v2::DeleteObjectRequest const&),
+              (override));
+  MOCK_METHOD(std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+                  google::storage::v2::ReadObjectResponse>>,
+              AsyncReadObject,
+              (google::cloud::CompletionQueue const&,
+               std::unique_ptr<grpc::ClientContext>,
+               google::storage::v2::ReadObjectRequest const&),
+              (override));
+  using AsyncWriteObjectReturnType =
+      std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+          google::storage::v2::WriteObjectRequest,
+          google::storage::v2::WriteObjectResponse>>;
+  MOCK_METHOD(AsyncWriteObjectReturnType, AsyncWriteObject,
+              (google::cloud::CompletionQueue const&,
+               std::unique_ptr<grpc::ClientContext>),
+              (override));
+  MOCK_METHOD(
+      future<StatusOr<google::storage::v2::StartResumableWriteResponse>>,
+      AsyncStartResumableWrite,
+      (google::cloud::CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
+       google::storage::v2::StartResumableWriteRequest const&),
+      (override));
+  MOCK_METHOD(future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>,
+              AsyncQueryWriteStatus,
+              (google::cloud::CompletionQueue&,
+               std::unique_ptr<grpc::ClientContext>,
+               google::storage::v2::QueryWriteStatusRequest const&),
+              (override));
 };
 
 class MockInsertStream : public google::cloud::internal::StreamingWriteRpc<
@@ -122,15 +197,47 @@ class MockInsertStream : public google::cloud::internal::StreamingWriteRpc<
               (override));
   MOCK_METHOD(StatusOr<google::storage::v2::WriteObjectResponse>, Close, (),
               (override));
+  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
+              (), (const, override));
 };
 
 class MockObjectMediaStream : public google::cloud::internal::StreamingReadRpc<
                                   google::storage::v2::ReadObjectResponse> {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
-  using ReadResultType =
-      absl::variant<Status, google::storage::v2::ReadObjectResponse>;
-  MOCK_METHOD(ReadResultType, Read, (), (override));
+  MOCK_METHOD((absl::variant<Status, google::storage::v2::ReadObjectResponse>),
+              Read, (), (override));
+  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
+              (), (const, override));
+};
+
+class MockAsyncInsertStream
+    : public google::cloud::internal::AsyncStreamingWriteRpc<
+          google::storage::v2::WriteObjectRequest,
+          google::storage::v2::WriteObjectResponse> {
+ public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(future<bool>, Write,
+              (google::storage::v2::WriteObjectRequest const&,
+               grpc::WriteOptions),
+              (override));
+  MOCK_METHOD(future<bool>, WritesDone, (), (override));
+  MOCK_METHOD(future<StatusOr<google::storage::v2::WriteObjectResponse>>,
+              Finish, (), (override));
+  MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
+              (), (const, override));
+};
+
+class MockAsyncObjectMediaStream
+    : public google::cloud::internal::AsyncStreamingReadRpc<
+          google::storage::v2::ReadObjectResponse> {
+ public:
+  MOCK_METHOD(void, Cancel, (), (override));
+  MOCK_METHOD(future<bool>, Start, (), (override));
+  MOCK_METHOD(future<absl::optional<google::storage::v2::ReadObjectResponse>>,
+              Read, (), (override));
+  MOCK_METHOD(future<Status>, Finish, (), (override));
   MOCK_METHOD(google::cloud::internal::StreamingRpcMetadata, GetRequestMetadata,
               (), (const, override));
 };

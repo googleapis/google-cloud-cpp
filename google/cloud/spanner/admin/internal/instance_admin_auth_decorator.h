@@ -51,6 +51,30 @@ class InstanceAdminAuth : public InstanceAdminStub {
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
           request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateInstanceConfig(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateInstanceConfig(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request) override;
+
+  Status DeleteInstanceConfig(
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+          request) override;
+
+  StatusOr<google::spanner::admin::instance::v1::
+               ListInstanceConfigOperationsResponse>
+  ListInstanceConfigOperations(
+      grpc::ClientContext& context,
+      google::spanner::admin::instance::v1::
+          ListInstanceConfigOperationsRequest const& request) override;
+
   StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
   ListInstances(
       grpc::ClientContext& context,

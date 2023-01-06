@@ -117,9 +117,10 @@ TEST(HttpResponseTest, ErrorInfo) {
     }
   )";
 
-  ErrorInfo error_info{"API_KEY_INVALID",
-                       "googleapis.com",
-                       {{"service", "translate.googleapis.com"}}};
+  ErrorInfo error_info{
+      "API_KEY_INVALID",
+      "googleapis.com",
+      {{"service", "translate.googleapis.com"}, {"http_status_code", "400"}}};
   std::string message = "API key not valid. Please pass a valid API key.";
   Status expected{StatusCode::kInvalidArgument, message, error_info};
   EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);
@@ -137,6 +138,26 @@ TEST(HttpResponseTest, ErrorInfoInvalidOnlyString) {
   auto constexpr kJsonPayload = R"("uh-oh some error here")";
   Status expected{StatusCode::kInvalidArgument, kJsonPayload};
   EXPECT_EQ(AsStatus(HttpResponse{400, kJsonPayload, {}}), expected);
+}
+
+TEST(HttpResponseTest, ErrorInfoInvalidUnexpectedFormat) {
+  std::string cases[] = {
+      R"js({"error": "invalid_grant", "error_description": "Invalid grant: account not found"})js",
+      R"js({"error": ["invalid"], "error_description": "Invalid grant: account not found"})js",
+      R"js({"error": {"missing-message": "msg"}})js",
+      R"js({"error": {"message": "msg", "missing-details": {}}})js",
+      R"js({"error": {"message": ["not string"], "details": {}}}})js",
+      R"js({"error": {"message": "the error", "details": "not-an-array"}}})js",
+      R"js({"error": {"message": "the error", "details": {"@type": "invalid-@type"}}}})js",
+      R"js({"error": {"message": "the error", "details": ["not-an-object"]}}})js",
+      R"js({"error": {"message": "the error", "details": [{"@type": "invalid-@type"}]}}})js",
+      R"js(Service Unavailable)js",
+      R"js("Service Unavailable")js",
+  };
+  for (auto const& payload : cases) {
+    Status expected{StatusCode::kInvalidArgument, payload};
+    EXPECT_EQ(AsStatus(HttpResponse{400, payload, {}}), expected);
+  }
 }
 
 }  // namespace

@@ -23,6 +23,15 @@ namespace {
 
 namespace btproto = ::google::bigtable::v2;
 
+TEST(ReadModifyWriteRuleTest, Equality) {
+  auto r1 = ReadModifyWriteRule::AppendValue("fam", "col", "foo");
+  auto r2 = ReadModifyWriteRule::IncrementAmount("fam", "col", 42);
+  EXPECT_NE(r1, r2);
+
+  r2 = r1;
+  EXPECT_EQ(r1, r2);
+}
+
 TEST(ReadModifyWriteRuleTest, AppendValue) {
   auto const proto =
       ReadModifyWriteRule::AppendValue("fam", "col", "foo").as_proto();

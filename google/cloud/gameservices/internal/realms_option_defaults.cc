@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options RealmsServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_REALMS_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_REALMS_SERVICE_AUTHORITY",
       "gameservices.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

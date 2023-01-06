@@ -14,7 +14,6 @@
 
 #include "google/cloud/resourcemanager/projects_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -27,12 +26,12 @@ int main(int argc, char* argv[]) try {
       resourcemanager::MakeProjectsConnection());
 
   for (auto p : client.ListProjects("folders/" + std::string(argv[1]))) {
-    if (!p) throw std::runtime_error(p.status().message());
+    if (!p) throw std::move(p).status();
     std::cout << p->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

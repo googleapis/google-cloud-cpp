@@ -13,6 +13,7 @@ In this project we use the (more or less) standard
 You create a [fork][fork-link] of [google-cloud-cpp][repo-link]. You can think
 of a "fork" as a full copy of the original repository, including all its history
 and branches. Then [clone][about-clone] that fork into your workstation:
+
 ```console
 git clone git@github.com:YOUR-USER-NAME/google-cloud-cpp.git
 ```
@@ -135,13 +136,13 @@ ci/cloudbuild/build.sh -t asan-pr
 In general, most of the builds for Linux can be reproduced locally using the
 build name as an argument to `build.sh`.
 
-[workflow-link]: https://guides.github.com/introduction/flow/
-[fork-link]: https://guides.github.com/activities/forking/
-[repo-link]: https://github.com/googleapis/google-cloud-cpp.git
-[mastering-issues]: https://guides.github.com/features/issues/
-[about-clone]: https://help.github.com/articles/cloning-a-repository/
 [about-branches]: https://help.github.com/articles/about-branches/
-[about-pull-requests]: https://help.github.com/articles/about-pull-requests/
+[about-clone]: https://help.github.com/articles/cloning-a-repository/
 [about-commits]: https://help.github.com/desktop/guides/contributing-to-projects/committing-and-reviewing-changes-to-your-project/#about-commits
+[about-pull-requests]: https://help.github.com/articles/about-pull-requests/
 [about-rebase]: https://help.github.com/articles/about-git-rebase/
+[fork-link]: https://guides.github.com/activities/forking/
+[mastering-issues]: https://guides.github.com/features/issues/
+[repo-link]: https://github.com/googleapis/google-cloud-cpp.git
 [syncing-a-fork]: https://help.github.com/articles/syncing-a-fork/
+[workflow-link]: https://guides.github.com/introduction/flow/

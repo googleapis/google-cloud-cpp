@@ -105,6 +105,8 @@ class $connection_class_name$Impl
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) continue;
+    if (IsStreamingWrite(method)) continue;
     HeaderPrintMethod(method, __FILE__, __LINE__,
                       AsyncMethodDeclaration(method));
   }
@@ -112,8 +114,7 @@ class $connection_class_name$Impl
   // `CurrentOptions()` may not have the service default options because we
   // could be running in a test that calls the ConnectionImpl layer directly,
   // and it does not create an `internal::OptionsSpan` like the Client layer.
-  // So, we have to fallback to `options_`, which we know has the service
-  // default options because we added them.
+  // So, we have to fallback to `options_`.
   HeaderPrint(R"""(
  private:
   std::unique_ptr<$product_namespace$::$retry_policy_name$> retry_policy() {
@@ -179,6 +180,7 @@ Status ConnectionImplGenerator::GenerateCc() {
 )""");
 
   // includes
+  auto const needs_async_retry_loop = !async_methods().empty();
   CcLocalIncludes(
       {vars("connection_impl_header_path"), vars("option_defaults_header_path"),
        "google/cloud/background_threads.h", "google/cloud/common_options.h",
@@ -187,6 +189,7 @@ Status ConnectionImplGenerator::GenerateCc() {
        HasLongrunningMethod()
            ? "google/cloud/internal/async_long_running_operation.h"
            : "",
+       needs_async_retry_loop ? "google/cloud/internal/async_retry_loop.h" : "",
        HasStreamingReadMethod()
            ? "google/cloud/internal/resumable_streaming_read_rpc.h"
            : "",
@@ -205,9 +208,9 @@ $connection_class_name$Impl::$connection_class_name$Impl(
     std::shared_ptr<$product_internal_namespace$::$stub_class_name$> stub,
     Options options)
   : background_(std::move(background)), stub_(std::move(stub)),
-    options_(internal::MergeOptions(std::move(options),
-      $product_internal_namespace$::$service_name$DefaultOptions(
-        $connection_class_name$::options()))) {}
+    options_(internal::MergeOptions(
+        std::move(options),
+        $connection_class_name$::options())) {}
 )""");
 
   for (auto const& method : methods()) {
@@ -215,6 +218,8 @@ $connection_class_name$Impl::$connection_class_name$Impl(
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) continue;
+    if (IsStreamingWrite(method)) continue;
     CcPrintMethod(method, __FILE__, __LINE__, AsyncMethodDefinition(method));
   }
 
@@ -229,7 +234,7 @@ std::string ConnectionImplGenerator::MethodDeclaration(
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
-  Async$method_name$(ExperimentalTag) override;
+  Async$method_name$() override;
 )""";
   }
 
@@ -306,7 +311,7 @@ std::string ConnectionImplGenerator::MethodDefinition(
     return R"""(
 StreamRange<$response_type$>
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<$product_namespace$::$retry_policy_name$ const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
 
@@ -335,7 +340,7 @@ $connection_class_name$Impl::$method_name$($request_type$ const& request) {
 StreamRange<$range_output_type$>
 $connection_class_name$Impl::$method_name$($request_type$ request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<$product_namespace$::$retry_policy_name$ const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->$method_name$(request);
@@ -376,7 +381,7 @@ future<StatusOr<$longrunning_deduced_response_type$>>)""",
         // `google::cloud::internal`.
         R"""(
 $connection_class_name$Impl::$method_name$($request_type$ const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<$longrunning_deduced_response_type$>(
     background_->cq(), request,
     [stub](google::cloud::CompletionQueue& cq,

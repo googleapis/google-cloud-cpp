@@ -32,15 +32,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class IamCheckerConnectionIdempotencyPolicy {
  public:
-  virtual ~IamCheckerConnectionIdempotencyPolicy() = 0;
+  virtual ~IamCheckerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<IamCheckerConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<IamCheckerConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency TroubleshootIamPolicy(
       google::cloud::policytroubleshooter::v1::
-          TroubleshootIamPolicyRequest const& request) = 0;
+          TroubleshootIamPolicyRequest const& request);
 };
 
 std::unique_ptr<IamCheckerConnectionIdempotencyPolicy>

@@ -109,6 +109,24 @@ ProductServiceMetadata::AsyncRemoveFulfillmentPlaces(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ProductServiceMetadata::AsyncAddLocalInventories(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request) {
+  SetMetadata(*context, "product=" + request.product());
+  return child_->AsyncAddLocalInventories(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ProductServiceMetadata::AsyncRemoveLocalInventories(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request) {
+  SetMetadata(*context, "product=" + request.product());
+  return child_->AsyncRemoveLocalInventories(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ProductServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -138,9 +156,8 @@ void ProductServiceMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

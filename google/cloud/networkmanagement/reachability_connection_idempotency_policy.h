@@ -32,35 +32,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ReachabilityServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~ReachabilityServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~ReachabilityServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency ListConnectivityTests(
       google::cloud::networkmanagement::v1::ListConnectivityTestsRequest
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetConnectivityTest(
       google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency CreateConnectivityTest(
       google::cloud::networkmanagement::v1::CreateConnectivityTestRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateConnectivityTest(
       google::cloud::networkmanagement::v1::UpdateConnectivityTestRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency RerunConnectivityTest(
       google::cloud::networkmanagement::v1::RerunConnectivityTestRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteConnectivityTest(
       google::cloud::networkmanagement::v1::DeleteConnectivityTestRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<ReachabilityServiceConnectionIdempotencyPolicy>

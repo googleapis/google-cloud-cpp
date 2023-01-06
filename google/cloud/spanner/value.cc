@@ -44,18 +44,19 @@ bool Equal(google::spanner::v1::Type const& pt1,  // NOLINT(misc-no-recursion)
     case google::spanner::v1::TypeCode::INT64:
       return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::FLOAT64:
-      // NaN should always compare not equal, even to itself.
-      if (pv1.string_value() == "NaN" || pv2.string_value() == "NaN") {
-        return false;
+      if (pv1.kind_case() == google::protobuf::Value::kNumberValue) {
+        return pv1.number_value() == pv2.number_value();
       }
-      return pv1.string_value() == pv2.string_value() &&
-             pv1.number_value() == pv2.number_value();
+      // FLOAT64 NaN values are considered equal for sorting purposes.
+      return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::STRING:
     case google::spanner::v1::TypeCode::BYTES:
     case google::spanner::v1::TypeCode::JSON:
     case google::spanner::v1::TypeCode::DATE:
     case google::spanner::v1::TypeCode::TIMESTAMP:
+      return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::NUMERIC:
+      if (pt1.type_annotation() != pt2.type_annotation()) return false;
       return pv1.string_value() == pv2.string_value();
     case google::spanner::v1::TypeCode::ARRAY: {
       auto const& etype1 = pt1.array_element_type();
@@ -234,11 +235,28 @@ bool Value::TypeProtoIs(Bytes const&, google::spanner::v1::Type const& type) {
 }
 
 bool Value::TypeProtoIs(Json const&, google::spanner::v1::Type const& type) {
-  return type.code() == google::spanner::v1::TypeCode::JSON;
+  return type.code() == google::spanner::v1::TypeCode::JSON &&
+         type.type_annotation() == google::spanner::v1::TypeAnnotationCode::
+                                       TYPE_ANNOTATION_CODE_UNSPECIFIED;
+}
+
+bool Value::TypeProtoIs(JsonB const&, google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::JSON &&
+         type.type_annotation() ==
+             google::spanner::v1::TypeAnnotationCode::PG_JSONB;
 }
 
 bool Value::TypeProtoIs(Numeric const&, google::spanner::v1::Type const& type) {
-  return type.code() == google::spanner::v1::TypeCode::NUMERIC;
+  return type.code() == google::spanner::v1::TypeCode::NUMERIC &&
+         type.type_annotation() == google::spanner::v1::TypeAnnotationCode::
+                                       TYPE_ANNOTATION_CODE_UNSPECIFIED;
+}
+
+bool Value::TypeProtoIs(PgNumeric const&,
+                        google::spanner::v1::Type const& type) {
+  return type.code() == google::spanner::v1::TypeCode::NUMERIC &&
+         type.type_annotation() ==
+             google::spanner::v1::TypeAnnotationCode::PG_NUMERIC;
 }
 
 //
@@ -278,12 +296,30 @@ google::spanner::v1::Type Value::MakeTypeProto(Bytes const&) {
 google::spanner::v1::Type Value::MakeTypeProto(Json const&) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::JSON);
+  // Prefer to leave type_annotation unset over setting it to
+  // TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED.
+  return t;
+}
+
+google::spanner::v1::Type Value::MakeTypeProto(JsonB const&) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::JSON);
+  t.set_type_annotation(google::spanner::v1::TypeAnnotationCode::PG_JSONB);
   return t;
 }
 
 google::spanner::v1::Type Value::MakeTypeProto(Numeric const&) {
   google::spanner::v1::Type t;
   t.set_code(google::spanner::v1::TypeCode::NUMERIC);
+  // Prefer to leave type_annotation unset over setting it to
+  // TypeAnnotationCode::TYPE_ANNOTATION_CODE_UNSPECIFIED.
+  return t;
+}
+
+google::spanner::v1::Type Value::MakeTypeProto(PgNumeric const&) {
+  google::spanner::v1::Type t;
+  t.set_code(google::spanner::v1::TypeCode::NUMERIC);
+  t.set_type_annotation(google::spanner::v1::TypeAnnotationCode::PG_NUMERIC);
   return t;
 }
 
@@ -359,7 +395,19 @@ google::protobuf::Value Value::MakeValueProto(Json j) {
   return v;
 }
 
+google::protobuf::Value Value::MakeValueProto(JsonB j) {
+  google::protobuf::Value v;
+  v.set_string_value(std::string(std::move(j)));
+  return v;
+}
+
 google::protobuf::Value Value::MakeValueProto(Numeric n) {
+  google::protobuf::Value v;
+  v.set_string_value(std::move(n).ToString());
+  return v;
+}
+
+google::protobuf::Value Value::MakeValueProto(PgNumeric n) {
   google::protobuf::Value v;
   v.set_string_value(std::move(n).ToString());
   return v;
@@ -484,6 +532,14 @@ StatusOr<Json> Value::GetValue(Json const&, google::protobuf::Value const& pv,
   return Json(pv.string_value());
 }
 
+StatusOr<JsonB> Value::GetValue(JsonB const&, google::protobuf::Value const& pv,
+                                google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing JSONB");
+  }
+  return JsonB(pv.string_value());
+}
+
 StatusOr<Numeric> Value::GetValue(Numeric const&,
                                   google::protobuf::Value const& pv,
                                   google::spanner::v1::Type const&) {
@@ -491,6 +547,17 @@ StatusOr<Numeric> Value::GetValue(Numeric const&,
     return Status(StatusCode::kUnknown, "missing NUMERIC");
   }
   auto decoded = MakeNumeric(pv.string_value());
+  if (!decoded) return decoded.status();
+  return *decoded;
+}
+
+StatusOr<PgNumeric> Value::GetValue(PgNumeric const&,
+                                    google::protobuf::Value const& pv,
+                                    google::spanner::v1::Type const&) {
+  if (pv.kind_case() != google::protobuf::Value::kStringValue) {
+    return Status(StatusCode::kUnknown, "missing NUMERIC");
+  }
+  auto decoded = MakePgNumeric(pv.string_value());
   if (!decoded) return decoded.status();
   return *decoded;
 }

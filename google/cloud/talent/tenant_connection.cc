@@ -23,6 +23,7 @@
 #include "google/cloud/talent/tenant_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -57,9 +58,9 @@ Status TenantServiceConnection::DeleteTenant(
 }
 
 StreamRange<google::cloud::talent::v4::Tenant>
-    TenantServiceConnection::ListTenants(
-        google::cloud::talent::v4::
-            ListTenantsRequest) {  // NOLINT(performance-unnecessary-value-param)
+TenantServiceConnection::ListTenants(
+    google::cloud::talent::v4::
+        ListTenantsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::talent::v4::Tenant>>();
 }
@@ -67,6 +68,7 @@ StreamRange<google::cloud::talent::v4::Tenant>
 std::shared_ptr<TenantServiceConnection> MakeTenantServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  TenantServicePolicyOptionList>(options,
                                                                 __func__);
   options = talent_internal::TenantServiceDefaultOptions(std::move(options));
@@ -79,23 +81,5 @@ std::shared_ptr<TenantServiceConnection> MakeTenantServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace talent_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<talent::TenantServiceConnection> MakeTenantServiceConnection(
-    std::shared_ptr<TenantServiceStub> stub, Options options) {
-  options = TenantServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<talent_internal::TenantServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace talent_internal
 }  // namespace cloud
 }  // namespace google

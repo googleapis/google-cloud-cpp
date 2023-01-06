@@ -17,7 +17,6 @@
 // source: google/cloud/apigateway/v1/apigateway_service.proto
 
 #include "google/cloud/apigateway/api_gateway_client.h"
-#include "google/cloud/apigateway/internal/api_gateway_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ApiGatewayServiceClient::ApiGatewayServiceClient(
     std::shared_ptr<ApiGatewayServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), apigateway_internal::ApiGatewayServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ApiGatewayServiceClient::~ApiGatewayServiceClient() = default;
 
 StreamRange<google::cloud::apigateway::v1::Gateway>

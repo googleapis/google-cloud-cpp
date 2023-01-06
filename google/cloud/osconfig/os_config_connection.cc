@@ -23,6 +23,7 @@
 #include "google/cloud/osconfig/os_config_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -53,17 +54,17 @@ OsConfigServiceConnection::CancelPatchJob(
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchJob>
-    OsConfigServiceConnection::ListPatchJobs(
-        google::cloud::osconfig::v1::
-            ListPatchJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+OsConfigServiceConnection::ListPatchJobs(
+    google::cloud::osconfig::v1::
+        ListPatchJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchJob>>();
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>
-    OsConfigServiceConnection::ListPatchJobInstanceDetails(
-        google::cloud::osconfig::v1::
-            ListPatchJobInstanceDetailsRequest) {  // NOLINT(performance-unnecessary-value-param)
+OsConfigServiceConnection::ListPatchJobInstanceDetails(
+    google::cloud::osconfig::v1::
+        ListPatchJobInstanceDetailsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchJobInstanceDetails>>();
 }
@@ -81,9 +82,9 @@ OsConfigServiceConnection::GetPatchDeployment(
 }
 
 StreamRange<google::cloud::osconfig::v1::PatchDeployment>
-    OsConfigServiceConnection::ListPatchDeployments(
-        google::cloud::osconfig::v1::
-            ListPatchDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+OsConfigServiceConnection::ListPatchDeployments(
+    google::cloud::osconfig::v1::
+        ListPatchDeploymentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::osconfig::v1::PatchDeployment>>();
 }
@@ -93,9 +94,28 @@ Status OsConfigServiceConnection::DeletePatchDeployment(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceConnection::UpdatePatchDeployment(
+    google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceConnection::PausePatchDeployment(
+    google::cloud::osconfig::v1::PausePatchDeploymentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceConnection::ResumePatchDeployment(
+    google::cloud::osconfig::v1::ResumePatchDeploymentRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  OsConfigServicePolicyOptionList>(options,
                                                                   __func__);
   options =
@@ -109,24 +129,5 @@ std::shared_ptr<OsConfigServiceConnection> MakeOsConfigServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace osconfig
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace osconfig_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<osconfig::OsConfigServiceConnection>
-MakeOsConfigServiceConnection(std::shared_ptr<OsConfigServiceStub> stub,
-                              Options options) {
-  options = OsConfigServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<osconfig_internal::OsConfigServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace osconfig_internal
 }  // namespace cloud
 }  // namespace google

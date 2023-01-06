@@ -20,50 +20,15 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_MOCKS_MOCK_GOLDEN_KITCHEN_SINK_CONNECTION_H
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
-#include <gmock/gmock.h>
+#include "generator/integration_tests/golden/v1/mocks/mock_golden_kitchen_sink_connection.h"
 
 namespace google {
 namespace cloud {
 namespace golden_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-class MockGoldenKitchenSinkConnection : public golden::GoldenKitchenSinkConnection {
- public:
-  MOCK_METHOD(Options, options, (), (override));
-
-  MOCK_METHOD(StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>,
-  GenerateAccessToken,
-  (google::test::admin::database::v1::GenerateAccessTokenRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>,
-  GenerateIdToken,
-  (google::test::admin::database::v1::GenerateIdTokenRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>,
-  WriteLogEntries,
-  (google::test::admin::database::v1::WriteLogEntriesRequest const& request), (override));
-
-  MOCK_METHOD(StreamRange<std::string>,
-  ListLogs,
-  (google::test::admin::database::v1::ListLogsRequest request), (override));
-
-  MOCK_METHOD(StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>,
-  TailLogEntries,
-  (google::test::admin::database::v1::TailLogEntriesRequest const& request), (override));
-
-  MOCK_METHOD(StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>,
-  ListServiceAccountKeys,
-  (google::test::admin::database::v1::ListServiceAccountKeysRequest const& request), (override));
-
-  MOCK_METHOD(Status,
-  DoNothing,
-  (google::protobuf::Empty const& request), (override));
-
-  MOCK_METHOD((std::unique_ptr<
-      ::google::cloud::AsyncStreamingReadWriteRpc<
-          google::test::admin::database::v1::AppendRowsRequest, google::test::admin::database::v1::AppendRowsResponse>>),
-      AsyncAppendRows, (ExperimentalTag), (override));
-};
+/// @deprecated Use golden_v1_mocks::MockGoldenKitchenSinkConnection directly.
+using ::google::cloud::golden_v1_mocks::MockGoldenKitchenSinkConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden_mocks

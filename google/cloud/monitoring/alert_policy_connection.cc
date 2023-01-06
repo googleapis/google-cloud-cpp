@@ -23,6 +23,7 @@
 #include "google/cloud/monitoring/internal/alert_policy_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AlertPolicyServiceConnection::~AlertPolicyServiceConnection() = default;
 
 StreamRange<google::monitoring::v3::AlertPolicy>
-    AlertPolicyServiceConnection::ListAlertPolicies(
-        google::monitoring::v3::
-            ListAlertPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+AlertPolicyServiceConnection::ListAlertPolicies(
+    google::monitoring::v3::
+        ListAlertPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::AlertPolicy>>();
 }
@@ -68,6 +69,7 @@ AlertPolicyServiceConnection::UpdateAlertPolicy(
 std::shared_ptr<AlertPolicyServiceConnection> MakeAlertPolicyServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AlertPolicyServicePolicyOptionList>(options,
                                                                      __func__);
   options =
@@ -82,25 +84,5 @@ std::shared_ptr<AlertPolicyServiceConnection> MakeAlertPolicyServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::AlertPolicyServiceConnection>
-MakeAlertPolicyServiceConnection(std::shared_ptr<AlertPolicyServiceStub> stub,
-                                 Options options) {
-  options = AlertPolicyServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      monitoring_internal::AlertPolicyServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
 }  // namespace cloud
 }  // namespace google

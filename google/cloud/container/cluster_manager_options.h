@@ -31,21 +31,38 @@ namespace cloud {
 namespace container {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-container-options
+ */
 struct ClusterManagerRetryPolicyOption {
   using Type = std::shared_ptr<ClusterManagerRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-container-options
+ */
 struct ClusterManagerBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-container-options
+ */
 struct ClusterManagerConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<ClusterManagerConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to ClusterManager.
+ *
+ * @ingroup google-cloud-container-options
+ */
 using ClusterManagerPolicyOptionList =
     OptionList<ClusterManagerRetryPolicyOption,
                ClusterManagerBackoffPolicyOption,

@@ -61,11 +61,17 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
                google::pubsub::v1::ModifyPushConfigRequest const& request),
               (override));
 
-  MOCK_METHOD(std::unique_ptr<pubsub_internal::SubscriberStub::AsyncPullStream>,
-              AsyncStreamingPull,
-              (google::cloud::CompletionQueue&,
-               std::unique_ptr<grpc::ClientContext>,
-               google::pubsub::v1::StreamingPullRequest const&),
+  MOCK_METHOD(StatusOr<google::pubsub::v1::PullResponse>, Pull,
+              (grpc::ClientContext&, google::pubsub::v1::PullRequest const&),
+              (override));
+
+  using StreamingPullStream = google::cloud::AsyncStreamingReadWriteRpc<
+      google::pubsub::v1::StreamingPullRequest,
+      google::pubsub::v1::StreamingPullResponse>;
+
+  MOCK_METHOD(std::unique_ptr<StreamingPullStream>, AsyncStreamingPull,
+              (google::cloud::CompletionQueue const&,
+               std::unique_ptr<grpc::ClientContext>),
               (override));
 
   MOCK_METHOD(future<Status>, AsyncAcknowledge,
@@ -111,8 +117,7 @@ class MockSubscriberStub : public pubsub_internal::SubscriberStub {
               (override));
 };
 
-class MockAsyncPullStream
-    : public pubsub_internal::SubscriberStub::AsyncPullStream {
+class MockAsyncPullStream : public MockSubscriberStub::StreamingPullStream {
  public:
   MOCK_METHOD(void, Cancel, (), (override));
   MOCK_METHOD(future<bool>, Start, (), (override));

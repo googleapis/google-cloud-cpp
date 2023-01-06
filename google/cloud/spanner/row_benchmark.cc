@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/mocks/row.h"
 #include "google/cloud/spanner/row.h"
 #include <benchmark/benchmark.h>
 
@@ -35,25 +36,31 @@ namespace {
 // BM_RowGetByColumnName               195 ns          194 ns      3590333
 
 void BM_RowGetByPosition(benchmark::State& state) {
-  Row row = MakeTestRow(1, "blah", true);
+  Row row = spanner_mocks::MakeRow(1, "blah", true);
   for (auto _ : state) {
-    benchmark::DoNotOptimize(row.get(0));
-    benchmark::DoNotOptimize(row.get(1));
-    benchmark::DoNotOptimize(row.get(2));
+    auto unused_0 = row.get(0);
+    benchmark::DoNotOptimize(unused_0);
+    auto unused_1 = row.get(1);
+    benchmark::DoNotOptimize(unused_1);
+    auto unused_2 = row.get(2);
+    benchmark::DoNotOptimize(unused_2);
   }
 }
 BENCHMARK(BM_RowGetByPosition);
 
 void BM_RowGetByColumnName(benchmark::State& state) {
-  Row row = MakeTestRow({
+  Row row = spanner_mocks::MakeRow({
       {"a", Value(1)},       //
       {"b", Value("blah")},  //
       {"c", Value(true)}     //
   });
   for (auto _ : state) {
-    benchmark::DoNotOptimize(row.get("a"));
-    benchmark::DoNotOptimize(row.get("b"));
-    benchmark::DoNotOptimize(row.get("c"));
+    auto unused_a = row.get("a");
+    benchmark::DoNotOptimize(unused_a);
+    auto unused_b = row.get("b");
+    benchmark::DoNotOptimize(unused_b);
+    auto unused_c = row.get("c");
+    benchmark::DoNotOptimize(unused_c);
   }
 }
 BENCHMARK(BM_RowGetByColumnName);

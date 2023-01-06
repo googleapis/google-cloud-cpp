@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/internal/defaults.h"
 #include "google/cloud/pubsub/internal/streaming_subscription_batch_source.h"
+#include "google/cloud/pubsub/internal/subscriber_stub_factory.h"
 #include "google/cloud/pubsub/publisher.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -60,6 +61,8 @@ class SubscriberIntegrationTest
         project_id, pubsub_testing::RandomSubscriptionId(generator_));
     ordered_subscription_ = Subscription(
         project_id, pubsub_testing::RandomSubscriptionId(generator_));
+    exactly_once_subscription_ = Subscription(
+        project_id, pubsub_testing::RandomSubscriptionId(generator_));
 
     auto topic_admin = TopicAdminClient(MakeTopicAdminConnection());
     auto subscription_admin =
@@ -68,16 +71,27 @@ class SubscriberIntegrationTest
     auto topic_metadata = topic_admin.CreateTopic(TopicBuilder(topic_));
     ASSERT_THAT(topic_metadata,
                 AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
+
     auto subscription_metadata = subscription_admin.CreateSubscription(
         topic_, subscription_,
         SubscriptionBuilder{}.set_ack_deadline(std::chrono::seconds(10)));
     ASSERT_THAT(subscription_metadata,
                 AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
+
     auto ordered_subscription_metadata = subscription_admin.CreateSubscription(
         topic_, ordered_subscription_,
         SubscriptionBuilder{}
             .set_ack_deadline(std::chrono::seconds(30))
             .enable_message_ordering(true));
+    ASSERT_THAT(ordered_subscription_metadata,
+                AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
+
+    auto exactly_once_subscription_metadata =
+        subscription_admin.CreateSubscription(
+            topic_, exactly_once_subscription_,
+            SubscriptionBuilder{}
+                .set_ack_deadline(std::chrono::seconds(30))
+                .enable_exactly_once_delivery(true));
     ASSERT_THAT(ordered_subscription_metadata,
                 AnyOf(IsOk(), StatusIs(StatusCode::kAlreadyExists)));
   }
@@ -87,6 +101,10 @@ class SubscriberIntegrationTest
     auto subscription_admin =
         SubscriptionAdminClient(MakeSubscriptionAdminConnection());
 
+    auto delete_exactly_once_subscription =
+        subscription_admin.DeleteSubscription(exactly_once_subscription_);
+    EXPECT_THAT(delete_exactly_once_subscription,
+                AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
     auto delete_ordered_subscription =
         subscription_admin.DeleteSubscription(ordered_subscription_);
     EXPECT_THAT(delete_ordered_subscription,
@@ -103,6 +121,7 @@ class SubscriberIntegrationTest
   Topic topic_ = Topic("unused", "unused");
   Subscription subscription_ = Subscription("unused", "unused");
   Subscription ordered_subscription_ = Subscription("unused", "unused");
+  Subscription exactly_once_subscription_ = Subscription("unused", "unused");
 };
 
 void TestRoundtrip(pubsub::Publisher publisher, pubsub::Subscriber subscriber) {
@@ -161,9 +180,10 @@ TEST_F(SubscriberIntegrationTest, RawStub) {
   request.set_max_outstanding_messages(1000);
   request.set_stream_ack_deadline_seconds(600);
 
-  auto stream = [&stub, &request](CompletionQueue cq) {
-    return stub->AsyncStreamingPull(
-        cq, absl::make_unique<grpc::ClientContext>(), request);
+  auto stream = [&stub](CompletionQueue const& cq) {
+    auto context = absl::make_unique<grpc::ClientContext>();
+
+    return stub->AsyncStreamingPull(cq, std::move(context));
   }(background.cq());
 
   ASSERT_TRUE(stream->Start().get());
@@ -439,8 +459,7 @@ TEST_F(SubscriberIntegrationTest, PublishOrdered) {
 
 TEST_F(SubscriberIntegrationTest, UnifiedCredentials) {
   auto options =
-      google::cloud::Options{}.set<google::cloud::UnifiedCredentialsOption>(
-          google::cloud::MakeGoogleDefaultCredentials());
+      Options{}.set<UnifiedCredentialsOption>(MakeGoogleDefaultCredentials());
   auto const using_emulator =
       internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
   if (using_emulator) {
@@ -452,6 +471,82 @@ TEST_F(SubscriberIntegrationTest, UnifiedCredentials) {
   auto subscriber =
       Subscriber(MakeSubscriberConnection(subscription_, options));
   ASSERT_NO_FATAL_FAILURE(TestRoundtrip(publisher, subscriber));
+}
+
+TEST_F(SubscriberIntegrationTest, ExactlyOnce) {
+  auto publisher = Publisher(MakePublisherConnection(topic_));
+  auto subscriber =
+      Subscriber(MakeSubscriberConnection(exactly_once_subscription_));
+
+  std::mutex mu;
+  std::map<std::string, int> ids;
+  for (auto const* data : {"message-0", "message-1", "message-2"}) {
+    auto response =
+        publisher.Publish(MessageBuilder{}.SetData(data).Build()).get();
+    EXPECT_STATUS_OK(response);
+    if (response) {
+      std::lock_guard<std::mutex> lk(mu);
+      ids.emplace(*std::move(response), 0);
+    }
+  }
+  EXPECT_FALSE(ids.empty());
+
+  promise<void> ids_empty;
+  auto callback = [&](pubsub::Message const& m, ExactlyOnceAckHandler h) {
+    SCOPED_TRACE("Search for message " + m.message_id());
+    std::unique_lock<std::mutex> lk(mu);
+    auto i = ids.find(m.message_id());
+    ASSERT_FALSE(i == ids.end());
+    if (i->second == 0) {
+      ++i->second;
+      lk.unlock();
+      std::move(h).nack().then([id = m.message_id()](auto f) {
+        auto status = f.get();
+        ASSERT_STATUS_OK(status) << " nack() failed for id=" << id;
+      });
+      return;
+    }
+    ids.erase(i);
+    if (ids.empty()) ids_empty.set_value();
+    lk.unlock();
+    std::move(h).ack().then([id = m.message_id()](auto f) {
+      auto status = f.get();
+      ASSERT_STATUS_OK(status) << " ack() failed for id=" << id;
+    });
+  };
+
+  auto result = subscriber.Subscribe(callback);
+  // Wait until there are no more ids pending, then cancel the subscription and
+  // get its status.
+  ids_empty.get_future().get();
+  result.cancel();
+  EXPECT_STATUS_OK(result.get());
+}
+
+TEST_F(SubscriberIntegrationTest, BlockingPull) {
+  auto publisher = Publisher(MakePublisherConnection(topic_));
+  auto subscriber =
+      Subscriber(MakeSubscriberConnection(exactly_once_subscription_));
+
+  std::set<std::string> ids;
+  for (auto const* data : {"message-0", "message-1", "message-2"}) {
+    auto response =
+        publisher.Publish(MessageBuilder{}.SetData(data).Build()).get();
+    EXPECT_STATUS_OK(response);
+    if (response) ids.insert(*std::move(response));
+  }
+  EXPECT_THAT(ids, Not(IsEmpty()));
+
+  auto const count = 2 * ids.size();
+  for (std::size_t i = 0; i != count && !ids.empty(); ++i) {
+    auto response = subscriber.Pull();
+    EXPECT_STATUS_OK(response);
+    if (!response) continue;
+    auto ack = std::move(response->handler).ack().get();
+    EXPECT_STATUS_OK(ack);
+    ids.erase(response->message.message_id());
+  }
+  EXPECT_THAT(ids, IsEmpty());
 }
 
 /// @test Verify the backwards compatibility `v1` namespace still exists.

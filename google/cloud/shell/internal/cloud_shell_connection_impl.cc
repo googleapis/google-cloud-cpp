@@ -37,8 +37,7 @@ CloudShellServiceConnectionImpl::CloudShellServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options), shell_internal::CloudShellServiceDefaultOptions(
-                                  CloudShellServiceConnection::options()))) {}
+          std::move(options), CloudShellServiceConnection::options())) {}
 
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceConnectionImpl::GetEnvironment(
@@ -56,7 +55,7 @@ CloudShellServiceConnectionImpl::GetEnvironment(
 future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>
 CloudShellServiceConnectionImpl::StartEnvironment(
     google::cloud::shell::v1::StartEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::shell::v1::StartEnvironmentResponse>(
       background_->cq(), request,
@@ -85,7 +84,7 @@ CloudShellServiceConnectionImpl::StartEnvironment(
 future<StatusOr<google::cloud::shell::v1::AuthorizeEnvironmentResponse>>
 CloudShellServiceConnectionImpl::AuthorizeEnvironment(
     google::cloud::shell::v1::AuthorizeEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::shell::v1::AuthorizeEnvironmentResponse>(
       background_->cq(), request,
@@ -115,7 +114,7 @@ CloudShellServiceConnectionImpl::AuthorizeEnvironment(
 future<StatusOr<google::cloud::shell::v1::AddPublicKeyResponse>>
 CloudShellServiceConnectionImpl::AddPublicKey(
     google::cloud::shell::v1::AddPublicKeyRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::shell::v1::AddPublicKeyResponse>(
       background_->cq(), request,
@@ -143,7 +142,7 @@ CloudShellServiceConnectionImpl::AddPublicKey(
 future<StatusOr<google::cloud::shell::v1::RemovePublicKeyResponse>>
 CloudShellServiceConnectionImpl::RemovePublicKey(
     google::cloud::shell::v1::RemovePublicKeyRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::shell::v1::RemovePublicKeyResponse>(
       background_->cq(), request,

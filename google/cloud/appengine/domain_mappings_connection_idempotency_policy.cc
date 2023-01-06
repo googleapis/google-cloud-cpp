@@ -30,49 +30,39 @@ using ::google::cloud::Idempotency;
 DomainMappingsConnectionIdempotencyPolicy::
     ~DomainMappingsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultDomainMappingsConnectionIdempotencyPolicy
-    : public DomainMappingsConnectionIdempotencyPolicy {
- public:
-  ~DefaultDomainMappingsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy>
+DomainMappingsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<DomainMappingsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultDomainMappingsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency DomainMappingsConnectionIdempotencyPolicy::ListDomainMappings(
+    google::appengine::v1::ListDomainMappingsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListDomainMappings(
-      google::appengine::v1::ListDomainMappingsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DomainMappingsConnectionIdempotencyPolicy::GetDomainMapping(
+    google::appengine::v1::GetDomainMappingRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetDomainMapping(
-      google::appengine::v1::GetDomainMappingRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency DomainMappingsConnectionIdempotencyPolicy::CreateDomainMapping(
+    google::appengine::v1::CreateDomainMappingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateDomainMapping(
-      google::appengine::v1::CreateDomainMappingRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency DomainMappingsConnectionIdempotencyPolicy::UpdateDomainMapping(
+    google::appengine::v1::UpdateDomainMappingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateDomainMapping(
-      google::appengine::v1::UpdateDomainMappingRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteDomainMapping(
-      google::appengine::v1::DeleteDomainMappingRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency DomainMappingsConnectionIdempotencyPolicy::DeleteDomainMapping(
+    google::appengine::v1::DeleteDomainMappingRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy>
 MakeDefaultDomainMappingsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultDomainMappingsConnectionIdempotencyPolicy>();
+  return absl::make_unique<DomainMappingsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

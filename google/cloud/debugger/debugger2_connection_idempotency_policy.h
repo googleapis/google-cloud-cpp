@@ -32,31 +32,27 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class Debugger2ConnectionIdempotencyPolicy {
  public:
-  virtual ~Debugger2ConnectionIdempotencyPolicy() = 0;
+  virtual ~Debugger2ConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<Debugger2ConnectionIdempotencyPolicy> clone()
-      const = 0;
+  virtual std::unique_ptr<Debugger2ConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency SetBreakpoint(
-      google::devtools::clouddebugger::v2::SetBreakpointRequest const&
-          request) = 0;
+      google::devtools::clouddebugger::v2::SetBreakpointRequest const& request);
 
   virtual google::cloud::Idempotency GetBreakpoint(
-      google::devtools::clouddebugger::v2::GetBreakpointRequest const&
-          request) = 0;
+      google::devtools::clouddebugger::v2::GetBreakpointRequest const& request);
 
   virtual google::cloud::Idempotency DeleteBreakpoint(
       google::devtools::clouddebugger::v2::DeleteBreakpointRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListBreakpoints(
       google::devtools::clouddebugger::v2::ListBreakpointsRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListDebuggees(
-      google::devtools::clouddebugger::v2::ListDebuggeesRequest const&
-          request) = 0;
+      google::devtools::clouddebugger::v2::ListDebuggeesRequest const& request);
 };
 
 std::unique_ptr<Debugger2ConnectionIdempotencyPolicy>

@@ -44,6 +44,18 @@ using IamCheckerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         policytroubleshooter_internal::IamCheckerRetryTraits>;
 
+/**
+ * The `IamCheckerConnection` object for `IamCheckerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `IamCheckerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `IamCheckerClient`.
+ *
+ * To create a concrete instance, see `MakeIamCheckerConnection()`.
+ *
+ * For mocking, see `policytroubleshooter_mocks::MockIamCheckerConnection`.
+ */
 class IamCheckerConnection {
  public:
   virtual ~IamCheckerConnection() = 0;
@@ -56,24 +68,32 @@ class IamCheckerConnection {
                             TroubleshootIamPolicyRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `IamCheckerConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of IamCheckerClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `IamCheckerConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::policytroubleshooter::IamCheckerPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `IamCheckerConnection` created by
+ * this function.
+ */
 std::shared_ptr<IamCheckerConnection> MakeIamCheckerConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace policytroubleshooter
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace policytroubleshooter_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<policytroubleshooter::IamCheckerConnection>
-MakeIamCheckerConnection(std::shared_ptr<IamCheckerStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace policytroubleshooter_internal
 }  // namespace cloud
 }  // namespace google
 

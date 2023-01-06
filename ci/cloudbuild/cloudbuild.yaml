@@ -25,6 +25,7 @@ options:
     'COMMIT_SHA=${COMMIT_SHA}',
     'PR_NUMBER=${_PR_NUMBER}',
     'TRIGGER_TYPE=${_TRIGGER_TYPE}',
+    'GENERATE_GOLDEN_ONLY=""',
     'CONSOLE_LOG_URL=https://console.cloud.google.com/cloud-build/builds;region=us-east1/${BUILD_ID};tab=detail?project=${PROJECT_ID}',
     'RAW_LOG_URL=https://storage.googleapis.com/${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COMMIT_SHA}/${_DISTRO}-${_BUILD_NAME}/log-${BUILD_ID}.txt'
   ]
@@ -62,7 +63,7 @@ logsBucket: 'gs://${_LOGS_BUCKET}/logs/google-cloud-cpp/${_TRIGGER_SOURCE}/${COM
 
 steps:
   # Builds the docker image that will be used by the main build step.
-- name: 'gcr.io/kaniko-project/executor:v1.6.0-debug'
+- name: 'gcr.io/kaniko-project/executor:v1.9.1'
   args: [
     '--log-format=text',
     '--context=dir:///workspace/ci',
@@ -70,6 +71,7 @@ steps:
     '--cache=true',
     '--destination=gcr.io/${PROJECT_ID}/${_IMAGE}:${BUILD_ID}',
     '--push-retry=3',
+    '--image-fs-extract-retry=3'
   ]
 
   # Pull the docker image. The step running 'ci/cloud/build.sh' would do this
@@ -79,7 +81,7 @@ steps:
 
   # Restores the homedir cache into /h in parallel with the previous step.
   # Won't break the build if this step fails.
-- name: 'gcr.io/cloud-builders/gsutil'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   waitFor: [ '-' ]
   entrypoint: 'bash'
   dir: '/h'
@@ -104,7 +106,7 @@ steps:
 
   # Caches some directories in the homedir, in the specified GCS bucket.
   # Won't break the build if this step fails.
-- name: 'gcr.io/cloud-builders/gsutil'
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'bash'
   dir: '/h'
   args:

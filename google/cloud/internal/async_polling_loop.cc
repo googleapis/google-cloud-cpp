@@ -39,8 +39,7 @@ class AsyncPollingLoopImpl
         cancel_(std::move(cancel)),
         polling_policy_(std::move(polling_policy)),
         location_(std::move(location)),
-        promise_(null_promise_t{}),
-        delayed_cancel_(false) {}
+        promise_(null_promise_t{}) {}
 
   future<StatusOr<Operation>> Start(future<StatusOr<Operation>> op) {
     auto self = shared_from_this();
@@ -137,15 +136,17 @@ class AsyncPollingLoopImpl
     // after too many polling attempts.
     if (!polling_policy_->OnFailure(op.status())) {
       if (op) {
+        // We should not be fabricating a `Status` value here. Rather, we
+        // should cancel the operation and wait for the next poll to return
+        // an accurate status to the user, otherwise they will have no idea
+        // how to react. But for now, we leave the operation running. It
+        // may eventually complete.
         return promise_.set_value(Status(
             StatusCode::kDeadlineExceeded,
             location_ + "() - polling loop terminated by polling policy"));
       }
+      // This could be a transient error if the policy is exhausted.
       return promise_.set_value(std::move(op).status());
-    }
-    if (op) {
-      std::unique_lock<std::mutex> lk(mu_);
-      op_name_ = std::move(*op->mutable_name());
     }
     return Wait();
   }
@@ -163,8 +164,8 @@ class AsyncPollingLoopImpl
   // `delayed_cancel_` and `op_name_`, in contrast, are also used from
   // `DoCancel()`, which is called asynchronously, so they need locking.
   std::mutex mu_;
-  bool delayed_cancel_;  // GUARDED_BY(mu_)
-  std::string op_name_;  // GUARDED_BY(mu_)
+  bool delayed_cancel_ = false;  // GUARDED_BY(mu_)
+  std::string op_name_;          // GUARDED_BY(mu_)
 };
 
 future<StatusOr<Operation>> AsyncPollingLoop(

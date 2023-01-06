@@ -45,7 +45,7 @@ StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2Metadata::WriteLogEntries(
     grpc::ClientContext& context,
     google::logging::v2::WriteLogEntriesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->WriteLogEntries(context, request);
 }
 
@@ -53,7 +53,7 @@ StatusOr<google::logging::v2::ListLogEntriesResponse>
 LoggingServiceV2Metadata::ListLogEntries(
     grpc::ClientContext& context,
     google::logging::v2::ListLogEntriesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListLogEntries(context, request);
 }
 
@@ -62,7 +62,7 @@ LoggingServiceV2Metadata::ListMonitoredResourceDescriptors(
     grpc::ClientContext& context,
     google::logging::v2::ListMonitoredResourceDescriptorsRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListMonitoredResourceDescriptors(context, request);
 }
 
@@ -84,6 +84,15 @@ LoggingServiceV2Metadata::AsyncTailLogEntries(
   return child_->AsyncTailLogEntries(cq, std::move(context));
 }
 
+future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+LoggingServiceV2Metadata::AsyncWriteLogEntries(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::logging::v2::WriteLogEntriesRequest const& request) {
+  SetMetadata(*context);
+  return child_->AsyncWriteLogEntries(cq, std::move(context), request);
+}
+
 void LoggingServiceV2Metadata::SetMetadata(grpc::ClientContext& context,
                                            std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);
@@ -97,9 +106,8 @@ void LoggingServiceV2Metadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

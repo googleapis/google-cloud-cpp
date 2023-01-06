@@ -23,6 +23,7 @@
 #include "google/cloud/filestore/internal/cloud_filestore_manager_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudFilestoreManagerConnection::~CloudFilestoreManagerConnection() = default;
 
 StreamRange<google::cloud::filestore::v1::Instance>
-    CloudFilestoreManagerConnection::ListInstances(
-        google::cloud::filestore::v1::
-            ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudFilestoreManagerConnection::ListInstances(
+    google::cloud::filestore::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::filestore::v1::Instance>>();
 }
@@ -81,9 +82,9 @@ CloudFilestoreManagerConnection::DeleteInstance(
 }
 
 StreamRange<google::cloud::filestore::v1::Backup>
-    CloudFilestoreManagerConnection::ListBackups(
-        google::cloud::filestore::v1::
-            ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudFilestoreManagerConnection::ListBackups(
+    google::cloud::filestore::v1::
+        ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::filestore::v1::Backup>>();
 }
@@ -121,6 +122,7 @@ CloudFilestoreManagerConnection::UpdateBackup(
 std::shared_ptr<CloudFilestoreManagerConnection>
 MakeCloudFilestoreManagerConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudFilestoreManagerPolicyOptionList>(
       options, __func__);
   options = filestore_internal::CloudFilestoreManagerDefaultOptions(
@@ -135,25 +137,5 @@ MakeCloudFilestoreManagerConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace filestore
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace filestore_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<filestore::CloudFilestoreManagerConnection>
-MakeCloudFilestoreManagerConnection(
-    std::shared_ptr<CloudFilestoreManagerStub> stub, Options options) {
-  options = CloudFilestoreManagerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      filestore_internal::CloudFilestoreManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace filestore_internal
 }  // namespace cloud
 }  // namespace google

@@ -23,6 +23,7 @@
 #include "google/cloud/monitoring/internal/group_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -62,9 +63,9 @@ Status GroupServiceConnection::DeleteGroup(
 }
 
 StreamRange<google::api::MonitoredResource>
-    GroupServiceConnection::ListGroupMembers(
-        google::monitoring::v3::
-            ListGroupMembersRequest) {  // NOLINT(performance-unnecessary-value-param)
+GroupServiceConnection::ListGroupMembers(
+    google::monitoring::v3::
+        ListGroupMembersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::MonitoredResource>>();
 }
@@ -72,6 +73,7 @@ StreamRange<google::api::MonitoredResource>
 std::shared_ptr<GroupServiceConnection> MakeGroupServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  GroupServicePolicyOptionList>(options,
                                                                __func__);
   options = monitoring_internal::GroupServiceDefaultOptions(std::move(options));
@@ -84,23 +86,5 @@ std::shared_ptr<GroupServiceConnection> MakeGroupServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::GroupServiceConnection> MakeGroupServiceConnection(
-    std::shared_ptr<GroupServiceStub> stub, Options options) {
-  options = GroupServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<monitoring_internal::GroupServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
 }  // namespace cloud
 }  // namespace google

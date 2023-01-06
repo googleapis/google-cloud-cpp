@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/storage/version.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/algorithm.h"
 #include "google/cloud/internal/user_agent_prefix.h"
@@ -26,6 +25,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 char const* InitialQueryParameterSeparator(std::string const& url) {
+  // Abseil <= 20200923 does not implement StrContains(.., char)
+  // NOLINTNEXTLINE(abseil-string-find-str-contains)
   if (url.find('?') != std::string::npos) return "&";
   return "?";
 }
@@ -36,13 +37,13 @@ char const* InitialQueryParameterSeparator(std::string const& url) {
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_INITIAL_BUFFER_SIZE
 
 CurlRequestBuilder::CurlRequestBuilder(
-    std::string base_url, std::shared_ptr<CurlHandleFactory> factory)
+    std::string base_url,
+    std::shared_ptr<rest_internal::CurlHandleFactory> factory)
     : factory_(std::move(factory)),
-      handle_(factory_->CreateHandle()),
+      handle_(CurlHandle::MakeFromPool(*factory_)),
       headers_(nullptr, &curl_slist_free_all),
       url_(std::move(base_url)),
       query_parameter_separator_(InitialQueryParameterSeparator(url_)),
-      logging_enabled_(false),
       transfer_stall_timeout_(0),
       download_stall_timeout_(0) {}
 
@@ -58,10 +59,11 @@ CurlRequest CurlRequestBuilder::BuildRequest() && {
   request.logging_enabled_ = logging_enabled_;
   request.socket_options_ = socket_options_;
   request.transfer_stall_timeout_ = transfer_stall_timeout_;
+  request.transfer_stall_minimum_rate_ = transfer_stall_minimum_rate_;
   return request;
 }
 
-std::unique_ptr<CurlDownloadRequest>
+StatusOr<std::unique_ptr<CurlDownloadRequest>>
 CurlRequestBuilder::BuildDownloadRequest() && {
   ValidateBuilderState(__func__);
   auto agent = user_agent_prefix_ + UserAgentSuffix();
@@ -74,7 +76,9 @@ CurlRequestBuilder::BuildDownloadRequest() && {
   request->logging_enabled_ = logging_enabled_;
   request->socket_options_ = socket_options_;
   request->download_stall_timeout_ = download_stall_timeout_;
-  request->SetOptions();
+  request->download_stall_minimum_rate_ = download_stall_minimum_rate_;
+  auto status = request->SetOptions();
+  if (!status.ok()) return status;
   return request;
 }
 
@@ -93,7 +97,9 @@ CurlRequestBuilder& CurlRequestBuilder::ApplyClientOptions(
   http_version_ =
       std::move(options.get<storage_experimental::HttpVersionOption>());
   transfer_stall_timeout_ = options.get<TransferStallTimeoutOption>();
+  transfer_stall_minimum_rate_ = options.get<TransferStallMinimumRateOption>();
   download_stall_timeout_ = options.get<DownloadStallTimeoutOption>();
+  download_stall_minimum_rate_ = options.get<DownloadStallMinimumRateOption>();
   return *this;
 }
 

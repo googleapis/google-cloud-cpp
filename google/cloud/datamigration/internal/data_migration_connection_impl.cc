@@ -38,15 +38,13 @@ DataMigrationServiceConnectionImpl::DataMigrationServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          datamigration_internal::DataMigrationServiceDefaultOptions(
-              DataMigrationServiceConnection::options()))) {}
+          std::move(options), DataMigrationServiceConnection::options())) {}
 
 StreamRange<google::cloud::clouddms::v1::MigrationJob>
 DataMigrationServiceConnectionImpl::ListMigrationJobs(
     google::cloud::clouddms::v1::ListMigrationJobsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<datamigration::DataMigrationServiceRetryPolicy const>(
           retry_policy());
@@ -93,7 +91,7 @@ DataMigrationServiceConnectionImpl::GetMigrationJob(
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::CreateMigrationJob(
     google::cloud::clouddms::v1::CreateMigrationJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::clouddms::v1::MigrationJob>(
       background_->cq(), request,
@@ -123,7 +121,7 @@ DataMigrationServiceConnectionImpl::CreateMigrationJob(
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::UpdateMigrationJob(
     google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::clouddms::v1::MigrationJob>(
       background_->cq(), request,
@@ -153,7 +151,7 @@ DataMigrationServiceConnectionImpl::UpdateMigrationJob(
 future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnectionImpl::DeleteMigrationJob(
     google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::clouddms::v1::OperationMetadata>(
       background_->cq(), request,
@@ -183,7 +181,7 @@ DataMigrationServiceConnectionImpl::DeleteMigrationJob(
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::StartMigrationJob(
     google::cloud::clouddms::v1::StartMigrationJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::clouddms::v1::MigrationJob>(
       background_->cq(), request,
@@ -213,7 +211,7 @@ DataMigrationServiceConnectionImpl::StartMigrationJob(
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::StopMigrationJob(
     google::cloud::clouddms::v1::StopMigrationJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::clouddms::v1::MigrationJob>(
       background_->cq(), request,
@@ -243,7 +241,7 @@ DataMigrationServiceConnectionImpl::StopMigrationJob(
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::ResumeMigrationJob(
     google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::clouddms::v1::MigrationJob>(
       background_->cq(), request,
@@ -273,7 +271,7 @@ DataMigrationServiceConnectionImpl::ResumeMigrationJob(
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::PromoteMigrationJob(
     google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::clouddms::v1::MigrationJob>(
       background_->cq(), request,
@@ -303,7 +301,7 @@ DataMigrationServiceConnectionImpl::PromoteMigrationJob(
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::VerifyMigrationJob(
     google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::clouddms::v1::MigrationJob>(
       background_->cq(), request,
@@ -333,7 +331,7 @@ DataMigrationServiceConnectionImpl::VerifyMigrationJob(
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
 DataMigrationServiceConnectionImpl::RestartMigrationJob(
     google::cloud::clouddms::v1::RestartMigrationJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::clouddms::v1::MigrationJob>(
       background_->cq(), request,
@@ -378,7 +376,7 @@ StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
 DataMigrationServiceConnectionImpl::ListConnectionProfiles(
     google::cloud::clouddms::v1::ListConnectionProfilesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<datamigration::DataMigrationServiceRetryPolicy const>(
           retry_policy());
@@ -426,7 +424,7 @@ future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
 DataMigrationServiceConnectionImpl::CreateConnectionProfile(
     google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::clouddms::v1::ConnectionProfile>(
       background_->cq(), request,
@@ -458,7 +456,7 @@ future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>
 DataMigrationServiceConnectionImpl::UpdateConnectionProfile(
     google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::clouddms::v1::ConnectionProfile>(
       background_->cq(), request,
@@ -490,7 +488,7 @@ future<StatusOr<google::cloud::clouddms::v1::OperationMetadata>>
 DataMigrationServiceConnectionImpl::DeleteConnectionProfile(
     google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::clouddms::v1::OperationMetadata>(
       background_->cq(), request,

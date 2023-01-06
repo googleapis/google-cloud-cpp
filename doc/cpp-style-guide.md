@@ -5,8 +5,6 @@ This project follows the [Google Style Guide][google-style-guide-link]
 choice for consistency within this project. The following describes where we
 differ from the GSG.
 
-[google-style-guide-link]: https://google.github.io/styleguide/cppguide.html
-
 ## Include Guards
 
 All header files should have include guards formatted like
@@ -22,8 +20,6 @@ This simplifies the rules for const making it *always* modify what is on its
 left. This is sometimes referred to as ["east const"][east-const-link].
 
 [link to GSG's section on using const](https://google.github.io/styleguide/cppguide.html#Use_of_const)
-
-[east-const-link]: https://google.com/search?q=c%2B%2B+"east+const"
 
 ## Pointer and Reference Expressions
 
@@ -108,3 +104,6 @@ and a brief description:
 ```
 // TODO(#123) - here we need to randomize the sleep delay….
 ```
+
+[east-const-link]: https://google.com/search?q=c%2B%2B+%22east+const%22
+[google-style-guide-link]: https://google.github.io/styleguide/cppguide.html

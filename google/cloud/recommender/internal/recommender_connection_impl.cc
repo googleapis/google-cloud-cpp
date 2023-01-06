@@ -36,15 +36,14 @@ RecommenderConnectionImpl::RecommenderConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), recommender_internal::RecommenderDefaultOptions(
-                                  RecommenderConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      RecommenderConnection::options())) {}
 
 StreamRange<google::cloud::recommender::v1::Insight>
 RecommenderConnectionImpl::ListInsights(
     google::cloud::recommender::v1::ListInsightsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<recommender::RecommenderRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -104,7 +103,7 @@ StreamRange<google::cloud::recommender::v1::Recommendation>
 RecommenderConnectionImpl::ListRecommendations(
     google::cloud::recommender::v1::ListRecommendationsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<recommender::RecommenderRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -189,6 +188,68 @@ RecommenderConnectionImpl::MarkRecommendationFailed(
           google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
               request) {
         return stub_->MarkRecommendationFailed(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderConnectionImpl::GetRecommenderConfig(
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetRecommenderConfig(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+                 request) {
+        return stub_->GetRecommenderConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderConnectionImpl::UpdateRecommenderConfig(
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateRecommenderConfig(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+              request) {
+        return stub_->UpdateRecommenderConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderConnectionImpl::GetInsightTypeConfig(
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetInsightTypeConfig(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+                 request) {
+        return stub_->GetInsightTypeConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderConnectionImpl::UpdateInsightTypeConfig(
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateInsightTypeConfig(request),
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+              request) {
+        return stub_->UpdateInsightTypeConfig(context, request);
       },
       request, __func__);
 }

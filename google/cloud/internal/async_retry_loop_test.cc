@@ -16,6 +16,7 @@
 #include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/async_sequencer.h"
+#include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
@@ -30,9 +31,11 @@ namespace {
 
 using ::google::cloud::testing_util::AsyncSequencer;
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::HasSubstr;
+using ::testing::MockFunction;
 using ::testing::Return;
 
 struct TestOption {
@@ -178,12 +181,6 @@ TEST(AsyncRetryLoopTest, ReturnJustStatus) {
   Status actual = pending.get();
   ASSERT_THAT(actual, IsOk());
 }
-
-class MockBackoffPolicy : public BackoffPolicy {
- public:
-  MOCK_METHOD(std::unique_ptr<BackoffPolicy>, clone, (), (const, override));
-  MOCK_METHOD(std::chrono::milliseconds, OnCompletion, (), (override));
-};
 
 class RetryPolicyWithSetup {
  public:
@@ -528,26 +525,26 @@ TEST_F(AsyncRetryLoopCancelTest, ShutdownDuringTimer) {
 }
 
 TEST(AsyncRetryLoopTest, ConfigureContext) {
-  auto setup = [](grpc::ClientContext& context) {
-    context.set_compression_algorithm(GRPC_COMPRESS_DEFLATE);
-  };
-  OptionsSpan span(Options{}.set<GrpcSetupOption>(setup));
+  AsyncSequencer<StatusOr<int>> sequencer;
+
+  // The original options should be used in the first attempt and in the retry
+  // attempt.
+  MockFunction<void(grpc::ClientContext&)> setup;
+  EXPECT_CALL(setup, Call).Times(2);
+  OptionsSpan span(Options{}.set<GrpcSetupOption>(setup.AsStdFunction()));
 
   AutomaticallyCreatedBackgroundThreads background;
-  StatusOr<int> actual =
-      AsyncRetryLoop(
-          TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
-          background.cq(),
-          [](google::cloud::CompletionQueue&,
-             std::unique_ptr<grpc::ClientContext> context,
-             int) -> future<StatusOr<int>> {
-            // Ensure that our options have taken affect on the ClientContext
-            // before we start using it.
-            EXPECT_EQ(GRPC_COMPRESS_DEFLATE, context->compression_algorithm());
-            return make_ready_future(StatusOr<int>(0));
-          },
-          42, "error message")
-          .get();
+  future<StatusOr<int>> actual = AsyncRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      background.cq(),
+      [&sequencer](auto, auto, auto) { return sequencer.PushBack(); }, 42,
+      "error message");
+
+  // Clear the current options before retrying.
+  OptionsSpan clear(Options{});
+  sequencer.PopFront().set_value(Status(StatusCode::kUnavailable, "try again"));
+  sequencer.PopFront().set_value(0);
+  (void)actual.get();
 }
 
 }  // namespace

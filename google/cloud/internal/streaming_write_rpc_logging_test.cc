@@ -33,6 +33,7 @@ using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::Contains;
 using ::testing::HasSubstr;
+using ::testing::Pair;
 using ::testing::Return;
 
 template <typename RequestType, typename ResponseType>
@@ -44,6 +45,7 @@ class MockStreamingWriteRpc
   MOCK_METHOD(bool, Write, (RequestType const&, grpc::WriteOptions),
               (override));
   MOCK_METHOD(StatusOr<ResponseType>, Close, (), (override));
+  MOCK_METHOD(StreamingRpcMetadata, GetRequestMetadata, (), (const, override));
 };
 
 class StreamingWriteRpcLoggingTest : public ::testing::Test {
@@ -74,7 +76,7 @@ TEST_F(StreamingWriteRpcLoggingTest, Write) {
   stream.Write(request, grpc::WriteOptions{});
   auto const lines = log_.ExtractLines();
   EXPECT_THAT(lines, Contains(AllOf(HasSubstr("Write"), HasSubstr("test-id"),
-                                    HasSubstr("123456"))));
+                                    HasSubstr("1970-01-02T10:17:36Z"))));
   EXPECT_THAT(lines, Contains(AllOf(HasSubstr("Write"), HasSubstr("test-id"),
                                     HasSubstr("true"))));
 }
@@ -92,7 +94,7 @@ TEST_F(StreamingWriteRpcLoggingTest, CloseWithSuccess) {
   EXPECT_THAT(lines, Contains(AllOf(HasSubstr("Close"), HasSubstr("test-id"),
                                     HasSubstr("(void)"))));
   EXPECT_THAT(lines, Contains(AllOf(HasSubstr("Close"), HasSubstr("test-id"),
-                                    HasSubstr("123456"))));
+                                    HasSubstr("34h17m36s"))));
 }
 
 TEST_F(StreamingWriteRpcLoggingTest, CloseWithError) {
@@ -109,6 +111,19 @@ TEST_F(StreamingWriteRpcLoggingTest, CloseWithError) {
                                     HasSubstr("(void)"))));
   EXPECT_THAT(lines, Contains(AllOf(HasSubstr("Close"), HasSubstr("test-id"),
                                     HasSubstr("try-again"))));
+}
+
+TEST_F(StreamingWriteRpcLoggingTest, GetRequestMetadata) {
+  auto mock = absl::make_unique<MockStream>();
+  EXPECT_CALL(*mock, GetRequestMetadata).WillOnce([] {
+    return StreamingRpcMetadata({{":test-only", "value"}});
+  });
+  TestedStream stream(std::move(mock), TracingOptions{}, "test-id");
+  EXPECT_THAT(stream.GetRequestMetadata(),
+              Contains(Pair(":test-only", "value")));
+  EXPECT_THAT(log_.ExtractLines(),
+              Contains(AllOf(HasSubstr("GetRequestMetadata(test-id)"),
+                             HasSubstr("{:test-only: value}"))));
 }
 
 }  // namespace

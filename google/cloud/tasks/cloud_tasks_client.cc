@@ -18,7 +18,6 @@
 
 #include "google/cloud/tasks/cloud_tasks_client.h"
 #include "google/cloud/tasks/cloud_tasks_options.h"
-#include "google/cloud/tasks/internal/cloud_tasks_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,9 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudTasksClient::CloudTasksClient(
     std::shared_ptr<CloudTasksConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          tasks_internal::CloudTasksDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudTasksClient::~CloudTasksClient() = default;
 
 StreamRange<google::cloud::tasks::v2::Queue> CloudTasksClient::ListQueues(
@@ -183,7 +181,10 @@ StatusOr<google::iam::v1::Policy> CloudTasksClient::SetIamPolicy(
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
   auto backoff_policy =
-      internal::CurrentOptions().get<CloudTasksBackoffPolicyOption>()->clone();
+      internal::CurrentOptions().get<CloudTasksBackoffPolicyOption>();
+  if (backoff_policy != nullptr) {
+    backoff_policy = backoff_policy->clone();
+  }
   for (;;) {
     auto recent = connection_->GetIamPolicy(get_request);
     if (!recent) {
@@ -195,7 +196,8 @@ StatusOr<google::iam::v1::Policy> CloudTasksClient::SetIamPolicy(
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result || result.status().code() != StatusCode::kAborted) {
+    if (result || result.status().code() != StatusCode::kAborted ||
+        backoff_policy == nullptr) {
       return result;
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());

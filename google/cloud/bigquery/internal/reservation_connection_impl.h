@@ -136,6 +136,11 @@ class ReservationServiceConnectionImpl
       google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
           request) override;
 
+  StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+  UpdateAssignment(
+      google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+          request) override;
+
   StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
   GetBiReservation(
       google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&

@@ -21,39 +21,40 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 Credentials::~Credentials() = default;
 
-std::shared_ptr<Credentials> MakeInsecureCredentials() {
-  return std::make_shared<internal::InsecureCredentialsConfig>();
+std::shared_ptr<Credentials> MakeInsecureCredentials(Options opts) {
+  return std::make_shared<internal::InsecureCredentialsConfig>(std::move(opts));
 }
 
-std::shared_ptr<Credentials> MakeGoogleDefaultCredentials() {
-  return std::make_shared<internal::GoogleDefaultCredentialsConfig>();
+std::shared_ptr<Credentials> MakeGoogleDefaultCredentials(Options opts) {
+  return std::make_shared<internal::GoogleDefaultCredentialsConfig>(
+      std::move(opts));
 }
 
 std::shared_ptr<Credentials> MakeAccessTokenCredentials(
     std::string const& access_token,
-    std::chrono::system_clock::time_point expiration) {
-  return std::make_shared<internal::AccessTokenConfig>(access_token,
-                                                       expiration);
+    std::chrono::system_clock::time_point expiration, Options opts) {
+  return std::make_shared<internal::AccessTokenConfig>(access_token, expiration,
+                                                       std::move(opts));
 }
 
 std::shared_ptr<Credentials> MakeImpersonateServiceAccountCredentials(
     std::shared_ptr<Credentials> base_credentials,
     std::string target_service_account, Options opts) {
-  opts = internal::MergeOptions(
-      std::move(opts),
-      Options{}
-          .set<ScopesOption>({"https://www.googleapis.com/auth/cloud-platform"})
-          .set<AccessTokenLifetimeOption>(
-              std::chrono::seconds(std::chrono::hours(1))));
   return std::make_shared<internal::ImpersonateServiceAccountConfig>(
       std::move(base_credentials), std::move(target_service_account),
       std::move(opts));
 }
 
 std::shared_ptr<Credentials> MakeServiceAccountCredentials(
-    std::string json_object) {
+    std::string json_object, Options opts) {
   return std::make_shared<internal::ServiceAccountConfig>(
-      std::move(json_object));
+      std::move(json_object), std::move(opts));
+}
+
+std::shared_ptr<Credentials> MakeExternalAccountCredentials(
+    std::string json_object, Options opts) {
+  return std::make_shared<internal::ExternalAccountConfig>(
+      std::move(json_object), std::move(opts));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

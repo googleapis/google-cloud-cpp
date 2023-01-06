@@ -40,15 +40,14 @@ GameServerClustersServiceConnectionImpl::
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          gameservices_internal::GameServerClustersServiceDefaultOptions(
-              GameServerClustersServiceConnection::options()))) {}
+          std::move(options), GameServerClustersServiceConnection::options())) {
+}
 
 StreamRange<google::cloud::gaming::v1::GameServerCluster>
 GameServerClustersServiceConnectionImpl::ListGameServerClusters(
     google::cloud::gaming::v1::ListGameServerClustersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<gameservices::GameServerClustersServiceRetryPolicy const>(
           retry_policy());
@@ -96,7 +95,7 @@ GameServerClustersServiceConnectionImpl::GetGameServerCluster(
 future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
 GameServerClustersServiceConnectionImpl::CreateGameServerCluster(
     google::cloud::gaming::v1::CreateGameServerClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gaming::v1::GameServerCluster>(
       background_->cq(), request,
@@ -142,7 +141,7 @@ GameServerClustersServiceConnectionImpl::PreviewCreateGameServerCluster(
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 GameServerClustersServiceConnectionImpl::DeleteGameServerCluster(
     google::cloud::gaming::v1::DeleteGameServerClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gaming::v1::OperationMetadata>(
       background_->cq(), request,
@@ -188,7 +187,7 @@ GameServerClustersServiceConnectionImpl::PreviewDeleteGameServerCluster(
 future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
 GameServerClustersServiceConnectionImpl::UpdateGameServerCluster(
     google::cloud::gaming::v1::UpdateGameServerClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gaming::v1::GameServerCluster>(
       background_->cq(), request,

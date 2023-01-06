@@ -94,6 +94,69 @@ IdentityAwareProxyAdminServiceLogging::UpdateIapSettings(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::iap::v1::ListTunnelDestGroupsResponse>
+IdentityAwareProxyAdminServiceLogging::ListTunnelDestGroups(
+    grpc::ClientContext& context,
+    google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::iap::v1::ListTunnelDestGroupsRequest const& request) {
+        return child_->ListTunnelDestGroups(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceLogging::CreateTunnelDestGroup(
+    grpc::ClientContext& context,
+    google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
+        return child_->CreateTunnelDestGroup(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceLogging::GetTunnelDestGroup(
+    grpc::ClientContext& context,
+    google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
+        return child_->GetTunnelDestGroup(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+Status IdentityAwareProxyAdminServiceLogging::DeleteTunnelDestGroup(
+    grpc::ClientContext& context,
+    google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
+        return child_->DeleteTunnelDestGroup(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::iap::v1::TunnelDestGroup>
+IdentityAwareProxyAdminServiceLogging::UpdateTunnelDestGroup(
+    grpc::ClientContext& context,
+    google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
+        return child_->UpdateTunnelDestGroup(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap_internal
 }  // namespace cloud

@@ -12,38 +12,26 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/storage/client.h"
-#include "google/cloud/storage/internal/object_metadata_parser.h"
-#include "google/cloud/storage/object_stream.h"
 #include "google/cloud/storage/testing/storage_integration_test.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/setenv.h"
 #include "google/cloud/testing_util/scoped_environment.h"
+#include "google/cloud/testing_util/setenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <crc32c/crc32c.h>
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 #include <vector>
 
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-#include "google/cloud/storage/internal/grpc_client.h"
-#include "google/cloud/grpc_error_delegate.h"
-#include <grpcpp/grpcpp.h>
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-
 namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 using ::google::cloud::internal::GetEnv;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
-// When GOOGLE_CLOUD_CPP_HAVE_GRPC is not set these tests compile, but they
-// actually just run against the regular GCS REST API. That is fine.
 class GrpcIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
       public ::testing::WithParamInterface<std::string> {
@@ -53,8 +41,8 @@ class GrpcIntegrationTest
 
   void SetUp() override {
     std::string const grpc_config_value = GetParam();
-    google::cloud::internal::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
-                                    grpc_config_value);
+    google::cloud::testing_util::SetEnv("GOOGLE_CLOUD_CPP_STORAGE_GRPC_CONFIG",
+                                        grpc_config_value);
     project_id_ = GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
     ASSERT_THAT(project_id_, Not(IsEmpty()))
         << "GOOGLE_CLOUD_PROJECT is not set";
@@ -250,13 +238,15 @@ TEST_P(GrpcIntegrationTest, FieldFilter) {
   }
 }
 
+#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMediaTest, GrpcIntegrationTest,
-                         // TODO(#7257) - restore production tests
-                         //     ::testing::Values("media"));
+                         ::testing::Values("media"));
+#else
+INSTANTIATE_TEST_SUITE_P(GrpcIntegrationMediaTest, GrpcIntegrationTest,
                          ::testing::Values("none"));
+#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage
 }  // namespace cloud

@@ -32,25 +32,24 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ImageAnnotatorConnectionIdempotencyPolicy {
  public:
-  virtual ~ImageAnnotatorConnectionIdempotencyPolicy() = 0;
+  virtual ~ImageAnnotatorConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency BatchAnnotateImages(
-      google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) = 0;
+      google::cloud::vision::v1::BatchAnnotateImagesRequest const& request);
 
   virtual google::cloud::Idempotency BatchAnnotateFiles(
-      google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) = 0;
+      google::cloud::vision::v1::BatchAnnotateFilesRequest const& request);
 
   virtual google::cloud::Idempotency AsyncBatchAnnotateImages(
       google::cloud::vision::v1::AsyncBatchAnnotateImagesRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency AsyncBatchAnnotateFiles(
-      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const&
-          request) = 0;
+      google::cloud::vision::v1::AsyncBatchAnnotateFilesRequest const& request);
 };
 
 std::unique_ptr<ImageAnnotatorConnectionIdempotencyPolicy>

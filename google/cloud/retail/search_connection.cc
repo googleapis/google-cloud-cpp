@@ -23,6 +23,7 @@
 #include "google/cloud/retail/search_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SearchServiceConnection::~SearchServiceConnection() = default;
 
 StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
-    SearchServiceConnection::Search(
-        google::cloud::retail::v2::
-            SearchRequest) {  // NOLINT(performance-unnecessary-value-param)
+SearchServiceConnection::Search(
+    google::cloud::retail::v2::
+        SearchRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>>();
 }
@@ -45,6 +46,7 @@ StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult>
 std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  SearchServicePolicyOptionList>(options,
                                                                 __func__);
   options = retail_internal::SearchServiceDefaultOptions(std::move(options));
@@ -57,23 +59,5 @@ std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace retail_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<retail::SearchServiceConnection> MakeSearchServiceConnection(
-    std::shared_ptr<SearchServiceStub> stub, Options options) {
-  options = SearchServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<retail_internal::SearchServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace retail_internal
 }  // namespace cloud
 }  // namespace google

@@ -15,14 +15,11 @@
 #include "google/cloud/storage/benchmarks/throughput_experiment.h"
 #include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/client.h"
-#include "google/cloud/storage/grpc_plugin.h"
 #include "google/cloud/grpc_error_delegate.h"
-#include "google/cloud/internal/getenv.h"
-#include "absl/algorithm/container.h"
 #include "absl/memory/memory.h"
-#include "absl/strings/str_split.h"
 #include <google/storage/v2/storage.grpc.pb.h>
 #include <curl/curl.h>
+#include <iterator>
 #include <vector>
 
 namespace google {
@@ -33,87 +30,152 @@ namespace gcs = ::google::cloud::storage;
 
 namespace {
 
-class UploadObject : public ThroughputExperiment {
+std::string ExtractPeer(
+    std::multimap<std::string, std::string> const& headers) {
+  auto p = headers.find(":grpc-context-peer");
+  if (p == headers.end()) {
+    p = headers.find(":curl-peer");
+  }
+  return p == headers.end() ? std::string{"[peer-unknown]"} : p->second;
+}
+
+std::string ExtractRetryCount(
+    std::multimap<std::string, std::string> const& headers) {
+  auto const range = headers.equal_range(":retry-count");
+  auto const d = std::distance(range.first, range.second);
+  if (d == 0) return "[retry-count-unknown]";
+  return std::next(range.first, d - 1)->second;
+}
+
+std::string ExtractUploadId(std::string v) {
+  auto constexpr kRestField = "upload_id=";
+  auto const pos = v.find(kRestField);
+  if (pos == std::string::npos) return v;
+  return v.substr(pos + std::strlen(kRestField));
+}
+
+class ResumableUpload : public ThroughputExperiment {
  public:
-  explicit UploadObject(google::cloud::storage::Client client, ApiName api,
-                        std::string random_data, bool prefer_insert)
+  explicit ResumableUpload(google::cloud::storage::Client client,
+                           ExperimentTransport transport,
+                           std::shared_ptr<std::string> random_data)
       : client_(std::move(client)),
-        api_(api),
-        random_data_(std::move(random_data)),
-        prefer_insert_(prefer_insert) {}
-  ~UploadObject() override = default;
+        transport_(transport),
+        random_data_(std::move(random_data)) {}
+  ~ResumableUpload() override = default;
 
   ThroughputResult Run(std::string const& bucket_name,
                        std::string const& object_name,
                        ThroughputExperimentConfig const& config) override {
-    auto api_selector = gcs::Fields();
-    if (api_ == ApiName::kApiXml) {
-      // The default API is JSON, we force XML by not using features that XML
-      // does not implement:
-      api_selector = gcs::Fields("");
-    }
-
     std::vector<char> buffer(config.app_buffer_size);
 
-    // When the object is relatively small using `ObjectInsert` might be more
-    // efficient. Randomly select about 1/2 of the small writes to use
-    // ObjectInsert()
-    if (static_cast<std::size_t>(config.object_size) < random_data_.size() &&
-        prefer_insert_) {
-      auto timer = Timer::PerThread();
-      std::string data =
-          random_data_.substr(0, static_cast<std::size_t>(config.object_size));
-      auto object_metadata = client_.InsertObject(
-          bucket_name, object_name, std::move(data),
-          gcs::DisableCrc32cChecksum(!config.enable_crc32c),
-          gcs::DisableMD5Hash(!config.enable_md5), api_selector);
-      auto const usage = timer.Sample();
-      return ThroughputResult{kOpInsert,
-                              config.object_size,
-                              config.object_size,
-                              config.app_buffer_size,
-                              config.lib_buffer_size,
-                              config.enable_crc32c,
-                              config.enable_md5,
-                              api_,
-                              usage.elapsed_time,
-                              usage.cpu_time,
-                              object_metadata.status()};
-    }
+    auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
-    auto writer = client_.WriteObject(
-        bucket_name, object_name,
-        gcs::DisableCrc32cChecksum(!config.enable_crc32c),
-        gcs::DisableMD5Hash(!config.enable_md5), api_selector);
+    auto writer =
+        client_.WriteObject(bucket_name, object_name,
+                            gcs::DisableCrc32cChecksum(!config.enable_crc32c),
+                            gcs::DisableMD5Hash(!config.enable_md5));
+    auto upload_id = ExtractUploadId(writer.resumable_session_id());
     for (std::int64_t offset = 0; offset < config.object_size;
          offset += config.app_buffer_size) {
       auto len = config.app_buffer_size;
       if (offset + static_cast<std::int64_t>(len) > config.object_size) {
         len = static_cast<std::size_t>(config.object_size - offset);
       }
-      writer.write(random_data_.data(), len);
+      writer.write(random_data_->data(), len);
     }
     writer.Close();
     auto const usage = timer.Sample();
+    auto generation = writer.metadata()
+                          ? std::to_string(writer.metadata()->generation())
+                          : std::string{};
 
-    return ThroughputResult{kOpWrite,
+    return ThroughputResult{start,
+                            ExperimentLibrary::kCppClient,
+                            transport_,
+                            kOpWrite,
                             config.object_size,
+                            /*transfer_offset=*/0,
                             config.object_size,
                             config.app_buffer_size,
-                            config.lib_buffer_size,
                             config.enable_crc32c,
                             config.enable_md5,
-                            api_,
                             usage.elapsed_time,
                             usage.cpu_time,
-                            writer.metadata().status()};
+                            writer.metadata().status(),
+                            ExtractPeer(writer.headers()),
+                            bucket_name,
+                            object_name,
+                            std::move(generation),
+                            std::move(upload_id),
+                            ExtractRetryCount(writer.headers())};
   }
 
  private:
   google::cloud::storage::Client client_;
-  ApiName api_;
-  std::string random_data_;
-  bool prefer_insert_;
+  ExperimentTransport transport_;
+  std::shared_ptr<std::string> random_data_;
+};
+
+class SimpleUpload : public ThroughputExperiment {
+ public:
+  explicit SimpleUpload(google::cloud::storage::Client client,
+                        ExperimentTransport transport,
+                        std::shared_ptr<std::string> random_data)
+      : client_(std::move(client)),
+        transport_(transport),
+        random_data_(std::move(random_data)),
+        fallback_(client_, transport_, random_data_) {}
+  ~SimpleUpload() override = default;
+
+  ThroughputResult Run(std::string const& bucket_name,
+                       std::string const& object_name,
+                       ThroughputExperimentConfig const& config) override {
+    // If the requested object is too large, fall back on resumable uploads.
+    if (static_cast<std::size_t>(config.object_size) > random_data_->size()) {
+      return fallback_.Run(bucket_name, object_name, config);
+    }
+
+    // Only relatively small objects can be uploaded using `InsertObject()`, so
+    // truncate the object to the right size.
+    auto const start = std::chrono::system_clock::now();
+    auto timer = Timer::PerThread();
+    std::string data =
+        random_data_->substr(0, static_cast<std::size_t>(config.object_size));
+    auto object_metadata =
+        client_.InsertObject(bucket_name, object_name, std::move(data),
+                             gcs::DisableCrc32cChecksum(!config.enable_crc32c),
+                             gcs::DisableMD5Hash(!config.enable_md5));
+    auto const usage = timer.Sample();
+    auto generation = object_metadata
+                          ? std::to_string(object_metadata->generation())
+                          : std::string{};
+    return ThroughputResult{start,
+                            ExperimentLibrary::kCppClient,
+                            transport_,
+                            kOpInsert,
+                            config.object_size,
+                            /*transfer_offset=*/0,
+                            config.object_size,
+                            config.app_buffer_size,
+                            config.enable_crc32c,
+                            config.enable_md5,
+                            usage.elapsed_time,
+                            usage.cpu_time,
+                            object_metadata.status(),
+                            "[peer-N/A]",
+                            bucket_name,
+                            object_name,
+                            std::move(generation),
+                            "[upload-id-N/A]",
+                            "[retry-count-unknown]"};
+  }
+
+ private:
+  google::cloud::storage::Client client_;
+  ExperimentTransport transport_;
+  std::shared_ptr<std::string> random_data_;
+  ResumableUpload fallback_;
 };
 
 /**
@@ -121,48 +183,57 @@ class UploadObject : public ThroughputExperiment {
  */
 class DownloadObject : public ThroughputExperiment {
  public:
-  explicit DownloadObject(google::cloud::storage::Client client, ApiName api)
-      : client_(std::move(client)), api_(api) {}
+  explicit DownloadObject(google::cloud::storage::Client client,
+                          ExperimentTransport transport)
+      : client_(std::move(client)), transport_(transport) {}
   ~DownloadObject() override = default;
 
   ThroughputResult Run(std::string const& bucket_name,
                        std::string const& object_name,
                        ThroughputExperimentConfig const& config) override {
-    auto api_selector = gcs::IfGenerationNotMatch();
-    if (api_ == ApiName::kApiJson) {
-      // The default API is XML, we force JSON by using a feature not available
-      // in XML.
-      api_selector = gcs::IfGenerationNotMatch(0);
-    }
-
     std::vector<char> buffer(config.app_buffer_size);
 
+    auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
-    auto reader = client_.ReadObject(
-        bucket_name, object_name,
-        gcs::DisableCrc32cChecksum(!config.enable_crc32c),
-        gcs::DisableMD5Hash(!config.enable_md5), api_selector);
+    auto const offset = config.read_range.value_or(std::make_pair(0, 0)).first;
+    auto read_range =
+        config.read_range.has_value()
+            ? gcs::ReadRange(offset, offset + config.read_range->second)
+            : gcs::ReadRange();
+    auto reader =
+        client_.ReadObject(bucket_name, object_name, read_range,
+                           gcs::DisableCrc32cChecksum(!config.enable_crc32c),
+                           gcs::DisableMD5Hash(!config.enable_md5));
     std::int64_t transfer_size = 0;
-    while (reader.read(buffer.data(), buffer.size())) {
+    while (!reader.eof() && !reader.bad()) {
+      reader.read(buffer.data(), buffer.size());
       transfer_size += reader.gcount();
     }
     auto const usage = timer.Sample();
-    return ThroughputResult{config.op,
+    return ThroughputResult{start,
+                            ExperimentLibrary::kCppClient,
+                            transport_,
+                            config.op,
                             config.object_size,
+                            offset,
                             transfer_size,
                             config.app_buffer_size,
-                            config.lib_buffer_size,
                             config.enable_crc32c,
                             config.enable_md5,
-                            api_,
                             usage.elapsed_time,
                             usage.cpu_time,
-                            reader.status()};
+                            reader.status(),
+                            ExtractPeer(reader.headers()),
+                            bucket_name,
+                            object_name,
+                            std::to_string(reader.generation().value_or(-1)),
+                            "[upload-id-N/A]",
+                            ExtractRetryCount(reader.headers())};
   }
 
  private:
   google::cloud::storage::Client client_;
-  ApiName api_;
+  ExperimentTransport transport_;
 };
 
 extern "C" std::size_t OnWrite(char* src, size_t size, size_t nmemb, void* d) {
@@ -178,10 +249,16 @@ extern "C" std::size_t OnHeader(char*, std::size_t size, std::size_t nitems,
 
 class DownloadObjectLibcurl : public ThroughputExperiment {
  public:
-  explicit DownloadObjectLibcurl(ApiName api)
-      : creds_(
-            google::cloud::storage::oauth2::GoogleDefaultCredentials().value()),
-        api_(api) {}
+  explicit DownloadObjectLibcurl(ThroughputOptions const& options)
+      : endpoint_(options.rest_options.get<gcs::RestEndpointOption>()),
+        target_api_version_path_(
+            options.rest_options.get<gcs::internal::TargetApiVersionOption>()),
+        creds_(google::cloud::storage::oauth2::GoogleDefaultCredentials()
+                   .value()) {
+    if (target_api_version_path_.empty()) {
+      target_api_version_path_ = "v1";
+    }
+  }
   ~DownloadObjectLibcurl() override = default;
 
   ThroughputResult Run(std::string const& bucket_name,
@@ -190,20 +267,17 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     auto header = creds_->AuthorizationHeader();
     if (!header) return {};
 
+    auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
     struct curl_slist* slist1 = nullptr;
     slist1 = curl_slist_append(slist1, header->c_str());
 
     auto* hnd = curl_easy_init();
     curl_easy_setopt(hnd, CURLOPT_BUFFERSIZE, 102400L);
-    std::string url;
-    if (api_ == ApiName::kApiRawXml) {
-      url = "https://storage.googleapis.com/" + bucket_name + "/" + object_name;
-    } else {
-      // For this benchmark it is not necessary to URL escape the object name.
-      url = "https://storage.googleapis.com/storage/v1/b/" + bucket_name +
-            "/o/" + object_name + "?alt=media";
-    }
+    // For this benchmark it is not necessary to URL escape the object name.
+    auto const url = endpoint_ + "/storage/" + target_api_version_path_ +
+                     "/b/" + bucket_name + "/o/" + object_name + "?alt=media";
+
     curl_easy_setopt(hnd, CURLOPT_URL, url.c_str());
     curl_easy_setopt(hnd, CURLOPT_HTTPHEADER, slist1);
     curl_easy_setopt(hnd, CURLOPT_USERAGENT, curl_version());
@@ -224,66 +298,70 @@ class DownloadObjectLibcurl : public ThroughputExperiment {
     Status status = ret == CURLE_OK
                         ? Status{}
                         : Status{StatusCode::kUnknown, "curl failed"};
+    auto peer = [&] {
+      char* ip = nullptr;
+      auto e = curl_easy_getinfo(hnd, CURLINFO_PRIMARY_IP, &ip);
+      if (e == CURLE_OK && ip != nullptr) return std::string{ip};
+      return std::string{"[error-fetching-peer]"};
+    }();
 
     curl_easy_cleanup(hnd);
     curl_slist_free_all(slist1);
     auto const usage = timer.Sample();
-    return ThroughputResult{config.op,
+    return ThroughputResult{start,
+                            ExperimentLibrary::kRaw,
+                            ExperimentTransport::kJson,
+                            config.op,
                             config.object_size,
+                            /*transfer_offset=*/0,
                             config.object_size,
                             config.app_buffer_size,
-                            config.lib_buffer_size,
                             config.enable_crc32c,
                             config.enable_md5,
-                            api_,
                             usage.elapsed_time,
                             usage.cpu_time,
-                            status};
+                            status,
+                            std::move(peer),
+                            bucket_name,
+                            object_name,
+                            "[generation-N/A]",
+                            "[upload-id-N/A]",
+                            "[retry-count-N/A]"};
   }
 
  private:
+  std::string endpoint_;
+  std::string target_api_version_path_;
   std::shared_ptr<google::cloud::storage::oauth2::Credentials> creds_;
-  ApiName api_;
 };
 
-auto constexpr kDirectPathConfig = R"json({
-    "loadBalancingConfig": [{
-      "grpclb": {
-        "childPolicy": [{
-          "pick_first": {}
-        }]
-      }
-    }]
-  })json";
-
-bool DirectPathEnabled() {
-  auto const direct_path_settings =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH")
-          .value_or("");
-  return absl::c_any_of(absl::StrSplit(direct_path_settings, ','),
-                        [](absl::string_view v) { return v == "storage"; });
-}
-
-std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel(int thread_id) {
+std::shared_ptr<grpc::ChannelInterface> CreateGcsChannel(
+    ThroughputOptions const& options, int thread_id,
+    ExperimentTransport transport) {
   grpc::ChannelArguments args;
   args.SetInt("grpc.channel_id", thread_id);
-  if (DirectPathEnabled()) {
-    args.SetServiceConfigJSON(kDirectPathConfig);
+  if (transport == ExperimentTransport::kGrpc) {
+    return grpc::CreateCustomChannel(options.grpc_options.get<EndpointOption>(),
+                                     grpc::GoogleDefaultCredentials(), args);
   }
-  return grpc::CreateCustomChannel("storage.googleapis.com",
-                                   grpc::GoogleDefaultCredentials(), args);
+  return grpc::CreateCustomChannel(
+      options.direct_path_options.get<EndpointOption>(),
+      grpc::GoogleDefaultCredentials(), args);
 }
 
 class DownloadObjectRawGrpc : public ThroughputExperiment {
  public:
-  explicit DownloadObjectRawGrpc(int thread_id)
+  explicit DownloadObjectRawGrpc(ThroughputOptions const& options,
+                                 int thread_id, ExperimentTransport transport)
       : stub_(google::storage::v2::Storage::NewStub(
-            CreateGcsChannel(thread_id))) {}
+            CreateGcsChannel(options, thread_id, transport))),
+        transport_(transport) {}
   ~DownloadObjectRawGrpc() override = default;
 
   ThroughputResult Run(std::string const& bucket_name,
                        std::string const& object_name,
                        ThroughputExperimentConfig const& config) override {
+    auto const start = std::chrono::system_clock::now();
     auto timer = Timer::PerThread();
     google::storage::v2::ReadObjectRequest request;
     request.set_bucket(bucket_name);
@@ -292,108 +370,90 @@ class DownloadObjectRawGrpc : public ThroughputExperiment {
     auto stream = stub_->ReadObject(&context, request);
     google::storage::v2::ReadObjectResponse response;
     std::int64_t bytes_received = 0;
+    std::string generation = "[generation-N/A]";
     while (stream->Read(&response)) {
       if (response.has_checksummed_data()) {
         bytes_received += response.checksummed_data().content().size();
+      }
+      if (response.has_metadata()) {
+        generation = std::to_string(response.metadata().generation());
       }
     }
     auto const status =
         ::google::cloud::MakeStatusFromRpcError(stream->Finish());
     auto const usage = timer.Sample();
 
-    return ThroughputResult{config.op,
+    return ThroughputResult{start,
+                            ExperimentLibrary::kRaw,
+                            transport_,
+                            config.op,
                             config.object_size,
+                            /*transfer_offset=*/0,
                             bytes_received,
                             config.app_buffer_size,
-                            /*lib_buffer_size=*/0,
                             /*crc_enabled=*/false,
                             /*md5_enabled=*/false,
-                            ApiName::kApiRawGrpc,
                             usage.elapsed_time,
                             usage.cpu_time,
-                            status};
+                            status,
+                            context.peer(),
+                            bucket_name,
+                            object_name,
+                            generation,
+                            "[upload-id-N/A]",
+                            "[retry-count-N/A]"};
   }
 
  private:
   std::unique_ptr<google::storage::v2::Storage::StubInterface> stub_;
+  ExperimentTransport transport_;
 };
 
 }  // namespace
 
-using ::google::cloud::storage_experimental::DefaultGrpcClient;
-
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
-    ThroughputOptions const& options,
-    google::cloud::storage::Client rest_client,
-    google::cloud::storage::Client grpc_client,
-    google::cloud::Options const& client_options) {
+    ThroughputOptions const& options, ClientProvider const& provider) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
-  auto contents = MakeRandomData(generator, options.maximum_write_size);
-
-  if (options.client_per_thread) rest_client = gcs::Client(client_options);
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  if (options.client_per_thread) {
-    grpc_client = DefaultGrpcClient(client_options);
-  }
-#else
-  if (options.client_per_thread) grpc_client = gcs::Client(client_options);
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
+  auto contents = std::make_shared<std::string>(
+      MakeRandomData(generator, options.maximum_write_buffer_size));
 
   std::vector<std::unique_ptr<ThroughputExperiment>> result;
-  for (auto a : options.enabled_apis) {
-    switch (a) {
-      case ApiName::kApiGrpc:
-      case ApiName::kApiRawGrpc:
-        result.push_back(
-            absl::make_unique<UploadObject>(grpc_client, a, contents, false));
-        result.push_back(
-            absl::make_unique<UploadObject>(grpc_client, a, contents, true));
-        break;
-      case ApiName::kApiXml:
-      case ApiName::kApiJson:
-      case ApiName::kApiRawJson:
-      case ApiName::kApiRawXml:
-        result.push_back(
-            absl::make_unique<UploadObject>(rest_client, a, contents, false));
-        result.push_back(
-            absl::make_unique<UploadObject>(rest_client, a, contents, true));
-        break;
+  for (auto l : options.libs) {
+    if (l == ExperimentLibrary::kRaw) continue;
+    for (auto t : options.transports) {
+      for (auto const& function : options.upload_functions) {
+        if (function == "InsertObject") {
+          result.push_back(
+              absl::make_unique<SimpleUpload>(provider(t), t, contents));
+        } else /* if (function == "WriteObject") */ {
+          result.push_back(
+              absl::make_unique<ResumableUpload>(provider(t), t, contents));
+        }
+      }
     }
   }
   return result;
 }
 
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
-    ThroughputOptions const& options,
-    google::cloud::storage::Client rest_client,
-    google::cloud::storage::Client grpc_client,
-    google::cloud::Options const& client_options, int thread_id) {
-  if (options.client_per_thread) rest_client = gcs::Client(client_options);
-#if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  if (options.client_per_thread) {
-    grpc_client = DefaultGrpcClient(client_options);
-  }
-#else
-  if (options.client_per_thread) grpc_client = gcs::Client(client_options);
-#endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-
+    ThroughputOptions const& options, ClientProvider const& provider,
+    int thread_id) {
   std::vector<std::unique_ptr<ThroughputExperiment>> result;
-  for (auto a : options.enabled_apis) {
-    switch (a) {
-      case ApiName::kApiGrpc:
-        result.push_back(absl::make_unique<DownloadObject>(grpc_client, a));
-        break;
-      case ApiName::kApiXml:
-      case ApiName::kApiJson:
-        result.push_back(absl::make_unique<DownloadObject>(rest_client, a));
-        break;
-      case ApiName::kApiRawXml:
-      case ApiName::kApiRawJson:
-        result.push_back(absl::make_unique<DownloadObjectLibcurl>(a));
-        break;
-      case ApiName::kApiRawGrpc:
-        result.push_back(absl::make_unique<DownloadObjectRawGrpc>(thread_id));
-        break;
+  for (auto l : options.libs) {
+    if (l != ExperimentLibrary::kRaw) {
+      for (auto t : options.transports) {
+        result.push_back(absl::make_unique<DownloadObject>(provider(t), t));
+      }
+      continue;
+    }
+    for (auto t : options.transports) {
+      if (t != ExperimentTransport::kGrpc &&
+          t != ExperimentTransport::kDirectPath) {
+        result.push_back(absl::make_unique<DownloadObjectLibcurl>(options));
+      } else {
+        result.push_back(
+            absl::make_unique<DownloadObjectRawGrpc>(options, thread_id, t));
+      }
     }
   }
   return result;

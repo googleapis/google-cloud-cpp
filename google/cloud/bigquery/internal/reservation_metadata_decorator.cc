@@ -196,6 +196,15 @@ ReservationServiceMetadata::MoveAssignment(
   return child_->MoveAssignment(context, request);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+ReservationServiceMetadata::UpdateAssignment(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+        request) {
+  SetMetadata(context, "assignment.name=" + request.assignment().name());
+  return child_->UpdateAssignment(context, request);
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceMetadata::GetBiReservation(
     grpc::ClientContext& context,
@@ -228,9 +237,8 @@ void ReservationServiceMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

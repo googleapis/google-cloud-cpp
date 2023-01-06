@@ -14,7 +14,6 @@
 
 #include "google/cloud/policytroubleshooter/iam_checker_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 4) {
@@ -33,11 +32,11 @@ int main(int argc, char* argv[]) try {
   access_tuple.set_full_resource_name(argv[2]);
   access_tuple.set_permission(argv[3]);
   auto const response = client.TroubleshootIamPolicy(request);
-  if (!response) throw std::runtime_error(response.status().message());
+  if (!response) throw std::move(response).status();
   std::cout << response->DebugString() << "\n";
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

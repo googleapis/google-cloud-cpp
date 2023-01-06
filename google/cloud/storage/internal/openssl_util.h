@@ -18,6 +18,7 @@
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status_or.h"
+#include "absl/types/span.h"
 #include <algorithm>
 #include <string>
 #include <vector>
@@ -41,7 +42,7 @@ std::string Base64Encode(std::string const& str);
 /**
  * Encodes a byte array using Base64.
  */
-std::string Base64Encode(std::vector<std::uint8_t> const& bytes);
+std::string Base64Encode(absl::Span<std::uint8_t const> bytes);
 
 /**
  * Signs a string with the private key from a PEM container.

@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options SecurityCenterDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_SECURITY_CENTER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_SECURITY_CENTER_AUTHORITY",
       "securitycenter.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

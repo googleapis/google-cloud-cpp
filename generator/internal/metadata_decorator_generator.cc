@@ -13,25 +13,99 @@
 // limitations under the License.
 
 #include "generator/internal/metadata_decorator_generator.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/str_split.h"
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/predicate_utils.h"
 #include "generator/internal/printer.h"
 #include <google/protobuf/descriptor.h>
+#include <algorithm>
 
 namespace google {
 namespace cloud {
 namespace generator_internal {
+namespace {
+
+enum ContextType { kPointer, kReference };
+
+std::string SetMetadataText(google::protobuf::MethodDescriptor const& method,
+                            ContextType context_type) {
+  std::string const context = context_type == kPointer ? "*context" : "context";
+
+  auto info = ParseExplicitRoutingHeader(method);
+  // If there are no explicit routing headers, we fall back to the routing as
+  // defined by the google.api.http annotation
+  if (info.empty()) {
+    if (HasRoutingHeader(method)) {
+      return "  SetMetadata(" + context +
+             ", \"$method_request_param_key$=\" + "
+             "request.$method_request_param_value$);";
+    }
+    // If the method does not have a `google.api.routing` or `google.api.http`
+    // annotation, we do not send the "x-goog-request-params" header.
+    return "  SetMetadata(" + context + ");";
+  }
+
+  // clang-format off
+  std::string text;
+  text += "  std::vector<std::string> params;\n";
+  text += "  params.reserve(" + std::to_string(info.size()) + ");\n\n";
+  for (auto const& kv : info) {
+    // In the simplest (and probably most common) cases where no regular
+    // expression matching is needed for a given routing parameter key, we skip
+    // the static loading of `RoutingMatcher`s and simply use if statements.
+    if (std::all_of(
+            kv.second.begin(), kv.second.end(),
+            [](RoutingParameter const& rp) { return rp.pattern == "(.*)"; })) {
+      auto const* sep = "  ";
+      for (auto const& rp : kv.second){
+        text += sep;
+        text += "if (!request." + rp.field_name + "().empty()) {\n";
+        text += "    params.push_back(\"" + kv.first + "=\" + request." + rp.field_name + "());\n";
+        text += "  }";
+        sep = " else ";
+      }
+      text += "\n\n";
+      continue;
+    }
+    text += "  static auto* " + kv.first + "_matcher = []{\n";
+    text += "    return new google::cloud::internal::RoutingMatcher<$request_type$>{\n";
+    text += "      \"" + kv.first + "=\", {\n";
+    for (auto const& rp : kv.second) {
+      text += "      {[]($request_type$ const& request) -> std::string const& {\n";
+      text += "        return request." + rp.field_name + "();\n";
+      text += "      },\n";
+      // In the special match-all case, we do not bother to set a regex.
+      if (rp.pattern == "(.*)") {
+        text += "      absl::nullopt},\n";
+      } else {
+        text += "      std::regex{\"" + rp.pattern + "\", std::regex::optimize}},\n";
+      }
+    }
+    text += "      }};\n";
+    text += "  }();\n";
+    text += "  " + kv.first + "_matcher->AppendParam(request, params);\n\n";
+  }
+  text += "  if (params.empty()) {\n";
+  text += "    SetMetadata(" + context + ");\n";
+  text += "  } else {\n";
+  text += "    SetMetadata(" + context + ", absl::StrJoin(params, \"&\"));\n";
+  text += "  }";
+  return text;
+  // clang-format on
+}
+
+}  // namespace
 
 MetadataDecoratorGenerator::MetadataDecoratorGenerator(
     google::protobuf::ServiceDescriptor const* service_descriptor,
     VarsDictionary service_vars,
     std::map<std::string, VarsDictionary> service_method_vars,
     google::protobuf::compiler::GeneratorContext* context)
-    : ServiceCodeGenerator("metadata_header_path", "metadata_cc_path",
-                           service_descriptor, std::move(service_vars),
-                           std::move(service_method_vars), context) {}
+    : StubGeneratorBase("metadata_header_path", "metadata_cc_path",
+                        service_descriptor, std::move(service_vars),
+                        std::move(service_method_vars), context) {}
 
 Status MetadataDecoratorGenerator::GenerateHeader() {
   HeaderPrint(CopyrightLicenseFileHeader());
@@ -64,92 +138,7 @@ Status MetadataDecoratorGenerator::GenerateHeader() {
     "  explicit $metadata_class_name$(std::shared_ptr<$stub_class_name$> child);\n");
   // clang-format on
 
-  for (auto const& method : methods()) {
-    if (IsStreamingWrite(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__,
-                        R"""(
-  std::unique_ptr<::google::cloud::internal::StreamingWriteRpc<
-      $request_type$,
-      $response_type$>>
-  $method_name$(
-      std::unique_ptr<grpc::ClientContext> context) override;
-)""");
-      continue;
-    }
-    if (IsBidirStreaming(method)) {
-      HeaderPrintMethod(method, __FILE__, __LINE__,
-                        R"""(
-  std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      $request_type$,
-      $response_type$>>
-  Async$method_name$(
-      google::cloud::CompletionQueue const& cq,
-      std::unique_ptr<grpc::ClientContext> context) override;
-)""");
-      continue;
-    }
-    HeaderPrintMethod(
-        method,
-        {MethodPattern({{IsResponseTypeEmpty,
-                         // clang-format off
-    "\n  Status $method_name$(\n",
-    "\n  StatusOr<$response_type$> $method_name$(\n"},
-   {"    grpc::ClientContext& context,\n"
-    "    $request_type$ const& request) override;\n"
-                            // clang-format on
-                        }},
-                       And(IsNonStreaming, Not(IsLongrunningOperation))),
-         MethodPattern({{R"""(
-  future<StatusOr<google::longrunning::Operation>> Async$method_name$(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      $request_type$ const& request) override;
-)"""}},
-                       IsLongrunningOperation),
-         MethodPattern(
-             {    // clang-format off
-   {"\n"
-    "  std::unique_ptr<google::cloud::internal::StreamingReadRpc<$response_type$>>\n"
-    "    $method_name$(\n"
-    "    std::unique_ptr<grpc::ClientContext> context,\n"
-    "    $request_type$ const& request) override;\n"
-                  // clang-format on
-              }},
-             IsStreamingRead)},
-        __FILE__, __LINE__);
-  }
-
-  for (auto const& method : async_methods()) {
-    HeaderPrintMethod(
-        method,
-        {MethodPattern(
-            {{IsResponseTypeEmpty,
-              // clang-format off
-    "\n  future<Status> Async$method_name$(\n",
-    "\n  future<StatusOr<$response_type$>> Async$method_name$(\n"},
-   {"    google::cloud::CompletionQueue& cq,\n"
-    "    std::unique_ptr<grpc::ClientContext> context,\n"
-    "    $request_type$ const& request) override;\n"
-                 // clang-format on
-             }},
-            And(IsNonStreaming, Not(IsLongrunningOperation)))},
-        __FILE__, __LINE__);
-  }
-
-  if (HasLongrunningMethod()) {
-    HeaderPrint(
-        R"""(
-  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::longrunning::GetOperationRequest const& request) override;
-
-  future<Status> AsyncCancelOperation(
-      google::cloud::CompletionQueue& cq,
-      std::unique_ptr<grpc::ClientContext> context,
-      google::longrunning::CancelOperationRequest const& request) override;
-)""");
-  }
+  HeaderPrintPublicMethods();
 
   HeaderPrint(R"""(
  private:
@@ -179,10 +168,15 @@ Status MetadataDecoratorGenerator::GenerateCc() {
 
   // includes
   CcPrint("\n");
-  CcLocalIncludes({vars("metadata_header_path"),
-                   "google/cloud/internal/api_client_header.h",
-                   "google/cloud/common_options.h",
-                   "google/cloud/status_or.h"});
+  CcLocalIncludes(
+      {vars("metadata_header_path"),
+       HasExplicitRoutingMethod()
+           ? "google/cloud/internal/absl_str_join_quiet.h"
+           : "",
+       "google/cloud/internal/api_client_header.h",
+       HasExplicitRoutingMethod() ? "google/cloud/internal/routing_matcher.h"
+                                  : "",
+       "google/cloud/common_options.h", "google/cloud/status_or.h"});
   CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
@@ -214,6 +208,10 @@ $metadata_class_name$::$method_name$(
       continue;
     }
     if (IsBidirStreaming(method)) {
+      // Asynchronous streaming writes do not consume a request. Typically, the
+      // first `Write()` call contains any relevant data to "start" the stream.
+      // Thus, the decorator cannot add any routing instructions. The caller
+      // should initialize `context` with any such instructions.
       CcPrintMethod(method, __FILE__, __LINE__,
                     R"""(
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -239,32 +237,21 @@ $metadata_class_name$::Async$method_name$(
    {"$metadata_class_name$::$method_name$(\n"
     "    grpc::ClientContext& context,\n"
     "    $request_type$ const& request) {\n"},
-   {HasRoutingHeader,
-    "  SetMetadata(context, \"$method_request_param_key$=\" + request.$method_request_param_value$);\n",
-    "  SetMetadata(context, {});\n"},
-   {"  return child_->$method_name$(context, request);\n"
+    {SetMetadataText(method, kReference)},
+   {"\n  return child_->$method_name$(context, request);\n"
     "}\n",}
                  // clang-format on
              },
              And(IsNonStreaming, Not(IsLongrunningOperation))),
-         MethodPattern({{HasRoutingHeader,
-                         R"""(
+         MethodPattern({{R"""(
 future<StatusOr<google::longrunning::Operation>>
 $metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     $request_type$ const& request) {
-  SetMetadata(*context, "$method_request_param_key$=" + request.$method_request_param_value$);
-  return child_->Async$method_name$(cq, std::move(context), request);
-}
-)""",
-                         R"""(
-future<StatusOr<google::longrunning::Operation>>
-$metadata_class_name$::Async$method_name$(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    $request_type$ const& request) {
-  SetMetadata(*context, {});
+)"""},
+                        {SetMetadataText(method, kPointer)},
+                        {R"""(
   return child_->Async$method_name$(cq, std::move(context), request);
 }
 )"""}},
@@ -277,10 +264,8 @@ $metadata_class_name$::Async$method_name$(
     "$metadata_class_name$::$method_name$(\n"
     "    std::unique_ptr<grpc::ClientContext> context,\n"
     "    $request_type$ const& request) {\n"},
-   {HasRoutingHeader,
-    "  SetMetadata(*context, \"$method_request_param_key$=\" + request.$method_request_param_value$);\n",
-    "  SetMetadata(*context, {});\n"},
-   {"  return child_->$method_name$(std::move(context), request);\n"
+   {SetMetadataText(method, kPointer)},
+   {"\n  return child_->$method_name$(std::move(context), request);\n"
     "}\n",}
                  // clang-format on
              },
@@ -289,6 +274,43 @@ $metadata_class_name$::Async$method_name$(
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) {
+      auto const definition = absl::StrCat(
+          R"""(
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      $response_type$>>
+$metadata_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    $request_type$ const& request) {
+)""",
+          SetMetadataText(method, kPointer),
+          R"""(
+  return child_->Async$method_name$(cq, std::move(context), request);
+}
+)""");
+      CcPrintMethod(method, __FILE__, __LINE__, definition);
+      continue;
+    }
+    if (IsStreamingWrite(method)) {
+      // Asynchronous streaming writes do not consume a request. Typically, the
+      // first `Write()` call contains any relevant data to "start" the stream.
+      // Thus, the decorator cannot add any routing instructions. The caller
+      // should initialize `context` with any such instructions.
+      auto const definition = absl::StrCat(
+          R"""(
+std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+    $request_type$, $response_type$>>
+$metadata_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  SetMetadata(*context);
+  return child_->Async$method_name$(cq, std::move(context));
+}
+)""");
+      CcPrintMethod(method, __FILE__, __LINE__, definition);
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(
@@ -299,11 +321,9 @@ $metadata_class_name$::Async$method_name$(
     {R"""($metadata_class_name$::Async$method_name$(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
-    $request_type$ const& request) {)"""},
-   {HasRoutingHeader, R"""(
-  SetMetadata(*context, "$method_request_param_key$=" + request.$method_request_param_value$);)""",
-   R"""(
-  SetMetadata(*context, {});)"""}, {R"""(
+    $request_type$ const& request) {
+)"""},
+   {SetMetadataText(method, kPointer)}, {R"""(
   return child_->Async$method_name$(cq, std::move(context), request);
 }
 )"""}},
@@ -348,9 +368,8 @@ void $metadata_class_name$::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata(
         "x-goog-user-project", options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 )""");
 

@@ -30,6 +30,7 @@ struct BucketMetadataParser {
   static StatusOr<BucketMetadata> FromString(std::string const& payload);
 };
 
+std::string ToJsonString(absl::CivilDay date);
 std::string BucketMetadataToJsonString(BucketMetadata const& meta);
 
 }  // namespace internal

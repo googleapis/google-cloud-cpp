@@ -30,35 +30,24 @@ using ::google::cloud::Idempotency;
 ServiceControllerConnectionIdempotencyPolicy::
     ~ServiceControllerConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultServiceControllerConnectionIdempotencyPolicy
-    : public ServiceControllerConnectionIdempotencyPolicy {
- public:
-  ~DefaultServiceControllerConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ServiceControllerConnectionIdempotencyPolicy>
+ServiceControllerConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ServiceControllerConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ServiceControllerConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultServiceControllerConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency ServiceControllerConnectionIdempotencyPolicy::Check(
+    google::api::servicecontrol::v1::CheckRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency Check(
-      google::api::servicecontrol::v1::CheckRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency Report(
-      google::api::servicecontrol::v1::ReportRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ServiceControllerConnectionIdempotencyPolicy::Report(
+    google::api::servicecontrol::v1::ReportRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ServiceControllerConnectionIdempotencyPolicy>
 MakeDefaultServiceControllerConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultServiceControllerConnectionIdempotencyPolicy>();
+  return absl::make_unique<ServiceControllerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

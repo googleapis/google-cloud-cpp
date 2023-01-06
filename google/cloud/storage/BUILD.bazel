@@ -12,15 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO(#3701) Change this visibility to "//:__subpackages__" so that users are
-# required to use the top-level BUILD file rather than reaching down into this
-# one.
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-GOOGLE_CLOUD_STORAGE_WIN_COPTS = [
-    "/DWIN32_LEAN_AND_MEAN",
+# These are needed to use the BoringSSL libraries, and should be set in any
+# downstream dependency too.
+GOOGLE_CLOUD_STORAGE_WIN_DEFINES = [
+    "WIN32_LEAN_AND_MEAN",
 ]
 
 load(":google_cloud_cpp_storage.bzl", "google_cloud_cpp_storage_hdrs", "google_cloud_cpp_storage_srcs")
@@ -30,14 +29,17 @@ cc_library(
     name = "google_cloud_cpp_storage_grpc",
     srcs = google_cloud_cpp_storage_grpc_srcs,
     hdrs = google_cloud_cpp_storage_grpc_hdrs,
-    copts = select({
-        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+    defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"] + select({
+        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
         "//conditions:default": [],
     }),
-    defines = ["GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC"],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [
         ":google_cloud_cpp_storage",
-        "//google/cloud:google_cloud_cpp_grpc_utils",
+        "//:grpc_utils",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
@@ -48,6 +50,8 @@ cc_library(
         "@com_google_absl//absl/time",
         "@com_google_googleapis//google/storage/v2:storage_cc_grpc",
         "@com_google_googleapis//google/storage/v2:storage_cc_proto",
+        # Do not sort: grpc++ must come last
+        "@com_github_grpc_grpc//:grpc++",
     ],
 )
 
@@ -55,16 +59,17 @@ cc_library(
     name = "google_cloud_cpp_storage",
     srcs = google_cloud_cpp_storage_srcs,
     hdrs = google_cloud_cpp_storage_hdrs,
-    copts = select({
-        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
+    defines = select({
+        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_DEFINES,
         "//conditions:default": [],
     }),
     visibility = [
+        ":__subpackages__",
         "//:__pkg__",
-        "//google/cloud/storage:__subpackages__",
     ],
     deps = [
-        "//google/cloud:google_cloud_cpp_common",
+        "//:common",
+        "//google/cloud:google_cloud_cpp_rest_internal",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
@@ -82,17 +87,16 @@ load(":storage_client_testing.bzl", "storage_client_testing_hdrs", "storage_clie
 
 cc_library(
     name = "storage_client_testing",
+    testonly = True,
     srcs = storage_client_testing_srcs,
     hdrs = storage_client_testing_hdrs,
-    copts = select({
-        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
-        "//conditions:default": [],
-    }),
+    visibility = ["//visibility:public"],
     deps = [
         ":google_cloud_cpp_storage",
         ":google_cloud_cpp_storage_grpc",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//:common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
@@ -106,10 +110,6 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    copts = select({
-        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
-        "//conditions:default": [],
-    }),
     linkopts = select({
         "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
@@ -117,8 +117,8 @@ load(":storage_client_unit_tests.bzl", "storage_client_unit_tests")
     deps = [
         ":google_cloud_cpp_storage",
         ":storage_client_testing",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//:common",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
@@ -132,10 +132,6 @@ load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
-    copts = select({
-        "@platforms//os:windows": GOOGLE_CLOUD_STORAGE_WIN_COPTS,
-        "//conditions:default": [],
-    }),
     linkopts = select({
         "@platforms//os:windows": [],
         "//conditions:default": ["-lpthread"],
@@ -143,8 +139,8 @@ load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
     deps = [
         ":google_cloud_cpp_storage",
         ":storage_client_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@boringssl//:crypto",
         "@boringssl//:ssl",
         "@com_github_curl_curl//:curl",
@@ -152,3 +148,15 @@ load(":storage_client_grpc_unit_tests.bzl", "storage_client_grpc_unit_tests")
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in storage_client_grpc_unit_tests]
+
+load(":google_cloud_cpp_storage_benchmarks.bzl", "google_cloud_cpp_storage_benchmarks")
+
+[cc_test(
+    name = benchmark.replace("/", "_").replace(".cc", ""),
+    srcs = [benchmark],
+    tags = ["benchmark"],
+    deps = [
+        ":google_cloud_cpp_storage",
+        "@com_google_benchmark//:benchmark_main",
+    ],
+) for benchmark in google_cloud_cpp_storage_benchmarks]

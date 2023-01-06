@@ -37,15 +37,13 @@ AuthorizedCertificatesConnectionImpl::AuthorizedCertificatesConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          appengine_internal::AuthorizedCertificatesDefaultOptions(
-              AuthorizedCertificatesConnection::options()))) {}
+          std::move(options), AuthorizedCertificatesConnection::options())) {}
 
 StreamRange<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesConnectionImpl::ListAuthorizedCertificates(
     google::appengine::v1::ListAuthorizedCertificatesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<appengine::AuthorizedCertificatesRetryPolicy const>(
           retry_policy());

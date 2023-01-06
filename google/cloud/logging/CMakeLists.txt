@@ -17,10 +17,11 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Logging C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Logging")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Beta)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "logging_internal" "logging_testing"
                             "examples")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
+                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::logging_protos)
@@ -65,14 +66,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_logging)
 set_target_properties(
     google_cloud_cpp_logging
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-logging
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::logging
+               VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_logging
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-logging ALIAS
-            google_cloud_cpp_logging)
+add_library(google-cloud-cpp::logging ALIAS google_cloud_cpp_logging)
 
 # To avoid maintaining the list of files for the library, export them to a .bzl
 # file.
@@ -90,11 +90,10 @@ target_sources(
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_logging_service_v2_connection.h)
 target_link_libraries(
     google_cloud_cpp_logging_mocks
-    INTERFACE google-cloud-cpp::experimental-logging GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_logging_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-logging_mocks)
+    INTERFACE google-cloud-cpp::logging GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_logging_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::logging_mocks)
 create_bazel_config(google_cloud_cpp_logging_mocks YEAR "2021")
 target_include_directories(
     google_cloud_cpp_logging_mocks
@@ -109,8 +108,7 @@ add_subdirectory(integration_tests)
 include(CTest)
 if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
     add_executable(logging_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(logging_quickstart
-                          PRIVATE google-cloud-cpp::experimental-logging)
+    target_link_libraries(logging_quickstart PRIVATE google-cloud-cpp::logging)
     google_cloud_cpp_add_common_options(logging_quickstart)
     add_test(
         NAME logging_quickstart
@@ -156,24 +154,13 @@ google_cloud_cpp_install_headers("google_cloud_cpp_logging"
 google_cloud_cpp_install_headers("google_cloud_cpp_logging_mocks"
                                  "include/google/cloud/logging")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The Google Cloud Logging C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to access Google Cloud Logging.")
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_logging")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common" " google_cloud_cpp_logging_protos")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/logging/config.pc.in"
-               "google_cloud_cpp_logging.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_logging.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    logging
+    "The Google Cloud Logging C++ Client Library"
+    "Provides C++ APIs to access Google Cloud Logging."
+    "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common"
+    " google_cloud_cpp_logging_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

@@ -23,6 +23,7 @@
 #include "google/cloud/asset/internal/asset_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -82,17 +83,17 @@ Status AssetServiceConnection::DeleteFeed(
 }
 
 StreamRange<google::cloud::asset::v1::ResourceSearchResult>
-    AssetServiceConnection::SearchAllResources(
-        google::cloud::asset::v1::
-            SearchAllResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
+AssetServiceConnection::SearchAllResources(
+    google::cloud::asset::v1::
+        SearchAllResourcesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::asset::v1::ResourceSearchResult>>();
 }
 
 StreamRange<google::cloud::asset::v1::IamPolicySearchResult>
-    AssetServiceConnection::SearchAllIamPolicies(
-        google::cloud::asset::v1::
-            SearchAllIamPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+AssetServiceConnection::SearchAllIamPolicies(
+    google::cloud::asset::v1::
+        SearchAllIamPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::asset::v1::IamPolicySearchResult>>();
 }
@@ -117,9 +118,53 @@ AssetServiceConnection::AnalyzeMove(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::asset::v1::QueryAssetsResponse>
+AssetServiceConnection::QueryAssets(
+    google::cloud::asset::v1::QueryAssetsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceConnection::CreateSavedQuery(
+    google::cloud::asset::v1::CreateSavedQueryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceConnection::GetSavedQuery(
+    google::cloud::asset::v1::GetSavedQueryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::cloud::asset::v1::SavedQuery>
+AssetServiceConnection::ListSavedQueries(
+    google::cloud::asset::v1::
+        ListSavedQueriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::asset::v1::SavedQuery>>();
+}
+
+StatusOr<google::cloud::asset::v1::SavedQuery>
+AssetServiceConnection::UpdateSavedQuery(
+    google::cloud::asset::v1::UpdateSavedQueryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status AssetServiceConnection::DeleteSavedQuery(
+    google::cloud::asset::v1::DeleteSavedQueryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>
+AssetServiceConnection::BatchGetEffectiveIamPolicies(
+    google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AssetServicePolicyOptionList>(options,
                                                                __func__);
   options = asset_internal::AssetServiceDefaultOptions(std::move(options));
@@ -132,23 +177,5 @@ std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace asset_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<asset::AssetServiceConnection> MakeAssetServiceConnection(
-    std::shared_ptr<AssetServiceStub> stub, Options options) {
-  options = AssetServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<asset_internal::AssetServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace asset_internal
 }  // namespace cloud
 }  // namespace google

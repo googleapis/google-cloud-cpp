@@ -24,37 +24,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 using ::google::cloud::testing_util::ScopedEnvironment;
-using ::testing::HasSubstr;
-using ::testing::StartsWith;
-
-TEST(ConnectionOptionsTraits, AdminEndpoint) {
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_EQ(ConnectionOptionsTraits::default_endpoint(), options.endpoint());
-  options.set_endpoint("invalid-endpoint");
-  EXPECT_EQ("invalid-endpoint", options.endpoint());
-}
-
-TEST(ConnectionOptionsTraits, NumChannels) {
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  int num_channels = options.num_channels();
-  EXPECT_EQ(ConnectionOptionsTraits::default_num_channels(), num_channels);
-  num_channels *= 2;  // ensure we change it from the default value.
-  options.set_num_channels(num_channels);
-  EXPECT_EQ(num_channels, options.num_channels());
-}
-
-TEST(ConnectionOptionsTraits, UserAgentPrefix) {
-  auto actual = ConnectionOptionsTraits::user_agent_prefix();
-  EXPECT_THAT(actual, StartsWith("gcloud-cpp/" + VersionString()));
-  EXPECT_THAT(actual, HasSubstr(google::cloud::internal::CompilerId()));
-  EXPECT_THAT(actual, HasSubstr(google::cloud::internal::CompilerVersion()));
-  EXPECT_THAT(actual, HasSubstr(google::cloud::internal::CompilerFeatures()));
-
-  ConnectionOptions options(grpc::InsecureChannelCredentials());
-  EXPECT_EQ(actual, options.user_agent_prefix());
-  options.add_user_agent_prefix("test-prefix/1.2.3");
-  EXPECT_EQ("test-prefix/1.2.3 " + actual, options.user_agent_prefix());
-}
 
 TEST(DefaultEndpoint, EnvironmentWorks) {
   EXPECT_NE("invalid-endpoint", ConnectionOptionsTraits::default_endpoint());

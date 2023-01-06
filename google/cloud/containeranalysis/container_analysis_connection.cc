@@ -23,6 +23,7 @@
 #include "google/cloud/containeranalysis/internal/container_analysis_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -60,6 +61,7 @@ ContainerAnalysisConnection::GetVulnerabilityOccurrencesSummary(
 std::shared_ptr<ContainerAnalysisConnection> MakeContainerAnalysisConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ContainerAnalysisPolicyOptionList>(options,
                                                                     __func__);
   options = containeranalysis_internal::ContainerAnalysisDefaultOptions(
@@ -74,25 +76,5 @@ std::shared_ptr<ContainerAnalysisConnection> MakeContainerAnalysisConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace containeranalysis_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<containeranalysis::ContainerAnalysisConnection>
-MakeContainerAnalysisConnection(std::shared_ptr<ContainerAnalysisStub> stub,
-                                Options options) {
-  options = ContainerAnalysisDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      containeranalysis_internal::ContainerAnalysisConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace containeranalysis_internal
 }  // namespace cloud
 }  // namespace google

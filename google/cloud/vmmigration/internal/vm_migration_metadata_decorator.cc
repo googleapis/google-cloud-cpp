@@ -162,6 +162,16 @@ VmMigrationMetadata::AsyncDeleteDatacenterConnector(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+VmMigrationMetadata::AsyncUpgradeAppliance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::vmmigration::v1::UpgradeApplianceRequest const& request) {
+  SetMetadata(*context,
+              "datacenter_connector=" + request.datacenter_connector());
+  return child_->AsyncUpgradeAppliance(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 VmMigrationMetadata::AsyncCreateMigratingVm(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -443,9 +453,8 @@ void VmMigrationMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

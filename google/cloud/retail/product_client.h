@@ -67,16 +67,16 @@ class ProductServiceClient {
       std::shared_ptr<ProductServiceConnection> connection, Options opts = {});
   ~ProductServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   ProductServiceClient(ProductServiceClient const&) = default;
   ProductServiceClient& operator=(ProductServiceClient const&) = default;
   ProductServiceClient(ProductServiceClient&&) = default;
   ProductServiceClient& operator=(ProductServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(ProductServiceClient const& a,
                          ProductServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -85,7 +85,7 @@ class ProductServiceClient {
                          ProductServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a [Product][google.cloud.retail.v2.Product].
@@ -112,7 +112,7 @@ class ProductServiceClient {
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
   /// [google.cloud.retail.v2.CreateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L219}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L336}
   /// [google.cloud.retail.v2.Product]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
@@ -125,14 +125,14 @@ class ProductServiceClient {
   /// Creates a [Product][google.cloud.retail.v2.Product].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::CreateProductRequest,google/cloud/retail/v2/product_service.proto#L219}
+  /// @googleapis_link{google::cloud::retail::v2::CreateProductRequest,google/cloud/retail/v2/product_service.proto#L336}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
   /// [google.cloud.retail.v2.CreateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L219}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L336}
   /// [google.cloud.retail.v2.Product]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
@@ -158,7 +158,7 @@ class ProductServiceClient {
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
   /// [google.cloud.retail.v2.GetProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L249}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L368}
   /// [google.cloud.retail.v2.Product]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
@@ -169,14 +169,14 @@ class ProductServiceClient {
   /// Gets a [Product][google.cloud.retail.v2.Product].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::GetProductRequest,google/cloud/retail/v2/product_service.proto#L249}
+  /// @googleapis_link{google::cloud::retail::v2::GetProductRequest,google/cloud/retail/v2/product_service.proto#L368}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
   /// [google.cloud.retail.v2.GetProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L249}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L368}
   /// [google.cloud.retail.v2.Product]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
@@ -201,7 +201,7 @@ class ProductServiceClient {
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
   /// [google.cloud.retail.v2.ListProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L327}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L455}
   /// [google.cloud.retail.v2.Product]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
@@ -212,14 +212,14 @@ class ProductServiceClient {
   /// Gets a list of [Product][google.cloud.retail.v2.Product]s.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::ListProductsRequest,google/cloud/retail/v2/product_service.proto#L327}
+  /// @googleapis_link{google::cloud::retail::v2::ListProductsRequest,google/cloud/retail/v2/product_service.proto#L455}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
   /// [google.cloud.retail.v2.ListProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L327}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L455}
   /// [google.cloud.retail.v2.Product]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
@@ -242,14 +242,17 @@ class ProductServiceClient {
   ///  output only fields are NOT supported. If not set, all supported fields
   ///  (the fields that are neither immutable nor output only) are updated. If
   ///  an unsupported or unknown field is provided, an INVALID_ARGUMENT error is
-  ///  returned.
+  ///  returned. The attribute key can be updated by setting the mask path as
+  ///  "attributes.${key_name}". If a key name is present in the mask but not in
+  ///  the patching product from the request, this key will be deleted after the
+  ///  update.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
   /// [google.cloud.retail.v2.UpdateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L267}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L388}
   /// [google.cloud.retail.v2.Product]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
@@ -261,14 +264,14 @@ class ProductServiceClient {
   /// Updates a [Product][google.cloud.retail.v2.Product].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::UpdateProductRequest,google/cloud/retail/v2/product_service.proto#L267}
+  /// @googleapis_link{google::cloud::retail::v2::UpdateProductRequest,google/cloud/retail/v2/product_service.proto#L388}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::retail::v2::Product,google/cloud/retail/v2/product.proto#L43}
   ///
   /// [google.cloud.retail.v2.UpdateProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L267}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L388}
   /// [google.cloud.retail.v2.Product]:
   /// @googleapis_reference_link{google/cloud/retail/v2/product.proto#L43}
   ///
@@ -301,7 +304,7 @@ class ProductServiceClient {
   ///     backoff policies.
   ///
   /// [google.cloud.retail.v2.DeleteProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L296}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L424}
   ///
   Status DeleteProduct(std::string const& name, Options opts = {});
 
@@ -309,12 +312,12 @@ class ProductServiceClient {
   /// Deletes a [Product][google.cloud.retail.v2.Product].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::DeleteProductRequest,google/cloud/retail/v2/product_service.proto#L296}
+  /// @googleapis_link{google::cloud::retail::v2::DeleteProductRequest,google/cloud/retail/v2/product_service.proto#L424}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.retail.v2.DeleteProductRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L296}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L424}
   ///
   Status DeleteProduct(
       google::cloud::retail::v2::DeleteProductRequest const& request,
@@ -323,23 +326,23 @@ class ProductServiceClient {
   ///
   /// Bulk import of multiple [Product][google.cloud.retail.v2.Product]s.
   ///
-  /// Request processing may be synchronous. No partial updating is supported.
+  /// Request processing may be synchronous.
   /// Non-existing items are created.
   ///
   /// Note that it is possible for a subset of the
   /// [Product][google.cloud.retail.v2.Product]s to be successfully updated.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::ImportProductsRequest,google/cloud/retail/v2/import_config.proto#L147}
+  /// @googleapis_link{google::cloud::retail::v2::ImportProductsRequest,google/cloud/retail/v2/import_config.proto#L164}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::ImportProductsResponse,google/cloud/retail/v2/import_config.proto#L346}
+  /// @googleapis_link{google::cloud::retail::v2::ImportProductsResponse,google/cloud/retail/v2/import_config.proto#L345}
   ///
   /// [google.cloud.retail.v2.ImportProductsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L147}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L164}
   /// [google.cloud.retail.v2.ImportProductsResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L346}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L345}
   ///
   future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>
   ImportProducts(
@@ -353,40 +356,53 @@ class ProductServiceClient {
   ///
   /// This process is asynchronous and does not require the
   /// [Product][google.cloud.retail.v2.Product] to exist before updating
-  /// fulfillment information. If the request is valid, the update will be
-  /// enqueued and processed downstream. As a consequence, when a response is
-  /// returned, updates are not immediately manifested in the
+  /// fulfillment information. If the request is valid, the update is enqueued
+  /// and processed downstream. As a consequence, when a response is returned,
+  /// updates are not immediately manifested in the
   /// [Product][google.cloud.retail.v2.Product] queried by
-  /// [GetProduct][google.cloud.retail.v2.ProductService.GetProduct] or
-  /// [ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct]
+  /// or
+  /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
   ///
   /// When inventory is updated with
-  /// [CreateProduct][google.cloud.retail.v2.ProductService.CreateProduct] and
-  /// [UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct], the
-  /// specified inventory field value(s) will overwrite any existing value(s)
+  /// [ProductService.CreateProduct][google.cloud.retail.v2.ProductService.CreateProduct]
+  /// and
+  /// [ProductService.UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct],
+  /// the specified inventory field value(s) overwrite any existing value(s)
   /// while ignoring the last update time for this field. Furthermore, the last
-  /// update time for the specified inventory fields will be overwritten to the
-  /// time of the
-  /// [CreateProduct][google.cloud.retail.v2.ProductService.CreateProduct] or
-  /// [UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct]
+  /// update times for the specified inventory fields are overwritten by the
+  /// times of the
+  /// [ProductService.CreateProduct][google.cloud.retail.v2.ProductService.CreateProduct]
+  /// or
+  /// [ProductService.UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct]
   /// request.
   ///
   /// If no inventory fields are set in
   /// [CreateProductRequest.product][google.cloud.retail.v2.CreateProductRequest.product],
-  /// then any pre-existing inventory information for this product will be used.
+  /// then any pre-existing inventory information for this product is used.
   ///
-  /// If no inventory fields are set in [UpdateProductRequest.set_mask][],
-  /// then any existing inventory information will be preserved.
+  /// If no inventory fields are set in
+  /// [SetInventoryRequest.set_mask][google.cloud.retail.v2.SetInventoryRequest.set_mask],
+  /// then any existing inventory information is preserved.
   ///
   /// Pre-existing inventory information can only be updated with
-  /// [SetInventory][google.cloud.retail.v2.ProductService.SetInventory],
-  /// [AddFulfillmentPlaces][google.cloud.retail.v2.ProductService.AddFulfillmentPlaces],
+  /// [ProductService.SetInventory][google.cloud.retail.v2.ProductService.SetInventory],
+  /// [ProductService.AddFulfillmentPlaces][google.cloud.retail.v2.ProductService.AddFulfillmentPlaces],
   /// and
-  /// [RemoveFulfillmentPlaces][google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces].
+  /// [ProductService.RemoveFulfillmentPlaces][google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces].
+  ///
+  /// The returned [Operation][google.longrunning.Operation]s is obsolete after
+  /// one day, and the
+  /// [GetOperation][google.longrunning.Operations.GetOperation] API returns
+  /// `NOT_FOUND` afterwards.
+  ///
+  /// If conflicting updates are issued, the
+  /// [Operation][google.longrunning.Operation]s associated with the stale
+  /// updates are not marked as [done][google.longrunning.Operation.done] until
+  /// they are obsolete.
   ///
   /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
+  /// Enable Retail Search on Cloud Console before using this feature.
   ///
   /// @param inventory  Required. The inventory information to update. The
   /// allowable fields to
@@ -397,8 +413,9 @@ class ProductServiceClient {
   ///  * [Product.fulfillment_info][google.cloud.retail.v2.Product.fulfillment_info]
   ///  The updated inventory fields must be specified in
   ///  [SetInventoryRequest.set_mask][google.cloud.retail.v2.SetInventoryRequest.set_mask].
-  ///  If [SetInventoryRequest.inventory.name][] is empty or invalid, an
-  ///  INVALID_ARGUMENT error is returned.
+  ///  If
+  ///  [SetInventoryRequest.inventory.name][google.cloud.retail.v2.Product.name]
+  ///  is empty or invalid, an INVALID_ARGUMENT error is returned.
   ///  If the caller does not have permission to update the
   ///  [Product][google.cloud.retail.v2.Product] named in
   ///  [Product.name][google.cloud.retail.v2.Product.name], regardless of
@@ -410,27 +427,44 @@ class ProductServiceClient {
   ///  will be merged while respecting the last update time for each inventory
   ///  field, using the provided or default value for
   ///  [SetInventoryRequest.set_time][google.cloud.retail.v2.SetInventoryRequest.set_time].
+  ///  The caller can replace place IDs for a subset of fulfillment types in the
+  ///  following ways:
+  ///  * Adds "fulfillment_info" in
+  ///  [SetInventoryRequest.set_mask][google.cloud.retail.v2.SetInventoryRequest.set_mask]
+  ///  * Specifies only the desired fulfillment types and corresponding place
+  ///  IDs to update in
+  ///  [SetInventoryRequest.inventory.fulfillment_info][google.cloud.retail.v2.Product.fulfillment_info]
+  ///  The caller can clear all place IDs from a subset of fulfillment types in
+  ///  the following ways:
+  ///  * Adds "fulfillment_info" in
+  ///  [SetInventoryRequest.set_mask][google.cloud.retail.v2.SetInventoryRequest.set_mask]
+  ///  * Specifies only the desired fulfillment types to clear in
+  ///  [SetInventoryRequest.inventory.fulfillment_info][google.cloud.retail.v2.Product.fulfillment_info]
+  ///  * Checks that only the desired fulfillment info types have empty
+  ///  [SetInventoryRequest.inventory.fulfillment_info.place_ids][google.cloud.retail.v2.FulfillmentInfo.place_ids]
   ///  The last update time is recorded for the following inventory fields:
   ///  * [Product.price_info][google.cloud.retail.v2.Product.price_info]
   ///  * [Product.availability][google.cloud.retail.v2.Product.availability]
   ///  * [Product.available_quantity][google.cloud.retail.v2.Product.available_quantity]
   ///  * [Product.fulfillment_info][google.cloud.retail.v2.Product.fulfillment_info]
   ///  If a full overwrite of inventory information while ignoring timestamps is
-  ///  needed, [UpdateProduct][] should be invoked instead.
+  ///  needed,
+  ///  [ProductService.UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct]
+  ///  should be invoked instead.
   /// @param set_mask  Indicates which inventory fields in the provided
-  ///  [Product][google.cloud.retail.v2.Product] to update. If not set or set
-  ///  with empty paths, all inventory fields will be updated. If an unsupported
-  ///  or unknown field is provided, an INVALID_ARGUMENT error is returned and
-  ///  the entire update will be ignored.
+  ///  [Product][google.cloud.retail.v2.Product] to update.
+  ///  At least one field must be provided.
+  ///  If an unsupported or unknown field is provided, an INVALID_ARGUMENT error
+  ///  is returned and the entire update will be ignored.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::SetInventoryResponse,google/cloud/retail/v2/product_service.proto#L493}
+  /// @googleapis_link{google::cloud::retail::v2::SetInventoryResponse,google/cloud/retail/v2/product_service.proto#L649}
   ///
   /// [google.cloud.retail.v2.SetInventoryRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L425}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L555}
   /// [google.cloud.retail.v2.SetInventoryResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L493}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L649}
   ///
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
   SetInventory(google::cloud::retail::v2::Product const& inventory,
@@ -443,52 +477,65 @@ class ProductServiceClient {
   ///
   /// This process is asynchronous and does not require the
   /// [Product][google.cloud.retail.v2.Product] to exist before updating
-  /// fulfillment information. If the request is valid, the update will be
-  /// enqueued and processed downstream. As a consequence, when a response is
-  /// returned, updates are not immediately manifested in the
+  /// fulfillment information. If the request is valid, the update is enqueued
+  /// and processed downstream. As a consequence, when a response is returned,
+  /// updates are not immediately manifested in the
   /// [Product][google.cloud.retail.v2.Product] queried by
-  /// [GetProduct][google.cloud.retail.v2.ProductService.GetProduct] or
-  /// [ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct]
+  /// or
+  /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
   ///
   /// When inventory is updated with
-  /// [CreateProduct][google.cloud.retail.v2.ProductService.CreateProduct] and
-  /// [UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct], the
-  /// specified inventory field value(s) will overwrite any existing value(s)
+  /// [ProductService.CreateProduct][google.cloud.retail.v2.ProductService.CreateProduct]
+  /// and
+  /// [ProductService.UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct],
+  /// the specified inventory field value(s) overwrite any existing value(s)
   /// while ignoring the last update time for this field. Furthermore, the last
-  /// update time for the specified inventory fields will be overwritten to the
-  /// time of the
-  /// [CreateProduct][google.cloud.retail.v2.ProductService.CreateProduct] or
-  /// [UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct]
+  /// update times for the specified inventory fields are overwritten by the
+  /// times of the
+  /// [ProductService.CreateProduct][google.cloud.retail.v2.ProductService.CreateProduct]
+  /// or
+  /// [ProductService.UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct]
   /// request.
   ///
   /// If no inventory fields are set in
   /// [CreateProductRequest.product][google.cloud.retail.v2.CreateProductRequest.product],
-  /// then any pre-existing inventory information for this product will be used.
+  /// then any pre-existing inventory information for this product is used.
   ///
-  /// If no inventory fields are set in [UpdateProductRequest.set_mask][],
-  /// then any existing inventory information will be preserved.
+  /// If no inventory fields are set in
+  /// [SetInventoryRequest.set_mask][google.cloud.retail.v2.SetInventoryRequest.set_mask],
+  /// then any existing inventory information is preserved.
   ///
   /// Pre-existing inventory information can only be updated with
-  /// [SetInventory][google.cloud.retail.v2.ProductService.SetInventory],
-  /// [AddFulfillmentPlaces][google.cloud.retail.v2.ProductService.AddFulfillmentPlaces],
+  /// [ProductService.SetInventory][google.cloud.retail.v2.ProductService.SetInventory],
+  /// [ProductService.AddFulfillmentPlaces][google.cloud.retail.v2.ProductService.AddFulfillmentPlaces],
   /// and
-  /// [RemoveFulfillmentPlaces][google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces].
+  /// [ProductService.RemoveFulfillmentPlaces][google.cloud.retail.v2.ProductService.RemoveFulfillmentPlaces].
+  ///
+  /// The returned [Operation][google.longrunning.Operation]s is obsolete after
+  /// one day, and the
+  /// [GetOperation][google.longrunning.Operations.GetOperation] API returns
+  /// `NOT_FOUND` afterwards.
+  ///
+  /// If conflicting updates are issued, the
+  /// [Operation][google.longrunning.Operation]s associated with the stale
+  /// updates are not marked as [done][google.longrunning.Operation.done] until
+  /// they are obsolete.
   ///
   /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
+  /// Enable Retail Search on Cloud Console before using this feature.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::SetInventoryRequest,google/cloud/retail/v2/product_service.proto#L425}
+  /// @googleapis_link{google::cloud::retail::v2::SetInventoryRequest,google/cloud/retail/v2/product_service.proto#L555}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::SetInventoryResponse,google/cloud/retail/v2/product_service.proto#L493}
+  /// @googleapis_link{google::cloud::retail::v2::SetInventoryResponse,google/cloud/retail/v2/product_service.proto#L649}
   ///
   /// [google.cloud.retail.v2.SetInventoryRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L425}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L555}
   /// [google.cloud.retail.v2.SetInventoryResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L493}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L649}
   ///
   future<StatusOr<google::cloud::retail::v2::SetInventoryResponse>>
   SetInventory(google::cloud::retail::v2::SetInventoryRequest const& request,
@@ -504,12 +551,22 @@ class ProductServiceClient {
   /// enqueued and processed downstream. As a consequence, when a response is
   /// returned, the added place IDs are not immediately manifested in the
   /// [Product][google.cloud.retail.v2.Product] queried by
-  /// [GetProduct][google.cloud.retail.v2.ProductService.GetProduct] or
-  /// [ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct]
+  /// or
+  /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  ///
+  /// The returned [Operation][google.longrunning.Operation]s will be obsolete
+  /// after 1 day, and
+  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
+  /// NOT_FOUND afterwards.
+  ///
+  /// If conflicting updates are issued, the
+  /// [Operation][google.longrunning.Operation]s associated with the stale
+  /// updates will not be marked as [done][google.longrunning.Operation.done]
+  /// until being obsolete.
   ///
   /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
+  /// Enable Retail Search on Cloud Console before using this feature.
   ///
   /// @param product  Required. Full resource name of
   /// [Product][google.cloud.retail.v2.Product],
@@ -521,12 +578,12 @@ class ProductServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AddFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L569}
+  /// @googleapis_link{google::cloud::retail::v2::AddFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L730}
   ///
   /// [google.cloud.retail.v2.AddFulfillmentPlacesRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L496}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L654}
   /// [google.cloud.retail.v2.AddFulfillmentPlacesResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L569}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L730}
   ///
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
   AddFulfillmentPlaces(std::string const& product, Options opts = {});
@@ -541,24 +598,34 @@ class ProductServiceClient {
   /// enqueued and processed downstream. As a consequence, when a response is
   /// returned, the added place IDs are not immediately manifested in the
   /// [Product][google.cloud.retail.v2.Product] queried by
-  /// [GetProduct][google.cloud.retail.v2.ProductService.GetProduct] or
-  /// [ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct]
+  /// or
+  /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  ///
+  /// The returned [Operation][google.longrunning.Operation]s will be obsolete
+  /// after 1 day, and
+  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
+  /// NOT_FOUND afterwards.
+  ///
+  /// If conflicting updates are issued, the
+  /// [Operation][google.longrunning.Operation]s associated with the stale
+  /// updates will not be marked as [done][google.longrunning.Operation.done]
+  /// until being obsolete.
   ///
   /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
+  /// Enable Retail Search on Cloud Console before using this feature.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::AddFulfillmentPlacesRequest,google/cloud/retail/v2/product_service.proto#L496}
+  /// @googleapis_link{google::cloud::retail::v2::AddFulfillmentPlacesRequest,google/cloud/retail/v2/product_service.proto#L654}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::AddFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L569}
+  /// @googleapis_link{google::cloud::retail::v2::AddFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L730}
   ///
   /// [google.cloud.retail.v2.AddFulfillmentPlacesRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L496}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L654}
   /// [google.cloud.retail.v2.AddFulfillmentPlacesResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L569}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L730}
   ///
   future<StatusOr<google::cloud::retail::v2::AddFulfillmentPlacesResponse>>
   AddFulfillmentPlaces(
@@ -575,12 +642,22 @@ class ProductServiceClient {
   /// enqueued and processed downstream. As a consequence, when a response is
   /// returned, the removed place IDs are not immediately manifested in the
   /// [Product][google.cloud.retail.v2.Product] queried by
-  /// [GetProduct][google.cloud.retail.v2.ProductService.GetProduct] or
-  /// [ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct]
+  /// or
+  /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  ///
+  /// The returned [Operation][google.longrunning.Operation]s will be obsolete
+  /// after 1 day, and
+  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
+  /// NOT_FOUND afterwards.
+  ///
+  /// If conflicting updates are issued, the
+  /// [Operation][google.longrunning.Operation]s associated with the stale
+  /// updates will not be marked as [done][google.longrunning.Operation.done]
+  /// until being obsolete.
   ///
   /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
+  /// Enable Retail Search on Cloud Console before using this feature.
   ///
   /// @param product  Required. Full resource name of
   /// [Product][google.cloud.retail.v2.Product],
@@ -592,12 +669,12 @@ class ProductServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L640}
+  /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L920}
   ///
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L572}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L849}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L640}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L920}
   ///
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(std::string const& product, Options opts = {});
@@ -612,28 +689,244 @@ class ProductServiceClient {
   /// enqueued and processed downstream. As a consequence, when a response is
   /// returned, the removed place IDs are not immediately manifested in the
   /// [Product][google.cloud.retail.v2.Product] queried by
-  /// [GetProduct][google.cloud.retail.v2.ProductService.GetProduct] or
-  /// [ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct]
+  /// or
+  /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  ///
+  /// The returned [Operation][google.longrunning.Operation]s will be obsolete
+  /// after 1 day, and
+  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
+  /// NOT_FOUND afterwards.
+  ///
+  /// If conflicting updates are issued, the
+  /// [Operation][google.longrunning.Operation]s associated with the stale
+  /// updates will not be marked as [done][google.longrunning.Operation.done]
+  /// until being obsolete.
   ///
   /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
+  /// Enable Retail Search on Cloud Console before using this feature.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesRequest,google/cloud/retail/v2/product_service.proto#L572}
+  /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesRequest,google/cloud/retail/v2/product_service.proto#L849}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L640}
+  /// @googleapis_link{google::cloud::retail::v2::RemoveFulfillmentPlacesResponse,google/cloud/retail/v2/product_service.proto#L920}
   ///
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L572}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L849}
   /// [google.cloud.retail.v2.RemoveFulfillmentPlacesResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L640}
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L920}
   ///
   future<StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Updates local inventory information for a
+  /// [Product][google.cloud.retail.v2.Product] at a list of places, while
+  /// respecting the last update timestamps of each inventory field.
+  ///
+  /// This process is asynchronous and does not require the
+  /// [Product][google.cloud.retail.v2.Product] to exist before updating
+  /// inventory information. If the request is valid, the update will be
+  /// enqueued and processed downstream. As a consequence, when a response is
+  /// returned, updates are not immediately manifested in the
+  /// [Product][google.cloud.retail.v2.Product] queried by
+  /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct]
+  /// or
+  /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  ///
+  /// Local inventory information can only be modified using this method.
+  /// [ProductService.CreateProduct][google.cloud.retail.v2.ProductService.CreateProduct]
+  /// and
+  /// [ProductService.UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct]
+  /// has no effect on local inventories.
+  ///
+  /// The returned [Operation][google.longrunning.Operation]s will be obsolete
+  /// after 1 day, and
+  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
+  /// NOT_FOUND afterwards.
+  ///
+  /// If conflicting updates are issued, the
+  /// [Operation][google.longrunning.Operation]s associated with the stale
+  /// updates will not be marked as [done][google.longrunning.Operation.done]
+  /// until being obsolete.
+  ///
+  /// This feature is only available for users who have Retail Search enabled.
+  /// Enable Retail Search on Cloud Console before using this feature.
+  ///
+  /// @param product  Required. Full resource name of
+  /// [Product][google.cloud.retail.v2.Product],
+  ///  such as
+  ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
+  ///  If the caller does not have permission to access the
+  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not
+  ///  it exists, a PERMISSION_DENIED error is returned.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::retail::v2::AddLocalInventoriesResponse,google/cloud/retail/v2/product_service.proto#L796}
+  ///
+  /// [google.cloud.retail.v2.AddLocalInventoriesRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L735}
+  /// [google.cloud.retail.v2.AddLocalInventoriesResponse]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L796}
+  ///
+  future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+  AddLocalInventories(std::string const& product, Options opts = {});
+
+  ///
+  /// Updates local inventory information for a
+  /// [Product][google.cloud.retail.v2.Product] at a list of places, while
+  /// respecting the last update timestamps of each inventory field.
+  ///
+  /// This process is asynchronous and does not require the
+  /// [Product][google.cloud.retail.v2.Product] to exist before updating
+  /// inventory information. If the request is valid, the update will be
+  /// enqueued and processed downstream. As a consequence, when a response is
+  /// returned, updates are not immediately manifested in the
+  /// [Product][google.cloud.retail.v2.Product] queried by
+  /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct]
+  /// or
+  /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  ///
+  /// Local inventory information can only be modified using this method.
+  /// [ProductService.CreateProduct][google.cloud.retail.v2.ProductService.CreateProduct]
+  /// and
+  /// [ProductService.UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct]
+  /// has no effect on local inventories.
+  ///
+  /// The returned [Operation][google.longrunning.Operation]s will be obsolete
+  /// after 1 day, and
+  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
+  /// NOT_FOUND afterwards.
+  ///
+  /// If conflicting updates are issued, the
+  /// [Operation][google.longrunning.Operation]s associated with the stale
+  /// updates will not be marked as [done][google.longrunning.Operation.done]
+  /// until being obsolete.
+  ///
+  /// This feature is only available for users who have Retail Search enabled.
+  /// Enable Retail Search on Cloud Console before using this feature.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::retail::v2::AddLocalInventoriesRequest,google/cloud/retail/v2/product_service.proto#L735}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::retail::v2::AddLocalInventoriesResponse,google/cloud/retail/v2/product_service.proto#L796}
+  ///
+  /// [google.cloud.retail.v2.AddLocalInventoriesRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L735}
+  /// [google.cloud.retail.v2.AddLocalInventoriesResponse]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L796}
+  ///
+  future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+  AddLocalInventories(
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Remove local inventory information for a
+  /// [Product][google.cloud.retail.v2.Product] at a list of places at a removal
+  /// timestamp.
+  ///
+  /// This process is asynchronous. If the request is valid, the removal will be
+  /// enqueued and processed downstream. As a consequence, when a response is
+  /// returned, removals are not immediately manifested in the
+  /// [Product][google.cloud.retail.v2.Product] queried by
+  /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct]
+  /// or
+  /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  ///
+  /// Local inventory information can only be removed using this method.
+  /// [ProductService.CreateProduct][google.cloud.retail.v2.ProductService.CreateProduct]
+  /// and
+  /// [ProductService.UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct]
+  /// has no effect on local inventories.
+  ///
+  /// The returned [Operation][google.longrunning.Operation]s will be obsolete
+  /// after 1 day, and
+  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
+  /// NOT_FOUND afterwards.
+  ///
+  /// If conflicting updates are issued, the
+  /// [Operation][google.longrunning.Operation]s associated with the stale
+  /// updates will not be marked as [done][google.longrunning.Operation.done]
+  /// until being obsolete.
+  ///
+  /// This feature is only available for users who have Retail Search enabled.
+  /// Enable Retail Search on Cloud Console before using this feature.
+  ///
+  /// @param product  Required. Full resource name of
+  /// [Product][google.cloud.retail.v2.Product],
+  ///  such as
+  ///  `projects/*/locations/global/catalogs/default_catalog/branches/default_branch/products/some_product_id`.
+  ///  If the caller does not have permission to access the
+  ///  [Product][google.cloud.retail.v2.Product], regardless of whether or not
+  ///  it exists, a PERMISSION_DENIED error is returned.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::retail::v2::RemoveLocalInventoriesResponse,google/cloud/retail/v2/product_service.proto#L844}
+  ///
+  /// [google.cloud.retail.v2.RemoveLocalInventoriesRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L801}
+  /// [google.cloud.retail.v2.RemoveLocalInventoriesResponse]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L844}
+  ///
+  future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+  RemoveLocalInventories(std::string const& product, Options opts = {});
+
+  ///
+  /// Remove local inventory information for a
+  /// [Product][google.cloud.retail.v2.Product] at a list of places at a removal
+  /// timestamp.
+  ///
+  /// This process is asynchronous. If the request is valid, the removal will be
+  /// enqueued and processed downstream. As a consequence, when a response is
+  /// returned, removals are not immediately manifested in the
+  /// [Product][google.cloud.retail.v2.Product] queried by
+  /// [ProductService.GetProduct][google.cloud.retail.v2.ProductService.GetProduct]
+  /// or
+  /// [ProductService.ListProducts][google.cloud.retail.v2.ProductService.ListProducts].
+  ///
+  /// Local inventory information can only be removed using this method.
+  /// [ProductService.CreateProduct][google.cloud.retail.v2.ProductService.CreateProduct]
+  /// and
+  /// [ProductService.UpdateProduct][google.cloud.retail.v2.ProductService.UpdateProduct]
+  /// has no effect on local inventories.
+  ///
+  /// The returned [Operation][google.longrunning.Operation]s will be obsolete
+  /// after 1 day, and
+  /// [GetOperation][google.longrunning.Operations.GetOperation] API will return
+  /// NOT_FOUND afterwards.
+  ///
+  /// If conflicting updates are issued, the
+  /// [Operation][google.longrunning.Operation]s associated with the stale
+  /// updates will not be marked as [done][google.longrunning.Operation.done]
+  /// until being obsolete.
+  ///
+  /// This feature is only available for users who have Retail Search enabled.
+  /// Enable Retail Search on Cloud Console before using this feature.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::retail::v2::RemoveLocalInventoriesRequest,google/cloud/retail/v2/product_service.proto#L801}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::retail::v2::RemoveLocalInventoriesResponse,google/cloud/retail/v2/product_service.proto#L844}
+  ///
+  /// [google.cloud.retail.v2.RemoveLocalInventoriesRequest]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L801}
+  /// [google.cloud.retail.v2.RemoveLocalInventoriesResponse]:
+  /// @googleapis_reference_link{google/cloud/retail/v2/product_service.proto#L844}
+  ///
+  future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+  RemoveLocalInventories(
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
       Options opts = {});
 
  private:

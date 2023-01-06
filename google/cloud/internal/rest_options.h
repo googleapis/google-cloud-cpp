@@ -18,6 +18,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <chrono>
+#include <cstdint>
 #include <memory>
 #include <string>
 
@@ -25,36 +26,6 @@ namespace google {
 namespace cloud {
 namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/**
- * Configure the UserIp query parameter.
- *
- * This can be used to separate quota usage by source IP address.
- *
- * @deprecated prefer using `google::cloud::QuotaUser`.
- */
-struct UserIpOption {
-  using Type = std::string;
-};
-
-/**
- * Configure the REST endpoint for the GCS client library.
- *
- * This endpoint must include the URL scheme (`http` or `https`) and `authority`
- * (host and port) used to access the GCS service, for example:
- *    https://storage.googleapis.com
- * When using emulators or testbench it can be of the form:
- *    http://localhost:8080/my-gcs-emulator-path
- *
- * @note The `Host` header is based on the `authority` component of the URL.
- *   Applications can override this default value using
- *   `google::cloud::AuthorityOption`
- *
- * @see https://en.wikipedia.org/wiki/Uniform_Resource_Identifier#URLs_and_URNs
- */
-struct RestEndpointOption {
-  using Type = std::string;
-};
 
 /**
  * Sets the transfer stall timeout.
@@ -76,6 +47,16 @@ struct TransferStallTimeoutOption {
 };
 
 /**
+ * The minimum accepted bytes/second transfer rate.
+ *
+ * If the average rate is below this value for the `TransferStallTimeoutOption`
+ * then the transfer is aborted.
+ */
+struct TransferStallMinimumRateOption {
+  using Type = std::int32_t;
+};
+
+/**
  * Sets the download stall timeout.
  *
  * If a download *stalls*, i.e., no bytes are received for a significant period,
@@ -93,11 +74,20 @@ struct DownloadStallTimeoutOption {
   using Type = std::chrono::seconds;
 };
 
+/**
+ * The minimum accepted bytes/second download rate.
+ *
+ * If the average rate is below this value for the `DownloadStallTimeoutOption`
+ * then the download is aborted.
+ */
+struct DownloadStallMinimumRateOption {
+  using Type = std::int32_t;
+};
+
 /// The complete list of options accepted by `CurlRestClient`
-using RestOptionList =
-    ::google::cloud::OptionList<UserIpOption, RestEndpointOption,
-                                TransferStallTimeoutOption,
-                                DownloadStallTimeoutOption>;
+using RestInternalOptionList = ::google::cloud::OptionList<
+    TransferStallTimeoutOption, TransferStallMinimumRateOption,
+    DownloadStallTimeoutOption, DownloadStallMinimumRateOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal

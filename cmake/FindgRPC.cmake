@@ -69,7 +69,7 @@ find_package(Threads REQUIRED)
 # `find_package()` because we (have to) install this module in non-standard
 # locations.
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}")
-find_package(ProtobufWithTargets)
+find_package(Protobuf)
 
 # The gRPC::grpc_cpp_plugin target is sometimes defined, but without a
 # IMPORTED_LOCATION
@@ -102,18 +102,6 @@ function (_grpc_fix_grpc_cpp_plugin_target)
     endif ()
 endfunction ()
 
-# The gRPC::* targets sometimes lack the right definitions to compile cleanly on
-# WIN32
-function (_grpc_fix_grpc_target_definitions)
-    # Including gRPC headers without this definition results in a build error.
-    if (WIN32)
-        set_property(TARGET gRPC::grpc APPEND
-                     PROPERTY INTERFACE_COMPILE_DEFINITIONS _WIN32_WINNT=0x600)
-        set_property(TARGET gRPC::grpc++ APPEND
-                     PROPERTY INTERFACE_COMPILE_DEFINITIONS _WIN32_WINNT=0x600)
-    endif ()
-endfunction ()
-
 # First try to use the `gRPCConfig.cmake` or `grpc-config.cmake` file if it was
 # installed. This is common on systems (or package managers) where gRPC was
 # compiled and installed with `CMake`.
@@ -127,7 +115,6 @@ endif ()
 
 if (gRPC_FOUND)
     _grpc_fix_grpc_cpp_plugin_target()
-    _grpc_fix_grpc_target_definitions()
     return()
 endif ()
 
@@ -206,21 +193,26 @@ if (_gRPC_grpc_LIBRARY)
                                                         "${_gRPC_grpc_LIBRARY}")
         endif ()
         if (EXISTS "${_gRPC_grpc_LIBRARY_RELEASE}")
-            set_property(TARGET gRPC::grpc APPEND
-                         PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+            set_property(
+                TARGET gRPC::grpc
+                APPEND
+                PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
             set_target_properties(
                 gRPC::grpc PROPERTIES IMPORTED_LOCATION_RELEASE
                                       "${_gRPC_grpc_LIBRARY_RELEASE}")
         endif ()
         if (EXISTS "${_gRPC_grpc_LIBRARY_DEBUG}")
-            set_property(TARGET gRPC::grpc APPEND
-                         PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+            set_property(
+                TARGET gRPC::grpc
+                APPEND
+                PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
             set_target_properties(
                 gRPC::grpc PROPERTIES IMPORTED_LOCATION_DEBUG
                                       "${_gRPC_grpc_LIBRARY_DEBUG}")
         endif ()
         set_property(
-            TARGET gRPC::grpc APPEND
+            TARGET gRPC::grpc
+            APPEND
             PROPERTY INTERFACE_LINK_LIBRARIES protobuf::libprotobuf
                      Threads::Threads)
     endif ()
@@ -238,46 +230,34 @@ if (_gRPC_grpc++_LIBRARY)
                                         "${_gRPC_grpc++_LIBRARY}")
         endif ()
         if (EXISTS "${_gRPC_grpc++_LIBRARY_RELEASE}")
-            set_property(TARGET gRPC::grpc++ APPEND
-                         PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
+            set_property(
+                TARGET gRPC::grpc++
+                APPEND
+                PROPERTY IMPORTED_CONFIGURATIONS RELEASE)
             set_target_properties(
                 gRPC::grpc++ PROPERTIES IMPORTED_LOCATION_RELEASE
                                         "${_gRPC_grpc++_LIBRARY_RELEASE}")
         endif ()
         if (EXISTS "${_gRPC_grpc++_LIBRARY_DEBUG}")
-            set_property(TARGET gRPC::grpc++ APPEND
-                         PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
+            set_property(
+                TARGET gRPC::grpc++
+                APPEND
+                PROPERTY IMPORTED_CONFIGURATIONS DEBUG)
             set_target_properties(
                 gRPC::grpc++ PROPERTIES IMPORTED_LOCATION_DEBUG
                                         "${_gRPC_grpc++_LIBRARY_DEBUG}")
         endif ()
         set_property(
-            TARGET gRPC::grpc++ APPEND
+            TARGET gRPC::grpc++
+            APPEND
             PROPERTY INTERFACE_LINK_LIBRARIES gRPC::grpc protobuf::libprotobuf
                      Threads::Threads)
-        if (CMAKE_VERSION VERSION_GREATER 3.8)
-            # gRPC++ requires C++11, but only CMake-3.8 introduced a target
-            # compiler feature to meet that requirement.
-            set_property(TARGET gRPC::grpc++ APPEND
-                         PROPERTY INTERFACE_COMPILE_FEATURES cxx_std_11)
-        elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
-            # CMake 3.5 is still alive and kicking in some older distros, use
-            # the compiler-specific versions in these cases.
-            set_property(TARGET gRPC::grpc++ APPEND
-                         PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++11")
-        elseif ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-            set_property(TARGET gRPC::grpc++ APPEND
-                         PROPERTY INTERFACE_COMPILE_OPTIONS "-std=c++11")
-        else ()
-            message(
-                WARNING
-                    "gRPC::grpc++ requires C++11, but this module"
-                    " (${CMAKE_CURRENT_LIST_FILE})"
-                    " cannot enable it for the library target in your CMake and"
-                    " compiler versions. You need to enable C++11 in the"
-                    " CMakeLists.txt for your project. Consider filing a bug"
-                    " so we can fix this problem.")
-        endif ()
+        # gRPC++ requires C++14. It does not yet define the compile features, so
+        # we define the feature ourselves.
+        set_property(
+            TARGET gRPC::grpc++
+            APPEND
+            PROPERTY INTERFACE_COMPILE_FEATURES cxx_std_14)
     endif ()
 endif ()
 
@@ -331,5 +311,7 @@ if (gRPC_DEBUG)
 endif ()
 
 include(FindPackageHandleStandardArgs)
-find_package_handle_standard_args(gRPC REQUIRED_VARS _gRPC_grpc_LIBRARY
-                                  _gRPC_INCLUDE_DIR VERSION_VAR gRPC_VERSION)
+find_package_handle_standard_args(
+    gRPC
+    REQUIRED_VARS _gRPC_grpc_LIBRARY _gRPC_INCLUDE_DIR
+    VERSION_VAR gRPC_VERSION)

@@ -49,6 +49,18 @@ using VpcAccessServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         vpcaccess_internal::VpcAccessServiceRetryTraits>;
 
+/**
+ * The `VpcAccessServiceConnection` object for `VpcAccessServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `VpcAccessServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `VpcAccessServiceClient`.
+ *
+ * To create a concrete instance, see `MakeVpcAccessServiceConnection()`.
+ *
+ * For mocking, see `vpcaccess_mocks::MockVpcAccessServiceConnection`.
+ */
 class VpcAccessServiceConnection {
  public:
   virtual ~VpcAccessServiceConnection() = 0;
@@ -70,25 +82,33 @@ class VpcAccessServiceConnection {
       google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `VpcAccessServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of VpcAccessServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `VpcAccessServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::vpcaccess::VpcAccessServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `VpcAccessServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<VpcAccessServiceConnection> MakeVpcAccessServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace vpcaccess_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<vpcaccess::VpcAccessServiceConnection>
-MakeVpcAccessServiceConnection(std::shared_ptr<VpcAccessServiceStub> stub,
-                               Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace vpcaccess_internal
 }  // namespace cloud
 }  // namespace google
 

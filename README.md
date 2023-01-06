@@ -10,101 +10,308 @@
 [![Kokoro CI status][kokoro-windows-bazel-shield]][kokoro-windows-bazel-link]
 [![Kokoro CI status][kokoro-macos-bazel-shield]][kokoro-macos-bazel-link]
 
-[kokoro-windows-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake.svg
-[kokoro-windows-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake-link.html
-[kokoro-windows-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel.svg
-[kokoro-windows-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel-link.html
-[kokoro-macos-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-cmake-vcpkg.svg
-[kokoro-macos-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-cmake-vcpkg-link.html
-[kokoro-macos-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel.svg
-[kokoro-macos-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel-link.html
-[codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/main/graph/badge.svg
-[codecov-link]: https://codecov.io/gh/googleapis/google-cloud-cpp
-[gcb-clang-tidy-shield]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/clang-tidy.svg
-[gcb-clang-tidy-link]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/clang-tidy.html
-[gcb-asan-shield]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/asan.svg
-[gcb-asan-link]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/asan.html
-
 This repository contains idiomatic C++ client libraries for the following
 [Google Cloud Platform](https://cloud.google.com/) services.
 
+> Please check the [CHANGELOG] for important announcements and upcoming
+> changes.
+
 <!-- inject-GA-libraries-start -->
-* [Access Approval API](google/cloud/accessapproval/README.md) [[quickstart]](google/cloud/accessapproval/quickstart/README.md)
-* [Access Context Manager API](google/cloud/accesscontextmanager/README.md) [[quickstart]](google/cloud/accesscontextmanager/quickstart/README.md)
-* [API Gateway API](google/cloud/apigateway/README.md) [[quickstart]](google/cloud/apigateway/quickstart/README.md)
-* [App Engine Admin API](google/cloud/appengine/README.md) [[quickstart]](google/cloud/appengine/quickstart/README.md)
-* [Artifact Registry API](google/cloud/artifactregistry/README.md) [[quickstart]](google/cloud/artifactregistry/quickstart/README.md)
-* [Cloud Asset API](google/cloud/asset/README.md) [[quickstart]](google/cloud/asset/quickstart/README.md)
-* [Assured Workloads API](google/cloud/assuredworkloads/README.md) [[quickstart]](google/cloud/assuredworkloads/quickstart/README.md)
-* [Cloud AutoML API](google/cloud/automl/README.md) [[quickstart]](google/cloud/automl/quickstart/README.md)
-* [Google Cloud BigQuery](google/cloud/bigquery/README.md) [[quickstart]](google/cloud/bigquery/quickstart/README.md)
-* [Google Cloud Bigtable](google/cloud/bigtable/README.md) [[quickstart]](google/cloud/bigtable/quickstart/README.md)
-* [Cloud Billing Budget API](google/cloud/billing/README.md) [[quickstart]](google/cloud/billing/quickstart/README.md)
-* [Binary Authorization API](google/cloud/binaryauthorization/README.md) [[quickstart]](google/cloud/binaryauthorization/quickstart/README.md)
-* [Cloud Channel API](google/cloud/channel/README.md) [[quickstart]](google/cloud/channel/quickstart/README.md)
-* [Cloud Build API](google/cloud/cloudbuild/README.md) [[quickstart]](google/cloud/cloudbuild/quickstart/README.md)
-* [Cloud Composer](google/cloud/composer/README.md) [[quickstart]](google/cloud/composer/quickstart/README.md)
-* [Kubernetes Engine API](google/cloud/container/README.md) [[quickstart]](google/cloud/container/quickstart/README.md)
-* [Container Analysis API](google/cloud/containeranalysis/README.md) [[quickstart]](google/cloud/containeranalysis/quickstart/README.md)
-* [Database Migration API](google/cloud/datamigration/README.md) [[quickstart]](google/cloud/datamigration/quickstart/README.md)
-* [Stackdriver Debugger API](google/cloud/debugger/README.md) [[quickstart]](google/cloud/debugger/quickstart/README.md)
-* [Cloud Data Loss Prevention (DLP) API](google/cloud/dlp/README.md) [[quickstart]](google/cloud/dlp/quickstart/README.md)
-* [Eventarc API](google/cloud/eventarc/README.md) [[quickstart]](google/cloud/eventarc/quickstart/README.md)
-* [Cloud Filestore API](google/cloud/filestore/README.md) [[quickstart]](google/cloud/filestore/quickstart/README.md)
-* [Cloud Functions API](google/cloud/functions/README.md) [[quickstart]](google/cloud/functions/quickstart/README.md)
-* [Game Services API](google/cloud/gameservices/README.md) [[quickstart]](google/cloud/gameservices/quickstart/README.md)
-* [GKE Hub](google/cloud/gkehub/README.md) [[quickstart]](google/cloud/gkehub/quickstart/README.md)
-* [Google Cloud IAM](google/cloud/iam/README.md) [[quickstart]](google/cloud/iam/quickstart/README.md)
-* [Cloud Identity-Aware Proxy API](google/cloud/iap/README.md) [[quickstart]](google/cloud/iap/quickstart/README.md)
-* [Cloud IDS API](google/cloud/ids/README.md) [[quickstart]](google/cloud/ids/quickstart/README.md)
-* [Cloud IoT API](google/cloud/iot/README.md) [[quickstart]](google/cloud/iot/quickstart/README.md)
-* [Cloud Key Management Service (KMS) API](google/cloud/kms/README.md) [[quickstart]](google/cloud/kms/quickstart/README.md)
-* [Cloud Memorystore for Memcached API](google/cloud/memcache/README.md) [[quickstart]](google/cloud/memcache/quickstart/README.md)
-* [Cloud Monitoring API](google/cloud/monitoring/README.md) [[quickstart]](google/cloud/monitoring/quickstart/README.md)
-* [Network Management API](google/cloud/networkmanagement/README.md) [[quickstart]](google/cloud/networkmanagement/quickstart/README.md)
-* [Notebooks API](google/cloud/notebooks/README.md) [[quickstart]](google/cloud/notebooks/quickstart/README.md)
-* [Organization Policy API](google/cloud/orgpolicy/README.md) [[quickstart]](google/cloud/orgpolicy/quickstart/README.md)
-* [Cloud OS Login API](google/cloud/oslogin/README.md) [[quickstart]](google/cloud/oslogin/quickstart/README.md)
-* [Policy Troubleshooter API](google/cloud/policytroubleshooter/README.md) [[quickstart]](google/cloud/policytroubleshooter/quickstart/README.md)
-* [Certificate Authority API](google/cloud/privateca/README.md) [[quickstart]](google/cloud/privateca/quickstart/README.md)
-* [Google Cloud Pub/Sub](google/cloud/pubsub/README.md) [[quickstart]](google/cloud/pubsub/quickstart/README.md)
-* [Cloud Pub/Sub Lite](google/cloud/pubsublite/README.md) [[quickstart]](google/cloud/pubsublite/quickstart/README.md)
-* [Recommender](google/cloud/recommender/README.md) [[quickstart]](google/cloud/recommender/quickstart/README.md)
-* [Google Cloud Memorystore for Redis API](google/cloud/redis/README.md) [[quickstart]](google/cloud/redis/quickstart/README.md)
-* [Cloud Resource Manager API](google/cloud/resourcemanager/README.md) [[quickstart]](google/cloud/resourcemanager/quickstart/README.md)
-* [Retail API](google/cloud/retail/README.md) [[quickstart]](google/cloud/retail/quickstart/README.md)
-* [Cloud Scheduler API](google/cloud/scheduler/README.md) [[quickstart]](google/cloud/scheduler/quickstart/README.md)
-* [Secret Manager API](google/cloud/secretmanager/README.md) [[quickstart]](google/cloud/secretmanager/quickstart/README.md)
-* [Security Command Center API](google/cloud/securitycenter/README.md) [[quickstart]](google/cloud/securitycenter/quickstart/README.md)
-* [Service Control API](google/cloud/servicecontrol/README.md) [[quickstart]](google/cloud/servicecontrol/quickstart/README.md)
-* [Service Directory API](google/cloud/servicedirectory/README.md) [[quickstart]](google/cloud/servicedirectory/quickstart/README.md)
-* [Service Management API](google/cloud/servicemanagement/README.md) [[quickstart]](google/cloud/servicemanagement/quickstart/README.md)
-* [Service Usage API](google/cloud/serviceusage/README.md) [[quickstart]](google/cloud/serviceusage/quickstart/README.md)
-* [Cloud Shell API](google/cloud/shell/README.md) [[quickstart]](google/cloud/shell/quickstart/README.md)
-* [Google Cloud Spanner](google/cloud/spanner/README.md) [[quickstart]](google/cloud/spanner/quickstart/README.md)
-* [Google Cloud Storage](google/cloud/storage/README.md) [[quickstart]](google/cloud/storage/quickstart/README.md)
-* [Storage Transfer API](google/cloud/storagetransfer/README.md) [[quickstart]](google/cloud/storagetransfer/quickstart/README.md)
-* [Cloud Talent Solution API](google/cloud/talent/README.md) [[quickstart]](google/cloud/talent/quickstart/README.md)
-* [Cloud Tasks API](google/cloud/tasks/README.md) [[quickstart]](google/cloud/tasks/quickstart/README.md)
-* [Cloud Text-to-Speech API](google/cloud/texttospeech/README.md) [[quickstart]](google/cloud/texttospeech/quickstart/README.md)
-* [Cloud TPU API](google/cloud/tpu/README.md) [[quickstart]](google/cloud/tpu/quickstart/README.md)
-* [Stackdriver Trace API](google/cloud/trace/README.md) [[quickstart]](google/cloud/trace/quickstart/README.md)
-* [Cloud Translation API](google/cloud/translate/README.md) [[quickstart]](google/cloud/translate/quickstart/README.md)
-* [Cloud Video Intelligence API](google/cloud/videointelligence/README.md) [[quickstart]](google/cloud/videointelligence/quickstart/README.md)
-* [Cloud Vision API](google/cloud/vision/README.md) [[quickstart]](google/cloud/vision/quickstart/README.md)
-* [VM Migration API](google/cloud/vmmigration/README.md) [[quickstart]](google/cloud/vmmigration/quickstart/README.md)
-* [Serverless VPC Access API](google/cloud/vpcaccess/README.md) [[quickstart]](google/cloud/vpcaccess/quickstart/README.md)
-* [Web Risk API](google/cloud/webrisk/README.md) [[quickstart]](google/cloud/webrisk/quickstart/README.md)
-* [Web Security Scanner API](google/cloud/websecurityscanner/README.md) [[quickstart]](google/cloud/websecurityscanner/quickstart/README.md)
-* [Workflow Executions API](google/cloud/workflows/README.md) [[quickstart]](google/cloud/workflows/quickstart/README.md)
+
+- [Access Approval API](google/cloud/accessapproval/README.md)
+  [\[quickstart\]](google/cloud/accessapproval/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-accessapproval/latest)
+- [Access Context Manager API](google/cloud/accesscontextmanager/README.md)
+  [\[quickstart\]](google/cloud/accesscontextmanager/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-accesscontextmanager/latest)
+- [API Gateway API](google/cloud/apigateway/README.md)
+  [\[quickstart\]](google/cloud/apigateway/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-apigateway/latest)
+- [Apigee Connect API](google/cloud/apigeeconnect/README.md)
+  [\[quickstart\]](google/cloud/apigeeconnect/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-apigeeconnect/latest)
+- [App Engine Admin API](google/cloud/appengine/README.md)
+  [\[quickstart\]](google/cloud/appengine/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-appengine/latest)
+- [Artifact Registry API](google/cloud/artifactregistry/README.md)
+  [\[quickstart\]](google/cloud/artifactregistry/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-artifactregistry/latest)
+- [Cloud Asset API](google/cloud/asset/README.md)
+  [\[quickstart\]](google/cloud/asset/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-asset/latest)
+- [Assured Workloads API](google/cloud/assuredworkloads/README.md)
+  [\[quickstart\]](google/cloud/assuredworkloads/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-assuredworkloads/latest)
+- [Cloud AutoML API](google/cloud/automl/README.md)
+  [\[quickstart\]](google/cloud/automl/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-automl/latest)
+- [Bare Metal Solution API](google/cloud/baremetalsolution/README.md)
+  [\[quickstart\]](google/cloud/baremetalsolution/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-baremetalsolution/latest)
+- [Batch API](google/cloud/batch/README.md)
+  [\[quickstart\]](google/cloud/batch/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-batch/latest)
+- [BeyondCorp API](google/cloud/beyondcorp/README.md)
+  [\[quickstart\]](google/cloud/beyondcorp/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-beyondcorp/latest)
+- [Google Cloud BigQuery](google/cloud/bigquery/README.md)
+  [\[quickstart\]](google/cloud/bigquery/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-bigquery/latest)
+- [Google Cloud Bigtable](google/cloud/bigtable/README.md)
+  [\[quickstart\]](google/cloud/bigtable/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-bigtable/latest)
+- [Cloud Billing Budget API](google/cloud/billing/README.md)
+  [\[quickstart\]](google/cloud/billing/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-billing/latest)
+- [Binary Authorization API](google/cloud/binaryauthorization/README.md)
+  [\[quickstart\]](google/cloud/binaryauthorization/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-binaryauthorization/latest)
+- [Certificate Manager API](google/cloud/certificatemanager/README.md)
+  [\[quickstart\]](google/cloud/certificatemanager/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-certificatemanager/latest)
+- [Cloud Channel API](google/cloud/channel/README.md)
+  [\[quickstart\]](google/cloud/channel/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-channel/latest)
+- [Cloud Build API](google/cloud/cloudbuild/README.md)
+  [\[quickstart\]](google/cloud/cloudbuild/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-cloudbuild/latest)
+- [Cloud Composer](google/cloud/composer/README.md)
+  [\[quickstart\]](google/cloud/composer/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-composer/latest)
+- [Connectors API](google/cloud/connectors/README.md)
+  [\[quickstart\]](google/cloud/connectors/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-connectors/latest)
+- [Contact Center AI Insights API](google/cloud/contactcenterinsights/README.md)
+  [\[quickstart\]](google/cloud/contactcenterinsights/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-contactcenterinsights/latest)
+- [Kubernetes Engine API](google/cloud/container/README.md)
+  [\[quickstart\]](google/cloud/container/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-container/latest)
+- [Container Analysis API](google/cloud/containeranalysis/README.md)
+  [\[quickstart\]](google/cloud/containeranalysis/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-containeranalysis/latest)
+- [Google Cloud Data Catalog API](google/cloud/datacatalog/README.md)
+  [\[quickstart\]](google/cloud/datacatalog/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-datacatalog/latest)
+- [Database Migration API](google/cloud/datamigration/README.md)
+  [\[quickstart\]](google/cloud/datamigration/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-datamigration/latest)
+- [Cloud Dataplex API](google/cloud/dataplex/README.md)
+  [\[quickstart\]](google/cloud/dataplex/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-dataplex/latest)
+- [Cloud Dataproc API](google/cloud/dataproc/README.md)
+  [\[quickstart\]](google/cloud/dataproc/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-dataproc/latest)
+- [Datastream API](google/cloud/datastream/README.md)
+  [\[quickstart\]](google/cloud/datastream/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-datastream/latest)
+- [Stackdriver Debugger API](google/cloud/debugger/README.md)
+  [\[quickstart\]](google/cloud/debugger/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-debugger/latest)
+- [Google Cloud Deploy API](google/cloud/deploy/README.md)
+  [\[quickstart\]](google/cloud/deploy/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-deploy/latest)
+- [Dialogflow CX API](google/cloud/dialogflow_cx/README.md)
+  [\[quickstart\]](google/cloud/dialogflow_cx/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-dialogflow_cx/latest)
+- [Dialogflow ES API](google/cloud/dialogflow_es/README.md)
+  [\[quickstart\]](google/cloud/dialogflow_es/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-dialogflow_es/latest)
+- [Cloud Data Loss Prevention (DLP) API](google/cloud/dlp/README.md)
+  [\[quickstart\]](google/cloud/dlp/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-dlp/latest)
+- [Cloud Document AI API](google/cloud/documentai/README.md)
+  [\[quickstart\]](google/cloud/documentai/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-documentai/latest)
+- [Distributed Cloud Edge Container API](google/cloud/edgecontainer/README.md)
+  [\[quickstart\]](google/cloud/edgecontainer/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-edgecontainer/latest)
+- [Eventarc API](google/cloud/eventarc/README.md)
+  [\[quickstart\]](google/cloud/eventarc/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-eventarc/latest)
+- [Cloud Filestore API](google/cloud/filestore/README.md)
+  [\[quickstart\]](google/cloud/filestore/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-filestore/latest)
+- [Cloud Functions API](google/cloud/functions/README.md)
+  [\[quickstart\]](google/cloud/functions/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-functions/latest)
+- [Game Services API](google/cloud/gameservices/README.md)
+  [\[quickstart\]](google/cloud/gameservices/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-gameservices/latest)
+- [GKE Hub](google/cloud/gkehub/README.md)
+  [\[quickstart\]](google/cloud/gkehub/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-gkehub/latest)
+- [Google Cloud IAM](google/cloud/iam/README.md)
+  [\[quickstart\]](google/cloud/iam/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-iam/latest)
+- [Cloud Identity-Aware Proxy API](google/cloud/iap/README.md)
+  [\[quickstart\]](google/cloud/iap/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-iap/latest)
+- [Cloud IDS API](google/cloud/ids/README.md)
+  [\[quickstart\]](google/cloud/ids/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-ids/latest)
+- [Cloud IoT API](google/cloud/iot/README.md)
+  [\[quickstart\]](google/cloud/iot/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-iot/latest)
+- [Cloud Key Management Service (KMS) API](google/cloud/kms/README.md)
+  [\[quickstart\]](google/cloud/kms/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-kms/latest)
+- [Cloud Natural Language API](google/cloud/language/README.md)
+  [\[quickstart\]](google/cloud/language/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-language/latest)
+- [Google Cloud Logging](google/cloud/logging/README.md)
+  [\[quickstart\]](google/cloud/logging/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-logging/latest)
+- [Managed Service for Microsoft Active Directory API](google/cloud/managedidentities/README.md)
+  [\[quickstart\]](google/cloud/managedidentities/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-managedidentities/latest)
+- [Cloud Memorystore for Memcached API](google/cloud/memcache/README.md)
+  [\[quickstart\]](google/cloud/memcache/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-memcache/latest)
+- [Cloud Monitoring API](google/cloud/monitoring/README.md)
+  [\[quickstart\]](google/cloud/monitoring/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-monitoring/latest)
+- [Network Connectivity API](google/cloud/networkconnectivity/README.md)
+  [\[quickstart\]](google/cloud/networkconnectivity/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-networkconnectivity/latest)
+- [Network Management API](google/cloud/networkmanagement/README.md)
+  [\[quickstart\]](google/cloud/networkmanagement/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-networkmanagement/latest)
+- [Notebooks API](google/cloud/notebooks/README.md)
+  [\[quickstart\]](google/cloud/notebooks/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-notebooks/latest)
+- [Cloud Optimization API](google/cloud/optimization/README.md)
+  [\[quickstart\]](google/cloud/optimization/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-optimization/latest)
+- [Organization Policy API](google/cloud/orgpolicy/README.md)
+  [\[quickstart\]](google/cloud/orgpolicy/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-orgpolicy/latest)
+- [OS Config API](google/cloud/osconfig/README.md)
+  [\[quickstart\]](google/cloud/osconfig/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-osconfig/latest)
+- [Cloud OS Login API](google/cloud/oslogin/README.md)
+  [\[quickstart\]](google/cloud/oslogin/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-oslogin/latest)
+- [Policy Troubleshooter API](google/cloud/policytroubleshooter/README.md)
+  [\[quickstart\]](google/cloud/policytroubleshooter/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-policytroubleshooter/latest)
+- [Certificate Authority API](google/cloud/privateca/README.md)
+  [\[quickstart\]](google/cloud/privateca/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-privateca/latest)
+- [Cloud Profiler API](google/cloud/profiler/README.md)
+  [\[quickstart\]](google/cloud/profiler/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-profiler/latest)
+- [Google Cloud Pub/Sub](google/cloud/pubsub/README.md)
+  [\[quickstart\]](google/cloud/pubsub/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-pubsub/latest)
+- [Recommender](google/cloud/recommender/README.md)
+  [\[quickstart\]](google/cloud/recommender/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-recommender/latest)
+- [Google Cloud Memorystore for Redis API](google/cloud/redis/README.md)
+  [\[quickstart\]](google/cloud/redis/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-redis/latest)
+- [Cloud Resource Manager API](google/cloud/resourcemanager/README.md)
+  [\[quickstart\]](google/cloud/resourcemanager/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-resourcemanager/latest)
+- [Resource Settings API](google/cloud/resourcesettings/README.md)
+  [\[quickstart\]](google/cloud/resourcesettings/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-resourcesettings/latest)
+- [Retail API](google/cloud/retail/README.md)
+  [\[quickstart\]](google/cloud/retail/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-retail/latest)
+- [Cloud Run Admin API](google/cloud/run/README.md)
+  [\[quickstart\]](google/cloud/run/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-run/latest)
+- [Cloud Scheduler API](google/cloud/scheduler/README.md)
+  [\[quickstart\]](google/cloud/scheduler/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-scheduler/latest)
+- [Secret Manager API](google/cloud/secretmanager/README.md)
+  [\[quickstart\]](google/cloud/secretmanager/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-secretmanager/latest)
+- [Security Command Center API](google/cloud/securitycenter/README.md)
+  [\[quickstart\]](google/cloud/securitycenter/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-securitycenter/latest)
+- [Service Control API](google/cloud/servicecontrol/README.md)
+  [\[quickstart\]](google/cloud/servicecontrol/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-servicecontrol/latest)
+- [Service Directory API](google/cloud/servicedirectory/README.md)
+  [\[quickstart\]](google/cloud/servicedirectory/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-servicedirectory/latest)
+- [Service Management API](google/cloud/servicemanagement/README.md)
+  [\[quickstart\]](google/cloud/servicemanagement/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-servicemanagement/latest)
+- [Service Usage API](google/cloud/serviceusage/README.md)
+  [\[quickstart\]](google/cloud/serviceusage/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-serviceusage/latest)
+- [Cloud Shell API](google/cloud/shell/README.md)
+  [\[quickstart\]](google/cloud/shell/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-shell/latest)
+- [Google Cloud Spanner](google/cloud/spanner/README.md)
+  [\[quickstart\]](google/cloud/spanner/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-spanner/latest)
+- [Cloud Speech-to-Text API](google/cloud/speech/README.md)
+  [\[quickstart\]](google/cloud/speech/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-speech/latest)
+- [Google Cloud Storage](google/cloud/storage/README.md)
+  [\[quickstart\]](google/cloud/storage/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-storage/latest)
+- [Storage Transfer API](google/cloud/storagetransfer/README.md)
+  [\[quickstart\]](google/cloud/storagetransfer/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-storagetransfer/latest)
+- [Cloud Talent Solution API](google/cloud/talent/README.md)
+  [\[quickstart\]](google/cloud/talent/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-talent/latest)
+- [Cloud Tasks API](google/cloud/tasks/README.md)
+  [\[quickstart\]](google/cloud/tasks/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-tasks/latest)
+- [Cloud Text-to-Speech API](google/cloud/texttospeech/README.md)
+  [\[quickstart\]](google/cloud/texttospeech/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-texttospeech/latest)
+- [Cloud TPU API](google/cloud/tpu/README.md)
+  [\[quickstart\]](google/cloud/tpu/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-tpu/latest)
+- [Stackdriver Trace API](google/cloud/trace/README.md)
+  [\[quickstart\]](google/cloud/trace/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-trace/latest)
+- [Cloud Translation API](google/cloud/translate/README.md)
+  [\[quickstart\]](google/cloud/translate/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-translate/latest)
+- [Video Services](google/cloud/video/README.md)
+  [\[quickstart\]](google/cloud/video/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-video/latest)
+- [Cloud Video Intelligence API](google/cloud/videointelligence/README.md)
+  [\[quickstart\]](google/cloud/videointelligence/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-videointelligence/latest)
+- [Cloud Vision API](google/cloud/vision/README.md)
+  [\[quickstart\]](google/cloud/vision/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-vision/latest)
+- [VM Migration API](google/cloud/vmmigration/README.md)
+  [\[quickstart\]](google/cloud/vmmigration/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-vmmigration/latest)
+- [VMware Engine API](google/cloud/vmwareengine/README.md)
+  [\[quickstart\]](google/cloud/vmwareengine/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-vmwareengine/latest)
+- [Serverless VPC Access API](google/cloud/vpcaccess/README.md)
+  [\[quickstart\]](google/cloud/vpcaccess/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-vpcaccess/latest)
+- [Web Risk API](google/cloud/webrisk/README.md)
+  [\[quickstart\]](google/cloud/webrisk/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-webrisk/latest)
+- [Web Security Scanner API](google/cloud/websecurityscanner/README.md)
+  [\[quickstart\]](google/cloud/websecurityscanner/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-websecurityscanner/latest)
+- [Workflow Executions API](google/cloud/workflows/README.md)
+  [\[quickstart\]](google/cloud/workflows/quickstart/README.md)
+  [\[reference\]](https://googleapis.dev/cpp/google-cloud-workflows/latest)
+
 <!-- inject-GA-libraries-end -->
 
 See each library's `README.md` file for more information about:
 
-* Where to find the documentation for the library and the service.
-* How to get started using the library.
-* How to incorporate the library into your build system.
-* The library's support status if not Generally Available (GA); unless noted in
+- Where to find the documentation for the library and the service.
+- How to get started using the library.
+- How to incorporate the library into your build system.
+- The library's support status if not Generally Available (GA); unless noted in
   a library's `README.md`, these libraries are all GA and supported by Google.
 
 ## Building and Installing
@@ -112,23 +319,25 @@ See each library's `README.md` file for more information about:
 This is a quickstart guide for developers wanting to compile the libraries and
 run the examples included with the libraries.
 
-* Packaging maintainers or developers who prefer to install the library in a
+- Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
-* Developers wanting to use the libraries as part of a larger CMake or Bazel
+- Developers that prefer using a package manager such as
+  [vcpkg](https://vcpkg.io), [Conda](https://conda.io),
+  or [Conan](https://conan.io) should follow the instructions for their package
+  manager.
+- Developers wanting to use the libraries as part of a larger CMake or Bazel
   project should consult the [quickstart guides](#quickstart) for the library
   or libraries they want to use.
-* Developers wanting to compile the library just to run some of the examples or
+- Developers wanting to compile the library just to run some examples or
   tests should read the current document.
-* Contributors and developers to `google-cloud-cpp` should consult the guide to
-  [setup a development workstation][howto-setup-dev-workstation].
-
-[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
+- Contributors and developers to `google-cloud-cpp` should consult the guide to
+  [set up a development workstation][howto-setup-dev-workstation].
 
 ### Building with Bazel
 
-This library requires Bazel >= 4.0. From the top-level directory, run the usual
-commands.
+This library requires Bazel >= 4.0[^bazel-version-note]. From the top-level
+directory, run the usual commands.
 
 ```shell
 bazel build //...
@@ -136,7 +345,7 @@ bazel build //...
 
 ### Building with CMake
 
-This library requires CMake >= 3.5. If you are planning to install the libraries
+This library requires CMake >= 3.10. If you are planning to install the libraries
 please consult the [packaging guide](/doc/packaging.md), these instructions will
 **NOT** produce artifacts that you can put in `/usr/local`, or share with your
 colleagues.
@@ -165,6 +374,7 @@ Storage](google/cloud/storage/README.md), should give you a taste of what it's
 like to use one of these C++ libraries.
 
 <!-- inject-quickstart-start -->
+
 ```cc
 #include "google/cloud/storage/client.h"
 #include <iostream>
@@ -207,19 +417,24 @@ int main(int argc, char* argv[]) {
   return 0;
 }
 ```
+
 <!-- inject-quickstart-end -->
 
 ## Support
 
-* This project supports Windows, macOS, Linux
-* This project supports C++11 (and higher) compilers (we test with GCC >= 6.3,
-  Clang >= 6.0, and MSVC >= 2017)
-* This project supports Bazel and CMake builds. See the [Quickstart examples](https://github.com/googleapis/google-cloud-cpp#quickstart)
-* This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md)
-* This project works with or without exceptions enabled
-* This project cuts [monthly releases](https://github.com/googleapis/google-cloud-cpp/releases) with detailed release notes
+- This project follows Google's [Foundational C++ Support Policy][support-policy],
+  which is summarized in the [Foundational C++ Support Matrix][support-matrix].
+  - Language Version (>= C++14).
+  - Operating Systems: Windows, macOS, and Linux.
+  - Build Systems: Bazel (>= 4.0)[^bazel-version-note], CMake (>= 3.10).
+  - Compilers: GCC (>= 7.3), Clang (>= 6.0), MSVC (>= 2017), Apple Clang (>= 12).
+- This project uses dependencies described in [doc/packaging.md](https://github.com/googleapis/google-cloud-cpp/blob/main/doc/packaging.md).
+- This project works with or without exceptions enabled.
+- This project cuts [monthly releases](https://github.com/googleapis/google-cloud-cpp/releases) with detailed release notes.
 
 ## Public API and API Breaking Changes
+
+This project follows Google's [OSS Library Breaking Change Policy][breaking-change-policy].
 
 In general, we avoid making backwards incompatible changes to our C++ APIs (see
 below for the definition of "API"). Sometimes such changes yield benefits to
@@ -254,24 +469,24 @@ policy described at https://cloud.google.com/terms.
 
 ### C++ Symbols and Files
 
-* You should only include headers matching the `google/cloud/${library}/*.h`,
+- You should only include headers matching the `google/cloud/${library}/*.h`,
   `google/cloud/${library}/mock/*.h` or `google/cloud/*.h` patterns.
-* You should **NOT** directly include headers in any subdirectories, such as
+- You should **NOT** directly include headers in any subdirectories, such as
   `google/cloud/${library}/internal`.
-* The files *included from* our public headers are **not part of our public
+- The files *included from* our public headers are **not part of our public
   API**. Depending on indirect includes may break your build in the future, as
   we may change a header `"foo.h"` to stop including `"bar.h"` if `"foo.h"` no
   longer needs the symbols in `"bar.h"`. To avoid having your code broken, you
   should directly include the public headers that define all the symbols you
   use (this is sometimes known as
   [include-what-you-use](https://include-what-you-use.org/)).
-* Any file or symbol that lives within a directory or namespace containing
+- Any file or symbol that lives within a directory or namespace containing
   `internal`, `impl`, `test`, `detail`, `benchmark`, `sample`, or `example`, is
   explicitly **not part of our public API**.
-* Any file or symbol with `Impl` or `impl` in its name is **not part of our
+- Any file or symbol with `Impl` or `impl` in its name is **not part of our
   public API**.
-* Any symbol with `experimental` in its name is not part of the public API.
-* You should avoid naming our inline namespaces (even avoid spelling the
+- Any symbol with `experimental` in its name is not part of the public API.
+- You should avoid naming our inline namespaces (even avoid spelling the
   preprocessor names like `GOOGLE_CLOUD_CPP_NS`) and instead rely on them being
   a transparent versioning mechanism that you almost certainly don't care
   about. If you do spell out specific inline namespace names, your code will be
@@ -282,19 +497,19 @@ policy described at https://cloud.google.com/terms.
 
 Applications developers interact with a C++ library through more than just
 the C++ symbols and headers. They also need to reference the name of the
-library in their build scripts. Depending of the build system they use
+library in their build scripts. Depending on the build system they use
 this may be a CMake target, a Bazel rule, a pkg-config module, or just the
 name of some object in the file system.
 
 As with the C++ API, we try to avoid breaking changes to these interface
 points. Sometimes such changes yield benefits to our customers, in the form of
-easier-to-understand what names go with with services, or more consistency
-across services. When these benefits warrant it, we will announce these changes
-prominently in our `CHANGELOG.md` file and in the affected release's notes.
-Nevertheless, though we take commercially reasonable efforts to prevent this,
-it is possible that backwards incompatible changes go undetected and,
-therefore, undocumented. We apologize if this is the case and welcome feedback
-or bug reports to rectify the problem.
+bug fixes, increased consistency across services, or easier to understand names.
+When these benefits warrant it, we will announce these changes prominently in
+our `CHANGELOG.md` file and in the affected release's notes.  Nevertheless,
+though we take commercially reasonable efforts to prevent this, it is possible
+that backwards incompatible changes go undetected and, therefore, undocumented.
+We apologize if this is the case and welcome feedback or bug reports to rectify
+the problem.
 
 ### Experimental Libraries
 
@@ -330,16 +545,16 @@ Only modules starting with `google_cloud_cpp_` are intended for customer use.
 
 We try to provide stable names for the previously described mechanisms:
 
-* Bazel rules,
-* CMake targets loaded via `find_package()`,
-* pkg-config modules
+- Bazel rules,
+- CMake targets loaded via `find_package()`,
+- pkg-config modules
 
 It is certainly possible to use the library using other approaches. While
 these may work, we may accidentally break these from time to time. Examples of
 such, and the recommended alternatives, include:
 
-* CMake's `FetchContent` and/or git submodules: in these approaches the
-  `google-cloud-cpp` library becomes a sub-directory of a larger CMake build
+- CMake's `FetchContent` and/or git submodules: in these approaches the
+  `google-cloud-cpp` library becomes a subdirectory of a larger CMake build
   We do not test `google-cloud-cpp` in these  configurations, and we find them
   brittle as **all** CMake targets become visible to the larger project.
   This is both prone to conflicts, and makes it impossible to enforce that
@@ -347,7 +562,7 @@ such, and the recommended alternatives, include:
   Applications may want to consider source package managers, such as
   `vcpkg`, or CMake super builds via `ExternalProject_Add()` as alternatives.
 
-* Using library names directly: applications should not use the
+- Using library names directly: applications should not use the
   library names, e.g., by using `-lgoogle_cloud_cpp_bigtable`
   in build scripts. We may need to split or merge libraries over time,
   making such names unstable. Applications should use CMake targets,
@@ -367,18 +582,42 @@ file a [GitHub issue][github-issue].
 
 ## Contact us
 
-* [GitHub Discussions] -- For questions and general comments
-* [GitHub Issues] -- For reporting bugs and feature requests
-
-[GitHub Discussions]: https://github.com/googleapis/google-cloud-cpp/discussions
-[GitHub Issues]: https://github.com/googleapis/google-cloud-cpp/issues
+- [GitHub Discussions] -- For questions and general comments
+- [GitHub Issues] -- For reporting bugs and feature requests
 
 ## Contributing changes
 
-See [`CONTRIBUTING.md`](CONTRIBUTING.md) for details on how to contribute to
+See [`CONTRIBUTING.md`](/CONTRIBUTING.md) for details on how to contribute to
 this project, including how to build and test your changes as well as how to
 properly format your code.
 
 ## Licensing
 
-Apache 2.0; see [`LICENSE`](LICENSE) for details.
+Apache 2.0; see [`LICENSE`](/LICENSE) for details.
+
+[^bazel-version-note]: On some platforms (e.g. macOS with M1 processors), you
+    may need a more recent version of Bazel. Consult the
+    [Bazel Install Guide](https://bazel.build/install) for details.
+
+[breaking-change-policy]: https://opensource.google/documentation/policies/library-breaking-change
+[changelog]: /CHANGELOG.md
+[codecov-link]: https://codecov.io/gh/googleapis/google-cloud-cpp
+[codecov-shield]: https://codecov.io/gh/googleapis/google-cloud-cpp/branch/main/graph/badge.svg
+[gcb-asan-link]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/asan.html
+[gcb-asan-shield]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/asan.svg
+[gcb-clang-tidy-link]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/clang-tidy.html
+[gcb-clang-tidy-shield]: https://storage.googleapis.com/cloud-cpp-community-publiclogs/badges/google-cloud-cpp/main/clang-tidy.svg
+[github discussions]: https://github.com/googleapis/google-cloud-cpp/discussions
+[github issues]: https://github.com/googleapis/google-cloud-cpp/issues
+[github-issue]: https://github.com/googleapis/google-cloud-cpp/issues/new/choose
+[howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
+[kokoro-macos-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel-link.html
+[kokoro-macos-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-bazel.svg
+[kokoro-macos-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-cmake-vcpkg-link.html
+[kokoro-macos-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/macos/kokoro-cmake-vcpkg.svg
+[kokoro-windows-bazel-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel-link.html
+[kokoro-windows-bazel-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-bazel.svg
+[kokoro-windows-cmake-link]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake-link.html
+[kokoro-windows-cmake-shield]: https://storage.googleapis.com/cloud-cpp-kokoro-status/kokoro-windows-cmake.svg
+[support-matrix]: https://github.com/google/oss-policies-info/blob/main/foundational-cxx-support-matrix.md
+[support-policy]: https://opensource.google/documentation/policies/cplusplus-support

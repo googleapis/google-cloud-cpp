@@ -17,7 +17,6 @@
 // source: google/cloud/contactcenterinsights/v1/contact_center_insights.proto
 
 #include "google/cloud/contactcenterinsights/contact_center_insights_client.h"
-#include "google/cloud/contactcenterinsights/internal/contact_center_insights_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ContactCenterInsightsClient::ContactCenterInsightsClient(
     std::shared_ptr<ContactCenterInsightsConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          contactcenterinsights_internal::ContactCenterInsightsDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ContactCenterInsightsClient::~ContactCenterInsightsClient() = default;
 
 StatusOr<google::cloud::contactcenterinsights::v1::Conversation>
@@ -196,6 +193,51 @@ Status ContactCenterInsightsClient::DeleteAnalysis(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeleteAnalysis(request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+ContactCenterInsightsClient::BulkAnalyzeConversations(std::string const& parent,
+                                                      std::string const& filter,
+                                                      float analysis_percentage,
+                                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsRequest
+      request;
+  request.set_parent(parent);
+  request.set_filter(filter);
+  request.set_analysis_percentage(analysis_percentage);
+  return connection_->BulkAnalyzeConversations(request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+ContactCenterInsightsClient::BulkAnalyzeConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->BulkAnalyzeConversations(request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+ContactCenterInsightsClient::IngestConversations(std::string const& parent,
+                                                 Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::IngestConversationsRequest request;
+  request.set_parent(parent);
+  return connection_->IngestConversations(request);
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+ContactCenterInsightsClient::IngestConversations(
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->IngestConversations(request);
 }
 
 future<StatusOr<
@@ -405,6 +447,21 @@ ContactCenterInsightsClient::UpdateIssue(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateIssue(request);
+}
+
+Status ContactCenterInsightsClient::DeleteIssue(std::string const& name,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::contactcenterinsights::v1::DeleteIssueRequest request;
+  request.set_name(name);
+  return connection_->DeleteIssue(request);
+}
+
+Status ContactCenterInsightsClient::DeleteIssue(
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteIssue(request);
 }
 
 StatusOr<

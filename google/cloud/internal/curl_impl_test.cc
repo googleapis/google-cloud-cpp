@@ -15,6 +15,7 @@
 #include "google/cloud/internal/curl_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -22,13 +23,48 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::ElementsAre;
 using ::testing::Eq;
+
+TEST(SpillBuffer, InitialState) {
+  SpillBuffer sb;
+  EXPECT_EQ(sb.capacity(), CURL_MAX_WRITE_SIZE);
+  EXPECT_EQ(sb.size(), 0);
+}
+
+TEST(SpillBuffer, Simple) {
+  SpillBuffer sb;
+  sb.CopyFrom(absl::MakeSpan("abc", 3));
+  EXPECT_EQ(sb.size(), 3);
+  std::vector<char> buf{'A', 'B', 'C', 'D'};
+  EXPECT_EQ(sb.MoveTo(absl::MakeSpan(buf)), 3);
+  EXPECT_EQ(sb.size(), 0);
+  EXPECT_THAT(buf, ElementsAre('a', 'b', 'c', 'D'));
+}
+
+TEST(SpillBuffer, Wrap) {
+  SpillBuffer sb;
+  std::vector<char> buf(sb.capacity() - 1, 'X');
+
+  sb.CopyFrom(absl::MakeSpan(buf));
+  EXPECT_EQ(sb.size(), buf.size());
+  EXPECT_EQ(sb.MoveTo(absl::MakeSpan(buf.data(), buf.size() - 1)),
+            buf.size() - 1);
+  EXPECT_EQ(sb.size(), 1);
+
+  sb.CopyFrom(absl::MakeSpan("abc", 3));
+  EXPECT_EQ(sb.size(), 4);
+  EXPECT_EQ(sb.MoveTo(absl::MakeSpan(buf)), 4);
+  EXPECT_EQ(sb.size(), 0);
+  EXPECT_THAT((std::vector<char>{buf.data(), buf.data() + 4}),
+              ElementsAre('X', 'a', 'b', 'c'));
+}
 
 class CurlImplTest : public ::testing::Test {
  protected:
   void SetUp() override {
     factory_ = GetDefaultCurlHandleFactory();
-    handle_ = GetCurlHandle(factory_);
+    handle_ = CurlHandle::MakeFromPool(*factory_);
   }
 
   CurlHandle handle_;
@@ -92,6 +128,22 @@ TEST_F(CurlImplTest,
   impl.SetUrl("https://endpoint.googleapis.com", request, params);
   EXPECT_THAT(impl.url(), Eq("https://endpoint.googleapis.com/resource/"
                              "verb?path=param&sort=desc&query=foo"));
+}
+
+TEST_F(CurlImplTest, SetUrlPathContainsHttps) {
+  RestRequest request;
+  request.SetPath("HTTPS://endpoint.googleapis.com/resource/verb");
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  impl.SetUrl("https://endpoint.googleapis.com", request, {});
+  EXPECT_THAT(impl.url(), Eq("HTTPS://endpoint.googleapis.com/resource/verb"));
+}
+
+TEST_F(CurlImplTest, SetUrlPathContainsHttp) {
+  RestRequest request;
+  request.SetPath("HTTP://endpoint.googleapis.com/resource/verb");
+  auto impl = CurlImpl(std::move(handle_), factory_, {});
+  impl.SetUrl("https://endpoint.googleapis.com", request, {});
+  EXPECT_THAT(impl.url(), Eq("HTTP://endpoint.googleapis.com/resource/verb"));
 }
 
 }  // namespace

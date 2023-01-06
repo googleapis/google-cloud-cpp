@@ -25,8 +25,8 @@ StatusOr<ServiceAccount> ServiceAccountParser::FromJson(
     return Status(StatusCode::kInvalidArgument, __func__);
   }
   ServiceAccount result{};
-  result.kind_ = json.value("kind", "");
-  result.email_address_ = json.value("email_address", "");
+  result.set_kind(json.value("kind", ""));
+  result.set_email_address(json.value("email_address", ""));
   return result;
 }
 

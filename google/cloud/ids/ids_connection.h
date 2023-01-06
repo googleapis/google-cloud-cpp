@@ -48,6 +48,18 @@ using IDSLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         ids_internal::IDSRetryTraits>;
 
+/**
+ * The `IDSConnection` object for `IDSClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `IDSClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `IDSClient`.
+ *
+ * To create a concrete instance, see `MakeIDSConnection()`.
+ *
+ * For mocking, see `ids_mocks::MockIDSConnection`.
+ */
 class IDSConnection {
  public:
   virtual ~IDSConnection() = 0;
@@ -67,23 +79,31 @@ class IDSConnection {
   DeleteEndpoint(google::cloud::ids::v1::DeleteEndpointRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `IDSConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of IDSClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `IDSConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::ids::IDSPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `IDSConnection` created by
+ * this function.
+ */
 std::shared_ptr<IDSConnection> MakeIDSConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace ids_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<ids::IDSConnection> MakeIDSConnection(
-    std::shared_ptr<IDSStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -67,16 +67,16 @@ class AdminServiceClient {
       std::shared_ptr<AdminServiceConnection> connection, Options opts = {});
   ~AdminServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   AdminServiceClient(AdminServiceClient const&) = default;
   AdminServiceClient& operator=(AdminServiceClient const&) = default;
   AdminServiceClient(AdminServiceClient&&) = default;
   AdminServiceClient& operator=(AdminServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(AdminServiceClient const& a,
                          AdminServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -85,7 +85,7 @@ class AdminServiceClient {
                          AdminServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Creates a new topic.
@@ -788,6 +788,43 @@ class AdminServiceClient {
   ///
   StreamRange<std::string> ListReservationTopics(
       google::cloud::pubsublite::v1::ListReservationTopicsRequest request,
+      Options opts = {});
+
+  ///
+  /// Returns the partition information for the requested topic.
+  ///
+  /// @param name  Required. The topic whose partition information to return.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
+  ///
+  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L259}
+  /// [google.cloud.pubsublite.v1.TopicPartitions]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L270}
+  ///
+  future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+  AsyncGetTopicPartitions(std::string const& name, Options opts = {});
+
+  ///
+  /// Returns the partition information for the requested topic.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::pubsublite::v1::GetTopicPartitionsRequest,google/cloud/pubsublite/v1/admin.proto#L259}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::pubsublite::v1::TopicPartitions,google/cloud/pubsublite/v1/admin.proto#L270}
+  ///
+  /// [google.cloud.pubsublite.v1.GetTopicPartitionsRequest]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L259}
+  /// [google.cloud.pubsublite.v1.TopicPartitions]:
+  /// @googleapis_reference_link{google/cloud/pubsublite/v1/admin.proto#L270}
+  ///
+  future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+  AsyncGetTopicPartitions(
+      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request,
       Options opts = {});
 
  private:

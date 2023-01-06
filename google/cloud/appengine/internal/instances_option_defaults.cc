@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options InstancesDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_INSTANCES_ENDPOINT", "",
-      "appengine.googleapis.com");
+      "GOOGLE_CLOUD_CPP_INSTANCES_AUTHORITY", "appengine.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<appengine::InstancesRetryPolicyOption>()) {

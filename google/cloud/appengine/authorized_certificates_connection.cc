@@ -23,6 +23,7 @@
 #include "google/cloud/appengine/internal/authorized_certificates_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AuthorizedCertificatesConnection::~AuthorizedCertificatesConnection() = default;
 
 StreamRange<google::appengine::v1::AuthorizedCertificate>
-    AuthorizedCertificatesConnection::ListAuthorizedCertificates(
-        google::appengine::v1::
-            ListAuthorizedCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+AuthorizedCertificatesConnection::ListAuthorizedCertificates(
+    google::appengine::v1::
+        ListAuthorizedCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::AuthorizedCertificate>>();
 }
@@ -68,6 +69,7 @@ Status AuthorizedCertificatesConnection::DeleteAuthorizedCertificate(
 std::shared_ptr<AuthorizedCertificatesConnection>
 MakeAuthorizedCertificatesConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AuthorizedCertificatesPolicyOptionList>(
       options, __func__);
   options = appengine_internal::AuthorizedCertificatesDefaultOptions(
@@ -82,25 +84,5 @@ MakeAuthorizedCertificatesConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace appengine_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<appengine::AuthorizedCertificatesConnection>
-MakeAuthorizedCertificatesConnection(
-    std::shared_ptr<AuthorizedCertificatesStub> stub, Options options) {
-  options = AuthorizedCertificatesDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      appengine_internal::AuthorizedCertificatesConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace appengine_internal
 }  // namespace cloud
 }  // namespace google

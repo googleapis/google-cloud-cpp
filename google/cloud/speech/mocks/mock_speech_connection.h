@@ -27,6 +27,21 @@ namespace cloud {
 namespace speech_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `SpeechConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `SpeechClient`. To do so,
+ * construct an object of type `SpeechClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockSpeechConnection : public speech::SpeechConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
@@ -44,7 +59,7 @@ class MockSpeechConnection : public speech::SpeechConnection {
   MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    google::cloud::speech::v1::StreamingRecognizeRequest,
                    google::cloud::speech::v1::StreamingRecognizeResponse>>),
-              AsyncStreamingRecognize, (ExperimentalTag), (override));
+              AsyncStreamingRecognize, (), (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

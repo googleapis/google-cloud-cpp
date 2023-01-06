@@ -136,6 +136,13 @@ class AdminServiceStub {
       google::cloud::pubsublite::v1::ListReservationTopicsRequest const&
           request) = 0;
 
+  virtual future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+  AsyncGetTopicPartitions(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -252,6 +259,13 @@ class DefaultAdminServiceStub : public AdminServiceStub {
       grpc::ClientContext& client_context,
       google::cloud::pubsublite::v1::ListReservationTopicsRequest const&
           request) override;
+
+  future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+  AsyncGetTopicPartitions(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request)
+      override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

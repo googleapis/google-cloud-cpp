@@ -16,26 +16,24 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-google::storage::v2::Owner GrpcOwnerParser::ToProto(Owner rhs) {
+google::storage::v2::Owner ToProto(storage::Owner rhs) {
   google::storage::v2::Owner result;
   *result.mutable_entity() = std::move(rhs.entity);
   *result.mutable_entity_id() = std::move(rhs.entity_id);
   return result;
 }
 
-Owner GrpcOwnerParser::FromProto(google::storage::v2::Owner rhs) {
-  Owner result;
+storage::Owner FromProto(google::storage::v2::Owner rhs) {
+  storage::Owner result;
   result.entity = std::move(*rhs.mutable_entity());
   result.entity_id = std::move(*rhs.mutable_entity_id());
   return result;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

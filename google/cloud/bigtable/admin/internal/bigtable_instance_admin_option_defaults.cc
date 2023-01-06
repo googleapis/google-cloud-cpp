@@ -35,7 +35,9 @@ auto constexpr kBackoffScaling = 2.0;
 Options BigtableInstanceAdminDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_BIGTABLE_INSTANCE_ADMIN_ENDPOINT",
-      "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST", "bigtableadmin.googleapis.com");
+      "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST",
+      "GOOGLE_CLOUD_CPP_BIGTABLE_INSTANCE_ADMIN_AUTHORITY",
+      "bigtableadmin.googleapis.com");
   options = google::cloud::internal::PopulateGrpcOptions(
       std::move(options), "BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
   if (!options.has<bigtable_admin::BigtableInstanceAdminRetryPolicyOption>()) {

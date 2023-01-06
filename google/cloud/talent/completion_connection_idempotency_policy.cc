@@ -30,29 +30,19 @@ using ::google::cloud::Idempotency;
 CompletionConnectionIdempotencyPolicy::
     ~CompletionConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultCompletionConnectionIdempotencyPolicy
-    : public CompletionConnectionIdempotencyPolicy {
- public:
-  ~DefaultCompletionConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<CompletionConnectionIdempotencyPolicy>
+CompletionConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<CompletionConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<CompletionConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultCompletionConnectionIdempotencyPolicy>(
-        *this);
-  }
-
-  Idempotency CompleteQuery(
-      google::cloud::talent::v4::CompleteQueryRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency CompletionConnectionIdempotencyPolicy::CompleteQuery(
+    google::cloud::talent::v4::CompleteQueryRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<CompletionConnectionIdempotencyPolicy>
 MakeDefaultCompletionConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultCompletionConnectionIdempotencyPolicy>();
+  return absl::make_unique<CompletionConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

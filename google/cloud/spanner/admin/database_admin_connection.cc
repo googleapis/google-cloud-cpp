@@ -23,6 +23,7 @@
 #include "google/cloud/spanner/admin/internal/database_admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DatabaseAdminConnection::~DatabaseAdminConnection() = default;
 
 StreamRange<google::spanner::admin::database::v1::Database>
-    DatabaseAdminConnection::ListDatabases(
-        google::spanner::admin::database::v1::
-            ListDatabasesRequest) {  // NOLINT(performance-unnecessary-value-param)
+DatabaseAdminConnection::ListDatabases(
+    google::spanner::admin::database::v1::
+        ListDatabasesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::spanner::admin::database::v1::Database>>();
 }
@@ -100,6 +101,14 @@ DatabaseAdminConnection::CreateBackup(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::spanner::admin::database::v1::Backup>>
+DatabaseAdminConnection::CopyBackup(
+    google::spanner::admin::database::v1::CopyBackupRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::spanner::admin::database::v1::Backup>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminConnection::GetBackup(
     google::spanner::admin::database::v1::GetBackupRequest const&) {
@@ -118,9 +127,9 @@ Status DatabaseAdminConnection::DeleteBackup(
 }
 
 StreamRange<google::spanner::admin::database::v1::Backup>
-    DatabaseAdminConnection::ListBackups(
-        google::spanner::admin::database::v1::
-            ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DatabaseAdminConnection::ListBackups(
+    google::spanner::admin::database::v1::
+        ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::spanner::admin::database::v1::Backup>>();
 }
@@ -134,24 +143,33 @@ DatabaseAdminConnection::RestoreDatabase(
 }
 
 StreamRange<google::longrunning::Operation>
-    DatabaseAdminConnection::ListDatabaseOperations(
-        google::spanner::admin::database::v1::
-            ListDatabaseOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DatabaseAdminConnection::ListDatabaseOperations(
+    google::spanner::admin::database::v1::
+        ListDatabaseOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
 }
 
 StreamRange<google::longrunning::Operation>
-    DatabaseAdminConnection::ListBackupOperations(
-        google::spanner::admin::database::v1::
-            ListBackupOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DatabaseAdminConnection::ListBackupOperations(
+    google::spanner::admin::database::v1::
+        ListBackupOperationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::longrunning::Operation>>();
+}
+
+StreamRange<google::spanner::admin::database::v1::DatabaseRole>
+DatabaseAdminConnection::ListDatabaseRoles(
+    google::spanner::admin::database::v1::
+        ListDatabaseRolesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::spanner::admin::database::v1::DatabaseRole>>();
 }
 
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  DatabaseAdminPolicyOptionList>(options,
                                                                 __func__);
   options =
@@ -166,25 +184,5 @@ std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace spanner_admin_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<spanner_admin::DatabaseAdminConnection>
-MakeDatabaseAdminConnection(std::shared_ptr<DatabaseAdminStub> stub,
-                            Options options) {
-  options = DatabaseAdminDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<spanner_admin_internal::DatabaseAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
-}  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google

@@ -20,6 +20,7 @@ source "$(dirname "$0")/../../../lib/init.sh"
 source module ci/lib/io.sh
 source module ci/etc/integration-tests-config.sh
 source module ci/etc/quickstart-config.sh
+source module ci/kokoro/lib/vcpkg.sh
 
 io::log_h2 "Using CMake version"
 cmake --version
@@ -28,19 +29,20 @@ io::log_h2 "Update or install dependencies"
 # vcpkg needs this
 brew list --versions pkg-config || brew install pkg-config
 
-# Fetch vcpkg at the specified hash.
-vcpkg_dir="${HOME}/vcpkg-quickstart"
-mkdir -p "${vcpkg_dir}"
-io::log "Downloading vcpkg into ${vcpkg_dir}..."
-VCPKG_COMMIT="$(<ci/etc/vcpkg-commit.txt)"
-ci/retry-command.sh 3 120 curl -sSL "https://github.com/microsoft/vcpkg/archive/${VCPKG_COMMIT}.tar.gz" |
-  tar -C "${vcpkg_dir}" --strip-components=1 -zxf -
+# Fetch vcpkg at the specified hash, download to the tmpfs directory when
+# running on Kokoro.
+if [[ -z "${KOKORO_ARTIFACTS_DIR:-}" ]]; then
+  vcpkg_dir="${HOME}/vcpkg-quickstart"
+else
+  vcpkg_dir="${KOKORO_ARTIFACTS_DIR}/vcpkg-quickstart"
+fi
+install_vcpkg "${vcpkg_dir}"
+
+# The downloads can fail, therefore require a retry loop.
 (
   cd "${vcpkg_dir}"
-  env VCPKG_ROOT="${vcpkg_dir}" CC="ccache cc" CXX="ccache c++" \
-    "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 ./bootstrap-vcpkg.sh
-  ./vcpkg remove --outdated --recurse
-  ./vcpkg install google-cloud-cpp
+  "${PROJECT_ROOT}/ci/retry-command.sh" 3 120 \
+    "${vcpkg_dir}/vcpkg" "--feature-flags=-manifests" install google-cloud-cpp
 )
 
 export NINJA_STATUS="T+%es [%f/%t] "
@@ -59,12 +61,18 @@ build_quickstart() {
 
   io::log_h2 "Configure CMake for ${library}'s quickstart"
   "${cmake}" "-GNinja" "-DCMAKE_MAKE_PROGRAM=${ninja}" \
-    "-H${source_dir}" "-B${binary_dir}" "${cmake_flags[@]}"
+    -S "${source_dir}" -B "${binary_dir}" "${cmake_flags[@]}"
 
   echo
   io::log_h2 "Compiling ${library}'s quickstart"
   "${cmake}" --build "${binary_dir}"
 }
+
+io::log_h2 "Fetch vcpkg tools"
+ci/retry-command.sh 3 120 \
+  "${vcpkg_dir}/vcpkg" "--feature-flags=-manifests" fetch cmake
+ci/retry-command.sh 3 120 \
+  "${vcpkg_dir}/vcpkg" "--feature-flags=-manifests" fetch ninja
 
 errors=""
 for library in $(quickstart::libraries); do

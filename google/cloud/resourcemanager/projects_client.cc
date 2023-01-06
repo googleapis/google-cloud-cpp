@@ -17,7 +17,6 @@
 // source: google/cloud/resourcemanager/v3/projects.proto
 
 #include "google/cloud/resourcemanager/projects_client.h"
-#include "google/cloud/resourcemanager/internal/projects_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProjectsClient::ProjectsClient(std::shared_ptr<ProjectsConnection> connection,
                                Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), resourcemanager_internal::ProjectsDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ProjectsClient::~ProjectsClient() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Project>

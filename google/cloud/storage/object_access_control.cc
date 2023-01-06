@@ -22,10 +22,19 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 bool operator==(ObjectAccessControl const& lhs,
                 ObjectAccessControl const& rhs) {
-  // Start with id, generation, object, bucket, etag because they should fail
-  // early, then alphabetical for readability.
-  return lhs.object_ == rhs.object_ && lhs.generation_ == rhs.generation_ &&
-         *static_cast<internal::AccessControlCommon const*>(&lhs) == rhs;
+  return lhs.bucket_ == rhs.bucket_                 //
+         && lhs.object_ == rhs.object_              //
+         && lhs.generation_ == rhs.generation_      //
+         && lhs.domain_ == rhs.domain_              //
+         && lhs.email_ == rhs.email_                //
+         && lhs.entity_ == rhs.entity_              //
+         && lhs.entity_id_ == rhs.entity_id_        //
+         && lhs.etag_ == rhs.etag_                  //
+         && lhs.id_ == rhs.id_                      //
+         && lhs.kind_ == rhs.kind_                  //
+         && lhs.project_team_ == rhs.project_team_  //
+         && lhs.role_ == rhs.role_                  //
+         && lhs.self_link_ == rhs.self_link_;
 }
 
 std::ostream& operator<<(std::ostream& os, ObjectAccessControl const& rhs) {

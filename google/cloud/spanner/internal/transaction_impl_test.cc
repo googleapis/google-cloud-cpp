@@ -76,13 +76,14 @@ class Client {
     auto read = [this, &table, &keys, &columns](
                     SessionHolder& session,
                     StatusOr<TransactionSelector>& selector,
-                    std::string const& tag, std::int64_t seqno) {
-      return this->Read(session, selector, tag, seqno, table, keys, columns);
+                    TransactionContext const& ctx) {
+      return this->Read(session, selector, ctx.tag, ctx.seqno, table, keys,
+                        columns);
     };
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
 #endif
-      return spanner_internal::Visit(std::move(txn), std::move(read));
+      return Visit(std::move(txn), std::move(read));
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     } catch (char const*) {
       return {};
@@ -156,7 +157,7 @@ ResultSet Client::Read(SessionHolder& session,
     switch (mode_) {
       case Mode::kReadSucceeds:
         // `begin` -> `id`, calls now parallelized
-        session = spanner_internal::MakeDissociatedSessionHolder(session_id_);
+        session = MakeDissociatedSessionHolder(session_id_);
         selector->set_id(txn_id_);
         break;
       case Mode::kReadFailsAndTxnRemainsBegin:

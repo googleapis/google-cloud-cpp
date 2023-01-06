@@ -23,6 +23,7 @@
 #include "google/cloud/datacatalog/internal/data_catalog_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataCatalogConnection::~DataCatalogConnection() = default;
 
 StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>
-    DataCatalogConnection::SearchCatalog(
-        google::cloud::datacatalog::v1::
-            SearchCatalogRequest) {  // NOLINT(performance-unnecessary-value-param)
+DataCatalogConnection::SearchCatalog(
+    google::cloud::datacatalog::v1::
+        SearchCatalogRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::SearchCatalogResult>>();
 }
@@ -66,9 +67,9 @@ Status DataCatalogConnection::DeleteEntryGroup(
 }
 
 StreamRange<google::cloud::datacatalog::v1::EntryGroup>
-    DataCatalogConnection::ListEntryGroups(
-        google::cloud::datacatalog::v1::
-            ListEntryGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DataCatalogConnection::ListEntryGroups(
+    google::cloud::datacatalog::v1::
+        ListEntryGroupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::EntryGroup>>();
 }
@@ -102,11 +103,23 @@ DataCatalogConnection::LookupEntry(
 }
 
 StreamRange<google::cloud::datacatalog::v1::Entry>
-    DataCatalogConnection::ListEntries(
-        google::cloud::datacatalog::v1::
-            ListEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+DataCatalogConnection::ListEntries(
+    google::cloud::datacatalog::v1::
+        ListEntriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Entry>>();
+}
+
+StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+DataCatalogConnection::ModifyEntryOverview(
+    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::datacatalog::v1::Contacts>
+DataCatalogConnection::ModifyEntryContacts(
+    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
@@ -178,11 +191,23 @@ Status DataCatalogConnection::DeleteTag(
 }
 
 StreamRange<google::cloud::datacatalog::v1::Tag>
-    DataCatalogConnection::ListTags(
-        google::cloud::datacatalog::v1::
-            ListTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
+DataCatalogConnection::ListTags(
+    google::cloud::datacatalog::v1::
+        ListTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Tag>>();
+}
+
+StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+DataCatalogConnection::StarEntry(
+    google::cloud::datacatalog::v1::StarEntryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+DataCatalogConnection::UnstarEntry(
+    google::cloud::datacatalog::v1::UnstarEntryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogConnection::SetIamPolicy(
@@ -204,6 +229,7 @@ DataCatalogConnection::TestIamPermissions(
 std::shared_ptr<DataCatalogConnection> MakeDataCatalogConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  DataCatalogPolicyOptionList>(options,
                                                               __func__);
   options = datacatalog_internal::DataCatalogDefaultOptions(std::move(options));
@@ -216,23 +242,5 @@ std::shared_ptr<DataCatalogConnection> MakeDataCatalogConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace datacatalog_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<datacatalog::DataCatalogConnection> MakeDataCatalogConnection(
-    std::shared_ptr<DataCatalogStub> stub, Options options) {
-  options = DataCatalogDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<datacatalog_internal::DataCatalogConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datacatalog_internal
 }  // namespace cloud
 }  // namespace google

@@ -23,6 +23,7 @@
 #include "google/cloud/datacatalog/policy_tag_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -52,9 +53,9 @@ PolicyTagManagerConnection::UpdateTaxonomy(
 }
 
 StreamRange<google::cloud::datacatalog::v1::Taxonomy>
-    PolicyTagManagerConnection::ListTaxonomies(
-        google::cloud::datacatalog::v1::
-            ListTaxonomiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+PolicyTagManagerConnection::ListTaxonomies(
+    google::cloud::datacatalog::v1::
+        ListTaxonomiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::Taxonomy>>();
 }
@@ -83,9 +84,9 @@ PolicyTagManagerConnection::UpdatePolicyTag(
 }
 
 StreamRange<google::cloud::datacatalog::v1::PolicyTag>
-    PolicyTagManagerConnection::ListPolicyTags(
-        google::cloud::datacatalog::v1::
-            ListPolicyTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
+PolicyTagManagerConnection::ListPolicyTags(
+    google::cloud::datacatalog::v1::
+        ListPolicyTagsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::datacatalog::v1::PolicyTag>>();
 }
@@ -115,6 +116,7 @@ PolicyTagManagerConnection::TestIamPermissions(
 std::shared_ptr<PolicyTagManagerConnection> MakePolicyTagManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PolicyTagManagerPolicyOptionList>(options,
                                                                    __func__);
   options =
@@ -128,24 +130,5 @@ std::shared_ptr<PolicyTagManagerConnection> MakePolicyTagManagerConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace datacatalog_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<datacatalog::PolicyTagManagerConnection>
-MakePolicyTagManagerConnection(std::shared_ptr<PolicyTagManagerStub> stub,
-                               Options options) {
-  options = PolicyTagManagerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<datacatalog_internal::PolicyTagManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datacatalog_internal
 }  // namespace cloud
 }  // namespace google

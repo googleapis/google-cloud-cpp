@@ -13,7 +13,6 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/logging_client.h"
-#include "google/cloud/storage/internal/logging_resumable_upload_session.h"
 #include "google/cloud/storage/internal/raw_client_wrapper_utils.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
@@ -39,7 +38,7 @@ using ::google::cloud::storage::internal::raw_client_wrapper_utils::Signature;
  * @return the result from making the call;
  */
 template <typename MemberFunction>
-static typename Signature<MemberFunction>::ReturnType MakeCall(
+typename Signature<MemberFunction>::ReturnType MakeCall(
     RawClient& client, MemberFunction function,
     typename Signature<MemberFunction>::RequestType const& request,
     char const* context) {
@@ -67,7 +66,7 @@ static typename Signature<MemberFunction>::ReturnType MakeCall(
  * @return the result from making the call;
  */
 template <typename MemberFunction>
-static typename Signature<MemberFunction>::ReturnType MakeCallNoResponseLogging(
+typename Signature<MemberFunction>::ReturnType MakeCallNoResponseLogging(
     google::cloud::storage::internal::RawClient& client,
     MemberFunction function,
     typename Signature<MemberFunction>::RequestType const& request,
@@ -83,6 +82,8 @@ LoggingClient::LoggingClient(std::shared_ptr<RawClient> client)
 ClientOptions const& LoggingClient::client_options() const {
   return client_->client_options();
 }
+
+Options LoggingClient::options() const { return client_->options(); }
 
 StatusOr<ListBucketsResponse> LoggingClient::ListBuckets(
     ListBucketsRequest const& request) {
@@ -114,20 +115,10 @@ StatusOr<BucketMetadata> LoggingClient::PatchBucket(
   return MakeCall(*client_, &RawClient::PatchBucket, request, __func__);
 }
 
-StatusOr<IamPolicy> LoggingClient::GetBucketIamPolicy(
-    GetBucketIamPolicyRequest const& request) {
-  return MakeCall(*client_, &RawClient::GetBucketIamPolicy, request, __func__);
-}
-
 StatusOr<NativeIamPolicy> LoggingClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
   return MakeCall(*client_, &RawClient::GetNativeBucketIamPolicy, request,
                   __func__);
-}
-
-StatusOr<IamPolicy> LoggingClient::SetBucketIamPolicy(
-    SetBucketIamPolicyRequest const& request) {
-  return MakeCall(*client_, &RawClient::SetBucketIamPolicy, request, __func__);
 }
 
 StatusOr<NativeIamPolicy> LoggingClient::SetNativeBucketIamPolicy(
@@ -200,22 +191,27 @@ StatusOr<RewriteObjectResponse> LoggingClient::RewriteObject(
   return MakeCall(*client_, &RawClient::RewriteObject, request, __func__);
 }
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-LoggingClient::CreateResumableSession(ResumableUploadRequest const& request) {
-  auto result = MakeCallNoResponseLogging(
-      *client_, &RawClient::CreateResumableSession, request, __func__);
-  if (!result.ok()) {
-    GCP_LOG(INFO) << __func__ << "() >> status={" << result.status() << "}";
-    return std::move(result).status();
-  }
-  return std::unique_ptr<ResumableUploadSession>(
-      absl::make_unique<LoggingResumableUploadSession>(*std::move(result)));
+StatusOr<CreateResumableUploadResponse> LoggingClient::CreateResumableUpload(
+    ResumableUploadRequest const& request) {
+  return MakeCall(*client_, &RawClient::CreateResumableUpload, request,
+                  __func__);
+}
+
+StatusOr<QueryResumableUploadResponse> LoggingClient::QueryResumableUpload(
+    QueryResumableUploadRequest const& request) {
+  return MakeCall(*client_, &RawClient::QueryResumableUpload, request,
+                  __func__);
 }
 
 StatusOr<EmptyResponse> LoggingClient::DeleteResumableUpload(
     DeleteResumableUploadRequest const& request) {
   return MakeCall(*client_, &RawClient::DeleteResumableUpload, request,
                   __func__);
+}
+
+StatusOr<QueryResumableUploadResponse> LoggingClient::UploadChunk(
+    UploadChunkRequest const& request) {
+  return MakeCall(*client_, &RawClient::UploadChunk, request, __func__);
 }
 
 StatusOr<ListBucketAclResponse> LoggingClient::ListBucketAcl(

@@ -23,6 +23,7 @@
 #include "google/cloud/servicemanagement/service_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceManagerConnection::~ServiceManagerConnection() = default;
 
 StreamRange<google::api::servicemanagement::v1::ManagedService>
-    ServiceManagerConnection::ListServices(
-        google::api::servicemanagement::v1::
-            ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ServiceManagerConnection::ListServices(
+    google::api::servicemanagement::v1::
+        ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::servicemanagement::v1::ManagedService>>();
 }
@@ -98,9 +99,9 @@ ServiceManagerConnection::SubmitConfigSource(
 }
 
 StreamRange<google::api::servicemanagement::v1::Rollout>
-    ServiceManagerConnection::ListServiceRollouts(
-        google::api::servicemanagement::v1::
-            ListServiceRolloutsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ServiceManagerConnection::ListServiceRollouts(
+    google::api::servicemanagement::v1::
+        ListServiceRolloutsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::api::servicemanagement::v1::Rollout>>();
 }
@@ -125,25 +126,10 @@ ServiceManagerConnection::GenerateConfigReport(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-future<StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>
-ServiceManagerConnection::EnableService(
-    google::api::servicemanagement::v1::EnableServiceRequest const&) {
-  return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
-}
-
-future<StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>
-ServiceManagerConnection::DisableService(
-    google::api::servicemanagement::v1::DisableServiceRequest const&) {
-  return google::cloud::make_ready_future<
-      StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>(
-      Status(StatusCode::kUnimplemented, "not implemented"));
-}
-
 std::shared_ptr<ServiceManagerConnection> MakeServiceManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ServiceManagerPolicyOptionList>(options,
                                                                  __func__);
   options = servicemanagement_internal::ServiceManagerDefaultOptions(
@@ -158,25 +144,5 @@ std::shared_ptr<ServiceManagerConnection> MakeServiceManagerConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace servicemanagement_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<servicemanagement::ServiceManagerConnection>
-MakeServiceManagerConnection(std::shared_ptr<ServiceManagerStub> stub,
-                             Options options) {
-  options = ServiceManagerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      servicemanagement_internal::ServiceManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace servicemanagement_internal
 }  // namespace cloud
 }  // namespace google

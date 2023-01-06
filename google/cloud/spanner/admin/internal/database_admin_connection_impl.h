@@ -93,6 +93,10 @@ class DatabaseAdminConnectionImpl
       google::spanner::admin::database::v1::CreateBackupRequest const& request)
       override;
 
+  future<StatusOr<google::spanner::admin::database::v1::Backup>> CopyBackup(
+      google::spanner::admin::database::v1::CopyBackupRequest const& request)
+      override;
+
   StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const& request)
       override;
@@ -120,6 +124,11 @@ class DatabaseAdminConnectionImpl
 
   StreamRange<google::longrunning::Operation> ListBackupOperations(
       google::spanner::admin::database::v1::ListBackupOperationsRequest request)
+      override;
+
+  StreamRange<google::spanner::admin::database::v1::DatabaseRole>
+  ListDatabaseRoles(
+      google::spanner::admin::database::v1::ListDatabaseRolesRequest request)
       override;
 
  private:

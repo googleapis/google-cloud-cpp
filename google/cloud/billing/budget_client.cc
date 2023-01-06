@@ -17,7 +17,6 @@
 // source: google/cloud/billing/budgets/v1/budget_service.proto
 
 #include "google/cloud/billing/budget_client.h"
-#include "google/cloud/billing/internal/budget_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BudgetServiceClient::BudgetServiceClient(
     std::shared_ptr<BudgetServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), billing_internal::BudgetServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 BudgetServiceClient::~BudgetServiceClient() = default;
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>

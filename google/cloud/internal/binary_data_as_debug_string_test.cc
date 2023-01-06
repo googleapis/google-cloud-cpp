@@ -22,47 +22,20 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
 TEST(BinaryDataAsDebugStringTest, Simple) {
-  auto actual = BinaryDataAsDebugString("123abc", 6);
-  EXPECT_EQ(
-      "123abc                   "
-      "313233616263                                    \n",
-      actual);
-}
-
-TEST(BinaryDataAsDebugStringTest, Multiline) {
-  auto actual =
-      BinaryDataAsDebugString(" 123456789 123456789 123456789 123456789", 40);
-  EXPECT_EQ(
-      " 123456789 123456789 123 "
-      "203132333435363738392031323334353637383920313233\n"
-      "456789 123456789         "
-      "34353637383920313233343536373839                \n",
-      actual);
-}
-
-TEST(BinaryDataAsDebugStringTest, Blanks) {
-  auto actual = BinaryDataAsDebugString("\n \r \t \v \b \a \f ", 14);
-  EXPECT_EQ(
-      ". . . . . . .            "
-      "0a200d2009200b20082007200c20                    \n",
-      actual);
-}
-
-TEST(BinaryDataAsDebugStringTest, NonPrintable) {
-  auto actual = BinaryDataAsDebugString("\x03\xf1 abcd", 7);
-  EXPECT_EQ(
-      ".. abcd                  "
-      "03f12061626364                                  \n",
-      actual);
-}
-
-TEST(BinaryDataAsDebugStringTest, Limit) {
-  auto actual = BinaryDataAsDebugString(
-      " 123456789 123456789 123456789 123456789", 40, 24);
-  EXPECT_EQ(
-      " 123456789 123456789 123 "
-      "203132333435363738392031323334353637383920313233\n",
-      actual);
+  struct TestCase {
+    std::string input;
+    std::size_t max;
+    std::string expected;
+  } cases[] = {
+      {"123abc", 0, "123abc"},
+      {"234abc", 3, "234...<truncated>..."},
+      {"3\n4\n5abc", 0, "3.4.5abc"},
+      {"3\n4\n5a\n\n\nbc", 5, "3.4.5...<truncated>..."},
+  };
+  for (auto const& t : cases) {
+    EXPECT_EQ(t.expected,
+              BinaryDataAsDebugString(t.input.data(), t.input.size(), t.max));
+  }
 }
 
 }  // namespace

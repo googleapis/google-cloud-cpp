@@ -22,6 +22,7 @@
 namespace google {
 namespace cloud {
 namespace storage_benchmarks {
+struct ThroughputOptions;
 
 /// The operation used for the experiment
 enum OpType {
@@ -57,24 +58,29 @@ enum OpType {
  * etc.) as well as its results: status, CPU time, and elapsed time.
  */
 struct ThroughputResult {
+  /// The start time for this result.
+  std::chrono::system_clock::time_point start;
+  /// The library used in this experiment
+  ExperimentLibrary library;
+  /// The transport used in this experiment
+  ExperimentTransport transport;
   /// The type of operation in this experiment.
   OpType op;
   /// The total size of the object involved in this experiment. Currently also
   /// represents the number of bytes transferred.
   std::int64_t object_size;
+  /// The beginning offset of the transfer. Only meaningful for downloads as it
+  /// it is always 0 for uploads
+  std::int64_t transfer_offset;
   /// The size of the transfer. For uploads this is always equal to the object
   /// size. For downloads this can be smaller than the object size.
   std::int64_t transfer_size;
   /// The size of the application buffer (for .read() or .write() calls).
   std::size_t app_buffer_size;
-  /// The size of the library buffers (if any).
-  std::size_t lib_buffer_size;
   /// True if the CRC32C checksums are enabled in this experiment.
   bool crc_enabled;
   /// True if the MD5 hashes are enabled in this experiment.
   bool md5_enabled;
-  /// The API, protocol, or library used in this experiment.
-  ApiName api;
   /// The total time used to complete the experiment.
   std::chrono::microseconds elapsed_time;
   /// The amount of CPU time (as reported by getrusage(2)) consumed in the
@@ -83,10 +89,23 @@ struct ThroughputResult {
   /// The result of the operation. The analysis may need to discard failed
   /// uploads or downloads.
   google::cloud::Status status;
+  /// The peer used during the transfer
+  std::string peer;
+  /// The bucket name
+  std::string bucket_name;
+  /// The object name
+  std::string object_name;
+  /// The object generation
+  std::string generation;
+  /// The upload id
+  std::string upload_id;
+  /// Retry Count
+  std::string retry_count;
 };
 
 /// Print @p r as a CSV line.
-void PrintAsCsv(std::ostream& os, ThroughputResult const& r);
+void PrintAsCsv(std::ostream& os, ThroughputOptions const& options,
+                ThroughputResult const& r);
 
 /// Print the field names produced by `PrintAsCsv()`
 void PrintThroughputResultHeader(std::ostream& os);

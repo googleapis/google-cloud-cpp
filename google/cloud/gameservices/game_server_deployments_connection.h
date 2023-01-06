@@ -49,6 +49,21 @@ using GameServerDeploymentsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         gameservices_internal::GameServerDeploymentsServiceRetryTraits>;
 
+/**
+ * The `GameServerDeploymentsServiceConnection` object for
+ * `GameServerDeploymentsServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `GameServerDeploymentsServiceClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `GameServerDeploymentsServiceClient`.
+ *
+ * To create a concrete instance, see
+ * `MakeGameServerDeploymentsServiceConnection()`.
+ *
+ * For mocking, see
+ * `gameservices_mocks::MockGameServerDeploymentsServiceConnection`.
+ */
 class GameServerDeploymentsServiceConnection {
  public:
   virtual ~GameServerDeploymentsServiceConnection() = 0;
@@ -99,25 +114,34 @@ class GameServerDeploymentsServiceConnection {
       google::cloud::gaming::v1::FetchDeploymentStateRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `GameServerDeploymentsServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * GameServerDeploymentsServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `GameServerDeploymentsServiceConnection`. Expected options are any
+ * of the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::gameservices::GameServerDeploymentsServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the
+ * `GameServerDeploymentsServiceConnection` created by this function.
+ */
 std::shared_ptr<GameServerDeploymentsServiceConnection>
 MakeGameServerDeploymentsServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace gameservices_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<gameservices::GameServerDeploymentsServiceConnection>
-MakeGameServerDeploymentsServiceConnection(
-    std::shared_ptr<GameServerDeploymentsServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gameservices_internal
 }  // namespace cloud
 }  // namespace google
 

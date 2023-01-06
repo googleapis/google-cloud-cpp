@@ -15,6 +15,7 @@
 #include "google/cloud/storage/parallel_upload.h"
 #include "absl/memory/memory.h"
 #include <nlohmann/json.hpp>
+#include <algorithm>
 #include <sstream>
 
 namespace google {
@@ -27,11 +28,12 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
  public:
   ParallelObjectWriteStreambuf(
       std::shared_ptr<ParallelUploadStateImpl> state, std::size_t stream_idx,
-      std::unique_ptr<ResumableUploadSession> upload_session,
-      std::size_t max_buffer_size, ResumableUploadRequest const& request)
+      std::shared_ptr<RawClient> client, ResumableUploadRequest const& request,
+      std::string upload_id, std::uint64_t committed_size,
+      absl::optional<ObjectMetadata> metadata, std::size_t max_buffer_size)
       : ObjectWriteStreambuf(
-            std::move(upload_session), max_buffer_size,
-            CreateHashFunction(request),
+            std::move(client), request, std::move(upload_id), committed_size,
+            std::move(metadata), max_buffer_size, CreateHashFunction(request),
             internal::HashValues{
                 request.GetOption<Crc32cChecksumValue>().value_or(""),
                 request.GetOption<MD5HashValue>().value_or(""),
@@ -44,7 +46,7 @@ class ParallelObjectWriteStreambuf : public ObjectWriteStreambuf {
     state_->StreamDestroyed(stream_idx_);
   }
 
-  StatusOr<ResumableUploadResponse> Close() override {
+  StatusOr<QueryResumableUploadResponse> Close() override {
     auto res = this->ObjectWriteStreambuf::Close();
     state_->StreamFinished(stream_idx_, res);
     return res;
@@ -62,9 +64,7 @@ ParallelUploadStateImpl::ParallelUploadStateImpl(
     : deleter_(std::move(deleter)),
       composer_(std::move(composer)),
       destination_object_name_(std::move(destination_object_name)),
-      expected_generation_(expected_generation),
-      finished_{},
-      num_unfinished_streams_{} {
+      expected_generation_(expected_generation) {
   if (!cleanup_on_failures) {
     deleter_->Enable(false);
   }
@@ -75,24 +75,30 @@ ParallelUploadStateImpl::~ParallelUploadStateImpl() {
 }
 
 StatusOr<ObjectWriteStream> ParallelUploadStateImpl::CreateStream(
-    RawClient& raw_client, ResumableUploadRequest const& request) {
-  auto session = raw_client.CreateResumableSession(request);
+    std::shared_ptr<RawClient> raw_client,
+    ResumableUploadRequest const& request) {
+  // Normally this is done by `storage::Client`, but here we are bypassing it:
+  google::cloud::internal::OptionsSpan const span(raw_client->options());
+  auto create = internal::CreateOrResume(*raw_client, request);
+
   std::unique_lock<std::mutex> lk(mu_);
-  if (!session) {
+  if (!create) {
     // Preserve the first error.
-    res_ = session.status();
-    return std::move(session).status();
+    res_ = create.status();
+    return std::move(create).status();
   }
 
   auto idx = streams_.size();
   ++num_unfinished_streams_;
   streams_.emplace_back(
-      StreamInfo{request.object_name(), (*session)->session_id(), {}, false});
+      StreamInfo{request.object_name(), create->upload_id, {}, false});
   assert(idx < streams_.size());
   lk.unlock();
   return ObjectWriteStream(absl::make_unique<ParallelObjectWriteStreambuf>(
-      shared_from_this(), idx, *std::move(session),
-      raw_client.client_options().upload_buffer_size(), request));
+      shared_from_this(), idx, std::move(raw_client), request,
+      std::move(create->upload_id), create->committed_size,
+      std::move(create->metadata),
+      raw_client->client_options().upload_buffer_size()));
 }
 
 std::string ParallelUploadPersistentState::ToString() const {
@@ -232,10 +238,12 @@ ParallelUploadPersistentState ParallelUploadStateImpl::ToPersistentState()
   std::unique_lock<std::mutex> lk(mu_);
 
   std::vector<ParallelUploadPersistentState::Stream> streams;
-  for (auto const& stream : streams_) {
-    streams.emplace_back(ParallelUploadPersistentState::Stream{
-        stream.object_name, stream.resumable_session_id});
-  }
+  streams.reserve(streams_.size());
+  std::transform(streams_.begin(), streams_.end(), std::back_inserter(streams),
+                 [](auto const& s) {
+                   return ParallelUploadPersistentState::Stream{
+                       s.object_name, s.resumable_session_id};
+                 });
 
   return ParallelUploadPersistentState{
       destination_object_name_,
@@ -271,7 +279,8 @@ void ParallelUploadStateImpl::AllStreamsFinished(
 }
 
 void ParallelUploadStateImpl::StreamFinished(
-    std::size_t stream_idx, StatusOr<ResumableUploadResponse> const& response) {
+    std::size_t stream_idx,
+    StatusOr<QueryResumableUploadResponse> const& response) {
   std::unique_lock<std::mutex> lk(mu_);
   assert(stream_idx < streams_.size());
   if (streams_[stream_idx].finished) {
@@ -381,7 +390,8 @@ Status ParallelUploadFileShard::Upload() {
     left_to_upload_ = 0;
     return status;
   };
-  auto const already_uploaded = ostream_.next_expected_byte();
+  auto const already_uploaded =
+      static_cast<std::int64_t>(ostream_.next_expected_byte());
   if (already_uploaded > left_to_upload_) {
     return fail(StatusCode::kInternal, "Corrupted upload state, uploaded " +
                                            std::to_string(already_uploaded) +
@@ -395,17 +405,13 @@ Status ParallelUploadFileShard::Upload() {
     return fail(StatusCode::kNotFound, "cannot open upload file source");
   }
 
-  static_assert(sizeof(std::ifstream::off_type) >= sizeof(std::uintmax_t),
-                "files cannot handle uintmax_t for offsets uploads");
-
-  // TODO(#...) - this cast should not be necessary.
-  istream.seekg(static_cast<std::ifstream::off_type>(offset_in_file_));
+  istream.seekg(offset_in_file_);
   if (!istream.good()) {
     return fail(StatusCode::kInternal, "file changed size during upload?");
   }
   while (left_to_upload_ > 0) {
-    auto const to_copy = static_cast<std::ifstream::off_type>(
-        std::min<std::uintmax_t>(left_to_upload_, upload_buffer_size_));
+    auto const to_copy = static_cast<std::streamsize>(
+        std::min<std::int64_t>(left_to_upload_, upload_buffer_size_));
     istream.read(buf.data(), to_copy);
     if (!istream.good()) {
       return fail(StatusCode::kInternal, "cannot read from file source");

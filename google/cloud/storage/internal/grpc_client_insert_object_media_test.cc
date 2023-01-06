@@ -13,12 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_client.h"
-#include "google/cloud/storage/internal/grpc_resumable_upload_session_url.h"
-#include "google/cloud/storage/internal/hybrid_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/testing/mock_storage_stub.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/testing_util/is_proto_equal.h"
+#include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include <google/protobuf/text_format.h>
@@ -26,16 +25,21 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
+using ::google::cloud::storage::TransferStallTimeoutOption;
+using ::google::cloud::storage::internal::InsertObjectMediaRequest;
 using ::google::cloud::storage::testing::MockInsertStream;
 using ::google::cloud::storage::testing::MockStorageStub;
 using ::google::cloud::testing_util::IsProtoEqual;
+using ::google::cloud::testing_util::MockCompletionQueueImpl;
+using ::google::cloud::testing_util::StatusIs;
 using ::google::protobuf::TextFormat;
 using ::testing::_;
+using ::testing::ByMove;
+using ::testing::HasSubstr;
 using ::testing::Return;
 
 /// @verify that small objects are inserted with a single Write() call.
@@ -71,12 +75,14 @@ TEST(GrpcClientInsertObjectMediaTest, Small) {
   auto mock = std::make_shared<MockStorageStub>();
   EXPECT_CALL(*mock, WriteObject)
       .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
+        ::testing::InSequence sequence;
         auto stream = absl::make_unique<MockInsertStream>();
         EXPECT_CALL(*stream, Write(IsProtoEqual(write_request), _))
             .WillOnce(Return(true));
-        EXPECT_CALL(*stream, Close).WillOnce(Return(make_status_or(response)));
+        EXPECT_CALL(*stream, Close).WillOnce(Return(response));
         return stream;
       });
+
   auto client = GrpcClient::CreateMock(mock);
   auto metadata = client->InsertObjectMedia(
       InsertObjectMediaRequest("test-bucket", "test-object",
@@ -87,9 +93,79 @@ TEST(GrpcClientInsertObjectMediaTest, Small) {
   EXPECT_EQ(metadata->generation(), 12345);
 }
 
+/// @verify that stall timeouts are reported correctly.
+TEST(GrpcClientInsertObjectMediaTest, StallTimeoutWrite) {
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, WriteObject)
+      .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
+        ::testing::InSequence sequence;
+        auto stream = absl::make_unique<MockInsertStream>();
+        EXPECT_CALL(*stream, Cancel).Times(1);
+        EXPECT_CALL(*stream, Write).WillOnce(Return(false));
+        EXPECT_CALL(*stream, Close)
+            .WillOnce(Return(google::storage::v2::WriteObjectResponse{}));
+        return stream;
+      });
+
+  auto const expected = std::chrono::seconds(42);
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer(std::chrono::nanoseconds(expected)))
+      .WillOnce(Return(ByMove(make_ready_future(
+          make_status_or(std::chrono::system_clock::now())))));
+  auto cq = CompletionQueue(mock_cq);
+
+  auto client = GrpcClient::CreateMock(
+      mock, Options{}
+                .set<TransferStallTimeoutOption>(expected)
+                .set<GrpcCompletionQueueOption>(cq));
+  google::cloud::internal::OptionsSpan const span(
+      Options{}.set<TransferStallTimeoutOption>(expected));
+  auto metadata = client->InsertObjectMedia(
+      InsertObjectMediaRequest("test-bucket", "test-object",
+                               "The quick brown fox jumps over the lazy dog"));
+  EXPECT_THAT(metadata,
+              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("Write()")));
+}
+
+/// @verify that stall timeouts are reported correctly.
+TEST(GrpcClientInsertObjectMediaTest, StallTimeoutClose) {
+  auto mock = std::make_shared<MockStorageStub>();
+  EXPECT_CALL(*mock, WriteObject)
+      .WillOnce([&](std::unique_ptr<grpc::ClientContext>) {
+        ::testing::InSequence sequence;
+        auto stream = absl::make_unique<MockInsertStream>();
+        EXPECT_CALL(*stream, Write).WillOnce(Return(false));
+        EXPECT_CALL(*stream, Cancel).Times(1);
+        EXPECT_CALL(*stream, Close)
+            .WillOnce(Return(google::storage::v2::WriteObjectResponse{}));
+        return stream;
+      });
+
+  auto const expected = std::chrono::seconds(42);
+  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
+  EXPECT_CALL(*mock_cq, MakeRelativeTimer(std::chrono::nanoseconds(expected)))
+      .WillOnce(Return(ByMove(
+          make_ready_future(StatusOr<std::chrono::system_clock::time_point>(
+              Status{StatusCode::kCancelled, "test-only"})))))
+      .WillOnce(Return(ByMove(make_ready_future(
+          make_status_or(std::chrono::system_clock::now())))));
+  auto cq = CompletionQueue(mock_cq);
+
+  auto client = GrpcClient::CreateMock(
+      mock, Options{}
+                .set<TransferStallTimeoutOption>(expected)
+                .set<GrpcCompletionQueueOption>(cq));
+  google::cloud::internal::OptionsSpan const span(
+      Options{}.set<TransferStallTimeoutOption>(expected));
+  auto metadata = client->InsertObjectMedia(
+      InsertObjectMediaRequest("test-bucket", "test-object",
+                               "The quick brown fox jumps over the lazy dog"));
+  EXPECT_THAT(metadata,
+              StatusIs(StatusCode::kDeadlineExceeded, HasSubstr("Finish()")));
+}
+
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

@@ -80,6 +80,21 @@ class OsConfigServiceMetadata : public OsConfigServiceStub {
       google::cloud::osconfig::v1::DeletePatchDeploymentRequest const& request)
       override;
 
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> UpdatePatchDeployment(
+      grpc::ClientContext& context,
+      google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request)
+      override;
+
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> PausePatchDeployment(
+      grpc::ClientContext& context,
+      google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request)
+      override;
+
+  StatusOr<google::cloud::osconfig::v1::PatchDeployment> ResumePatchDeployment(
+      grpc::ClientContext& context,
+      google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request)
+      override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

@@ -22,6 +22,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
+#include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -37,9 +38,8 @@ AdminServiceConnectionImpl::AdminServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), pubsublite_internal::AdminServiceDefaultOptions(
-                                  AdminServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      AdminServiceConnection::options())) {}
 
 StatusOr<google::cloud::pubsublite::v1::Topic>
 AdminServiceConnectionImpl::CreateTopic(
@@ -84,7 +84,7 @@ StreamRange<google::cloud::pubsublite::v1::Topic>
 AdminServiceConnectionImpl::ListTopics(
     google::cloud::pubsublite::v1::ListTopicsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -139,7 +139,7 @@ Status AdminServiceConnectionImpl::DeleteTopic(
 StreamRange<std::string> AdminServiceConnectionImpl::ListTopicSubscriptions(
     google::cloud::pubsublite::v1::ListTopicSubscriptionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -197,7 +197,7 @@ StreamRange<google::cloud::pubsublite::v1::Subscription>
 AdminServiceConnectionImpl::ListSubscriptions(
     google::cloud::pubsublite::v1::ListSubscriptionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -257,7 +257,7 @@ Status AdminServiceConnectionImpl::DeleteSubscription(
 future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
 AdminServiceConnectionImpl::SeekSubscription(
     google::cloud::pubsublite::v1::SeekSubscriptionRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::pubsublite::v1::SeekSubscriptionResponse>(
       background_->cq(), request,
@@ -316,7 +316,7 @@ StreamRange<google::cloud::pubsublite::v1::Reservation>
 AdminServiceConnectionImpl::ListReservations(
     google::cloud::pubsublite::v1::ListReservationsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -375,7 +375,7 @@ Status AdminServiceConnectionImpl::DeleteReservation(
 StreamRange<std::string> AdminServiceConnectionImpl::ListReservationTopics(
     google::cloud::pubsublite::v1::ListReservationTopicsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<pubsublite::AdminServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -401,6 +401,21 @@ StreamRange<std::string> AdminServiceConnectionImpl::ListReservationTopics(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+}
+
+future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+AdminServiceConnectionImpl::AsyncGetTopicPartitions(
+    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetTopicPartitions(request), background_->cq(),
+      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::pubsublite::v1::GetTopicPartitionsRequest const&
+                 request) {
+        return stub->AsyncGetTopicPartitions(cq, std::move(context), request);
+      },
+      request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -82,6 +82,9 @@ class MetricServiceConnectionImpl : public monitoring::MetricServiceConnection {
   Status CreateServiceTimeSeries(
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
+  future<Status> AsyncCreateTimeSeries(
+      google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
+
  private:
   std::unique_ptr<monitoring::MetricServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

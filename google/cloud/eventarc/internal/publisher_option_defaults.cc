@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options PublisherDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_PUBLISHER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_PUBLISHER_AUTHORITY",
       "eventarcpublishing.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

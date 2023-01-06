@@ -37,7 +37,7 @@ StatusOr<google::cloud::datacatalog::v1::SearchCatalogResponse>
 DataCatalogMetadata::SearchCatalog(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::SearchCatalogRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->SearchCatalog(context, request);
 }
 
@@ -114,7 +114,7 @@ StatusOr<google::cloud::datacatalog::v1::Entry>
 DataCatalogMetadata::LookupEntry(
     grpc::ClientContext& context,
     google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->LookupEntry(context, request);
 }
 
@@ -124,6 +124,22 @@ DataCatalogMetadata::ListEntries(
     google::cloud::datacatalog::v1::ListEntriesRequest const& request) {
   SetMetadata(context, "parent=" + request.parent());
   return child_->ListEntries(context, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::EntryOverview>
+DataCatalogMetadata::ModifyEntryOverview(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->ModifyEntryOverview(context, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::Contacts>
+DataCatalogMetadata::ModifyEntryContacts(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->ModifyEntryContacts(context, request);
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
@@ -230,6 +246,22 @@ DataCatalogMetadata::ListTags(
   return child_->ListTags(context, request);
 }
 
+StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
+DataCatalogMetadata::StarEntry(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::StarEntryRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->StarEntry(context, request);
+}
+
+StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
+DataCatalogMetadata::UnstarEntry(
+    grpc::ClientContext& context,
+    google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->UnstarEntry(context, request);
+}
+
 StatusOr<google::iam::v1::Policy> DataCatalogMetadata::SetIamPolicy(
     grpc::ClientContext& context,
     google::iam::v1::SetIamPolicyRequest const& request) {
@@ -265,9 +297,8 @@ void DataCatalogMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

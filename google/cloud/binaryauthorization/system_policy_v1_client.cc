@@ -17,7 +17,6 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/system_policy_v1_client.h"
-#include "google/cloud/binaryauthorization/internal/system_policy_v1_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SystemPolicyV1Client::SystemPolicyV1Client(
     std::shared_ptr<SystemPolicyV1Connection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          binaryauthorization_internal::SystemPolicyV1DefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 SystemPolicyV1Client::~SystemPolicyV1Client() = default;
 
 StatusOr<google::cloud::binaryauthorization::v1::Policy>

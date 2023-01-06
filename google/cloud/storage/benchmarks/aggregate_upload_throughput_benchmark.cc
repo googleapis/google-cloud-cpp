@@ -32,11 +32,11 @@ using ::google::cloud::storage_experimental::DefaultGrpcClient;
 using ::google::cloud::testing_util::FormatSize;
 using ::google::cloud::testing_util::Timer;
 namespace gcs = ::google::cloud::storage;
-namespace gcs_experimental = ::google::cloud::storage_experimental;
+namespace gcs_ex = ::google::cloud::storage_experimental;
 namespace gcs_bm = ::google::cloud::storage_benchmarks;
 using gcs_bm::AggregateUploadThroughputOptions;
-using gcs_bm::ApiName;
 using gcs_bm::FormatBandwidthGbPerSecond;
+using gcs_bm::FormatTimestamp;
 
 char const kDescription[] = R"""(A benchmark for aggregated upload throughput.
 
@@ -76,6 +76,10 @@ using Counters = std::map<std::string, std::int64_t>;
 
 struct UploadDetail {
   int iteration;
+  std::chrono::system_clock::time_point start_time;
+  std::string bucket_name;
+  std::string object_name;
+  std::string upload_id;
   std::string peer;
   std::uint64_t bytes_uploaded;
   std::chrono::microseconds elapsed_time;
@@ -107,23 +111,17 @@ class UploadIteration {
 };
 
 gcs::Client MakeClient(AggregateUploadThroughputOptions const& options) {
-  auto client_options =
-      google::cloud::Options{}
-          // Make the upload buffer size small, the library will flush on almost
-          // all `.write()` requests.
-          .set<gcs::UploadBufferSizeOption>(256 * gcs_bm::kKiB)
-          .set<gcs_experimental::HttpVersionOption>(options.rest_http_version);
+  auto opts = google::cloud::Options{options.client_options}
+                  // Make the upload buffer size small, the library will flush
+                  // on almost all `.write()` requests.
+                  .set<gcs::UploadBufferSizeOption>(256 * gcs_bm::kKiB);
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  if (options.api == ApiName::kApiGrpc) {
-    auto channels = options.grpc_channel_count;
-    if (channels == 0) channels = (std::max)(options.thread_count / 4, 4);
-    client_options.set<google::cloud::GrpcNumChannelsOption>(channels)
-        .set<google::cloud::storage_experimental::GrpcPluginOption>(
-            options.grpc_plugin_config);
-    return DefaultGrpcClient(std::move(client_options));
+  if (options.api == "GRPC") {
+    return DefaultGrpcClient(
+        std::move(opts).set<gcs_ex::GrpcPluginOption>("media"));
   }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  return gcs::Client(std::move(client_options));
+  return gcs::Client(std::move(opts));
 }
 
 }  // namespace
@@ -144,13 +142,7 @@ int main(int argc, char* argv[]) {
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
 
-  auto current_time = [] {
-    auto constexpr kFormat = "%E4Y-%m-%dT%H:%M:%E*SZ";
-    auto const t = absl::FromChrono(std::chrono::system_clock::now());
-    return absl::FormatTime(kFormat, t, absl::UTCTimeZone());
-  };
-
-  std::cout << "# Start time: " << current_time()
+  std::cout << "# Start time: " << gcs_bm::CurrentTime()
             << "\n# Labels: " << options->labels
             << "\n# Bucket Name: " << options->bucket_name
             << "\n# Object Prefix: " << options->object_prefix
@@ -163,13 +155,11 @@ int main(int argc, char* argv[]) {
             << FormatSize(options->resumable_upload_chunk_size)
             << "\n# Thread Count: " << options->thread_count
             << "\n# Iterations: " << options->iteration_count
-            << "\n# API: " << gcs_bm::ToString(options->api)
-            << "\n# gRPC Channel Count: " << options->grpc_channel_count
-            << "\n# gRPC Plugin Config: " << options->grpc_plugin_config
-            << "\n# HTTP Version: " << options->rest_http_version
+            << "\n# API: " << options->api
             << "\n# Client Per Thread: " << std::boolalpha
-            << options->client_per_thread << "\n# Build Info: " << notes
-            << std::endl;
+            << options->client_per_thread;
+  gcs_bm::PrintOptions(std::cout, "Client Options", options->client_options);
+  std::cout << "\n# Build Info: " << notes << std::endl;
 
   auto configs = [](AggregateUploadThroughputOptions const& options,
                     gcs::Client const& default_client) {
@@ -185,9 +175,9 @@ int main(int argc, char* argv[]) {
   std::generate(upload_items.begin(), upload_items.end(), [&] {
     auto const object_size = std::uniform_int_distribution<std::uint64_t>(
         options->minimum_object_size, options->maximum_object_size)(generator);
-    return UploadItem{options->object_prefix +
-                          gcs_bm::MakeRandomObjectName(generator).substr(0, 32),
-                      object_size};
+    return UploadItem{
+        options->object_prefix + gcs_bm::MakeRandomObjectName(generator),
+        object_size};
   });
   auto const write_block = [&] {
     std::string block;
@@ -216,10 +206,10 @@ int main(int argc, char* argv[]) {
   // header because sometimes we interrupt the benchmark and these tools
   // require a header even for empty files.
   std::cout
-      << "Iteration,Labels,ObjectCount"
-      << ",ResumableUploadChunkSize,ThreadCount,Api"
-      << ",GrpcChannelCount,GrpcPluginConfig,RestHttpVersion"
-      << ",ClientPerThread,StatusCode,Peer,BytesUploaded,ElapsedMicroseconds"
+      << "Start,Labels,Iteration,ObjectCount,ResumableUploadChunkSize"
+      << ",ThreadCount,Api,ClientPerThread"
+      << ",BucketName,ObjectName,UploadId,Peer,StatusCode"
+      << ",BytesUploaded,ElapsedMicroseconds"
       << ",IterationBytes,IterationElapsedMicroseconds,IterationCpuMicroseconds"
       << std::endl;
 
@@ -248,8 +238,6 @@ int main(int argc, char* argv[]) {
       return v;
     };
     auto const labels = clean_csv_field(options->labels);
-    auto const grpc_plugin_config =
-        clean_csv_field(options->grpc_plugin_config);
     auto const* client_per_thread =
         options->client_per_thread ? "true" : "false";
     // Print the results after each iteration. Makes it possible to interrupt
@@ -258,18 +246,19 @@ int main(int argc, char* argv[]) {
       for (auto const& d : r.details) {
         // Join the iteration details with the per-upload details. That makes
         // it easier to analyze the data in external scripts.
-        std::cout << d.iteration                                  //
+        std::cout << FormatTimestamp(d.start_time)                //
                   << ',' << labels                                //
+                  << ',' << d.iteration                           //
                   << ',' << options->object_count                 //
                   << ',' << options->resumable_upload_chunk_size  //
                   << ',' << options->thread_count                 //
-                  << ',' << ToString(options->api)                //
-                  << ',' << options->grpc_channel_count           //
-                  << ',' << grpc_plugin_config                    //
-                  << ',' << options->rest_http_version            //
+                  << ',' << options->api                          //
                   << ',' << client_per_thread                     //
-                  << ',' << d.status.code()                       //
+                  << ',' << d.bucket_name                         //
+                  << ',' << d.object_name                         //
+                  << ',' << d.upload_id                           //
                   << ',' << d.peer                                //
+                  << ',' << d.status.code()                       //
                   << ',' << d.bytes_uploaded                      //
                   << ',' << d.elapsed_time.count()                //
                   << ',' << uploaded_bytes                        //
@@ -284,7 +273,7 @@ int main(int argc, char* argv[]) {
     // the operator of these benchmarks (coryan@) is an impatient person.
     auto const bandwidth =
         FormatBandwidthGbPerSecond(uploaded_bytes, usage.elapsed_time);
-    std::cout << "# " << current_time() << " uploaded=" << uploaded_bytes
+    std::cout << "# " << gcs_bm::CurrentTime() << " uploaded=" << uploaded_bytes
               << " cpu_time=" << absl::FromChrono(usage.cpu_time)
               << " elapsed_time=" << absl::FromChrono(usage.elapsed_time)
               << " Gbit/s=" << bandwidth << std::endl;
@@ -298,6 +287,22 @@ int main(int argc, char* argv[]) {
 
 namespace {
 
+std::string ExtractPeer(
+    std::multimap<std::string, std::string> const& headers) {
+  auto p = headers.find(":grpc-context-peer");
+  if (p == headers.end()) {
+    p = headers.find(":curl-peer");
+  }
+  return p == headers.end() ? std::string{"[peer-unknown]"} : p->second;
+}
+
+std::string ExtractUploadId(std::string v) {
+  auto constexpr kRestField = "upload_id=";
+  auto const pos = v.find(kRestField);
+  if (pos == std::string::npos) return v;
+  return v.substr(pos + std::strlen(kRestField));
+}
+
 UploadDetail UploadOneObject(gcs::Client& client,
                              AggregateUploadThroughputOptions const& options,
                              UploadItem const& upload,
@@ -307,16 +312,10 @@ UploadDetail UploadOneObject(gcs::Client& client,
   using std::chrono::microseconds;
 
   auto const buffer_size = static_cast<std::streamsize>(write_block.size());
-  // The JSON API returns the object metadata after an insert, while the XML API
-  // does not. If the application explicitly requests "filter out all the
-  // fields" from the response, then both APIs are equivalent and the library
-  // prefers XML in that case. Using gcs::Fields() has no effect.
-  auto xml_hack =
-      options.api == ApiName::kApiJson ? gcs::Fields() : gcs::Fields("");
   auto const object_start = clock::now();
+  auto const start = std::chrono::system_clock::now();
 
-  auto stream =
-      client.WriteObject(options.bucket_name, upload.object_name, xml_hack);
+  auto stream = client.WriteObject(options.bucket_name, upload.object_name);
   auto object_bytes = std::uint64_t{0};
   while (object_bytes < upload.object_size) {
     auto n = std::min(static_cast<std::uint64_t>(buffer_size),
@@ -329,13 +328,16 @@ UploadDetail UploadOneObject(gcs::Client& client,
   if (!stream.metadata().ok()) google::cloud::LogSink::Instance().Flush();
   auto const object_elapsed =
       duration_cast<microseconds>(clock::now() - object_start);
-  auto p = stream.headers().find(":grpc-context-peer");
-  if (p == stream.headers().end()) {
-    p = stream.headers().find(":curl-peer");
-  }
-  auto const& peer =
-      p == stream.headers().end() ? std::string{"unknown"} : p->second;
-  return UploadDetail{iteration, peer, object_bytes, object_elapsed,
+  auto peer = ExtractPeer(stream.headers());
+  auto upload_id = ExtractUploadId(stream.resumable_session_id());
+  return UploadDetail{iteration,
+                      start,
+                      options.bucket_name,
+                      upload.object_name,
+                      std::move(upload_id),
+                      std::move(peer),
+                      object_bytes,
+                      object_elapsed,
                       stream.metadata().status()};
 }
 
@@ -388,8 +390,6 @@ google::cloud::StatusOr<AggregateUploadThroughputOptions> SelfTest(
           "--thread-count=1",
           "--iteration-count=1",
           "--api=JSON",
-          "--grpc-channel-count=1",
-          "--grpc-plugin-config=dp",
       },
       kDescription);
 }
@@ -400,8 +400,13 @@ google::cloud::StatusOr<AggregateUploadThroughputOptions> ParseArgs(
       GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES").value_or("") == "yes";
   if (auto_run) return SelfTest(argv[0]);
 
-  return gcs_bm::ParseAggregateUploadThroughputOptions({argv, argv + argc},
-                                                       kDescription);
+  auto options = gcs_bm::ParseAggregateUploadThroughputOptions(
+      {argv, argv + argc}, kDescription);
+  if (!options) return options;
+  // We don't want to get the default labels in the unit tests, as they can
+  // flake.
+  options->labels = gcs_bm::AddDefaultLabels(std::move(options->labels));
+  return options;
 }
 
 }  // namespace

@@ -23,6 +23,7 @@
 #include "google/cloud/retail/user_event_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -71,6 +72,7 @@ UserEventServiceConnection::RejoinUserEvents(
 std::shared_ptr<UserEventServiceConnection> MakeUserEventServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  UserEventServicePolicyOptionList>(options,
                                                                    __func__);
   options = retail_internal::UserEventServiceDefaultOptions(std::move(options));
@@ -83,24 +85,5 @@ std::shared_ptr<UserEventServiceConnection> MakeUserEventServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace retail_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<retail::UserEventServiceConnection>
-MakeUserEventServiceConnection(std::shared_ptr<UserEventServiceStub> stub,
-                               Options options) {
-  options = UserEventServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<retail_internal::UserEventServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace retail_internal
 }  // namespace cloud
 }  // namespace google

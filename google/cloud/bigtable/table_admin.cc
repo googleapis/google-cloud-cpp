@@ -13,7 +13,8 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table_admin.h"
-#include "google/cloud/bigtable/internal/wait_for_consistency.h"
+#include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
+#include "google/cloud/bigtable/wait_for_consistency.h"
 #include "google/cloud/internal/retry_policy.h"
 #include "google/cloud/internal/time_utils.h"
 #include <google/protobuf/duration.pb.h>
@@ -45,7 +46,7 @@ constexpr TableAdmin::TableView TableAdmin::VIEW_UNSPECIFIED;
 
 StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
                                                  TableConfig config) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   auto request = std::move(config).as_proto();
   request.set_parent(instance_name());
   request.set_table_id(std::move(table_id));
@@ -54,7 +55,7 @@ StatusOr<btadmin::Table> TableAdmin::CreateTable(std::string table_id,
 
 StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
     btadmin::Table::View view) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   std::vector<btadmin::Table> result;
 
   btadmin::ListTablesRequest request;
@@ -70,7 +71,7 @@ StatusOr<std::vector<btadmin::Table>> TableAdmin::ListTables(
 
 StatusOr<btadmin::Table> TableAdmin::GetTable(std::string const& table_id,
                                               btadmin::Table::View view) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::GetTableRequest request;
   request.set_name(TableName(table_id));
   request.set_view(view);
@@ -78,7 +79,7 @@ StatusOr<btadmin::Table> TableAdmin::GetTable(std::string const& table_id,
 }
 
 Status TableAdmin::DeleteTable(std::string const& table_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::DeleteTableRequest request;
   request.set_name(TableName(table_id));
   return connection_->DeleteTable(request);
@@ -98,14 +99,14 @@ btadmin::CreateBackupRequest TableAdmin::CreateBackupParams::AsProto(
 
 StatusOr<btadmin::Backup> TableAdmin::CreateBackup(
     CreateBackupParams const& params) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   auto request = params.AsProto(instance_name());
   return connection_->CreateBackup(request).get();
 }
 
 StatusOr<btadmin::Backup> TableAdmin::GetBackup(std::string const& cluster_id,
                                                 std::string const& backup_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::GetBackupRequest request;
   request.set_name(BackupName(cluster_id, backup_id));
   return connection_->GetBackup(request);
@@ -124,13 +125,13 @@ btadmin::UpdateBackupRequest TableAdmin::UpdateBackupParams::AsProto(
 
 StatusOr<btadmin::Backup> TableAdmin::UpdateBackup(
     UpdateBackupParams const& params) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::UpdateBackupRequest request = params.AsProto(instance_name());
   return connection_->UpdateBackup(request);
 }
 
 Status TableAdmin::DeleteBackup(btadmin::Backup const& backup) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::DeleteBackupRequest request;
   request.set_name(backup.name());
   return connection_->DeleteBackup(request);
@@ -138,7 +139,7 @@ Status TableAdmin::DeleteBackup(btadmin::Backup const& backup) {
 
 Status TableAdmin::DeleteBackup(std::string const& cluster_id,
                                 std::string const& backup_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::DeleteBackupRequest request;
   request.set_name(BackupName(cluster_id, backup_id));
   return connection_->DeleteBackup(request);
@@ -156,7 +157,7 @@ btadmin::ListBackupsRequest TableAdmin::ListBackupsParams::AsProto(
 
 StatusOr<std::vector<btadmin::Backup>> TableAdmin::ListBackups(
     ListBackupsParams const& params) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   std::vector<btadmin::Backup> result;
 
   btadmin::ListBackupsRequest request = params.AsProto(instance_name());
@@ -197,7 +198,7 @@ btadmin::RestoreTableRequest AsProto(
 
 StatusOr<btadmin::Table> TableAdmin::RestoreTable(
     RestoreTableFromInstanceParams params) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   auto request = AsProto(instance_name(), std::move(params));
   return connection_->RestoreTable(request).get();
 }
@@ -205,11 +206,11 @@ StatusOr<btadmin::Table> TableAdmin::RestoreTable(
 StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(
     std::string const& table_id,
     std::vector<ColumnFamilyModification> modifications) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::ModifyColumnFamiliesRequest request;
   request.set_name(TableName(table_id));
   for (auto& m : modifications) {
-    google::cloud::internal::OptionsSpan span(policies_);
+    google::cloud::internal::OptionsSpan span(options_);
     *request.add_modifications() = std::move(m).as_proto();
   }
   return connection_->ModifyColumnFamilies(request);
@@ -217,7 +218,7 @@ StatusOr<btadmin::Table> TableAdmin::ModifyColumnFamilies(
 
 Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
                                     std::string row_key_prefix) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::DropRowRangeRequest request;
   request.set_name(TableName(table_id));
   request.set_row_key_prefix(std::move(row_key_prefix));
@@ -226,9 +227,16 @@ Status TableAdmin::DropRowsByPrefix(std::string const& table_id,
 
 future<StatusOr<Consistency>> TableAdmin::WaitForConsistency(
     std::string const& table_id, std::string const& consistency_token) {
-  return bigtable_admin_internal::AsyncWaitForConsistency(
-             cq_, connection_, TableName(table_id), consistency_token,
-             policies_)
+  // We avoid lifetime issues due to ownership cycles, by holding the
+  // `BackgroundThreads` which run the `CompletionQueue` outside of the
+  // operation, in this class. If the `BackgroundThreads` running the
+  // `CompletionQueue` were instead owned by the Connection, we would have an
+  // ownership cycle. We have made this mistake before. See #7740 for more
+  // details.
+  auto client = bigtable_admin::BigtableTableAdminClient(connection_);
+  return bigtable_admin::AsyncWaitForConsistency(cq_, std::move(client),
+                                                 TableName(table_id),
+                                                 consistency_token, options_)
       .then([](future<Status> f) -> StatusOr<Consistency> {
         auto s = f.get();
         if (!s.ok()) return s;
@@ -237,7 +245,7 @@ future<StatusOr<Consistency>> TableAdmin::WaitForConsistency(
 }
 
 Status TableAdmin::DropAllRows(std::string const& table_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::DropRowRangeRequest request;
   request.set_name(TableName(table_id));
   request.set_delete_all_data_from_table(true);
@@ -246,7 +254,7 @@ Status TableAdmin::DropAllRows(std::string const& table_id) {
 
 StatusOr<std::string> TableAdmin::GenerateConsistencyToken(
     std::string const& table_id) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::GenerateConsistencyTokenRequest request;
   request.set_name(TableName(table_id));
   auto sor = connection_->GenerateConsistencyToken(request);
@@ -256,7 +264,7 @@ StatusOr<std::string> TableAdmin::GenerateConsistencyToken(
 
 StatusOr<Consistency> TableAdmin::CheckConsistency(
     std::string const& table_id, std::string const& consistency_token) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   btadmin::CheckConsistencyRequest request;
   request.set_name(TableName(table_id));
   request.set_consistency_token(consistency_token);
@@ -278,7 +286,7 @@ StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicy(
 
 StatusOr<google::iam::v1::Policy> TableAdmin::GetIamPolicyImpl(
     std::string resource) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   ::google::iam::v1::GetIamPolicyRequest request;
   request.set_resource(std::move(resource));
   return connection_->GetIamPolicy(request);
@@ -297,7 +305,7 @@ StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicy(
 
 StatusOr<google::iam::v1::Policy> TableAdmin::SetIamPolicyImpl(
     std::string resource, google::iam::v1::Policy const& iam_policy) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   ::google::iam::v1::SetIamPolicyRequest request;
   request.set_resource(std::move(resource));
   *request.mutable_policy() = iam_policy;
@@ -317,7 +325,7 @@ StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissions(
 
 StatusOr<std::vector<std::string>> TableAdmin::TestIamPermissionsImpl(
     std::string resource, std::vector<std::string> const& permissions) {
-  google::cloud::internal::OptionsSpan span(policies_);
+  google::cloud::internal::OptionsSpan span(options_);
   ::google::iam::v1::TestIamPermissionsRequest request;
   request.set_resource(std::move(resource));
   for (auto const& permission : permissions) {

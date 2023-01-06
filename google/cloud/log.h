@@ -85,6 +85,7 @@
  */
 
 #include "google/cloud/version.h"
+#include "absl/memory/memory.h"
 #include <atomic>
 #include <chrono>
 #include <cstdlib>
@@ -202,12 +203,12 @@ enum class Severity : int {
   /// The system is unusable.  GCP_LOG(FATAL) will call std::abort().
   GCP_LS_FATAL,  // NOLINT(readability-identifier-naming)
   /// The highest possible severity level.
-  GCP_LS_HIGHEST = int(GCP_LS_FATAL),  // NOLINT(readability-identifier-naming)
+  GCP_LS_HIGHEST = GCP_LS_FATAL,  // NOLINT(readability-identifier-naming)
   /// The lowest possible severity level.
-  GCP_LS_LOWEST = int(GCP_LS_TRACE),  // NOLINT(readability-identifier-naming)
+  GCP_LS_LOWEST = GCP_LS_TRACE,  // NOLINT(readability-identifier-naming)
   /// The lowest level that is enabled at compile-time.
   // NOLINTNEXTLINE(readability-identifier-naming)
-  GCP_LS_LOWEST_ENABLED = int(GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED),
+  GCP_LS_LOWEST_ENABLED = GOOGLE_CLOUD_CPP_LOGGING_MIN_SEVERITY_ENABLED,
 };
 
 /// Streaming operator, writes a human readable representation.
@@ -415,9 +416,7 @@ class Logger {
 
   /// Return the iostream that captures the log message.
   std::ostream& Stream() {
-    if (!stream_) {
-      stream_.reset(new std::ostringstream);
-    }
+    if (!stream_) stream_ = absl::make_unique<std::ostringstream>();
     return *stream_;
   }
 

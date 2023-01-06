@@ -13,89 +13,112 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
-#include "google/cloud/storage/internal/common_metadata_parser.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 
 namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
+
+absl::optional<std::vector<std::string>> ParseStringListCondition(
+    nlohmann::json const& condition, char const* name) {
+  if (!condition.contains(name)) return absl::nullopt;
+  std::vector<std::string> matches;
+  for (auto const& kv : condition[name].items()) {
+    matches.emplace_back(kv.value().get<std::string>());
+  }
+  return matches;
+}
+
+Status ParseIntCondition(absl::optional<std::int32_t>& field,
+                         nlohmann::json const& condition, char const* name) {
+  if (!condition.contains(name)) return Status{};
+  auto value = internal::ParseIntField(condition, name);
+  if (!value) return std::move(value).status();
+  field.emplace(*value);
+  return Status{};
+}
+
+Status ParseBoolCondition(absl::optional<bool>& field,
+                          nlohmann::json const& condition, char const* name) {
+  if (!condition.contains(name)) return Status{};
+  auto value = internal::ParseBoolField(condition, name);
+  if (!value) return std::move(value).status();
+  field.emplace(*value);
+  return Status{};
+}
+
+Status ParseDateCondition(absl::optional<absl::CivilDay>& field,
+                          nlohmann::json const& condition, char const* name) {
+  if (!condition.contains(name)) return Status{};
+  auto const date = condition.value(name, "");
+  absl::CivilDay day;
+  if (!absl::ParseCivilTime(date, &day)) {
+    return Status(StatusCode::kInvalidArgument,
+                  "Cannot parse " + std::string(name) + " with value=<" + date +
+                      "> as a date");
+  }
+  field.emplace(std::move(day));
+  return Status{};
+}
+
+StatusOr<LifecycleRuleAction> ActionFromJson(nlohmann::json const& json) {
+  auto f = json.find("action");
+  if (f == json.end()) return LifecycleRuleAction{};
+  if (!f->is_object()) return Status(StatusCode::kInvalidArgument, __func__);
+
+  LifecycleRuleAction action;
+  action.type = f->value("type", "");
+  action.storage_class = f->value("storageClass", "");
+  return action;
+}
+
+StatusOr<LifecycleRuleCondition> ConditionFromJson(nlohmann::json const& json) {
+  auto f = json.find("condition");
+  if (f == json.end()) return LifecycleRuleCondition{};
+  if (!f->is_object()) return Status(StatusCode::kInvalidArgument, __func__);
+
+  LifecycleRuleCondition result;
+  auto status = ParseIntCondition(result.age, *f, "age");
+  if (!status.ok()) return status;
+  status = ParseDateCondition(result.created_before, *f, "createdBefore");
+  if (!status.ok()) return status;
+  status = ParseBoolCondition(result.is_live, *f, "isLive");
+  if (!status.ok()) return status;
+  result.matches_storage_class =
+      ParseStringListCondition(*f, "matchesStorageClass");
+  status = ParseIntCondition(result.num_newer_versions, *f, "numNewerVersions");
+  if (!status.ok()) return status;
+  status = ParseIntCondition(result.days_since_noncurrent_time, *f,
+                             "daysSinceNoncurrentTime");
+  if (!status.ok()) return status;
+  status = ParseDateCondition(result.noncurrent_time_before, *f,
+                              "noncurrentTimeBefore");
+  if (!status.ok()) return status;
+  status = ParseIntCondition(result.days_since_custom_time, *f,
+                             "daysSinceCustomTime");
+  if (!status.ok()) return status;
+  status =
+      ParseDateCondition(result.custom_time_before, *f, "customTimeBefore");
+  if (!status.ok()) return status;
+  result.matches_prefix = ParseStringListCondition(*f, "matchesPrefix");
+  result.matches_suffix = ParseStringListCondition(*f, "matchesSuffix");
+  return result;
+}
+
+}  // namespace
+
 StatusOr<LifecycleRule> LifecycleRuleParser::FromJson(
     nlohmann::json const& json) {
-  if (!json.is_object()) {
-    return Status(StatusCode::kInvalidArgument, __func__);
-  }
-  LifecycleRule result;
-  if (json.count("action") != 0) {
-    result.action_.type = json["action"].value("type", "");
-    result.action_.storage_class = json["action"].value("storageClass", "");
-  }
-  if (json.count("condition") != 0) {
-    auto condition = json["condition"];
-    if (condition.count("age") != 0) {
-      auto age = internal::ParseIntField(condition, "age");
-      if (!age) return std::move(age).status();
-      result.condition_.age.emplace(*age);
-    }
-    if (condition.count("createdBefore") != 0) {
-      auto const date = condition.value("createdBefore", "");
-      absl::CivilDay day;
-      if (!absl::ParseCivilTime(date, &day)) {
-        return Status(
-            StatusCode::kInvalidArgument,
-            "Cannot parse createdBefore value (" + date + ") as a date");
-      }
-      result.condition_.created_before.emplace(std::move(day));
-    }
-    if (condition.count("isLive") != 0) {
-      auto is_live = internal::ParseBoolField(condition, "isLive");
-      if (!is_live.ok()) return std::move(is_live).status();
-      result.condition_.is_live.emplace(*is_live);
-    }
-    if (condition.count("matchesStorageClass") != 0) {
-      std::vector<std::string> matches;
-      for (auto const& kv : condition["matchesStorageClass"].items()) {
-        matches.emplace_back(kv.value().get<std::string>());
-      }
-      result.condition_.matches_storage_class.emplace(std::move(matches));
-    }
-    if (condition.count("numNewerVersions") != 0) {
-      auto v = internal::ParseIntField(condition, "numNewerVersions");
-      if (!v) return std::move(v).status();
-      result.condition_.num_newer_versions.emplace(*v);
-    }
-    if (condition.count("daysSinceNoncurrentTime") != 0) {
-      auto v = internal::ParseIntField(condition, "daysSinceNoncurrentTime");
-      if (!v) return std::move(v).status();
-      result.condition_.days_since_noncurrent_time.emplace(*v);
-    }
-    if (condition.count("noncurrentTimeBefore") != 0) {
-      auto const date = condition.value("noncurrentTimeBefore", "");
-      absl::CivilDay day;
-      if (!absl::ParseCivilTime(date, &day)) {
-        return Status(
-            StatusCode::kInvalidArgument,
-            "Cannot parse noncurrentTimeBefore value (" + date + ") as a date");
-      }
-      result.condition_.noncurrent_time_before.emplace(std::move(day));
-    }
-    if (condition.count("daysSinceCustomTime") != 0) {
-      auto v = internal::ParseIntField(condition, "daysSinceCustomTime");
-      if (!v) return std::move(v).status();
-      result.condition_.days_since_custom_time.emplace(*v);
-    }
-    if (condition.count("customTimeBefore") != 0) {
-      auto const date = condition.value("customTimeBefore", "");
-      absl::CivilDay day;
-      if (!absl::ParseCivilTime(date, &day)) {
-        return Status(
-            StatusCode::kInvalidArgument,
-            "Cannot parse customTimeBefore value (" + date + ") as a date");
-      }
-      result.condition_.custom_time_before.emplace(std::move(day));
-    }
-  }
-  return result;
+  if (!json.is_object()) return Status(StatusCode::kInvalidArgument, __func__);
+  auto condition = ConditionFromJson(json);
+  if (!condition) return std::move(condition).status();
+  auto action = ActionFromJson(json);
+  if (!action) return std::move(action).status();
+
+  return LifecycleRule(*std::move(condition), *std::move(action));
 }
 
 StatusOr<LifecycleRule> LifecycleRuleParser::FromString(

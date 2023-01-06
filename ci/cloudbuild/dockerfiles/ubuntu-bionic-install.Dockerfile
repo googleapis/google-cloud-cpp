@@ -57,21 +57,20 @@ RUN apt-get update && \
 # image smaller (and with fewer layers)
 
 WORKDIR /var/tmp/build/abseil-cpp
-RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20211102.0.tar.gz | \
+RUN curl -sSL https://github.com/abseil/abseil-cpp/archive/20220623.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     sed -i 's/^#define ABSL_OPTION_USE_\(.*\) 2/#define ABSL_OPTION_USE_\1 0/' "absl/base/options.h" && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
-      -DBUILD_TESTING=OFF \
+      -DABSL_BUILD_TESTING=OFF \
       -DBUILD_SHARED_LIBS=yes \
-      -DCMAKE_CXX_STANDARD=11 \
       -H. -Bcmake-out -GNinja && \
     cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/googletest
-RUN curl -sSL https://github.com/google/googletest/archive/release-1.11.0.tar.gz | \
+RUN curl -sSL https://github.com/google/googletest/archive/release-1.12.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
@@ -83,7 +82,7 @@ RUN curl -sSL https://github.com/google/googletest/archive/release-1.11.0.tar.gz
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/benchmark
-RUN curl -sSL https://github.com/google/benchmark/archive/v1.6.1.tar.gz | \
+RUN curl -sSL https://github.com/google/benchmark/archive/v1.7.0.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE="Release" \
@@ -109,7 +108,7 @@ RUN curl -sSL https://github.com/google/crc32c/archive/1.1.2.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/nlohmann-json
-RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
+RUN curl -sSL https://github.com/nlohmann/json/archive/v3.11.2.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
       -DCMAKE_BUILD_TYPE="Release" \
@@ -122,13 +121,14 @@ RUN curl -sSL https://github.com/nlohmann/json/archive/v3.10.5.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/protobuf
-RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v3.19.4.tar.gz | \
+RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=yes \
         -Dprotobuf_BUILD_TESTS=OFF \
-        -Hcmake -Bcmake-out -GNinja && \
+        -Dprotobuf_ABSL_PROVIDER=package \
+        -H. -Bcmake-out -GNinja && \
     cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
@@ -145,7 +145,7 @@ RUN curl -sSL https://github.com/c-ares/c-ares/archive/refs/tags/cares-1_17_1.ta
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/re2
-RUN curl -sSL https://github.com/google/re2/archive/2020-11-01.tar.gz | \
+RUN curl -sSL https://github.com/google/re2/archive/2022-12-01.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake -DCMAKE_BUILD_TYPE=Release \
         -DBUILD_SHARED_LIBS=ON \
@@ -156,7 +156,7 @@ RUN curl -sSL https://github.com/google/re2/archive/2020-11-01.tar.gz | \
     cd /var/tmp && rm -fr build
 
 WORKDIR /var/tmp/build/grpc
-RUN curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
+RUN curl -sSL https://github.com/grpc/grpc/archive/v1.51.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
@@ -173,6 +173,20 @@ RUN curl -sSL https://github.com/grpc/grpc/archive/v1.44.0.tar.gz | \
     cmake --build cmake-out --target install -- -j ${NCPU} && \
     ldconfig && \
     cd /var/tmp && rm -fr build
+
+WORKDIR /var/tmp/build/
+RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.1.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
+        -DBUILD_SHARED_LIBS=ON \
+        -DWITH_EXAMPLES=OFF \
+        -DWITH_ABSEIL=ON \
+        -DBUILD_TESTING=OFF \
+        -H. -Bcmake-out -GNinja && \
+    cmake --build cmake-out --target install && \
+    ldconfig && cd /var/tmp && rm -fr build
 
 # Install Python packages used in the integration tests.
 RUN update-alternatives --install /usr/bin/python python $(which python3) 10

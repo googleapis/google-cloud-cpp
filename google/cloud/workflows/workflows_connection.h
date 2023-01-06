@@ -48,6 +48,18 @@ using WorkflowsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         workflows_internal::WorkflowsRetryTraits>;
 
+/**
+ * The `WorkflowsConnection` object for `WorkflowsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `WorkflowsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `WorkflowsClient`.
+ *
+ * To create a concrete instance, see `MakeWorkflowsConnection()`.
+ *
+ * For mocking, see `workflows_mocks::MockWorkflowsConnection`.
+ */
 class WorkflowsConnection {
  public:
   virtual ~WorkflowsConnection() = 0;
@@ -73,24 +85,32 @@ class WorkflowsConnection {
       google::cloud::workflows::v1::UpdateWorkflowRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `WorkflowsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of WorkflowsClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `WorkflowsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::workflows::WorkflowsPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `WorkflowsConnection` created by
+ * this function.
+ */
 std::shared_ptr<WorkflowsConnection> MakeWorkflowsConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace workflows_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<workflows::WorkflowsConnection> MakeWorkflowsConnection(
-    std::shared_ptr<WorkflowsStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace workflows_internal
 }  // namespace cloud
 }  // namespace google
 

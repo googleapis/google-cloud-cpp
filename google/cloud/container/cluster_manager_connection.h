@@ -46,6 +46,18 @@ using ClusterManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         container_internal::ClusterManagerRetryTraits>;
 
+/**
+ * The `ClusterManagerConnection` object for `ClusterManagerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ClusterManagerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ClusterManagerClient`.
+ *
+ * To create a concrete instance, see `MakeClusterManagerConnection()`.
+ *
+ * For mocking, see `container_mocks::MockClusterManagerConnection`.
+ */
 class ClusterManagerConnection {
  public:
   virtual ~ClusterManagerConnection() = 0;
@@ -118,6 +130,9 @@ class ClusterManagerConnection {
   virtual StatusOr<google::container::v1::Operation> DeleteNodePool(
       google::container::v1::DeleteNodePoolRequest const& request);
 
+  virtual Status CompleteNodePoolUpgrade(
+      google::container::v1::CompleteNodePoolUpgradeRequest const& request);
+
   virtual StatusOr<google::container::v1::Operation> RollbackNodePoolUpgrade(
       google::container::v1::RollbackNodePoolUpgradeRequest const& request);
 
@@ -150,25 +165,32 @@ class ClusterManagerConnection {
       google::container::v1::ListUsableSubnetworksRequest request);
 };
 
+/**
+ * A factory function to construct an object of type `ClusterManagerConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of ClusterManagerClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `ClusterManagerConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::container::ClusterManagerPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `ClusterManagerConnection` created by
+ * this function.
+ */
 std::shared_ptr<ClusterManagerConnection> MakeClusterManagerConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace container
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace container_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<container::ClusterManagerConnection>
-MakeClusterManagerConnection(std::shared_ptr<ClusterManagerStub> stub,
-                             Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace container_internal
 }  // namespace cloud
 }  // namespace google
 

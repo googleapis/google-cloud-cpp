@@ -17,7 +17,7 @@
 
 #include "google/cloud/status.h"
 #include "generator/internal/printer.h"
-#include "generator/internal/service_code_generator.h"
+#include "generator/internal/stub_generator_base.h"
 #include <google/protobuf/compiler/code_generator.h>
 #include <google/protobuf/descriptor.h>
 #include <map>
@@ -31,7 +31,7 @@ namespace generator_internal {
 /**
  * Generates the Auth decorator for a particular service.
  */
-class AuthDecoratorGenerator : public ServiceCodeGenerator {
+class AuthDecoratorGenerator : public StubGeneratorBase {
  public:
   AuthDecoratorGenerator(
       google::protobuf::ServiceDescriptor const* service_descriptor,

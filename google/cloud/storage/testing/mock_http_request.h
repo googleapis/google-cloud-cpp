@@ -64,7 +64,7 @@ class MockHttpRequestBuilder {
  public:
   explicit MockHttpRequestBuilder(
       // NOLINTNEXTLINE(performance-unnecessary-value-param)
-      std::string url, std::shared_ptr<internal::CurlHandleFactory> h) {
+      std::string url, std::shared_ptr<rest_internal::CurlHandleFactory> h) {
     mock_->Constructor(std::move(url), h->cainfo(), h->capath());
   }
 

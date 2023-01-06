@@ -65,17 +65,17 @@ class ValidationHelperV1Client {
       Options opts = {});
   ~ValidationHelperV1Client();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   ValidationHelperV1Client(ValidationHelperV1Client const&) = default;
   ValidationHelperV1Client& operator=(ValidationHelperV1Client const&) =
       default;
   ValidationHelperV1Client(ValidationHelperV1Client&&) = default;
   ValidationHelperV1Client& operator=(ValidationHelperV1Client&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(ValidationHelperV1Client const& a,
                          ValidationHelperV1Client const& b) {
     return a.connection_ == b.connection_;
@@ -84,7 +84,7 @@ class ValidationHelperV1Client {
                          ValidationHelperV1Client const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns whether the given Attestation for the given image URI

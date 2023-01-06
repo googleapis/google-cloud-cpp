@@ -35,15 +35,14 @@ CloudCatalogConnectionImpl::CloudCatalogConnectionImpl(
     std::shared_ptr<billing_internal::CloudCatalogStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), billing_internal::CloudCatalogDefaultOptions(
-                                  CloudCatalogConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      CloudCatalogConnection::options())) {}
 
 StreamRange<google::cloud::billing::v1::Service>
 CloudCatalogConnectionImpl::ListServices(
     google::cloud::billing::v1::ListServicesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<billing::CloudCatalogRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -76,7 +75,7 @@ StreamRange<google::cloud::billing::v1::Sku>
 CloudCatalogConnectionImpl::ListSkus(
     google::cloud::billing::v1::ListSkusRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<billing::CloudCatalogRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

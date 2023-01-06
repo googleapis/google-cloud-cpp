@@ -32,31 +32,31 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AgentEndpointServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~AgentEndpointServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~AgentEndpointServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency StartNextTask(
       google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ReportTaskProgress(
       google::cloud::osconfig::agentendpoint::v1::
-          ReportTaskProgressRequest const& request) = 0;
+          ReportTaskProgressRequest const& request);
 
   virtual google::cloud::Idempotency ReportTaskComplete(
       google::cloud::osconfig::agentendpoint::v1::
-          ReportTaskCompleteRequest const& request) = 0;
+          ReportTaskCompleteRequest const& request);
 
   virtual google::cloud::Idempotency RegisterAgent(
       google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ReportInventory(
       google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>

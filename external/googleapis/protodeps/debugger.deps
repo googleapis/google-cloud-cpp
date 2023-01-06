@@ -2,4 +2,5 @@
 @com_google_googleapis//google/api:client_proto
 @com_google_googleapis//google/api:field_behavior_proto
 @com_google_googleapis//google/api:http_proto
+@com_google_googleapis//google/api:launch_stage_proto
 @com_google_googleapis//google/devtools/source/v1:source_proto

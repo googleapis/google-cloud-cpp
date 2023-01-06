@@ -32,30 +32,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class DashboardsServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~DashboardsServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~DashboardsServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<DashboardsServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateDashboard(
-      google::monitoring::dashboard::v1::CreateDashboardRequest const&
-          request) = 0;
+      google::monitoring::dashboard::v1::CreateDashboardRequest const& request);
 
   virtual google::cloud::Idempotency ListDashboards(
-      google::monitoring::dashboard::v1::ListDashboardsRequest request) = 0;
+      google::monitoring::dashboard::v1::ListDashboardsRequest request);
 
   virtual google::cloud::Idempotency GetDashboard(
-      google::monitoring::dashboard::v1::GetDashboardRequest const&
-          request) = 0;
+      google::monitoring::dashboard::v1::GetDashboardRequest const& request);
 
   virtual google::cloud::Idempotency DeleteDashboard(
-      google::monitoring::dashboard::v1::DeleteDashboardRequest const&
-          request) = 0;
+      google::monitoring::dashboard::v1::DeleteDashboardRequest const& request);
 
   virtual google::cloud::Idempotency UpdateDashboard(
-      google::monitoring::dashboard::v1::UpdateDashboardRequest const&
-          request) = 0;
+      google::monitoring::dashboard::v1::UpdateDashboardRequest const& request);
 };
 
 std::unique_ptr<DashboardsServiceConnectionIdempotencyPolicy>

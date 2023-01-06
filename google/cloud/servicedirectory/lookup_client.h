@@ -64,16 +64,16 @@ class LookupServiceClient {
       std::shared_ptr<LookupServiceConnection> connection, Options opts = {});
   ~LookupServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   LookupServiceClient(LookupServiceClient const&) = default;
   LookupServiceClient& operator=(LookupServiceClient const&) = default;
   LookupServiceClient(LookupServiceClient&&) = default;
   LookupServiceClient& operator=(LookupServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(LookupServiceClient const& a,
                          LookupServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class LookupServiceClient {
                          LookupServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Returns a [service][google.cloud.servicedirectory.v1.Service] and its

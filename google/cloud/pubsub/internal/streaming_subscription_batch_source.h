@@ -38,28 +38,6 @@ namespace cloud {
 namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * Configuration parameters to batch Ack/Nack responses.
- *
- * To minimize I/O overhead we batch the Ack/Nack responses from the application
- * into larger `Write()` requests. Some test set these numbers to different
- * values, and in the future we may expose them to the application via
- * `Options` from the `pubsub::SubscriberOptionList`. For now they are only
- * available in `pubsub_internal` because it is always easy to add new APIs
- * later vs. removing these any APIs or accessors.
- */
-struct AckBatchingConfig {
-  AckBatchingConfig() = default;
-  AckBatchingConfig(std::size_t s, std::chrono::milliseconds t)
-      : max_batch_size(s), max_hold_time(t) {}
-
-  // The defaults are biased towards high-throughput applications. Note that
-  // the max_hold_time is small enough that it should not make a big difference,
-  // the minimum ack deadline is 10 seconds.
-  std::size_t max_batch_size = 1000;
-  std::chrono::milliseconds max_hold_time{100};
-};
-
 class StreamingSubscriptionBatchSource
     : public SubscriptionBatchSource,
       public std::enable_shared_from_this<StreamingSubscriptionBatchSource> {
@@ -68,33 +46,22 @@ class StreamingSubscriptionBatchSource
       CompletionQueue cq,
       std::shared_ptr<SessionShutdownManager> shutdown_manager,
       std::shared_ptr<SubscriberStub> stub, std::string subscription_full_name,
-      std::string client_id, Options opts,
-      AckBatchingConfig ack_batching_config = {})
-      : cq_(std::move(cq)),
-        shutdown_manager_(std::move(shutdown_manager)),
-        stub_(std::move(stub)),
-        subscription_full_name_(std::move(subscription_full_name)),
-        client_id_(std::move(client_id)),
-        options_(std::move(opts)),
-        max_outstanding_messages_(
-            options_.get<pubsub::MaxOutstandingMessagesOption>()),
-        max_outstanding_bytes_(
-            options_.get<pubsub::MaxOutstandingBytesOption>()),
-        max_deadline_time_(options_.get<pubsub::MaxDeadlineTimeOption>()),
-        ack_batching_config_(std::move(ack_batching_config)) {}
+      std::string client_id, Options opts);
 
   ~StreamingSubscriptionBatchSource() override = default;
 
   void Start(BatchCallback callback) override;
 
   void Shutdown() override;
-  void AckMessage(std::string const& ack_id) override;
-  void NackMessage(std::string const& ack_id) override;
-  void BulkNack(std::vector<std::string> ack_ids) override;
+  future<Status> AckMessage(std::string const& ack_id) override;
+  future<Status> NackMessage(std::string const& ack_id) override;
+  future<Status> BulkNack(std::vector<std::string> ack_ids) override;
   void ExtendLeases(std::vector<std::string> ack_ids,
                     std::chrono::seconds extension) override;
 
-  using AsyncPullStream = SubscriberStub::AsyncPullStream;
+  using AsyncPullStream = google::cloud::AsyncStreamingReadWriteRpc<
+      google::pubsub::v1::StreamingPullRequest,
+      google::pubsub::v1::StreamingPullResponse>;
 
   enum class StreamState {
     kNull,
@@ -102,6 +69,16 @@ class StreamingSubscriptionBatchSource
     kDisconnecting,
     kFinishing,
   };
+
+  // The maximum size for `ModifyAckDeadlineRequest` is 512 KB:
+  //    https://cloud.google.com/pubsub/quotas#resource_limits
+  // Typical ack ids are less than 200 bytes. This value is safe, but there is
+  // no need to over optimize it:
+  // - Google does not charge for these messages
+  // - The value is reached rarely
+  // - The CPU costs saved between 2,048 ids per message vs. the theoretical
+  //   maximum are minimal
+  static int constexpr kMaxAckIdsPerMessage = 2048;
 
  private:
   // C++17 adds weak_from_this(), we cannot use the same name as (1) some
@@ -139,11 +116,8 @@ class StreamingSubscriptionBatchSource
   void ShutdownStream(std::unique_lock<std::mutex> lk, char const* reason);
   void OnFinish(Status status);
 
-  void DrainQueues(std::unique_lock<std::mutex> lk, bool force_flush);
+  void UpdateStreamDeadline();
   void OnWrite(bool ok);
-
-  void StartWriteTimer();
-  void OnWriteTimer(Status const&);
 
   void ChangeState(std::unique_lock<std::mutex> const& lk, StreamState s,
                    char const* where, char const* reason);
@@ -156,8 +130,8 @@ class StreamingSubscriptionBatchSource
   Options options_;
   std::int64_t const max_outstanding_messages_;
   std::int64_t const max_outstanding_bytes_;
+  std::chrono::seconds const min_deadline_time_;
   std::chrono::seconds const max_deadline_time_;
-  AckBatchingConfig const ack_batching_config_;
 
   std::mutex mu_;
   BatchCallback callback_;
@@ -167,11 +141,17 @@ class StreamingSubscriptionBatchSource
   bool pending_read_ = false;
   Status status_;
   std::shared_ptr<AsyncPullStream> stream_;
+  absl::optional<bool> exactly_once_delivery_enabled_;
   std::vector<std::pair<std::string, std::chrono::seconds>> deadlines_queue_;
 };
 
 std::ostream& operator<<(std::ostream& os,
                          StreamingSubscriptionBatchSource::StreamState s);
+
+/// Split @p request such that each request has at most @p max_ack_ids.
+std::vector<google::pubsub::v1::ModifyAckDeadlineRequest>
+SplitModifyAckDeadline(google::pubsub::v1::ModifyAckDeadlineRequest request,
+                       int max_ack_ids);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub_internal

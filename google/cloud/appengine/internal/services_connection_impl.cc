@@ -36,15 +36,14 @@ ServicesConnectionImpl::ServicesConnectionImpl(
     std::shared_ptr<appengine_internal::ServicesStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), appengine_internal::ServicesDefaultOptions(
-                                  ServicesConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ServicesConnection::options())) {}
 
 StreamRange<google::appengine::v1::Service>
 ServicesConnectionImpl::ListServices(
     google::appengine::v1::ListServicesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<appengine::ServicesRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -86,7 +85,7 @@ StatusOr<google::appengine::v1::Service> ServicesConnectionImpl::GetService(
 future<StatusOr<google::appengine::v1::Service>>
 ServicesConnectionImpl::UpdateService(
     google::appengine::v1::UpdateServiceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::Service>(
       background_->cq(), request,
@@ -114,7 +113,7 @@ ServicesConnectionImpl::UpdateService(
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 ServicesConnectionImpl::DeleteService(
     google::appengine::v1::DeleteServiceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::OperationMetadataV1>(
       background_->cq(), request,

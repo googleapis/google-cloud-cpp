@@ -36,9 +36,8 @@ ClusterManagerConnectionImpl::ClusterManagerConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), container_internal::ClusterManagerDefaultOptions(
-                                  ClusterManagerConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ClusterManagerConnection::options())) {}
 
 StatusOr<google::container::v1::ListClustersResponse>
 ClusterManagerConnectionImpl::ListClusters(
@@ -327,6 +326,19 @@ ClusterManagerConnectionImpl::DeleteNodePool(
       request, __func__);
 }
 
+Status ClusterManagerConnectionImpl::CompleteNodePoolUpgrade(
+    google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CompleteNodePoolUpgrade(request),
+      [this](grpc::ClientContext& context,
+             google::container::v1::CompleteNodePoolUpgradeRequest const&
+                 request) {
+        return stub_->CompleteNodePoolUpgrade(context, request);
+      },
+      request, __func__);
+}
+
 StatusOr<google::container::v1::Operation>
 ClusterManagerConnectionImpl::RollbackNodePoolUpgrade(
     google::container::v1::RollbackNodePoolUpgradeRequest const& request) {
@@ -451,7 +463,7 @@ StreamRange<google::container::v1::UsableSubnetwork>
 ClusterManagerConnectionImpl::ListUsableSubnetworks(
     google::container::v1::ListUsableSubnetworksRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<container::ClusterManagerRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

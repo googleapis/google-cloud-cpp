@@ -19,6 +19,7 @@
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <cstdint>
 #include <map>
 
 namespace google {
@@ -62,6 +63,7 @@ enum HttpStatusCode : std::int32_t {
   kRequestRangeNotSatisfiable = 416,
   kTooManyRequests = 429,
 
+  kClientClosedRequest = 499,
   kInternalServerError = 500,
   kBadGateway = 502,
   kServiceUnavailable = 503,
@@ -77,6 +79,15 @@ class RestResponse {
   // invalidating the current RestResponse object.
   virtual std::unique_ptr<HttpPayload> ExtractPayload() && = 0;
 };
+
+/// Convert a HTTP status code to a google::cloud::StatusCode.
+StatusCode MapHttpCodeToStatus(std::int32_t code);
+
+/// Determines if @p response contains a successful result.
+bool IsHttpSuccess(RestResponse const& response);
+
+/// Determines if @p response contains an error.
+bool IsHttpError(RestResponse const& response);
 
 /**
  * Maps a response to a `Status`.

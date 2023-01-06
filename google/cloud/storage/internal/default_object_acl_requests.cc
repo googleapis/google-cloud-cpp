@@ -50,6 +50,11 @@ ListDefaultObjectAclResponse::FromHttpResponse(std::string const& payload) {
   return result;
 }
 
+StatusOr<ListDefaultObjectAclResponse>
+ListDefaultObjectAclResponse::FromHttpResponse(HttpResponse const& response) {
+  return FromHttpResponse(response.payload);
+}
+
 std::ostream& operator<<(std::ostream& os,
                          ListDefaultObjectAclResponse const& r) {
   os << "ListDefaultObjectAclResponse={items={";

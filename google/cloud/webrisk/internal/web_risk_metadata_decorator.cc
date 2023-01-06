@@ -38,7 +38,7 @@ StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
 WebRiskServiceMetadata::ComputeThreatListDiff(
     grpc::ClientContext& context,
     google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ComputeThreatListDiff(context, request);
 }
 
@@ -46,7 +46,7 @@ StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
 WebRiskServiceMetadata::SearchUris(
     grpc::ClientContext& context,
     google::cloud::webrisk::v1::SearchUrisRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->SearchUris(context, request);
 }
 
@@ -54,7 +54,7 @@ StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
 WebRiskServiceMetadata::SearchHashes(
     grpc::ClientContext& context,
     google::cloud::webrisk::v1::SearchHashesRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->SearchHashes(context, request);
 }
 
@@ -79,9 +79,8 @@ void WebRiskServiceMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -23,6 +23,7 @@
 #include "google/cloud/binaryauthorization/validation_helper_v1_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -44,6 +45,7 @@ ValidationHelperV1Connection::ValidateAttestationOccurrence(
 std::shared_ptr<ValidationHelperV1Connection> MakeValidationHelperV1Connection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ValidationHelperV1PolicyOptionList>(options,
                                                                      __func__);
   options = binaryauthorization_internal::ValidationHelperV1DefaultOptions(
@@ -58,25 +60,5 @@ std::shared_ptr<ValidationHelperV1Connection> MakeValidationHelperV1Connection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace binaryauthorization_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<binaryauthorization::ValidationHelperV1Connection>
-MakeValidationHelperV1Connection(std::shared_ptr<ValidationHelperV1Stub> stub,
-                                 Options options) {
-  options = ValidationHelperV1DefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      binaryauthorization_internal::ValidationHelperV1ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace binaryauthorization_internal
 }  // namespace cloud
 }  // namespace google

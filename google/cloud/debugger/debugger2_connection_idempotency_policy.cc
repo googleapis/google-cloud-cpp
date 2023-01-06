@@ -30,53 +30,39 @@ using ::google::cloud::Idempotency;
 Debugger2ConnectionIdempotencyPolicy::~Debugger2ConnectionIdempotencyPolicy() =
     default;
 
-namespace {
-class DefaultDebugger2ConnectionIdempotencyPolicy
-    : public Debugger2ConnectionIdempotencyPolicy {
- public:
-  ~DefaultDebugger2ConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<Debugger2ConnectionIdempotencyPolicy>
+Debugger2ConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<Debugger2ConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<Debugger2ConnectionIdempotencyPolicy> clone() const override {
-    return absl::make_unique<DefaultDebugger2ConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency Debugger2ConnectionIdempotencyPolicy::SetBreakpoint(
+    google::devtools::clouddebugger::v2::SetBreakpointRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SetBreakpoint(
-      google::devtools::clouddebugger::v2::SetBreakpointRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency Debugger2ConnectionIdempotencyPolicy::GetBreakpoint(
+    google::devtools::clouddebugger::v2::GetBreakpointRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetBreakpoint(
-      google::devtools::clouddebugger::v2::GetBreakpointRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency Debugger2ConnectionIdempotencyPolicy::DeleteBreakpoint(
+    google::devtools::clouddebugger::v2::DeleteBreakpointRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteBreakpoint(
-      google::devtools::clouddebugger::v2::DeleteBreakpointRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency Debugger2ConnectionIdempotencyPolicy::ListBreakpoints(
+    google::devtools::clouddebugger::v2::ListBreakpointsRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListBreakpoints(
-      google::devtools::clouddebugger::v2::ListBreakpointsRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency ListDebuggees(
-      google::devtools::clouddebugger::v2::ListDebuggeesRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency Debugger2ConnectionIdempotencyPolicy::ListDebuggees(
+    google::devtools::clouddebugger::v2::ListDebuggeesRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<Debugger2ConnectionIdempotencyPolicy>
 MakeDefaultDebugger2ConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultDebugger2ConnectionIdempotencyPolicy>();
+  return absl::make_unique<Debugger2ConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

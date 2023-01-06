@@ -1,0 +1,430 @@
+/*!
+
+@mainpage Dialogflow CX API C++ Client Library
+
+An idiomatic C++ client library for the [Dialogflow CX API][cloud-service-docs], a service
+to build conversational interfaces (for example, chatbots, and voice-powered apps and devices).
+There are [two editions] of Dialogflow, this library supports the CX edition.
+
+[two editions]: https://cloud.google.com/dialogflow/docs/editions
+
+While this library is **GA**, please note Google Cloud C++ client libraries do **not** follow [Semantic Versioning](https://semver.org/).
+
+This library requires a C++14 compiler. It is supported (and tested) on multiple
+Linux distributions, as well as Windows and macOS. The [README][github-readme]
+on [GitHub][github-link] provides detailed instructions to install the necessary
+dependencies, as well as how to compile the client library.
+
+@tableofcontents{HTML:2}
+
+## Setting up your repo
+
+In order to use the Dialogflow API C++ client library from your own code,
+you'll need to configure your build system to discover and compile the Cloud
+C++ client libraries. In some cases your build system or package manager may
+need to download the libraries too. The Cloud C++ client libraries natively
+support [Bazel](https://bazel.build/) and [CMake](https://cmake.org/) as build
+systems. We've created a minimal, "Hello World", [quickstart][github-quickstart]
+that includes detailed instructions on how to compile the library for use in
+your application. You can fetch the source from [GitHub][github-link] as normal:
+
+@code{.sh}
+git clone https://github.com/googleapis/google-cloud-cpp.git
+cd google-cloud-cpp/google/cloud/dialogflow_cx/quickstart
+@endcode
+
+@par Example: Quickstart
+
+The following shows the code that you'll run in the
+`google/cloud/dialogflow_cx/quickstart/` directory,
+which should give you a taste of the Dialogflow API C++ client library API.
+
+@include quickstart.cc
+
+## Environment Variables
+
+<!-- inject-endpoint-env-vars-start -->
+
+- `GOOGLE_CLOUD_CPP_AGENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeAgentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_CHANGELOGS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeChangelogsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_DEPLOYMENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeDeploymentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_ENTITY_TYPES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeEntityTypesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_DIALOGFLOW_ENVIRONMENT_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeEnvironmentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_EXPERIMENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeExperimentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_FLOWS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeFlowsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_INTENTS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeIntentsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_PAGES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakePagesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SECURITY_SETTINGS_SERVICE_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeSecuritySettingsServiceConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SESSION_ENTITY_TYPES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeSessionEntityTypesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_SESSIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeSessionsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TEST_CASES_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeTestCasesConnection()`.
+
+- `GOOGLE_CLOUD_CPP_TRANSITION_ROUTE_GROUPS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeTransitionRouteGroupsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_DIALOGFLOW_VERSIONS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeVersionsConnection()`.
+
+- `GOOGLE_CLOUD_CPP_WEBHOOKS_ENDPOINT=...` overrides the
+  `EndpointOption` (which defaults to "<location>-dialogflow.googleapis.com")
+  used by `MakeWebhooksConnection()`.
+
+<!-- inject-endpoint-env-vars-end -->
+
+- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc` turns on tracing for most gRPC
+  calls. The library injects an additional Stub decorator that prints each gRPC
+  request and response.  Unless you have configured your own logging backend,
+  you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
+  the program's console.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams` turns on tracing for streaming
+  gRPC calls. This can produce a lot of output, so use with caution!
+
+- `GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...` modifies the behavior of gRPC tracing,
+  including whether messages will be output on multiple lines, or whether
+  string/bytes fields will be truncated.
+
+- `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` turns on logging in the library. Basically
+  the library always "logs" but the logging infrastructure has no backend to
+  actually print anything until the application sets a backend or it sets this
+  environment variable.
+
+## Error Handling
+
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
+
+This library never throws exceptions to signal error, but you can use exceptions
+to detect errors in the returned objects. In general, the library returns a
+[`StatusOr<T>`][status-or-header] if an error is possible. This is an "outcome"
+type, when the operation is successful a `StatusOr<T>` converts to `true` in
+boolean context (and its `.ok()` member function returns `true`), the
+application can then use `operator->` or `operator*` to access the `T` value.
+When the operation fails a `StatusOr<T>` converts to `false` (and `.ok()`
+returns `false`). It is undefined behavior to use the value in this case.
+
+If you prefer to use exceptions on error, you can use the `.value()` accessor.
+It will return the `T` value or throw on error.
+
+For operations that do not return a value the library simply returns
+`google::cloud::Status`.
+
+## Override the default endpoint
+
+In some cases, you may need to override the default endpoint used by the client
+library. Use the `google::cloud::EndpointOption` when initializing the client
+library to change this default.
+
+<!-- inject-endpoint-snippet-start -->
+For example, this will override the default endpoint for `dialogflow_cx::AgentsClient`:
+
+@snippet agents_client_samples.cc set-client-endpoint
+
+Follow these links to find examples for other \c *Client classes:
+ [dialogflow_cx::AgentsClient](@ref dialogflow_cx::AgentsClient-endpoint-snippet)
+ [dialogflow_cx::ChangelogsClient](@ref dialogflow_cx::ChangelogsClient-endpoint-snippet)
+ [dialogflow_cx::DeploymentsClient](@ref dialogflow_cx::DeploymentsClient-endpoint-snippet)
+ [dialogflow_cx::EntityTypesClient](@ref dialogflow_cx::EntityTypesClient-endpoint-snippet)
+ [dialogflow_cx::EnvironmentsClient](@ref dialogflow_cx::EnvironmentsClient-endpoint-snippet)
+ [dialogflow_cx::ExperimentsClient](@ref dialogflow_cx::ExperimentsClient-endpoint-snippet)
+ [dialogflow_cx::FlowsClient](@ref dialogflow_cx::FlowsClient-endpoint-snippet)
+ [dialogflow_cx::IntentsClient](@ref dialogflow_cx::IntentsClient-endpoint-snippet)
+ [dialogflow_cx::PagesClient](@ref dialogflow_cx::PagesClient-endpoint-snippet)
+ [dialogflow_cx::SecuritySettingsServiceClient](@ref dialogflow_cx::SecuritySettingsServiceClient-endpoint-snippet)
+ [dialogflow_cx::SessionEntityTypesClient](@ref dialogflow_cx::SessionEntityTypesClient-endpoint-snippet)
+ [dialogflow_cx::SessionsClient](@ref dialogflow_cx::SessionsClient-endpoint-snippet)
+ [dialogflow_cx::TestCasesClient](@ref dialogflow_cx::TestCasesClient-endpoint-snippet)
+ [dialogflow_cx::TransitionRouteGroupsClient](@ref dialogflow_cx::TransitionRouteGroupsClient-endpoint-snippet)
+ [dialogflow_cx::VersionsClient](@ref dialogflow_cx::VersionsClient-endpoint-snippet)
+ [dialogflow_cx::WebhooksClient](@ref dialogflow_cx::WebhooksClient-endpoint-snippet)
+
+<!-- inject-endpoint-snippet-end -->
+
+## Override the authentication configuration
+
+Some applications cannot use the default authentication mechanism (known as
+[Application Default Credentials]). You can override this default using
+`google::cloud::UnifiedCredentialsOption`. The following example shows how
+to explicitly load a service account key file.
+
+<!-- inject-service-account-snippet-start -->
+@snippet agents_client_samples.cc with-service-account
+
+Follow these links to find examples for other \c *Client classes:
+ [dialogflow_cx::AgentsClient](@ref dialogflow_cx::AgentsClient-service-account-snippet)
+ [dialogflow_cx::ChangelogsClient](@ref dialogflow_cx::ChangelogsClient-service-account-snippet)
+ [dialogflow_cx::DeploymentsClient](@ref dialogflow_cx::DeploymentsClient-service-account-snippet)
+ [dialogflow_cx::EntityTypesClient](@ref dialogflow_cx::EntityTypesClient-service-account-snippet)
+ [dialogflow_cx::EnvironmentsClient](@ref dialogflow_cx::EnvironmentsClient-service-account-snippet)
+ [dialogflow_cx::ExperimentsClient](@ref dialogflow_cx::ExperimentsClient-service-account-snippet)
+ [dialogflow_cx::FlowsClient](@ref dialogflow_cx::FlowsClient-service-account-snippet)
+ [dialogflow_cx::IntentsClient](@ref dialogflow_cx::IntentsClient-service-account-snippet)
+ [dialogflow_cx::PagesClient](@ref dialogflow_cx::PagesClient-service-account-snippet)
+ [dialogflow_cx::SecuritySettingsServiceClient](@ref dialogflow_cx::SecuritySettingsServiceClient-service-account-snippet)
+ [dialogflow_cx::SessionEntityTypesClient](@ref dialogflow_cx::SessionEntityTypesClient-service-account-snippet)
+ [dialogflow_cx::SessionsClient](@ref dialogflow_cx::SessionsClient-service-account-snippet)
+ [dialogflow_cx::TestCasesClient](@ref dialogflow_cx::TestCasesClient-service-account-snippet)
+ [dialogflow_cx::TransitionRouteGroupsClient](@ref dialogflow_cx::TransitionRouteGroupsClient-service-account-snippet)
+ [dialogflow_cx::VersionsClient](@ref dialogflow_cx::VersionsClient-service-account-snippet)
+ [dialogflow_cx::WebhooksClient](@ref dialogflow_cx::WebhooksClient-service-account-snippet)
+
+<!-- inject-service-account-snippet-end -->
+
+Keep in mind that we chose this as an example because it is relatively easy to
+understand. Consult the [Best practices for managing service account keys]
+guide for more details.
+
+@see @ref guac - for more information on the factory functions to create
+`google::cloud::Credentials` objects.
+
+[Best practices for managing service account keys]: https://cloud.google.com/iam/docs/best-practices-for-managing-service-account-keys
+[Application Default Credentials]: https://cloud.google.com/docs/authentication#adc
+
+## Retry, Backoff, and Idempotency Policies.
+
+The library automatically retries requests that fail with transient errors, and
+uses [exponential backoff] to backoff between retries. Application developers
+can override the default policies.
+
+[cloud-service-docs]: https://cloud.google.com/dialogflow/cx/docs
+[exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
+[github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
+<!-- The ugly %2E disables auto-linking in Doxygen -->
+[github-readme]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dialogflow_cx/README%2Emd
+[github-quickstart]:  https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/dialogflow_cx/quickstart/README%2Emd
+
+*/
+
+// <!-- inject-endpoint-pages-start -->
+
+/*! @page dialogflow_cx::AgentsClient-endpoint-snippet Override dialogflow_cx::AgentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/agents_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::AgentsClient-service-account-snippet Override dialogflow_cx::AgentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/agents_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::ChangelogsClient-endpoint-snippet Override dialogflow_cx::ChangelogsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/changelogs_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::ChangelogsClient-service-account-snippet Override dialogflow_cx::ChangelogsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/changelogs_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::DeploymentsClient-endpoint-snippet Override dialogflow_cx::DeploymentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/deployments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::DeploymentsClient-service-account-snippet Override dialogflow_cx::DeploymentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/deployments_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::EntityTypesClient-endpoint-snippet Override dialogflow_cx::EntityTypesClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/entity_types_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::EntityTypesClient-service-account-snippet Override dialogflow_cx::EntityTypesClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/entity_types_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::EnvironmentsClient-endpoint-snippet Override dialogflow_cx::EnvironmentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/environments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::EnvironmentsClient-service-account-snippet Override dialogflow_cx::EnvironmentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/environments_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::ExperimentsClient-endpoint-snippet Override dialogflow_cx::ExperimentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/experiments_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::ExperimentsClient-service-account-snippet Override dialogflow_cx::ExperimentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/experiments_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::FlowsClient-endpoint-snippet Override dialogflow_cx::FlowsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/flows_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::FlowsClient-service-account-snippet Override dialogflow_cx::FlowsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/flows_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::IntentsClient-endpoint-snippet Override dialogflow_cx::IntentsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/intents_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::IntentsClient-service-account-snippet Override dialogflow_cx::IntentsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/intents_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::PagesClient-endpoint-snippet Override dialogflow_cx::PagesClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/pages_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::PagesClient-service-account-snippet Override dialogflow_cx::PagesClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/pages_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::SecuritySettingsServiceClient-endpoint-snippet Override dialogflow_cx::SecuritySettingsServiceClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/security_settings_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::SecuritySettingsServiceClient-service-account-snippet Override dialogflow_cx::SecuritySettingsServiceClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/security_settings_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::SessionEntityTypesClient-endpoint-snippet Override dialogflow_cx::SessionEntityTypesClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/session_entity_types_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::SessionEntityTypesClient-service-account-snippet Override dialogflow_cx::SessionEntityTypesClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/session_entity_types_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::SessionsClient-endpoint-snippet Override dialogflow_cx::SessionsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/sessions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::SessionsClient-service-account-snippet Override dialogflow_cx::SessionsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/sessions_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::TestCasesClient-endpoint-snippet Override dialogflow_cx::TestCasesClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/test_cases_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::TestCasesClient-service-account-snippet Override dialogflow_cx::TestCasesClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/test_cases_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::TransitionRouteGroupsClient-endpoint-snippet Override dialogflow_cx::TransitionRouteGroupsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/transition_route_groups_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::TransitionRouteGroupsClient-service-account-snippet Override dialogflow_cx::TransitionRouteGroupsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/transition_route_groups_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::VersionsClient-endpoint-snippet Override dialogflow_cx::VersionsClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/versions_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::VersionsClient-service-account-snippet Override dialogflow_cx::VersionsClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/versions_client_samples.cc with-service-account
+
+*/
+
+/*! @page dialogflow_cx::WebhooksClient-endpoint-snippet Override dialogflow_cx::WebhooksClient Endpoint Configuration
+
+@snippet google/cloud/dialogflow_cx/samples/webhooks_client_samples.cc set-client-endpoint
+
+*/
+
+/*! @page dialogflow_cx::WebhooksClient-service-account-snippet Override dialogflow_cx::WebhooksClient Authentication Defaults
+
+@snippet google/cloud/dialogflow_cx/samples/webhooks_client_samples.cc with-service-account
+
+*/
+// <!-- inject-endpoint-pages-end -->

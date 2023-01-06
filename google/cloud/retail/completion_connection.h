@@ -48,6 +48,18 @@ using CompletionServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         retail_internal::CompletionServiceRetryTraits>;
 
+/**
+ * The `CompletionServiceConnection` object for `CompletionServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CompletionServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `CompletionServiceClient`.
+ *
+ * To create a concrete instance, see `MakeCompletionServiceConnection()`.
+ *
+ * For mocking, see `retail_mocks::MockCompletionServiceConnection`.
+ */
 class CompletionServiceConnection {
  public:
   virtual ~CompletionServiceConnection() = 0;
@@ -63,25 +75,34 @@ class CompletionServiceConnection {
       google::cloud::retail::v2::ImportCompletionDataRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `CompletionServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * CompletionServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `CompletionServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::retail::CompletionServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `CompletionServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<CompletionServiceConnection> MakeCompletionServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace retail_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<retail::CompletionServiceConnection>
-MakeCompletionServiceConnection(std::shared_ptr<CompletionServiceStub> stub,
-                                Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace retail_internal
 }  // namespace cloud
 }  // namespace google
 

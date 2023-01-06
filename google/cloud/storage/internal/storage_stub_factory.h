@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/storage_stub.h"
 #include "google/cloud/completion_queue.h"
+#include "google/cloud/internal/minimal_iam_credentials_stub.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
 #include <functional>
@@ -30,10 +31,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using BaseStorageStubFactory =
     std::function<std::shared_ptr<StorageStub>(std::shared_ptr<grpc::Channel>)>;
 
-std::shared_ptr<StorageStub> CreateStorageStubRoundRobin(
-    Options const& options,
-    std::function<std::shared_ptr<StorageStub>(int)> child_factory);
-
 /// Used in testing to create decorated mocks.
 std::shared_ptr<StorageStub> CreateDecoratedStubs(
     google::cloud::CompletionQueue cq, Options const& options,
@@ -42,6 +39,9 @@ std::shared_ptr<StorageStub> CreateDecoratedStubs(
 /// Default function used by the `GrpcClient`.
 std::shared_ptr<StorageStub> CreateStorageStub(
     google::cloud::CompletionQueue cq, Options const& options);
+
+std::shared_ptr<google::cloud::internal::MinimalIamCredentialsStub>
+CreateStorageIamStub(google::cloud::CompletionQueue cq, Options const& options);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

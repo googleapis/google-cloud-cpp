@@ -385,6 +385,145 @@ DefaultCloudChannelServiceStub::UpdateChannelPartnerLink(
   return response;
 }
 
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+DefaultCloudChannelServiceStub::GetCustomerRepricingConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+        request) {
+  google::cloud::channel::v1::CustomerRepricingConfig response;
+  auto status = grpc_stub_->GetCustomerRepricingConfig(&client_context, request,
+                                                       &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::channel::v1::ListCustomerRepricingConfigsResponse>
+DefaultCloudChannelServiceStub::ListCustomerRepricingConfigs(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
+        request) {
+  google::cloud::channel::v1::ListCustomerRepricingConfigsResponse response;
+  auto status = grpc_stub_->ListCustomerRepricingConfigs(&client_context,
+                                                         request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+DefaultCloudChannelServiceStub::CreateCustomerRepricingConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+        request) {
+  google::cloud::channel::v1::CustomerRepricingConfig response;
+  auto status = grpc_stub_->CreateCustomerRepricingConfig(&client_context,
+                                                          request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+DefaultCloudChannelServiceStub::UpdateCustomerRepricingConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+        request) {
+  google::cloud::channel::v1::CustomerRepricingConfig response;
+  auto status = grpc_stub_->UpdateCustomerRepricingConfig(&client_context,
+                                                          request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultCloudChannelServiceStub::DeleteCustomerRepricingConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteCustomerRepricingConfig(&client_context,
+                                                          request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+DefaultCloudChannelServiceStub::GetChannelPartnerRepricingConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+        request) {
+  google::cloud::channel::v1::ChannelPartnerRepricingConfig response;
+  auto status = grpc_stub_->GetChannelPartnerRepricingConfig(
+      &client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse>
+DefaultCloudChannelServiceStub::ListChannelPartnerRepricingConfigs(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest const&
+        request) {
+  google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse
+      response;
+  auto status = grpc_stub_->ListChannelPartnerRepricingConfigs(
+      &client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+DefaultCloudChannelServiceStub::CreateChannelPartnerRepricingConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::
+        CreateChannelPartnerRepricingConfigRequest const& request) {
+  google::cloud::channel::v1::ChannelPartnerRepricingConfig response;
+  auto status = grpc_stub_->CreateChannelPartnerRepricingConfig(
+      &client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+DefaultCloudChannelServiceStub::UpdateChannelPartnerRepricingConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::
+        UpdateChannelPartnerRepricingConfigRequest const& request) {
+  google::cloud::channel::v1::ChannelPartnerRepricingConfig response;
+  auto status = grpc_stub_->UpdateChannelPartnerRepricingConfig(
+      &client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultCloudChannelServiceStub::DeleteChannelPartnerRepricingConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::channel::v1::
+        DeleteChannelPartnerRepricingConfigRequest const& request) {
+  google::protobuf::Empty response;
+  auto status = grpc_stub_->DeleteChannelPartnerRepricingConfig(
+      &client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 StatusOr<google::cloud::channel::v1::Offer>
 DefaultCloudChannelServiceStub::LookupOffer(
     grpc::ClientContext& client_context,

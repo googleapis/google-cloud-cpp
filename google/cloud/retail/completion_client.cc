@@ -17,7 +17,6 @@
 // source: google/cloud/retail/v2/completion_service.proto
 
 #include "google/cloud/retail/completion_client.h"
-#include "google/cloud/retail/internal/completion_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CompletionServiceClient::CompletionServiceClient(
     std::shared_ptr<CompletionServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), retail_internal::CompletionServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CompletionServiceClient::~CompletionServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>

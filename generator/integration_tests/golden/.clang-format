@@ -1,2 +1,3 @@
+BasedOnStyle: InheritParentConfig
 DisableFormat: true
-SortIncludes: false
+SortIncludes: false  # https://reviews.llvm.org/D67843

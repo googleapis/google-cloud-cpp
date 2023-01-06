@@ -25,6 +25,7 @@
 #include "absl/meta/type_traits.h"
 #include <google/bigtable/v2/bigtable.pb.h>
 #include <google/bigtable/v2/data.pb.h>
+#include <google/protobuf/util/message_differencer.h>
 #include <grpcpp/grpcpp.h>
 #include <chrono>
 #include <string>
@@ -355,6 +356,16 @@ class SingleRowMutation {
   SingleRowMutation(SingleRowMutation const&) = default;
   SingleRowMutation& operator=(SingleRowMutation const&) = default;
 
+  friend bool operator==(SingleRowMutation const& a,
+                         SingleRowMutation const& b) noexcept {
+    return google::protobuf::util::MessageDifferencer::Equivalent(a.request_,
+                                                                  b.request_);
+  }
+  friend bool operator!=(SingleRowMutation const& a,
+                         SingleRowMutation const& b) noexcept {
+    return !(a == b);
+  }
+
   /// Move the contents into a bigtable::v2::MutateRowsRequest::Entry.
   void MoveTo(google::bigtable::v2::MutateRowsRequest::Entry* entry) {
     entry->set_row_key(std::move(*request_.mutable_row_key()));
@@ -403,6 +414,15 @@ class FailedMutation {
   FailedMutation& operator=(FailedMutation&&) = default;
   FailedMutation(FailedMutation const&) = default;
   FailedMutation& operator=(FailedMutation const&) = default;
+
+  friend bool operator==(FailedMutation const& a,
+                         FailedMutation const& b) noexcept {
+    return a.status_ == b.status_ && a.original_index_ == b.original_index_;
+  }
+  friend bool operator!=(FailedMutation const& a,
+                         FailedMutation const& b) noexcept {
+    return !(a == b);
+  }
 
   //@{
   /// @name accessors

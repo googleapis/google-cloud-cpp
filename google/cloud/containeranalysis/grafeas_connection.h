@@ -45,6 +45,18 @@ using GrafeasLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         containeranalysis_internal::GrafeasRetryTraits>;
 
+/**
+ * The `GrafeasConnection` object for `GrafeasClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `GrafeasClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `GrafeasClient`.
+ *
+ * To create a concrete instance, see `MakeGrafeasConnection()`.
+ *
+ * For mocking, see `containeranalysis_mocks::MockGrafeasConnection`.
+ */
 class GrafeasConnection {
  public:
   virtual ~GrafeasConnection() = 0;
@@ -94,23 +106,31 @@ class GrafeasConnection {
       grafeas::v1::ListNoteOccurrencesRequest request);
 };
 
+/**
+ * A factory function to construct an object of type `GrafeasConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of GrafeasClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `GrafeasConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::containeranalysis::GrafeasPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `GrafeasConnection` created by
+ * this function.
+ */
 std::shared_ptr<GrafeasConnection> MakeGrafeasConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace containeranalysis
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace containeranalysis_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<containeranalysis::GrafeasConnection> MakeGrafeasConnection(
-    std::shared_ptr<GrafeasStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace containeranalysis_internal
 }  // namespace cloud
 }  // namespace google
 

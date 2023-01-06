@@ -13,16 +13,17 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/grpc_bucket_access_control_parser.h"
+#include "google/cloud/storage/bucket_access_control.h"
+#include "google/cloud/storage/internal/patch_builder_details.h"
 #include "google/cloud/storage/version.h"
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-google::storage::v2::BucketAccessControl GrpcBucketAccessControlParser::ToProto(
-    BucketAccessControl const& acl) {
+google::storage::v2::BucketAccessControl ToProto(
+    storage::BucketAccessControl const& acl) {
   google::storage::v2::BucketAccessControl result;
   result.set_role(acl.role());
   result.set_id(acl.id());
@@ -35,34 +36,39 @@ google::storage::v2::BucketAccessControl GrpcBucketAccessControlParser::ToProto(
         acl.project_team().project_number);
     result.mutable_project_team()->set_team(acl.project_team().team);
   }
+  result.set_etag(acl.etag());
   return result;
 }
 
-BucketAccessControl GrpcBucketAccessControlParser::FromProto(
+storage::BucketAccessControl FromProto(
     google::storage::v2::BucketAccessControl acl,
     std::string const& bucket_name) {
-  BucketAccessControl result;
-  result.kind_ = "storage#bucketAccessControl";
-  result.bucket_ = bucket_name;
-  result.domain_ = std::move(*acl.mutable_domain());
-  result.email_ = std::move(*acl.mutable_email());
-  result.entity_ = std::move(*acl.mutable_entity());
-  result.entity_id_ = std::move(*acl.mutable_entity_id());
-  result.id_ = std::move(*acl.mutable_id());
+  storage::BucketAccessControl result;
+  result.set_kind("storage#bucketAccessControl");
+  result.set_bucket(bucket_name);
+  result.set_domain(std::move(*acl.mutable_domain()));
+  result.set_email(std::move(*acl.mutable_email()));
+  result.set_entity(std::move(*acl.mutable_entity()));
+  result.set_entity_id(std::move(*acl.mutable_entity_id()));
+  result.set_id(std::move(*acl.mutable_id()));
   if (acl.has_project_team()) {
-    result.project_team_ = ProjectTeam{
+    result.set_project_team(storage::ProjectTeam{
         std::move(*acl.mutable_project_team()->mutable_project_number()),
         std::move(*acl.mutable_project_team()->mutable_team()),
-    };
+    });
   }
-  result.role_ = std::move(*acl.mutable_role());
-  result.self_link_.clear();
+  result.set_role(std::move(*acl.mutable_role()));
+  result.set_etag(std::move(*acl.mutable_etag()));
 
   return result;
 }
 
-}  // namespace internal
+std::string Role(storage::BucketAccessControlPatchBuilder const& patch) {
+  return storage::internal::PatchBuilderDetails::GetPatch(patch).value("role",
+                                                                       "");
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

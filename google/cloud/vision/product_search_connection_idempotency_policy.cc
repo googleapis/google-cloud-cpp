@@ -30,121 +30,110 @@ using ::google::cloud::Idempotency;
 ProductSearchConnectionIdempotencyPolicy::
     ~ProductSearchConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultProductSearchConnectionIdempotencyPolicy
-    : public ProductSearchConnectionIdempotencyPolicy {
- public:
-  ~DefaultProductSearchConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ProductSearchConnectionIdempotencyPolicy>
+ProductSearchConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ProductSearchConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ProductSearchConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultProductSearchConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::CreateProductSet(
+    google::cloud::vision::v1::CreateProductSetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateProductSet(
-      google::cloud::vision::v1::CreateProductSetRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::ListProductSets(
+    google::cloud::vision::v1::ListProductSetsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListProductSets(
-      google::cloud::vision::v1::ListProductSetsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::GetProductSet(
+    google::cloud::vision::v1::GetProductSetRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetProductSet(
-      google::cloud::vision::v1::GetProductSetRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::UpdateProductSet(
+    google::cloud::vision::v1::UpdateProductSetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateProductSet(
-      google::cloud::vision::v1::UpdateProductSetRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::DeleteProductSet(
+    google::cloud::vision::v1::DeleteProductSetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteProductSet(
-      google::cloud::vision::v1::DeleteProductSetRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::CreateProduct(
+    google::cloud::vision::v1::CreateProductRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateProduct(
-      google::cloud::vision::v1::CreateProductRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::ListProducts(
+    google::cloud::vision::v1::ListProductsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListProducts(
-      google::cloud::vision::v1::ListProductsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::GetProduct(
+    google::cloud::vision::v1::GetProductRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetProduct(
-      google::cloud::vision::v1::GetProductRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::UpdateProduct(
+    google::cloud::vision::v1::UpdateProductRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateProduct(
-      google::cloud::vision::v1::UpdateProductRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::DeleteProduct(
+    google::cloud::vision::v1::DeleteProductRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteProduct(
-      google::cloud::vision::v1::DeleteProductRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::CreateReferenceImage(
+    google::cloud::vision::v1::CreateReferenceImageRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateReferenceImage(
-      google::cloud::vision::v1::CreateReferenceImageRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::DeleteReferenceImage(
+    google::cloud::vision::v1::DeleteReferenceImageRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteReferenceImage(
-      google::cloud::vision::v1::DeleteReferenceImageRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::ListReferenceImages(
+    google::cloud::vision::v1::ListReferenceImagesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListReferenceImages(
-      google::cloud::vision::v1::ListReferenceImagesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::GetReferenceImage(
+    google::cloud::vision::v1::GetReferenceImageRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetReferenceImage(
-      google::cloud::vision::v1::GetReferenceImageRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::AddProductToProductSet(
+    google::cloud::vision::v1::AddProductToProductSetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency AddProductToProductSet(
-      google::cloud::vision::v1::AddProductToProductSetRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ProductSearchConnectionIdempotencyPolicy::RemoveProductFromProductSet(
+    google::cloud::vision::v1::RemoveProductFromProductSetRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RemoveProductFromProductSet(
-      google::cloud::vision::v1::RemoveProductFromProductSetRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::ListProductsInProductSet(
+    google::cloud::vision::v1::ListProductsInProductSetRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListProductsInProductSet(
-      google::cloud::vision::v1::ListProductsInProductSetRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ProductSearchConnectionIdempotencyPolicy::ImportProductSets(
+    google::cloud::vision::v1::ImportProductSetsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ImportProductSets(
-      google::cloud::vision::v1::ImportProductSetsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency PurgeProducts(
-      google::cloud::vision::v1::PurgeProductsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ProductSearchConnectionIdempotencyPolicy::PurgeProducts(
+    google::cloud::vision::v1::PurgeProductsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ProductSearchConnectionIdempotencyPolicy>
 MakeDefaultProductSearchConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultProductSearchConnectionIdempotencyPolicy>();
+  return absl::make_unique<ProductSearchConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

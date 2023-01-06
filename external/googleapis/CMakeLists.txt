@@ -17,11 +17,19 @@
 include(GoogleapisConfig)
 
 set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
-    "https://github.com/googleapis/googleapis/archive/${GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
+    "https://github.com/googleapis/googleapis/archive/${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
+    "https://storage.googleapis.com/cloud-cpp-community-archive/com_google_googleapis/${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_COMMIT_SHA}.tar.gz"
 )
-
-set(EXTERNAL_GOOGLEAPIS_SOURCE
-    "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
+set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL_HASH
+    "${_GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}")
+if (GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL)
+    set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL
+        ${GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL})
+endif ()
+if (GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH)
+    set(GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL_HASH
+        "${GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH}")
+endif ()
 
 set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     # cmake-format: sort
@@ -61,9 +69,6 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     # by any other library. So, added manually.
     "google/cloud/orgpolicy/v1/orgpolicy.proto"
     "google/devtools/source/v1/source_context.proto"
-    "google/iam/v1/iam_policy.proto"
-    "google/iam/v1/options.proto"
-    "google/iam/v1/policy.proto"
     "google/longrunning/operations.proto"
     "google/rpc/code.proto"
     "google/rpc/error_details.proto"
@@ -73,6 +78,7 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/type/date.proto"
     "google/type/datetime.proto"
     "google/type/dayofweek.proto"
+    "google/type/decimal.proto"
     "google/type/expr.proto"
     "google/type/fraction.proto"
     "google/type/interval.proto"
@@ -86,6 +92,17 @@ set(EXTERNAL_GOOGLEAPIS_PROTO_FILES
     "google/type/timeofday.proto")
 
 include(EnableWerror)
+
+# Set EXTERNAL_GOOGLEAPIS_SOURCE in the parent directory, as it is used by all
+# the generated libraries.  The Conan packages (https://conan.io), will need to
+# patch this value.  Setting the value in a single place makes such patching
+# easier.
+set(EXTERNAL_GOOGLEAPIS_PREFIX "${PROJECT_BINARY_DIR}/external/googleapis")
+set(EXTERNAL_GOOGLEAPIS_SOURCE
+    "${EXTERNAL_GOOGLEAPIS_PREFIX}/src/googleapis_download"
+    PARENT_SCOPE)
+set(EXTERNAL_GOOGLEAPIS_SOURCE
+    "${EXTERNAL_GOOGLEAPIS_PREFIX}/src/googleapis_download")
 
 # Include the functions to compile proto files and maintain proto libraries.
 include(CompileProtos)
@@ -106,12 +123,12 @@ endforeach ()
 
 include(ExternalProject)
 
-ExternalProject_Add(
+externalproject_add(
     googleapis_download
     EXCLUDE_FROM_ALL ON
-    PREFIX "${PROJECT_BINARY_DIR}/external/googleapis"
+    PREFIX "${EXTERNAL_GOOGLEAPIS_PREFIX}"
     URL ${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL}
-    URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_SHA256}
+    URL_HASH SHA256=${GOOGLE_CLOUD_CPP_GOOGLEAPIS_URL_HASH}
     PATCH_COMMAND
         ""
         # ~~~
@@ -182,8 +199,8 @@ function (external_googleapis_set_version_and_alias short_name)
     set_target_properties(
         "google_cloud_cpp_${short_name}"
         PROPERTIES EXPORT_NAME google-cloud-cpp::${short_name}
-                   VERSION "${PROJECT_VERSION}" SOVERSION
-                                                ${PROJECT_VERSION_MAJOR})
+                   VERSION "${PROJECT_VERSION}"
+                   SOVERSION ${PROJECT_VERSION_MAJOR})
     add_library("google-cloud-cpp::${short_name}" ALIAS
                 "google_cloud_cpp_${short_name}")
 endfunction ()
@@ -216,6 +233,7 @@ set(PROTO_FILES_WITH_DEPENDENCIES
     "google/api/annotations.proto"
     "google/api/auth.proto"
     "google/api/billing.proto"
+    "google/api/client.proto"
     "google/api/distribution.proto"
     "google/api/endpoint.proto"
     "google/api/log.proto"
@@ -247,6 +265,8 @@ endforeach ()
 # Out of order because they have dependencies.
 external_googleapis_add_library("google/api/annotations.proto" api_http_protos)
 external_googleapis_add_library("google/api/auth.proto" api_annotations_protos)
+external_googleapis_add_library("google/api/client.proto"
+                                api_launch_stage_protos)
 external_googleapis_add_library("google/api/metric.proto"
                                 api_launch_stage_protos api_label_protos)
 external_googleapis_add_library("google/api/billing.proto"
@@ -271,6 +291,7 @@ external_googleapis_add_library(
     api_auth_protos
     api_backend_protos
     api_billing_protos
+    api_client_protos
     api_context_protos
     api_control_protos
     api_documentation_protos
@@ -491,12 +512,13 @@ endforeach ()
 # Create and install the pkg-config files.
 foreach (target ${external_googleapis_installed_libraries_list}
                 google_cloud_cpp_logging_type_type_protos)
-    external_googleapis_install_pc("${target}" "${CMAKE_CURRENT_LIST_DIR}")
+    external_googleapis_install_pc("${target}")
 endforeach ()
 
 external_googleapis_install_pc_common(google_cloud_cpp_logging_type_protos)
 set(GOOGLE_CLOUD_CPP_PC_LIBS "")
-configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in"
+google_cloud_cpp_set_pkgconfig_paths()
+configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
                "google_cloud_cpp_logging_type_protos.pc" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_logging_type_protos.pc"
@@ -540,7 +562,9 @@ string(
            " zlib"
            " libcares")
 set(GOOGLE_CLOUD_CPP_PC_LIBS "")
-configure_file("${CMAKE_CURRENT_LIST_DIR}/config.pc.in" "googleapis.pc" @ONLY)
+google_cloud_cpp_set_pkgconfig_paths()
+configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
+               "googleapis.pc" @ONLY)
 install(
     FILES "${CMAKE_CURRENT_BINARY_DIR}/googleapis.pc"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
@@ -566,7 +590,6 @@ install(
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_googleapis-config.cmake"
         "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_googleapis-config-version.cmake"
         "${PROJECT_SOURCE_DIR}/cmake/FindgRPC.cmake"
-        "${PROJECT_SOURCE_DIR}/cmake/FindProtobufWithTargets.cmake"
         "${PROJECT_SOURCE_DIR}/cmake/CompileProtos.cmake"
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_googleapis"
     COMPONENT google_cloud_cpp_development)

@@ -57,7 +57,7 @@ if (BUILD_TESTING)
                          "bigtable_benchmarks_unit_tests" YEAR "2020")
 
     foreach (fname ${bigtable_benchmarks_unit_tests})
-        google_cloud_cpp_add_executable(target "bigtable_benchmarks" "${fname}")
+        google_cloud_cpp_add_executable(target "bigtable" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE bigtable_benchmark_common

@@ -31,26 +31,48 @@ namespace cloud {
 namespace pubsublite {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-pubsublite-options
+ */
 struct AdminServiceRetryPolicyOption {
   using Type = std::shared_ptr<AdminServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-pubsublite-options
+ */
 struct AdminServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct AdminServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-pubsublite-options
+ */
 struct AdminServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<AdminServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-pubsublite-options
+ */
+struct AdminServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to AdminService.
+ *
+ * @ingroup google-cloud-pubsublite-options
+ */
 using AdminServicePolicyOptionList =
     OptionList<AdminServiceRetryPolicyOption, AdminServiceBackoffPolicyOption,
                AdminServicePollingPolicyOption,

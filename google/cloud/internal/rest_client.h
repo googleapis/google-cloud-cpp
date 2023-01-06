@@ -19,6 +19,7 @@
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/options.h"
+#include "google/cloud/rest_options.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <string>

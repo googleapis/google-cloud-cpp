@@ -184,6 +184,66 @@ class CloudChannelServiceStub {
       google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  GetCustomerRepricingConfig(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::channel::v1::ListCustomerRepricingConfigsResponse>
+  ListCustomerRepricingConfigs(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  CreateCustomerRepricingConfig(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  UpdateCustomerRepricingConfig(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+          request) = 0;
+
+  virtual Status DeleteCustomerRepricingConfig(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  GetChannelPartnerRepricingConfig(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse>
+  ListChannelPartnerRepricingConfigs(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::
+          ListChannelPartnerRepricingConfigsRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  CreateChannelPartnerRepricingConfig(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::
+          CreateChannelPartnerRepricingConfigRequest const& request) = 0;
+
+  virtual StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  UpdateChannelPartnerRepricingConfig(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::
+          UpdateChannelPartnerRepricingConfigRequest const& request) = 0;
+
+  virtual Status DeleteChannelPartnerRepricingConfig(
+      grpc::ClientContext& context,
+      google::cloud::channel::v1::
+          DeleteChannelPartnerRepricingConfigRequest const& request) = 0;
+
   virtual StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
       grpc::ClientContext& context,
       google::cloud::channel::v1::LookupOfferRequest const& request) = 0;
@@ -394,6 +454,65 @@ class DefaultCloudChannelServiceStub : public CloudChannelServiceStub {
       grpc::ClientContext& client_context,
       google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
           request) override;
+
+  StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  GetCustomerRepricingConfig(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::channel::v1::ListCustomerRepricingConfigsResponse>
+  ListCustomerRepricingConfigs(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::ListCustomerRepricingConfigsRequest const&
+          request) override;
+
+  StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  CreateCustomerRepricingConfig(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+  UpdateCustomerRepricingConfig(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+          request) override;
+
+  Status DeleteCustomerRepricingConfig(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  GetChannelPartnerRepricingConfig(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+          request) override;
+
+  StatusOr<
+      google::cloud::channel::v1::ListChannelPartnerRepricingConfigsResponse>
+  ListChannelPartnerRepricingConfigs(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::
+          ListChannelPartnerRepricingConfigsRequest const& request) override;
+
+  StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  CreateChannelPartnerRepricingConfig(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::
+          CreateChannelPartnerRepricingConfigRequest const& request) override;
+
+  StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+  UpdateChannelPartnerRepricingConfig(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::
+          UpdateChannelPartnerRepricingConfigRequest const& request) override;
+
+  Status DeleteChannelPartnerRepricingConfig(
+      grpc::ClientContext& client_context,
+      google::cloud::channel::v1::
+          DeleteChannelPartnerRepricingConfigRequest const& request) override;
 
   StatusOr<google::cloud::channel::v1::Offer> LookupOffer(
       grpc::ClientContext& client_context,

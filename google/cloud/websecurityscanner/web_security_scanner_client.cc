@@ -17,7 +17,6 @@
 // source: google/cloud/websecurityscanner/v1/web_security_scanner.proto
 
 #include "google/cloud/websecurityscanner/web_security_scanner_client.h"
-#include "google/cloud/websecurityscanner/internal/web_security_scanner_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WebSecurityScannerClient::WebSecurityScannerClient(
     std::shared_ptr<WebSecurityScannerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          websecurityscanner_internal::WebSecurityScannerDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 WebSecurityScannerClient::~WebSecurityScannerClient() = default;
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>

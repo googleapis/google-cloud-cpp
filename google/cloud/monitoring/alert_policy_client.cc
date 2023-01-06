@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/alert_service.proto
 
 #include "google/cloud/monitoring/alert_policy_client.h"
-#include "google/cloud/monitoring/internal/alert_policy_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AlertPolicyServiceClient::AlertPolicyServiceClient(
     std::shared_ptr<AlertPolicyServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          monitoring_internal::AlertPolicyServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AlertPolicyServiceClient::~AlertPolicyServiceClient() = default;
 
 StreamRange<google::monitoring::v3::AlertPolicy>

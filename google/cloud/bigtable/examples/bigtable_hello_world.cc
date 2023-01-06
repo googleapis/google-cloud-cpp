@@ -34,9 +34,9 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
   if (argv.size() != 3) {
     throw Usage{"hello-world <project-id> <instance-id> <table-id>"};
   }
-  std::string const project_id = argv[0];
-  std::string const instance_id = argv[1];
-  std::string const table_id = argv[2];
+  std::string const& project_id = argv[0];
+  std::string const& instance_id = argv[1];
+  std::string const& table_id = argv[2];
 
   // Create a namespace alias to make the code easier to read.
   //! [aliases]
@@ -53,11 +53,9 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
   //! [create table] [START bigtable_hw_create_table]
   // Define the desired schema for the Table.
-  google::bigtable::admin::v2::GcRule gc;
-  gc.set_max_num_versions(1);
   google::bigtable::admin::v2::Table t;
   auto& families = *t.mutable_column_families();
-  *families["family"].mutable_gc_rule() = std::move(gc);
+  families["family"].mutable_gc_rule()->set_max_num_versions(1);
 
   // Create a table.
   std::string instance_name = cbt::InstanceName(project_id, instance_id);
@@ -67,7 +65,8 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
   // Create an object to access the Cloud Bigtable Data API.
   //! [connect data]
-  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id);
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(project_id, instance_id, table_id));
   //! [connect data] [END bigtable_hw_create_table]
 
   // Modify (and create if necessary) a row.

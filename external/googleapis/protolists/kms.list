@@ -1,2 +1,3 @@
+@com_google_googleapis//google/cloud/kms/v1:ekm_service.proto
 @com_google_googleapis//google/cloud/kms/v1:resources.proto
 @com_google_googleapis//google/cloud/kms/v1:service.proto

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
+#include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/internal/getenv.h"
 #include <sstream>
 
@@ -135,6 +136,27 @@ google::cloud::testing_util::Commands::value_type CreateSchemaAdminCommand(
 
 bool UsingEmulator() {
   return google::cloud::internal::GetEnv("PUBSUB_EMULATOR_HOST").has_value();
+}
+
+std::string RandomTopicId(google::cloud::internal::DefaultPRNG& generator) {
+  return google::cloud::pubsub_testing::RandomTopicId(generator,
+                                                      "cloud-cpp-samples");
+}
+
+std::string RandomSubscriptionId(
+    google::cloud::internal::DefaultPRNG& generator) {
+  return google::cloud::pubsub_testing::RandomSubscriptionId(
+      generator, "cloud-cpp-samples");
+}
+
+std::string RandomSnapshotId(google::cloud::internal::DefaultPRNG& generator) {
+  return google::cloud::pubsub_testing::RandomSnapshotId(generator,
+                                                         "cloud-cpp-samples");
+}
+
+std::string RandomSchemaId(google::cloud::internal::DefaultPRNG& generator) {
+  return google::cloud::pubsub_testing::RandomSchemaId(generator,
+                                                       "cloud-cpp-samples");
 }
 
 }  // namespace examples

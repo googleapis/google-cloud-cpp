@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options CloudRedisDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_REDIS_ENDPOINT", "",
-      "redis.googleapis.com");
+      "GOOGLE_CLOUD_CPP_CLOUD_REDIS_AUTHORITY", "redis.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<redis::CloudRedisRetryPolicyOption>()) {

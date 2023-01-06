@@ -36,7 +36,7 @@ Options&& MakeOptions(ClientOptions&& o) {
 }
 }  // namespace internal
 
-ClientOptions::ClientOptions() : ClientOptions(Options{}) {}
+ClientOptions::ClientOptions() { opts_ = internal::DefaultOptions(); }
 
 ClientOptions::ClientOptions(Options opts) {
   ::google::cloud::internal::CheckExpectedOptions<
@@ -44,16 +44,22 @@ ClientOptions::ClientOptions(Options opts) {
   opts_ = internal::DefaultOptions(std::move(opts));
 }
 
-ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds)
-    : ClientOptions(Options{}.set<GrpcCredentialOption>(std::move(creds))) {
-  set_data_endpoint("bigtable.googleapis.com");
-  set_admin_endpoint("bigtableadmin.googleapis.com");
+ClientOptions::ClientOptions(std::shared_ptr<grpc::ChannelCredentials> creds) {
+  opts_ = internal::DefaultOptions(
+      Options{}.set<GrpcCredentialOption>(std::move(creds)));
+
+  // This constructor ignores the emulator environment variables, which might be
+  // set by `internal::DefaultOptions()`.
+  opts_.set<DataEndpointOption>("bigtable.googleapis.com");
+  opts_.set<AdminEndpointOption>("bigtableadmin.googleapis.com");
+  opts_.set<InstanceAdminEndpointOption>("bigtableadmin.googleapis.com");
 }
 
 // NOLINTNEXTLINE(readability-identifier-naming)
 ClientOptions& ClientOptions::set_connection_pool_size(std::size_t size) {
-  opts_.set<GrpcNumChannelsOption>(
-      size == 0 ? internal::DefaultConnectionPoolSize() : int(size));
+  opts_.set<GrpcNumChannelsOption>(size == 0
+                                       ? internal::DefaultConnectionPoolSize()
+                                       : static_cast<int>(size));
   return *this;
 }
 

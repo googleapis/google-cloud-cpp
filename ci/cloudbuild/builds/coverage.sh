@@ -26,15 +26,15 @@ export CXX=g++
 # Explicitly list the patterns that match hand-crafted code. Excluding the
 # generated code results in a longer list and more maintenance.
 instrumented_patterns=(
+  "/examples[/:]"
+  "/generator[/:]"
   "/google/cloud:"
   "/google/cloud/testing_util:"
   "/google/cloud/bigtable[/:]"
-  "/google/cloud/examples[/:]"
   "/google/cloud/pubsub[/:]"
   "/google/cloud/pubsublite[/:]"
   "/google/cloud/spanner[/:]"
   "/google/cloud/storage[/:]"
-  "/generator[/:]"
 )
 instrumentation_filter="$(printf ",%s" "${instrumented_patterns[@]}")"
 instrumentation_filter="${instrumentation_filter:1}"
@@ -42,10 +42,20 @@ instrumentation_filter="${instrumentation_filter:1}"
 mapfile -t args < <(bazel::common_args)
 args+=("--instrumentation_filter=${instrumentation_filter}")
 args+=("--instrument_test_targets")
+# This is a workaround for:
+#     https://github.com/googleapis/google-cloud-cpp/issues/6952
+# Based on the recommendations from:
+#     https://github.com/bazelbuild/bazel/issues/3236
+args+=("--sandbox_tmpfs_path=/tmp")
 bazel coverage "${args[@]}" --test_tag_filters=-integration-test ...
 GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS="instance"
 mapfile -t integration_args < <(integration::bazel_args)
 integration::bazel_with_emulators coverage "${args[@]}" "${integration_args[@]}"
+
+io::log_h2 "Running Storage integration tests (with emulator and Legacy http)"
+"google/cloud/storage/ci/run_integration_tests_emulator_bazel.sh" \
+  bazel coverage "${args[@]}" "${integration_args[@]}" \
+  "--test_env=GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP=yes"
 
 # Where does this token come from? For triggered ci/pr builds GCB will securely
 # inject this into the environment. See the "secretEnv" setting in the
@@ -71,27 +81,27 @@ time {
 }
 
 codecov_args=(
-  "-X" "gcov"
-  "-f" "${MERGED_COVERAGE}"
-  "-q" "${HOME}/coverage-report.txt"
-  "-B" "${BRANCH_NAME}"
-  "-C" "${COMMIT_SHA}"
-  "-P" "${PR_NUMBER:-}"
-  "-b" "${BUILD_ID:-}"
+  "--filter=gcov"
+  "--file=${MERGED_COVERAGE}"
+  "--branch=${BRANCH_NAME}"
+  "--sha=${COMMIT_SHA}"
+  "--pr=${PR_NUMBER:-}"
+  "--build=${BUILD_ID:-}"
+  "--verbose"
 )
 io::log_h2 "Uploading ${MERGED_COVERAGE} to codecov.io"
 io::log "Flags: ${codecov_args[*]}"
 TIMEFORMAT="==> 🕑 codecov.io upload done in %R seconds"
 time {
-  # Verifies the codecov bash uploader before executing it.
-  sha256sum="d6aa3207c4908d123bd8af62ec0538e3f2b9f257c3de62fad4e29cd3b59b41d9"
-  codecov_url="https://raw.githubusercontent.com/codecov/codecov-bash/1b4b96ac38946b20043b3ca3bad88d95462259b6/codecov"
-  codecov_script="$(curl -s "${codecov_url}")"
-  if ! sha256sum -c <(echo "${sha256sum} -") <<<"${codecov_script}"; then
-    io::log_h2 "ERROR: Invalid sha256sum for codecov_script:"
-    echo "${codecov_script}"
+  # Downloads and verifies the codecov uploader before executing it.
+  codecov="$(mktemp -u -t codecov.XXXXXXXXXX)"
+  curl -sSL -o "${codecov}" https://uploader.codecov.io/v0.3.1/linux/codecov
+  sha256sum="0146032e40bc0179db3afa3de179dab4da59ece0449af03d881f3c509eaabc8b"
+  if ! sha256sum -c <(echo "${sha256sum} *${codecov}"); then
+    io::log_h2 "ERROR: Invalid sha256sum for codecov program"
     exit 1
   fi
-  env -i CODECOV_TOKEN="${CODECOV_TOKEN:-}" HOME="${HOME}" \
-    bash <(echo "${codecov_script}") "${codecov_args[@]}"
+  chmod +x "${codecov}"
+  env -i HOME="${HOME}" "${codecov}" --token="${CODECOV_TOKEN}" "${codecov_args[@]}"
+  rm "${codecov}"
 }

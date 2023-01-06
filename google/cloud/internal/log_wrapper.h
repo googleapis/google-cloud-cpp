@@ -17,6 +17,11 @@
 
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
+#include "google/cloud/grpc_error_delegate.h"
+#include "google/cloud/internal/debug_future_status.h"
+#include "google/cloud/internal/debug_string.h"
+#include "google/cloud/internal/debug_string_protobuf.h"
+#include "google/cloud/internal/debug_string_status.h"
 #include "google/cloud/internal/invoke_result.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
@@ -31,15 +36,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-
-std::string DebugString(google::protobuf::Message const& m,
-                        TracingOptions const& options);
-
-char const* DebugFutureStatus(std::future_status s);
-
-// Create a unique ID that can be used to match asynchronous requests/response
-// pairs.
-std::string RequestIdForLogging();
 
 template <typename T>
 struct IsStatusOr : public std::false_type {};
@@ -62,31 +58,30 @@ template <>
 struct IsFutureStatus<future<Status>> : public std::true_type {};
 
 template <
-    typename Functor, typename Request,
+    typename Functor, typename Request, typename Context,
     typename Result = google::cloud::internal::invoke_result_t<
-        Functor, grpc::ClientContext&, Request const&>,
+        Functor, Context&, Request const&>,
     typename std::enable_if<std::is_same<Result, google::cloud::Status>::value,
                             int>::type = 0>
-Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
-                  Request const& request, char const* where,
-                  TracingOptions const& options) {
+Result LogWrapper(Functor&& functor, Context& context, Request const& request,
+                  char const* where, TracingOptions const& options) {
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
   auto response = functor(context, request);
-  GCP_LOG(DEBUG) << where << "() >> status=" << response;
+  GCP_LOG(DEBUG) << where << "() >> status=" << DebugString(response, options);
   return response;
 }
 
-template <typename Functor, typename Request,
+template <typename Functor, typename Request, typename Context,
           typename Result = google::cloud::internal::invoke_result_t<
-              Functor, grpc::ClientContext&, Request const&>,
+              Functor, Context&, Request const&>,
           typename std::enable_if<IsStatusOr<Result>::value, int>::type = 0>
-Result LogWrapper(Functor&& functor, grpc::ClientContext& context,
-                  Request const& request, char const* where,
-                  TracingOptions const& options) {
+Result LogWrapper(Functor&& functor, Context& context, Request const& request,
+                  char const* where, TracingOptions const& options) {
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
   auto response = functor(context, request);
   if (!response) {
-    GCP_LOG(DEBUG) << where << "() >> status=" << response.status();
+    GCP_LOG(DEBUG) << where << "() >> status="
+                   << DebugString(response.status(), options);
   } else {
     GCP_LOG(DEBUG) << where
                    << "() >> response=" << DebugString(*response, options);
@@ -158,7 +153,8 @@ Result LogWrapper(Functor&& functor, Request request, char const* where,
   return response.then([prefix, options](decltype(response) f) {
     auto response = f.get();
     if (!response) {
-      GCP_LOG(DEBUG) << prefix << " >> status=" << response.status();
+      GCP_LOG(DEBUG) << prefix << " >> status="
+                     << DebugString(response.status(), options);
     } else {
       GCP_LOG(DEBUG) << prefix
                      << " >> response=" << DebugString(*response, options);
@@ -191,7 +187,8 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
   return response.then([prefix, options](decltype(response) f) {
     auto response = f.get();
     if (!response) {
-      GCP_LOG(DEBUG) << prefix << " >> status=" << response.status();
+      GCP_LOG(DEBUG) << prefix << " >> status="
+                     << DebugString(response.status(), options);
     } else {
       GCP_LOG(DEBUG) << prefix
                      << " >> response=" << DebugString(*response, options);
@@ -220,9 +217,10 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
   GCP_LOG(DEBUG) << prefix << " >> future_status="
                  << DebugFutureStatus(
                         response.wait_for(std::chrono::microseconds(0)));
-  return response.then([prefix](future<Status> f) {
+  return response.then([prefix, options](future<Status> f) {
     auto response = f.get();
-    GCP_LOG(DEBUG) << prefix << " >> response=" << response;
+    GCP_LOG(DEBUG) << prefix
+                   << " >> response=" << DebugString(response, options);
     return response;
   });
 }
@@ -238,9 +236,11 @@ Result LogWrapper(Functor&& functor, grpc::ClientContext* context,
   GCP_LOG(DEBUG) << where << "() << " << DebugString(request, options);
   auto status = functor(context, request, response);
   if (!status.ok()) {
-    GCP_LOG(DEBUG) << where << "() >> status=" << status.error_message();
+    GCP_LOG(DEBUG) << where << "() >> status="
+                   << DebugString(MakeStatusFromRpcError(status), options);
   } else {
-    GCP_LOG(DEBUG) << where << "() << " << DebugString(*response, options);
+    GCP_LOG(DEBUG) << where
+                   << "() >> response=" << DebugString(*response, options);
   }
   return status;
 }

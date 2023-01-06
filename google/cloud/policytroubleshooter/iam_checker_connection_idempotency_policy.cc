@@ -30,30 +30,20 @@ using ::google::cloud::Idempotency;
 IamCheckerConnectionIdempotencyPolicy::
     ~IamCheckerConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultIamCheckerConnectionIdempotencyPolicy
-    : public IamCheckerConnectionIdempotencyPolicy {
- public:
-  ~DefaultIamCheckerConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<IamCheckerConnectionIdempotencyPolicy>
+IamCheckerConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<IamCheckerConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<IamCheckerConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultIamCheckerConnectionIdempotencyPolicy>(
-        *this);
-  }
-
-  Idempotency TroubleshootIamPolicy(
-      google::cloud::policytroubleshooter::v1::
-          TroubleshootIamPolicyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency IamCheckerConnectionIdempotencyPolicy::TroubleshootIamPolicy(
+    google::cloud::policytroubleshooter::v1::
+        TroubleshootIamPolicyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<IamCheckerConnectionIdempotencyPolicy>
 MakeDefaultIamCheckerConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultIamCheckerConnectionIdempotencyPolicy>();
+  return absl::make_unique<IamCheckerConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

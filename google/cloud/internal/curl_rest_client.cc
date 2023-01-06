@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/curl_rest_client.h"
+#include "google/cloud/common_options.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
@@ -22,9 +23,7 @@
 #include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/curl_rest_response.h"
 #include "google/cloud/internal/oauth2_google_credentials.h"
-#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/unified_rest_credentials.h"
-#include "google/cloud/log.h"
 #include "absl/strings/match.h"
 #include "absl/strings/strip.h"
 
@@ -51,9 +50,7 @@ Status MakeRequestWithPayload(
       concatenated_payload += std::string(p.begin(), p.end());
     }
     encoded_payload = impl.MakeEscapedString(concatenated_payload);
-    if (!encoded_payload.empty()) {
-      impl.SetHeader(absl::StrCat("content-length: ", encoded_payload.size()));
-    }
+    impl.SetHeader(absl::StrCat("Content-Length: ", encoded_payload.size()));
     return impl.MakeRequest(http_method,
                             {{encoded_payload.data(), encoded_payload.size()}});
   }
@@ -62,9 +59,8 @@ Status MakeRequestWithPayload(
   for (auto const& p : payload) {
     content_length += p.size();
   }
-  if (content_length > 0) {
-    impl.SetHeader(absl::StrCat("content-length: ", content_length));
-  }
+
+  impl.SetHeader(absl::StrCat("Content-Length: ", content_length));
   return impl.MakeRequest(http_method, payload);
 }
 
@@ -78,17 +74,20 @@ std::string FormatHostHeaderValue(absl::string_view hostname) {
 }  // namespace
 
 std::string CurlRestClient::HostHeader(Options const& options,
-                                       std::string const& default_endpoint) {
+                                       std::string const& endpoint) {
   // If this function returns an empty string libcurl will fill out the `Host: `
   // header based on the URL. In most cases this is the correct value. The main
   // exception are applications using `VPC-SC`:
   //     https://cloud.google.com/vpc/docs/configure-private-google-access
-  // In those cases the application would target an URL like
+  // In those cases the application would target a URL like
   // `https://restricted.googleapis.com`, or `https://private.googleapis.com`,
-  // or their own proxy, and need to provide the target's service host.
-  auto const& endpoint = options.get<RestEndpointOption>();
-  if (absl::StrContains(endpoint, "googleapis.com"))
-    return absl::StrCat("Host: ", FormatHostHeaderValue(default_endpoint));
+  // or their own proxy, and need to provide the target's service host via the
+  // AuthorityOption.
+  auto const& auth = options.get<AuthorityOption>();
+  if (!auth.empty()) return absl::StrCat("Host: ", auth);
+  if (absl::StrContains(endpoint, "googleapis.com")) {
+    return absl::StrCat("Host: ", FormatHostHeaderValue(endpoint));
+  }
   return {};
 }
 
@@ -99,16 +98,19 @@ CurlRestClient::CurlRestClient(std::string endpoint_address,
       handle_factory_(std::move(factory)),
       x_goog_api_client_header_("x-goog-api-client: " +
                                 google::cloud::internal::ApiClientHeader()),
-      options_(std::move(options)) {}
+      options_(std::move(options)) {
+  if (options_.has<UnifiedCredentialsOption>()) {
+    credentials_ = MapCredentials(options_.get<UnifiedCredentialsOption>());
+  }
+}
 
 StatusOr<std::unique_ptr<CurlImpl>> CurlRestClient::CreateCurlImpl(
     RestRequest const& request) {
-  auto handle = GetCurlHandle(handle_factory_);
+  auto handle = CurlHandle::MakeFromPool(*handle_factory_);
   auto impl =
       absl::make_unique<CurlImpl>(std::move(handle), handle_factory_, options_);
-  if (options_.has<UnifiedCredentialsOption>()) {
-    auto credentials = MapCredentials(options_.get<UnifiedCredentialsOption>());
-    auto auth_header = credentials->AuthorizationHeader();
+  if (credentials_) {
+    auto auth_header = oauth2_internal::AuthorizationHeader(*credentials_);
     if (!auth_header.ok()) return std::move(auth_header).status();
     impl->SetHeader(auth_header.value());
   }
@@ -221,9 +223,16 @@ std::unique_ptr<RestClient> MakePooledRestClient(std::string endpoint_address,
   if (options.has<ConnectionPoolSizeOption>()) {
     pool_size = options.get<ConnectionPoolSizeOption>();
   }
-  auto factory = std::make_shared<PooledCurlHandleFactory>(pool_size, options);
+
+  if (pool_size > 0) {
+    auto pool = std::make_shared<PooledCurlHandleFactory>(pool_size, options);
+    return std::unique_ptr<RestClient>(new CurlRestClient(
+        std::move(endpoint_address), std::move(pool), std::move(options)));
+  }
+
+  auto pool = std::make_shared<DefaultCurlHandleFactory>(options);
   return std::unique_ptr<RestClient>(new CurlRestClient(
-      std::move(endpoint_address), std::move(factory), std::move(options)));
+      std::move(endpoint_address), std::move(pool), std::move(options)));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

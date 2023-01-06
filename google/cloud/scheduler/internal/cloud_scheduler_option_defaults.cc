@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options CloudSchedulerDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CLOUD_SCHEDULER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_CLOUD_SCHEDULER_AUTHORITY",
       "cloudscheduler.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

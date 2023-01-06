@@ -48,9 +48,19 @@ class BigtableTableAdminStub {
       grpc::ClientContext& context,
       google::bigtable::admin::v2::GetTableRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUpdateTable(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::bigtable::admin::v2::UpdateTableRequest const& request) = 0;
+
   virtual Status DeleteTable(
       grpc::ClientContext& context,
       google::bigtable::admin::v2::DeleteTableRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncUndeleteTable(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::bigtable::admin::v2::UndeleteTableRequest const& request) = 0;
 
   virtual StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
       grpc::ClientContext& context,
@@ -153,9 +163,20 @@ class DefaultBigtableTableAdminStub : public BigtableTableAdminStub {
       grpc::ClientContext& client_context,
       google::bigtable::admin::v2::GetTableRequest const& request) override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateTable(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::bigtable::admin::v2::UpdateTableRequest const& request) override;
+
   Status DeleteTable(
       grpc::ClientContext& client_context,
       google::bigtable::admin::v2::DeleteTableRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncUndeleteTable(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::bigtable::admin::v2::UndeleteTableRequest const& request)
+      override;
 
   StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
       grpc::ClientContext& client_context,

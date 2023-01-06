@@ -36,14 +36,13 @@ CloudBuildConnectionImpl::CloudBuildConnectionImpl(
     std::shared_ptr<cloudbuild_internal::CloudBuildStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), cloudbuild_internal::CloudBuildDefaultOptions(
-                                  CloudBuildConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      CloudBuildConnection::options())) {}
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnectionImpl::CreateBuild(
     google::devtools::cloudbuild::v1::CreateBuildRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::Build>(
       background_->cq(), request,
@@ -85,7 +84,7 @@ StreamRange<google::devtools::cloudbuild::v1::Build>
 CloudBuildConnectionImpl::ListBuilds(
     google::devtools::cloudbuild::v1::ListBuildsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<cloudbuild::CloudBuildRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -129,7 +128,7 @@ CloudBuildConnectionImpl::CancelBuild(
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnectionImpl::RetryBuild(
     google::devtools::cloudbuild::v1::RetryBuildRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::Build>(
       background_->cq(), request,
@@ -158,7 +157,7 @@ CloudBuildConnectionImpl::RetryBuild(
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnectionImpl::ApproveBuild(
     google::devtools::cloudbuild::v1::ApproveBuildRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::Build>(
       background_->cq(), request,
@@ -215,7 +214,7 @@ StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildConnectionImpl::ListBuildTriggers(
     google::devtools::cloudbuild::v1::ListBuildTriggersRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<cloudbuild::CloudBuildRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -276,7 +275,7 @@ CloudBuildConnectionImpl::UpdateBuildTrigger(
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
 CloudBuildConnectionImpl::RunBuildTrigger(
     google::devtools::cloudbuild::v1::RunBuildTriggerRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::Build>(
       background_->cq(), request,
@@ -322,7 +321,7 @@ CloudBuildConnectionImpl::ReceiveTriggerWebhook(
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildConnectionImpl::CreateWorkerPool(
     google::devtools::cloudbuild::v1::CreateWorkerPoolRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::WorkerPool>(
       background_->cq(), request,
@@ -365,7 +364,7 @@ future<StatusOr<
     google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>>
 CloudBuildConnectionImpl::DeleteWorkerPool(
     google::devtools::cloudbuild::v1::DeleteWorkerPoolRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::DeleteWorkerPoolOperationMetadata>(
       background_->cq(), request,
@@ -395,7 +394,7 @@ CloudBuildConnectionImpl::DeleteWorkerPool(
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
 CloudBuildConnectionImpl::UpdateWorkerPool(
     google::devtools::cloudbuild::v1::UpdateWorkerPoolRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::devtools::cloudbuild::v1::WorkerPool>(
       background_->cq(), request,
@@ -426,7 +425,7 @@ StreamRange<google::devtools::cloudbuild::v1::WorkerPool>
 CloudBuildConnectionImpl::ListWorkerPools(
     google::devtools::cloudbuild::v1::ListWorkerPoolsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<cloudbuild::CloudBuildRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

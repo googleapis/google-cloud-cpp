@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CURL_REST_CLIENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_CURL_REST_CLIENT_H
 
+#include "google/cloud/internal/oauth2_credentials.h"
 #include "google/cloud/internal/rest_client.h"
-#include "google/cloud/internal/rest_options.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
 #include "google/cloud/options.h"
@@ -34,11 +34,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class CurlHandleFactory;
 class CurlImpl;
 
-// RestClient implementation using libcurl.
+// RestClient implementation using libcurl. In order to maximize the performance
+// of the connection that libcurl manages, the endpoint that the client connects
+// to cannot be changed after creation. If a service needs to communicate with
+// multiple endpoints, use a different CurlRestClient for each such endpoint.
 class CurlRestClient : public RestClient {
  public:
   static std::string HostHeader(Options const& options,
-                                std::string const& default_endpoint);
+                                std::string const& endpoint);
   ~CurlRestClient() override = default;
 
   CurlRestClient(CurlRestClient const&) = delete;
@@ -68,7 +71,7 @@ class CurlRestClient : public RestClient {
   friend std::unique_ptr<RestClient> MakeDefaultRestClient(
       std::string endpoint_address, Options options);
 
-  friend class std::unique_ptr<RestClient> MakePooledRestClient(
+  friend std::unique_ptr<RestClient> MakePooledRestClient(
       std::string endpoint_address, Options options);
 
   CurlRestClient(std::string endpoint_address,
@@ -79,6 +82,7 @@ class CurlRestClient : public RestClient {
   std::string endpoint_address_;
   std::shared_ptr<CurlHandleFactory> handle_factory_;
   std::string x_goog_api_client_header_;
+  std::shared_ptr<oauth2_internal::Credentials> credentials_;
   Options options_;
 };
 

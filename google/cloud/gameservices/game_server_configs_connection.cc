@@ -23,6 +23,7 @@
 #include "google/cloud/gameservices/internal/game_server_configs_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -36,9 +37,9 @@ GameServerConfigsServiceConnection::~GameServerConfigsServiceConnection() =
     default;
 
 StreamRange<google::cloud::gaming::v1::GameServerConfig>
-    GameServerConfigsServiceConnection::ListGameServerConfigs(
-        google::cloud::gaming::v1::
-            ListGameServerConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+GameServerConfigsServiceConnection::ListGameServerConfigs(
+    google::cloud::gaming::v1::
+        ListGameServerConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gaming::v1::GameServerConfig>>();
 }
@@ -68,6 +69,7 @@ GameServerConfigsServiceConnection::DeleteGameServerConfig(
 std::shared_ptr<GameServerConfigsServiceConnection>
 MakeGameServerConfigsServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  GameServerConfigsServicePolicyOptionList>(
       options, __func__);
   options = gameservices_internal::GameServerConfigsServiceDefaultOptions(
@@ -82,25 +84,5 @@ MakeGameServerConfigsServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace gameservices_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<gameservices::GameServerConfigsServiceConnection>
-MakeGameServerConfigsServiceConnection(
-    std::shared_ptr<GameServerConfigsServiceStub> stub, Options options) {
-  options = GameServerConfigsServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      gameservices_internal::GameServerConfigsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gameservices_internal
 }  // namespace cloud
 }  // namespace google

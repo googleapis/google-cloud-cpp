@@ -27,6 +27,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::HasSubstr;
 using ::testing::Return;
@@ -92,12 +93,15 @@ TEST_F(CreateSignedUrlTest, V2SignRemote) {
   EXPECT_CALL(*mock_, SignBlob)
       .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
       .WillOnce([&expected_signed_blob](internal::SignBlobRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         return make_status_or(
             internal::SignBlobResponse{"test-key-id", expected_signed_blob});
       });
   auto client = ClientForMock();
   StatusOr<std::string> actual =
-      client.CreateV2SignedUrl("GET", "test-bucket", "test-object");
+      client.CreateV2SignedUrl("GET", "test-bucket", "test-object",
+                               Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_safe));
 }
@@ -235,12 +239,15 @@ TEST_F(CreateSignedUrlTest, V4SignRemote) {
   EXPECT_CALL(*mock_, SignBlob)
       .WillOnce(Return(StatusOr<internal::SignBlobResponse>(TransientError())))
       .WillOnce([&expected_signed_blob](internal::SignBlobRequest const&) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         return make_status_or(
             internal::SignBlobResponse{"test-key-id", expected_signed_blob});
       });
   auto client = ClientForMock();
   StatusOr<std::string> actual =
-      client.CreateV4SignedUrl("GET", "test-bucket", "test-object");
+      client.CreateV4SignedUrl("GET", "test-bucket", "test-object",
+                               Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_THAT(*actual, HasSubstr(expected_signed_blob_hex));
 }

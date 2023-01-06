@@ -23,6 +23,7 @@
 #include "google/cloud/automl/internal/auto_ml_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -153,15 +154,16 @@ AutoMlConnection::GetModelEvaluation(
 }
 
 StreamRange<google::cloud::automl::v1::ModelEvaluation>
-    AutoMlConnection::ListModelEvaluations(
-        google::cloud::automl::v1::
-            ListModelEvaluationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+AutoMlConnection::ListModelEvaluations(
+    google::cloud::automl::v1::
+        ListModelEvaluationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::automl::v1::ModelEvaluation>>();
 }
 
 std::shared_ptr<AutoMlConnection> MakeAutoMlConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AutoMlPolicyOptionList>(options, __func__);
   options = automl_internal::AutoMlDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -173,23 +175,5 @@ std::shared_ptr<AutoMlConnection> MakeAutoMlConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace automl
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace automl_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<automl::AutoMlConnection> MakeAutoMlConnection(
-    std::shared_ptr<AutoMlStub> stub, Options options) {
-  options = AutoMlDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<automl_internal::AutoMlConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace automl_internal
 }  // namespace cloud
 }  // namespace google

@@ -25,29 +25,43 @@ namespace internal {
 
 Options PopulateCommonOptions(Options opts, std::string const& endpoint_env_var,
                               std::string const& emulator_env_var,
+                              std::string const& authority_env_var,
                               std::string default_endpoint) {
+  if (!opts.has<EndpointOption>()) {
+    opts.set<EndpointOption>(default_endpoint);
+  }
+  if (!endpoint_env_var.empty()) {
+    auto e = internal::GetEnv(endpoint_env_var.c_str());
+    if (e && !e->empty()) {
+      opts.set<EndpointOption>(*std::move(e));
+    }
+  }
   if (!emulator_env_var.empty()) {
     auto e = internal::GetEnv(emulator_env_var.c_str());
     if (e && !e->empty()) {
       opts.set<EndpointOption>(*std::move(e));
     }
   }
-  if (!opts.has<EndpointOption>()) {
-    auto e = internal::GetEnv(endpoint_env_var.c_str());
-    if (e && !e->empty()) {
-      opts.set<EndpointOption>(*std::move(e));
-    } else {
-      opts.set<EndpointOption>(default_endpoint);
-    }
-  }
+
   if (!opts.has<AuthorityOption>()) {
     opts.set<AuthorityOption>(std::move(default_endpoint));
   }
+  if (!authority_env_var.empty()) {
+    auto e = internal::GetEnv(authority_env_var.c_str());
+    if (e && !e->empty()) {
+      opts.set<AuthorityOption>(*std::move(e));
+    }
+  }
+
   auto e = GetEnv("GOOGLE_CLOUD_CPP_USER_PROJECT");
-  if (e && !e->empty()) opts.set<UserProjectOption>(*std::move(e));
+  if (e && !e->empty()) {
+    opts.set<UserProjectOption>(*std::move(e));
+  }
+
   if (!opts.has<TracingComponentsOption>()) {
     opts.set<TracingComponentsOption>(internal::DefaultTracingComponents());
   }
+
   auto& products = opts.lookup<UserAgentProductsOption>();
   products.insert(products.begin(), UserAgentPrefix());
 

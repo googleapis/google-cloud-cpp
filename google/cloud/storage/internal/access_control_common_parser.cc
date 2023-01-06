@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/access_control_common_parser.h"
+// This file contains the implementation for deprecated functions, we need to
+// disable the warnings.
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 namespace google {
 namespace cloud {
@@ -35,7 +38,7 @@ Status AccessControlCommonParser::FromJson(AccessControlCommon& result,
   result.role_ = json.value("role", "");
   result.self_link_ = json.value("selfLink", "");
   if (json.count("projectTeam") != 0) {
-    auto tmp = json["projectTeam"];
+    auto const& tmp = json["projectTeam"];
     if (tmp.is_null()) return Status{};
     ProjectTeam p;
     p.project_number = tmp.value("projectNumber", "");

@@ -17,7 +17,6 @@
 // source: google/appengine/v1/appengine.proto
 
 #include "google/cloud/appengine/instances_client.h"
-#include "google/cloud/appengine/internal/instances_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 InstancesClient::InstancesClient(
     std::shared_ptr<InstancesConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), appengine_internal::InstancesDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 InstancesClient::~InstancesClient() = default;
 
 StreamRange<google::appengine::v1::Instance> InstancesClient::ListInstances(

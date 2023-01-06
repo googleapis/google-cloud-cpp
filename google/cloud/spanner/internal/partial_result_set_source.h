@@ -23,8 +23,10 @@
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include "absl/types/optional.h"
+#include <google/protobuf/repeated_field.h>
+#include <google/protobuf/struct.pb.h>
 #include <google/spanner/v1/spanner.pb.h>
-#include <grpcpp/grpcpp.h>
+#include <cstddef>
 #include <deque>
 #include <memory>
 #include <string>
@@ -37,7 +39,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * This class serves as a bridge between the gRPC `PartialResultSet` streaming
- * reader and the spanner `ResultSet`, which is used to iterate over the rows
+ * reader and the spanner `ResultSet`, and is used to iterate over the rows
  * returned from a read operation.
  */
 class PartialResultSetSource : public ResultSourceInterface {
@@ -60,19 +62,56 @@ class PartialResultSetSource : public ResultSourceInterface {
 
  private:
   explicit PartialResultSetSource(
-      std::unique_ptr<PartialResultSetReader> reader)
-      : options_(internal::CurrentOptions()), reader_(std::move(reader)) {}
+      std::unique_ptr<PartialResultSetReader> reader);
 
   Status ReadFromStream();
 
   Options options_;
   std::unique_ptr<PartialResultSetReader> reader_;
+
+  // The `PartialResultSet.metadata` we received in the first response, and
+  // the column names it contained (which will be shared between rows).
   absl::optional<google::spanner::v1::ResultSetMetadata> metadata_;
-  absl::optional<google::spanner::v1::ResultSetStats> stats_;
-  std::deque<google::protobuf::Value> buffer_;
-  absl::optional<google::protobuf::Value> chunk_;
   std::shared_ptr<std::vector<std::string>> columns_;
-  bool finished_ = false;
+
+  // The `PartialResultSet.stats` received in the last response, corresponding
+  // to the `QueryMode` implied by the particular streaming read/query type.
+  absl::optional<google::spanner::v1::ResultSetStats> stats_;
+
+  // `Row`s ready to be returned by `NextRow()`.
+  std::deque<spanner::Row> rows_;
+
+  // When engaged, the token we can use to resume the stream immediately after
+  // any data in (or previously in) `rows_`. When disengaged, we have already
+  // delivered data that would be replayed, so resumption is disabled until we
+  // see a new token.
+  absl::optional<std::string> resume_token_ = std::string{};
+
+  // `Value`s that could be combined into `rows_` when we have enough to fill
+  // an entire row, plus a token that would resume the stream after such rows.
+  google::protobuf::RepeatedPtrField<google::protobuf::Value> values_;
+
+  // Should the space used by `values_` get larger than this limit, we will
+  // move complete rows into `rows_` and disable resumption until we see a
+  // new token. During this time, an error in the stream will be returned by
+  // `NextRow()`. No individual row in a result set can exceed 100 MiB, so we
+  // set the default limit to twice that.
+  std::size_t values_space_limit_ = 2 * 100 * (std::size_t{1} << 20);
+
+  // `*values_.rbegin()` exists, but it is incomplete. The rest of the value
+  // will be sent in subsequent `PartialResultSet` messages.
+  bool values_back_incomplete_ = false;
+
+  // The state of our PartialResultSetReader.
+  enum : char {
+    // `Read()` has yet to return nullopt.
+    kReading,
+    // `Read()` has returned nullopt, but we are yet to call `Finish()`.
+    kEndOfStream,
+    // `Finish()` has been called, which means `NextRow()` has returned
+    // either an empty row or an error status.
+    kFinished,
+  } state_ = kReading;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

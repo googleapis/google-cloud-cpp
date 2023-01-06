@@ -137,6 +137,26 @@ void CreateBucketWithStorageClassLocation(
   (std::move(client), argv.at(0), argv.at(1), argv.at(2));
 }
 
+void CreateBucketDualRegion(google::cloud::storage::Client client,
+                            std::vector<std::string> const& argv) {
+  // [START storage_create_bucket_dual_region]
+  namespace gcs = ::google::cloud::storage;
+  using ::google::cloud::StatusOr;
+  [](gcs::Client client, std::string const& bucket_name,
+     std::string const& region_a, std::string const& region_b) {
+    auto metadata = client.CreateBucket(
+        bucket_name,
+        gcs::BucketMetadata().set_custom_placement_config(
+            gcs::BucketCustomPlacementConfig{{region_a, region_b}}));
+    if (!metadata) throw std::runtime_error(metadata.status().message());
+
+    std::cout << "Bucket " << metadata->name() << " created."
+              << "\nFull Metadata: " << *metadata << "\n";
+  }
+  // [END storage_create_bucket_dual_region]
+  (std::move(client), argv.at(0), argv.at(1), argv.at(2));
+}
+
 void GetBucketMetadata(google::cloud::storage::Client client,
                        std::vector<std::string> const& argv) {
   //! [get bucket metadata]
@@ -596,6 +616,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto generator = google::cloud::internal::DefaultPRNG(std::random_device{}());
   auto const bucket_name = examples::MakeRandomBucketName(generator);
   auto const rpo_bucket_name = examples::MakeRandomBucketName(generator);
+  auto const dual_bucket_name = examples::MakeRandomBucketName(generator);
   auto client = gcs::Client();
 
   // This is the only example that cleans up stale buckets. The examples run in
@@ -604,7 +625,7 @@ void RunAll(std::vector<std::string> const& argv) {
   auto const create_time_limit =
       std::chrono::system_clock::now() - std::chrono::hours(48);
   std::cout << "\nRemoving stale buckets for examples" << std::endl;
-  examples::RemoveStaleBuckets(client, "cloud-cpp-testing-examples",
+  examples::RemoveStaleBuckets(client, examples::BucketPrefix(),
                                create_time_limit);
 
   std::cout << "\nRunning ListBucketsForProject() example" << std::endl;
@@ -690,6 +711,11 @@ void RunAll(std::vector<std::string> const& argv) {
   std::cout << "\nRunning DeleteBucket() example [2]" << std::endl;
   DeleteBucket(client, {bucket_name});
 
+  std::cout << "\nRunning CreateBucketDualRegion example" << std::endl;
+  CreateBucketDualRegion(client, {dual_bucket_name, "us-east4", "us-central1"});
+
+  (void)client.DeleteBucket(dual_bucket_name);
+
   std::cout << "\nRunning CreateBucketWithStorageClassLocation() example"
             << std::endl;
   CreateBucketWithStorageClassLocation(client, {bucket_name, "STANDARD", "US"});
@@ -722,6 +748,8 @@ int main(int argc, char* argv[]) {
       make_entry("create-bucket-with-storage-class-location",
                  {"<storage-class>", "<location>"},
                  CreateBucketWithStorageClassLocation),
+      make_entry("create-bucket-dual-region", {"<region-a>", "<region-b>"},
+                 CreateBucketDualRegion),
       make_entry("get-bucket-metadata", {}, GetBucketMetadata),
       make_entry("delete-bucket", {}, DeleteBucket),
       make_entry("change-default-storage-class", {"<new-class>"},

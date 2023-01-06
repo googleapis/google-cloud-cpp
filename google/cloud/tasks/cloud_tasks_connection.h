@@ -45,6 +45,18 @@ using CloudTasksLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         tasks_internal::CloudTasksRetryTraits>;
 
+/**
+ * The `CloudTasksConnection` object for `CloudTasksClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CloudTasksClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CloudTasksClient`.
+ *
+ * To create a concrete instance, see `MakeCloudTasksConnection()`.
+ *
+ * For mocking, see `tasks_mocks::MockCloudTasksConnection`.
+ */
 class CloudTasksConnection {
  public:
   virtual ~CloudTasksConnection() = 0;
@@ -100,24 +112,32 @@ class CloudTasksConnection {
       google::cloud::tasks::v2::RunTaskRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `CloudTasksConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of CloudTasksClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `CloudTasksConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::tasks::CloudTasksPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `CloudTasksConnection` created by
+ * this function.
+ */
 std::shared_ptr<CloudTasksConnection> MakeCloudTasksConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace tasks_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<tasks::CloudTasksConnection> MakeCloudTasksConnection(
-    std::shared_ptr<CloudTasksStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace tasks_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -23,6 +23,7 @@
 #include "google/cloud/workflows/internal/executions_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ExecutionsConnection::~ExecutionsConnection() = default;
 
 StreamRange<google::cloud::workflows::executions::v1::Execution>
-    ExecutionsConnection::ListExecutions(
-        google::cloud::workflows::executions::v1::
-            ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ExecutionsConnection::ListExecutions(
+    google::cloud::workflows::executions::v1::
+        ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::workflows::executions::v1::Execution>>();
 }
@@ -63,6 +64,7 @@ ExecutionsConnection::CancelExecution(
 std::shared_ptr<ExecutionsConnection> MakeExecutionsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ExecutionsPolicyOptionList>(options, __func__);
   options = workflows_internal::ExecutionsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -74,23 +76,5 @@ std::shared_ptr<ExecutionsConnection> MakeExecutionsConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace workflows_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<workflows::ExecutionsConnection> MakeExecutionsConnection(
-    std::shared_ptr<ExecutionsStub> stub, Options options) {
-  options = ExecutionsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<workflows_internal::ExecutionsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace workflows_internal
 }  // namespace cloud
 }  // namespace google

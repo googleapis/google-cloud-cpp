@@ -3,12 +3,13 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^(master|main|v\d+\..*)$
+    branch: ^main$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 name: quickstart-production-pr
 substitutions:
   _BUILD_NAME: quickstart-production
-  _DISTRO: fedora-34
+  _DISTRO: fedora-36-cmake
   _TRIGGER_TYPE: pr
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr

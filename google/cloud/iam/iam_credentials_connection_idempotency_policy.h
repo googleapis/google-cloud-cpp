@@ -32,24 +32,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class IAMCredentialsConnectionIdempotencyPolicy {
  public:
-  virtual ~IAMCredentialsConnectionIdempotencyPolicy() = 0;
+  virtual ~IAMCredentialsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency GenerateAccessToken(
-      google::iam::credentials::v1::GenerateAccessTokenRequest const&
-          request) = 0;
+      google::iam::credentials::v1::GenerateAccessTokenRequest const& request);
 
   virtual google::cloud::Idempotency GenerateIdToken(
-      google::iam::credentials::v1::GenerateIdTokenRequest const& request) = 0;
+      google::iam::credentials::v1::GenerateIdTokenRequest const& request);
 
   virtual google::cloud::Idempotency SignBlob(
-      google::iam::credentials::v1::SignBlobRequest const& request) = 0;
+      google::iam::credentials::v1::SignBlobRequest const& request);
 
   virtual google::cloud::Idempotency SignJwt(
-      google::iam::credentials::v1::SignJwtRequest const& request) = 0;
+      google::iam::credentials::v1::SignJwtRequest const& request);
 };
 
 std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>

@@ -122,6 +122,11 @@ class AdminServiceConnectionImpl : public pubsublite::AdminServiceConnection {
       google::cloud::pubsublite::v1::ListReservationTopicsRequest request)
       override;
 
+  future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+  AsyncGetTopicPartitions(
+      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request)
+      override;
+
  private:
   std::unique_ptr<pubsublite::AdminServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

@@ -17,6 +17,7 @@
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/api_client_header.h"
 #include "google/cloud/internal/background_threads_impl.h"
+#include "google/cloud/testing_util/mock_minimal_iam_credentials_stub.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/testing_util/validate_metadata.h"
@@ -31,28 +32,23 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::MockMinimalIamCredentialsStub;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::cloud::testing_util::ValidateMetadataFixture;
 using ::google::iam::credentials::v1::GenerateAccessTokenRequest;
 using ::google::iam::credentials::v1::GenerateAccessTokenResponse;
+using ::google::iam::credentials::v1::SignBlobRequest;
+using ::google::iam::credentials::v1::SignBlobResponse;
 using ::testing::Contains;
 using ::testing::HasSubstr;
-
-class MockMinimalIamCredentialsStub : public MinimalIamCredentialsStub {
- public:
-  MOCK_METHOD(future<StatusOr<GenerateAccessTokenResponse>>,
-              AsyncGenerateAccessToken,
-              (CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-               GenerateAccessTokenRequest const&),
-              (override));
-};
+using ::testing::Return;
 
 class MinimalIamCredentialsStubTest : public ::testing::Test {
  protected:
-  Status IsContextMDValid(grpc::ClientContext& context,
-                          std::string const& method) {
+  void IsContextMDValid(grpc::ClientContext& context, std::string const& method,
+                        google::protobuf::Message const& request) {
     return validate_metadata_fixture_.IsContextMDValid(
-        context, method, google::cloud::internal::ApiClientHeader());
+        context, method, request, google::cloud::internal::ApiClientHeader());
   }
 
   static Status TransientError() {
@@ -112,6 +108,42 @@ TEST_F(MinimalIamCredentialsStubTest, AsyncGenerateAccessTokenNoLogging) {
   EXPECT_THAT(lines, Not(Contains(HasSubstr("AsyncGenerateAccessToken"))));
 }
 
+TEST_F(MinimalIamCredentialsStubTest, SignBlobLogging) {
+  auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
+  SignBlobResponse expected;
+  expected.set_signed_blob("test-only-signed");
+  EXPECT_CALL(*mock, SignBlob).WillOnce(Return(expected));
+  auto stub = DecorateMinimalIamCredentialsStub(
+      mock, Options{}
+                .set<TracingComponentsOption>({"rpc"})
+                .set<GrpcTracingOptionsOption>(
+                    TracingOptions{}.SetOptions("single_line_mode")));
+  SignBlobRequest request;
+  request.set_name("projects/-/serviceAccounts/test-only-sa@not-valid");
+  grpc::ClientContext context;
+  auto response = stub->SignBlob(context, request);
+  ASSERT_THAT(response, IsOk());
+  auto const lines = log_.ExtractLines();
+  EXPECT_THAT(lines, Contains(HasSubstr("SignBlob")));
+  EXPECT_THAT(lines, Contains(HasSubstr("test-only-signed")));
+}
+
+TEST_F(MinimalIamCredentialsStubTest, SignBlobNoLogging) {
+  auto mock = std::make_shared<MockMinimalIamCredentialsStub>();
+  SignBlobResponse expected;
+  expected.set_signed_blob("test-only-signed");
+  EXPECT_CALL(*mock, SignBlob).WillOnce(Return(expected));
+  auto stub = DecorateMinimalIamCredentialsStub(
+      mock, Options{}.set<TracingComponentsOption>({}));
+  SignBlobRequest request;
+  request.set_name("projects/-/serviceAccounts/test-only-sa@not-valid");
+  grpc::ClientContext context;
+  auto response = stub->SignBlob(context, request);
+  ASSERT_THAT(response, IsOk());
+  auto const lines = log_.ExtractLines();
+  EXPECT_THAT(lines, Not(Contains(HasSubstr("SignBlob"))));
+}
+
 TEST_F(MinimalIamCredentialsStubTest, Invalid) {
   auto stub = MakeMinimalIamCredentialsStub(
       CreateAuthenticationStrategy(grpc::InsecureChannelCredentials()),
@@ -134,10 +166,11 @@ TEST_F(MinimalIamCredentialsStubTest,
   EXPECT_CALL(*mock, AsyncGenerateAccessToken)
       .WillOnce([this](CompletionQueue&,
                        std::unique_ptr<grpc::ClientContext> context,
-                       GenerateAccessTokenRequest const&) {
-        EXPECT_STATUS_OK(IsContextMDValid(
+                       GenerateAccessTokenRequest const& request) {
+        IsContextMDValid(
             *context,
-            "google.iam.credentials.v1.IAMCredentials.GenerateAccessToken"));
+            "google.iam.credentials.v1.IAMCredentials.GenerateAccessToken",
+            request);
         GenerateAccessTokenResponse response;
         response.set_access_token("test-only-token");
         return make_ready_future(make_status_or(response));

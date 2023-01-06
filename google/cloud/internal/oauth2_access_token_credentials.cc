@@ -20,13 +20,12 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AccessTokenCredentials::AccessTokenCredentials(
-    google::cloud::internal::AccessToken const& access_token)
-    : header_(std::make_pair("Authorization", "Bearer " + access_token.token)) {
-}
+    google::cloud::internal::AccessToken access_token)
+    : access_token_(std::move(access_token)) {}
 
-StatusOr<std::pair<std::string, std::string>>
-AccessTokenCredentials::AuthorizationHeader() {
-  return header_;
+StatusOr<internal::AccessToken> AccessTokenCredentials::GetToken(
+    std::chrono::system_clock::time_point /*tp*/) {
+  return access_token_;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

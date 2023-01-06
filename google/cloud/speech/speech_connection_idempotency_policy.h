@@ -32,17 +32,16 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class SpeechConnectionIdempotencyPolicy {
  public:
-  virtual ~SpeechConnectionIdempotencyPolicy() = 0;
+  virtual ~SpeechConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
-  virtual std::unique_ptr<SpeechConnectionIdempotencyPolicy> clone() const = 0;
+  virtual std::unique_ptr<SpeechConnectionIdempotencyPolicy> clone() const;
 
   virtual google::cloud::Idempotency Recognize(
-      google::cloud::speech::v1::RecognizeRequest const& request) = 0;
+      google::cloud::speech::v1::RecognizeRequest const& request);
 
   virtual google::cloud::Idempotency LongRunningRecognize(
-      google::cloud::speech::v1::LongRunningRecognizeRequest const&
-          request) = 0;
+      google::cloud::speech::v1::LongRunningRecognizeRequest const& request);
 };
 
 std::unique_ptr<SpeechConnectionIdempotencyPolicy>

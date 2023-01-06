@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options ArtifactRegistryDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_ARTIFACT_REGISTRY_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_ARTIFACT_REGISTRY_AUTHORITY",
       "artifactregistry.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
@@ -48,6 +49,18 @@ Options ArtifactRegistryDefaultOptions(Options options) {
     options.set<artifactregistry::ArtifactRegistryBackoffPolicyOption>(
         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                  std::chrono::minutes(5), kBackoffScaling)
+            .clone());
+  }
+  if (!options.has<artifactregistry::ArtifactRegistryPollingPolicyOption>()) {
+    options.set<artifactregistry::ArtifactRegistryPollingPolicyOption>(
+        GenericPollingPolicy<
+            artifactregistry::ArtifactRegistryRetryPolicyOption::Type,
+            artifactregistry::ArtifactRegistryBackoffPolicyOption::Type>(
+            options.get<artifactregistry::ArtifactRegistryRetryPolicyOption>()
+                ->clone(),
+            options
+                .get<artifactregistry::ArtifactRegistryBackoffPolicyOption>()
+                ->clone())
             .clone());
   }
   if (!options.has<artifactregistry::

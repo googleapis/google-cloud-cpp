@@ -35,11 +35,15 @@ grpc::ChannelArguments MakeChannelArguments(Options const& opts,
   // larger than 10MiB, but there is the overhead in the protos, and the gRPC
   // overhead (auth tokens, headers, etc) to consider. We set the limits to
   // 16MiB because (a) it is a round number, (b) it generously exceeds any
-  // reasonable overhead, and (c) typically applications have dozens of channels
-  // and rarely more than 100, so even if too generous it is unlikely to be
-  // material.
+  // reasonable overhead, and (c) while applications open many channels, their
+  // total is rarely more than 100, so even if too generous it is unlikely to be
+  // material. i.e. 6 MiB * 100 is not enough to worry about setting a more
+  // strict limit.
   args.SetMaxSendMessageSize(16 * 1024 * 1024);
   args.SetMaxReceiveMessageSize(16 * 1024 * 1024);
+  // Pub/Sub messages with exactly-once delivery may have a larger metadata size
+  // than is allowed by default.  Increase to 4 MiB.
+  args.SetInt("grpc.max_metadata_size", 4 * 1024 * 1024);
   return args;
 }
 

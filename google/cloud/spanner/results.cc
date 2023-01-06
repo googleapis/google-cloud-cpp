@@ -39,7 +39,8 @@ absl::optional<Timestamp> GetReadTimestamp(
 
 std::int64_t GetRowsModified(
     std::unique_ptr<spanner_internal::ResultSourceInterface> const& source) {
-  return source->Stats()->row_count_exact();
+  auto stats = source->Stats();
+  return stats ? stats->row_count_exact() : 0;
 }
 
 absl::optional<std::unordered_map<std::string, std::string>> GetExecutionStats(
@@ -66,11 +67,11 @@ absl::optional<spanner::ExecutionPlan> GetExecutionPlan(
 }
 }  // namespace
 
-absl::optional<Timestamp> RowStream::ReadTimestamp() const {
-  return GetReadTimestamp(source_);
+std::int64_t RowStream::RowsModified() const {
+  return GetRowsModified(source_);
 }
 
-absl::optional<Timestamp> ProfileQueryResult::ReadTimestamp() const {
+absl::optional<Timestamp> RowStream::ReadTimestamp() const {
   return GetReadTimestamp(source_);
 }
 
@@ -78,8 +79,8 @@ std::int64_t DmlResult::RowsModified() const {
   return GetRowsModified(source_);
 }
 
-std::int64_t ProfileDmlResult::RowsModified() const {
-  return GetRowsModified(source_);
+absl::optional<Timestamp> ProfileQueryResult::ReadTimestamp() const {
+  return GetReadTimestamp(source_);
 }
 
 absl::optional<std::unordered_map<std::string, std::string>>
@@ -90,6 +91,10 @@ ProfileQueryResult::ExecutionStats() const {
 absl::optional<spanner::ExecutionPlan> ProfileQueryResult::ExecutionPlan()
     const {
   return GetExecutionPlan(source_);
+}
+
+std::int64_t ProfileDmlResult::RowsModified() const {
+  return GetRowsModified(source_);
 }
 
 absl::optional<std::unordered_map<std::string, std::string>>

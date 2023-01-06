@@ -18,7 +18,6 @@
 
 #include "google/cloud/resourcemanager/folders_client.h"
 #include "google/cloud/resourcemanager/folders_options.h"
-#include "google/cloud/resourcemanager/internal/folders_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,9 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FoldersClient::FoldersClient(std::shared_ptr<FoldersConnection> connection,
                              Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), resourcemanager_internal::FoldersDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 FoldersClient::~FoldersClient() = default;
 
 StatusOr<google::cloud::resourcemanager::v3::Folder> FoldersClient::GetFolder(
@@ -201,7 +199,10 @@ StatusOr<google::iam::v1::Policy> FoldersClient::SetIamPolicy(
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
   auto backoff_policy =
-      internal::CurrentOptions().get<FoldersBackoffPolicyOption>()->clone();
+      internal::CurrentOptions().get<FoldersBackoffPolicyOption>();
+  if (backoff_policy != nullptr) {
+    backoff_policy = backoff_policy->clone();
+  }
   for (;;) {
     auto recent = connection_->GetIamPolicy(get_request);
     if (!recent) {
@@ -213,7 +214,8 @@ StatusOr<google::iam::v1::Policy> FoldersClient::SetIamPolicy(
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result || result.status().code() != StatusCode::kAborted) {
+    if (result || result.status().code() != StatusCode::kAborted ||
+        backoff_policy == nullptr) {
       return result;
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());

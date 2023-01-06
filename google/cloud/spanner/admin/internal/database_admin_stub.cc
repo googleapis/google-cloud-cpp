@@ -161,6 +161,21 @@ DefaultDatabaseAdminStub::AsyncCreateBackup(
       request, std::move(context));
 }
 
+future<StatusOr<google::longrunning::Operation>>
+DefaultDatabaseAdminStub::AsyncCopyBackup(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::spanner::admin::database::v1::CopyBackupRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::spanner::admin::database::v1::CopyBackupRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncCopyBackup(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 StatusOr<google::spanner::admin::database::v1::Backup>
 DefaultDatabaseAdminStub::GetBackup(
     grpc::ClientContext& client_context,
@@ -246,6 +261,20 @@ DefaultDatabaseAdminStub::ListBackupOperations(
   google::spanner::admin::database::v1::ListBackupOperationsResponse response;
   auto status =
       grpc_stub_->ListBackupOperations(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::spanner::admin::database::v1::ListDatabaseRolesResponse>
+DefaultDatabaseAdminStub::ListDatabaseRoles(
+    grpc::ClientContext& client_context,
+    google::spanner::admin::database::v1::ListDatabaseRolesRequest const&
+        request) {
+  google::spanner::admin::database::v1::ListDatabaseRolesResponse response;
+  auto status =
+      grpc_stub_->ListDatabaseRoles(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

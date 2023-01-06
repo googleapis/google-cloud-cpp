@@ -72,40 +72,6 @@ TEST(SpannerAuthTest, BatchCreateSessions) {
   EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
 }
 
-TEST(SpannerAuthTest, GetSession) {
-  auto mock = std::make_shared<MockSpannerStub>();
-  EXPECT_CALL(*mock, GetSession)
-      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
-
-  SpannerAuth under_test(MakeTypicalMockAuth(), mock);
-  google::spanner::v1::GetSessionRequest request;
-  grpc::ClientContext ctx;
-  auto auth_failure = under_test.GetSession(ctx, request);
-  EXPECT_THAT(ctx.credentials(), IsNull());
-  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
-
-  auto auth_success = under_test.GetSession(ctx, request);
-  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
-  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
-}
-
-TEST(SpannerAuthTest, ListSessions) {
-  auto mock = std::make_shared<MockSpannerStub>();
-  EXPECT_CALL(*mock, ListSessions)
-      .WillOnce(Return(Status(StatusCode::kPermissionDenied, "uh-oh")));
-
-  SpannerAuth under_test(MakeTypicalMockAuth(), mock);
-  google::spanner::v1::ListSessionsRequest request;
-  grpc::ClientContext ctx;
-  auto auth_failure = under_test.ListSessions(ctx, request);
-  EXPECT_THAT(ctx.credentials(), IsNull());
-  EXPECT_THAT(auth_failure, StatusIs(StatusCode::kInvalidArgument));
-
-  auto auth_success = under_test.ListSessions(ctx, request);
-  EXPECT_THAT(ctx.credentials(), Not(IsNull()));
-  EXPECT_THAT(auth_success, StatusIs(StatusCode::kPermissionDenied));
-}
-
 TEST(SpannerAuthTest, DeleteSession) {
   auto mock = std::make_shared<MockSpannerStub>();
   EXPECT_CALL(*mock, DeleteSession)

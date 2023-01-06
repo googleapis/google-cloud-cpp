@@ -37,13 +37,27 @@ add_library(
     internal/connection_impl_generator.h
     internal/descriptor_utils.cc
     internal/descriptor_utils.h
+    internal/forwarding_client_generator.cc
+    internal/forwarding_client_generator.h
+    internal/forwarding_connection_generator.cc
+    internal/forwarding_connection_generator.h
+    internal/forwarding_idempotency_policy_generator.cc
+    internal/forwarding_idempotency_policy_generator.h
+    internal/forwarding_mock_connection_generator.cc
+    internal/forwarding_mock_connection_generator.h
+    internal/forwarding_options_generator.cc
+    internal/forwarding_options_generator.h
     internal/generator_interface.h
     internal/idempotency_policy_generator.cc
     internal/idempotency_policy_generator.h
     internal/logging_decorator_generator.cc
     internal/logging_decorator_generator.h
+    internal/logging_decorator_rest_generator.cc
+    internal/logging_decorator_rest_generator.h
     internal/metadata_decorator_generator.cc
     internal/metadata_decorator_generator.h
+    internal/metadata_decorator_rest_generator.cc
+    internal/metadata_decorator_rest_generator.h
     internal/mock_connection_generator.cc
     internal/mock_connection_generator.h
     internal/option_defaults_generator.cc
@@ -55,14 +69,24 @@ add_library(
     internal/printer.h
     internal/retry_traits_generator.cc
     internal/retry_traits_generator.h
+    internal/round_robin_decorator_generator.cc
+    internal/round_robin_decorator_generator.h
+    internal/sample_generator.cc
+    internal/sample_generator.h
     internal/scaffold_generator.cc
     internal/scaffold_generator.h
     internal/service_code_generator.cc
     internal/service_code_generator.h
     internal/stub_factory_generator.cc
     internal/stub_factory_generator.h
+    internal/stub_factory_rest_generator.cc
+    internal/stub_factory_rest_generator.h
     internal/stub_generator.cc
-    internal/stub_generator.h)
+    internal/stub_generator.h
+    internal/stub_generator_base.cc
+    internal/stub_generator_base.h
+    internal/stub_rest_generator.cc
+    internal/stub_rest_generator.h)
 target_include_directories(google_cloud_cpp_generator
                            PUBLIC ${PROJECT_SOURCE_DIR} ${PROJECT_BINARY_DIR})
 target_link_libraries(
@@ -71,6 +95,7 @@ target_link_libraries(
            google-cloud-cpp::common
            nlohmann_json::nlohmann_json
            google-cloud-cpp::api_client_protos
+           google-cloud-cpp::api_routing_protos
            google-cloud-cpp::longrunning_operations_protos
            absl::str_format
            protobuf::libprotoc)
@@ -149,8 +174,7 @@ function (google_cloud_cpp_generator_define_tests)
 
     # Generate a target for each unit test.
     foreach (fname ${google_cloud_cpp_generator_unit_tests})
-        google_cloud_cpp_add_executable(target "google_cloud_cpp_generator"
-                                        "${fname}")
+        google_cloud_cpp_add_executable(target "generator" "${fname}")
         target_link_libraries(
             ${target}
             PRIVATE google_cloud_cpp_generator

@@ -37,14 +37,13 @@ ServiceUsageConnectionImpl::ServiceUsageConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), serviceusage_internal::ServiceUsageDefaultOptions(
-                                  ServiceUsageConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ServiceUsageConnection::options())) {}
 
 future<StatusOr<google::api::serviceusage::v1::EnableServiceResponse>>
 ServiceUsageConnectionImpl::EnableService(
     google::api::serviceusage::v1::EnableServiceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::serviceusage::v1::EnableServiceResponse>(
       background_->cq(), request,
@@ -73,7 +72,7 @@ ServiceUsageConnectionImpl::EnableService(
 future<StatusOr<google::api::serviceusage::v1::DisableServiceResponse>>
 ServiceUsageConnectionImpl::DisableService(
     google::api::serviceusage::v1::DisableServiceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::serviceusage::v1::DisableServiceResponse>(
       background_->cq(), request,
@@ -117,7 +116,7 @@ StreamRange<google::api::serviceusage::v1::Service>
 ServiceUsageConnectionImpl::ListServices(
     google::api::serviceusage::v1::ListServicesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<serviceusage::ServiceUsageRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -149,7 +148,7 @@ ServiceUsageConnectionImpl::ListServices(
 future<StatusOr<google::api::serviceusage::v1::BatchEnableServicesResponse>>
 ServiceUsageConnectionImpl::BatchEnableServices(
     google::api::serviceusage::v1::BatchEnableServicesRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::api::serviceusage::v1::BatchEnableServicesResponse>(
       background_->cq(), request,

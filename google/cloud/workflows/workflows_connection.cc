@@ -23,6 +23,7 @@
 #include "google/cloud/workflows/workflows_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 WorkflowsConnection::~WorkflowsConnection() = default;
 
 StreamRange<google::cloud::workflows::v1::Workflow>
-    WorkflowsConnection::ListWorkflows(
-        google::cloud::workflows::v1::
-            ListWorkflowsRequest) {  // NOLINT(performance-unnecessary-value-param)
+WorkflowsConnection::ListWorkflows(
+    google::cloud::workflows::v1::
+        ListWorkflowsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::workflows::v1::Workflow>>();
 }
@@ -74,6 +75,7 @@ WorkflowsConnection::UpdateWorkflow(
 
 std::shared_ptr<WorkflowsConnection> MakeWorkflowsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  WorkflowsPolicyOptionList>(options, __func__);
   options = workflows_internal::WorkflowsDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -85,23 +87,5 @@ std::shared_ptr<WorkflowsConnection> MakeWorkflowsConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace workflows
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace workflows_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<workflows::WorkflowsConnection> MakeWorkflowsConnection(
-    std::shared_ptr<WorkflowsStub> stub, Options options) {
-  options = WorkflowsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<workflows_internal::WorkflowsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace workflows_internal
 }  // namespace cloud
 }  // namespace google

@@ -29,7 +29,7 @@ namespace google {
  */
 namespace cloud {
 /**
- * Contains all the Cloud Pubsub C++ client types and functions.
+ * Contains all the Cloud Pub/Sub C++ client types and functions.
  */
 namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN

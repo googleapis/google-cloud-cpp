@@ -30,29 +30,19 @@ using ::google::cloud::Idempotency;
 QueryServiceConnectionIdempotencyPolicy::
     ~QueryServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultQueryServiceConnectionIdempotencyPolicy
-    : public QueryServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultQueryServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<QueryServiceConnectionIdempotencyPolicy>
+QueryServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<QueryServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<QueryServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultQueryServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
-
-  Idempotency QueryTimeSeries(
-      google::monitoring::v3::QueryTimeSeriesRequest) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency QueryServiceConnectionIdempotencyPolicy::QueryTimeSeries(
+    google::monitoring::v3::QueryTimeSeriesRequest) {  // NOLINT
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<QueryServiceConnectionIdempotencyPolicy>
 MakeDefaultQueryServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultQueryServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<QueryServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

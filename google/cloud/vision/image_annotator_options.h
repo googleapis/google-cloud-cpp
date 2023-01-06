@@ -31,26 +31,48 @@ namespace cloud {
 namespace vision {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-vision-options
+ */
 struct ImageAnnotatorRetryPolicyOption {
   using Type = std::shared_ptr<ImageAnnotatorRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-vision-options
+ */
 struct ImageAnnotatorBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct ImageAnnotatorPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-vision-options
+ */
 struct ImageAnnotatorConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<ImageAnnotatorConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-vision-options
+ */
+struct ImageAnnotatorPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to ImageAnnotator.
+ *
+ * @ingroup google-cloud-vision-options
+ */
 using ImageAnnotatorPolicyOptionList =
     OptionList<ImageAnnotatorRetryPolicyOption,
                ImageAnnotatorBackoffPolicyOption,

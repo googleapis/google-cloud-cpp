@@ -194,6 +194,30 @@ Status DefaultIAMStub::DeleteServiceAccountKey(
   return google::cloud::Status();
 }
 
+Status DefaultIAMStub::DisableServiceAccountKey(
+    grpc::ClientContext& client_context,
+    google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DisableServiceAccountKey(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+Status DefaultIAMStub::EnableServiceAccountKey(
+    grpc::ClientContext& client_context,
+    google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->EnableServiceAccountKey(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
 StatusOr<google::iam::v1::Policy> DefaultIAMStub::GetIamPolicy(
     grpc::ClientContext& client_context,
     google::iam::v1::GetIamPolicyRequest const& request) {

@@ -31,21 +31,38 @@ namespace cloud {
 namespace resourcemanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
 struct OrganizationsRetryPolicyOption {
   using Type = std::shared_ptr<OrganizationsRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
 struct OrganizationsBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
 struct OrganizationsConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<OrganizationsConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to Organizations.
+ *
+ * @ingroup google-cloud-resourcemanager-options
+ */
 using OrganizationsPolicyOptionList =
     OptionList<OrganizationsRetryPolicyOption, OrganizationsBackoffPolicyOption,
                OrganizationsConnectionIdempotencyPolicyOption>;

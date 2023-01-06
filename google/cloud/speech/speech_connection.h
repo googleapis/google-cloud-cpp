@@ -23,7 +23,6 @@
 #include "google/cloud/speech/internal/speech_stub.h"
 #include "google/cloud/speech/speech_connection_idempotency_policy.h"
 #include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
 #include "google/cloud/future.h"
 #include "google/cloud/internal/async_read_write_stream_impl.h"
 #include "google/cloud/options.h"
@@ -49,6 +48,18 @@ using SpeechLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         speech_internal::SpeechRetryTraits>;
 
+/**
+ * The `SpeechConnection` object for `SpeechClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `SpeechClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SpeechClient`.
+ *
+ * To create a concrete instance, see `MakeSpeechConnection()`.
+ *
+ * For mocking, see `speech_mocks::MockSpeechConnection`.
+ */
 class SpeechConnection {
  public:
   virtual ~SpeechConnection() = 0;
@@ -66,26 +77,34 @@ class SpeechConnection {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::speech::v1::StreamingRecognizeRequest,
       google::cloud::speech::v1::StreamingRecognizeResponse>>
-      AsyncStreamingRecognize(ExperimentalTag);
+  AsyncStreamingRecognize();
 };
 
+/**
+ * A factory function to construct an object of type `SpeechConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of SpeechClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `SpeechConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::speech::SpeechPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `SpeechConnection` created by
+ * this function.
+ */
 std::shared_ptr<SpeechConnection> MakeSpeechConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace speech
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace speech_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<speech::SpeechConnection> MakeSpeechConnection(
-    std::shared_ptr<SpeechStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace speech_internal
 }  // namespace cloud
 }  // namespace google
 

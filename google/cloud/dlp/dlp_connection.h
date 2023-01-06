@@ -45,6 +45,18 @@ using DlpServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dlp_internal::DlpServiceRetryTraits>;
 
+/**
+ * The `DlpServiceConnection` object for `DlpServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DlpServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DlpServiceClient`.
+ *
+ * To create a concrete instance, see `MakeDlpServiceConnection()`.
+ *
+ * For mocking, see `dlp_mocks::MockDlpServiceConnection`.
+ */
 class DlpServiceConnection {
  public:
   virtual ~DlpServiceConnection() = 0;
@@ -170,24 +182,32 @@ class DlpServiceConnection {
       google::privacy::dlp::v2::FinishDlpJobRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `DlpServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of DlpServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `DlpServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::dlp::DlpServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `DlpServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<DlpServiceConnection> MakeDlpServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace dlp_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<dlp::DlpServiceConnection> MakeDlpServiceConnection(
-    std::shared_ptr<DlpServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dlp_internal
 }  // namespace cloud
 }  // namespace google
 

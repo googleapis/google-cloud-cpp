@@ -20,120 +20,30 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_GOLDEN_THING_ADMIN_CONNECTION_H
 
 #include "generator/integration_tests/golden/golden_thing_admin_connection_idempotency_policy.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_retry_traits.h"
-#include "generator/integration_tests/golden/internal/golden_thing_admin_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/future.h"
-#include "google/cloud/options.h"
-#include "google/cloud/polling_policy.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <google/longrunning/operations.grpc.pb.h>
-#include <memory>
+#include "generator/integration_tests/golden/v1/golden_thing_admin_connection.h"
 
 namespace google {
 namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using GoldenThingAdminRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    golden_internal::GoldenThingAdminRetryTraits>;
+/// @deprecated Use golden_v1::MakeGoldenThingAdminConnection directly.
+using ::google::cloud::golden_v1::MakeGoldenThingAdminConnection;
 
-using GoldenThingAdminLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    golden_internal::GoldenThingAdminRetryTraits>;
+/// @deprecated Use golden_v1::GoldenThingAdminConnection directly.
+using ::google::cloud::golden_v1::GoldenThingAdminConnection;
 
-using GoldenThingAdminLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        golden_internal::GoldenThingAdminRetryTraits>;
+/// @deprecated Use golden_v1::GoldenThingAdminLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::golden_v1::GoldenThingAdminLimitedErrorCountRetryPolicy;
 
-class GoldenThingAdminConnection {
- public:
-  virtual ~GoldenThingAdminConnection() = 0;
+/// @deprecated Use golden_v1::GoldenThingAdminLimitedTimeRetryPolicy directly.
+using ::google::cloud::golden_v1::GoldenThingAdminLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::test::admin::database::v1::Database>
-  ListDatabases(google::test::admin::database::v1::ListDatabasesRequest request);
-
-  virtual future<StatusOr<google::test::admin::database::v1::Database>>
-  CreateDatabase(google::test::admin::database::v1::CreateDatabaseRequest const& request);
-
-  virtual StatusOr<google::test::admin::database::v1::Database>
-  GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request);
-
-  virtual future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
-  UpdateDatabaseDdl(google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request);
-
-  virtual Status
-  DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request);
-
-  virtual StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
-  GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy>
-  SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::Policy>
-  GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request);
-
-  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
-  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
-
-  virtual future<StatusOr<google::test::admin::database::v1::Backup>>
-  CreateBackup(google::test::admin::database::v1::CreateBackupRequest const& request);
-
-  virtual StatusOr<google::test::admin::database::v1::Backup>
-  GetBackup(google::test::admin::database::v1::GetBackupRequest const& request);
-
-  virtual StatusOr<google::test::admin::database::v1::Backup>
-  UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request);
-
-  virtual Status
-  DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const& request);
-
-  virtual StreamRange<google::test::admin::database::v1::Backup>
-  ListBackups(google::test::admin::database::v1::ListBackupsRequest request);
-
-  virtual future<StatusOr<google::test::admin::database::v1::Database>>
-  RestoreDatabase(google::test::admin::database::v1::RestoreDatabaseRequest const& request);
-
-  virtual StreamRange<google::longrunning::Operation>
-  ListDatabaseOperations(google::test::admin::database::v1::ListDatabaseOperationsRequest request);
-
-  virtual StreamRange<google::longrunning::Operation>
-  ListBackupOperations(google::test::admin::database::v1::ListBackupOperationsRequest request);
-
-  virtual future<StatusOr<google::test::admin::database::v1::Database>>
-  LongRunningWithoutRouting(google::test::admin::database::v1::RestoreDatabaseRequest const& request);
-
-  virtual future<StatusOr<google::test::admin::database::v1::Database>>
-  AsyncGetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request);
-
-  virtual future<Status>
-  AsyncDropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request);
-};
-
-std::shared_ptr<GoldenThingAdminConnection> MakeGoldenThingAdminConnection(
-    Options options = {});
+/// @deprecated Use golden_v1::GoldenThingAdminRetryPolicy directly.
+using ::google::cloud::golden_v1::GoldenThingAdminRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<golden::GoldenThingAdminConnection>
-MakeGoldenThingAdminConnection(
-    std::shared_ptr<GoldenThingAdminStub> stub,
-    Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 

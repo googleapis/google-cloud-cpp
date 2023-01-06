@@ -25,8 +25,14 @@ CurlHttpPayload::CurlHttpPayload(std::unique_ptr<CurlImpl> impl,
                                  Options options)
     : impl_(std::move(impl)), options_(std::move(options)) {}
 
+bool CurlHttpPayload::HasUnreadData() const { return impl_->HasUnreadData(); }
+
 StatusOr<std::size_t> CurlHttpPayload::Read(absl::Span<char> buffer) {
   return impl_->Read(buffer);
+}
+
+std::multimap<std::string, std::string> CurlHttpPayload::headers() const {
+  return impl_->headers();
 }
 
 StatusOr<std::string> ReadAll(std::unique_ptr<HttpPayload> payload,

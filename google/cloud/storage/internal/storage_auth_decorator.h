@@ -75,6 +75,22 @@ class StorageAuth : public StorageStub {
       grpc::ClientContext& context,
       google::storage::v2::UpdateBucketRequest const& request) override;
 
+  Status DeleteNotification(
+      grpc::ClientContext& context,
+      google::storage::v2::DeleteNotificationRequest const& request) override;
+
+  StatusOr<google::storage::v2::Notification> GetNotification(
+      grpc::ClientContext& context,
+      google::storage::v2::GetNotificationRequest const& request) override;
+
+  StatusOr<google::storage::v2::Notification> CreateNotification(
+      grpc::ClientContext& context,
+      google::storage::v2::CreateNotificationRequest const& request) override;
+
+  StatusOr<google::storage::v2::ListNotificationsResponse> ListNotifications(
+      grpc::ClientContext& context,
+      google::storage::v2::ListNotificationsRequest const& request) override;
+
   StatusOr<google::storage::v2::Object> ComposeObject(
       grpc::ClientContext& context,
       google::storage::v2::ComposeObjectRequest const& request) override;
@@ -82,6 +98,11 @@ class StorageAuth : public StorageStub {
   Status DeleteObject(
       grpc::ClientContext& context,
       google::storage::v2::DeleteObjectRequest const& request) override;
+
+  StatusOr<google::storage::v2::CancelResumableWriteResponse>
+  CancelResumableWrite(
+      grpc::ClientContext& context,
+      google::storage::v2::CancelResumableWriteRequest const& request) override;
 
   StatusOr<google::storage::v2::Object> GetObject(
       grpc::ClientContext& context,
@@ -121,6 +142,56 @@ class StorageAuth : public StorageStub {
   StatusOr<google::storage::v2::ServiceAccount> GetServiceAccount(
       grpc::ClientContext& context,
       google::storage::v2::GetServiceAccountRequest const& request) override;
+
+  StatusOr<google::storage::v2::CreateHmacKeyResponse> CreateHmacKey(
+      grpc::ClientContext& context,
+      google::storage::v2::CreateHmacKeyRequest const& request) override;
+
+  Status DeleteHmacKey(
+      grpc::ClientContext& context,
+      google::storage::v2::DeleteHmacKeyRequest const& request) override;
+
+  StatusOr<google::storage::v2::HmacKeyMetadata> GetHmacKey(
+      grpc::ClientContext& context,
+      google::storage::v2::GetHmacKeyRequest const& request) override;
+
+  StatusOr<google::storage::v2::ListHmacKeysResponse> ListHmacKeys(
+      grpc::ClientContext& context,
+      google::storage::v2::ListHmacKeysRequest const& request) override;
+
+  StatusOr<google::storage::v2::HmacKeyMetadata> UpdateHmacKey(
+      grpc::ClientContext& context,
+      google::storage::v2::UpdateHmacKeyRequest const& request) override;
+
+  future<Status> AsyncDeleteObject(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::DeleteObjectRequest const& request) override;
+
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      google::storage::v2::ReadObjectResponse>>
+  AsyncReadObject(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::ReadObjectRequest const& request) override;
+
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+      google::storage::v2::WriteObjectRequest,
+      google::storage::v2::WriteObjectResponse>>
+  AsyncWriteObject(google::cloud::CompletionQueue const& cq,
+                   std::unique_ptr<grpc::ClientContext> context) override;
+
+  future<StatusOr<google::storage::v2::StartResumableWriteResponse>>
+  AsyncStartResumableWrite(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::StartResumableWriteRequest const& request) override;
+
+  future<StatusOr<google::storage::v2::QueryWriteStatusResponse>>
+  AsyncQueryWriteStatus(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::storage::v2::QueryWriteStatusRequest const& request) override;
 
  private:
   std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth_;

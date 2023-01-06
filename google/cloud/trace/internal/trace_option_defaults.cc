@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options TraceServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TRACE_SERVICE_ENDPOINT", "",
-      "cloudtrace.googleapis.com");
+      "GOOGLE_CLOUD_CPP_TRACE_SERVICE_AUTHORITY", "cloudtrace.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<trace::TraceServiceRetryPolicyOption>()) {

@@ -61,11 +61,12 @@ StatusOr<std::unique_ptr<Credentials>> LoadCredsFromPath(
     // This is not a JSON file, try to load it as a P12 service account.
     auto info = ParseServiceAccountP12File(path);
     if (!info) {
-      // Ignore the error returned by the P12 parser, because those are too
-      // specific, they typically say "error in PKCS#12" and the application
-      // may not even be trying to load a PKCS#12 file.
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid credentials file " + path);
+      return Status(
+          StatusCode::kInvalidArgument,
+          "Cannot open credentials file " + path +
+              ", it does not contain a JSON object, nor can be parsed "
+              "as a PKCS#12 file. " +
+              info.status().message());
     }
     info->subject = std::move(service_account_subject);
     info->scopes = std::move(service_account_scopes);
@@ -159,22 +160,10 @@ StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
     return StatusOr<std::shared_ptr<Credentials>>(std::move(*creds));
   }
 
-  // 3) Check for implicit environment-based credentials (GCE, GAE Flexible,
+  // 3) Use the implicit environment-based credentials (GCE, GAE Flexible,
   // Cloud Run or GKE Environment).
-  auto gce_creds = std::make_shared<ComputeEngineCredentials<>>();
-  auto override_val =
-      google::cloud::internal::GetEnv(internal::GceCheckOverrideEnvVar());
-  if (override_val.has_value() ? (std::string("1") == *override_val)
-                               : gce_creds->AuthorizationHeader().ok()) {
-    return StatusOr<std::shared_ptr<Credentials>>(std::move(gce_creds));
-  }
-
-  // We've exhausted all search points, thus credentials cannot be constructed.
   return StatusOr<std::shared_ptr<Credentials>>(
-      Status(StatusCode::kUnknown,
-             "Could not automatically determine credentials. For more "
-             "information, please see " +
-                 std::string(kAdcLink)));
+      std::make_shared<ComputeEngineCredentials<>>());
 }
 
 std::shared_ptr<Credentials> CreateAnonymousCredentials() {

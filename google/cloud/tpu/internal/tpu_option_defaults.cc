@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options TpuDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_TPU_ENDPOINT", "",
-      "tpu.googleapis.com");
+      "GOOGLE_CLOUD_CPP_TPU_AUTHORITY", "tpu.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<tpu::TpuRetryPolicyOption>()) {

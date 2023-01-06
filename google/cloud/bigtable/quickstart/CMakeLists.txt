@@ -15,11 +15,8 @@
 # A minimal CMakeList.txt showing how to use the Cloud Bigtable C++ client
 # library in CMake-based projects.
 
-cmake_minimum_required(VERSION 3.5)
-project(google-cloud-cpp-bigtable-quickstart CXX C)
-
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+cmake_minimum_required(VERSION 3.10...3.24)
+project(google-cloud-cpp-bigtable-quickstart CXX)
 
 find_package(google_cloud_cpp_bigtable REQUIRED)
 

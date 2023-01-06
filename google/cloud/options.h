@@ -33,6 +33,13 @@ namespace internal {
 Options MergeOptions(Options, Options);
 void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
                               char const*);
+// TODO(#8800) - Remove when bigtable::Table no longer uses bigtable::DataClient
+bool IsEmpty(Options const&);
+template <typename T>
+inline T const& DefaultValue() {
+  static auto const* const kDefaultValue = new T{};
+  return *kDefaultValue;
+}
 }  // namespace internal
 
 /**
@@ -78,6 +85,8 @@ void CheckExpectedOptionsImpl(std::set<std::type_index> const&, Options const&,
  * std::set<std::string> const& bar = opts.get<BarOption>();
  * assert(bar == std::set<std::string>{"hello", "world"});
  * @endcode
+ *
+ * @ingroup options
  */
 class Options {
  private:
@@ -163,9 +172,8 @@ class Options {
    */
   template <typename T>
   ValueTypeT<T> const& get() const {
-    static auto const* const kDefaultValue = new ValueTypeT<T>{};
     auto const it = m_.find(typeid(T));
-    if (it == m_.end()) return *kDefaultValue;
+    if (it == m_.end()) return internal::DefaultValue<ValueTypeT<T>>();
     auto const* value = it->second->data_address();
     return *reinterpret_cast<ValueTypeT<T> const*>(value);
   }
@@ -205,6 +213,7 @@ class Options {
   friend Options internal::MergeOptions(Options, Options);
   friend void internal::CheckExpectedOptionsImpl(
       std::set<std::type_index> const&, Options const&, char const*);
+  friend bool internal::IsEmpty(Options const&);
 
   // The type-erased data holder of all the option values.
   class DataHolder {
@@ -232,6 +241,9 @@ class Options {
     ValueTypeT<T> value_;
   };
 
+  // Note that (1) `typeid(T)` returns a `std::type_info const&`, but that
+  // implicitly converts to a `std::type_index`, and (2) `std::hash<>` is
+  // specialized for `std::type_index` to use `std::type_index::hash_code()`.
   std::unordered_map<std::type_index, std::unique_ptr<DataHolder>> m_;
 };
 
@@ -336,6 +348,17 @@ Options const& CurrentOptions();
 class ABSL_MUST_USE_RESULT OptionsSpan {
  public:
   explicit OptionsSpan(Options opts);
+
+  // `OptionsSpan` should not be copied/moved.
+  OptionsSpan(OptionsSpan const&) = delete;
+  OptionsSpan(OptionsSpan&&) = delete;
+  OptionsSpan& operator=(OptionsSpan const&) = delete;
+  OptionsSpan& operator=(OptionsSpan&&) = delete;
+
+  // `OptionsSpan` should only be used for block-scoped objects.
+  static void* operator new(std::size_t) = delete;
+  static void* operator new[](std::size_t) = delete;
+
   ~OptionsSpan();
 
  private:

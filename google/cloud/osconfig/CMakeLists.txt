@@ -17,61 +17,35 @@
 include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "OS Config API C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the OS Config API")
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "osconfig_internal" "osconfig_testing"
                             "examples")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
+                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::osconfig_protos)
 
 include(GoogleCloudCppCommon)
 
-set(EXTERNAL_GOOGLEAPIS_SOURCE
-    "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
 find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
 if (PROTO_INCLUDE_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
 endif ()
 
 include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/osconfig.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/osconfig.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_osconfig_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/agentendpoint/v1/config_common.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/agentendpoint/v1/inventory.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/agentendpoint/v1/os_policy.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/agentendpoint/v1/patch_jobs.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/agentendpoint/v1/tasks.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/inventory.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/os_policy.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/os_policy_assignment_reports.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/os_policy_assignments.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/osconfig_common.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/osconfig_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/osconfig_zonal_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/patch_deployments.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/patch_jobs.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/osconfig/v1/vulnerability.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_osconfig_protos # cmake-format: sort
+    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(osconfig_protos)
-target_link_libraries(
-    google_cloud_cpp_osconfig_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos
-           google-cloud-cpp::type_date_protos
-           google-cloud-cpp::type_datetime_protos
-           google-cloud-cpp::type_dayofweek_protos
-           google-cloud-cpp::type_timeofday_protos)
+target_link_libraries(google_cloud_cpp_osconfig_protos PUBLIC ${proto_deps})
 
 file(
     GLOB source_files
@@ -91,14 +65,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_osconfig)
 set_target_properties(
     google_cloud_cpp_osconfig
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-osconfig
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::osconfig
+               VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_osconfig
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-osconfig ALIAS
-            google_cloud_cpp_osconfig)
+add_library(google-cloud-cpp::osconfig ALIAS google_cloud_cpp_osconfig)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
 # for these, a regular library would not work on macOS (where the library needs
@@ -117,11 +90,10 @@ add_library(google_cloud_cpp_osconfig_mocks INTERFACE)
 target_sources(google_cloud_cpp_osconfig_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_osconfig_mocks
-    INTERFACE google-cloud-cpp::experimental-osconfig GTest::gmock_main
-              GTest::gmock GTest::gtest)
-set_target_properties(
-    google_cloud_cpp_osconfig_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-osconfig_mocks)
+    INTERFACE google-cloud-cpp::osconfig GTest::gmock_main GTest::gmock
+              GTest::gtest)
+set_target_properties(google_cloud_cpp_osconfig_mocks
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::osconfig_mocks)
 target_include_directories(
     google_cloud_cpp_osconfig_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -134,7 +106,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(osconfig_quickstart "quickstart/quickstart.cc")
     target_link_libraries(osconfig_quickstart
-                          PRIVATE google-cloud-cpp::experimental-osconfig)
+                          PRIVATE google-cloud-cpp::osconfig)
     google_cloud_cpp_add_common_options(osconfig_quickstart)
     add_test(
         NAME osconfig_quickstart
@@ -184,23 +156,10 @@ google_cloud_cpp_install_headers("google_cloud_cpp_osconfig"
 google_cloud_cpp_install_headers("google_cloud_cpp_osconfig_mocks"
                                  "include/google/cloud/osconfig")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The OS Config API C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION "Provides C++ APIs to use the OS Config API.")
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_osconfig")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common" " google_cloud_cpp_osconfig_protos")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/osconfig/config.pc.in"
-               "google_cloud_cpp_osconfig.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_osconfig.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    osconfig "The OS Config API C++ Client Library"
+    "Provides C++ APIs to use the OS Config API." "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common" " google_cloud_cpp_osconfig_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -217,5 +176,4 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_osconfig"
     COMPONENT google_cloud_cpp_development)
 
-external_googleapis_install_pc("google_cloud_cpp_osconfig_protos"
-                               "${PROJECT_SOURCE_DIR}/external/googleapis")
+external_googleapis_install_pc("google_cloud_cpp_osconfig_protos")

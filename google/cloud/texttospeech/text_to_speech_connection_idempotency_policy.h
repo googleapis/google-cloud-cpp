@@ -32,18 +32,17 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class TextToSpeechConnectionIdempotencyPolicy {
  public:
-  virtual ~TextToSpeechConnectionIdempotencyPolicy() = 0;
+  virtual ~TextToSpeechConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListVoices(
-      google::cloud::texttospeech::v1::ListVoicesRequest const& request) = 0;
+      google::cloud::texttospeech::v1::ListVoicesRequest const& request);
 
   virtual google::cloud::Idempotency SynthesizeSpeech(
-      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const&
-          request) = 0;
+      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request);
 };
 
 std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy>

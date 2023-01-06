@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options AutoMlDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_AUTO_ML_ENDPOINT", "",
-      "automl.googleapis.com");
+      "GOOGLE_CLOUD_CPP_AUTO_ML_AUTHORITY", "automl.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<automl::AutoMlRetryPolicyOption>()) {

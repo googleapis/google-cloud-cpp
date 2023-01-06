@@ -30,49 +30,39 @@ using ::google::cloud::Idempotency;
 CompanyServiceConnectionIdempotencyPolicy::
     ~CompanyServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultCompanyServiceConnectionIdempotencyPolicy
-    : public CompanyServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultCompanyServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy>
+CompanyServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<CompanyServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultCompanyServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency CompanyServiceConnectionIdempotencyPolicy::CreateCompany(
+    google::cloud::talent::v4::CreateCompanyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateCompany(
-      google::cloud::talent::v4::CreateCompanyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CompanyServiceConnectionIdempotencyPolicy::GetCompany(
+    google::cloud::talent::v4::GetCompanyRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetCompany(
-      google::cloud::talent::v4::GetCompanyRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency CompanyServiceConnectionIdempotencyPolicy::UpdateCompany(
+    google::cloud::talent::v4::UpdateCompanyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateCompany(
-      google::cloud::talent::v4::UpdateCompanyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency CompanyServiceConnectionIdempotencyPolicy::DeleteCompany(
+    google::cloud::talent::v4::DeleteCompanyRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteCompany(
-      google::cloud::talent::v4::DeleteCompanyRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ListCompanies(
-      google::cloud::talent::v4::ListCompaniesRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency CompanyServiceConnectionIdempotencyPolicy::ListCompanies(
+    google::cloud::talent::v4::ListCompaniesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<CompanyServiceConnectionIdempotencyPolicy>
 MakeDefaultCompanyServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultCompanyServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<CompanyServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -31,21 +31,38 @@ namespace cloud {
 namespace retail {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-retail-options
+ */
 struct SearchServiceRetryPolicyOption {
   using Type = std::shared_ptr<SearchServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-retail-options
+ */
 struct SearchServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-retail-options
+ */
 struct SearchServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<SearchServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to SearchService.
+ *
+ * @ingroup google-cloud-retail-options
+ */
 using SearchServicePolicyOptionList =
     OptionList<SearchServiceRetryPolicyOption, SearchServiceBackoffPolicyOption,
                SearchServiceConnectionIdempotencyPolicyOption>;

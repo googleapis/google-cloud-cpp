@@ -27,6 +27,21 @@ namespace cloud {
 namespace contactcenterinsights_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `ContactCenterInsightsConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `ContactCenterInsightsClient`. To do
+ * so, construct an object of type `ContactCenterInsightsClient` with an
+ * instance of this class. Then use the Google Test framework functions to
+ * program the behavior of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockContactCenterInsightsConnection
     : public contactcenterinsights::ContactCenterInsightsConnection {
  public:
@@ -87,6 +102,20 @@ class MockContactCenterInsightsConnection
       (google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&
            request),
       (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  BulkAnalyzeConversationsResponse>>,
+              BulkAnalyzeConversations,
+              (google::cloud::contactcenterinsights::v1::
+                   BulkAnalyzeConversationsRequest const& request),
+              (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
+                                  IngestConversationsResponse>>,
+              IngestConversations,
+              (google::cloud::contactcenterinsights::v1::
+                   IngestConversationsRequest const& request),
+              (override));
 
   MOCK_METHOD(future<StatusOr<google::cloud::contactcenterinsights::v1::
                                   ExportInsightsDataResponse>>,
@@ -163,6 +192,12 @@ class MockContactCenterInsightsConnection
   MOCK_METHOD(
       StatusOr<google::cloud::contactcenterinsights::v1::Issue>, UpdateIssue,
       (google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteIssue,
+      (google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
            request),
       (override));
 

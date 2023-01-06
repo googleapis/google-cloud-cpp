@@ -31,26 +31,48 @@ namespace cloud {
 namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-workflows-options
+ */
 struct WorkflowsRetryPolicyOption {
   using Type = std::shared_ptr<WorkflowsRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-workflows-options
+ */
 struct WorkflowsBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct WorkflowsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-workflows-options
+ */
 struct WorkflowsConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<WorkflowsConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-workflows-options
+ */
+struct WorkflowsPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to Workflows.
+ *
+ * @ingroup google-cloud-workflows-options
+ */
 using WorkflowsPolicyOptionList =
     OptionList<WorkflowsRetryPolicyOption, WorkflowsBackoffPolicyOption,
                WorkflowsPollingPolicyOption,

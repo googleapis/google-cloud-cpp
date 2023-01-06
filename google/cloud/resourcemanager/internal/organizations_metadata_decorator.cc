@@ -47,7 +47,7 @@ OrganizationsMetadata::SearchOrganizations(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::SearchOrganizationsRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->SearchOrganizations(context, request);
 }
 
@@ -86,9 +86,8 @@ void OrganizationsMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

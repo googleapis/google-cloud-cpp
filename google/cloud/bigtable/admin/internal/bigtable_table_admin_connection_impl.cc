@@ -22,6 +22,7 @@
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/async_long_running_operation.h"
+#include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -38,9 +39,7 @@ BigtableTableAdminConnectionImpl::BigtableTableAdminConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          bigtable_admin_internal::BigtableTableAdminDefaultOptions(
-              BigtableTableAdminConnection::options()))) {}
+          std::move(options), BigtableTableAdminConnection::options())) {}
 
 StatusOr<google::bigtable::admin::v2::Table>
 BigtableTableAdminConnectionImpl::CreateTable(
@@ -59,7 +58,7 @@ StreamRange<google::bigtable::admin::v2::Table>
 BigtableTableAdminConnectionImpl::ListTables(
     google::bigtable::admin::v2::ListTablesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<bigtable_admin::BigtableTableAdminRetryPolicy const>(
           retry_policy());
@@ -101,6 +100,34 @@ BigtableTableAdminConnectionImpl::GetTable(
       request, __func__);
 }
 
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminConnectionImpl::UpdateTable(
+    google::bigtable::admin::v2::UpdateTableRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::bigtable::admin::v2::Table>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::bigtable::admin::v2::UpdateTableRequest const& request) {
+        return stub->AsyncUpdateTable(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::bigtable::admin::v2::Table>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateTable(request), polling_policy(), __func__);
+}
+
 Status BigtableTableAdminConnectionImpl::DeleteTable(
     google::bigtable::admin::v2::DeleteTableRequest const& request) {
   return google::cloud::internal::RetryLoop(
@@ -111,6 +138,34 @@ Status BigtableTableAdminConnectionImpl::DeleteTable(
         return stub_->DeleteTable(context, request);
       },
       request, __func__);
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminConnectionImpl::UndeleteTable(
+    google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::bigtable::admin::v2::Table>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::bigtable::admin::v2::UndeleteTableRequest const& request) {
+        return stub->AsyncUndeleteTable(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::bigtable::admin::v2::Table>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UndeleteTable(request), polling_policy(), __func__);
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
@@ -171,7 +226,7 @@ BigtableTableAdminConnectionImpl::CheckConsistency(
 future<StatusOr<google::bigtable::admin::v2::Backup>>
 BigtableTableAdminConnectionImpl::CreateBackup(
     google::bigtable::admin::v2::CreateBackupRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Backup>(
       background_->cq(), request,
@@ -238,7 +293,7 @@ StreamRange<google::bigtable::admin::v2::Backup>
 BigtableTableAdminConnectionImpl::ListBackups(
     google::bigtable::admin::v2::ListBackupsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<bigtable_admin::BigtableTableAdminRetryPolicy const>(
           retry_policy());
@@ -269,7 +324,7 @@ BigtableTableAdminConnectionImpl::ListBackups(
 future<StatusOr<google::bigtable::admin::v2::Table>>
 BigtableTableAdminConnectionImpl::RestoreTable(
     google::bigtable::admin::v2::RestoreTableRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Table>(
       background_->cq(), request,

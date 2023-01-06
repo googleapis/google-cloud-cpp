@@ -16,6 +16,8 @@
 #include "google/cloud/bigtable/admin/bigtable_table_admin_client.h"
 #include "google/cloud/bigtable/resource_names.h"
 #include "google/cloud/bigtable/testing/table_integration_test.h"
+#include "google/cloud/bigtable/wait_for_consistency.h"
+#include "google/cloud/internal/background_threads_impl.h"
 #include "google/cloud/internal/backoff_policy.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/random.h"
@@ -169,17 +171,14 @@ TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTable) {
   r.set_parent(instance_name);
   r.set_table_id(table_id);
 
-  btadmin::GcRule gc_fam;
-  gc_fam.set_max_num_versions(10);
-  btadmin::GcRule gc_foo;
   auto constexpr kSecondsPerDay =
       std::chrono::seconds(std::chrono::hours(24)).count();
-  gc_foo.mutable_max_age()->set_seconds(kSecondsPerDay);
 
   auto& t = *r.mutable_table();
   auto& families = *t.mutable_column_families();
-  *families["fam"].mutable_gc_rule() = std::move(gc_fam);
-  *families["foo"].mutable_gc_rule() = std::move(gc_foo);
+  families["fam"].mutable_gc_rule()->set_max_num_versions(10);
+  families["foo"].mutable_gc_rule()->mutable_max_age()->set_seconds(
+      kSecondsPerDay);
   for (auto&& split : {"a1000", "a2000", "b3000", "m5000"}) {
     r.add_initial_splits()->set_key(std::move(split));
   }
@@ -220,20 +219,13 @@ TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTable) {
   std::vector<Mod> mods(3);
 
   mods[0].set_id("newfam");
-  btadmin::GcRule gc_create;
+  auto& gc_create = *mods[0].mutable_create()->mutable_gc_rule();
   auto& intersection = *gc_create.mutable_intersection();
-  btadmin::GcRule gc_create_1;
-  gc_create_1.set_max_num_versions(1);
-  *intersection.add_rules() = std::move(gc_create_1);
-  btadmin::GcRule gc_create_2;
-  gc_create_2.mutable_max_age()->set_seconds(7 * kSecondsPerDay);
-  *intersection.add_rules() = std::move(gc_create_2);
-  *mods[0].mutable_create()->mutable_gc_rule() = std::move(gc_create);
+  intersection.add_rules()->set_max_num_versions(1);
+  intersection.add_rules()->mutable_max_age()->set_seconds(7 * kSecondsPerDay);
 
   mods[1].set_id("fam");
-  btadmin::GcRule gc_update;
-  gc_update.set_max_num_versions(2);
-  *mods[1].mutable_update()->mutable_gc_rule() = std::move(gc_update);
+  mods[1].mutable_update()->mutable_gc_rule()->set_max_num_versions(2);
 
   mods[2].set_id("foo");
   mods[2].set_drop(true);
@@ -303,10 +295,8 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
   std::string const family = "column_family";
 
   btadmin::Table t;
-  btadmin::GcRule gc;
-  gc.set_max_num_versions(10);
   auto& families = *t.mutable_column_families();
-  *families[family].mutable_gc_rule() = std::move(gc);
+  families[family].mutable_gc_rule()->set_max_num_versions(10);
 
   // Create the new table.
   auto table_created =
@@ -315,8 +305,11 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
 
   // We need to mutate the data in the table and then wait for those mutations
   // to propagate to both clusters. First create a `bigtable::Table` object.
-  auto data_client = bigtable::MakeDataClient(project_id(), id);
-  bigtable::Table table(data_client, random_table_id);
+  internal::AutomaticallyCreatedBackgroundThreads background;
+  auto table = bigtable::Table(
+      bigtable::MakeDataConnection(
+          Options{}.set<GrpcCompletionQueueOption>(background.cq())),
+      bigtable::TableResource(project_id(), id, random_table_id));
 
   // Insert some cells into the table.
   std::string const row_key1 = "check-consistency-row1";
@@ -336,39 +329,14 @@ TEST_F(TableAdminIntegrationTest, WaitForConsistencyCheck) {
   auto consistency_token =
       std::move(*consistency_token_resp->mutable_consistency_token());
 
-  // A retry loop that checks if the data replication has completed.
-  auto wait_for_consistency = [&]() -> Status {
-    auto retry = google::cloud::internal::LimitedTimeRetryPolicy<
-        bigtable::internal::SafeGrpcRetry>(std::chrono::minutes(2));
-    auto backoff = google::cloud::internal::ExponentialBackoffPolicy(
-        std::chrono::milliseconds(5), std::chrono::minutes(2), 2.0);
+  // Verify that our clusters are eventually consistent. This calls
+  // `AsyncCheckConsistency` under the hood.
+  auto result = AsyncWaitForConsistency(background.cq(), client_,
+                                        table.table_name(), consistency_token);
+  ASSERT_STATUS_OK(result.get());
 
-    Status status;
-    do {
-      auto result = client_.CheckConsistency(table_name, consistency_token);
-      if (result.ok()) {
-        // Consistency has been achieved. Break the loop.
-        if (result->consistent()) return Status();
-        status = Status(StatusCode::kUnavailable, "Not consistent yet");
-      } else {
-        status = std::move(result).status();
-      }
-      if (!retry.OnFailure(status)) {
-        // The retry policy is exhausted or the error is not retryable.
-        return status;
-      }
-      std::this_thread::sleep_for(backoff.OnCompletion());
-    } while (!retry.IsExhausted());
-    return status;
-  };
-
-  // Verify that our clusters are eventually consistent.
-  auto result = wait_for_consistency();
-  ASSERT_STATUS_OK(result);
-
-  // Make an asynchronous call, just to test all functions.
-  auto resp =
-      client_.AsyncCheckConsistency(table_name, consistency_token).get();
+  // Make a synchronous call, just to test all functions.
+  auto resp = client_.CheckConsistency(table_name, consistency_token);
   ASSERT_STATUS_OK(resp);
   EXPECT_TRUE(resp->consistent());
 
@@ -399,17 +367,14 @@ TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   r.set_parent(instance_name);
   r.set_table_id(table_id);
 
-  btadmin::GcRule gc_fam;
-  gc_fam.set_max_num_versions(10);
-  btadmin::GcRule gc_foo;
   auto constexpr kSecondsPerDay =
       std::chrono::seconds(std::chrono::hours(24)).count();
-  gc_foo.mutable_max_age()->set_seconds(kSecondsPerDay);
 
   auto& t = *r.mutable_table();
   auto& families = *t.mutable_column_families();
-  *families["fam"].mutable_gc_rule() = std::move(gc_fam);
-  *families["foo"].mutable_gc_rule() = std::move(gc_foo);
+  families["fam"].mutable_gc_rule()->set_max_num_versions(10);
+  families["foo"].mutable_gc_rule()->mutable_max_age()->set_seconds(
+      kSecondsPerDay);
   for (auto&& split : {"a1000", "a2000", "b3000", "m5000"}) {
     r.add_initial_splits()->set_key(std::move(split));
   }
@@ -450,20 +415,13 @@ TEST_F(TableAdminIntegrationTest, CreateListGetDeleteTableWithLogging) {
   std::vector<Mod> mods(3);
 
   mods[0].set_id("newfam");
-  btadmin::GcRule gc_create;
+  auto& gc_create = *mods[0].mutable_create()->mutable_gc_rule();
   auto& intersection = *gc_create.mutable_intersection();
-  btadmin::GcRule gc_create_1;
-  gc_create_1.set_max_num_versions(1);
-  *intersection.add_rules() = std::move(gc_create_1);
-  btadmin::GcRule gc_create_2;
-  gc_create_2.mutable_max_age()->set_seconds(7 * kSecondsPerDay);
-  *intersection.add_rules() = std::move(gc_create_2);
-  *mods[0].mutable_create()->mutable_gc_rule() = std::move(gc_create);
+  intersection.add_rules()->set_max_num_versions(1);
+  intersection.add_rules()->mutable_max_age()->set_seconds(7 * kSecondsPerDay);
 
   mods[1].set_id("fam");
-  btadmin::GcRule gc_update;
-  gc_update.set_max_num_versions(2);
-  *mods[1].mutable_update()->mutable_gc_rule() = std::move(gc_update);
+  mods[1].mutable_update()->mutable_gc_rule()->set_max_num_versions(2);
 
   mods[2].set_id("foo");
   mods[2].set_drop(true);

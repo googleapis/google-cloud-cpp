@@ -59,7 +59,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::testing::Not;
 
 TEST(QueryPartitionTest, MakeQueryPartition) {
-  std::string stmt("select * from foo where name = @name");
+  std::string stmt("SELECT * FROM foo WHERE name = @name");
   SqlStatement::ParamType params = {{"name", Value("Bob")}};
   std::string partition_token("token");
   std::string session_id("session");
@@ -78,7 +78,7 @@ TEST(QueryPartitionTest, MakeQueryPartition) {
 }
 
 TEST(QueryPartitionTest, Constructor) {
-  std::string stmt("select * from foo where name = @name");
+  std::string stmt("SELECT * FROM foo WHERE name = @name");
   SqlStatement::ParamType params = {{"name", Value("Bob")}};
   std::string partition_token("token");
   std::string session_id("session");
@@ -97,7 +97,7 @@ TEST(QueryPartitionTest, Constructor) {
 }
 
 TEST(QueryPartitionTest, RegularSemantics) {
-  std::string stmt("select * from foo where name = @name");
+  std::string stmt("SELECT * FROM foo WHERE name = @name");
   SqlStatement::ParamType params = {{"name", Value("Bob")}};
   std::string partition_token("token");
   std::string session_id("session");
@@ -124,7 +124,7 @@ TEST(QueryPartitionTest, RegularSemantics) {
 TEST(QueryPartitionTest, SerializeDeserialize) {
   QueryPartitionTester expected_partition(spanner_internal::MakeQueryPartition(
       "txn-id", "tag", "session", "token",
-      SqlStatement("select * from foo where name = @name",
+      SqlStatement("SELECT * FROM foo WHERE name = @name",
                    {{"name", Value("Bob")}})));
   StatusOr<QueryPartition> partition = DeserializeQueryPartition(
       *(SerializeQueryPartition(expected_partition.Partition())));
@@ -154,14 +154,14 @@ TEST(QueryPartitionTest, FailedDeserialize) {
 TEST(QueryPartitionTest, MakeSqlParams) {
   QueryPartitionTester expected_partition(spanner_internal::MakeQueryPartition(
       "txn-id", "tag", "session", "token",
-      SqlStatement("select * from foo where name = @name",
+      SqlStatement("SELECT * FROM foo WHERE name = @name",
                    {{"name", Value("Bob")}})));
 
   Connection::SqlParams params =
       spanner_internal::MakeSqlParams(expected_partition.Partition());
 
   EXPECT_EQ(params.statement,
-            SqlStatement("select * from foo where name = @name",
+            SqlStatement("SELECT * FROM foo WHERE name = @name",
                          {{"name", Value("Bob")}}));
   EXPECT_EQ(*params.partition_token, "token");
   EXPECT_THAT(params.transaction,

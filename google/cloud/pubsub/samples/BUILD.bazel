@@ -14,7 +14,7 @@
 
 """Examples for the Cloud Pub/Sub C++ client library."""
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
@@ -22,13 +22,14 @@ load(":pubsub_samples_common.bzl", "pubsub_samples_common_hdrs", "pubsub_samples
 
 cc_library(
     name = "pubsub_samples_common",
+    testonly = True,
     srcs = pubsub_samples_common_srcs,
     hdrs = pubsub_samples_common_hdrs,
     deps = [
+        "//:common",
         "//:pubsub",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/pubsub:pubsub_client_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/pubsub:pubsub_client_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
     ],
 )
 
@@ -39,15 +40,14 @@ load(":pubsub_samples_unit_tests.bzl", "pubsub_samples_unit_tests")
     srcs = [test],
     deps = [
         ":pubsub_samples_common",
+        "//:common",
         "//:pubsub",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in pubsub_samples_unit_tests]
 
 load(":pubsub_client_integration_samples.bzl", "pubsub_client_integration_samples")
-load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
 
 proto_library(
     name = "samples_proto",
@@ -74,21 +74,22 @@ cc_proto_library(
     deps = [
         ":pubsub_samples_common",
         ":samples_cc_proto",
+        "//:common",
         "//:pubsub",
-        "//google/cloud:google_cloud_cpp_common",
-        "@com_google_googletest//:gtest_main",
-    ],
+    ] + (["//:iam"] if test == "iam_samples.cc" else []),
 ) for test in pubsub_client_integration_samples]
+
+load(":pubsub_client_unit_samples.bzl", "pubsub_client_unit_samples")
 
 [cc_test(
     name = test.replace("/", "_").replace(".cc", ""),
     srcs = [test],
     deps = [
         ":pubsub_samples_common",
+        "//:common",
         "//:pubsub",
         "//:pubsub_mocks",
-        "//google/cloud:google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in pubsub_client_unit_samples]

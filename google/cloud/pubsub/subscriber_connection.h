@@ -15,12 +15,12 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_SUBSCRIBER_CONNECTION_H
 
-#include "google/cloud/pubsub/ack_handler.h"
 #include "google/cloud/pubsub/application_callback.h"
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
 #include "google/cloud/pubsub/internal/subscriber_stub.h"
 #include "google/cloud/pubsub/message.h"
+#include "google/cloud/pubsub/pull_response.h"
 #include "google/cloud/pubsub/retry_policy.h"
 #include "google/cloud/pubsub/subscriber_options.h"
 #include "google/cloud/pubsub/subscription.h"
@@ -63,8 +63,26 @@ class SubscriberConnection {
     ApplicationCallback callback;
   };
 
-  /// Defines the interface for `Subscriber::Subscribe()`
+  /// Defines the interface for `Subscriber::Subscribe(ApplicationCallback)`
   virtual future<Status> Subscribe(SubscribeParams p);
+
+  struct ExactlyOnceSubscribeParams {
+    ExactlyOnceApplicationCallback callback;
+  };
+
+  /**
+   * Defines the interface for
+   * `Subscriber::Subscribe(ExactlyOnceApplicationCallback)`.
+   *
+   * We use a different name for this function (as opposed to an overload) to
+   * simplify the use of mocks.
+   */
+  virtual future<Status> ExactlyOnceSubscribe(ExactlyOnceSubscribeParams p);
+
+  virtual StatusOr<PullResponse> Pull();
+
+  /// Returns the configuration parameters for this object
+  virtual Options options() { return Options{}; }
 };
 
 /**
@@ -74,9 +92,10 @@ class SubscriberConnection {
  *     existing code, which calls `MakeSubscriberConnection(subscription, {})`
  *     from breaking, due to ambiguity.
  *
- * @deprecated Please use the `MakeSubscriberConnection` function which accepts
- *     `google::cloud::Options` instead.
+ * @deprecated Please use `MakeSubscriberConnection(subscription)` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "use `MakeSubscriberConnection(subscription) instead")
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     Subscription subscription,
     std::initializer_list<internal::NonConstructible>);
@@ -127,7 +146,7 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
  * shared and reused when possible. Note that gRPC reuses existing OS resources
  * (sockets) whenever possible, so applications may experience better
  * performance on the second (and subsequent) calls to this function with the
- * same `ConnectionOptions` parameters. However, this behavior is not guaranteed
+ * identical values for @p options. However, this behavior is not guaranteed
  * and applications should not rely on it.
  *
  * @see `SubscriberConnection`
@@ -149,6 +168,8 @@ std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
  * @deprecated Please use the `MakeSubscriberConnection` function which accepts
  *     `google::cloud::Options` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "use the overload consuming google::cloud::Options instead")
 std::shared_ptr<SubscriberConnection> MakeSubscriberConnection(
     Subscription subscription, SubscriberOptions options,
     ConnectionOptions connection_options = {},

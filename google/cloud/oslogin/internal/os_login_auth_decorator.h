@@ -38,6 +38,11 @@ class OsLoginServiceAuth : public OsLoginServiceStub {
       std::shared_ptr<google::cloud::internal::GrpcAuthenticationStrategy> auth,
       std::shared_ptr<OsLoginServiceStub> child);
 
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
+      grpc::ClientContext& context,
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request)
+      override;
+
   Status DeletePosixAccount(
       grpc::ClientContext& context,
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request)

@@ -20,13 +20,6 @@
 #include "google/cloud/version.h"
 #include <string>
 
-#define GOOGLE_CLOUD_CPP_STORAGE_IAM_DEPRECATED(alternative)                   \
-  GOOGLE_CLOUD_CPP_DEPRECATED(                                                 \
-      "this function predates IAM conditions and does not work with policies " \
-      "that include IAM conditions. Please use " alternative                   \
-      " instead. The function will be removed on 2022-04-01 or shortly "       \
-      "after. See GitHub issue #5929 for more information.")
-
 #if defined(_MSC_VER) && _MSC_VER < 1929
 #define GOOGLE_CLOUD_CPP_STORAGE_RESTORE_UPLOAD_DEPRECATED() /**/
 #else
@@ -50,6 +43,7 @@ namespace cloud {
  */
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 /**
  * Returns the Google Cloud Storage C++ Client major version.
  *
@@ -71,10 +65,19 @@ int constexpr version_minor() { return google::cloud::version_minor(); }
  */
 int constexpr version_patch() { return google::cloud::version_patch(); }
 
+/**
+ * Returns the Google Cloud Storage C++ Client pre-release version.
+ *
+ * @see https://semver.org/spec/v2.0.0.html for details.
+ */
+constexpr char const* version_pre_release() {
+  return google::cloud::version_pre_release();
+}
+
 /// Returns a single integer representing the Major/Minor/Patch version.
 int constexpr version() { return google::cloud::version(); }
 
-/// Returns the version as a string, in MAJOR.MINOR.PATCH+gitrev format.
+/// Returns the version as a string, in MAJOR.MINOR.PATCH[-PRE][+gitrev] format.
 std::string version_string();
 
 /// Returns the value for `x-goog-api-client` header.

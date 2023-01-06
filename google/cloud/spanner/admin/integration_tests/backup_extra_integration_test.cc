@@ -22,6 +22,7 @@
 #include "google/cloud/spanner/retry_policy.h"
 #include "google/cloud/spanner/testing/instance_location.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
+#include "google/cloud/spanner/testing/random_backup_name.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
 #include "google/cloud/spanner/timestamp.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
@@ -30,6 +31,7 @@
 #include "google/cloud/kms_key_name.h"
 #include "google/cloud/testing_util/integration_test.h"
 #include "google/cloud/testing_util/status_matchers.h"
+#include "absl/strings/match.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -61,10 +63,10 @@ std::string const& ProjectId() {
 
 bool RunSlowBackupTests() {
   static bool run_slow_backup_tests =
-      google::cloud::internal::GetEnv(
-          "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
-          .value_or("")
-          .find("backup") != std::string::npos;
+      absl::StrContains(google::cloud::internal::GetEnv(
+                            "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
+                            .value_or(""),
+                        "backup");
   return run_slow_backup_tests;
 }
 
@@ -92,7 +94,7 @@ class BackupExtraIntegrationTest
                         .clone())
                 .set<spanner_admin::DatabaseAdminPollingPolicyOption>(
                     GenericPollingPolicy<>(
-                        LimitedTimeRetryPolicy(std::chrono::hours(3)),
+                        LimitedTimeRetryPolicy(std::chrono::minutes(90)),
                         ExponentialBackoffPolicy(std::chrono::seconds(1),
                                                  std::chrono::minutes(1), 2.0))
                         .clone())) {}
@@ -127,8 +129,7 @@ TEST_F(BackupExtraIntegrationTest, CreateBackupWithVersionTime) {
       "  Value  INT64 NOT NULL"
       ") PRIMARY KEY (Name)");
   auto database = database_admin_client_.CreateDatabase(creq).get();
-  if (Emulator()) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (Emulator()) {  // version_retention_period
     EXPECT_THAT(database, Not(IsOk()));
     return;
   }
@@ -249,6 +250,35 @@ TEST_F(BackupExtraIntegrationTest, CreateBackupWithVersionTime) {
         EXPECT_STATUS_OK(database_admin_client_.DropDatabase(rdb.FullName()));
       }
 
+      // While we have a backup handy, verify that we can copy it.
+      auto backup_id = spanner_testing::RandomBackupName(generator_);
+      auto max_expire_time =
+          google::cloud::spanner::MakeTimestamp(backup->max_expire_time())
+              .value();
+      auto bad_expire_time =
+          google::cloud::spanner::MakeTimestamp(
+              max_expire_time.get<absl::Time>().value() + absl::Hours(1))
+              .value();
+      auto copy_backup =
+          database_admin_client_
+              .CopyBackup(db.instance().FullName(), backup_id, backup->name(),
+                          bad_expire_time.get<protobuf::Timestamp>().value())
+              .get();
+      EXPECT_THAT(copy_backup, StatusIs(StatusCode::kInvalidArgument,
+                                        HasSubstr("exceeded the maximum")));
+      if (!copy_backup) {
+        copy_backup =
+            database_admin_client_
+                .CopyBackup(db.instance().FullName(), backup_id, backup->name(),
+                            max_expire_time.get<protobuf::Timestamp>().value())
+                .get();
+        EXPECT_STATUS_OK(copy_backup);
+      }
+      if (copy_backup) {
+        EXPECT_STATUS_OK(
+            database_admin_client_.DeleteBackup(copy_backup->name()));
+      }
+
       EXPECT_STATUS_OK(database_admin_client_.DeleteBackup(backup->name()));
     }
   }
@@ -272,8 +302,7 @@ TEST_F(BackupExtraIntegrationTest, CreateBackupWithExpiredVersionTime) {
       absl::StrCat("ALTER DATABASE `", db.database_id(),
                    "` SET OPTIONS (version_retention_period='1h')"));
   auto database = database_admin_client_.CreateDatabase(creq).get();
-  if (Emulator()) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (Emulator()) {  // version_retention_period
     EXPECT_THAT(database, Not(IsOk()));
     return;
   }
@@ -318,8 +347,7 @@ TEST_F(BackupExtraIntegrationTest, CreateBackupWithFutureVersionTime) {
       absl::StrCat("ALTER DATABASE `", db.database_id(),
                    "` SET OPTIONS (version_retention_period='1h')"));
   auto database = database_admin_client_.CreateDatabase(creq).get();
-  if (Emulator()) {
-    // TODO(#5479): Awaiting emulator support for version_retention_period.
+  if (Emulator()) {  // version_retention_period
     EXPECT_THAT(database, Not(IsOk()));
     return;
   }
@@ -368,8 +396,10 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
   google::spanner::admin::database::v1::CreateDatabaseRequest creq;
   creq.set_parent(db.instance().FullName());
   creq.set_create_statement(
-      absl::StrCat("CREATE DATABASE `", db.database_id(), "`"));
+      absl::StrCat("CREATE DATABASE \"", db.database_id(), "\""));
   creq.mutable_encryption_config()->set_kms_key_name(encryption_key.FullName());
+  creq.set_database_dialect(
+      google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
   auto database = database_admin_client_.CreateDatabase(creq).get();
   ASSERT_STATUS_OK(database);
   EXPECT_TRUE(database->has_encryption_config());
@@ -378,6 +408,8 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
               encryption_key.FullName());
   }
   EXPECT_THAT(database->encryption_info(), IsEmpty());
+  EXPECT_EQ(database->database_dialect(),
+            google::spanner::admin::database::v1::DatabaseDialect::POSTGRESQL);
 
   auto database_get = database_admin_client_.GetDatabase(db.FullName());
   ASSERT_STATUS_OK(database_get);
@@ -387,6 +419,7 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
     EXPECT_EQ(database_get->encryption_config().kms_key_name(),
               encryption_key.FullName());
   }
+  EXPECT_EQ(database_get->database_dialect(), database->database_dialect());
 
   auto create_time =
       MakeTimestamp(database->create_time()).value().get<absl::Time>().value();
@@ -402,6 +435,19 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
           CUSTOMER_MANAGED_ENCRYPTION);
   breq.mutable_encryption_config()->set_kms_key_name(encryption_key.FullName());
   auto backup = database_admin_client_.CreateBackup(breq).get();
+  {
+    // TODO(#8616): Remove this when we know how to deal with the issue.
+    auto matcher = testing_util::StatusIs(
+        StatusCode::kDeadlineExceeded,
+        testing::HasSubstr("terminated by polling policy"));
+    testing::StringMatchResultListener listener;
+    if (matcher.impl().MatchAndExplain(backup, &listener)) {
+      // The backup is still in progress (and may eventually complete),
+      // and we can't drop the database while it has pending backups, so
+      // we simply abandon them, to be cleaned up offline.
+      GTEST_SKIP();
+    }
+  }
   ASSERT_STATUS_OK(backup);
   EXPECT_TRUE(backup->has_encryption_info());
   if (backup->has_encryption_info()) {
@@ -411,6 +457,7 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
     EXPECT_THAT(backup->encryption_info().kms_key_version(),
                 HasSubstr(encryption_key.FullName() + "/cryptoKeyVersions/"));
   }
+  EXPECT_EQ(backup->database_dialect(), database->database_dialect());
 
   EXPECT_STATUS_OK(database_admin_client_.DropDatabase(db.FullName()));
 
@@ -426,6 +473,7 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
     EXPECT_THAT(backup_get->encryption_info().kms_key_version(),
                 HasSubstr(encryption_key.FullName() + "/cryptoKeyVersions/"));
   }
+  EXPECT_EQ(backup_get->database_dialect(), database->database_dialect());
 
   Database restore_db(in, spanner_testing::RandomDatabaseName(generator_));
   google::spanner::admin::database::v1::RestoreDatabaseRequest rreq;
@@ -443,6 +491,8 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
     EXPECT_EQ(restored_database->encryption_config().kms_key_name(),
               encryption_key.FullName());
   }
+  EXPECT_EQ(restored_database->database_dialect(),
+            database->database_dialect());
 
   auto restored_get = database_admin_client_.GetDatabase(restore_db.FullName());
   ASSERT_STATUS_OK(restored_get);
@@ -452,6 +502,7 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
     EXPECT_EQ(restored_get->encryption_config().kms_key_name(),
               encryption_key.FullName());
   }
+  EXPECT_EQ(restored_get->database_dialect(), database->database_dialect());
 
   EXPECT_STATUS_OK(database_admin_client_.DropDatabase(restore_db.FullName()));
 
@@ -473,6 +524,7 @@ TEST_F(BackupExtraIntegrationTest, BackupRestoreWithCMEK) {
             b->encryption_info().kms_key_version(),
             HasSubstr(encryption_key.FullName() + "/cryptoKeyVersions/"));
       }
+      EXPECT_EQ(b->database_dialect(), backup->database_dialect());
     }
   }
   EXPECT_TRUE(found);

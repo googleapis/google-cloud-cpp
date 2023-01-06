@@ -21,6 +21,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -36,15 +37,14 @@ MetricServiceConnectionImpl::MetricServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), monitoring_internal::MetricServiceDefaultOptions(
-                                  MetricServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      MetricServiceConnection::options())) {}
 
 StreamRange<google::api::MonitoredResourceDescriptor>
 MetricServiceConnectionImpl::ListMonitoredResourceDescriptors(
     google::monitoring::v3::ListMonitoredResourceDescriptorsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<monitoring::MetricServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -95,7 +95,7 @@ StreamRange<google::api::MetricDescriptor>
 MetricServiceConnectionImpl::ListMetricDescriptors(
     google::monitoring::v3::ListMetricDescriptorsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<monitoring::MetricServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -169,7 +169,7 @@ StreamRange<google::monitoring::v3::TimeSeries>
 MetricServiceConnectionImpl::ListTimeSeries(
     google::monitoring::v3::ListTimeSeriesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<monitoring::MetricServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -218,6 +218,19 @@ Status MetricServiceConnectionImpl::CreateServiceTimeSeries(
       [this](grpc::ClientContext& context,
              google::monitoring::v3::CreateTimeSeriesRequest const& request) {
         return stub_->CreateServiceTimeSeries(context, request);
+      },
+      request, __func__);
+}
+
+future<Status> MetricServiceConnectionImpl::AsyncCreateTimeSeries(
+    google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->CreateTimeSeries(request), background_->cq(),
+      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             google::monitoring::v3::CreateTimeSeriesRequest const& request) {
+        return stub->AsyncCreateTimeSeries(cq, std::move(context), request);
       },
       request, __func__);
 }

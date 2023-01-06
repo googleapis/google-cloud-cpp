@@ -35,7 +35,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options KeyManagementServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_KEY_MANAGEMENT_SERVICE_ENDPOINT",
-      "", "cloudkms.googleapis.com");
+      "", "GOOGLE_CLOUD_CPP_KEY_MANAGEMENT_SERVICE_AUTHORITY",
+      "cloudkms.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<kms::KeyManagementServiceRetryPolicyOption>()) {

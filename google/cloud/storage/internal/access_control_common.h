@@ -15,7 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_ACCESS_CONTROL_COMMON_H
 
-#include "google/cloud/storage/internal/common_metadata.h"
+#include "google/cloud/storage/project_team.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/status.h"
 #include "absl/types/optional.h"
@@ -28,49 +28,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 struct AccessControlCommonParser;
-}  // namespace internal
-
-/**
- * Represents the projectTeam field in *AccessControls.
- *
- * @see
- * https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls
- * https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls
- */
-struct ProjectTeam {
-  std::string project_number;
-  std::string team;
-};
-
-inline bool operator==(ProjectTeam const& lhs, ProjectTeam const& rhs) {
-  return std::tie(lhs.project_number, lhs.team) ==
-         std::tie(rhs.project_number, rhs.team);
-}
-
-inline bool operator<(ProjectTeam const& lhs, ProjectTeam const& rhs) {
-  return std::tie(lhs.project_number, lhs.team) <
-         std::tie(rhs.project_number, rhs.team);
-}
-
-inline bool operator!=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(ProjectTeam const& lhs, ProjectTeam const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(ProjectTeam const& lhs, ProjectTeam const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
-
-namespace internal {
-struct GrpcBucketAccessControlParser;
-struct GrpcObjectAccessControlParser;
 
 /**
  * Defines common code to both `BucketAccessControl` and `ObjectAccessControl`.
@@ -79,7 +36,9 @@ struct GrpcObjectAccessControlParser;
  * https://cloud.google.com/storage/docs/json_api/v1/bucketAccessControls
  * https://cloud.google.com/storage/docs/json_api/v1/objectAccessControls
  */
-class AccessControlCommon {
+// TODO(#9897) - remove this class and any references to it
+class GOOGLE_CLOUD_CPP_DEPRECATED(
+    "This class will be removed shortly after 2023-06-01") AccessControlCommon {
  public:
   AccessControlCommon() = default;
 
@@ -103,9 +62,9 @@ class AccessControlCommon {
    * We use functions instead of enums because enums are not backwards
    * compatible and are brittle to changes in the server-side.
    */
-  static std::string TEAM_EDITORS() { return "editors"; }
-  static std::string TEAM_OWNERS() { return "owners"; }
-  static std::string TEAM_VIEWERS() { return "viewers"; }
+  static std::string TEAM_EDITORS() { return storage::TEAM_EDITORS(); }
+  static std::string TEAM_OWNERS() { return storage::TEAM_OWNERS(); }
+  static std::string TEAM_VIEWERS() { return storage::TEAM_VIEWERS(); }
   //@}
 
   std::string const& bucket() const { return bucket_; }
@@ -132,8 +91,6 @@ class AccessControlCommon {
   std::string const& self_link() const { return self_link_; }
 
  private:
-  friend struct GrpcBucketAccessControlParser;
-  friend struct GrpcObjectAccessControlParser;
   friend struct internal::AccessControlCommonParser;
 
   std::string bucket_;
@@ -148,6 +105,8 @@ class AccessControlCommon {
   std::string role_;
   std::string self_link_;
 };
+
+#include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 inline bool operator==(AccessControlCommon const& lhs,
                        AccessControlCommon const& rhs) {
@@ -167,6 +126,8 @@ inline bool operator!=(AccessControlCommon const& lhs,
                        AccessControlCommon const& rhs) {
   return std::rel_ops::operator!=(lhs, rhs);
 }
+
+#include "google/cloud/internal/diagnostics_pop.inc"
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

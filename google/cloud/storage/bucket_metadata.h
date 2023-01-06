@@ -16,10 +16,22 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BUCKET_METADATA_H
 
 #include "google/cloud/storage/bucket_access_control.h"
-#include "google/cloud/storage/internal/common_metadata.h"
+#include "google/cloud/storage/bucket_autoclass.h"
+#include "google/cloud/storage/bucket_billing.h"
+#include "google/cloud/storage/bucket_cors_entry.h"
+#include "google/cloud/storage/bucket_custom_placement_config.h"
+#include "google/cloud/storage/bucket_encryption.h"
+#include "google/cloud/storage/bucket_iam_configuration.h"
+#include "google/cloud/storage/bucket_lifecycle.h"
+#include "google/cloud/storage/bucket_logging.h"
+#include "google/cloud/storage/bucket_retention_policy.h"
+#include "google/cloud/storage/bucket_rpo.h"
+#include "google/cloud/storage/bucket_versioning.h"
+#include "google/cloud/storage/bucket_website.h"
 #include "google/cloud/storage/internal/patch_builder.h"
 #include "google/cloud/storage/lifecycle_rule.h"
 #include "google/cloud/storage/object_access_control.h"
+#include "google/cloud/storage/owner.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/optional.h"
 #include "absl/types/optional.h"
@@ -34,497 +46,11 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-struct BucketMetadataParser;
-struct GrpcBucketMetadataParser;
-struct GrpcBucketRequestParser;
-}  // namespace internal
-
-/**
- * The billing configuration for a Bucket.
- *
- * @see https://cloud.google.com/storage/docs/requester-pays for general
- *     information on "Requester Pays" billing.
- */
-struct BucketBilling {
-  BucketBilling() = default;
-  // NOLINTNEXTLINE(google-explicit-constructor)
-  BucketBilling(bool v) : requester_pays(v) {}
-
-  bool requester_pays{false};
-};
-
-inline bool operator==(BucketBilling const& lhs, BucketBilling const& rhs) {
-  return lhs.requester_pays == rhs.requester_pays;
-}
-
-inline bool operator<(BucketBilling const& lhs, BucketBilling const& rhs) {
-  return !lhs.requester_pays && rhs.requester_pays;
-}
-
-inline bool operator!=(BucketBilling const& lhs, BucketBilling const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(BucketBilling const& lhs, BucketBilling const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(BucketBilling const& lhs, BucketBilling const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(BucketBilling const& lhs, BucketBilling const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
-
-/**
- * An entry in the CORS list.
- *
- * CORS (Cross-Origin Resource Sharing) is a mechanism to enable client-side
- * cross-origin requests. An entry in the configuration has a maximum age and a
- * list of allowed origin and methods, as well as a list of returned response
- * headers.
- *
- * @see https://en.wikipedia.org/wiki/Cross-origin_resource_sharing for general
- *     information on CORS.
- *
- * @see https://cloud.google.com/storage/docs/cross-origin for general
- *     information about CORS in the context of Google Cloud Storage.
- *
- * @see https://cloud.google.com/storage/docs/configuring-cors for information
- *     on how to set and troubleshoot CORS settings.
- */
-struct CorsEntry {
-  absl::optional<std::int64_t> max_age_seconds;
-  std::vector<std::string> method;
-  std::vector<std::string> origin;
-  std::vector<std::string> response_header;
-};
-
-//@{
-/// @name Comparison operators for CorsEntry.
-inline bool operator==(CorsEntry const& lhs, CorsEntry const& rhs) {
-  return std::tie(lhs.max_age_seconds, lhs.method, lhs.origin,
-                  lhs.response_header) == std::tie(rhs.max_age_seconds,
-                                                   rhs.method, rhs.origin,
-                                                   rhs.response_header);
-}
-
-inline bool operator<(CorsEntry const& lhs, CorsEntry const& rhs) {
-  return std::tie(lhs.max_age_seconds, lhs.method, lhs.origin,
-                  lhs.response_header) < std::tie(rhs.max_age_seconds,
-                                                  rhs.method, rhs.origin,
-                                                  rhs.response_header);
-}
-
-inline bool operator!=(CorsEntry const& lhs, CorsEntry const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(CorsEntry const& lhs, CorsEntry const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(CorsEntry const& lhs, CorsEntry const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(CorsEntry const& lhs, CorsEntry const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
-//@}
-
-std::ostream& operator<<(std::ostream& os, CorsEntry const& rhs);
-
-/**
- * Configure if only the IAM policies are used for access control.
- *
- * @see Before enabling Uniform Bucket Level Access please
- *     review the [feature documentation][ubla-link], as well as
- *     ["Should you use uniform bucket-level access ?"][ubla-should-link].
- *
- * [ubla-link]:
- * https://cloud.google.com/storage/docs/uniform-bucket-level-access
- * [ubla-should-link]:
- * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
- */
-struct UniformBucketLevelAccess {
-  bool enabled;
-  std::chrono::system_clock::time_point locked_time;
-};
-using BucketPolicyOnly = UniformBucketLevelAccess;
-
-//@{
-/// @name Comparison operators For UniformBucketLevelAccess
-inline bool operator==(UniformBucketLevelAccess const& lhs,
-                       UniformBucketLevelAccess const& rhs) {
-  return std::tie(lhs.enabled, lhs.locked_time) ==
-         std::tie(rhs.enabled, rhs.locked_time);
-}
-
-inline bool operator<(UniformBucketLevelAccess const& lhs,
-                      UniformBucketLevelAccess const& rhs) {
-  return std::tie(lhs.enabled, lhs.locked_time) <
-         std::tie(rhs.enabled, rhs.locked_time);
-}
-
-inline bool operator!=(UniformBucketLevelAccess const& lhs,
-                       UniformBucketLevelAccess const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(UniformBucketLevelAccess const& lhs,
-                      UniformBucketLevelAccess const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(UniformBucketLevelAccess const& lhs,
-                       UniformBucketLevelAccess const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(UniformBucketLevelAccess const& lhs,
-                       UniformBucketLevelAccess const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
-//@}
-
-std::ostream& operator<<(std::ostream& os, UniformBucketLevelAccess const& rhs);
-
-/**
- * The IAM configuration for a Bucket.
- *
- * Currently this only holds the UniformBucketLevelAccess. In the future, we may
- * define additional IAM which would be included in this object.
- *
- * @see Before enabling Uniform Bucket Level Access please review the
- *     [feature documentation][ubla-link], as well as
- *     ["Should you use uniform bucket-level access ?"][ubla-should-link].
- *
- * [ubla-link]:
- * https://cloud.google.com/storage/docs/uniform-bucket-level-access
- * [ubla-should-link]:
- * https://cloud.google.com/storage/docs/uniform-bucket-level-access#should-you-use
- */
-struct BucketIamConfiguration {
-  absl::optional<UniformBucketLevelAccess> uniform_bucket_level_access;
-  absl::optional<std::string> public_access_prevention;
-};
-
-//@{
-/// @name Public Access Prevention helper functions
-inline std::string PublicAccessPreventionEnforced() { return "enforced"; }
-inline std::string PublicAccessPreventionInherited() { return "inherited"; }
-GOOGLE_CLOUD_CPP_DEPRECATED("Use PublicAccessPreventionInherited()")
-inline std::string PublicAccessPreventionUnspecified() { return "unspecified"; }
-//@}
-
-//@{
-/// @name Comparison operators for BucketIamConfiguration.
-inline bool operator==(BucketIamConfiguration const& lhs,
-                       BucketIamConfiguration const& rhs) {
-  return std::tie(lhs.uniform_bucket_level_access,
-                  lhs.public_access_prevention) ==
-         std::tie(rhs.uniform_bucket_level_access,
-                  rhs.public_access_prevention);
-}
-
-inline bool operator<(BucketIamConfiguration const& lhs,
-                      BucketIamConfiguration const& rhs) {
-  return std::tie(lhs.uniform_bucket_level_access,
-                  lhs.public_access_prevention) <
-         std::tie(rhs.uniform_bucket_level_access,
-                  rhs.public_access_prevention);
-}
-
-inline bool operator!=(BucketIamConfiguration const& lhs,
-                       BucketIamConfiguration const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(BucketIamConfiguration const& lhs,
-                      BucketIamConfiguration const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(BucketIamConfiguration const& lhs,
-                       BucketIamConfiguration const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(BucketIamConfiguration const& lhs,
-                       BucketIamConfiguration const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
-//@}
-
-std::ostream& operator<<(std::ostream& os, BucketIamConfiguration const& rhs);
-
-/**
- * The Object Lifecycle configuration for a Bucket.
- *
- * @see https://cloud.google.com/storage/docs/managing-lifecycles for general
- *     information on object lifecycle rules.
- */
-struct BucketLifecycle {
-  std::vector<LifecycleRule> rule;
-};
-
-//@{
-/// @name Comparison operators for BucketLifecycle.
-inline bool operator==(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
-  return lhs.rule == rhs.rule;
-}
-
-inline bool operator<(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
-  return lhs.rule < rhs.rule;
-}
-
-inline bool operator!=(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(BucketLifecycle const& lhs, BucketLifecycle const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
-//@}
-
-/**
- * The Logging configuration for a Bucket.
- *
- * @see https://cloud.google.com/storage/docs/access-logs for general
- *     information about using access logs with Google Cloud Storage.
- */
-struct BucketLogging {
-  std::string log_bucket;
-  std::string log_object_prefix;
-};
-
-inline bool operator==(BucketLogging const& lhs, BucketLogging const& rhs) {
-  return std::tie(lhs.log_bucket, lhs.log_object_prefix) ==
-         std::tie(rhs.log_bucket, rhs.log_object_prefix);
-}
-
-inline bool operator<(BucketLogging const& lhs, BucketLogging const& rhs) {
-  return std::tie(lhs.log_bucket, lhs.log_object_prefix) <
-         std::tie(rhs.log_bucket, rhs.log_object_prefix);
-}
-
-inline bool operator!=(BucketLogging const& lhs, BucketLogging const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(BucketLogging const& lhs, BucketLogging const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(BucketLogging const& lhs, BucketLogging const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(BucketLogging const& lhs, BucketLogging const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
-
-std::ostream& operator<<(std::ostream& os, BucketLogging const& rhs);
-
-/**
- * Describes the default customer managed encryption key for a bucket.
- *
- * Customer managed encryption keys (CMEK) are encryption keys selected by the
- * user and generated by Google Cloud Key Management Service.
- *
- * @see https://cloud.google.com/storage/docs/encryption/customer-managed-keys
- *     for a general description of CMEK in Google Cloud Storage.
- *
- * @see https://cloud.google.com/kms/ for details about the Cloud Key Management
- *     Service.
- */
-struct BucketEncryption {
-  std::string default_kms_key_name;
-};
-
-inline bool operator==(BucketEncryption const& lhs,
-                       BucketEncryption const& rhs) {
-  return lhs.default_kms_key_name == rhs.default_kms_key_name;
-}
-
-inline bool operator<(BucketEncryption const& lhs,
-                      BucketEncryption const& rhs) {
-  return lhs.default_kms_key_name < rhs.default_kms_key_name;
-}
-
-inline bool operator!=(BucketEncryption const& lhs,
-                       BucketEncryption const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(BucketEncryption const& lhs,
-                      BucketEncryption const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(BucketEncryption const& lhs,
-                       BucketEncryption const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(BucketEncryption const& lhs,
-                       BucketEncryption const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
-
-/**
- * The retention policy for a bucket.
- *
- * The Bucket Lock feature of Google Cloud Storage allows you to configure a
- * data retention policy for a Cloud Storage bucket. This policy governs how
- * long objects in the bucket must be retained. The feature also allows you to
- * lock the data retention policy, permanently preventing the policy from from
- * being reduced or removed.
- *
- * @see https://cloud.google.com/storage/docs/bucket-lock for a general
- *     overview
- */
-struct BucketRetentionPolicy {
-  std::chrono::seconds retention_period;
-  std::chrono::system_clock::time_point effective_time;
-  bool is_locked;
-};
-
-inline bool operator==(BucketRetentionPolicy const& lhs,
-                       BucketRetentionPolicy const& rhs) {
-  return std::tie(lhs.retention_period, lhs.effective_time, lhs.is_locked) ==
-         std::tie(rhs.retention_period, rhs.effective_time, rhs.is_locked);
-}
-
-inline bool operator<(BucketRetentionPolicy const& lhs,
-                      BucketRetentionPolicy const& rhs) {
-  return std::tie(lhs.retention_period, lhs.effective_time, lhs.is_locked) <
-         std::tie(rhs.retention_period, rhs.effective_time, rhs.is_locked);
-}
-
-inline bool operator!=(BucketRetentionPolicy const& lhs,
-                       BucketRetentionPolicy const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(BucketRetentionPolicy const& lhs,
-                      BucketRetentionPolicy const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(BucketRetentionPolicy const& lhs,
-                       BucketRetentionPolicy const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(BucketRetentionPolicy const& lhs,
-                       BucketRetentionPolicy const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
-
-std::ostream& operator<<(std::ostream& os, BucketRetentionPolicy const& rhs);
-
-/// A helper function to avoid typos in the RPO configuration
-inline std::string RpoDefault() { return "DEFAULT"; }
-
-/// A helper function to avoid typos in the RPO configuration
-inline std::string RpoAsyncTurbo() { return "ASYNC_TURBO"; }
-
-/**
- * The versioning configuration for a Bucket.
- *
- * @see https://cloud.google.com/storage/docs/requester-pays for general
- *     information on "Requester Pays" billing.
- */
-struct BucketVersioning {
-  BucketVersioning() = default;
-  explicit BucketVersioning(bool flag) : enabled(flag) {}
-
-  bool enabled{true};
-};
-
-inline bool operator==(BucketVersioning const& lhs,
-                       BucketVersioning const& rhs) {
-  return lhs.enabled == rhs.enabled;
-}
-
-inline bool operator<(BucketVersioning const& lhs,
-                      BucketVersioning const& rhs) {
-  return !lhs.enabled && rhs.enabled;
-}
-
-inline bool operator!=(BucketVersioning const& lhs,
-                       BucketVersioning const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(BucketVersioning const& lhs,
-                      BucketVersioning const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(BucketVersioning const& lhs,
-                       BucketVersioning const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(BucketVersioning const& lhs,
-                       BucketVersioning const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
-
-/**
- * The website configuration for a Bucket.
- *
- * @see https://cloud.google.com/storage/docs/static-website for information on
- *     how to configure Buckets to serve as a static website.
- */
-struct BucketWebsite {
-  std::string main_page_suffix;
-  std::string not_found_page;
-};
-
-inline bool operator==(BucketWebsite const& lhs, BucketWebsite const& rhs) {
-  return std::tie(lhs.main_page_suffix, lhs.not_found_page) ==
-         std::tie(rhs.main_page_suffix, rhs.not_found_page);
-}
-
-inline bool operator<(BucketWebsite const& lhs, BucketWebsite const& rhs) {
-  return std::tie(lhs.main_page_suffix, lhs.not_found_page) <
-         std::tie(rhs.main_page_suffix, rhs.not_found_page);
-}
-
-inline bool operator!=(BucketWebsite const& lhs, BucketWebsite const& rhs) {
-  return std::rel_ops::operator!=(lhs, rhs);
-}
-
-inline bool operator>(BucketWebsite const& lhs, BucketWebsite const& rhs) {
-  return std::rel_ops::operator>(lhs, rhs);
-}
-
-inline bool operator<=(BucketWebsite const& lhs, BucketWebsite const& rhs) {
-  return std::rel_ops::operator<=(lhs, rhs);
-}
-
-inline bool operator>=(BucketWebsite const& lhs, BucketWebsite const& rhs) {
-  return std::rel_ops::operator>=(lhs, rhs);
-}
 
 /**
  * Represents a Google Cloud Storage Bucket Metadata object.
  */
-class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
+class BucketMetadata {
  public:
   BucketMetadata() = default;
 
@@ -540,6 +66,23 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   std::vector<BucketAccessControl>& mutable_acl() { return acl_; }
   BucketMetadata& set_acl(std::vector<BucketAccessControl> acl) {
     acl_ = std::move(acl);
+    return *this;
+  }
+  ///@}
+
+  /// @name Accessors and modifiers for Autoclass configuration.
+  ///@{
+  bool has_autoclass() const { return autoclass_.has_value(); }
+  BucketAutoclass const& autoclass() const { return *autoclass_; }
+  absl::optional<BucketAutoclass> const& autoclass_as_optional() const {
+    return autoclass_;
+  }
+  BucketMetadata& set_autoclass(BucketAutoclass v) {
+    autoclass_ = std::move(v);
+    return *this;
+  }
+  BucketMetadata& reset_autoclass() {
+    autoclass_.reset();
     return *this;
   }
   ///@}
@@ -660,7 +203,13 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   ///@}
 
-  using CommonMetadata::etag;
+  std::string const& etag() const { return etag_; }
+
+  /// @note This is only intended for mocking.
+  BucketMetadata& set_etag(std::string v) {
+    etag_ = std::move(v);
+    return *this;
+  }
 
   /**
    * @name Get and set the IAM configuration.
@@ -693,8 +242,22 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   ///@}
 
-  using CommonMetadata::id;
-  using CommonMetadata::kind;
+  /// Return the bucket id.
+  std::string const& id() const { return id_; }
+
+  /// @note This is only intended for mocking.
+  BucketMetadata& set_id(std::string v) {
+    id_ = std::move(v);
+    return *this;
+  }
+
+  std::string const& kind() const { return kind_; }
+
+  /// @note This is only intended for mocking
+  BucketMetadata& set_kind(std::string v) {
+    kind_ = std::move(v);
+    return *this;
+  }
 
   /// @name Accessors and modifiers to the `labels`.
   ///@{
@@ -763,13 +326,23 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   ///@}
 
+  /// Return the bucket location.
   std::string const& location() const { return location_; }
+
+  /// Set the bucket location. Only applicable when creating buckets.
   BucketMetadata& set_location(std::string v) {
     location_ = std::move(v);
     return *this;
   }
 
+  /// Returns the location type (e.g. regional vs. dual region).
   std::string const& location_type() const { return location_type_; }
+
+  /// @note This is only intended for mocking.
+  BucketMetadata& set_location_type(std::string v) {
+    location_type_ = std::move(v);
+    return *this;
+  }
 
   /// @name Accessors and modifiers for logging configuration.
   ///@{
@@ -789,10 +362,16 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   ///@}
 
   /// The bucket metageneration.
-  using CommonMetadata::metageneration;
+  std::int64_t metageneration() const { return metageneration_; }
+
+  /// @note this is only intended for mocking.
+  BucketMetadata& set_metageneration(std::int64_t v) {
+    metageneration_ = v;
+    return *this;
+  }
 
   /// The bucket name.
-  using CommonMetadata::name;
+  std::string const& name() const { return name_; }
 
   /**
    * Changes the name.
@@ -802,17 +381,46 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
    *   some other attribute.
    */
   BucketMetadata& set_name(std::string v) {
-    CommonMetadata::set_name(std::move(v));
+    name_ = std::move(v);
     return *this;
   }
 
   /// Returns true if the bucket `owner` attribute is present.
-  using CommonMetadata::has_owner;
-  using CommonMetadata::owner;
+  bool has_owner() const { return owner_.has_value(); }
+  /**
+   * Returns the owner.
+   *
+   * It is undefined behavior to call `owner()` if `has_owner()` is false.
+   */
+  Owner const& owner() const { return *owner_; }
+
+  /// @note this is only intended for mocking.
+  BucketMetadata& set_owner(Owner v) {
+    owner_ = std::move(v);
+    return *this;
+  }
+  /// @note this is only intended for mocking.
+  BucketMetadata& reset_owner() {
+    owner_.reset();
+    return *this;
+  }
 
   std::int64_t const& project_number() const { return project_number_; }
 
-  using CommonMetadata::self_link;
+  /// @note this is only intended for mocking.
+  BucketMetadata& set_project_number(std::int64_t v) {
+    project_number_ = v;
+    return *this;
+  }
+
+  /// Returns a HTTP link to retrieve the bucket metadata.
+  std::string const& self_link() const { return self_link_; }
+
+  /// @note this is only intended for mocking.
+  BucketMetadata& set_self_link(std::string v) {
+    self_link_ = std::move(v);
+    return *this;
+  }
 
   /// @name Accessors and modifiers for retention policy configuration.
   ///@{
@@ -858,18 +466,32 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
 
   /// @name Access and modify the default storage class attribute.
   ///@{
-  using CommonMetadata::storage_class;
+  std::string const& storage_class() const { return storage_class_; }
   BucketMetadata& set_storage_class(std::string v) {
-    CommonMetadata::set_storage_class(std::move(v));
+    storage_class_ = std::move(v);
     return *this;
   }
   ///@}
 
   /// Returns the bucket creation timestamp.
-  using CommonMetadata::time_created;
+  std::chrono::system_clock::time_point time_created() const {
+    return time_created_;
+  }
+
+  /// @note This is only intended for mocking.
+  BucketMetadata& set_time_created(std::chrono::system_clock::time_point v) {
+    time_created_ = v;
+    return *this;
+  }
 
   /// Returns the timestamp for the last bucket metadata update.
-  using CommonMetadata::updated;
+  std::chrono::system_clock::time_point updated() const { return updated_; }
+
+  /// @note This is only intended for mocking.
+  BucketMetadata& set_updated(std::chrono::system_clock::time_point v) {
+    updated_ = v;
+    return *this;
+  }
 
   /// @name Accessors and modifiers for versioning configuration.
   ///@{
@@ -912,32 +534,65 @@ class BucketMetadata : private internal::CommonMetadata<BucketMetadata> {
   }
   ///@}
 
+  /// @name Accessors and modifiers for custom placement configuration.
+  ///@{
+  bool has_custom_placement_config() const {
+    return custom_placement_config_.has_value();
+  }
+  BucketCustomPlacementConfig const& custom_placement_config() const {
+    return *custom_placement_config_;
+  }
+  absl::optional<BucketCustomPlacementConfig> const&
+  custom_placement_config_as_optional() const {
+    return custom_placement_config_;
+  }
+  /// Placement configuration can only be set when the bucket is created.
+  BucketMetadata& set_custom_placement_config(BucketCustomPlacementConfig v) {
+    custom_placement_config_ = std::move(v);
+    return *this;
+  }
+  /// Placement configuration can only be set when the bucket is created.
+  BucketMetadata& reset_custom_placement_config() {
+    custom_placement_config_.reset();
+    return *this;
+  }
+  ///@}
+
   friend bool operator==(BucketMetadata const& lhs, BucketMetadata const& rhs);
   friend bool operator!=(BucketMetadata const& lhs, BucketMetadata const& rhs) {
     return !(lhs == rhs);
   }
 
  private:
-  friend struct internal::BucketMetadataParser;
-  friend struct internal::GrpcBucketMetadataParser;
-
   friend std::ostream& operator<<(std::ostream& os, BucketMetadata const& rhs);
   // Keep the fields in alphabetical order.
   std::vector<BucketAccessControl> acl_;
+  absl::optional<BucketAutoclass> autoclass_;
   absl::optional<BucketBilling> billing_;
   std::vector<CorsEntry> cors_;
-  bool default_event_based_hold_ = false;
+  absl::optional<BucketCustomPlacementConfig> custom_placement_config_;
   std::vector<ObjectAccessControl> default_acl_;
+  bool default_event_based_hold_ = false;
   absl::optional<BucketEncryption> encryption_;
+  std::string etag_;
   absl::optional<BucketIamConfiguration> iam_configuration_;
+  std::string id_;
+  std::string kind_;
   std::map<std::string, std::string> labels_;
   absl::optional<BucketLifecycle> lifecycle_;
   std::string location_;
   std::string location_type_;
   absl::optional<BucketLogging> logging_;
+  std::int64_t metageneration_{0};
+  std::string name_;
+  absl::optional<Owner> owner_;
   std::int64_t project_number_ = 0;
   absl::optional<BucketRetentionPolicy> retention_policy_;
   std::string rpo_;
+  std::string self_link_;
+  std::string storage_class_;
+  std::chrono::system_clock::time_point time_created_;
+  std::chrono::system_clock::time_point updated_;
   absl::optional<BucketVersioning> versioning_;
   absl::optional<BucketWebsite> website_;
 };
@@ -970,6 +625,9 @@ class BucketMetadataPatchBuilder {
    * @warning Currently the server ignores requests to reset the full ACL.
    */
   BucketMetadataPatchBuilder& ResetAcl();
+
+  BucketMetadataPatchBuilder& SetAutoclass(BucketAutoclass const& v);
+  BucketMetadataPatchBuilder& ResetAutoclass();
 
   BucketMetadataPatchBuilder& SetBilling(BucketBilling const& v);
   BucketMetadataPatchBuilder& ResetBilling();
@@ -1035,7 +693,7 @@ class BucketMetadataPatchBuilder {
   BucketMetadataPatchBuilder& ResetWebsite();
 
  private:
-  friend struct internal::GrpcBucketRequestParser;
+  friend struct internal::PatchBuilderDetails;
 
   internal::PatchBuilder impl_;
   bool labels_subpatch_dirty_{false};

@@ -23,6 +23,7 @@
 #include "google/cloud/iap/internal/identity_aware_proxy_o_auth_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -60,9 +61,9 @@ IdentityAwareProxyOAuthServiceConnection::CreateIdentityAwareProxyClient(
 }
 
 StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
-    IdentityAwareProxyOAuthServiceConnection::ListIdentityAwareProxyClients(
-        google::cloud::iap::v1::
-            ListIdentityAwareProxyClientsRequest) {  // NOLINT(performance-unnecessary-value-param)
+IdentityAwareProxyOAuthServiceConnection::ListIdentityAwareProxyClients(
+    google::cloud::iap::v1::
+        ListIdentityAwareProxyClientsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>>();
 }
@@ -87,7 +88,7 @@ Status IdentityAwareProxyOAuthServiceConnection::DeleteIdentityAwareProxyClient(
 std::shared_ptr<IdentityAwareProxyOAuthServiceConnection>
 MakeIdentityAwareProxyOAuthServiceConnection(Options options) {
   internal::CheckExpectedOptions<
-      CommonOptionList, GrpcOptionList,
+      CommonOptionList, GrpcOptionList, UnifiedCredentialsOptionList,
       IdentityAwareProxyOAuthServicePolicyOptionList>(options, __func__);
   options = iap_internal::IdentityAwareProxyOAuthServiceDefaultOptions(
       std::move(options));
@@ -101,25 +102,5 @@ MakeIdentityAwareProxyOAuthServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace iap_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<iap::IdentityAwareProxyOAuthServiceConnection>
-MakeIdentityAwareProxyOAuthServiceConnection(
-    std::shared_ptr<IdentityAwareProxyOAuthServiceStub> stub, Options options) {
-  options = IdentityAwareProxyOAuthServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      iap_internal::IdentityAwareProxyOAuthServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iap_internal
 }  // namespace cloud
 }  // namespace google

@@ -1,0 +1,9 @@
+@com_google_googleapis//google/cloud/connectors/v1:authconfig.proto
+@com_google_googleapis//google/cloud/connectors/v1:common.proto
+@com_google_googleapis//google/cloud/connectors/v1:connection.proto
+@com_google_googleapis//google/cloud/connectors/v1:connector.proto
+@com_google_googleapis//google/cloud/connectors/v1:connector_version.proto
+@com_google_googleapis//google/cloud/connectors/v1:connectors_service.proto
+@com_google_googleapis//google/cloud/connectors/v1:destination_config.proto
+@com_google_googleapis//google/cloud/connectors/v1:provider.proto
+@com_google_googleapis//google/cloud/connectors/v1:runtime.proto

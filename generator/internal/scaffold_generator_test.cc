@@ -45,6 +45,48 @@ char const* const kHierarchy[] = {
     "/external/googleapis/protodeps/",
 };
 
+TEST(ScaffoldGeneratorTest, LibraryName) {
+  EXPECT_EQ("test", LibraryName("google/cloud/test"));
+  EXPECT_EQ("test", LibraryName("google/cloud/test/"));
+  EXPECT_EQ("test", LibraryName("google/cloud/test/v1"));
+  EXPECT_EQ("test", LibraryName("google/cloud/test/v1/"));
+  EXPECT_EQ("test", LibraryName("google/cloud/test/foo/v1"));
+  EXPECT_EQ("golden", LibraryName("blah/golden"));
+  EXPECT_EQ("golden", LibraryName("blah/golden/v1"));
+  EXPECT_EQ("service", LibraryName("foo/bar/service"));
+}
+
+TEST(ScaffoldGeneratorTest, LibraryPath) {
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test"));
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test/"));
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test/v1"));
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test/v1/"));
+  EXPECT_EQ("google/cloud/test/", LibraryPath("google/cloud/test/foo/v1"));
+  EXPECT_EQ("blah/golden/", LibraryPath("blah/golden"));
+  EXPECT_EQ("blah/golden/", LibraryPath("blah/golden/v1"));
+  EXPECT_EQ("foo/bar/service/", LibraryPath("foo/bar/service"));
+}
+
+TEST(ScaffoldGeneratorTest, ServiceSubdirectory) {
+  EXPECT_EQ("", ServiceSubdirectory("google/cloud/test"));
+  EXPECT_EQ("", ServiceSubdirectory("google/cloud/test/"));
+  EXPECT_EQ("v1/", ServiceSubdirectory("google/cloud/test/v1"));
+  EXPECT_EQ("v1/", ServiceSubdirectory("google/cloud/test/v1/"));
+  EXPECT_EQ("foo/v1/", ServiceSubdirectory("google/cloud/test/foo/v1"));
+  EXPECT_EQ("", ServiceSubdirectory("blah/golden"));
+  EXPECT_EQ("v1/", ServiceSubdirectory("blah/golden/v1"));
+  EXPECT_EQ("v1/", ServiceSubdirectory("blah/golden/v1"));
+  EXPECT_EQ("", ServiceSubdirectory("foo/bar/service"));
+}
+
+TEST(ScaffoldGeneratorTest, OptionsGroup) {
+  EXPECT_EQ("google-cloud-test-options", OptionsGroup("google/cloud/test"));
+  EXPECT_EQ("google-cloud-test-options", OptionsGroup("google/cloud/test/v1"));
+  EXPECT_EQ("blah-golden-options", OptionsGroup("blah/golden"));
+  EXPECT_EQ("blah-golden-options", OptionsGroup("blah/golden/v1"));
+  EXPECT_EQ("foo-bar-service-options", OptionsGroup("foo/bar/service"));
+}
+
 class ScaffoldGenerator : public ::testing::Test {
  protected:
   ~ScaffoldGenerator() override {
@@ -98,7 +140,7 @@ class ScaffoldGenerator : public ::testing::Test {
 )""";
 
     google::cloud::cpp::generator::ServiceConfiguration service;
-    service.set_product_path("google/cloud/test");
+    service.set_product_path("google/cloud/test/v1");
     service.set_service_proto_path("google/cloud/test/v1/service.proto");
     service.set_initial_copyright_year("2034");
     service_ = std::move(service);
@@ -114,22 +156,40 @@ class ScaffoldGenerator : public ::testing::Test {
   google::cloud::cpp::generator::ServiceConfiguration service_;
 };
 
-TEST_F(ScaffoldGenerator, LibraryName) {
-  EXPECT_EQ("test", LibraryName(service()));
-}
-
 TEST_F(ScaffoldGenerator, Vars) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const ga = ScaffoldVars(path(), service(), false);
   EXPECT_THAT(
-      vars, AllOf(Contains(Pair("title", "Test Only API")),
-                  Contains(Pair("description",
-                                "Provides a placeholder to write this test.")),
-                  Contains(Pair("library", "test")),
-                  Contains(Pair("copyright_year", "2034"))));
+      ga,
+      AllOf(Contains(Pair("title", "Test Only API")),
+            Contains(Pair("description",
+                          "Provides a placeholder to write this test.")),
+            Contains(Pair("library", "test")),
+            Contains(Pair("service_subdirectory", "v1/")),
+            Contains(Pair("product_options_page", "google-cloud-test-options")),
+            Contains(Pair("copyright_year", "2034")),
+            Contains(Pair("library_prefix", "")),
+            Contains(Pair("doxygen_version_suffix", "")),
+            Contains(Pair("construction", "")),
+            Contains(Pair("status", HasSubstr("**GA**")))));
+
+  auto const experimental = ScaffoldVars(path(), service(), true);
+  EXPECT_THAT(
+      experimental,
+      AllOf(Contains(Pair("title", "Test Only API")),
+            Contains(Pair("description",
+                          "Provides a placeholder to write this test.")),
+            Contains(Pair("library", "test")),
+            Contains(Pair("service_subdirectory", "v1/")),
+            Contains(Pair("product_options_page", "google-cloud-test-options")),
+            Contains(Pair("copyright_year", "2034")),
+            Contains(Pair("library_prefix", "experimental-")),
+            Contains(Pair("doxygen_version_suffix", " (Experimental)")),
+            Contains(Pair("construction", "\n:construction:\n")),
+            Contains(Pair("status", HasSubstr("**experimental**")))));
 }
 
 TEST_F(ScaffoldGenerator, CmakeConfigIn) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateCmakeConfigIn(os, vars);
   auto const actual = std::move(os).str();
@@ -141,18 +201,8 @@ TEST_F(ScaffoldGenerator, CmakeConfigIn) {
           R"""(include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_test-targets.cmake"))"""));
 }
 
-TEST_F(ScaffoldGenerator, ConfigPcIn) {
-  auto const vars = ScaffoldVars(path(), path(), service());
-  std::ostringstream os;
-  GenerateConfigPcIn(os, vars);
-  auto const actual = std::move(os).str();
-  EXPECT_THAT(actual, HasSubstr("2034"));
-  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
-  EXPECT_THAT(actual, HasSubstr(R"""(prefix=${pcfiledir}/../..)"""));
-}
-
 TEST_F(ScaffoldGenerator, Readme) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateReadme(os, vars);
   auto const actual = std::move(os).str();
@@ -161,10 +211,13 @@ TEST_F(ScaffoldGenerator, Readme) {
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-test/latest/
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/test
 )"""));
+  EXPECT_THAT(actual, Not(HasSubstr("$construction$")));
+  EXPECT_THAT(actual, HasSubstr("**GA**"));
+  EXPECT_THAT(actual, Not(HasSubstr("$status$")));
 }
 
 TEST_F(ScaffoldGenerator, Build) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateBuild(os, vars);
   auto const actual = std::move(os).str();
@@ -178,28 +231,28 @@ TEST_F(ScaffoldGenerator, Build) {
 }
 
 TEST_F(ScaffoldGenerator, CMakeLists) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateCMakeLists(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$doxygen_version_suffix$")));
   EXPECT_THAT(actual, HasSubstr(R"""(include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/test.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/test.deps")
 google_cloud_cpp_grpcpp_library(
     google_cloud_cpp_test_protos # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/test/v1/foo.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/test/v1/admin.proto
+    ${proto_list}
     PROTO_PATH_DIRECTORIES
     "${EXTERNAL_GOOGLEAPIS_SOURCE}" "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(test_protos)
-target_link_libraries(google_cloud_cpp_test_protos PUBLIC #
-    google-cloud-cpp::longrunning_operations_protos
-    google-cloud-cpp::rpc_status_protos
-    google-cloud-cpp::api_resource_protos
-    google-cloud-cpp::api_field_behavior_protos
-    google-cloud-cpp::api_client_protos
-    google-cloud-cpp::api_annotations_protos
-    google-cloud-cpp::api_http_protos)
+target_link_libraries(google_cloud_cpp_test_protos PUBLIC ${proto_deps})
 )"""));
 
   EXPECT_THAT(actual, HasSubstr(R"""(add_executable(test_quickstart)"""));
@@ -207,7 +260,7 @@ target_link_libraries(google_cloud_cpp_test_protos PUBLIC #
 }
 
 TEST_F(ScaffoldGenerator, DoxygenMainPage) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateDoxygenMainPage(os, vars);
   auto const actual = std::move(os).str();
@@ -218,10 +271,22 @@ to Provides a placeholder to write this test.
   EXPECT_THAT(actual, HasSubstr(R"""(
 [cloud-service-docs]: https://cloud.google.com/test
 )"""));
+  EXPECT_THAT(actual, Not(HasSubstr("$status$")));
+  EXPECT_THAT(actual, HasSubstr("**GA**"));
+}
+
+TEST_F(ScaffoldGenerator, DoxygenOptionsPage) {
+  auto const vars = ScaffoldVars(path(), service(), false);
+  std::ostringstream os;
+  GenerateDoxygenOptionsPage(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr(R"""(
+@defgroup google-cloud-test-options Test Only API Configuration Options
+)"""));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartReadme) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateQuickstartReadme(os, vars);
   auto const actual = std::move(os).str();
@@ -232,7 +297,7 @@ TEST_F(ScaffoldGenerator, QuickstartReadme) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartSkeleton) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateQuickstartSkeleton(os, vars);
   auto const actual = std::move(os).str();
@@ -241,16 +306,17 @@ TEST_F(ScaffoldGenerator, QuickstartSkeleton) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartCMake) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateQuickstartCMake(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartMakefile) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateQuickstartMakefile(os, vars);
   auto const actual = std::move(os).str();
@@ -260,18 +326,40 @@ TEST_F(ScaffoldGenerator, QuickstartMakefile) {
 }
 
 TEST_F(ScaffoldGenerator, QuickstartWorkspace) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto constexpr kContents = R"""(# Copyright $copyright_year$ Google LLC
+
+# A minimal WORKSPACE file showing how to use the $title$
+# C++ client library in Bazel-based projects.
+workspace(name = "qs")
+)""";
+
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
-  GenerateQuickstartWorkspace(os, vars);
+  GenerateQuickstartWorkspace(os, vars, kContents);
   auto const actual = std::move(os).str();
-  EXPECT_THAT(actual, HasSubstr("2034"));
+  EXPECT_THAT(actual, HasSubstr("# Copyright 2034 Google LLC"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+  EXPECT_THAT(
+      actual,
+      HasSubstr(
+          "A minimal WORKSPACE file showing how to use the Test Only API"));
+  EXPECT_THAT(actual, Not(HasSubstr("$title$")));
 }
 
 TEST_F(ScaffoldGenerator, QuickstartBuild) {
-  auto const vars = ScaffoldVars(path(), path(), service());
+  auto const vars = ScaffoldVars(path(), service(), false);
   std::ostringstream os;
   GenerateQuickstartBuild(os, vars);
+  auto const actual = std::move(os).str();
+  EXPECT_THAT(actual, HasSubstr("2034"));
+  EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));
+  EXPECT_THAT(actual, Not(HasSubstr("$library_prefix$")));
+}
+
+TEST_F(ScaffoldGenerator, QuickstartBazelrc) {
+  auto const vars = ScaffoldVars(path(), service(), false);
+  std::ostringstream os;
+  GenerateQuickstartBazelrc(os, vars);
   auto const actual = std::move(os).str();
   EXPECT_THAT(actual, HasSubstr("2034"));
   EXPECT_THAT(actual, Not(HasSubstr("$copyright_year$")));

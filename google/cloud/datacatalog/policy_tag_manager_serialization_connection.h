@@ -45,6 +45,21 @@ using PolicyTagManagerSerializationLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         datacatalog_internal::PolicyTagManagerSerializationRetryTraits>;
 
+/**
+ * The `PolicyTagManagerSerializationConnection` object for
+ * `PolicyTagManagerSerializationClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `PolicyTagManagerSerializationClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `PolicyTagManagerSerializationClient`.
+ *
+ * To create a concrete instance, see
+ * `MakePolicyTagManagerSerializationConnection()`.
+ *
+ * For mocking, see
+ * `datacatalog_mocks::MockPolicyTagManagerSerializationConnection`.
+ */
 class PolicyTagManagerSerializationConnection {
  public:
   virtual ~PolicyTagManagerSerializationConnection() = 0;
@@ -63,25 +78,34 @@ class PolicyTagManagerSerializationConnection {
       google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `PolicyTagManagerSerializationConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * PolicyTagManagerSerializationClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `PolicyTagManagerSerializationConnection`. Expected options are any
+ * of the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::datacatalog::PolicyTagManagerSerializationPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the
+ * `PolicyTagManagerSerializationConnection` created by this function.
+ */
 std::shared_ptr<PolicyTagManagerSerializationConnection>
 MakePolicyTagManagerSerializationConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace datacatalog_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<datacatalog::PolicyTagManagerSerializationConnection>
-MakePolicyTagManagerSerializationConnection(
-    std::shared_ptr<PolicyTagManagerSerializationStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datacatalog_internal
 }  // namespace cloud
 }  // namespace google
 

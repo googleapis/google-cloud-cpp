@@ -14,9 +14,9 @@
 
 #include "google/cloud/storage/internal/signed_url_requests.h"
 #include "google/cloud/storage/internal/curl_handle.h"
-#include "google/cloud/storage/internal/sha256_hash.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/internal/sha256_hash.h"
 #include "absl/strings/str_split.h"
 #include <algorithm>
 #include <cctype>
@@ -120,7 +120,8 @@ std::string TrimHeaderValue(std::string const& value) {
   std::string tmp = value;
   // Header values need to be normalized for spaces, whitespaces and tabs
   std::replace_if(
-      tmp.begin(), tmp.end(), [](char c) { return std::isspace(c); }, ' ');
+      tmp.begin(), tmp.end(), [](unsigned char c) { return std::isspace(c); },
+      ' ');
   tmp.erase(0, tmp.find_first_not_of(' '));
   tmp = tmp.substr(0, tmp.find_last_not_of(' ') + 1);
   auto end = std::unique(tmp.begin(), tmp.end(),
@@ -253,7 +254,8 @@ std::chrono::seconds V4SignUrlRequest::DefaultExpires() {
 
 std::string V4SignUrlRequest::CanonicalRequestHash(
     std::string const& client_id) const {
-  return HexEncode(Sha256Hash(CanonicalRequest(client_id)));
+  return google::cloud::internal::HexEncode(
+      google::cloud::internal::Sha256Hash(CanonicalRequest(client_id)));
 }
 
 std::string V4SignUrlRequest::Scope() const {

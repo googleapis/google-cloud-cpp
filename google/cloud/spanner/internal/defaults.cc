@@ -34,7 +34,8 @@ namespace {
 void SetBasicDefaults(Options& opts) {
   opts = internal::PopulateCommonOptions(
       std::move(opts), "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT",
-      "SPANNER_EMULATOR_HOST", "spanner.googleapis.com");
+      "SPANNER_EMULATOR_HOST", "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY",
+      "spanner.googleapis.com");
   opts =
       internal::PopulateGrpcOptions(std::move(opts), "SPANNER_EMULATOR_HOST");
   if (!opts.has<GrpcNumChannelsOption>()) {
@@ -72,7 +73,12 @@ Options DefaultOptions(Options opts) {
     }
   }
 
-  // Sets Spanner-specific options from session_pool_options.h
+  // Sets Spanner-specific session-pool options.
+  auto& num_channels = opts.lookup<GrpcNumChannelsOption>();
+  num_channels = (std::max)(num_channels, 1);
+  if (!opts.has<spanner::SessionPoolMinSessionsOption>()) {
+    opts.set<spanner::SessionPoolMinSessionsOption>(25 * num_channels);
+  }
   if (!opts.has<spanner::SessionPoolMaxSessionsPerChannelOption>()) {
     opts.set<spanner::SessionPoolMaxSessionsPerChannelOption>(100);
   }
@@ -88,8 +94,6 @@ Options DefaultOptions(Options opts) {
     opts.set<SessionPoolClockOption>(std::make_shared<Session::Clock>());
   }
   // Enforces some SessionPool constraints.
-  auto& num_channels = opts.lookup<GrpcNumChannelsOption>();
-  num_channels = (std::max)(num_channels, 1);
   auto& max_idle = opts.lookup<spanner::SessionPoolMaxIdleSessionsOption>();
   max_idle = (std::max)(max_idle, 0);
   auto& max_sessions_per_channel =

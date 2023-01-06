@@ -13,10 +13,10 @@
 // limitations under the License.
 
 #include "google/cloud/bigtable/table.h"
-#include "google/cloud/bigtable/testing/mock_async_failing_rpc_factory.h"
-#include "google/cloud/bigtable/testing/table_test_fixture.h"
-#include "google/cloud/internal/background_threads_impl.h"
-#include "google/cloud/testing_util/fake_completion_queue_impl.h"
+#include "google/cloud/bigtable/mocks/mock_data_connection.h"
+#include "google/cloud/bigtable/mocks/mock_row_reader.h"
+#include "google/cloud/testing_util/status_matchers.h"
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -24,240 +24,588 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-namespace btproto = ::google::bigtable::v2;
-using ::google::cloud::testing_util::FakeCompletionQueueImpl;
-using ::testing::HasSubstr;
+namespace v2 = ::google::bigtable::v2;
+using ms = std::chrono::milliseconds;
+using ::google::cloud::bigtable_mocks::MockDataConnection;
+using ::google::cloud::testing_util::StatusIs;
+using ::testing::ElementsAre;
+using ::testing::ElementsAreArray;
+using ::testing::Eq;
+using ::testing::Matcher;
+using ::testing::MockFunction;
+using ::testing::Property;
+using ::testing::Return;
+using ::testing::Unused;
 
-/// Define types and functions used in the tests.
-namespace {
-class TableTest : public ::google::cloud::bigtable::testing::TableTestFixture {
- public:
-  TableTest() : TableTestFixture(CompletionQueue{}) {}
-};
-}  // anonymous namespace
+auto const* const kProjectId = "test-project";
+auto const* const kInstanceId = "test-instance";
+auto const* const kAppProfileId = "test-profile";
+auto const* const kTableId = "test-table";
+auto const* const kTableName =
+    "projects/test-project/instances/test-instance/tables/test-table";
 
-TEST_F(TableTest, ClientProjectId) {
-  EXPECT_EQ(kProjectId, client_->project_id());
+Status PermanentError() {
+  return Status(StatusCode::kPermissionDenied, "fail");
 }
 
-TEST_F(TableTest, ClientInstanceId) {
-  EXPECT_EQ(kInstanceId, client_->instance_id());
+bigtable::SingleRowMutation IdempotentMutation() {
+  return bigtable::SingleRowMutation(
+      "row", {bigtable::SetCell("fam", "col", ms(0), "val")});
 }
 
-TEST_F(TableTest, StandaloneInstanceName) {
-  EXPECT_EQ(kInstanceName, InstanceName(client_));
+bigtable::SingleRowMutation NonIdempotentMutation() {
+  return bigtable::SingleRowMutation("row",
+                                     {bigtable::SetCell("fam", "col", "val")});
 }
 
-TEST_F(TableTest, StandaloneTableName) {
-  EXPECT_EQ(kTableName, TableName(client_, kTableId));
+void CheckFailedMutations(std::vector<FailedMutation> const& actual,
+                          std::vector<FailedMutation> const& expected) {
+  struct Unroll {
+    explicit Unroll(std::vector<FailedMutation> const& failed) {
+      for (auto const& f : failed) {
+        statuses.push_back(f.status());
+        indices.push_back(f.original_index());
+      }
+    }
+    std::vector<Status> statuses;
+    std::vector<int> indices;
+  };
+
+  auto a = Unroll(actual);
+  auto e = Unroll(expected);
+  EXPECT_THAT(a.statuses, ElementsAreArray(e.statuses));
+  EXPECT_THAT(a.indices, ElementsAreArray(e.indices));
 }
 
-TEST_F(TableTest, TableName) { EXPECT_EQ(kTableName, table_.table_name()); }
+RowSet TestRowSet() { return RowSet("r1", "r2"); }
 
-TEST_F(TableTest, WithNewTarget) {
-  Table table(client_, "original-profile", kTableId);
-  EXPECT_EQ(table.project_id(), kProjectId);
-  EXPECT_EQ(table.instance_id(), kInstanceId);
-  EXPECT_EQ(table.table_id(), kTableId);
-  EXPECT_EQ(table.table_name(), TableName(kProjectId, kInstanceId, kTableId));
-  EXPECT_EQ(table.app_profile_id(), "original-profile");
-
-  std::string const other_project_id = "other-project";
-  std::string const other_instance_id = "other-instance";
-  std::string const other_table_id = "other-table";
-  auto other_table =
-      table.WithNewTarget(other_project_id, other_instance_id, other_table_id);
-
-  EXPECT_EQ(other_table.project_id(), other_project_id);
-  EXPECT_EQ(other_table.instance_id(), other_instance_id);
-  EXPECT_EQ(other_table.table_id(), other_table_id);
-  EXPECT_EQ(other_table.table_name(),
-            TableName(other_project_id, other_instance_id, other_table_id));
-  EXPECT_EQ(other_table.app_profile_id(), "original-profile");
+Matcher<RowSet const&> IsTestRowSet() {
+  return Property(&RowSet::as_proto,
+                  Property(&v2::RowSet::row_keys, ElementsAre("r1", "r2")));
 }
 
-TEST_F(TableTest, WithNewTargetProfile) {
-  Table table(client_, "original-profile", kTableId);
-  EXPECT_EQ(table.project_id(), kProjectId);
-  EXPECT_EQ(table.instance_id(), kInstanceId);
-  EXPECT_EQ(table.table_id(), kTableId);
-  EXPECT_EQ(table.table_name(), TableName(kProjectId, kInstanceId, kTableId));
-  EXPECT_EQ(table.app_profile_id(), "original-profile");
+Filter TestFilter() { return Filter::Latest(5); }
 
-  std::string const other_project_id = "other-project";
-  std::string const other_instance_id = "other-instance";
-  std::string const other_table_id = "other-table";
-  std::string const other_profile_id = "other-profile";
-  auto other_table = table.WithNewTarget(other_project_id, other_instance_id,
-                                         other_profile_id, other_table_id);
-
-  EXPECT_EQ(other_table.project_id(), other_project_id);
-  EXPECT_EQ(other_table.instance_id(), other_instance_id);
-  EXPECT_EQ(other_table.table_id(), other_table_id);
-  EXPECT_EQ(other_table.table_name(),
-            TableName(other_project_id, other_instance_id, other_table_id));
-  EXPECT_EQ(other_table.app_profile_id(), other_profile_id);
+Matcher<Filter const&> IsTestFilter() {
+  return Property(
+      &Filter::as_proto,
+      Property(&v2::RowFilter::cells_per_column_limit_filter, Eq(5)));
 }
 
-TEST_F(TableTest, TableConstructor) {
-  std::string const other_table_id = "my-table";
-  std::string const other_table_name = TableName(client_, other_table_id);
-  Table table(client_, other_table_id);
-  EXPECT_EQ(other_table_name, table.table_name());
+ReadModifyWriteRule TestAppendRule() {
+  return ReadModifyWriteRule::AppendValue("cf1", "cq1", "append");
 }
 
-TEST_F(TableTest, CopyConstructor) {
-  Table source(client_, "my-table");
-  std::string const& expected = source.table_name();
-  // NOLINTNEXTLINE(performance-unnecessary-copy-initialization)
-  Table copy(source);
-  EXPECT_EQ(expected, copy.table_name());
+ReadModifyWriteRule TestIncrementRule() {
+  return ReadModifyWriteRule::IncrementAmount("cf2", "cq2", 42);
 }
 
-TEST_F(TableTest, MoveConstructor) {
-  Table source(client_, "my-table");
-  std::string expected = source.table_name();
-  Table copy(std::move(source));
-  EXPECT_EQ(expected, copy.table_name());
+Matcher<v2::ReadModifyWriteRule const> MatchRule(
+    ReadModifyWriteRule const& rule) {
+  auto const& r = rule.as_proto();
+  return AllOf(
+      Property(&v2::ReadModifyWriteRule::family_name, r.family_name()),
+      Property(&v2::ReadModifyWriteRule::column_qualifier,
+               r.column_qualifier()),
+      Property(&v2::ReadModifyWriteRule::append_value, r.append_value()),
+      Property(&v2::ReadModifyWriteRule::increment_amount,
+               r.increment_amount()));
 }
 
-TEST_F(TableTest, CopyAssignment) {
-  Table source(client_, "my-table");
-  std::string const& expected = source.table_name();
-  Table dest(client_, "another-table");
-  dest = source;
-  EXPECT_EQ(expected, dest.table_name());
-}
-
-TEST_F(TableTest, MoveAssignment) {
-  Table source(client_, "my-table");
-  std::string expected = source.table_name();
-  Table dest(client_, "another-table");
-  dest = std::move(source);
-  EXPECT_EQ(expected, dest.table_name());
-}
-
-TEST_F(TableTest, ChangeOnePolicy) {
-  Table table(client_, "some-table", AlwaysRetryMutationPolicy());
-  EXPECT_EQ("", table.app_profile_id());
-  EXPECT_THAT(table.table_name(), HasSubstr("some-table"));
-}
-
-TEST_F(TableTest, ChangePolicies) {
-  Table table(client_, "some-table", AlwaysRetryMutationPolicy(),
-              LimitedErrorCountRetryPolicy(42));
-  EXPECT_EQ("", table.app_profile_id());
-  EXPECT_THAT(table.table_name(), HasSubstr("some-table"));
-}
-
-TEST_F(TableTest, ConstructorWithAppProfileAndPolicies) {
-  Table table(client_, "test-profile-id", "some-table",
-              AlwaysRetryMutationPolicy(), LimitedErrorCountRetryPolicy(42));
-  EXPECT_EQ("test-profile-id", table.app_profile_id());
-  EXPECT_THAT(table.table_name(), HasSubstr("some-table"));
-}
-
-std::string const kProjectId = "the-project";
-std::string const kInstanceId = "the-instance";
-std::string const kTableId = "the-table";
-
-class ValidContextMdAsyncTest : public ::testing::Test {
- public:
-  ValidContextMdAsyncTest()
-      : cq_impl_(new FakeCompletionQueueImpl),
-        cq_(cq_impl_),
-        client_(new ::google::cloud::bigtable::testing::MockDataClient(
-            Options{}.set<GrpcCompletionQueueOption>(cq_))) {
-    EXPECT_CALL(*client_, project_id())
-        .WillRepeatedly(::testing::ReturnRef(kProjectId));
-    EXPECT_CALL(*client_, instance_id())
-        .WillRepeatedly(::testing::ReturnRef(kInstanceId));
-    table_ = absl::make_unique<Table>(client_, kTableId);
-  }
-
- protected:
-  template <typename ResultType>
-  void FinishTest(
-      ::google::cloud::future<google::cloud::StatusOr<ResultType>> res_future) {
-    EXPECT_EQ(1U, cq_impl_->size());
-    cq_impl_->SimulateCompletion(true);
-    EXPECT_EQ(0U, cq_impl_->size());
-    auto res = res_future.get();
-    EXPECT_FALSE(res);
-    EXPECT_EQ(::google::cloud::StatusCode::kPermissionDenied,
-              res.status().code());
-  }
-
-  void FinishTest(::google::cloud::future<google::cloud::Status> res_future) {
-    EXPECT_EQ(1U, cq_impl_->size());
-    cq_impl_->SimulateCompletion(true);
-    EXPECT_EQ(0U, cq_impl_->size());
-    auto res = res_future.get();
-    EXPECT_EQ(::google::cloud::StatusCode::kPermissionDenied, res.code());
-  }
-
-  std::shared_ptr<FakeCompletionQueueImpl> cq_impl_;
-  CompletionQueue cq_;
-  std::shared_ptr<testing::MockDataClient> client_;
-  std::unique_ptr<Table> table_;
+// Set by connection, client, and operation.
+struct TestOption1 {
+  using Type = std::string;
 };
 
-TEST_F(ValidContextMdAsyncTest, AsyncApply) {
-  testing::MockAsyncFailingRpcFactory<btproto::MutateRowRequest,
-                                      btproto::MutateRowResponse>
-      rpc_factory;
-  EXPECT_CALL(*client_, AsyncMutateRow)
-      .WillOnce(rpc_factory.Create(
-          R"""(
-              table_name: "projects/the-project/instances/the-instance/tables/the-table"
-              row_key: "row_key"
-              mutations: { delete_from_row { } }
-          )""",
-          "google.bigtable.v2.Bigtable.MutateRow"));
-  FinishTest(table_->AsyncApply(SingleRowMutation("row_key", DeleteFromRow())));
+// Set by connection and client.
+struct TestOption2 {
+  using Type = std::string;
+};
+
+// Set by connection.
+struct TestOption3 {
+  using Type = std::string;
+};
+
+Options CallOptions() { return Options{}.set<TestOption1>("call"); }
+
+Options TableOptions() {
+  return Options{}
+      .set<AppProfileIdOption>(kAppProfileId)
+      .set<TestOption1>("client")
+      .set<TestOption2>("client");
 }
 
-TEST_F(ValidContextMdAsyncTest, AsyncCheckAndMutateRow) {
-  testing::MockAsyncFailingRpcFactory<btproto::CheckAndMutateRowRequest,
-                                      btproto::CheckAndMutateRowResponse>
-      rpc_factory;
-  EXPECT_CALL(*client_, AsyncCheckAndMutateRow)
-      .WillOnce(rpc_factory.Create(
-          R"""(
-              table_name: "projects/the-project/instances/the-instance/tables/the-table"
-              row_key: "row_key"
-              true_mutations: { delete_from_row { } }
-              predicate_filter: { pass_all_filter: true }
-          )""",
-          "google.bigtable.v2.Bigtable.CheckAndMutateRow"));
-  FinishTest(table_->AsyncCheckAndMutateRow("row_key", Filter::PassAllFilter(),
-                                            {DeleteFromRow()}, {}));
+Options ConnectionOptions() {
+  return Options{}
+      .set<TestOption1>("connection")
+      .set<TestOption2>("connection")
+      .set<TestOption3>("connection");
 }
 
-TEST_F(ValidContextMdAsyncTest, AsyncReadModifyWriteRow) {
-  testing::MockAsyncFailingRpcFactory<btproto::ReadModifyWriteRowRequest,
-                                      btproto::ReadModifyWriteRowResponse>
-      rpc_factory;
-  EXPECT_CALL(*client_, AsyncReadModifyWriteRow)
-      .WillOnce(rpc_factory.Create(
-          R"""(
-              table_name: "projects/the-project/instances/the-instance/tables/the-table"
-              row_key: "row_key"
-              rules: {
-                  family_name: "fam"
-                  column_qualifier: "counter"
-                  increment_amount: 1
-              }
-              rules: {
-                  family_name: "fam"
-                  column_qualifier: "list"
-                  append_value: ";element"
-              }
-          )""",
-          "google.bigtable.v2.Bigtable.ReadModifyWriteRow"));
-  FinishTest(table_->AsyncReadModifyWriteRow(
-      "row_key", ReadModifyWriteRule::IncrementAmount("fam", "counter", 1),
-      ReadModifyWriteRule::AppendValue("fam", "list", ";element")));
+Table TestTable(std::shared_ptr<MockDataConnection> mock) {
+  EXPECT_CALL(*mock, options).WillRepeatedly(Return(ConnectionOptions()));
+  return Table(std::move(mock),
+               TableResource(kProjectId, kInstanceId, kTableId),
+               TableOptions());
+}
+
+void CheckCurrentOptions() {
+  auto const& options = google::cloud::internal::CurrentOptions();
+  EXPECT_EQ(kAppProfileId, options.get<AppProfileIdOption>());
+  EXPECT_EQ("call", options.get<TestOption1>());
+  EXPECT_EQ("client", options.get<TestOption2>());
+  EXPECT_EQ("connection", options.get<TestOption3>());
+}
+
+TEST(TableTest, ConnectionConstructor) {
+  auto conn = std::make_shared<MockDataConnection>();
+  auto table =
+      Table(std::move(conn), TableResource(kProjectId, kInstanceId, kTableId));
+  EXPECT_EQ(kProjectId, table.project_id());
+  EXPECT_EQ(kInstanceId, table.instance_id());
+  EXPECT_EQ(kTableId, table.table_id());
+  EXPECT_EQ(kTableName, table.table_name());
+}
+
+TEST(TableTest, AppProfileId) {
+  auto conn = std::make_shared<MockDataConnection>();
+  auto table = Table(conn, TableResource(kProjectId, kInstanceId, kTableId));
+  EXPECT_EQ("", table.app_profile_id());
+
+  table = Table(conn, TableResource(kProjectId, kInstanceId, kTableId),
+                Options{}.set<AppProfileIdOption>(kAppProfileId));
+  EXPECT_EQ(kAppProfileId, table.app_profile_id());
+}
+
+TEST(TableTest, Apply) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, Apply)
+      .WillOnce([](std::string const& table_name,
+                   bigtable::SingleRowMutation const& mut) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_EQ(mut.row_key(), "row");
+        return PermanentError();
+      });
+
+  auto table = TestTable(std::move(mock));
+  auto status = table.Apply(IdempotentMutation(), CallOptions());
+  EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, AsyncApply) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncApply)
+      .WillOnce([](std::string const& table_name,
+                   bigtable::SingleRowMutation const& mut) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_EQ(mut.row_key(), "row");
+        return make_ready_future(PermanentError());
+      });
+
+  auto table = TestTable(std::move(mock));
+  auto status = table.AsyncApply(IdempotentMutation(), CallOptions()).get();
+  EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, BulkApply) {
+  std::vector<FailedMutation> expected = {{PermanentError(), 1}};
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, BulkApply)
+      .WillOnce([&expected](std::string const& table_name,
+                            bigtable::BulkMutation const& mut) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_EQ(mut.size(), 2);
+        return expected;
+      });
+
+  auto table = TestTable(std::move(mock));
+  auto actual = table.BulkApply(
+      BulkMutation(IdempotentMutation(), NonIdempotentMutation()),
+      CallOptions());
+  CheckFailedMutations(actual, expected);
+}
+
+TEST(TableTest, AsyncBulkApply) {
+  std::vector<FailedMutation> expected = {{PermanentError(), 1}};
+
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncBulkApply)
+      .WillOnce([&expected](std::string const& table_name,
+                            bigtable::BulkMutation const& mut) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_EQ(mut.size(), 2);
+        return make_ready_future(expected);
+      });
+
+  auto table = TestTable(std::move(mock));
+  auto actual = table.AsyncBulkApply(
+      BulkMutation(IdempotentMutation(), NonIdempotentMutation()),
+      CallOptions());
+  CheckFailedMutations(actual.get(), expected);
+}
+
+TEST(TableTest, ReadRows) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([](std::string const& table_name,
+                   bigtable::RowSet const& row_set, std::int64_t rows_limit,
+                   bigtable::Filter const& filter) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_THAT(row_set, IsTestRowSet());
+        EXPECT_EQ(rows_limit, RowReader::NO_ROWS_LIMIT);
+        EXPECT_THAT(filter, IsTestFilter());
+        return bigtable_mocks::MakeRowReader({}, PermanentError());
+      });
+
+  auto table = TestTable(std::move(mock));
+  auto reader = table.ReadRows(TestRowSet(), TestFilter(), CallOptions());
+  auto it = reader.begin();
+  EXPECT_THAT(*it, StatusIs(StatusCode::kPermissionDenied));
+  EXPECT_EQ(++it, reader.end());
+}
+
+TEST(TableTest, ReadRowsWithRowLimit) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadRows)
+      .WillOnce([](std::string const& table_name,
+                   bigtable::RowSet const& row_set, std::int64_t rows_limit,
+                   bigtable::Filter const& filter) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_THAT(row_set, IsTestRowSet());
+        EXPECT_EQ(rows_limit, 42);
+        EXPECT_THAT(filter, IsTestFilter());
+        return bigtable_mocks::MakeRowReader({}, PermanentError());
+      });
+
+  auto table = TestTable(std::move(mock));
+  auto reader = table.ReadRows(TestRowSet(), 42, TestFilter(), CallOptions());
+  auto it = reader.begin();
+  EXPECT_THAT(*it, StatusIs(StatusCode::kPermissionDenied));
+  EXPECT_EQ(++it, reader.end());
+}
+
+TEST(TableTest, ReadRow) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadRow)
+      .WillOnce([](std::string const& table_name, std::string const& row_key,
+                   bigtable::Filter const& filter) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_EQ("row", row_key);
+        EXPECT_THAT(filter, IsTestFilter());
+        return PermanentError();
+      });
+
+  auto table = TestTable(std::move(mock));
+  auto resp = table.ReadRow("row", TestFilter(), CallOptions());
+  EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, CheckAndMutateRow) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, CheckAndMutateRow)
+      .WillOnce([](std::string const& table_name, std::string const& row_key,
+                   Filter const& filter,
+                   std::vector<Mutation> const& true_mutations,
+                   std::vector<Mutation> const& false_mutations) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_EQ("row", row_key);
+        EXPECT_THAT(filter, IsTestFilter());
+        // We could check individual elements, but verifying the size is good
+        // enough for me.
+        EXPECT_EQ(1, true_mutations.size());
+        EXPECT_EQ(2, false_mutations.size());
+        return PermanentError();
+      });
+
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+  auto table = TestTable(std::move(mock));
+  auto row = table.CheckAndMutateRow("row", TestFilter(), {t1}, {f1, f2},
+                                     CallOptions());
+  EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, AsyncCheckAndMutateRow) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncCheckAndMutateRow)
+      .WillOnce([](std::string const& table_name, std::string const& row_key,
+                   Filter const& filter,
+                   std::vector<Mutation> const& true_mutations,
+                   std::vector<Mutation> const& false_mutations) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_EQ("row", row_key);
+        EXPECT_THAT(filter, IsTestFilter());
+        // We could check individual elements, but verifying the size is good
+        // enough for me.
+        EXPECT_EQ(1, true_mutations.size());
+        EXPECT_EQ(2, false_mutations.size());
+        return make_ready_future<StatusOr<bigtable::MutationBranch>>(
+            PermanentError());
+      });
+
+  auto t1 = bigtable::SetCell("f1", "c1", ms(0), "true1");
+  auto f1 = bigtable::SetCell("f1", "c1", ms(0), "false1");
+  auto f2 = bigtable::SetCell("f2", "c2", ms(0), "false2");
+  auto table = TestTable(std::move(mock));
+  auto row = table.AsyncCheckAndMutateRow("row", TestFilter(), {t1}, {f1, f2},
+                                          CallOptions());
+  EXPECT_THAT(row.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, SampleRows) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, SampleRows).WillOnce([](std::string const& table_name) {
+    CheckCurrentOptions();
+    EXPECT_EQ(kTableName, table_name);
+    return PermanentError();
+  });
+
+  auto table = TestTable(std::move(mock));
+  auto samples = table.SampleRows(CallOptions());
+  EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, AsyncSampleRows) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncSampleRows)
+      .WillOnce([](std::string const& table_name) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        return make_ready_future<StatusOr<std::vector<RowKeySample>>>(
+            PermanentError());
+      });
+
+  auto table = TestTable(std::move(mock));
+  auto samples = table.AsyncSampleRows(CallOptions()).get();
+  EXPECT_THAT(samples, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, ReadModifyWriteRow) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadModifyWriteRow)
+      .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_THAT(request.rules(),
+                    ElementsAre(MatchRule(TestAppendRule()),
+                                MatchRule(TestIncrementRule())));
+        return PermanentError();
+      });
+
+  auto table = TestTable(std::move(mock));
+  auto row = table.ReadModifyWriteRow("row", TestAppendRule(),
+                                      TestIncrementRule(), CallOptions());
+  EXPECT_THAT(row, StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, ReadModifyWriteRowOptionsMerge) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, ReadModifyWriteRow)
+      .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
+        auto const& options = google::cloud::internal::CurrentOptions();
+        EXPECT_EQ("latter", options.get<TestOption1>());
+        EXPECT_EQ("former", options.get<TestOption2>());
+        EXPECT_EQ("latter", options.get<TestOption3>());
+        EXPECT_THAT(request.rules(),
+                    ElementsAre(MatchRule(TestAppendRule()),
+                                MatchRule(TestIncrementRule())));
+        return PermanentError();
+      });
+
+  auto former = Options{}.set<TestOption1>("former").set<TestOption2>("former");
+  auto latter = Options{}.set<TestOption1>("latter").set<TestOption3>("latter");
+
+  auto table = TestTable(std::move(mock));
+  (void)table.ReadModifyWriteRow("row", TestAppendRule(), former,
+                                 TestIncrementRule(), latter);
+}
+
+TEST(TableTest, AsyncReadModifyWriteRow) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
+      .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, request.table_name());
+        EXPECT_THAT(request.rules(),
+                    ElementsAre(MatchRule(TestAppendRule()),
+                                MatchRule(TestIncrementRule())));
+        return make_ready_future<StatusOr<Row>>(PermanentError());
+      });
+
+  auto table = TestTable(std::move(mock));
+  auto row = table.AsyncReadModifyWriteRow("row", TestAppendRule(),
+                                           TestIncrementRule(), CallOptions());
+  EXPECT_THAT(row.get(), StatusIs(StatusCode::kPermissionDenied));
+}
+
+TEST(TableTest, AsyncReadModifyWriteRowOptionsMerge) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadModifyWriteRow)
+      .WillOnce([](v2::ReadModifyWriteRowRequest const& request) {
+        auto const& options = google::cloud::internal::CurrentOptions();
+        EXPECT_EQ("latter", options.get<TestOption1>());
+        EXPECT_EQ("former", options.get<TestOption2>());
+        EXPECT_EQ("latter", options.get<TestOption3>());
+        EXPECT_THAT(request.rules(),
+                    ElementsAre(MatchRule(TestAppendRule()),
+                                MatchRule(TestIncrementRule())));
+        return make_ready_future<StatusOr<Row>>(PermanentError());
+      });
+
+  auto former = Options{}.set<TestOption1>("former").set<TestOption2>("former");
+  auto latter = Options{}.set<TestOption1>("latter").set<TestOption3>("latter");
+
+  auto table = TestTable(std::move(mock));
+  (void)table
+      .AsyncReadModifyWriteRow("row", TestAppendRule(), former,
+                               TestIncrementRule(), latter)
+      .get();
+}
+
+TEST(TableTest, AsyncReadRows) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](std::string const& table_name,
+                   std::function<future<bool>(bigtable::Row)> const& on_row,
+                   std::function<void(Status)> const& on_finish,
+                   bigtable::RowSet const& row_set, std::int64_t rows_limit,
+                   bigtable::Filter const& filter) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_THAT(row_set, IsTestRowSet());
+        EXPECT_EQ(RowReader::NO_ROWS_LIMIT, rows_limit);
+        EXPECT_THAT(filter, IsTestFilter());
+
+        // Invoke the callbacks.
+        EXPECT_TRUE(on_row(bigtable::Row("r1", {})).get());
+        EXPECT_FALSE(on_row(bigtable::Row("r2", {})).get());
+        on_finish(PermanentError());
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call)
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r1", row.row_key());
+        return make_ready_future(true);
+      })
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r2", row.row_key());
+        return make_ready_future(false);
+      });
+
+  MockFunction<void(Status)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+  });
+
+  auto table = TestTable(std::move(mock));
+  table.AsyncReadRows(on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                      TestRowSet(), TestFilter(), CallOptions());
+}
+
+TEST(TableTest, AsyncReadRowsWithRowLimit) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](std::string const& table_name,
+                   std::function<future<bool>(bigtable::Row)> const& on_row,
+                   std::function<void(Status)> const& on_finish,
+                   bigtable::RowSet const& row_set, std::int64_t rows_limit,
+                   bigtable::Filter const& filter) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_THAT(row_set, IsTestRowSet());
+        EXPECT_EQ(42, rows_limit);
+        EXPECT_THAT(filter, IsTestFilter());
+
+        // Invoke the callbacks.
+        EXPECT_TRUE(on_row(bigtable::Row("r1", {})).get());
+        EXPECT_FALSE(on_row(bigtable::Row("r2", {})).get());
+        on_finish(PermanentError());
+      });
+
+  MockFunction<future<bool>(bigtable::Row const&)> on_row;
+  EXPECT_CALL(on_row, Call)
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r1", row.row_key());
+        return make_ready_future(true);
+      })
+      .WillOnce([](bigtable::Row const& row) {
+        EXPECT_EQ("r2", row.row_key());
+        return make_ready_future(false);
+      });
+
+  MockFunction<void(Status)> on_finish;
+  EXPECT_CALL(on_finish, Call).WillOnce([](Status const& status) {
+    EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+  });
+
+  auto table = TestTable(std::move(mock));
+  table.AsyncReadRows(on_row.AsStdFunction(), on_finish.AsStdFunction(),
+                      TestRowSet(), 42, TestFilter(), CallOptions());
+}
+
+TEST(TableTest, AsyncReadRowsAcceptsMoveOnlyTypes) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadRows)
+      .WillOnce([](Unused,
+                   std::function<future<bool>(bigtable::Row)> const& on_row,
+                   std::function<void(Status)> const& on_finish, Unused, Unused,
+                   Unused) {
+        // Invoke the callbacks.
+        EXPECT_TRUE(on_row(bigtable::Row("row", {})).get());
+        on_finish(PermanentError());
+      });
+
+  class MoveOnly {
+   public:
+    MoveOnly() = default;
+    MoveOnly(MoveOnly&&) = default;
+    MoveOnly& operator=(MoveOnly&&) = default;
+    MoveOnly(MoveOnly const&) = delete;
+    MoveOnly& operator=(MoveOnly const&) = delete;
+
+    future<bool> operator()(Row const& row) {
+      EXPECT_EQ("row", row.row_key());
+      return make_ready_future(true);
+    }
+
+    void operator()(Status const& status) {
+      EXPECT_THAT(status, StatusIs(StatusCode::kPermissionDenied));
+    }
+  };
+
+  auto table = TestTable(std::move(mock));
+  table.AsyncReadRows(MoveOnly{}, MoveOnly{}, TestRowSet(), TestFilter());
+}
+
+TEST(TableTest, AsyncReadRow) {
+  auto mock = std::make_shared<MockDataConnection>();
+  EXPECT_CALL(*mock, AsyncReadRow)
+      .WillOnce([](std::string const& table_name, std::string const& row_key,
+                   bigtable::Filter const& filter) {
+        CheckCurrentOptions();
+        EXPECT_EQ(kTableName, table_name);
+        EXPECT_EQ("row", row_key);
+        EXPECT_THAT(filter, IsTestFilter());
+        return make_ready_future<StatusOr<std::pair<bool, bigtable::Row>>>(
+            PermanentError());
+      });
+
+  auto table = TestTable(std::move(mock));
+  auto resp = table.AsyncReadRow("row", TestFilter(), CallOptions()).get();
+  EXPECT_THAT(resp, StatusIs(StatusCode::kPermissionDenied));
 }
 
 }  // namespace

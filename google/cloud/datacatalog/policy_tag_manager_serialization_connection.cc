@@ -23,6 +23,7 @@
 #include "google/cloud/datacatalog/policy_tag_manager_serialization_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -55,6 +56,7 @@ PolicyTagManagerSerializationConnection::ExportTaxonomies(
 std::shared_ptr<PolicyTagManagerSerializationConnection>
 MakePolicyTagManagerSerializationConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PolicyTagManagerSerializationPolicyOptionList>(
       options, __func__);
   options = datacatalog_internal::PolicyTagManagerSerializationDefaultOptions(
@@ -70,25 +72,5 @@ MakePolicyTagManagerSerializationConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace datacatalog_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<datacatalog::PolicyTagManagerSerializationConnection>
-MakePolicyTagManagerSerializationConnection(
-    std::shared_ptr<PolicyTagManagerSerializationStub> stub, Options options) {
-  options = PolicyTagManagerSerializationDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      datacatalog_internal::PolicyTagManagerSerializationConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datacatalog_internal
 }  // namespace cloud
 }  // namespace google

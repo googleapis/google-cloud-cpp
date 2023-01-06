@@ -23,6 +23,9 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+/// Returns the scheme  to query a GCE metadata sevrre.
+std::string GceMetadataScheme();
+
 /// Returns the hostname for a GCE instance's metadata server.
 std::string GceMetadataHostname();
 

@@ -37,14 +37,13 @@ CloudRedisConnectionImpl::CloudRedisConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
-                                      redis_internal::CloudRedisDefaultOptions(
-                                          CloudRedisConnection::options()))) {}
+                                      CloudRedisConnection::options())) {}
 
 StreamRange<google::cloud::redis::v1::Instance>
 CloudRedisConnectionImpl::ListInstances(
     google::cloud::redis::v1::ListInstancesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<redis::CloudRedisRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -86,10 +85,24 @@ CloudRedisConnectionImpl::GetInstance(
       request, __func__);
 }
 
+StatusOr<google::cloud::redis::v1::InstanceAuthString>
+CloudRedisConnectionImpl::GetInstanceAuthString(
+    google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetInstanceAuthString(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::redis::v1::GetInstanceAuthStringRequest const&
+                 request) {
+        return stub_->GetInstanceAuthString(context, request);
+      },
+      request, __func__);
+}
+
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::CreateInstance(
     google::cloud::redis::v1::CreateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,
@@ -118,7 +131,7 @@ CloudRedisConnectionImpl::CreateInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::UpdateInstance(
     google::cloud::redis::v1::UpdateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,
@@ -147,7 +160,7 @@ CloudRedisConnectionImpl::UpdateInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::UpgradeInstance(
     google::cloud::redis::v1::UpgradeInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,
@@ -176,7 +189,7 @@ CloudRedisConnectionImpl::UpgradeInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::ImportInstance(
     google::cloud::redis::v1::ImportInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,
@@ -205,7 +218,7 @@ CloudRedisConnectionImpl::ImportInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::ExportInstance(
     google::cloud::redis::v1::ExportInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,
@@ -234,7 +247,7 @@ CloudRedisConnectionImpl::ExportInstance(
 future<StatusOr<google::cloud::redis::v1::Instance>>
 CloudRedisConnectionImpl::FailoverInstance(
     google::cloud::redis::v1::FailoverInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::Instance>(
       background_->cq(), request,
@@ -263,7 +276,7 @@ CloudRedisConnectionImpl::FailoverInstance(
 future<StatusOr<google::cloud::redis::v1::OperationMetadata>>
 CloudRedisConnectionImpl::DeleteInstance(
     google::cloud::redis::v1::DeleteInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::redis::v1::OperationMetadata>(
       background_->cq(), request,
@@ -286,6 +299,37 @@ CloudRedisConnectionImpl::DeleteInstance(
           google::cloud::redis::v1::OperationMetadata>,
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteInstance(request), polling_policy(),
+      __func__);
+}
+
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnectionImpl::RescheduleMaintenance(
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::redis::v1::Instance>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::redis::v1::RescheduleMaintenanceRequest const&
+                 request) {
+        return stub->AsyncRescheduleMaintenance(cq, std::move(context),
+                                                request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::redis::v1::Instance>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->RescheduleMaintenance(request), polling_policy(),
       __func__);
 }
 

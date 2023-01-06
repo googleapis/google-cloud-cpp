@@ -16,6 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_REFRESHING_CREDENTIALS_WRAPPER_H
 
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/oauth2_refreshing_credentials_wrapper.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <chrono>
@@ -30,9 +31,13 @@ namespace oauth2 {
 
 /**
  * Wrapper for refreshable parts of a Credentials object.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 class RefreshingCredentialsWrapper {
  public:
+  RefreshingCredentialsWrapper();
+
   struct TemporaryToken {
     std::string token;
     std::chrono::system_clock::time_point expiration_time;
@@ -40,18 +45,18 @@ class RefreshingCredentialsWrapper {
 
   template <typename RefreshFunctor>
   StatusOr<std::string> AuthorizationHeader(
-      std::chrono::system_clock::time_point now,
-      RefreshFunctor refresh_fn) const {
-    if (IsValid(now)) {
-      return temporary_token_.token;
-    }
-
-    StatusOr<TemporaryToken> new_token = refresh_fn();
-    if (new_token) {
-      temporary_token_ = *std::move(new_token);
-      return temporary_token_.token;
-    }
-    return new_token.status();
+      std::chrono::system_clock::time_point, RefreshFunctor refresh_fn) const {
+    auto refresh_fn_wrapper =
+        [refresh_fn]() -> StatusOr<google::cloud::internal::AccessToken> {
+      auto temp_token = refresh_fn();
+      if (!temp_token.ok()) return temp_token.status();
+      auto token = SplitToken(temp_token->token);
+      return google::cloud::internal::AccessToken{std::move(token.second),
+                                                  temp_token->expiration_time};
+    };
+    auto header = impl_->AuthorizationHeader(refresh_fn_wrapper);
+    if (!header.ok()) return std::move(header).status();
+    return header->first + ": " + header->second;
   }
 
   /**
@@ -64,6 +69,8 @@ class RefreshingCredentialsWrapper {
    * If a Credentials is close to expiration but not quite expired, this method
    * may still return false. This helps prevent the case where an access token
    * expires between when it is obtained and when it is used.
+   *
+   * @deprecated Prefer using the unified credentials documented in @ref guac
    */
   bool IsExpired(std::chrono::system_clock::time_point now) const;
 
@@ -72,11 +79,16 @@ class RefreshingCredentialsWrapper {
    *
    * This method should be used to determine whether a Credentials object needs
    * to be refreshed.
+   *
+   * @deprecated Prefer using the unified credentials documented in @ref guac
    */
   bool IsValid(std::chrono::system_clock::time_point now) const;
 
  private:
-  mutable TemporaryToken temporary_token_;
+  static std::pair<std::string, std::string> SplitToken(
+      std::string const& token);
+
+  std::unique_ptr<oauth2_internal::RefreshingCredentialsWrapper> impl_;
 };
 
 }  // namespace oauth2

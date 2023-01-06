@@ -24,6 +24,7 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class Message;
 class AckHandler;
+class ExactlyOnceAckHandler;
 
 /**
  * Defines the interface for application-level callbacks.
@@ -33,6 +34,18 @@ class AckHandler;
  * a move-only type to support asynchronously acknowledgments.
  */
 using ApplicationCallback = std::function<void(Message, AckHandler)>;
+
+/**
+ * Defines the interface for application-level callbacks with exactly-once
+ * delivery.
+ *
+ * Applications provide a callable compatible with this type to receive
+ * messages.  They acknowledge (or reject) messages using
+ * `ExactlyOnceAckHandler`.  This is a move-only type to support asynchronous
+ * acknowledgments.
+ */
+using ExactlyOnceApplicationCallback =
+    std::function<void(pubsub::Message, ExactlyOnceAckHandler)>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub

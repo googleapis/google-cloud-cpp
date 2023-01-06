@@ -35,9 +35,8 @@ TextToSpeechConnectionImpl::TextToSpeechConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), texttospeech_internal::TextToSpeechDefaultOptions(
-                                  TextToSpeechConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      TextToSpeechConnection::options())) {}
 
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechConnectionImpl::ListVoices(

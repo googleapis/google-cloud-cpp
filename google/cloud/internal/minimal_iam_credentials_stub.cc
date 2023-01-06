@@ -43,7 +43,7 @@ class MinimalIamCredentialsImpl : public MinimalIamCredentialsStub {
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       GenerateAccessTokenRequest const& request) override {
     using ResultType = StatusOr<GenerateAccessTokenResponse>;
-    auto impl = impl_;
+    auto& impl = impl_;
     auto async_call = [impl](grpc::ClientContext* context,
                              GenerateAccessTokenRequest const& request,
                              grpc::CompletionQueue* cq) {
@@ -58,6 +58,17 @@ class MinimalIamCredentialsImpl : public MinimalIamCredentialsStub {
             return make_ready_future(ResultType(std::move(context).status()));
           return cq.MakeUnaryRpc(async_call, request, *std::move(context));
         });
+  }
+
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      grpc::ClientContext& context,
+      google::iam::credentials::v1::SignBlobRequest const& request) override {
+    auto status = auth_strategy_->ConfigureContext(context);
+    if (!status.ok()) return status;
+    google::iam::credentials::v1::SignBlobResponse response;
+    auto grpc = impl_->SignBlob(&context, request, &response);
+    if (!grpc.ok()) return MakeStatusFromRpcError(grpc);
+    return response;
   }
 
  private:
@@ -81,6 +92,14 @@ class AsyncAccessTokenGeneratorMetadata : public MinimalIamCredentialsStub {
     return child_->AsyncGenerateAccessToken(cq, std::move(context), request);
   }
 
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      grpc::ClientContext& context,
+      google::iam::credentials::v1::SignBlobRequest const& request) override {
+    context.AddMetadata("x-goog-request-params", "name=" + request.name());
+    context.AddMetadata("x-goog-api-client", x_goog_api_client_);
+    return child_->SignBlob(context, request);
+  }
+
  private:
   std::shared_ptr<MinimalIamCredentialsStub> child_;
   std::string x_goog_api_client_;
@@ -99,13 +118,14 @@ class AsyncAccessTokenGeneratorLogging : public MinimalIamCredentialsStub {
       CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
       GenerateAccessTokenRequest const& request) override {
     auto prefix = std::string(__func__) + "(" + RequestIdForLogging() + ")";
-    GCP_LOG(DEBUG) << prefix << " << "
-                   << DebugString(request, tracing_options_);
+    auto const& opts = tracing_options_;
+    GCP_LOG(DEBUG) << prefix << " << " << DebugString(request, opts);
     return child_->AsyncGenerateAccessToken(cq, std::move(context), request)
-        .then([prefix](future<StatusOr<GenerateAccessTokenResponse>> f) {
+        .then([prefix, opts](future<StatusOr<GenerateAccessTokenResponse>> f) {
           auto response = f.get();
           if (!response) {
-            GCP_LOG(DEBUG) << prefix << " >> status=" << response.status();
+            GCP_LOG(DEBUG) << prefix << " >> status="
+                           << DebugString(response.status(), opts);
           } else {
             // We do not want to log the access token
             GCP_LOG(DEBUG) << prefix
@@ -113,6 +133,17 @@ class AsyncAccessTokenGeneratorLogging : public MinimalIamCredentialsStub {
           }
           return response;
         });
+  }
+
+  StatusOr<google::iam::credentials::v1::SignBlobResponse> SignBlob(
+      grpc::ClientContext& context,
+      google::iam::credentials::v1::SignBlobRequest const& request) override {
+    return google::cloud::internal::LogWrapper(
+        [this](grpc::ClientContext& context,
+               google::iam::credentials::v1::SignBlobRequest const& request) {
+          return child_->SignBlob(context, request);
+        },
+        context, request, __func__, tracing_options_);
   }
 
  private:

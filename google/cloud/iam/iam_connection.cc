@@ -23,6 +23,7 @@
 #include "google/cloud/iam/internal/iam_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 IAMConnection::~IAMConnection() = default;
 
 StreamRange<google::iam::admin::v1::ServiceAccount>
-    IAMConnection::ListServiceAccounts(
-        google::iam::admin::v1::
-            ListServiceAccountsRequest) {  // NOLINT(performance-unnecessary-value-param)
+IAMConnection::ListServiceAccounts(
+    google::iam::admin::v1::
+        ListServiceAccountsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::iam::admin::v1::ServiceAccount>>();
 }
@@ -110,6 +111,16 @@ Status IAMConnection::DeleteServiceAccountKey(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+Status IAMConnection::DisableServiceAccountKey(
+    google::iam::admin::v1::DisableServiceAccountKeyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+Status IAMConnection::EnableServiceAccountKey(
+    google::iam::admin::v1::EnableServiceAccountKeyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<google::iam::v1::Policy> IAMConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
@@ -166,9 +177,9 @@ StatusOr<google::iam::admin::v1::Role> IAMConnection::UndeleteRole(
 }
 
 StreamRange<google::iam::admin::v1::Permission>
-    IAMConnection::QueryTestablePermissions(
-        google::iam::admin::v1::
-            QueryTestablePermissionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+IAMConnection::QueryTestablePermissions(
+    google::iam::admin::v1::
+        QueryTestablePermissionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::iam::admin::v1::Permission>>();
 }
@@ -186,6 +197,7 @@ StatusOr<google::iam::admin::v1::LintPolicyResponse> IAMConnection::LintPolicy(
 
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  IAMPolicyOptionList>(options, __func__);
   options = iam_internal::IAMDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -197,24 +209,5 @@ std::shared_ptr<IAMConnection> MakeIAMConnection(Options options) {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace iam_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<iam::IAMConnection> MakeIAMConnection(
-    std::shared_ptr<IAMStub> stub, Options options) {
-  options = IAMDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<iam_internal::IAMConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
-}  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

@@ -23,6 +23,7 @@
 #include "google/cloud/iam/internal/iam_credentials_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -60,6 +61,7 @@ IAMCredentialsConnection::SignJwt(
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  IAMCredentialsPolicyOptionList>(options,
                                                                  __func__);
   options = iam_internal::IAMCredentialsDefaultOptions(std::move(options));
@@ -73,24 +75,5 @@ std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace iam_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<iam::IAMCredentialsConnection> MakeIAMCredentialsConnection(
-    std::shared_ptr<IAMCredentialsStub> stub, Options options) {
-  options = IAMCredentialsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<iam_internal::IAMCredentialsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
-}  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google

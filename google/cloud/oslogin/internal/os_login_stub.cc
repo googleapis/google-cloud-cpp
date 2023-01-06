@@ -29,6 +29,19 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OsLoginServiceStub::~OsLoginServiceStub() = default;
 
+StatusOr<google::cloud::oslogin::common::SshPublicKey>
+DefaultOsLoginServiceStub::CreateSshPublicKey(
+    grpc::ClientContext& client_context,
+    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request) {
+  google::cloud::oslogin::common::SshPublicKey response;
+  auto status =
+      grpc_stub_->CreateSshPublicKey(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultOsLoginServiceStub::DeletePosixAccount(
     grpc::ClientContext& client_context,
     google::cloud::oslogin::v1::DeletePosixAccountRequest const& request) {

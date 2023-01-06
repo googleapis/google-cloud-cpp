@@ -27,6 +27,21 @@ namespace cloud {
 namespace notebooks_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `NotebookServiceConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `NotebookServiceClient`. To do so,
+ * construct an object of type `NotebookServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockNotebookServiceConnection
     : public notebooks::NotebookServiceConnection {
  public:
@@ -86,6 +101,14 @@ class MockNotebookServiceConnection
       (override));
 
   MOCK_METHOD(
+      StatusOr<
+          google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>,
+      UpdateInstanceMetadataItems,
+      (google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
       future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>,
       DeleteInstance,
       (google::cloud::notebooks::v1::DeleteInstanceRequest const& request),
@@ -134,6 +157,12 @@ class MockNotebookServiceConnection
       future<StatusOr<google::cloud::notebooks::v1::Instance>>,
       RollbackInstance,
       (google::cloud::notebooks::v1::RollbackInstanceRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::cloud::notebooks::v1::Instance>>,
+      DiagnoseInstance,
+      (google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request),
       (override));
 
   MOCK_METHOD(

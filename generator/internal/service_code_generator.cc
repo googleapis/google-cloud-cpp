@@ -23,7 +23,9 @@
 #include "generator/internal/codegen_utils.h"
 #include "generator/internal/printer.h"
 #include <google/api/client.pb.h>
+#include <google/api/routing.pb.h>
 #include <google/protobuf/descriptor.h>
+#include <algorithm>
 #include <unordered_map>
 
 namespace google {
@@ -85,6 +87,19 @@ ServiceCodeGenerator::ServiceCodeGenerator(
   SetMethods();
 }
 
+ServiceCodeGenerator::ServiceConfiguration::EndpointLocationStyle
+ServiceCodeGenerator::EndpointLocationStyle() const {
+  auto endpoint_location_style = ServiceConfiguration::LOCATION_INDEPENDENT;
+  ServiceConfiguration::EndpointLocationStyle_Parse(
+      vars("endpoint_location_style"), &endpoint_location_style);
+  return endpoint_location_style;
+}
+
+bool ServiceCodeGenerator::IsExperimental() const {
+  auto iter = vars().find("experimental");
+  return iter != vars().end() && iter->second == "true";
+}
+
 bool ServiceCodeGenerator::HasLongrunningMethod() const {
   return std::any_of(methods_.begin(), methods_.end(),
                      [](google::protobuf::MethodDescriptor const& m) {
@@ -128,6 +143,20 @@ bool ServiceCodeGenerator::HasStreamingReadMethod() const {
                      });
 }
 
+bool ServiceCodeGenerator::HasAsynchronousStreamingReadMethod() const {
+  return std::any_of(async_methods_.begin(), async_methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return IsStreamingRead(m);
+                     });
+}
+
+bool ServiceCodeGenerator::HasAsynchronousStreamingWriteMethod() const {
+  return std::any_of(async_methods_.begin(), async_methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return IsStreamingWrite(m);
+                     });
+}
+
 bool ServiceCodeGenerator::HasStreamingWriteMethod() const {
   return std::any_of(methods_.begin(), methods_.end(),
                      [](google::protobuf::MethodDescriptor const& m) {
@@ -139,6 +168,13 @@ bool ServiceCodeGenerator::HasBidirStreamingMethod() const {
   return std::any_of(methods_.begin(), methods_.end(),
                      [](google::protobuf::MethodDescriptor const& m) {
                        return IsBidirStreaming(m);
+                     });
+}
+
+bool ServiceCodeGenerator::HasExplicitRoutingMethod() const {
+  return std::any_of(methods_.begin(), methods_.end(),
+                     [](google::protobuf::MethodDescriptor const& m) {
+                       return m.options().HasExtension(google::api::routing);
                      });
 }
 
@@ -164,7 +200,7 @@ ServiceCodeGenerator::MethodSignatureWellKnownProtobufTypeIncludes() const {
   return include_paths;
 }
 
-bool ServiceCodeGenerator::IsDeprecatedMethodSignature(
+bool ServiceCodeGenerator::OmitMethodSignature(
     google::protobuf::MethodDescriptor const& method,
     int method_signature_number) const {
   auto method_vars = service_method_vars_.find(method.full_name());
@@ -219,7 +255,13 @@ void ServiceCodeGenerator::CcSystemIncludes(
 
 Status ServiceCodeGenerator::HeaderOpenNamespaces(NamespaceType ns_type) {
   HeaderPrint("\n");
-  return OpenNamespaces(header_, ns_type);
+  return OpenNamespaces(header_, ns_type, "product_path");
+}
+
+Status ServiceCodeGenerator::HeaderOpenForwardingNamespaces(
+    NamespaceType ns_type) {
+  HeaderPrint("\n");
+  return OpenNamespaces(header_, ns_type, "forwarding_product_path");
 }
 
 void ServiceCodeGenerator::HeaderCloseNamespaces() {
@@ -229,7 +271,7 @@ void ServiceCodeGenerator::HeaderCloseNamespaces() {
 
 Status ServiceCodeGenerator::CcOpenNamespaces(NamespaceType ns_type) {
   CcPrint("\n");
-  return OpenNamespaces(cc_, ns_type);
+  return OpenNamespaces(cc_, ns_type, "product_path");
 }
 
 void ServiceCodeGenerator::CcCloseNamespaces() {
@@ -305,12 +347,14 @@ void ServiceCodeGenerator::GenerateSystemIncludes(
   }
 }
 
-Status ServiceCodeGenerator::OpenNamespaces(Printer& p, NamespaceType ns_type) {
-  auto result = service_vars_.find("product_path");
+Status ServiceCodeGenerator::OpenNamespaces(
+    Printer& p, NamespaceType ns_type, std::string const& product_path_var) {
+  auto result = service_vars_.find(product_path_var);
   if (result == service_vars_.end()) {
-    return Status(StatusCode::kInternal, "product_path not found in vars");
+    return Status(StatusCode::kInternal,
+                  product_path_var + " not found in vars");
   }
-  namespaces_ = BuildNamespaces(service_vars_["product_path"], ns_type);
+  namespaces_ = BuildNamespaces(service_vars_[product_path_var], ns_type);
   for (auto const& nspace : namespaces_) {
     if (nspace == "GOOGLE_CLOUD_CPP_NS") {
       p.Print("GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN\n");

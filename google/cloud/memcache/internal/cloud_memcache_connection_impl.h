@@ -77,6 +77,10 @@ class CloudMemcacheConnectionImpl : public memcache::CloudMemcacheConnection {
       google::cloud::memcache::v1::ApplyParametersRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::memcache::v1::Instance>> RescheduleMaintenance(
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request)
+      override;
+
  private:
   std::unique_ptr<memcache::CloudMemcacheRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

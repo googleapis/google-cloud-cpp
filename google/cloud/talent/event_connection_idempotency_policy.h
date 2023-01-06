@@ -32,14 +32,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class EventServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~EventServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~EventServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<EventServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateClientEvent(
-      google::cloud::talent::v4::CreateClientEventRequest const& request) = 0;
+      google::cloud::talent::v4::CreateClientEventRequest const& request);
 };
 
 std::unique_ptr<EventServiceConnectionIdempotencyPolicy>

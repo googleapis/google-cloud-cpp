@@ -59,7 +59,7 @@ Create a table with [BigtableTableAdminClient::CreateTable()][TableAdmin-CreateT
 ## Connecting to Cloud Bigtable to read and write data
 
 To read and write data, connect to Cloud Bigtable using
-`bigtable::MakeDataClient()`:
+`bigtable::MakeDataConnection()`:
 
 @snippet bigtable_hello_world.cc connect data
 

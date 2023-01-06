@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options IAMDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_IAM_ENDPOINT", "",
-      "iam.googleapis.com");
+      "GOOGLE_CLOUD_CPP_IAM_AUTHORITY", "iam.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<iam::IAMRetryPolicyOption>()) {

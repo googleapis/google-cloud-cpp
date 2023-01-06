@@ -293,7 +293,7 @@ TEST(CurlRequestTest, HandleTeapot) {
   auto response = RetryMakeRequest(factory, {}, 418);
   ASSERT_STATUS_OK(response);
   ASSERT_EQ(418, response->status_code) << "response=" << *response;
-  EXPECT_THAT(response->payload, HasSubstr("[ teapot ]"));
+  EXPECT_THAT(response->payload, HasSubstr("teapot"));
 }
 
 /// @test Verify the response includes the header values.
@@ -353,6 +353,11 @@ TEST(CurlRequestTest, UserAgent) {
   EXPECT_THAT(headers.value("User-Agent", ""), HasSubstr("gcloud-cpp/"));
 }
 
+#if CURL_AT_LEAST_VERSION(7, 43, 0)
+bool UsingEmulator() {
+  return google::cloud::internal::GetEnv("HTTPBIN_ENDPOINT").has_value();
+}
+
 /// @test Verify the HTTP Version option.
 TEST(CurlRequestTest, HttpVersion) {
   struct Test {
@@ -367,16 +372,17 @@ TEST(CurlRequestTest, HttpVersion) {
       {"", "http/"},
   };
 
+  auto* vinfo = curl_version_info(CURLVERSION_NOW);
+  auto const supports_http2 = vinfo->features & CURL_VERSION_HTTP2;
+
   for (auto const& test : cases) {
     SCOPED_TRACE("Testing with version=<" + test.version + ">");
     auto factory = [&] {
-      CurlRequestBuilder builder(
-          HttpBinEndpoint() + "/get",
-          storage::internal::GetDefaultCurlHandleFactory());
-      auto options =
-          google::cloud::Options{}.set<storage_experimental::HttpVersionOption>(
-              test.version);
-      builder.ApplyClientOptions(options);
+      auto factory =
+          std::make_shared<rest_internal::DefaultCurlHandleFactory>();
+      CurlRequestBuilder builder(HttpBinEndpoint() + "/get", factory);
+      builder.ApplyClientOptions(
+          Options{}.set<storage_experimental::HttpVersionOption>(test.version));
       builder.AddHeader("Accept: application/json");
       builder.AddHeader("charsets: utf-8");
       return std::move(builder).BuildRequest();
@@ -386,8 +392,17 @@ TEST(CurlRequestTest, HttpVersion) {
     ASSERT_STATUS_OK(response);
     ASSERT_EQ(200, response->status_code) << "response=" << *response;
     EXPECT_THAT(response->headers, Contains(Pair(StartsWith(test.prefix), "")));
+
+    // The httpbin.org site strips the `Connection` header.
+    if (supports_http2 && test.version == "2" && UsingEmulator()) {
+      auto parsed = nlohmann::json::parse(response->payload);
+      auto const& request_headers = parsed["headers"];
+      auto const& connection = request_headers.value("Connection", "");
+      EXPECT_THAT(connection, HasSubstr("HTTP2")) << *response;
+    }
   }
 }
+#endif  // CURL_AT_LEAST_VERSION
 
 /// @test Verify that the Projection parameter is included if set.
 TEST(CurlRequestTest, WellKnownQueryParametersProjection) {
@@ -629,8 +644,8 @@ TEST(CurlRequestTest, Logging) {
 
 TEST(CurlRequestTest, HandlesReleasedOnError) {
   auto constexpr kTestPoolSize = 8;
-  auto factory =
-      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
+      kTestPoolSize, Options{});
   ASSERT_EQ(0, factory->CurrentHandleCount());
   ASSERT_EQ(0, factory->CurrentMultiHandleCount());
 
@@ -644,8 +659,8 @@ TEST(CurlRequestTest, HandlesReleasedOnError) {
 
 TEST(CurlRequestTest, HandlesReusedOnSuccess) {
   auto constexpr kTestPoolSize = 8;
-  auto factory =
-      std::make_shared<PooledCurlHandleFactory>(kTestPoolSize, Options{});
+  auto factory = std::make_shared<rest_internal::PooledCurlHandleFactory>(
+      kTestPoolSize, Options{});
   ASSERT_EQ(0, factory->CurrentHandleCount());
   ASSERT_EQ(0, factory->CurrentMultiHandleCount());
 

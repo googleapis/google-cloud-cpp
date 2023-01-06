@@ -16,7 +16,6 @@
 #include "google/cloud/pubsublite/endpoint.h"
 #include "google/cloud/common_options.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 3) {
@@ -28,7 +27,7 @@ int main(int argc, char* argv[]) try {
   namespace pubsublite = ::google::cloud::pubsublite;
   auto const zone_id = std::string{argv[2]};
   auto endpoint = pubsublite::EndpointFromZone(zone_id);
-  if (!endpoint) throw std::runtime_error(endpoint.status().message());
+  if (!endpoint) throw std::move(endpoint).status();
   auto client =
       pubsublite::AdminServiceClient(pubsublite::MakeAdminServiceConnection(
           gc::Options{}
@@ -36,12 +35,13 @@ int main(int argc, char* argv[]) try {
               .set<gc::AuthorityOption>(*endpoint)));
   auto const parent =
       std::string{"projects/"} + argv[1] + "/locations/" + zone_id;
-  for (auto const& topic : client.ListTopics(parent)) {
-    std::cout << topic.value().DebugString() << "\n";
+  for (auto topic : client.ListTopics(parent)) {
+    if (!topic) throw std::move(topic).status();
+    std::cout << topic->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

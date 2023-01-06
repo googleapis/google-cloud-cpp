@@ -39,16 +39,14 @@ AccessContextManagerConnectionImpl::AccessContextManagerConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          accesscontextmanager_internal::AccessContextManagerDefaultOptions(
-              AccessContextManagerConnection::options()))) {}
+          std::move(options), AccessContextManagerConnection::options())) {}
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
 AccessContextManagerConnectionImpl::ListAccessPolicies(
     google::identity::accesscontextmanager::v1::ListAccessPoliciesRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       accesscontextmanager::AccessContextManagerRetryPolicy const>(
       retry_policy());
@@ -98,7 +96,7 @@ AccessContextManagerConnectionImpl::GetAccessPolicy(
 future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerConnectionImpl::CreateAccessPolicy(
     google::identity::accesscontextmanager::v1::AccessPolicy const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::AccessPolicy>(
       background_->cq(), request,
@@ -129,7 +127,7 @@ future<StatusOr<google::identity::accesscontextmanager::v1::AccessPolicy>>
 AccessContextManagerConnectionImpl::UpdateAccessPolicy(
     google::identity::accesscontextmanager::v1::UpdateAccessPolicyRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::AccessPolicy>(
       background_->cq(), request,
@@ -161,7 +159,7 @@ future<StatusOr<google::identity::accesscontextmanager::v1::
 AccessContextManagerConnectionImpl::DeleteAccessPolicy(
     google::identity::accesscontextmanager::v1::DeleteAccessPolicyRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::
           AccessContextManagerOperationMetadata>(
@@ -195,7 +193,7 @@ AccessContextManagerConnectionImpl::ListAccessLevels(
     google::identity::accesscontextmanager::v1::ListAccessLevelsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       accesscontextmanager::AccessContextManagerRetryPolicy const>(
       retry_policy());
@@ -246,7 +244,7 @@ future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerConnectionImpl::CreateAccessLevel(
     google::identity::accesscontextmanager::v1::CreateAccessLevelRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::AccessLevel>(
       background_->cq(), request,
@@ -277,7 +275,7 @@ future<StatusOr<google::identity::accesscontextmanager::v1::AccessLevel>>
 AccessContextManagerConnectionImpl::UpdateAccessLevel(
     google::identity::accesscontextmanager::v1::UpdateAccessLevelRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::AccessLevel>(
       background_->cq(), request,
@@ -309,7 +307,7 @@ future<StatusOr<google::identity::accesscontextmanager::v1::
 AccessContextManagerConnectionImpl::DeleteAccessLevel(
     google::identity::accesscontextmanager::v1::DeleteAccessLevelRequest const&
         request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::
           AccessContextManagerOperationMetadata>(
@@ -343,7 +341,7 @@ future<StatusOr<
 AccessContextManagerConnectionImpl::ReplaceAccessLevels(
     google::identity::accesscontextmanager::v1::
         ReplaceAccessLevelsRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::ReplaceAccessLevelsResponse>(
       background_->cq(), request,
@@ -376,7 +374,7 @@ AccessContextManagerConnectionImpl::ListServicePerimeters(
     google::identity::accesscontextmanager::v1::ListServicePerimetersRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       accesscontextmanager::AccessContextManagerRetryPolicy const>(
       retry_policy());
@@ -428,7 +426,7 @@ future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerConnectionImpl::CreateServicePerimeter(
     google::identity::accesscontextmanager::v1::
         CreateServicePerimeterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::ServicePerimeter>(
       background_->cq(), request,
@@ -460,7 +458,7 @@ future<StatusOr<google::identity::accesscontextmanager::v1::ServicePerimeter>>
 AccessContextManagerConnectionImpl::UpdateServicePerimeter(
     google::identity::accesscontextmanager::v1::
         UpdateServicePerimeterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::ServicePerimeter>(
       background_->cq(), request,
@@ -493,7 +491,7 @@ future<StatusOr<google::identity::accesscontextmanager::v1::
 AccessContextManagerConnectionImpl::DeleteServicePerimeter(
     google::identity::accesscontextmanager::v1::
         DeleteServicePerimeterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::
           AccessContextManagerOperationMetadata>(
@@ -528,7 +526,7 @@ future<StatusOr<google::identity::accesscontextmanager::v1::
 AccessContextManagerConnectionImpl::ReplaceServicePerimeters(
     google::identity::accesscontextmanager::v1::
         ReplaceServicePerimetersRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::
           ReplaceServicePerimetersResponse>(
@@ -563,7 +561,7 @@ future<StatusOr<google::identity::accesscontextmanager::v1::
 AccessContextManagerConnectionImpl::CommitServicePerimeters(
     google::identity::accesscontextmanager::v1::
         CommitServicePerimetersRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::
           CommitServicePerimetersResponse>(
@@ -598,7 +596,7 @@ AccessContextManagerConnectionImpl::ListGcpUserAccessBindings(
     google::identity::accesscontextmanager::v1::ListGcpUserAccessBindingsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<
       accesscontextmanager::AccessContextManagerRetryPolicy const>(
       retry_policy());
@@ -651,7 +649,7 @@ future<
 AccessContextManagerConnectionImpl::CreateGcpUserAccessBinding(
     google::identity::accesscontextmanager::v1::
         CreateGcpUserAccessBindingRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>(
       background_->cq(), request,
@@ -684,7 +682,7 @@ future<
 AccessContextManagerConnectionImpl::UpdateGcpUserAccessBinding(
     google::identity::accesscontextmanager::v1::
         UpdateGcpUserAccessBindingRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>(
       background_->cq(), request,
@@ -717,7 +715,7 @@ future<StatusOr<google::identity::accesscontextmanager::v1::
 AccessContextManagerConnectionImpl::DeleteGcpUserAccessBinding(
     google::identity::accesscontextmanager::v1::
         DeleteGcpUserAccessBindingRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::identity::accesscontextmanager::v1::
           GcpUserAccessBindingOperationMetadata>(
@@ -745,6 +743,45 @@ AccessContextManagerConnectionImpl::DeleteGcpUserAccessBinding(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteGcpUserAccessBinding(request),
       polling_policy(), __func__);
+}
+
+StatusOr<google::iam::v1::Policy>
+AccessContextManagerConnectionImpl::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->SetIamPolicy(request),
+      [this](grpc::ClientContext& context,
+             google::iam::v1::SetIamPolicyRequest const& request) {
+        return stub_->SetIamPolicy(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::iam::v1::Policy>
+AccessContextManagerConnectionImpl::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetIamPolicy(request),
+      [this](grpc::ClientContext& context,
+             google::iam::v1::GetIamPolicyRequest const& request) {
+        return stub_->GetIamPolicy(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AccessContextManagerConnectionImpl::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->TestIamPermissions(request),
+      [this](grpc::ClientContext& context,
+             google::iam::v1::TestIamPermissionsRequest const& request) {
+        return stub_->TestIamPermissions(context, request);
+      },
+      request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

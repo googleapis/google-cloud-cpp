@@ -45,6 +45,19 @@ using ValidationHelperV1LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         binaryauthorization_internal::ValidationHelperV1RetryTraits>;
 
+/**
+ * The `ValidationHelperV1Connection` object for `ValidationHelperV1Client`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ValidationHelperV1Client`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ValidationHelperV1Client`.
+ *
+ * To create a concrete instance, see `MakeValidationHelperV1Connection()`.
+ *
+ * For mocking, see
+ * `binaryauthorization_mocks::MockValidationHelperV1Connection`.
+ */
 class ValidationHelperV1Connection {
  public:
   virtual ~ValidationHelperV1Connection() = 0;
@@ -58,25 +71,34 @@ class ValidationHelperV1Connection {
           ValidateAttestationOccurrenceRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `ValidationHelperV1Connection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * ValidationHelperV1Client.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `ValidationHelperV1Connection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::binaryauthorization::ValidationHelperV1PolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `ValidationHelperV1Connection`
+ * created by this function.
+ */
 std::shared_ptr<ValidationHelperV1Connection> MakeValidationHelperV1Connection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace binaryauthorization
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace binaryauthorization_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<binaryauthorization::ValidationHelperV1Connection>
-MakeValidationHelperV1Connection(std::shared_ptr<ValidationHelperV1Stub> stub,
-                                 Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace binaryauthorization_internal
 }  // namespace cloud
 }  // namespace google
 

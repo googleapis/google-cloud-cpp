@@ -21,6 +21,7 @@
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/grpc_options.h"
+#include "google/cloud/internal/async_retry_loop.h"
 #include "google/cloud/internal/pagination_range.h"
 #include "google/cloud/internal/retry_loop.h"
 #include <memory>
@@ -36,9 +37,8 @@ LoggingServiceV2ConnectionImpl::LoggingServiceV2ConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), logging_internal::LoggingServiceV2DefaultOptions(
-                                  LoggingServiceV2Connection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      LoggingServiceV2Connection::options())) {}
 
 Status LoggingServiceV2ConnectionImpl::DeleteLog(
     google::logging::v2::DeleteLogRequest const& request) {
@@ -69,7 +69,7 @@ StreamRange<google::logging::v2::LogEntry>
 LoggingServiceV2ConnectionImpl::ListLogEntries(
     google::logging::v2::ListLogEntriesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<logging::LoggingServiceV2RetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -100,7 +100,7 @@ StreamRange<google::api::MonitoredResourceDescriptor>
 LoggingServiceV2ConnectionImpl::ListMonitoredResourceDescriptors(
     google::logging::v2::ListMonitoredResourceDescriptorsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<logging::LoggingServiceV2RetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -134,7 +134,7 @@ LoggingServiceV2ConnectionImpl::ListMonitoredResourceDescriptors(
 StreamRange<std::string> LoggingServiceV2ConnectionImpl::ListLogs(
     google::logging::v2::ListLogsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<logging::LoggingServiceV2RetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -158,6 +158,20 @@ StreamRange<std::string> LoggingServiceV2ConnectionImpl::ListLogs(
         std::move(messages.begin(), messages.end(), result.begin());
         return result;
       });
+}
+
+future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+LoggingServiceV2ConnectionImpl::AsyncWriteLogEntries(
+    google::logging::v2::WriteLogEntriesRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncRetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->WriteLogEntries(request), background_->cq(),
+      [stub](CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
+             google::logging::v2::WriteLogEntriesRequest const& request) {
+        return stub->AsyncWriteLogEntries(cq, std::move(context), request);
+      },
+      request, __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -70,16 +70,16 @@ class ServiceUsageClient {
       std::shared_ptr<ServiceUsageConnection> connection, Options opts = {});
   ~ServiceUsageClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   ServiceUsageClient(ServiceUsageClient const&) = default;
   ServiceUsageClient& operator=(ServiceUsageClient const&) = default;
   ServiceUsageClient(ServiceUsageClient&&) = default;
   ServiceUsageClient& operator=(ServiceUsageClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(ServiceUsageClient const& a,
                          ServiceUsageClient const& b) {
     return a.connection_ == b.connection_;
@@ -88,7 +88,7 @@ class ServiceUsageClient {
                          ServiceUsageClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Enable a service so that it can be used with a project.
@@ -144,12 +144,12 @@ class ServiceUsageClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::serviceusage::v1::Service,google/api/serviceusage/v1/resources.proto#L38}
+  /// @googleapis_link{google::api::serviceusage::v1::Service,google/api/serviceusage/v1/resources.proto#L37}
   ///
   /// [google.api.serviceusage.v1.GetServiceRequest]:
   /// @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L193}
   /// [google.api.serviceusage.v1.Service]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/resources.proto#L38}
+  /// @googleapis_reference_link{google/api/serviceusage/v1/resources.proto#L37}
   ///
   StatusOr<google::api::serviceusage::v1::Service> GetService(
       google::api::serviceusage::v1::GetServiceRequest const& request,
@@ -175,12 +175,12 @@ class ServiceUsageClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::serviceusage::v1::Service,google/api/serviceusage/v1/resources.proto#L38}
+  /// @googleapis_link{google::api::serviceusage::v1::Service,google/api/serviceusage/v1/resources.proto#L37}
   ///
   /// [google.api.serviceusage.v1.ListServicesRequest]:
   /// @googleapis_reference_link{google/api/serviceusage/v1/serviceusage.proto#L203}
   /// [google.api.serviceusage.v1.Service]:
-  /// @googleapis_reference_link{google/api/serviceusage/v1/resources.proto#L38}
+  /// @googleapis_reference_link{google/api/serviceusage/v1/resources.proto#L37}
   ///
   StreamRange<google::api::serviceusage::v1::Service> ListServices(
       google::api::serviceusage::v1::ListServicesRequest request,

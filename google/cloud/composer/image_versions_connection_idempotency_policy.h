@@ -32,15 +32,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ImageVersionsConnectionIdempotencyPolicy {
  public:
-  virtual ~ImageVersionsConnectionIdempotencyPolicy() = 0;
+  virtual ~ImageVersionsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListImageVersions(
       google::cloud::orchestration::airflow::service::v1::
-          ListImageVersionsRequest request) = 0;
+          ListImageVersionsRequest request);
 };
 
 std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>

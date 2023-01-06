@@ -14,7 +14,6 @@
 
 #include "google/cloud/managedidentities/managed_identities_client.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -28,12 +27,12 @@ int main(int argc, char* argv[]) try {
 
   auto const parent = std::string{"projects/"} + argv[1] + "/locations/global";
   for (auto d : client.ListDomains(parent)) {
-    if (!d) throw std::runtime_error(d.status().message());
+    if (!d) throw std::move(d).status();
     std::cout << d->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

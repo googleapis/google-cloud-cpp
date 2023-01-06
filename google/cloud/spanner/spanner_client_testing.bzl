@@ -20,6 +20,7 @@ spanner_client_testing_hdrs = [
     "testing/cleanup_stale_databases.h",
     "testing/cleanup_stale_instances.h",
     "testing/database_integration_test.h",
+    "testing/debug_log.h",
     "testing/fake_clock.h",
     "testing/instance_location.h",
     "testing/matchers.h",
@@ -32,16 +33,19 @@ spanner_client_testing_hdrs = [
     "testing/random_backup_name.h",
     "testing/random_database_name.h",
     "testing/random_instance_name.h",
+    "testing/status_utils.h",
 ]
 
 spanner_client_testing_srcs = [
     "testing/cleanup_stale_databases.cc",
     "testing/cleanup_stale_instances.cc",
     "testing/database_integration_test.cc",
+    "testing/debug_log.cc",
     "testing/instance_location.cc",
     "testing/pick_instance_config.cc",
     "testing/pick_random_instance.cc",
     "testing/random_backup_name.cc",
     "testing/random_database_name.cc",
     "testing/random_instance_name.cc",
+    "testing/status_utils.cc",
 ]

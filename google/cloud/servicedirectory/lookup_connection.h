@@ -45,6 +45,18 @@ using LookupServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         servicedirectory_internal::LookupServiceRetryTraits>;
 
+/**
+ * The `LookupServiceConnection` object for `LookupServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `LookupServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `LookupServiceClient`.
+ *
+ * To create a concrete instance, see `MakeLookupServiceConnection()`.
+ *
+ * For mocking, see `servicedirectory_mocks::MockLookupServiceConnection`.
+ */
 class LookupServiceConnection {
  public:
   virtual ~LookupServiceConnection() = 0;
@@ -57,25 +69,32 @@ class LookupServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type `LookupServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of LookupServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `LookupServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::servicedirectory::LookupServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `LookupServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<LookupServiceConnection> MakeLookupServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicedirectory
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace servicedirectory_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<servicedirectory::LookupServiceConnection>
-MakeLookupServiceConnection(std::shared_ptr<LookupServiceStub> stub,
-                            Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace servicedirectory_internal
 }  // namespace cloud
 }  // namespace google
 

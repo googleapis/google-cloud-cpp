@@ -23,6 +23,7 @@
 #include "google/cloud/monitoring/notification_channel_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -36,9 +37,9 @@ NotificationChannelServiceConnection::~NotificationChannelServiceConnection() =
     default;
 
 StreamRange<google::monitoring::v3::NotificationChannelDescriptor>
-    NotificationChannelServiceConnection::ListNotificationChannelDescriptors(
-        google::monitoring::v3::
-            ListNotificationChannelDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+NotificationChannelServiceConnection::ListNotificationChannelDescriptors(
+    google::monitoring::v3::
+        ListNotificationChannelDescriptorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::NotificationChannelDescriptor>>();
 }
@@ -50,9 +51,9 @@ NotificationChannelServiceConnection::GetNotificationChannelDescriptor(
 }
 
 StreamRange<google::monitoring::v3::NotificationChannel>
-    NotificationChannelServiceConnection::ListNotificationChannels(
-        google::monitoring::v3::
-            ListNotificationChannelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+NotificationChannelServiceConnection::ListNotificationChannels(
+    google::monitoring::v3::
+        ListNotificationChannelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::NotificationChannel>>();
 }
@@ -103,6 +104,7 @@ NotificationChannelServiceConnection::VerifyNotificationChannel(
 std::shared_ptr<NotificationChannelServiceConnection>
 MakeNotificationChannelServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  NotificationChannelServicePolicyOptionList>(
       options, __func__);
   options = monitoring_internal::NotificationChannelServiceDefaultOptions(
@@ -117,25 +119,5 @@ MakeNotificationChannelServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::NotificationChannelServiceConnection>
-MakeNotificationChannelServiceConnection(
-    std::shared_ptr<NotificationChannelServiceStub> stub, Options options) {
-  options = NotificationChannelServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      monitoring_internal::NotificationChannelServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
 }  // namespace cloud
 }  // namespace google

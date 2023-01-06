@@ -23,6 +23,7 @@
 #include "google/cloud/secretmanager/secret_manager_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 SecretManagerServiceConnection::~SecretManagerServiceConnection() = default;
 
 StreamRange<google::cloud::secretmanager::v1::Secret>
-    SecretManagerServiceConnection::ListSecrets(
-        google::cloud::secretmanager::v1::
-            ListSecretsRequest) {  // NOLINT(performance-unnecessary-value-param)
+SecretManagerServiceConnection::ListSecrets(
+    google::cloud::secretmanager::v1::
+        ListSecretsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::secretmanager::v1::Secret>>();
 }
@@ -72,9 +73,9 @@ Status SecretManagerServiceConnection::DeleteSecret(
 }
 
 StreamRange<google::cloud::secretmanager::v1::SecretVersion>
-    SecretManagerServiceConnection::ListSecretVersions(
-        google::cloud::secretmanager::v1::
-            ListSecretVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+SecretManagerServiceConnection::ListSecretVersions(
+    google::cloud::secretmanager::v1::
+        ListSecretVersionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::secretmanager::v1::SecretVersion>>();
 }
@@ -128,6 +129,7 @@ SecretManagerServiceConnection::TestIamPermissions(
 std::shared_ptr<SecretManagerServiceConnection>
 MakeSecretManagerServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  SecretManagerServicePolicyOptionList>(
       options, __func__);
   options = secretmanager_internal::SecretManagerServiceDefaultOptions(
@@ -142,25 +144,5 @@ MakeSecretManagerServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace secretmanager
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace secretmanager_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<secretmanager::SecretManagerServiceConnection>
-MakeSecretManagerServiceConnection(
-    std::shared_ptr<SecretManagerServiceStub> stub, Options options) {
-  options = SecretManagerServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      secretmanager_internal::SecretManagerServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace secretmanager_internal
 }  // namespace cloud
 }  // namespace google

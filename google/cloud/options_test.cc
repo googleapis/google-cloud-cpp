@@ -251,6 +251,16 @@ TEST(CheckUnexpectedOptions, OptionsListOneUnexpected) {
               Contains(ContainsRegex("caller: Unexpected option.+FooOption")));
 }
 
+TEST(IsEmpty, Yes) {
+  Options opts;
+  EXPECT_TRUE(internal::IsEmpty(opts));
+}
+
+TEST(IsEmpty, No) {
+  auto opts = Options{}.set<IntOption>(0);
+  EXPECT_FALSE(internal::IsEmpty(opts));
+}
+
 TEST(MergeOptions, Basics) {
   auto a = Options{}.set<StringOption>("from a").set<IntOption>(42);
   auto b = Options{}.set<StringOption>("from b").set<BoolOption>(true);

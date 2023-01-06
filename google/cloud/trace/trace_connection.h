@@ -45,6 +45,18 @@ using TraceServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         trace_internal::TraceServiceRetryTraits>;
 
+/**
+ * The `TraceServiceConnection` object for `TraceServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `TraceServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `TraceServiceClient`.
+ *
+ * To create a concrete instance, see `MakeTraceServiceConnection()`.
+ *
+ * For mocking, see `trace_mocks::MockTraceServiceConnection`.
+ */
 class TraceServiceConnection {
  public:
   virtual ~TraceServiceConnection() = 0;
@@ -58,24 +70,32 @@ class TraceServiceConnection {
       google::devtools::cloudtrace::v2::Span const& request);
 };
 
+/**
+ * A factory function to construct an object of type `TraceServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of TraceServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `TraceServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::trace::TraceServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `TraceServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<TraceServiceConnection> MakeTraceServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace trace
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace trace_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<trace::TraceServiceConnection> MakeTraceServiceConnection(
-    std::shared_ptr<TraceServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace trace_internal
 }  // namespace cloud
 }  // namespace google
 

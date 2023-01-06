@@ -34,17 +34,10 @@ using ::testing::AnyOf;
 using ::testing::IsEmpty;
 using ::testing::Not;
 
-struct TestParam {
-  absl::optional<std::string> rest_config;
-};
-
 class ObjectReadPreconditionsIntegrationTest
-    : public ::google::cloud::storage::testing::StorageIntegrationTest,
-      public ::testing::WithParamInterface<TestParam> {
+    : public ::google::cloud::storage::testing::StorageIntegrationTest {
  protected:
-  ObjectReadPreconditionsIntegrationTest()
-      : config_("GOOGLE_CLOUD_CPP_STORAGE_REST_CONFIG",
-                GetParam().rest_config) {}
+  ObjectReadPreconditionsIntegrationTest() = default;
 
   void SetUp() override {
     bucket_name_ =
@@ -57,10 +50,9 @@ class ObjectReadPreconditionsIntegrationTest
 
  private:
   std::string bucket_name_;
-  google::cloud::testing_util::ScopedEnvironment config_;
 };
 
-TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
+TEST_F(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -77,7 +69,7 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchSuccess) {
   EXPECT_THAT(reader.status(), IsOk());
 }
 
-TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchFailure) {
+TEST_F(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -94,7 +86,7 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationMatchFailure) {
   EXPECT_THAT(reader.status(), StatusIs(StatusCode::kFailedPrecondition));
 }
 
-TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
+TEST_F(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -111,7 +103,7 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchSuccess) {
   EXPECT_THAT(reader.status(), IsOk());
 }
 
-TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
+TEST_F(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -133,7 +125,7 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfGenerationNotMatchFailure) {
                                               StatusCode::kAborted)));
 }
 
-TEST_P(ObjectReadPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
+TEST_F(ObjectReadPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -151,7 +143,7 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfMetagenerationMatchSuccess) {
   EXPECT_THAT(reader.status(), IsOk());
 }
 
-TEST_P(ObjectReadPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
+TEST_F(ObjectReadPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
@@ -169,7 +161,7 @@ TEST_P(ObjectReadPreconditionsIntegrationTest, IfMetagenerationMatchFailure) {
   EXPECT_THAT(reader.status(), StatusIs(StatusCode::kFailedPrecondition));
 }
 
-TEST_P(ObjectReadPreconditionsIntegrationTest,
+TEST_F(ObjectReadPreconditionsIntegrationTest,
        IfMetagenerationNotMatchSuccess) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -188,7 +180,7 @@ TEST_P(ObjectReadPreconditionsIntegrationTest,
   EXPECT_THAT(reader.status(), IsOk());
 }
 
-TEST_P(ObjectReadPreconditionsIntegrationTest,
+TEST_F(ObjectReadPreconditionsIntegrationTest,
        IfMetagenerationNotMatchFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -211,11 +203,6 @@ TEST_P(ObjectReadPreconditionsIntegrationTest,
   EXPECT_THAT(reader.status(), StatusIs(AnyOf(StatusCode::kFailedPrecondition,
                                               StatusCode::kAborted)));
 }
-
-INSTANTIATE_TEST_SUITE_P(XmlDisabled, ObjectReadPreconditionsIntegrationTest,
-                         ::testing::Values(TestParam{"disable-xml"}));
-INSTANTIATE_TEST_SUITE_P(XmlEnabled, ObjectReadPreconditionsIntegrationTest,
-                         ::testing::Values(TestParam{absl::nullopt}));
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

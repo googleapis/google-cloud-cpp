@@ -1,1 +1,2 @@
 @com_google_googleapis//google/cloud/texttospeech/v1:cloud_tts.proto
+@com_google_googleapis//google/cloud/texttospeech/v1:cloud_tts_lrs.proto

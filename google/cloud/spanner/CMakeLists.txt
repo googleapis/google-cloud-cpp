@@ -18,8 +18,10 @@ include(GoogleapisConfig)
 set(DOXYGEN_PROJECT_NAME "Google Cloud Spanner C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for Google Cloud Spanner")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
-                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXAMPLE_PATH
+    ${CMAKE_CURRENT_SOURCE_DIR}/samples
+    ${CMAKE_CURRENT_SOURCE_DIR}/admin/samples
+    ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "spanner_admin_internal"
                             "spanner_internal" "spanner_testing" "examples")
 
@@ -208,8 +210,8 @@ target_link_libraries(
            google-cloud-cpp::spanner_protos)
 set_target_properties(
     google_cloud_cpp_spanner
-    PROPERTIES EXPORT_NAME "google-cloud-cpp::spanner" VERSION
-                                                       "${PROJECT_VERSION}"
+    PROPERTIES EXPORT_NAME "google-cloud-cpp::spanner"
+               VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_spanner
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
@@ -235,7 +237,8 @@ target_sources(
         ${CMAKE_CURRENT_SOURCE_DIR}/admin/mocks/mock_instance_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_database_admin_connection.h
         ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_instance_admin_connection.h
-        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h)
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/mock_spanner_connection.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/mocks/row.h)
 target_link_libraries(
     google_cloud_cpp_spanner_mocks
     INTERFACE google-cloud-cpp::spanner GTest::gmock_main GTest::gmock
@@ -269,6 +272,8 @@ function (spanner_client_define_tests)
         testing/cleanup_stale_instances.h
         testing/database_integration_test.cc
         testing/database_integration_test.h
+        testing/debug_log.cc
+        testing/debug_log.h
         testing/fake_clock.h
         testing/instance_location.cc
         testing/instance_location.h
@@ -286,7 +291,9 @@ function (spanner_client_define_tests)
         testing/random_database_name.cc
         testing/random_database_name.h
         testing/random_instance_name.cc
-        testing/random_instance_name.h)
+        testing/random_instance_name.h
+        testing/status_utils.cc
+        testing/status_utils.h)
     target_link_libraries(
         spanner_client_testing
         PUBLIC google_cloud_cpp_testing google-cloud-cpp::spanner_mocks
@@ -396,7 +403,7 @@ endfunction ()
 
 # Define the benchmarks in a function so we have a new scope for variable names.
 function (spanner_client_define_benchmarks)
-    find_package(benchmark CONFIG REQUIRED)
+    include(FindBenchmarkWithWorkarounds)
 
     set(spanner_client_benchmarks
         # cmake-format: sort
@@ -415,8 +422,10 @@ function (spanner_client_define_benchmarks)
     foreach (fname ${spanner_client_benchmarks})
         google_cloud_cpp_add_executable(target "spanner" "${fname}")
         add_test(NAME ${target} COMMAND ${target})
-        target_link_libraries(${target} PRIVATE google-cloud-cpp::spanner
-                                                benchmark::benchmark_main)
+        target_link_libraries(
+            ${target}
+            PRIVATE google-cloud-cpp::spanner google-cloud-cpp::spanner_mocks
+                    benchmark::benchmark_main)
         google_cloud_cpp_add_common_options(${target})
 
         add_dependencies(spanner-client-benchmarks ${target})
@@ -431,6 +440,7 @@ if (BUILD_TESTING)
     spanner_client_define_benchmarks()
     add_subdirectory(integration_tests)
     add_subdirectory(admin/integration_tests)
+    add_subdirectory(admin/samples)
     add_subdirectory(benchmarks) # macro benchmarks
 endif (BUILD_TESTING)
 
@@ -484,28 +494,17 @@ google_cloud_cpp_install_headers("google_cloud_cpp_spanner"
 google_cloud_cpp_install_headers("google_cloud_cpp_spanner_mocks"
                                  "include/google/cloud/spanner")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CPP_PC_NAME "The Google Cloud Spanner C++ Client Library")
-set(GOOGLE_CLOUD_CPP_PC_DESCRIPTION
-    "Provides C++ APIs to access Google Cloud Spanner.")
-set(GOOGLE_CLOUD_CPP_PC_LIBS "-lgoogle_cloud_cpp_spanner")
-string(
-    CONCAT GOOGLE_CLOUD_CPP_PC_REQUIRES
-           "google_cloud_cpp_grpc_utils"
-           " google_cloud_cpp_common"
-           " google_cloud_cpp_spanner_protos"
-           " absl_memory"
-           " absl_numeric"
-           " absl_strings"
-           " absl_time")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/spanner/config.pc.in"
-               "google_cloud_cpp_spanner.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_spanner.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    spanner
+    "The Google Cloud Spanner C++ Client Library"
+    "Provides C++ APIs to access Google Cloud Spanner."
+    "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common"
+    " google_cloud_cpp_spanner_protos"
+    " absl_memory"
+    " absl_numeric"
+    " absl_strings"
+    " absl_time")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)

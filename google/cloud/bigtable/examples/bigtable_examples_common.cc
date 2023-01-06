@@ -53,7 +53,8 @@ Commands::value_type MakeCommandEntry(std::string const& name,
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::Table table(
-        google::cloud::bigtable::MakeDataClient(argv[0], argv[1]), argv[2]);
+        google::cloud::bigtable::MakeDataConnection(),
+        google::cloud::bigtable::TableResource(argv[0], argv[1], argv[2]));
     argv.erase(argv.begin(), argv.begin() + 3);
     function(table, argv);
   };
@@ -117,7 +118,8 @@ Commands::value_type MakeCommandEntry(std::string const& name,
       throw Usage{std::move(os).str()};
     }
     google::cloud::bigtable::Table table(
-        google::cloud::bigtable::MakeDataClient(argv[0], argv[1]), argv[2]);
+        google::cloud::bigtable::MakeDataConnection(),
+        google::cloud::bigtable::TableResource(argv[0], argv[1], argv[2]));
     google::cloud::CompletionQueue cq;
     std::thread t([&cq] { cq.Run(); });
     AutoShutdownCQ shutdown(cq, std::move(t));

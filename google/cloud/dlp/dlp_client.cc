@@ -17,7 +17,6 @@
 // source: google/privacy/dlp/v2/dlp.proto
 
 #include "google/cloud/dlp/dlp_client.h"
-#include "google/cloud/dlp/internal/dlp_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DlpServiceClient::DlpServiceClient(
     std::shared_ptr<DlpServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          dlp_internal::DlpServiceDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DlpServiceClient::~DlpServiceClient() = default;
 
 StatusOr<google::privacy::dlp::v2::InspectContentResponse>

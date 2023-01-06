@@ -272,6 +272,21 @@ DefaultAdminServiceStub::ListReservationTopics(
   return response;
 }
 
+future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+DefaultAdminServiceStub::AsyncGetTopicPartitions(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
+  return cq.MakeUnaryRpc(
+      [this](grpc::ClientContext* context,
+             google::cloud::pubsublite::v1::GetTopicPartitionsRequest const&
+                 request,
+             grpc::CompletionQueue* cq) {
+        return grpc_stub_->AsyncGetTopicPartitions(context, request, cq);
+      },
+      request, std::move(context));
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAdminServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

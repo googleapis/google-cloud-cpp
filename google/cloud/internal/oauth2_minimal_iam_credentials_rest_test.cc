@@ -17,6 +17,7 @@
 #include "google/cloud/internal/http_payload.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/rest_response.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
 #include "google/cloud/testing_util/mock_rest_client.h"
 #include "google/cloud/testing_util/mock_rest_response.h"
@@ -30,83 +31,228 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::rest_internal::HttpPayload;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::rest_internal::RestResponse;
 using ::google::cloud::testing_util::IsOk;
-using ::google::cloud::testing_util::MockHttpPayload;
+using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::_;
 using ::testing::A;
+using ::testing::ByMove;
 using ::testing::Eq;
+using ::testing::HasSubstr;
 using ::testing::Return;
 
 class MockCredentials : public google::cloud::oauth2_internal::Credentials {
  public:
-  MOCK_METHOD((StatusOr<std::pair<std::string, std::string>>),
-              AuthorizationHeader, (), (override));
+  MOCK_METHOD(StatusOr<internal::AccessToken>, GetToken,
+              (std::chrono::system_clock::time_point), (override));
 };
 
-class MinimalIamCredentialsRestTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    mock_rest_client_ = std::make_shared<MockRestClient>();
-    mock_credentials_ = std::make_shared<MockCredentials>();
-  }
+using MockHttpClientFactory =
+    ::testing::MockFunction<std::unique_ptr<rest_internal::RestClient>(
+        Options const&)>;
 
-  std::shared_ptr<MockRestClient> mock_rest_client_;
-  std::shared_ptr<MockCredentials> mock_credentials_;
-};
+TEST(ParseGenerateAccessTokenResponse, Success) {
+  auto const response = std::string{R"""({
+    "accessToken": "test-access-token",
+    "expireTime": "2022-10-12T07:20:50.520Z"})"""};
+  //  date --date=2022-10-12T07:20:50.52Z +%s
+  auto const expiration = std::chrono::system_clock::from_time_t(1665559250) +
+                          std::chrono::milliseconds(520);
+  MockRestResponse mock;
+  EXPECT_CALL(mock, StatusCode)
+      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+  EXPECT_CALL(std::move(mock), ExtractPayload)
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
 
-TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
+  auto ec = internal::ErrorContext();
+  auto token = ParseGenerateAccessTokenResponse(mock, ec);
+  ASSERT_STATUS_OK(token);
+  EXPECT_EQ(token->token, "test-access-token");
+  EXPECT_EQ(token->expiration, expiration);
+}
+
+TEST(ParseGenerateAccessTokenResponse, HttpError) {
+  auto const response = std::string{R"""({
+    "accessToken": "test-access-token",
+    "expireTime": "2022-10-12T07:20:50.520Z"})"""};
+  MockRestResponse mock;
+  EXPECT_CALL(mock, StatusCode)
+      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kNotFound));
+  EXPECT_CALL(std::move(mock), ExtractPayload)
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
+
+  auto ec = internal::ErrorContext();
+  auto token = ParseGenerateAccessTokenResponse(mock, ec);
+  EXPECT_THAT(token, StatusIs(StatusCode::kNotFound));
+}
+
+TEST(ParseGenerateAccessTokenResponse, NotJson) {
+  auto const response = std::string{R"""(not-json)"""};
+  MockRestResponse mock;
+  EXPECT_CALL(mock, StatusCode)
+      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+  EXPECT_CALL(std::move(mock), ExtractPayload)
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
+
+  auto ec = internal::ErrorContext();
+  auto token = ParseGenerateAccessTokenResponse(mock, ec);
+  EXPECT_THAT(token,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("cannot parse response as a JSON object")));
+}
+
+TEST(ParseGenerateAccessTokenResponse, NotJsonObject) {
+  auto const response = std::string{R"""("JSON-but-not-object")"""};
+  MockRestResponse mock;
+  EXPECT_CALL(mock, StatusCode)
+      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+  EXPECT_CALL(std::move(mock), ExtractPayload)
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
+
+  auto ec = internal::ErrorContext();
+  auto token = ParseGenerateAccessTokenResponse(mock, ec);
+  EXPECT_THAT(token,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("cannot parse response as a JSON object")));
+}
+
+TEST(ParseGenerateAccessTokenResponse, MissingAccessToken) {
+  auto const response = std::string{R"""({
+    "missing-accessToken": "test-access-token",
+    "expireTime": "2022-10-12T07:20:50.520Z"})"""};
+  MockRestResponse mock;
+  EXPECT_CALL(mock, StatusCode)
+      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+  EXPECT_CALL(std::move(mock), ExtractPayload)
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
+
+  auto ec = internal::ErrorContext();
+  auto token = ParseGenerateAccessTokenResponse(mock, ec);
+  EXPECT_THAT(token, StatusIs(StatusCode::kInvalidArgument,
+                              HasSubstr("cannot find `accessToken` field")));
+}
+
+TEST(ParseGenerateAccessTokenResponse, InvalidAccessToken) {
+  auto const response = std::string{R"""({
+    "accessToken": true,
+    "expireTime": "2022-10-12T07:20:50.520Z"})"""};
+  MockRestResponse mock;
+  EXPECT_CALL(mock, StatusCode)
+      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+  EXPECT_CALL(std::move(mock), ExtractPayload)
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
+
+  auto ec = internal::ErrorContext();
+  auto token = ParseGenerateAccessTokenResponse(mock, ec);
+  EXPECT_THAT(token,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("invalid type for `accessToken` field")));
+}
+
+TEST(ParseGenerateAccessTokenResponse, MissingExpireTime) {
+  auto const response = std::string{R"""({
+    "accessToken": "unused",
+    "missing-expireTime": "2022-10-12T07:20:50.520Z"})"""};
+  MockRestResponse mock;
+  EXPECT_CALL(mock, StatusCode)
+      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+  EXPECT_CALL(std::move(mock), ExtractPayload)
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
+
+  auto ec = internal::ErrorContext();
+  auto token = ParseGenerateAccessTokenResponse(mock, ec);
+  EXPECT_THAT(token, StatusIs(StatusCode::kInvalidArgument,
+                              HasSubstr("cannot find `expireTime` field")));
+}
+
+TEST(ParseGenerateAccessTokenResponse, InvalidExpireTime) {
+  auto const response = std::string{R"""({
+    "accessToken": "unused",
+    "expireTime": true})"""};
+  MockRestResponse mock;
+  EXPECT_CALL(mock, StatusCode)
+      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+  EXPECT_CALL(std::move(mock), ExtractPayload)
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
+
+  auto ec = internal::ErrorContext();
+  auto token = ParseGenerateAccessTokenResponse(mock, ec);
+  EXPECT_THAT(token,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("invalid type for `expireTime` field")));
+}
+
+TEST(ParseGenerateAccessTokenResponse, InvalidExpireTimeFormat) {
+  auto const response = std::string{R"""({
+    "accessToken": "unused",
+    "expireTime": "not-a-RFC-3339-date"})"""};
+  MockRestResponse mock;
+  EXPECT_CALL(mock, StatusCode)
+      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+  EXPECT_CALL(std::move(mock), ExtractPayload)
+      .WillOnce(Return(ByMove(MakeMockHttpPayloadSuccess(response))));
+
+  auto ec = internal::ErrorContext();
+  auto token = ParseGenerateAccessTokenResponse(mock, ec);
+  EXPECT_THAT(token,
+              StatusIs(StatusCode::kInvalidArgument,
+                       HasSubstr("invalid format for `expireTime` field")));
+}
+
+TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   std::string service_account = "foo@somewhere.com";
   std::chrono::seconds lifetime(3600);
   std::string scope = "my_scope";
   std::string delegate = "my_delegate";
-
-  EXPECT_CALL(*mock_credentials_, AuthorizationHeader).WillOnce([] {
-    return std::make_pair(std::string("Authorization"), std::string("Foo"));
-  });
-
   std::string response = R"""({
-  "accessToken": "my_access_token",
-  "expireTime": "2022-10-12T07:20:50.52Z"
-})""";
+    "accessToken": "my_access_token",
+    "expireTime": "2022-10-12T07:20:50.52Z"})""";
 
-  auto* mock_response = new MockRestResponse();
-  EXPECT_CALL(*mock_response, StatusCode)
-      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(response.begin(), response.end(), buffer.begin());
-          return response.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).WillOnce([=](Options const&) {
+    auto client = absl::make_unique<MockRestClient>();
+    EXPECT_CALL(*client,
+                Post(_, A<std::vector<absl::Span<char const>> const&>()))
+        .WillOnce([response, service_account](
+                      RestRequest const& request,
+                      std::vector<absl::Span<char const>> const& payload) {
+          auto mock_response = absl::make_unique<MockRestResponse>();
+          EXPECT_CALL(*mock_response, StatusCode)
+              .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
+          EXPECT_CALL(std::move(*mock_response), ExtractPayload)
+              .WillOnce([response] {
+                return testing_util::MakeMockHttpPayloadSuccess(response);
+              });
+
+          EXPECT_THAT(
+              request.path(),
+              Eq(absl::StrCat("https://iamcredentials.googleapis.com/v1/",
+                              "projects/-/serviceAccounts/", service_account,
+                              ":generateAccessToken")));
+          std::string str_payload(payload[0].begin(), payload[0].end());
+          EXPECT_THAT(str_payload,
+                      testing::HasSubstr("\"lifetime\":\"3600s\""));
+          EXPECT_THAT(str_payload,
+                      testing::HasSubstr("\"scope\":[\"my_scope\"]"));
+          EXPECT_THAT(str_payload,
+                      testing::HasSubstr("\"delegates\":[\"my_delegate\"]"));
+          return std::unique_ptr<RestResponse>(std::move(mock_response));
+        });
+    return std::unique_ptr<rest_internal::RestClient>(std::move(client));
   });
 
-  EXPECT_CALL(*mock_rest_client_,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](rest_internal::RestRequest const& request,
-                    std::vector<absl::Span<char const>> const& payload) {
-        EXPECT_THAT(request.path(),
-                    Eq(absl::StrCat("projects/-/serviceAccounts/",
-                                    service_account, ":generateAccessToken")));
-        std::string str_payload(payload[0].begin(), payload[0].end());
-        EXPECT_THAT(str_payload, testing::HasSubstr("\"lifetime\":\"3600s\""));
-        EXPECT_THAT(str_payload,
-                    testing::HasSubstr("\"scope\":[\"my_scope\"]"));
-        EXPECT_THAT(str_payload,
-                    testing::HasSubstr("\"delegates\":[\"my_delegate\"]"));
-        return std::unique_ptr<RestResponse>(std::move(mock_response));
-      });
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([lifetime](auto tp) {
+    return internal::AccessToken{"test-token", tp + lifetime};
+  });
 
-  auto stub = MinimalIamCredentialsRestStub(std::move(mock_credentials_), {},
-                                            std::move(mock_rest_client_));
+  auto stub =
+      MinimalIamCredentialsRestStub(std::move(mock_credentials), Options{},
+                                    mock_client_factory.AsStdFunction());
   GenerateAccessTokenRequest request;
   request.service_account = service_account;
   request.lifetime = lifetime;
@@ -118,174 +264,15 @@ TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenSuccess) {
   EXPECT_THAT(access_token->token, Eq("my_access_token"));
 }
 
-TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenNonRfc3339Time) {
-  std::string service_account = "foo@somewhere.com";
-  std::chrono::seconds lifetime(3600);
-  std::string scope = "my_scope";
-  std::string delegate = "my_delegate";
-
-  EXPECT_CALL(*mock_credentials_, AuthorizationHeader).WillOnce([] {
-    return std::make_pair(std::string("Authorization"), std::string("Foo"));
-  });
-
-  std::string response = R"""({
-  "accessToken": "my_access_token",
-  "expireTime": "Tomorrow"
-})""";
-
-  auto* mock_response = new MockRestResponse();
-  EXPECT_CALL(*mock_response, StatusCode)
-      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(response.begin(), response.end(), buffer.begin());
-          return response.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
-  });
-
-  EXPECT_CALL(*mock_rest_client_,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](rest_internal::RestRequest const& request,
-                    std::vector<absl::Span<char const>> const& payload) {
-        EXPECT_THAT(request.path(),
-                    Eq(absl::StrCat("projects/-/serviceAccounts/",
-                                    service_account, ":generateAccessToken")));
-        std::string str_payload(payload[0].begin(), payload[0].end());
-        EXPECT_THAT(str_payload, testing::HasSubstr("\"lifetime\":\"3600s\""));
-        EXPECT_THAT(str_payload,
-                    testing::HasSubstr("\"scope\":[\"my_scope\"]"));
-        EXPECT_THAT(str_payload,
-                    testing::HasSubstr("\"delegates\":[\"my_delegate\"]"));
-        return std::unique_ptr<RestResponse>(std::move(mock_response));
-      });
-
-  auto stub = MinimalIamCredentialsRestStub(std::move(mock_credentials_), {},
-                                            std::move(mock_rest_client_));
-  GenerateAccessTokenRequest request;
-  request.service_account = service_account;
-  request.lifetime = lifetime;
-  request.scopes.push_back(scope);
-  request.delegates.push_back(delegate);
-
-  auto access_token = stub.GenerateAccessToken(request);
-  EXPECT_THAT(access_token, StatusIs(StatusCode::kInvalidArgument));
-}
-
-TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenInvalidResponse) {
-  std::string service_account = "foo@somewhere.com";
-  std::chrono::seconds lifetime(3600);
-  std::string scope = "my_scope";
-  std::string delegate = "my_delegate";
-
-  EXPECT_CALL(*mock_credentials_, AuthorizationHeader).WillOnce([] {
-    return std::make_pair(std::string("Authorization"), std::string("Foo"));
-  });
-
-  std::string response = R"""({
-  "accessToken": "my_access_token"
-})""";
-
-  auto* mock_response = new MockRestResponse();
-  EXPECT_CALL(*mock_response, StatusCode)
-      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kOk));
-  EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read)
-        .WillOnce([&](absl::Span<char> buffer) {
-          std::copy(response.begin(), response.end(), buffer.begin());
-          return response.size();
-        })
-        .WillOnce([](absl::Span<char>) { return 0; });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
-  });
-
-  EXPECT_CALL(*mock_rest_client_,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](rest_internal::RestRequest const& request,
-                    std::vector<absl::Span<char const>> const& payload) {
-        EXPECT_THAT(request.path(),
-                    Eq(absl::StrCat("projects/-/serviceAccounts/",
-                                    service_account, ":generateAccessToken")));
-        std::string str_payload(payload[0].begin(), payload[0].end());
-        EXPECT_THAT(str_payload, testing::HasSubstr("\"lifetime\":\"3600s\""));
-        EXPECT_THAT(str_payload,
-                    testing::HasSubstr("\"scope\":[\"my_scope\"]"));
-        EXPECT_THAT(str_payload,
-                    testing::HasSubstr("\"delegates\":[\"my_delegate\"]"));
-        return std::unique_ptr<RestResponse>(std::move(mock_response));
-      });
-
-  auto stub = MinimalIamCredentialsRestStub(std::move(mock_credentials_), {},
-                                            std::move(mock_rest_client_));
-  GenerateAccessTokenRequest request;
-  request.service_account = service_account;
-  request.lifetime = lifetime;
-  request.scopes.push_back(scope);
-  request.delegates.push_back(delegate);
-
-  auto access_token = stub.GenerateAccessToken(request);
-  EXPECT_THAT(access_token, StatusIs(StatusCode::kUnknown));
-}
-
-TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenPostFailure) {
-  std::string service_account = "foo@somewhere.com";
-  std::chrono::seconds lifetime(3600);
-  std::string scope = "my_scope";
-  std::string delegate = "my_delegate";
-
-  EXPECT_CALL(*mock_credentials_, AuthorizationHeader).WillOnce([] {
-    return std::make_pair(std::string("Authorization"), std::string("Foo"));
-  });
-
-  auto* mock_response = new MockRestResponse();
-  EXPECT_CALL(*mock_response, StatusCode)
-      .WillRepeatedly(Return(rest_internal::HttpStatusCode::kNotFound));
-  EXPECT_CALL(std::move(*mock_response), ExtractPayload).WillOnce([&] {
-    auto mock_http_payload = absl::make_unique<MockHttpPayload>();
-    EXPECT_CALL(*mock_http_payload, Read).WillOnce([](absl::Span<char>) {
-      return 0;
-    });
-    return std::unique_ptr<HttpPayload>(std::move(mock_http_payload));
-  });
-
-  EXPECT_CALL(*mock_rest_client_,
-              Post(_, A<std::vector<absl::Span<char const>> const&>()))
-      .WillOnce([&](rest_internal::RestRequest const& request,
-                    std::vector<absl::Span<char const>> const& payload) {
-        EXPECT_THAT(request.path(),
-                    Eq(absl::StrCat("projects/-/serviceAccounts/",
-                                    service_account, ":generateAccessToken")));
-        std::string str_payload(payload[0].begin(), payload[0].end());
-        EXPECT_THAT(str_payload, testing::HasSubstr("\"lifetime\":\"3600s\""));
-        EXPECT_THAT(str_payload,
-                    testing::HasSubstr("\"scope\":[\"my_scope\"]"));
-        EXPECT_THAT(str_payload,
-                    testing::HasSubstr("\"delegates\":[\"my_delegate\"]"));
-        return std::unique_ptr<RestResponse>(std::move(mock_response));
-      });
-
-  auto stub = MinimalIamCredentialsRestStub(std::move(mock_credentials_), {},
-                                            std::move(mock_rest_client_));
-  GenerateAccessTokenRequest request;
-  request.service_account = service_account;
-  request.lifetime = lifetime;
-  request.scopes.push_back(scope);
-  request.delegates.push_back(delegate);
-
-  auto access_token = stub.GenerateAccessToken(request);
-  EXPECT_THAT(access_token, StatusIs(StatusCode::kNotFound));
-}
-
-TEST_F(MinimalIamCredentialsRestTest, GenerateAccessTokenCredentialFailure) {
-  EXPECT_CALL(*mock_credentials_, AuthorizationHeader).WillOnce([] {
+TEST(MinimalIamCredentialsRestTest, GenerateAccessTokenCredentialFailure) {
+  auto mock_credentials = std::make_shared<MockCredentials>();
+  EXPECT_CALL(*mock_credentials, GetToken).WillOnce([] {
     return Status(StatusCode::kPermissionDenied, "Permission Denied");
   });
-  auto stub = MinimalIamCredentialsRestStub(std::move(mock_credentials_), {},
-                                            std::move(mock_rest_client_));
+  MockHttpClientFactory mock_client_factory;
+  EXPECT_CALL(mock_client_factory, Call).Times(0);
+  auto stub = MinimalIamCredentialsRestStub(
+      std::move(mock_credentials), {}, mock_client_factory.AsStdFunction());
   GenerateAccessTokenRequest request;
   auto access_token = stub.GenerateAccessToken(request);
   EXPECT_THAT(access_token, StatusIs(StatusCode::kPermissionDenied));

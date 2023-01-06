@@ -23,6 +23,7 @@
 #include "google/cloud/gameservices/realms_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RealmsServiceConnection::~RealmsServiceConnection() = default;
 
 StreamRange<google::cloud::gaming::v1::Realm>
-    RealmsServiceConnection::ListRealms(
-        google::cloud::gaming::v1::
-            ListRealmsRequest) {  // NOLINT(performance-unnecessary-value-param)
+RealmsServiceConnection::ListRealms(
+    google::cloud::gaming::v1::
+        ListRealmsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::gaming::v1::Realm>>();
 }
@@ -80,6 +81,7 @@ RealmsServiceConnection::PreviewRealmUpdate(
 std::shared_ptr<RealmsServiceConnection> MakeRealmsServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  RealmsServicePolicyOptionList>(options,
                                                                 __func__);
   options =
@@ -93,24 +95,5 @@ std::shared_ptr<RealmsServiceConnection> MakeRealmsServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace gameservices_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<gameservices::RealmsServiceConnection>
-MakeRealmsServiceConnection(std::shared_ptr<RealmsServiceStub> stub,
-                            Options options) {
-  options = RealmsServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<gameservices_internal::RealmsServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gameservices_internal
 }  // namespace cloud
 }  // namespace google

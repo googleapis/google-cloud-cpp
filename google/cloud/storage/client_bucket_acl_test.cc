@@ -28,6 +28,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::google::cloud::testing_util::IsOk;
 using ::testing::Not;
@@ -98,14 +99,16 @@ TEST_F(BucketAccessControlsTest, ListBucketAcl) {
       .WillOnce(
           Return(StatusOr<internal::ListBucketAclResponse>(TransientError())))
       .WillOnce([&expected](internal::ListBucketAclRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
 
         return make_status_or(internal::ListBucketAclResponse{expected});
       });
 
   auto client = ClientForMock();
-  StatusOr<std::vector<BucketAccessControl>> actual =
-      client.ListBucketAcl("test-bucket");
+  StatusOr<std::vector<BucketAccessControl>> actual = client.ListBucketAcl(
+      "test-bucket", Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -140,6 +143,8 @@ TEST_F(BucketAccessControlsTest, CreateBucketAcl) {
   EXPECT_CALL(*mock_, CreateBucketAcl)
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
       .WillOnce([&expected](internal::CreateBucketAclRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
         EXPECT_EQ("READER", r.role());
@@ -148,7 +153,8 @@ TEST_F(BucketAccessControlsTest, CreateBucketAcl) {
       });
   auto client = ClientForMock();
   StatusOr<BucketAccessControl> actual = client.CreateBucketAcl(
-      "test-bucket", "user-test-user-1", BucketAccessControl::ROLE_READER());
+      "test-bucket", "user-test-user-1", BucketAccessControl::ROLE_READER(),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
 
   // Compare just a few fields because the values for most of the fields are
@@ -191,13 +197,17 @@ TEST_F(BucketAccessControlsTest, DeleteBucketAcl) {
   EXPECT_CALL(*mock_, DeleteBucketAcl)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteBucketAclRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
 
         return make_status_or(internal::EmptyResponse{});
       });
   auto client = ClientForMock();
-  auto status = client.DeleteBucketAcl("test-bucket", "user-test-user-1");
+  auto status =
+      client.DeleteBucketAcl("test-bucket", "user-test-user-1",
+                             Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(status);
 }
 
@@ -236,6 +246,8 @@ TEST_F(BucketAccessControlsTest, GetBucketAcl) {
   EXPECT_CALL(*mock_, GetBucketAcl)
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
       .WillOnce([&expected](internal::GetBucketAclRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
 
@@ -243,7 +255,8 @@ TEST_F(BucketAccessControlsTest, GetBucketAcl) {
       });
   auto client = ClientForMock();
   StatusOr<BucketAccessControl> actual =
-      client.GetBucketAcl("test-bucket", "user-test-user-1");
+      client.GetBucketAcl("test-bucket", "user-test-user-1",
+                          Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ(expected, *actual);
@@ -282,6 +295,8 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
   EXPECT_CALL(*mock_, UpdateBucketAcl)
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
       .WillOnce([&expected](internal::UpdateBucketAclRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
         EXPECT_EQ("OWNER", r.role());
@@ -291,7 +306,8 @@ TEST_F(BucketAccessControlsTest, UpdateBucketAcl) {
   auto client = ClientForMock();
   StatusOr<BucketAccessControl> actual = client.UpdateBucketAcl(
       "test-bucket",
-      BucketAccessControl().set_entity("user-test-user-1").set_role("OWNER"));
+      BucketAccessControl().set_entity("user-test-user-1").set_role("OWNER"),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ(expected, *actual);
@@ -345,6 +361,8 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
   EXPECT_CALL(*mock_, PatchBucketAcl)
       .WillOnce(Return(StatusOr<BucketAccessControl>(TransientError())))
       .WillOnce([&result](internal::PatchBucketAclRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-bucket", r.bucket_name());
         EXPECT_EQ("user-test-user-1", r.entity());
         nlohmann::json expected{{"role", "OWNER"}};
@@ -354,9 +372,10 @@ TEST_F(BucketAccessControlsTest, PatchBucketAcl) {
         return make_status_or(result);
       });
   auto client = ClientForMock();
-  StatusOr<BucketAccessControl> actual = client.PatchBucketAcl(
-      "test-bucket", "user-test-user-1",
-      BucketAccessControlPatchBuilder().set_role("OWNER"));
+  StatusOr<BucketAccessControl> actual =
+      client.PatchBucketAcl("test-bucket", "user-test-user-1",
+                            BucketAccessControlPatchBuilder().set_role("OWNER"),
+                            Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
 
   EXPECT_EQ(result, *actual);

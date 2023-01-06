@@ -14,7 +14,6 @@
 
 #include "google/cloud/testing_util/scoped_environment.h"
 #include "google/cloud/internal/getenv.h"
-#include "google/cloud/internal/setenv.h"
 #include <gtest/gtest.h>
 
 namespace google {

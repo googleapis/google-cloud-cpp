@@ -49,6 +49,18 @@ using SecurityCenterLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         securitycenter_internal::SecurityCenterRetryTraits>;
 
+/**
+ * The `SecurityCenterConnection` object for `SecurityCenterClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `SecurityCenterClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SecurityCenterClient`.
+ *
+ * To create a concrete instance, see `MakeSecurityCenterConnection()`.
+ *
+ * For mocking, see `securitycenter_mocks::MockSecurityCenterConnection`.
+ */
 class SecurityCenterConnection {
  public:
   virtual ~SecurityCenterConnection() = 0;
@@ -83,6 +95,11 @@ class SecurityCenterConnection {
 
   virtual Status DeleteNotificationConfig(
       google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  GetBigQueryExport(
+      google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
           request);
 
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -179,27 +196,52 @@ class SecurityCenterConnection {
   UpdateSecurityMarks(
       google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
           request);
+
+  virtual StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  CreateBigQueryExport(
+      google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+          request);
+
+  virtual Status DeleteBigQueryExport(
+      google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+          request);
+
+  virtual StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  UpdateBigQueryExport(
+      google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+          request);
+
+  virtual StreamRange<google::cloud::securitycenter::v1::BigQueryExport>
+  ListBigQueryExports(
+      google::cloud::securitycenter::v1::ListBigQueryExportsRequest request);
 };
 
+/**
+ * A factory function to construct an object of type `SecurityCenterConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of SecurityCenterClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `SecurityCenterConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::securitycenter::SecurityCenterPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `SecurityCenterConnection` created by
+ * this function.
+ */
 std::shared_ptr<SecurityCenterConnection> MakeSecurityCenterConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace securitycenter
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace securitycenter_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<securitycenter::SecurityCenterConnection>
-MakeSecurityCenterConnection(std::shared_ptr<SecurityCenterStub> stub,
-                             Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace securitycenter_internal
 }  // namespace cloud
 }  // namespace google
 

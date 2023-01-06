@@ -23,9 +23,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TopicAdminClient::TopicAdminClient(
     std::shared_ptr<TopicAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          pubsub_internal::DefaultCommonOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub

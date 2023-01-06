@@ -46,6 +46,18 @@ using DashboardsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         monitoring_internal::DashboardsServiceRetryTraits>;
 
+/**
+ * The `DashboardsServiceConnection` object for `DashboardsServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DashboardsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `DashboardsServiceClient`.
+ *
+ * To create a concrete instance, see `MakeDashboardsServiceConnection()`.
+ *
+ * For mocking, see `monitoring_mocks::MockDashboardsServiceConnection`.
+ */
 class DashboardsServiceConnection {
  public:
   virtual ~DashboardsServiceConnection() = 0;
@@ -71,25 +83,34 @@ class DashboardsServiceConnection {
       google::monitoring::dashboard::v1::UpdateDashboardRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `DashboardsServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * DashboardsServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `DashboardsServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::monitoring::DashboardsServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `DashboardsServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<DashboardsServiceConnection> MakeDashboardsServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::DashboardsServiceConnection>
-MakeDashboardsServiceConnection(std::shared_ptr<DashboardsServiceStub> stub,
-                                Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
 }  // namespace cloud
 }  // namespace google
 

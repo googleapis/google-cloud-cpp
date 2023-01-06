@@ -46,6 +46,18 @@ using DeviceManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         iot_internal::DeviceManagerRetryTraits>;
 
+/**
+ * The `DeviceManagerConnection` object for `DeviceManagerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DeviceManagerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DeviceManagerClient`.
+ *
+ * To create a concrete instance, see `MakeDeviceManagerConnection()`.
+ *
+ * For mocking, see `iot_mocks::MockDeviceManagerConnection`.
+ */
 class DeviceManagerConnection {
  public:
   virtual ~DeviceManagerConnection() = 0;
@@ -117,24 +129,32 @@ class DeviceManagerConnection {
       google::cloud::iot::v1::UnbindDeviceFromGatewayRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `DeviceManagerConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of DeviceManagerClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `DeviceManagerConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::iot::DeviceManagerPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `DeviceManagerConnection` created by
+ * this function.
+ */
 std::shared_ptr<DeviceManagerConnection> MakeDeviceManagerConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace iot_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<iot::DeviceManagerConnection> MakeDeviceManagerConnection(
-    std::shared_ptr<DeviceManagerStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iot_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -46,6 +46,20 @@ using IdentityAwareProxyOAuthServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         iap_internal::IdentityAwareProxyOAuthServiceRetryTraits>;
 
+/**
+ * The `IdentityAwareProxyOAuthServiceConnection` object for
+ * `IdentityAwareProxyOAuthServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `IdentityAwareProxyOAuthServiceClient`. This allows users to inject
+ * custom behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `IdentityAwareProxyOAuthServiceClient`.
+ *
+ * To create a concrete instance, see
+ * `MakeIdentityAwareProxyOAuthServiceConnection()`.
+ *
+ * For mocking, see `iap_mocks::MockIdentityAwareProxyOAuthServiceConnection`.
+ */
 class IdentityAwareProxyOAuthServiceConnection {
  public:
   virtual ~IdentityAwareProxyOAuthServiceConnection() = 0;
@@ -85,25 +99,34 @@ class IdentityAwareProxyOAuthServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `IdentityAwareProxyOAuthServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * IdentityAwareProxyOAuthServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `IdentityAwareProxyOAuthServiceConnection`. Expected options are any
+ * of the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::iap::IdentityAwareProxyOAuthServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the
+ * `IdentityAwareProxyOAuthServiceConnection` created by this function.
+ */
 std::shared_ptr<IdentityAwareProxyOAuthServiceConnection>
 MakeIdentityAwareProxyOAuthServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iap
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace iap_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<iap::IdentityAwareProxyOAuthServiceConnection>
-MakeIdentityAwareProxyOAuthServiceConnection(
-    std::shared_ptr<IdentityAwareProxyOAuthServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iap_internal
 }  // namespace cloud
 }  // namespace google
 

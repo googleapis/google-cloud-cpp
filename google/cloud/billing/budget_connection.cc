@@ -23,6 +23,7 @@
 #include "google/cloud/billing/internal/budget_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -53,9 +54,9 @@ BudgetServiceConnection::GetBudget(
 }
 
 StreamRange<google::cloud::billing::budgets::v1::Budget>
-    BudgetServiceConnection::ListBudgets(
-        google::cloud::billing::budgets::v1::
-            ListBudgetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+BudgetServiceConnection::ListBudgets(
+    google::cloud::billing::budgets::v1::
+        ListBudgetsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::budgets::v1::Budget>>();
 }
@@ -68,6 +69,7 @@ Status BudgetServiceConnection::DeleteBudget(
 std::shared_ptr<BudgetServiceConnection> MakeBudgetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BudgetServicePolicyOptionList>(options,
                                                                 __func__);
   options = billing_internal::BudgetServiceDefaultOptions(std::move(options));
@@ -80,23 +82,5 @@ std::shared_ptr<BudgetServiceConnection> MakeBudgetServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace billing_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<billing::BudgetServiceConnection> MakeBudgetServiceConnection(
-    std::shared_ptr<BudgetServiceStub> stub, Options options) {
-  options = BudgetServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<billing_internal::BudgetServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace billing_internal
 }  // namespace cloud
 }  // namespace google

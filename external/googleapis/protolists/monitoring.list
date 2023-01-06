@@ -1,12 +1,17 @@
 @com_google_googleapis//google/monitoring/dashboard/v1:alertchart.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:collapsible_group.proto
 @com_google_googleapis//google/monitoring/dashboard/v1:common.proto
 @com_google_googleapis//google/monitoring/dashboard/v1:dashboard.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:dashboard_filter.proto
 @com_google_googleapis//google/monitoring/dashboard/v1:dashboards_service.proto
 @com_google_googleapis//google/monitoring/dashboard/v1:drilldowns.proto
 @com_google_googleapis//google/monitoring/dashboard/v1:layouts.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:logs_panel.proto
 @com_google_googleapis//google/monitoring/dashboard/v1:metrics.proto
 @com_google_googleapis//google/monitoring/dashboard/v1:scorecard.proto
 @com_google_googleapis//google/monitoring/dashboard/v1:service.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:table.proto
+@com_google_googleapis//google/monitoring/dashboard/v1:table_display_options.proto
 @com_google_googleapis//google/monitoring/dashboard/v1:text.proto
 @com_google_googleapis//google/monitoring/dashboard/v1:widget.proto
 @com_google_googleapis//google/monitoring/dashboard/v1:xychart.proto

@@ -18,7 +18,6 @@
 
 #include "google/cloud/iam/iam_client.h"
 #include "google/cloud/iam/iam_options.h"
-#include "google/cloud/iam/internal/iam_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -29,9 +28,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 IAMClient::IAMClient(std::shared_ptr<IAMConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          iam_internal::IAMDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 IAMClient::~IAMClient() = default;
 
 StreamRange<google::iam::admin::v1::ServiceAccount>
@@ -215,6 +213,36 @@ Status IAMClient::DeleteServiceAccountKey(
   return connection_->DeleteServiceAccountKey(request);
 }
 
+Status IAMClient::DisableServiceAccountKey(std::string const& name,
+                                           Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::iam::admin::v1::DisableServiceAccountKeyRequest request;
+  request.set_name(name);
+  return connection_->DisableServiceAccountKey(request);
+}
+
+Status IAMClient::DisableServiceAccountKey(
+    google::iam::admin::v1::DisableServiceAccountKeyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DisableServiceAccountKey(request);
+}
+
+Status IAMClient::EnableServiceAccountKey(std::string const& name,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::iam::admin::v1::EnableServiceAccountKeyRequest request;
+  request.set_name(name);
+  return connection_->EnableServiceAccountKey(request);
+}
+
+Status IAMClient::EnableServiceAccountKey(
+    google::iam::admin::v1::EnableServiceAccountKeyRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->EnableServiceAccountKey(request);
+}
+
 StatusOr<google::iam::v1::Policy> IAMClient::GetIamPolicy(
     std::string const& resource, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
@@ -248,7 +276,10 @@ StatusOr<google::iam::v1::Policy> IAMClient::SetIamPolicy(
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
   auto backoff_policy =
-      internal::CurrentOptions().get<IAMBackoffPolicyOption>()->clone();
+      internal::CurrentOptions().get<IAMBackoffPolicyOption>();
+  if (backoff_policy != nullptr) {
+    backoff_policy = backoff_policy->clone();
+  }
   for (;;) {
     auto recent = connection_->GetIamPolicy(get_request);
     if (!recent) {
@@ -260,7 +291,8 @@ StatusOr<google::iam::v1::Policy> IAMClient::SetIamPolicy(
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result || result.status().code() != StatusCode::kAborted) {
+    if (result || result.status().code() != StatusCode::kAborted ||
+        backoff_policy == nullptr) {
       return result;
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());

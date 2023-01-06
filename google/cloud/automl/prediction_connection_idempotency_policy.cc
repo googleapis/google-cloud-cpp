@@ -30,35 +30,24 @@ using ::google::cloud::Idempotency;
 PredictionServiceConnectionIdempotencyPolicy::
     ~PredictionServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultPredictionServiceConnectionIdempotencyPolicy
-    : public PredictionServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultPredictionServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
+PredictionServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<PredictionServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultPredictionServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency PredictionServiceConnectionIdempotencyPolicy::Predict(
+    google::cloud::automl::v1::PredictRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency Predict(
-      google::cloud::automl::v1::PredictRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency BatchPredict(
-      google::cloud::automl::v1::BatchPredictRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency PredictionServiceConnectionIdempotencyPolicy::BatchPredict(
+    google::cloud::automl::v1::BatchPredictRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<PredictionServiceConnectionIdempotencyPolicy>
 MakeDefaultPredictionServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultPredictionServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<PredictionServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

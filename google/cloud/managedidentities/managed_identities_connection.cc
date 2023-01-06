@@ -23,6 +23,7 @@
 #include "google/cloud/managedidentities/managed_identities_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -51,9 +52,9 @@ ManagedIdentitiesServiceConnection::ResetAdminPassword(
 }
 
 StreamRange<google::cloud::managedidentities::v1::Domain>
-    ManagedIdentitiesServiceConnection::ListDomains(
-        google::cloud::managedidentities::v1::
-            ListDomainsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ManagedIdentitiesServiceConnection::ListDomains(
+    google::cloud::managedidentities::v1::
+        ListDomainsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::managedidentities::v1::Domain>>();
 }
@@ -115,6 +116,7 @@ ManagedIdentitiesServiceConnection::ValidateTrust(
 std::shared_ptr<ManagedIdentitiesServiceConnection>
 MakeManagedIdentitiesServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ManagedIdentitiesServicePolicyOptionList>(
       options, __func__);
   options = managedidentities_internal::ManagedIdentitiesServiceDefaultOptions(
@@ -130,25 +132,5 @@ MakeManagedIdentitiesServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace managedidentities
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace managedidentities_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<managedidentities::ManagedIdentitiesServiceConnection>
-MakeManagedIdentitiesServiceConnection(
-    std::shared_ptr<ManagedIdentitiesServiceStub> stub, Options options) {
-  options = ManagedIdentitiesServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      managedidentities_internal::ManagedIdentitiesServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace managedidentities_internal
 }  // namespace cloud
 }  // namespace google

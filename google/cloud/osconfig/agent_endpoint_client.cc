@@ -17,7 +17,6 @@
 // source: google/cloud/osconfig/agentendpoint/v1/agentendpoint.proto
 
 #include "google/cloud/osconfig/agent_endpoint_client.h"
-#include "google/cloud/osconfig/internal/agent_endpoint_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AgentEndpointServiceClient::AgentEndpointServiceClient(
     std::shared_ptr<AgentEndpointServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          osconfig_internal::AgentEndpointServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AgentEndpointServiceClient::~AgentEndpointServiceClient() = default;
 
 StreamRange<

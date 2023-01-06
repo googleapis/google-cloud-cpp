@@ -21,9 +21,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 namespace storage_proto = ::google::storage::v2;
@@ -42,10 +41,12 @@ TEST(GrpcObjectAccessControlParser, FromProto) {
        project_number: "test-project-number"
        team: "test-team"
      }
+     etag: "test-etag"
      )""",
                                                             &input));
 
-  auto const expected = ObjectAccessControlParser::FromString(R"""({
+  auto const expected =
+      storage::internal::ObjectAccessControlParser::FromString(R"""({
      "role": "test-role",
      "id": "test-id",
      "kind": "storage#objectAccessControl",
@@ -59,17 +60,17 @@ TEST(GrpcObjectAccessControlParser, FromProto) {
      "projectTeam": {
        "projectNumber": "test-project-number",
        "team": "test-team"
-     }
+     },
+     "etag": "test-etag"
   })""");
   ASSERT_STATUS_OK(expected);
 
-  auto actual = GrpcObjectAccessControlParser::FromProto(input, "test-bucket",
-                                                         "test-object", 42);
+  auto actual = FromProto(input, "test-bucket", "test-object", 42);
   EXPECT_EQ(*expected, actual);
 }
 
 TEST(GrpcObjectAccessControlParser, ToProtoSimple) {
-  auto acl = ObjectAccessControlParser::FromString(R"""({
+  auto acl = storage::internal::ObjectAccessControlParser::FromString(R"""({
      "role": "test-role",
      "id": "test-id",
      "kind": "storage#objectAccessControl",
@@ -83,10 +84,11 @@ TEST(GrpcObjectAccessControlParser, ToProtoSimple) {
      "projectTeam": {
        "projectNumber": "test-project-number",
        "team": "test-team"
-     }
+     },
+     "etag": "test-etag"
   })""");
   ASSERT_STATUS_OK(acl);
-  auto actual = GrpcObjectAccessControlParser::ToProto(*acl);
+  auto actual = ToProto(*acl);
 
   storage_proto::ObjectAccessControl expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
@@ -100,6 +102,7 @@ TEST(GrpcObjectAccessControlParser, ToProtoSimple) {
        project_number: "test-project-number"
        team: "test-team"
      }
+     etag: "test-etag"
      )""",
                                                             &expected));
 
@@ -107,10 +110,10 @@ TEST(GrpcObjectAccessControlParser, ToProtoSimple) {
 }
 
 TEST(GrpcObjectAccessControlParser, MinimalFields) {
-  ObjectAccessControl acl;
+  storage::ObjectAccessControl acl;
   acl.set_role("test-role");
   acl.set_entity("test-entity");
-  auto actual = GrpcObjectAccessControlParser::ToProto(acl);
+  auto actual = ToProto(acl);
 
   storage_proto::ObjectAccessControl expected;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(R"""(
@@ -123,8 +126,7 @@ TEST(GrpcObjectAccessControlParser, MinimalFields) {
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

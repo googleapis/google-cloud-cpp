@@ -27,6 +27,21 @@ namespace cloud {
 namespace eventarc_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `PublisherConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `PublisherClient`. To do so,
+ * construct an object of type `PublisherClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockPublisherConnection : public eventarc::PublisherConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
@@ -37,6 +52,13 @@ class MockPublisherConnection : public eventarc::PublisherConnection {
               (google::cloud::eventarc::publishing::v1::
                    PublishChannelConnectionEventsRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>,
+      PublishEvents,
+      (google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

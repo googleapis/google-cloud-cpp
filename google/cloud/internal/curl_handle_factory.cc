@@ -15,6 +15,8 @@
 #include "google/cloud/internal/curl_handle_factory.h"
 #include "google/cloud/credentials.h"
 #include "google/cloud/internal/curl_options.h"
+#include <algorithm>
+#include <iterator>
 
 namespace google {
 namespace cloud {
@@ -46,27 +48,30 @@ DefaultCurlHandleFactory::DefaultCurlHandleFactory(Options const& o) {
 }
 
 CurlPtr DefaultCurlHandleFactory::CreateHandle() {
-  CurlPtr curl(curl_easy_init(), &curl_easy_cleanup);
+  auto curl = MakeCurlPtr();
   SetCurlOptions(curl.get());
   return curl;
 }
 
-void DefaultCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
-  if (GetHandle(h) == nullptr) return;
+void DefaultCurlHandleFactory::CleanupHandle(CurlPtr h, HandleDisposition) {
+  if (!h) return;
   char* ip;
-  auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
+  auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
     std::lock_guard<std::mutex> lk(mu_);
     last_client_ip_address_ = ip;
   }
-  ResetHandle(h);
+  h.reset();
 }
 
 CurlMulti DefaultCurlHandleFactory::CreateMultiHandle() {
   return CurlMulti(curl_multi_init(), &curl_multi_cleanup);
 }
 
-void DefaultCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) { m.reset(); }
+void DefaultCurlHandleFactory::CleanupMultiHandle(CurlMulti m,
+                                                  HandleDisposition) {
+  m.reset();
+}
 
 void DefaultCurlHandleFactory::SetCurlOptions(CURL* handle) {
   if (cainfo_) {
@@ -79,75 +84,111 @@ void DefaultCurlHandleFactory::SetCurlOptions(CURL* handle) {
 
 PooledCurlHandleFactory::PooledCurlHandleFactory(std::size_t maximum_size,
                                                  Options const& o)
-    : maximum_size_(maximum_size) {
-  if (o.has<CARootsFilePathOption>()) cainfo_ = o.get<CARootsFilePathOption>();
-  if (o.has<CAPathOption>()) capath_ = o.get<CAPathOption>();
-}
+    : maximum_size_(maximum_size), cainfo_(CAInfo(o)), capath_(CAPath(o)) {}
 
-PooledCurlHandleFactory::~PooledCurlHandleFactory() {
-  for (auto* h : handles_) {
-    curl_easy_cleanup(h);
-  }
-  for (auto* m : multi_handles_) {
-    curl_multi_cleanup(m);
-  }
-}
+PooledCurlHandleFactory::~PooledCurlHandleFactory() = default;
 
 CurlPtr PooledCurlHandleFactory::CreateHandle() {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::unique_lock<std::mutex> lk(handles_mu_);
   if (!handles_.empty()) {
-    auto* handle = handles_.back();
-    // Clear all the options in the handle so we do not leak its previous state.
-    (void)curl_easy_reset(handle);
+    auto handle = std::move(handles_.back());
     handles_.pop_back();
-    CurlPtr curl(handle, &curl_easy_cleanup);
-    SetCurlOptions(curl.get());
-    return curl;
+    lk.unlock();
+    // Clear all the options in the handle, so we do not leak its previous
+    // state.
+    (void)curl_easy_reset(handle.get());
+    SetCurlOptions(handle.get());
+    return handle;
   }
-  CurlPtr curl(curl_easy_init(), &curl_easy_cleanup);
+  ++active_handles_;
+  lk.unlock();
+  auto curl = MakeCurlPtr();
   SetCurlOptions(curl.get());
   return curl;
 }
 
-void PooledCurlHandleFactory::CleanupHandle(CurlHandle&& h) {
-  if (GetHandle(h) == nullptr) return;
-  std::unique_lock<std::mutex> lk(mu_);
+void PooledCurlHandleFactory::CleanupHandle(CurlPtr h, HandleDisposition d) {
+  if (!h) return;
+  // Querying the local IP can be expensive, as it may require a DNS lookup.
+  // We should not perform such operations while holding a lock.
   char* ip;
-  auto res = curl_easy_getinfo(GetHandle(h), CURLINFO_LOCAL_IP, &ip);
+  auto res = curl_easy_getinfo(h.get(), CURLINFO_LOCAL_IP, &ip);
   if (res == CURLE_OK && ip != nullptr) {
+    std::unique_lock<std::mutex> lk(last_client_ip_address_mu_);
     last_client_ip_address_ = ip;
   }
-  while (handles_.size() >= maximum_size_) {
-    auto* tmp = handles_.front();
-    handles_.erase(handles_.begin());
-    curl_easy_cleanup(tmp);
+  // Use a temporary data structure to release any excess handles *after* the
+  // lock is released.
+  std::vector<CurlPtr> released;
+  std::unique_lock<std::mutex> lk(handles_mu_);
+  if (d == HandleDisposition::kDiscard) {
+    --active_handles_;
+    return;
   }
-  handles_.push_back(GetHandle(h));
-  // The handles_ vector now has ownership, so release it.
-  ReleaseHandle(h);
+  // If needed, release several handles to make room, amortizing the cost when
+  // many threads are releasing handles at the same time.
+  if (handles_.size() >= maximum_size_) {
+    // Sometimes the application may be using a lot more handles than
+    // `maximum_size_`. For example, if many threads demand a handle for
+    // downloads, then each thread will have a handle.
+    // When these handles are returned we want to minimize the locking overhead
+    // (and contention) by removing them in larger blocks. At the same time, we
+    // do not want to empty the pool because other threads may need some handles
+    // from the pool.  Finally, when the number of active handles is close to
+    // the maximum size of the pool, we just want to remove enough handles to
+    // make room.
+    //
+    // Note that active_handles_ >= handles_.size() is a class invariant, and we
+    // just checked that handles_.size() >= maximum_size_ > maximum_size / 2
+    auto const release_count = (std::min)(handles_.size() - maximum_size_ / 2,
+                                          active_handles_ - maximum_size_);
+    released.reserve(release_count);
+    auto const end = std::next(handles_.begin(), release_count);
+    std::move(handles_.begin(), end, std::back_inserter(released));
+    handles_.erase(handles_.begin(), end);
+  }
+  handles_.push_back(std::move(h));
+  active_handles_ -= released.size();
 }
 
 CurlMulti PooledCurlHandleFactory::CreateMultiHandle() {
-  std::unique_lock<std::mutex> lk(mu_);
+  std::unique_lock<std::mutex> lk(multi_handles_mu_);
   if (!multi_handles_.empty()) {
-    auto* m = multi_handles_.back();
+    auto m = std::move(multi_handles_.back());
     multi_handles_.pop_back();
-    return CurlMulti(m, &curl_multi_cleanup);
+    lk.unlock();
+    return m;
   }
+  ++active_multi_handles_;
+  lk.unlock();
   return CurlMulti(curl_multi_init(), &curl_multi_cleanup);
 }
 
-void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti&& m) {
+void PooledCurlHandleFactory::CleanupMultiHandle(CurlMulti m,
+                                                 HandleDisposition d) {
   if (!m) return;
-  std::unique_lock<std::mutex> lk(mu_);
-  while (multi_handles_.size() >= maximum_size_) {
-    auto* tmp = multi_handles_.front();
-    multi_handles_.erase(multi_handles_.begin());
-    curl_multi_cleanup(tmp);
+  // Use a temporary data structure to release any excess handles *after* the
+  // lock is released.
+  std::vector<CurlMulti> released;
+  std::unique_lock<std::mutex> lk(multi_handles_mu_);
+  if (d == HandleDisposition::kDiscard) {
+    --active_multi_handles_;
+    return;
   }
-  multi_handles_.push_back(m.get());
-  // The multi_handles_ vector now has ownership, so release it.
-  (void)m.release();
+  // If needed, release several handles to make room, amortizing the cost when
+  // many threads are releasing handles at the same time.
+  if (multi_handles_.size() >= maximum_size_) {
+    // Same idea as is CleanupHandle()
+    auto const release_count =
+        (std::min)(handles_.size() - maximum_size_ / 2,
+                   active_multi_handles_ - maximum_size_);
+    released.reserve(release_count);
+    auto const end = std::next(multi_handles_.begin(), release_count);
+    std::move(multi_handles_.begin(), end, std::back_inserter(released));
+    multi_handles_.erase(multi_handles_.begin(), end);
+  }
+  multi_handles_.push_back(std::move(m));
+  active_multi_handles_ -= released.size();
 }
 
 void PooledCurlHandleFactory::SetCurlOptions(CURL* handle) {
@@ -159,8 +200,14 @@ void PooledCurlHandleFactory::SetCurlOptions(CURL* handle) {
   }
 }
 
-CurlHandle GetCurlHandle(std::shared_ptr<CurlHandleFactory> const& factory) {
-  return CurlHandle(factory->CreateHandle());
+absl::optional<std::string> PooledCurlHandleFactory::CAInfo(Options const& o) {
+  if (!o.has<CARootsFilePathOption>()) return absl::nullopt;
+  return o.get<CARootsFilePathOption>();
+}
+
+absl::optional<std::string> PooledCurlHandleFactory::CAPath(Options const& o) {
+  if (!o.has<CAPathOption>()) return absl::nullopt;
+  return o.get<CAPathOption>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -291,9 +291,12 @@ class ExperimentImpl {
               << std::flush;
 
     auto connection = spanner::MakeConnection(
-        database, spanner::ConnectionOptions().set_num_channels(num_channels),
+        database,
         // This pre-creates all the Sessions we will need (one per thread).
-        spanner::SessionPoolOptions().set_min_sessions(config.maximum_threads));
+        google::cloud::Options{}
+            .set<google::cloud::GrpcNumChannelsOption>(num_channels)
+            .set<spanner::SessionPoolMinSessionsOption>(
+                config.maximum_threads));
     return spanner::Client(std::move(connection));
   }
 
@@ -303,8 +306,9 @@ class ExperimentImpl {
     std::cout << "# Creating " << num_channels << " stub"
               << (num_channels != 1 ? "s" : "") << "\n"
               << std::flush;
-    auto opts = google::cloud::internal::MakeOptions(
-        spanner::ConnectionOptions().set_num_channels(num_channels));
+    auto opts =
+        google::cloud::Options{}.set<google::cloud::GrpcNumChannelsOption>(
+            num_channels);
     opts = spanner_internal::DefaultOptions(std::move(opts));
     auto auth = google::cloud::internal::CreateAuthenticationStrategy(
         opts.get<google::cloud::GrpcCredentialOption>());
@@ -316,12 +320,6 @@ class ExperimentImpl {
     }
     return stubs;
   }
-
-  /// Get a snapshot of the random bit generator
-  google::cloud::internal::DefaultPRNG Generator() const {
-    std::lock_guard<std::mutex> lk(mu_);
-    return generator_;
-  };
 
   void DumpSamples(std::vector<RowCpuSample> const& samples) const {
     std::lock_guard<std::mutex> lk(mu_);
@@ -480,7 +478,7 @@ class BasicExperiment : public Experiment {
     int num_stubs = static_cast<int>(stubs.size());
     int task_id = 0;
     for (auto& t : tasks) {
-      auto client = stubs[task_id++ % num_stubs];
+      auto const& client = stubs[task_id++ % num_stubs];
       t = std::async(std::launch::async, [this, &config, thread_count,
                                           num_stubs, client] {
         return ViaStub(config, thread_count, num_stubs,
@@ -1175,14 +1173,6 @@ class RunAllExperiment : public Experiment {
     for (auto& kv : AvailableExperiments()) {
       // Do not recurse, skip this experiment.
       if (kv.first == "run-all") continue;
-      // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-      if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST")
-              .has_value()) {
-        auto pos = kv.first.rfind("-numeric");
-        if (pos != std::string::npos) {
-          continue;
-        }
-      }
 
       Config config = cfg;
       config.experiment = kv.first;
@@ -1359,13 +1349,6 @@ int main(int argc, char* argv[]) {
   request.set_create_statement(
       absl::StrCat("CREATE DATABASE `", database.database_id(), "`"));
   for (auto const& kv : available) {
-    // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-    if (google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value()) {
-      auto pos = kv.first.rfind("-numeric");
-      if (pos != std::string::npos) {
-        continue;
-      }
-    }
     auto experiment = kv.second(generator);
     auto s = experiment->AdditionalDdlStatement();
     if (s.empty()) continue;

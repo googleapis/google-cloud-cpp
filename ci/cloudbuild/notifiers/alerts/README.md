@@ -66,5 +66,4 @@ gcloud beta eventarc triggers create send-build-alerts-trigger \
 ```
 
 [docker]: https://docker.com/
-[docker-install]: https://store.docker.com/search?type=edition&offering=community
 [pack-install]: https://buildpacks.io/docs/install-pack/

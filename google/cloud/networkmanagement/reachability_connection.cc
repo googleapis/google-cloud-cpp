@@ -23,6 +23,7 @@
 #include "google/cloud/networkmanagement/reachability_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ReachabilityServiceConnection::~ReachabilityServiceConnection() = default;
 
 StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>
-    ReachabilityServiceConnection::ListConnectivityTests(
-        google::cloud::networkmanagement::v1::
-            ListConnectivityTestsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ReachabilityServiceConnection::ListConnectivityTests(
+    google::cloud::networkmanagement::v1::
+        ListConnectivityTestsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::networkmanagement::v1::ConnectivityTest>>();
 }
@@ -86,6 +87,7 @@ ReachabilityServiceConnection::DeleteConnectivityTest(
 std::shared_ptr<ReachabilityServiceConnection>
 MakeReachabilityServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ReachabilityServicePolicyOptionList>(options,
                                                                       __func__);
   options = networkmanagement_internal::ReachabilityServiceDefaultOptions(
@@ -100,25 +102,5 @@ MakeReachabilityServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace networkmanagement
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace networkmanagement_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<networkmanagement::ReachabilityServiceConnection>
-MakeReachabilityServiceConnection(std::shared_ptr<ReachabilityServiceStub> stub,
-                                  Options options) {
-  options = ReachabilityServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      networkmanagement_internal::ReachabilityServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace networkmanagement_internal
 }  // namespace cloud
 }  // namespace google

@@ -36,6 +36,7 @@ Options IdentityAwareProxyOAuthServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options),
       "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_O_AUTH_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_IDENTITY_AWARE_PROXY_O_AUTH_SERVICE_AUTHORITY",
       "iap.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

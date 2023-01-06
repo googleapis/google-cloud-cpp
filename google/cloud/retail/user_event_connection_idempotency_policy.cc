@@ -30,50 +30,39 @@ using ::google::cloud::Idempotency;
 UserEventServiceConnectionIdempotencyPolicy::
     ~UserEventServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultUserEventServiceConnectionIdempotencyPolicy
-    : public UserEventServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultUserEventServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy>
+UserEventServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<UserEventServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultUserEventServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency UserEventServiceConnectionIdempotencyPolicy::WriteUserEvent(
+    google::cloud::retail::v2::WriteUserEventRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency WriteUserEvent(
-      google::cloud::retail::v2::WriteUserEventRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency UserEventServiceConnectionIdempotencyPolicy::CollectUserEvent(
+    google::cloud::retail::v2::CollectUserEventRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency CollectUserEvent(
-      google::cloud::retail::v2::CollectUserEventRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency UserEventServiceConnectionIdempotencyPolicy::PurgeUserEvents(
+    google::cloud::retail::v2::PurgeUserEventsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency PurgeUserEvents(
-      google::cloud::retail::v2::PurgeUserEventsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency UserEventServiceConnectionIdempotencyPolicy::ImportUserEvents(
+    google::cloud::retail::v2::ImportUserEventsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ImportUserEvents(
-      google::cloud::retail::v2::ImportUserEventsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency RejoinUserEvents(
-      google::cloud::retail::v2::RejoinUserEventsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency UserEventServiceConnectionIdempotencyPolicy::RejoinUserEvents(
+    google::cloud::retail::v2::RejoinUserEventsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<UserEventServiceConnectionIdempotencyPolicy>
 MakeDefaultUserEventServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultUserEventServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<UserEventServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

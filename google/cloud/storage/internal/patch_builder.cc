@@ -29,6 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 struct PatchBuilder::Impl {
+  Impl() = default;  // NOLINT(bugprone-exception-escape)
+
   std::string ToString() const {
     if (empty()) {
       return "{}";
@@ -138,6 +140,14 @@ PatchBuilder::PatchBuilder(PatchBuilder&& rhs) noexcept
 PatchBuilder& PatchBuilder::operator=(PatchBuilder&& rhs) noexcept {
   pimpl_ = std::move(rhs.pimpl_);
   return *this;
+}
+
+bool operator==(PatchBuilder const& a, PatchBuilder const& b) noexcept {
+  return a.pimpl_->patch_ == b.pimpl_->patch_;
+}
+
+bool operator!=(PatchBuilder const& a, PatchBuilder const& b) noexcept {
+  return !(a == b);
 }
 
 std::string PatchBuilder::ToString() const { return pimpl_->ToString(); }

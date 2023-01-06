@@ -21,35 +21,24 @@
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection.h"
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection_idempotency_policy.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "generator/integration_tests/golden/v1/golden_kitchen_sink_options.h"
 
 namespace google {
 namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
-struct GoldenKitchenSinkRetryPolicyOption {
-  using Type = std::shared_ptr<GoldenKitchenSinkRetryPolicy>;
-};
+/// @deprecated Use golden_v1::GoldenKitchenSinkBackoffPolicyOption directly.
+using ::google::cloud::golden_v1::GoldenKitchenSinkBackoffPolicyOption;
 
-/// Option to use with `google::cloud::Options`.
-struct GoldenKitchenSinkBackoffPolicyOption {
-  using Type = std::shared_ptr<BackoffPolicy>;
-};
+/// @deprecated Use golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicyOption directly.
+using ::google::cloud::golden_v1::GoldenKitchenSinkConnectionIdempotencyPolicyOption;
 
-/// Option to use with `google::cloud::Options`.
-struct GoldenKitchenSinkConnectionIdempotencyPolicyOption {
-  using Type = std::shared_ptr<GoldenKitchenSinkConnectionIdempotencyPolicy>;
-};
+/// @deprecated Use golden_v1::GoldenKitchenSinkPolicyOptionList directly.
+using ::google::cloud::golden_v1::GoldenKitchenSinkPolicyOptionList;
 
-using GoldenKitchenSinkPolicyOptionList =
-    OptionList<GoldenKitchenSinkRetryPolicyOption,
-               GoldenKitchenSinkBackoffPolicyOption,
-               GoldenKitchenSinkConnectionIdempotencyPolicyOption>;
+/// @deprecated Use golden_v1::GoldenKitchenSinkRetryPolicyOption directly.
+using ::google::cloud::golden_v1::GoldenKitchenSinkRetryPolicyOption;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden

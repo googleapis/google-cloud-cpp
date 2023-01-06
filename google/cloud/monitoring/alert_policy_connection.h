@@ -46,6 +46,18 @@ using AlertPolicyServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         monitoring_internal::AlertPolicyServiceRetryTraits>;
 
+/**
+ * The `AlertPolicyServiceConnection` object for `AlertPolicyServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AlertPolicyServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AlertPolicyServiceClient`.
+ *
+ * To create a concrete instance, see `MakeAlertPolicyServiceConnection()`.
+ *
+ * For mocking, see `monitoring_mocks::MockAlertPolicyServiceConnection`.
+ */
 class AlertPolicyServiceConnection {
  public:
   virtual ~AlertPolicyServiceConnection() = 0;
@@ -68,25 +80,34 @@ class AlertPolicyServiceConnection {
       google::monitoring::v3::UpdateAlertPolicyRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `AlertPolicyServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * AlertPolicyServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `AlertPolicyServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::monitoring::AlertPolicyServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `AlertPolicyServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<AlertPolicyServiceConnection> MakeAlertPolicyServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::AlertPolicyServiceConnection>
-MakeAlertPolicyServiceConnection(std::shared_ptr<AlertPolicyServiceStub> stub,
-                                 Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
 }  // namespace cloud
 }  // namespace google
 

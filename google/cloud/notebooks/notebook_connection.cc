@@ -23,6 +23,7 @@
 #include "google/cloud/notebooks/notebook_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 NotebookServiceConnection::~NotebookServiceConnection() = default;
 
 StreamRange<google::cloud::notebooks::v1::Instance>
-    NotebookServiceConnection::ListInstances(
-        google::cloud::notebooks::v1::
-            ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+NotebookServiceConnection::ListInstances(
+    google::cloud::notebooks::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Instance>>();
 }
@@ -102,6 +103,12 @@ NotebookServiceConnection::SetInstanceLabels(
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Instance>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+NotebookServiceConnection::UpdateInstanceMetadataItems(
+    google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
@@ -173,6 +180,14 @@ NotebookServiceConnection::RollbackInstance(
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
+NotebookServiceConnection::DiagnoseInstance(
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::notebooks::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Instance>>
 NotebookServiceConnection::UpgradeInstanceInternal(
     google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&) {
   return google::cloud::make_ready_future<
@@ -181,9 +196,9 @@ NotebookServiceConnection::UpgradeInstanceInternal(
 }
 
 StreamRange<google::cloud::notebooks::v1::Environment>
-    NotebookServiceConnection::ListEnvironments(
-        google::cloud::notebooks::v1::
-            ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+NotebookServiceConnection::ListEnvironments(
+    google::cloud::notebooks::v1::
+        ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Environment>>();
 }
@@ -211,9 +226,9 @@ NotebookServiceConnection::DeleteEnvironment(
 }
 
 StreamRange<google::cloud::notebooks::v1::Schedule>
-    NotebookServiceConnection::ListSchedules(
-        google::cloud::notebooks::v1::
-            ListSchedulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+NotebookServiceConnection::ListSchedules(
+    google::cloud::notebooks::v1::
+        ListSchedulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Schedule>>();
 }
@@ -249,9 +264,9 @@ NotebookServiceConnection::TriggerSchedule(
 }
 
 StreamRange<google::cloud::notebooks::v1::Execution>
-    NotebookServiceConnection::ListExecutions(
-        google::cloud::notebooks::v1::
-            ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
+NotebookServiceConnection::ListExecutions(
+    google::cloud::notebooks::v1::
+        ListExecutionsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Execution>>();
 }
@@ -281,6 +296,7 @@ NotebookServiceConnection::CreateExecution(
 std::shared_ptr<NotebookServiceConnection> MakeNotebookServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  NotebookServicePolicyOptionList>(options,
                                                                   __func__);
   options =
@@ -294,24 +310,5 @@ std::shared_ptr<NotebookServiceConnection> MakeNotebookServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace notebooks_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<notebooks::NotebookServiceConnection>
-MakeNotebookServiceConnection(std::shared_ptr<NotebookServiceStub> stub,
-                              Options options) {
-  options = NotebookServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<notebooks_internal::NotebookServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace notebooks_internal
 }  // namespace cloud
 }  // namespace google

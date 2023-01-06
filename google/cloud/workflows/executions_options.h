@@ -31,21 +31,38 @@ namespace cloud {
 namespace workflows {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-workflows-options
+ */
 struct ExecutionsRetryPolicyOption {
   using Type = std::shared_ptr<ExecutionsRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-workflows-options
+ */
 struct ExecutionsBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-workflows-options
+ */
 struct ExecutionsConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<ExecutionsConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to Executions.
+ *
+ * @ingroup google-cloud-workflows-options
+ */
 using ExecutionsPolicyOptionList =
     OptionList<ExecutionsRetryPolicyOption, ExecutionsBackoffPolicyOption,
                ExecutionsConnectionIdempotencyPolicyOption>;

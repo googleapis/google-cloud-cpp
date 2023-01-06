@@ -23,6 +23,7 @@
 #include "google/cloud/billing/internal/cloud_billing_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -41,9 +42,9 @@ CloudBillingConnection::GetBillingAccount(
 }
 
 StreamRange<google::cloud::billing::v1::BillingAccount>
-    CloudBillingConnection::ListBillingAccounts(
-        google::cloud::billing::v1::
-            ListBillingAccountsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudBillingConnection::ListBillingAccounts(
+    google::cloud::billing::v1::
+        ListBillingAccountsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::BillingAccount>>();
 }
@@ -61,9 +62,9 @@ CloudBillingConnection::CreateBillingAccount(
 }
 
 StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
-    CloudBillingConnection::ListProjectBillingInfo(
-        google::cloud::billing::v1::
-            ListProjectBillingInfoRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudBillingConnection::ListProjectBillingInfo(
+    google::cloud::billing::v1::
+        ListProjectBillingInfoRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::billing::v1::ProjectBillingInfo>>();
 }
@@ -99,6 +100,7 @@ CloudBillingConnection::TestIamPermissions(
 std::shared_ptr<CloudBillingConnection> MakeCloudBillingConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudBillingPolicyOptionList>(options,
                                                                __func__);
   options = billing_internal::CloudBillingDefaultOptions(std::move(options));
@@ -111,23 +113,5 @@ std::shared_ptr<CloudBillingConnection> MakeCloudBillingConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace billing_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<billing::CloudBillingConnection> MakeCloudBillingConnection(
-    std::shared_ptr<CloudBillingStub> stub, Options options) {
-  options = CloudBillingDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<billing_internal::CloudBillingConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace billing_internal
 }  // namespace cloud
 }  // namespace google

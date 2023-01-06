@@ -46,6 +46,18 @@ using ConnectionServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         bigquery_internal::ConnectionServiceRetryTraits>;
 
+/**
+ * The `ConnectionServiceConnection` object for `ConnectionServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ConnectionServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ConnectionServiceClient`.
+ *
+ * To create a concrete instance, see `MakeConnectionServiceConnection()`.
+ *
+ * For mocking, see `bigquery_mocks::MockConnectionServiceConnection`.
+ */
 class ConnectionServiceConnection {
  public:
   virtual ~ConnectionServiceConnection() = 0;
@@ -85,25 +97,34 @@ class ConnectionServiceConnection {
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `ConnectionServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * ConnectionServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `ConnectionServiceConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::bigquery::ConnectionServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `ConnectionServiceConnection` created
+ * by this function.
+ */
 std::shared_ptr<ConnectionServiceConnection> MakeConnectionServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigquery
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace bigquery_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<bigquery::ConnectionServiceConnection>
-MakeConnectionServiceConnection(std::shared_ptr<ConnectionServiceStub> stub,
-                                Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigquery_internal
 }  // namespace cloud
 }  // namespace google
 

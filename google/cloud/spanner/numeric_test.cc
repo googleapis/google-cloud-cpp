@@ -30,9 +30,9 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::HasSubstr;
 
-auto constexpr kNumericIntMin =  // 1 - 10^Numeric::kIntPrec
+auto constexpr kNumericIntMin =  // 1 - 10^Numeric::kIntPrecision
     absl::MakeInt128(-5421010863, 10560352017195204609U);
-auto constexpr kNumericIntMax =  // 10^Numeric::kIntPrec - 1
+auto constexpr kNumericIntMax =  // 10^Numeric::kIntPrecision - 1
     absl::MakeInt128(5421010862, 7886392056514347007U);
 
 TEST(Numeric, DefaultCtor) {
@@ -357,8 +357,10 @@ TEST(Numeric, MakeNumericDoubleFail) {
               StatusIs(StatusCode::kOutOfRange, HasSubstr("e+")));
 
   // NaN and infinities count as outside the allowable range.
+  EXPECT_THAT(MakeNumeric("NaN"),
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("NaN")));
   EXPECT_THAT(MakeNumeric(std::numeric_limits<double>::quiet_NaN()),
-              StatusIs(StatusCode::kOutOfRange, HasSubstr("nan")));
+              StatusIs(StatusCode::kInvalidArgument, HasSubstr("nan")));
   EXPECT_THAT(MakeNumeric(std::numeric_limits<double>::infinity()),
               StatusIs(StatusCode::kOutOfRange, HasSubstr("inf")));
   EXPECT_THAT(MakeNumeric(-std::numeric_limits<double>::infinity()),
@@ -539,6 +541,38 @@ TEST(Numeric, MakeNumericIntegerScaledFail) {
 
   // Beyond the fractional-scaling limit (value is truncated).
   EXPECT_EQ(0.0, ToDouble(MakeNumeric(1, -10).value()));
+}
+
+TEST(Numeric, PostgreSQL) {
+  // Default constructor.
+  PgNumeric n;
+  EXPECT_EQ(0, ToInteger<int>(n).value());
+  EXPECT_EQ(0U, ToInteger<unsigned>(n).value());
+  EXPECT_EQ(0.0, ToDouble(n));
+  EXPECT_EQ("0", n.ToString());
+
+  // PostgreSQL NUMERICs allow NaN.
+  for (auto const& nan :
+       {MakePgNumeric("NaN"), MakePgNumeric("nan"),
+        MakePgNumeric(std::numeric_limits<double>::quiet_NaN())}) {
+    EXPECT_EQ("NaN", nan.value().ToString());
+  }
+
+  // Unlike regular NaN values, PostgreSQL NaNs compare equal.
+  EXPECT_EQ(MakePgNumeric("NaN"), MakePgNumeric("NaN"));
+
+  // Check some limits of representation and rounding.
+  auto limit = "-" + std::string(131072, '9') + "." + std::string(16383, '9');
+  EXPECT_TRUE(MakePgNumeric(limit).ok());
+  auto too_big = "-1" + std::string(131072, '0');
+  EXPECT_FALSE(MakePgNumeric(too_big).ok());
+  auto round_up = "0." + std::string(16383, '9') + "5";
+  EXPECT_EQ("1", MakePgNumeric(round_up).value().ToString());
+
+  // Finally, check some random integer/scaled/double conversions.
+  EXPECT_EQ(1, ToInteger<int>(MakePgNumeric(1).value()).value());
+  EXPECT_EQ(123400, ToInteger<int>(MakePgNumeric(1234, 1).value(), 1).value());
+  EXPECT_EQ(251.125, ToDouble(MakePgNumeric(251.125).value()));
 }
 
 }  // namespace

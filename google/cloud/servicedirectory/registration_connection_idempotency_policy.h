@@ -32,77 +32,71 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class RegistrationServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~RegistrationServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~RegistrationServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency CreateNamespace(
       google::cloud::servicedirectory::v1::CreateNamespaceRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListNamespaces(
-      google::cloud::servicedirectory::v1::ListNamespacesRequest request) = 0;
+      google::cloud::servicedirectory::v1::ListNamespacesRequest request);
 
   virtual google::cloud::Idempotency GetNamespace(
-      google::cloud::servicedirectory::v1::GetNamespaceRequest const&
-          request) = 0;
+      google::cloud::servicedirectory::v1::GetNamespaceRequest const& request);
 
   virtual google::cloud::Idempotency UpdateNamespace(
       google::cloud::servicedirectory::v1::UpdateNamespaceRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteNamespace(
       google::cloud::servicedirectory::v1::DeleteNamespaceRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency CreateService(
-      google::cloud::servicedirectory::v1::CreateServiceRequest const&
-          request) = 0;
+      google::cloud::servicedirectory::v1::CreateServiceRequest const& request);
 
   virtual google::cloud::Idempotency ListServices(
-      google::cloud::servicedirectory::v1::ListServicesRequest request) = 0;
+      google::cloud::servicedirectory::v1::ListServicesRequest request);
 
   virtual google::cloud::Idempotency GetService(
-      google::cloud::servicedirectory::v1::GetServiceRequest const&
-          request) = 0;
+      google::cloud::servicedirectory::v1::GetServiceRequest const& request);
 
   virtual google::cloud::Idempotency UpdateService(
-      google::cloud::servicedirectory::v1::UpdateServiceRequest const&
-          request) = 0;
+      google::cloud::servicedirectory::v1::UpdateServiceRequest const& request);
 
   virtual google::cloud::Idempotency DeleteService(
-      google::cloud::servicedirectory::v1::DeleteServiceRequest const&
-          request) = 0;
+      google::cloud::servicedirectory::v1::DeleteServiceRequest const& request);
 
   virtual google::cloud::Idempotency CreateEndpoint(
       google::cloud::servicedirectory::v1::CreateEndpointRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListEndpoints(
-      google::cloud::servicedirectory::v1::ListEndpointsRequest request) = 0;
+      google::cloud::servicedirectory::v1::ListEndpointsRequest request);
 
   virtual google::cloud::Idempotency GetEndpoint(
-      google::cloud::servicedirectory::v1::GetEndpointRequest const&
-          request) = 0;
+      google::cloud::servicedirectory::v1::GetEndpointRequest const& request);
 
   virtual google::cloud::Idempotency UpdateEndpoint(
       google::cloud::servicedirectory::v1::UpdateEndpointRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteEndpoint(
       google::cloud::servicedirectory::v1::DeleteEndpointRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetIamPolicy(
-      google::iam::v1::GetIamPolicyRequest const& request) = 0;
+      google::iam::v1::GetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency SetIamPolicy(
-      google::iam::v1::SetIamPolicyRequest const& request) = 0;
+      google::iam::v1::SetIamPolicyRequest const& request);
 
   virtual google::cloud::Idempotency TestIamPermissions(
-      google::iam::v1::TestIamPermissionsRequest const& request) = 0;
+      google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
 std::unique_ptr<RegistrationServiceConnectionIdempotencyPolicy>

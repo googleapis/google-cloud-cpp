@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/sign_blob_requests.h"
+#include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include <nlohmann/json.hpp>
 
@@ -38,6 +39,11 @@ StatusOr<SignBlobResponse> SignBlobResponse::FromHttpResponse(
   result.key_id = json.value("keyId", "");
   result.signed_blob = json.value("signedBlob", "");
   return result;
+}
+
+StatusOr<SignBlobResponse> SignBlobResponse::FromHttpResponse(
+    HttpResponse const& response) {
+  return FromHttpResponse(response.payload);
 }
 
 std::ostream& operator<<(std::ostream& os, SignBlobResponse const& r) {

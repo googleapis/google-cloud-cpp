@@ -20,9 +20,22 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-RawClient::RestoreResumableSession(std::string const& /*session_id*/) {
-  return Status(StatusCode::kUnimplemented, "removed, see #7282 for details");
+StatusOr<CreateOrResumeResponse> CreateOrResume(
+    RawClient& client, ResumableUploadRequest const& request) {
+  auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
+  if (session_id.empty()) {
+    auto create = client.CreateResumableUpload(request);
+    if (!create) return std::move(create).status();
+    return CreateOrResumeResponse{std::move(create->upload_id), 0,
+                                  absl::nullopt};
+  }
+
+  auto query = internal::QueryResumableUploadRequest(session_id);
+  auto response = client.QueryResumableUpload(query);
+  if (!response) return std::move(response).status();
+  return CreateOrResumeResponse{std::move(session_id),
+                                response->committed_size.value_or(0),
+                                std::move(response->payload)};
 }
 
 }  // namespace internal

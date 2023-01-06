@@ -38,14 +38,12 @@ VideoIntelligenceServiceConnectionImpl::VideoIntelligenceServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          videointelligence_internal::VideoIntelligenceServiceDefaultOptions(
-              VideoIntelligenceServiceConnection::options()))) {}
+          std::move(options), VideoIntelligenceServiceConnection::options())) {}
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>
 VideoIntelligenceServiceConnectionImpl::AnnotateVideo(
     google::cloud::videointelligence::v1::AnnotateVideoRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::videointelligence::v1::AnnotateVideoResponse>(
       background_->cq(), request,

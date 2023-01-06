@@ -23,6 +23,7 @@
 #include "google/cloud/websecurityscanner/web_security_scanner_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -52,9 +53,9 @@ WebSecurityScannerConnection::GetScanConfig(
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
-    WebSecurityScannerConnection::ListScanConfigs(
-        google::cloud::websecurityscanner::v1::
-            ListScanConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+WebSecurityScannerConnection::ListScanConfigs(
+    google::cloud::websecurityscanner::v1::
+        ListScanConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>>();
 }
@@ -78,9 +79,9 @@ WebSecurityScannerConnection::GetScanRun(
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
-    WebSecurityScannerConnection::ListScanRuns(
-        google::cloud::websecurityscanner::v1::
-            ListScanRunsRequest) {  // NOLINT(performance-unnecessary-value-param)
+WebSecurityScannerConnection::ListScanRuns(
+    google::cloud::websecurityscanner::v1::
+        ListScanRunsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::ScanRun>>();
 }
@@ -92,9 +93,9 @@ WebSecurityScannerConnection::StopScanRun(
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
-    WebSecurityScannerConnection::ListCrawledUrls(
-        google::cloud::websecurityscanner::v1::
-            ListCrawledUrlsRequest) {  // NOLINT(performance-unnecessary-value-param)
+WebSecurityScannerConnection::ListCrawledUrls(
+    google::cloud::websecurityscanner::v1::
+        ListCrawledUrlsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>>();
 }
@@ -106,9 +107,9 @@ WebSecurityScannerConnection::GetFinding(
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::Finding>
-    WebSecurityScannerConnection::ListFindings(
-        google::cloud::websecurityscanner::v1::
-            ListFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+WebSecurityScannerConnection::ListFindings(
+    google::cloud::websecurityscanner::v1::
+        ListFindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::websecurityscanner::v1::Finding>>();
 }
@@ -122,6 +123,7 @@ WebSecurityScannerConnection::ListFindingTypeStats(
 std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  WebSecurityScannerPolicyOptionList>(options,
                                                                      __func__);
   options = websecurityscanner_internal::WebSecurityScannerDefaultOptions(
@@ -136,25 +138,5 @@ std::shared_ptr<WebSecurityScannerConnection> MakeWebSecurityScannerConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace websecurityscanner
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace websecurityscanner_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<websecurityscanner::WebSecurityScannerConnection>
-MakeWebSecurityScannerConnection(std::shared_ptr<WebSecurityScannerStub> stub,
-                                 Options options) {
-  options = WebSecurityScannerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      websecurityscanner_internal::WebSecurityScannerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace websecurityscanner_internal
 }  // namespace cloud
 }  // namespace google

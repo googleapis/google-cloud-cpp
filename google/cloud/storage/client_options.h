@@ -30,6 +30,9 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 class ClientOptions;
 namespace internal {
+std::string RestEndpoint(Options const&);
+std::string IamRestEndpoint(Options const&);
+std::string IamRestPath();
 std::string JsonEndpoint(Options const&);
 std::string JsonUploadEndpoint(Options const&);
 std::string XmlEndpoint(Options const&);

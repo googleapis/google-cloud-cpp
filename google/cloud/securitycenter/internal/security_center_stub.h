@@ -75,6 +75,12 @@ class SecurityCenterStub {
       google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  GetBigQueryExport(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+          request) = 0;
+
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
@@ -203,6 +209,30 @@ class SecurityCenterStub {
       google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  CreateBigQueryExport(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+          request) = 0;
+
+  virtual Status DeleteBigQueryExport(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  UpdateBigQueryExport(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
+  ListBigQueryExports(
+      grpc::ClientContext& context,
+      google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -259,6 +289,11 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
   Status DeleteNotificationConfig(
       grpc::ClientContext& client_context,
       google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::BigQueryExport> GetBigQueryExport(
+      grpc::ClientContext& client_context,
+      google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
           request) override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
@@ -385,6 +420,29 @@ class DefaultSecurityCenterStub : public SecurityCenterStub {
   UpdateSecurityMarks(
       grpc::ClientContext& client_context,
       google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  CreateBigQueryExport(
+      grpc::ClientContext& client_context,
+      google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+          request) override;
+
+  Status DeleteBigQueryExport(
+      grpc::ClientContext& client_context,
+      google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+  UpdateBigQueryExport(
+      grpc::ClientContext& client_context,
+      google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+          request) override;
+
+  StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
+  ListBigQueryExports(
+      grpc::ClientContext& client_context,
+      google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

@@ -20,91 +20,33 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_ACCESSAPPROVAL_ACCESS_APPROVAL_CONNECTION_H
 
 #include "google/cloud/accessapproval/access_approval_connection_idempotency_policy.h"
-#include "google/cloud/accessapproval/internal/access_approval_retry_traits.h"
-#include "google/cloud/accessapproval/internal/access_approval_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "google/cloud/accessapproval/v1/access_approval_connection.h"
 
 namespace google {
 namespace cloud {
 namespace accessapproval {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using AccessApprovalRetryPolicy =
-    ::google::cloud::internal::TraitBasedRetryPolicy<
-        accessapproval_internal::AccessApprovalRetryTraits>;
+/// @deprecated Use accessapproval_v1::MakeAccessApprovalConnection directly.
+using ::google::cloud::accessapproval_v1::MakeAccessApprovalConnection;
 
-using AccessApprovalLimitedTimeRetryPolicy =
-    ::google::cloud::internal::LimitedTimeRetryPolicy<
-        accessapproval_internal::AccessApprovalRetryTraits>;
+/// @deprecated Use accessapproval_v1::AccessApprovalConnection directly.
+using ::google::cloud::accessapproval_v1::AccessApprovalConnection;
 
-using AccessApprovalLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        accessapproval_internal::AccessApprovalRetryTraits>;
+/// @deprecated Use
+/// accessapproval_v1::AccessApprovalLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::accessapproval_v1::
+    AccessApprovalLimitedErrorCountRetryPolicy;
 
-class AccessApprovalConnection {
- public:
-  virtual ~AccessApprovalConnection() = 0;
+/// @deprecated Use accessapproval_v1::AccessApprovalLimitedTimeRetryPolicy
+/// directly.
+using ::google::cloud::accessapproval_v1::AccessApprovalLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StreamRange<google::cloud::accessapproval::v1::ApprovalRequest>
-  ListApprovalRequests(
-      google::cloud::accessapproval::v1::ListApprovalRequestsMessage request);
-
-  virtual StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  GetApprovalRequest(
-      google::cloud::accessapproval::v1::GetApprovalRequestMessage const&
-          request);
-
-  virtual StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  ApproveApprovalRequest(
-      google::cloud::accessapproval::v1::ApproveApprovalRequestMessage const&
-          request);
-
-  virtual StatusOr<google::cloud::accessapproval::v1::ApprovalRequest>
-  DismissApprovalRequest(
-      google::cloud::accessapproval::v1::DismissApprovalRequestMessage const&
-          request);
-
-  virtual StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  GetAccessApprovalSettings(
-      google::cloud::accessapproval::v1::GetAccessApprovalSettingsMessage const&
-          request);
-
-  virtual StatusOr<google::cloud::accessapproval::v1::AccessApprovalSettings>
-  UpdateAccessApprovalSettings(
-      google::cloud::accessapproval::v1::
-          UpdateAccessApprovalSettingsMessage const& request);
-
-  virtual Status DeleteAccessApprovalSettings(
-      google::cloud::accessapproval::v1::
-          DeleteAccessApprovalSettingsMessage const& request);
-};
-
-std::shared_ptr<AccessApprovalConnection> MakeAccessApprovalConnection(
-    Options options = {});
+/// @deprecated Use accessapproval_v1::AccessApprovalRetryPolicy directly.
+using ::google::cloud::accessapproval_v1::AccessApprovalRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accessapproval
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace accessapproval_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<accessapproval::AccessApprovalConnection>
-MakeAccessApprovalConnection(std::shared_ptr<AccessApprovalStub> stub,
-                             Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accessapproval_internal
 }  // namespace cloud
 }  // namespace google
 

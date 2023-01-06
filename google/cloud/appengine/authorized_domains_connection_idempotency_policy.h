@@ -32,14 +32,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AuthorizedDomainsConnectionIdempotencyPolicy {
  public:
-  virtual ~AuthorizedDomainsConnectionIdempotencyPolicy() = 0;
+  virtual ~AuthorizedDomainsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListAuthorizedDomains(
-      google::appengine::v1::ListAuthorizedDomainsRequest request) = 0;
+      google::appengine::v1::ListAuthorizedDomainsRequest request);
 };
 
 std::unique_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>

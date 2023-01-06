@@ -25,6 +25,7 @@
 #include "google/cloud/polling_policy.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
+#include <map>
 #include <memory>
 
 namespace google {
@@ -36,8 +37,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /// Service for search.
 ///
 /// This feature is only available for users who have Retail Search enabled.
-/// Please submit a form [here](https://cloud.google.com/contact) to contact
-/// cloud sales if you are interested in using Retail Search.
+/// Enable Retail Search on Cloud Console before using this feature.
 ///
 /// @par Equality
 ///
@@ -68,16 +68,16 @@ class SearchServiceClient {
       std::shared_ptr<SearchServiceConnection> connection, Options opts = {});
   ~SearchServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   SearchServiceClient(SearchServiceClient const&) = default;
   SearchServiceClient& operator=(SearchServiceClient const&) = default;
   SearchServiceClient(SearchServiceClient&&) = default;
   SearchServiceClient& operator=(SearchServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(SearchServiceClient const& a,
                          SearchServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -86,26 +86,25 @@ class SearchServiceClient {
                          SearchServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Performs a search.
   ///
   /// This feature is only available for users who have Retail Search enabled.
-  /// Please submit a form [here](https://cloud.google.com/contact) to contact
-  /// cloud sales if you are interested in using Retail Search.
+  /// Enable Retail Search on Cloud Console before using this feature.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::SearchRequest,google/cloud/retail/v2/search_service.proto#L64}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::SearchResponse::SearchResult,google/cloud/retail/v2/search_service.proto#L588}
+  /// @googleapis_link{google::cloud::retail::v2::SearchResponse::SearchResult,google/cloud/retail/v2/search_service.proto#L733}
   ///
   /// [google.cloud.retail.v2.SearchRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L64}
   /// [google.cloud.retail.v2.SearchResponse.SearchResult]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L588}
+  /// @googleapis_reference_link{google/cloud/retail/v2/search_service.proto#L733}
   ///
   StreamRange<google::cloud::retail::v2::SearchResponse::SearchResult> Search(
       google::cloud::retail::v2::SearchRequest request, Options opts = {});

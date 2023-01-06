@@ -31,26 +31,17 @@ namespace storage_experimental {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- * Low-level experimental settings for the GCS+gRPC plugin.
+ * Configure the GCS+gRPC plugin.
  *
- * Possible values for the string include:
+ * - "none": use REST, disables gRPC.
+ * - "media": use gRPC for media (aka data, aka I/O) operations, and REST for
+ *   all other requests. In other words, only `ReadObject()`, `WriteObject()`,
+ *   and `InsertObject()` use gRPC.
+ * - "metadata": use gRPC for all operations.
  *
- * - "default" or "none": do not use any special settings with gRPC.
- * - "dp": enable Google Direct Access (formerly 'Direct Path') equivalent to
- *   setting both "pick-first-lb" and "enable-dns-srv-queries".
- * - "alts": same settings as "dp", but use the experimental ALTS credentials.
- * - "enable-dns-srv-queries": set the `grpc.dns_enable_srv_queries` channel
- *   argument to `1`, see [dns-query-arg].
- * - "disable-dns-srv-queries": set the `grpc.dns_enable_srv_queries` channel
- *   argument to `0`, see [dns-query-arg].
- * - "pick-first-lb": configure the gRPC load balancer to use the "pick_first"
- *   policy.
- * - "exclusive": use an exclusive channel for each stub.
- *
- * Unknown values are ignored.
- *
- * [dns-query-arg]:
- * https://grpc.github.io/grpc/core/group__grpc__arg__keys.html#ga247ed6771077938be12ab24790a95732
+ * @warning GCS+gRPC is an experimental feature of the C++ client library, and
+ *   subject to change without notice.  The service itself is not generally
+ *   available, does not have an SLA and requires projects to be allow-listed.
  */
 struct GrpcPluginOption {
   using Type = std::string;

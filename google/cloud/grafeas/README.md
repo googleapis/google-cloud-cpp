@@ -21,17 +21,17 @@ Please note that the Google Cloud C++ client libraries do **not** follow
 
 ## Supported Platforms
 
-* Windows, macOS, Linux
-* C++11 (and higher) compilers (we test with GCC >= 5.4, Clang >= 6.0, and MSVC >= 2017)
-* Environments with or without exceptions
-* Bazel and CMake builds
+- Windows, macOS, Linux
+- C++14 (and higher) compilers (we test with GCC >= 7.3, Clang >= 6.0, and MSVC >= 2017)
+- Environments with or without exceptions
+- Bazel (>= 4.0) and CMake (>= 3.5) builds
 
 ## Contributing changes
 
-See [`CONTRIBUTING.md`](../../../CONTRIBUTING.md) for details on how to
+See [`CONTRIBUTING.md`](/CONTRIBUTING.md) for details on how to
 contribute to this project, including how to build and test your changes
 as well as how to properly format your code.
 
 ## Licensing
 
-Apache 2.0; see [`LICENSE`](../../../LICENSE) for details.
+Apache 2.0; see [`LICENSE`](/LICENSE) for details.

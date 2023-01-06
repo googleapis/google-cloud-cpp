@@ -31,27 +31,50 @@ namespace generator_internal {
  * In `google-cloud-cpp` libraries called `foo` live in the `google/cloud/foo`
  * directory. The names of CMake targets, Bazel rules, pkg-config modules,
  * features, etc. are based on the library name. This function returns the
- * name give a service configuration.
- *
- * This function assumes the service configuration has already been validated.
+ * library name given a service configuration's product path.
  */
-std::string LibraryName(
-    google::cloud::cpp::generator::ServiceConfiguration const& service);
+std::string LibraryName(std::string const& product_path);
+
+/**
+ * Returns the path to the library directory.
+ *
+ * Extract the library path (e.g. `google/cloud/foo/`) from a product path (e.g.
+ * `google/cloud/foo/bar/v1`).
+ */
+std::string LibraryPath(std::string const& product_path);
+
+/**
+ * Returns the relative path to the service from its library path.
+ *
+ * Extract the relative path (e.g. `bar/v1/`) from a product path (e.g.
+ * `google/cloud/foo/bar/v1`).
+ */
+std::string ServiceSubdirectory(std::string const& product_path);
+
+/**
+ * Returns the name of the doxygen refgroup for options in a given product path.
+ *
+ * There is a single refgroup for all options in a library. For example, the
+ * options in `google/cloud/foo/v1/` and `google/cloud/foo/bar/v1` will both map
+ * to the group: `google-cloud-foo-options`.
+ */
+std::string OptionsGroup(std::string const& product_path);
 
 std::map<std::string, std::string> ScaffoldVars(
-    std::string const& googleapis_path, std::string const& project_root,
-    google::cloud::cpp::generator::ServiceConfiguration const& service);
+    std::string const& googleapis_path,
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    bool experimental);
 
 void MakeDirectory(std::string const& path);
 
 void GenerateScaffold(
-    std::string const& googleapis_path, std::string const& output_path,
-    google::cloud::cpp::generator::ServiceConfiguration const& service);
+    std::string const& googleapis_path,
+    std::string const& scaffold_templates_path, std::string const& output_path,
+    google::cloud::cpp::generator::ServiceConfiguration const& service,
+    bool experimental);
 
 void GenerateCmakeConfigIn(std::ostream& os,
                            std::map<std::string, std::string> const& variables);
-void GenerateConfigPcIn(std::ostream& os,
-                        std::map<std::string, std::string> const& variables);
 void GenerateReadme(std::ostream& os,
                     std::map<std::string, std::string> const& variables);
 void GenerateBuild(std::ostream& os,
@@ -59,6 +82,8 @@ void GenerateBuild(std::ostream& os,
 void GenerateCMakeLists(std::ostream& os,
                         std::map<std::string, std::string> const& variables);
 void GenerateDoxygenMainPage(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateDoxygenOptionsPage(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateQuickstartReadme(
     std::ostream& os, std::map<std::string, std::string> const& variables);
@@ -69,8 +94,11 @@ void GenerateQuickstartCMake(
 void GenerateQuickstartMakefile(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 void GenerateQuickstartWorkspace(
-    std::ostream& os, std::map<std::string, std::string> const& variables);
+    std::ostream& os, std::map<std::string, std::string> const& variables,
+    std::string const& contents);
 void GenerateQuickstartBuild(
+    std::ostream& os, std::map<std::string, std::string> const& variables);
+void GenerateQuickstartBazelrc(
     std::ostream& os, std::map<std::string, std::string> const& variables);
 
 }  // namespace generator_internal

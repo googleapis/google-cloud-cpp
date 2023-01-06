@@ -23,6 +23,7 @@
 #include "google/cloud/monitoring/service_monitoring_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -48,9 +49,9 @@ ServiceMonitoringServiceConnection::GetService(
 }
 
 StreamRange<google::monitoring::v3::Service>
-    ServiceMonitoringServiceConnection::ListServices(
-        google::monitoring::v3::
-            ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ServiceMonitoringServiceConnection::ListServices(
+    google::monitoring::v3::
+        ListServicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::Service>>();
 }
@@ -79,9 +80,9 @@ ServiceMonitoringServiceConnection::GetServiceLevelObjective(
 }
 
 StreamRange<google::monitoring::v3::ServiceLevelObjective>
-    ServiceMonitoringServiceConnection::ListServiceLevelObjectives(
-        google::monitoring::v3::
-            ListServiceLevelObjectivesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ServiceMonitoringServiceConnection::ListServiceLevelObjectives(
+    google::monitoring::v3::
+        ListServiceLevelObjectivesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::monitoring::v3::ServiceLevelObjective>>();
 }
@@ -100,6 +101,7 @@ Status ServiceMonitoringServiceConnection::DeleteServiceLevelObjective(
 std::shared_ptr<ServiceMonitoringServiceConnection>
 MakeServiceMonitoringServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ServiceMonitoringServicePolicyOptionList>(
       options, __func__);
   options = monitoring_internal::ServiceMonitoringServiceDefaultOptions(
@@ -114,25 +116,5 @@ MakeServiceMonitoringServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::ServiceMonitoringServiceConnection>
-MakeServiceMonitoringServiceConnection(
-    std::shared_ptr<ServiceMonitoringServiceStub> stub, Options options) {
-  options = ServiceMonitoringServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      monitoring_internal::ServiceMonitoringServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
 }  // namespace cloud
 }  // namespace google

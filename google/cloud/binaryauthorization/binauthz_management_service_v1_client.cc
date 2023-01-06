@@ -17,7 +17,6 @@
 // source: google/cloud/binaryauthorization/v1/service.proto
 
 #include "google/cloud/binaryauthorization/binauthz_management_service_v1_client.h"
-#include "google/cloud/binaryauthorization/internal/binauthz_management_service_v1_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ BinauthzManagementServiceV1Client::BinauthzManagementServiceV1Client(
     std::shared_ptr<BinauthzManagementServiceV1Connection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), binaryauthorization_internal::
-                               BinauthzManagementServiceV1DefaultOptions(
-                                   connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 BinauthzManagementServiceV1Client::~BinauthzManagementServiceV1Client() =
     default;
 

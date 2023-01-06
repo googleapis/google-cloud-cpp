@@ -31,21 +31,38 @@ namespace cloud {
 namespace talent {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-talent-options
+ */
 struct CompletionRetryPolicyOption {
   using Type = std::shared_ptr<CompletionRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-talent-options
+ */
 struct CompletionBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-talent-options
+ */
 struct CompletionConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<CompletionConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to Completion.
+ *
+ * @ingroup google-cloud-talent-options
+ */
 using CompletionPolicyOptionList =
     OptionList<CompletionRetryPolicyOption, CompletionBackoffPolicyOption,
                CompletionConnectionIdempotencyPolicyOption>;

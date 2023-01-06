@@ -23,6 +23,7 @@
 #include "google/cloud/appengine/internal/firewall_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 FirewallConnection::~FirewallConnection() = default;
 
 StreamRange<google::appengine::v1::FirewallRule>
-    FirewallConnection::ListIngressRules(
-        google::appengine::v1::
-            ListIngressRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
+FirewallConnection::ListIngressRules(
+    google::appengine::v1::
+        ListIngressRulesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::appengine::v1::FirewallRule>>();
 }
@@ -73,6 +74,7 @@ Status FirewallConnection::DeleteIngressRule(
 
 std::shared_ptr<FirewallConnection> MakeFirewallConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  FirewallPolicyOptionList>(options, __func__);
   options = appengine_internal::FirewallDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -84,23 +86,5 @@ std::shared_ptr<FirewallConnection> MakeFirewallConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace appengine_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<appengine::FirewallConnection> MakeFirewallConnection(
-    std::shared_ptr<FirewallStub> stub, Options options) {
-  options = FirewallDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<appengine_internal::FirewallConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace appengine_internal
 }  // namespace cloud
 }  // namespace google

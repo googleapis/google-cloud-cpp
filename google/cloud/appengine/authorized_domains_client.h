@@ -67,16 +67,16 @@ class AuthorizedDomainsClient {
       Options opts = {});
   ~AuthorizedDomainsClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   AuthorizedDomainsClient(AuthorizedDomainsClient const&) = default;
   AuthorizedDomainsClient& operator=(AuthorizedDomainsClient const&) = default;
   AuthorizedDomainsClient(AuthorizedDomainsClient&&) = default;
   AuthorizedDomainsClient& operator=(AuthorizedDomainsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(AuthorizedDomainsClient const& a,
                          AuthorizedDomainsClient const& b) {
     return a.connection_ == b.connection_;
@@ -85,22 +85,22 @@ class AuthorizedDomainsClient {
                          AuthorizedDomainsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists all domains the user is authorized to administer.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::ListAuthorizedDomainsRequest,google/appengine/v1/appengine.proto#L631}
+  /// @googleapis_link{google::appengine::v1::ListAuthorizedDomainsRequest,google/appengine/v1/appengine.proto#L718}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::AuthorizedDomain,google/appengine/v1/domain.proto#L32}
+  /// @googleapis_link{google::appengine::v1::AuthorizedDomain,google/appengine/v1/domain.proto#L30}
   ///
   /// [google.appengine.v1.ListAuthorizedDomainsRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L631}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L718}
   /// [google.appengine.v1.AuthorizedDomain]:
-  /// @googleapis_reference_link{google/appengine/v1/domain.proto#L32}
+  /// @googleapis_reference_link{google/appengine/v1/domain.proto#L30}
   ///
   StreamRange<google::appengine::v1::AuthorizedDomain> ListAuthorizedDomains(
       google::appengine::v1::ListAuthorizedDomainsRequest request,

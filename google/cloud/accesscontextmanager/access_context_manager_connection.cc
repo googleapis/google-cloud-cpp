@@ -23,6 +23,7 @@
 #include "google/cloud/accesscontextmanager/internal/access_context_manager_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AccessContextManagerConnection::~AccessContextManagerConnection() = default;
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>
-    AccessContextManagerConnection::ListAccessPolicies(
-        google::identity::accesscontextmanager::v1::
-            ListAccessPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+AccessContextManagerConnection::ListAccessPolicies(
+    google::identity::accesscontextmanager::v1::
+        ListAccessPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::identity::accesscontextmanager::v1::AccessPolicy>>();
 }
@@ -77,9 +78,9 @@ AccessContextManagerConnection::DeleteAccessPolicy(
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>
-    AccessContextManagerConnection::ListAccessLevels(
-        google::identity::accesscontextmanager::v1::
-            ListAccessLevelsRequest) {  // NOLINT(performance-unnecessary-value-param)
+AccessContextManagerConnection::ListAccessLevels(
+    google::identity::accesscontextmanager::v1::
+        ListAccessLevelsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::identity::accesscontextmanager::v1::AccessLevel>>();
 }
@@ -130,9 +131,9 @@ AccessContextManagerConnection::ReplaceAccessLevels(
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::ServicePerimeter>
-    AccessContextManagerConnection::ListServicePerimeters(
-        google::identity::accesscontextmanager::v1::
-            ListServicePerimetersRequest) {  // NOLINT(performance-unnecessary-value-param)
+AccessContextManagerConnection::ListServicePerimeters(
+    google::identity::accesscontextmanager::v1::
+        ListServicePerimetersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::identity::accesscontextmanager::v1::ServicePerimeter>>();
 }
@@ -196,9 +197,9 @@ AccessContextManagerConnection::CommitServicePerimeters(
 }
 
 StreamRange<google::identity::accesscontextmanager::v1::GcpUserAccessBinding>
-    AccessContextManagerConnection::ListGcpUserAccessBindings(
-        google::identity::accesscontextmanager::v1::
-            ListGcpUserAccessBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
+AccessContextManagerConnection::ListGcpUserAccessBindings(
+    google::identity::accesscontextmanager::v1::
+        ListGcpUserAccessBindingsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::identity::accesscontextmanager::v1::GcpUserAccessBinding>>();
 }
@@ -241,9 +242,26 @@ AccessContextManagerConnection::DeleteGcpUserAccessBinding(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StatusOr<google::iam::v1::Policy> AccessContextManagerConnection::SetIamPolicy(
+    google::iam::v1::SetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::Policy> AccessContextManagerConnection::GetIamPolicy(
+    google::iam::v1::GetIamPolicyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+AccessContextManagerConnection::TestIamPermissions(
+    google::iam::v1::TestIamPermissionsRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<AccessContextManagerConnection>
 MakeAccessContextManagerConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AccessContextManagerPolicyOptionList>(
       options, __func__);
   options = accesscontextmanager_internal::AccessContextManagerDefaultOptions(
@@ -259,25 +277,5 @@ MakeAccessContextManagerConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace accesscontextmanager_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<accesscontextmanager::AccessContextManagerConnection>
-MakeAccessContextManagerConnection(
-    std::shared_ptr<AccessContextManagerStub> stub, Options options) {
-  options = AccessContextManagerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      accesscontextmanager_internal::AccessContextManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager_internal
 }  // namespace cloud
 }  // namespace google

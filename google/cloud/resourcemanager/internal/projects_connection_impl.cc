@@ -37,9 +37,8 @@ ProjectsConnectionImpl::ProjectsConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), resourcemanager_internal::ProjectsDefaultOptions(
-                                  ProjectsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ProjectsConnection::options())) {}
 
 StatusOr<google::cloud::resourcemanager::v3::Project>
 ProjectsConnectionImpl::GetProject(
@@ -57,7 +56,7 @@ StreamRange<google::cloud::resourcemanager::v3::Project>
 ProjectsConnectionImpl::ListProjects(
     google::cloud::resourcemanager::v3::ListProjectsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<resourcemanager::ProjectsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -89,7 +88,7 @@ StreamRange<google::cloud::resourcemanager::v3::Project>
 ProjectsConnectionImpl::SearchProjects(
     google::cloud::resourcemanager::v3::SearchProjectsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<resourcemanager::ProjectsRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -120,7 +119,7 @@ ProjectsConnectionImpl::SearchProjects(
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::CreateProject(
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Project>(
       background_->cq(), request,
@@ -149,7 +148,7 @@ ProjectsConnectionImpl::CreateProject(
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::UpdateProject(
     google::cloud::resourcemanager::v3::UpdateProjectRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Project>(
       background_->cq(), request,
@@ -178,7 +177,7 @@ ProjectsConnectionImpl::UpdateProject(
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::MoveProject(
     google::cloud::resourcemanager::v3::MoveProjectRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Project>(
       background_->cq(), request,
@@ -207,7 +206,7 @@ ProjectsConnectionImpl::MoveProject(
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::DeleteProject(
     google::cloud::resourcemanager::v3::DeleteProjectRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Project>(
       background_->cq(), request,
@@ -236,7 +235,7 @@ ProjectsConnectionImpl::DeleteProject(
 future<StatusOr<google::cloud::resourcemanager::v3::Project>>
 ProjectsConnectionImpl::UndeleteProject(
     google::cloud::resourcemanager::v3::UndeleteProjectRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::resourcemanager::v3::Project>(
       background_->cq(), request,

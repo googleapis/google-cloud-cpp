@@ -30,45 +30,34 @@ using ::google::cloud::Idempotency;
 IAMCredentialsConnectionIdempotencyPolicy::
     ~IAMCredentialsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultIAMCredentialsConnectionIdempotencyPolicy
-    : public IAMCredentialsConnectionIdempotencyPolicy {
- public:
-  ~DefaultIAMCredentialsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
+IAMCredentialsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<IAMCredentialsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultIAMCredentialsConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency IAMCredentialsConnectionIdempotencyPolicy::GenerateAccessToken(
+    google::iam::credentials::v1::GenerateAccessTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GenerateAccessToken(
-      google::iam::credentials::v1::GenerateAccessTokenRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMCredentialsConnectionIdempotencyPolicy::GenerateIdToken(
+    google::iam::credentials::v1::GenerateIdTokenRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GenerateIdToken(
-      google::iam::credentials::v1::GenerateIdTokenRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency IAMCredentialsConnectionIdempotencyPolicy::SignBlob(
+    google::iam::credentials::v1::SignBlobRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency SignBlob(
-      google::iam::credentials::v1::SignBlobRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency SignJwt(
-      google::iam::credentials::v1::SignJwtRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency IAMCredentialsConnectionIdempotencyPolicy::SignJwt(
+    google::iam::credentials::v1::SignJwtRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<IAMCredentialsConnectionIdempotencyPolicy>
 MakeDefaultIAMCredentialsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultIAMCredentialsConnectionIdempotencyPolicy>();
+  return absl::make_unique<IAMCredentialsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

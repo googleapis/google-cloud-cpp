@@ -47,6 +47,10 @@ class OsLoginServiceConnectionImpl : public oslogin::OsLoginServiceConnection {
 
   Options options() override { return options_; }
 
+  StatusOr<google::cloud::oslogin::common::SshPublicKey> CreateSshPublicKey(
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request)
+      override;
+
   Status DeletePosixAccount(
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request)
       override;

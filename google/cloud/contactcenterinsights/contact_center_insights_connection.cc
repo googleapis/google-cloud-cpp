@@ -23,6 +23,7 @@
 #include "google/cloud/contactcenterinsights/internal/contact_center_insights_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -55,9 +56,9 @@ ContactCenterInsightsConnection::GetConversation(
 }
 
 StreamRange<google::cloud::contactcenterinsights::v1::Conversation>
-    ContactCenterInsightsConnection::ListConversations(
-        google::cloud::contactcenterinsights::v1::
-            ListConversationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ContactCenterInsightsConnection::ListConversations(
+    google::cloud::contactcenterinsights::v1::
+        ListConversationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::Conversation>>();
 }
@@ -83,9 +84,9 @@ ContactCenterInsightsConnection::GetAnalysis(
 }
 
 StreamRange<google::cloud::contactcenterinsights::v1::Analysis>
-    ContactCenterInsightsConnection::ListAnalyses(
-        google::cloud::contactcenterinsights::v1::
-            ListAnalysesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ContactCenterInsightsConnection::ListAnalyses(
+    google::cloud::contactcenterinsights::v1::
+        ListAnalysesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::Analysis>>();
 }
@@ -93,6 +94,27 @@ StreamRange<google::cloud::contactcenterinsights::v1::Analysis>
 Status ContactCenterInsightsConnection::DeleteAnalysis(
     google::cloud::contactcenterinsights::v1::DeleteAnalysisRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::BulkAnalyzeConversationsResponse>>
+ContactCenterInsightsConnection::BulkAnalyzeConversations(
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::contactcenterinsights::v1::
+                   BulkAnalyzeConversationsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>
+ContactCenterInsightsConnection::IngestConversations(
+    google::cloud::contactcenterinsights::v1::
+        IngestConversationsRequest const&) {
+  return google::cloud::make_ready_future<StatusOr<
+      google::cloud::contactcenterinsights::v1::IngestConversationsResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 future<StatusOr<
@@ -177,6 +199,11 @@ ContactCenterInsightsConnection::UpdateIssue(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+Status ContactCenterInsightsConnection::DeleteIssue(
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StatusOr<
     google::cloud::contactcenterinsights::v1::CalculateIssueModelStatsResponse>
 ContactCenterInsightsConnection::CalculateIssueModelStats(
@@ -199,9 +226,9 @@ ContactCenterInsightsConnection::GetPhraseMatcher(
 }
 
 StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>
-    ContactCenterInsightsConnection::ListPhraseMatchers(
-        google::cloud::contactcenterinsights::v1::
-            ListPhraseMatchersRequest) {  // NOLINT(performance-unnecessary-value-param)
+ContactCenterInsightsConnection::ListPhraseMatchers(
+    google::cloud::contactcenterinsights::v1::
+        ListPhraseMatchersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::PhraseMatcher>>();
 }
@@ -250,9 +277,9 @@ ContactCenterInsightsConnection::GetView(
 }
 
 StreamRange<google::cloud::contactcenterinsights::v1::View>
-    ContactCenterInsightsConnection::ListViews(
-        google::cloud::contactcenterinsights::v1::
-            ListViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ContactCenterInsightsConnection::ListViews(
+    google::cloud::contactcenterinsights::v1::
+        ListViewsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::contactcenterinsights::v1::View>>();
 }
@@ -271,6 +298,7 @@ Status ContactCenterInsightsConnection::DeleteView(
 std::shared_ptr<ContactCenterInsightsConnection>
 MakeContactCenterInsightsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ContactCenterInsightsPolicyOptionList>(
       options, __func__);
   options = contactcenterinsights_internal::ContactCenterInsightsDefaultOptions(
@@ -286,25 +314,5 @@ MakeContactCenterInsightsConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace contactcenterinsights
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace contactcenterinsights_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<contactcenterinsights::ContactCenterInsightsConnection>
-MakeContactCenterInsightsConnection(
-    std::shared_ptr<ContactCenterInsightsStub> stub, Options options) {
-  options = ContactCenterInsightsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      contactcenterinsights_internal::ContactCenterInsightsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace contactcenterinsights_internal
 }  // namespace cloud
 }  // namespace google

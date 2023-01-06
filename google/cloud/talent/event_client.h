@@ -64,16 +64,16 @@ class EventServiceClient {
       std::shared_ptr<EventServiceConnection> connection, Options opts = {});
   ~EventServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   EventServiceClient(EventServiceClient const&) = default;
   EventServiceClient& operator=(EventServiceClient const&) = default;
   EventServiceClient(EventServiceClient&&) = default;
   EventServiceClient& operator=(EventServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(EventServiceClient const& a,
                          EventServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class EventServiceClient {
                          EventServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Report events issued when end user interacts with customer's application
@@ -103,12 +103,12 @@ class EventServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::talent::v4::ClientEvent,google/cloud/talent/v4/event.proto#L34}
+  /// @googleapis_link{google::cloud::talent::v4::ClientEvent,google/cloud/talent/v4/event.proto#L33}
   ///
   /// [google.cloud.talent.v4.CreateClientEventRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/event_service.proto#L55}
   /// [google.cloud.talent.v4.ClientEvent]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/event.proto#L34}
+  /// @googleapis_reference_link{google/cloud/talent/v4/event.proto#L33}
   ///
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       std::string const& parent,
@@ -129,12 +129,12 @@ class EventServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::talent::v4::ClientEvent,google/cloud/talent/v4/event.proto#L34}
+  /// @googleapis_link{google::cloud::talent::v4::ClientEvent,google/cloud/talent/v4/event.proto#L33}
   ///
   /// [google.cloud.talent.v4.CreateClientEventRequest]:
   /// @googleapis_reference_link{google/cloud/talent/v4/event_service.proto#L55}
   /// [google.cloud.talent.v4.ClientEvent]:
-  /// @googleapis_reference_link{google/cloud/talent/v4/event.proto#L34}
+  /// @googleapis_reference_link{google/cloud/talent/v4/event.proto#L33}
   ///
   StatusOr<google::cloud::talent::v4::ClientEvent> CreateClientEvent(
       google::cloud::talent::v4::CreateClientEventRequest const& request,

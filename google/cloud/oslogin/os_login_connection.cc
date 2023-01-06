@@ -23,6 +23,7 @@
 #include "google/cloud/oslogin/os_login_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -32,6 +33,12 @@ namespace oslogin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 OsLoginServiceConnection::~OsLoginServiceConnection() = default;
+
+StatusOr<google::cloud::oslogin::common::SshPublicKey>
+OsLoginServiceConnection::CreateSshPublicKey(
+    google::cloud::oslogin::v1::CreateSshPublicKeyRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
 
 Status OsLoginServiceConnection::DeletePosixAccount(
     google::cloud::oslogin::v1::DeletePosixAccountRequest const&) {
@@ -70,6 +77,7 @@ OsLoginServiceConnection::UpdateSshPublicKey(
 std::shared_ptr<OsLoginServiceConnection> MakeOsLoginServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  OsLoginServicePolicyOptionList>(options,
                                                                  __func__);
   options = oslogin_internal::OsLoginServiceDefaultOptions(std::move(options));
@@ -82,23 +90,5 @@ std::shared_ptr<OsLoginServiceConnection> MakeOsLoginServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace oslogin_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<oslogin::OsLoginServiceConnection> MakeOsLoginServiceConnection(
-    std::shared_ptr<OsLoginServiceStub> stub, Options options) {
-  options = OsLoginServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<oslogin_internal::OsLoginServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace oslogin_internal
 }  // namespace cloud
 }  // namespace google

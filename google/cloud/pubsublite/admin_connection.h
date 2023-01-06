@@ -49,6 +49,18 @@ using AdminServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         pubsublite_internal::AdminServiceRetryTraits>;
 
+/**
+ * The `AdminServiceConnection` object for `AdminServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AdminServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `AdminServiceClient`.
+ *
+ * To create a concrete instance, see `MakeAdminServiceConnection()`.
+ *
+ * For mocking, see `pubsublite_mocks::MockAdminServiceConnection`.
+ */
 class AdminServiceConnection {
  public:
   virtual ~AdminServiceConnection() = 0;
@@ -120,26 +132,38 @@ class AdminServiceConnection {
 
   virtual StreamRange<std::string> ListReservationTopics(
       google::cloud::pubsublite::v1::ListReservationTopicsRequest request);
+
+  virtual future<StatusOr<google::cloud::pubsublite::v1::TopicPartitions>>
+  AsyncGetTopicPartitions(
+      google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `AdminServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of AdminServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `AdminServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::pubsublite::AdminServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `AdminServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<AdminServiceConnection> MakeAdminServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsublite
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace pubsublite_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<pubsublite::AdminServiceConnection> MakeAdminServiceConnection(
-    std::shared_ptr<AdminServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsublite_internal
 }  // namespace cloud
 }  // namespace google
 

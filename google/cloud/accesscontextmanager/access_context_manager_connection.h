@@ -49,6 +49,19 @@ using AccessContextManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         accesscontextmanager_internal::AccessContextManagerRetryTraits>;
 
+/**
+ * The `AccessContextManagerConnection` object for `AccessContextManagerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AccessContextManagerClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AccessContextManagerClient`.
+ *
+ * To create a concrete instance, see `MakeAccessContextManagerConnection()`.
+ *
+ * For mocking, see
+ * `accesscontextmanager_mocks::MockAccessContextManagerConnection`.
+ */
 class AccessContextManagerConnection {
  public:
   virtual ~AccessContextManagerConnection() = 0;
@@ -172,27 +185,45 @@ class AccessContextManagerConnection {
   DeleteGcpUserAccessBinding(
       google::identity::accesscontextmanager::v1::
           DeleteGcpUserAccessBindingRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> SetIamPolicy(
+      google::iam::v1::SetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
+      google::iam::v1::GetIamPolicyRequest const& request);
+
+  virtual StatusOr<google::iam::v1::TestIamPermissionsResponse>
+  TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `AccessContextManagerConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * AccessContextManagerClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `AccessContextManagerConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::accesscontextmanager::AccessContextManagerPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `AccessContextManagerConnection`
+ * created by this function.
+ */
 std::shared_ptr<AccessContextManagerConnection>
 MakeAccessContextManagerConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace accesscontextmanager
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace accesscontextmanager_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<accesscontextmanager::AccessContextManagerConnection>
-MakeAccessContextManagerConnection(
-    std::shared_ptr<AccessContextManagerStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace accesscontextmanager_internal
 }  // namespace cloud
 }  // namespace google
 

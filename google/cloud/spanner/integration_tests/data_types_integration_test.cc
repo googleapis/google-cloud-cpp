@@ -12,16 +12,17 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/spanner/admin/database_admin_client.h"
 #include "google/cloud/spanner/client.h"
 #include "google/cloud/spanner/database.h"
 #include "google/cloud/spanner/mutations.h"
 #include "google/cloud/spanner/testing/database_integration_test.h"
 #include "google/cloud/spanner/timestamp.h"
-#include "google/cloud/internal/getenv.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/memory/memory.h"
 #include "absl/time/time.h"
 #include <gmock/gmock.h>
+#include <vector>
 
 namespace google {
 namespace cloud {
@@ -31,6 +32,9 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
+using ::testing::AllOf;
+using ::testing::AnyOf;
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::UnorderedElementsAreArray;
 
@@ -48,7 +52,7 @@ StatusOr<T> WriteReadData(Client& client, T const& data,
   int id = 0;
   for (auto&& x : data) {
     mutations.push_back(MakeInsertMutation("DataTypes", {"Id", column},
-                                           "Id-" + std::to_string(id++), x));
+                                           "Id-" + std::to_string(++id), x));
   }
   auto commit_result = client.Commit(std::move(mutations));
   if (!commit_result) return commit_result.status();
@@ -63,35 +67,43 @@ StatusOr<T> WriteReadData(Client& client, T const& data,
   return actual;
 }
 
-class DataTypeIntegrationTest
-    : public spanner_testing::DatabaseIntegrationTest {
- public:
+template <typename T>
+class DataTypeIntegrationTestTmpl : public T {
+ protected:
   static void SetUpTestSuite() {
-    spanner_testing::DatabaseIntegrationTest::SetUpTestSuite();
-    client_ = absl::make_unique<Client>(MakeConnection(GetDatabase()));
+    T::SetUpTestSuite();
+    client_ = absl::make_unique<Client>(MakeConnection(T::GetDatabase()));
   }
 
   void SetUp() override {
     auto commit_result = client_->Commit(Mutations{
         MakeDeleteMutation("DataTypes", KeySet::All()),
     });
-    EXPECT_STATUS_OK(commit_result);
+    if (T::UsingEmulator()) {
+      // PgDataTypeIntegrationTest::SetUpTestSuite() will fail until
+      // the emulator supports PostgreSQL syntax to quote identifiers.
+      ASSERT_THAT(commit_result,
+                  AnyOf(IsOk(), StatusIs(StatusCode::kNotFound)));
+    } else {
+      ASSERT_THAT(commit_result, IsOk());
+    }
   }
 
   static void TearDownTestSuite() {
     client_ = nullptr;
-    spanner_testing::DatabaseIntegrationTest::TearDownTestSuite();
+    T::TearDownTestSuite();
   }
 
-  static bool UsingEmulator() {
-    return google::cloud::internal::GetEnv("SPANNER_EMULATOR_HOST").has_value();
-  }
-
- protected:
   static std::unique_ptr<Client> client_;
 };
 
-std::unique_ptr<Client> DataTypeIntegrationTest::client_;
+template <typename T>
+std::unique_ptr<Client> DataTypeIntegrationTestTmpl<T>::client_;
+
+using DataTypeIntegrationTest =
+    DataTypeIntegrationTestTmpl<spanner_testing::DatabaseIntegrationTest>;
+using PgDataTypeIntegrationTest =
+    DataTypeIntegrationTestTmpl<spanner_testing::PgDatabaseIntegrationTest>;
 
 TEST_F(DataTypeIntegrationTest, WriteReadBool) {
   std::vector<bool> const data = {true, false};
@@ -220,9 +232,6 @@ TEST_F(DataTypeIntegrationTest, WriteReadDate) {
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadJson) {
-  // TODO(#6873): Remove this check when the emulator supports JSON.
-  if (UsingEmulator()) GTEST_SKIP();
-
   std::vector<Json> const data = {
       Json(),                     //
       Json(R"("Hello world!")"),  //
@@ -234,10 +243,21 @@ TEST_F(DataTypeIntegrationTest, WriteReadJson) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
-TEST_F(DataTypeIntegrationTest, WriteReadNumeric) {
-  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (UsingEmulator()) GTEST_SKIP();
+TEST_F(PgDataTypeIntegrationTest, WriteReadJson) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
 
+  std::vector<JsonB> const data = {
+      JsonB(),                     //
+      JsonB(R"("Hello world!")"),  //
+      JsonB("42"),                 //
+      JsonB("true"),               //
+  };
+  auto result = WriteReadData(*client_, data, "JsonValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadNumeric) {
   auto min = MakeNumeric("-99999999999999999999999999999.999999999");
   ASSERT_STATUS_OK(min);
   auto max = MakeNumeric("99999999999999999999999999999.999999999");
@@ -251,6 +271,29 @@ TEST_F(DataTypeIntegrationTest, WriteReadNumeric) {
       MakeNumeric(1).value(),              //
       MakeNumeric(999999999e-3).value(),   //
       *max,                                //
+  };
+  auto result = WriteReadData(*client_, data, "NumericValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
+TEST_F(PgDataTypeIntegrationTest, WriteReadNumeric) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
+
+  auto limit = std::string(131072, '9') + "." + std::string(16383, '9');
+  auto min = MakePgNumeric("-" + limit);
+  ASSERT_STATUS_OK(min);
+  auto max = MakePgNumeric(limit);
+  ASSERT_STATUS_OK(max);
+
+  std::vector<PgNumeric> const data = {
+      *min,                                  //
+      MakePgNumeric(-999999999e-3).value(),  //
+      MakePgNumeric(-1).value(),             //
+      MakePgNumeric(0).value(),              //
+      MakePgNumeric(1).value(),              //
+      MakePgNumeric(999999999e-3).value(),   //
+      *max,                                  //
   };
   auto result = WriteReadData(*client_, data, "NumericValue");
   ASSERT_STATUS_OK(result);
@@ -345,9 +388,6 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayDate) {
 }
 
 TEST_F(DataTypeIntegrationTest, WriteReadArrayJson) {
-  // TODO(#6873): Remove this check when the emulator supports JSON.
-  if (UsingEmulator()) GTEST_SKIP();
-
   std::vector<std::vector<Json>> const data = {
       std::vector<Json>{},
       std::vector<Json>{Json()},
@@ -363,10 +403,25 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayJson) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
-TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
-  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (UsingEmulator()) GTEST_SKIP();
+TEST_F(PgDataTypeIntegrationTest, WriteReadArrayJson) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
 
+  std::vector<std::vector<JsonB>> const data = {
+      std::vector<JsonB>{},
+      std::vector<JsonB>{JsonB()},
+      std::vector<JsonB>{
+          JsonB(),
+          JsonB(R"("Hello world!")"),
+          JsonB("42"),
+          JsonB("true"),
+      },
+  };
+  auto result = WriteReadData(*client_, data, "ArrayJsonValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
+TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
   std::vector<std::vector<Numeric>> const data = {
       std::vector<Numeric>{},
       std::vector<Numeric>{Numeric()},
@@ -381,10 +436,124 @@ TEST_F(DataTypeIntegrationTest, WriteReadArrayNumeric) {
   EXPECT_THAT(*result, UnorderedElementsAreArray(data));
 }
 
-TEST_F(DataTypeIntegrationTest, InsertAndQueryWithNumericKey) {
-  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (UsingEmulator()) GTEST_SKIP();
+TEST_F(PgDataTypeIntegrationTest, WriteReadArrayNumeric) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
 
+  std::vector<std::vector<PgNumeric>> const data = {
+      std::vector<PgNumeric>{},
+      std::vector<PgNumeric>{PgNumeric()},
+      std::vector<PgNumeric>{
+          MakePgNumeric(-1e+9).value(),
+          MakePgNumeric(1e-9).value(),
+          MakePgNumeric(1e+9).value(),
+      },
+  };
+  auto result = WriteReadData(*client_, data, "ArrayNumericValue");
+  ASSERT_STATUS_OK(result);
+  EXPECT_THAT(*result, UnorderedElementsAreArray(data));
+}
+
+TEST_F(DataTypeIntegrationTest, JsonIndexAndPrimaryKey) {
+  spanner_admin::DatabaseAdminClient admin_client(
+      spanner_admin::MakeDatabaseAdminConnection());
+
+  // Verify that a JSON column cannot be used as an index.
+  std::vector<std::string> statements;
+  statements.emplace_back(R"""(
+        CREATE INDEX DataTypesByJsonValue
+          ON DataTypes(JsonValue)
+      )""");
+  auto metadata =
+      admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
+          .get();
+  EXPECT_THAT(metadata,
+              StatusIs(StatusCode::kFailedPrecondition,
+                       AnyOf(AllOf(HasSubstr("Index DataTypesByJsonValue"),
+                                   HasSubstr("unsupported type JSON")),
+                             AllOf(HasSubstr("index DataTypesByJsonValue"),
+                                   HasSubstr("Cannot reference JSON")))));
+
+  // Verify that a JSON column cannot be used as a primary key.
+  statements.clear();
+  statements.emplace_back(R"""(
+        CREATE TABLE JsonKey (
+          Key JSON NOT NULL
+        ) PRIMARY KEY (Key)
+      )""");
+  metadata =
+      admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
+          .get();
+  EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
+                                 AllOf(HasSubstr("has type JSON"),
+                                       HasSubstr("part of the primary key"))));
+}
+
+TEST_F(PgDataTypeIntegrationTest, JsonIndexAndPrimaryKey) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
+
+  spanner_admin::DatabaseAdminClient admin_client(
+      spanner_admin::MakeDatabaseAdminConnection());
+
+  // Verify that a JSONB column cannot be used as an index.
+  std::vector<std::string> statements;
+  statements.emplace_back(R"""(
+        CREATE INDEX DataTypesByJsonValue
+          ON DataTypes(JsonValue)
+      )""");
+  auto metadata =
+      admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
+          .get();
+  EXPECT_THAT(metadata,
+              StatusIs(StatusCode::kFailedPrecondition,
+                       AllOf(HasSubstr("Index datatypesbyjsonvalue"),
+                             HasSubstr("unsupported type PG.JSONB"))));
+
+  // Verify that a JSONB column cannot be used as a primary key.
+  statements.clear();
+  statements.emplace_back(R"""(
+        CREATE TABLE JsonKey (
+          Key JSONB NOT NULL,
+          PRIMARY KEY (Key)
+        )
+      )""");
+  metadata =
+      admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
+          .get();
+  EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
+                                 AllOf(HasSubstr("has type PG.JSONB"),
+                                       HasSubstr("part of the primary key"))));
+}
+
+TEST_F(PgDataTypeIntegrationTest, InsertAndQueryWithJson) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
+
+  auto& client = *client_;
+  auto commit_result =
+      client.Commit([&client](Transaction const& txn) -> StatusOr<Mutations> {
+        auto dml_result = client.ExecuteDml(
+            txn,
+            SqlStatement("INSERT INTO DataTypes (Id, JsonValue)"
+                         "  VALUES($1, $2)",
+                         {{"p1", Value("Id-1")}, {"p2", Value(JsonB("42"))}}));
+        if (!dml_result) return dml_result.status();
+        return Mutations{};
+      });
+  ASSERT_STATUS_OK(commit_result);
+
+  auto rows =
+      client_->ExecuteQuery(SqlStatement("SELECT Id, JsonValue FROM DataTypes"
+                                         "  WHERE Id = $1",
+                                         {{"p1", Value("Id-1")}}));
+  using RowType = std::tuple<std::string, absl::optional<JsonB>>;
+  auto row = GetSingularRow(StreamOf<RowType>(rows));
+  ASSERT_STATUS_OK(row);
+
+  auto const& v = std::get<1>(*row);
+  ASSERT_TRUE(v.has_value());
+  EXPECT_EQ(*v, JsonB("42"));
+}
+
+TEST_F(DataTypeIntegrationTest, InsertAndQueryWithNumericKey) {
   auto& client = *client_;
   auto const key = MakeNumeric(42).value();
 
@@ -399,6 +568,170 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithNumericKey) {
   auto row = GetSingularRow(StreamOf<RowType>(rows));
   ASSERT_STATUS_OK(row);
   EXPECT_EQ(std::get<0>(*std::move(row)), key);
+}
+
+TEST_F(PgDataTypeIntegrationTest, NumericPrimaryKey) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support PostgreSQL";
+
+  spanner_admin::DatabaseAdminClient admin_client(
+      spanner_admin::MakeDatabaseAdminConnection());
+
+  // Verify that a NUMERIC column cannot be used as a primary key.
+  std::vector<std::string> statements;
+  statements.emplace_back(R"sql(
+        CREATE TABLE NumericKey (
+          Key NUMERIC NOT NULL,
+          PRIMARY KEY(Key)
+        )
+      )sql");
+  auto metadata =
+      admin_client.UpdateDatabaseDdl(GetDatabase().FullName(), statements)
+          .get();
+  EXPECT_THAT(metadata, StatusIs(StatusCode::kInvalidArgument,
+                                 AllOf(HasSubstr("has type PG.NUMERIC"),
+                                       HasSubstr("part of the primary key"))));
+}
+
+TEST_F(DataTypeIntegrationTest, DmlReturning) {
+  if (UsingEmulator()) GTEST_SKIP() << "emulator does not support THEN RETURN";
+
+  auto& client = *client_;
+  using RowType = std::tuple<std::string, std::int64_t>;
+
+  std::vector<RowType> insert_actual;
+  auto insert_result = client.Commit(
+      [&client, &insert_actual](Transaction const& txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(R"""(
+            INSERT INTO DataTypes (Id, Int64Value)
+              VALUES ('Id-Ret-1', 1),
+                     ('Id-Ret-2', 2),
+                     ('Id-Ret-3', 3),
+                     ('Id-Ret-4', 4)
+              THEN RETURN Id, Int64Value
+        )""");
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        EXPECT_EQ(rows.RowsModified(), 4);
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (row) insert_actual.push_back(*std::move(row));
+        }
+        return Mutations{};
+      });
+  ASSERT_THAT(insert_result, IsOk());
+  EXPECT_THAT(insert_actual,
+              ElementsAre(RowType{"Id-Ret-1", 1}, RowType{"Id-Ret-2", 2},
+                          RowType{"Id-Ret-3", 3}, RowType{"Id-Ret-4", 4}));
+
+  std::vector<RowType> update_actual;
+  auto update_result = client.Commit(
+      [&client, &update_actual](Transaction const& txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(R"""(
+            UPDATE DataTypes SET Int64Value = 100
+              WHERE Id LIKE 'Id-Ret-%%'
+              THEN RETURN Id, Int64Value
+        )""");
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        EXPECT_EQ(rows.RowsModified(), 4);
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (row) update_actual.push_back(*std::move(row));
+        }
+        return Mutations{};
+      });
+  ASSERT_THAT(update_result, IsOk());
+  EXPECT_THAT(update_actual,
+              ElementsAre(RowType{"Id-Ret-1", 100}, RowType{"Id-Ret-2", 100},
+                          RowType{"Id-Ret-3", 100}, RowType{"Id-Ret-4", 100}));
+
+  std::vector<RowType> delete_actual;
+  auto delete_result = client.Commit(
+      [&client, &delete_actual](Transaction const& txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(R"""(
+            DELETE FROM DataTypes
+              WHERE Id LIKE 'Id-Ret-%%'
+              THEN RETURN Id, Int64Value
+        )""");
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        EXPECT_EQ(rows.RowsModified(), 4);
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (row) delete_actual.push_back(*std::move(row));
+        }
+        return Mutations{};
+      });
+  ASSERT_THAT(delete_result, IsOk());
+  EXPECT_THAT(delete_actual,
+              ElementsAre(RowType{"Id-Ret-1", 100}, RowType{"Id-Ret-2", 100},
+                          RowType{"Id-Ret-3", 100}, RowType{"Id-Ret-4", 100}));
+}
+
+TEST_F(PgDataTypeIntegrationTest, DmlReturning) {
+  if (UsingEmulator()) {
+    GTEST_SKIP() << "emulator does not support PostgreSQL or RETURNING";
+  }
+
+  auto& client = *client_;
+  using RowType = std::tuple<std::string, std::int64_t>;
+
+  std::vector<RowType> insert_actual;
+  auto insert_result = client.Commit(
+      [&client, &insert_actual](Transaction const& txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(R"""(
+            INSERT INTO DataTypes (Id, Int64Value)
+              VALUES ('Id-Ret-1', 1),
+                     ('Id-Ret-2', 2),
+                     ('Id-Ret-3', 3),
+                     ('Id-Ret-4', 4)
+              RETURNING Id, Int64Value
+        )""");
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        EXPECT_EQ(rows.RowsModified(), 4);
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (row) insert_actual.push_back(*std::move(row));
+        }
+        return Mutations{};
+      });
+  ASSERT_THAT(insert_result, IsOk());
+  EXPECT_THAT(insert_actual,
+              ElementsAre(RowType{"Id-Ret-1", 1}, RowType{"Id-Ret-2", 2},
+                          RowType{"Id-Ret-3", 3}, RowType{"Id-Ret-4", 4}));
+
+  std::vector<RowType> update_actual;
+  auto update_result = client.Commit(
+      [&client, &update_actual](Transaction const& txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(R"""(
+            UPDATE DataTypes SET Int64Value = 100
+              WHERE Id LIKE 'Id-Ret-%%'
+              RETURNING Id, Int64Value
+        )""");
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        EXPECT_EQ(rows.RowsModified(), 4);
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (row) update_actual.push_back(*std::move(row));
+        }
+        return Mutations{};
+      });
+  ASSERT_THAT(update_result, IsOk());
+  EXPECT_THAT(update_actual,
+              ElementsAre(RowType{"Id-Ret-1", 100}, RowType{"Id-Ret-2", 100},
+                          RowType{"Id-Ret-3", 100}, RowType{"Id-Ret-4", 100}));
+
+  std::vector<RowType> delete_actual;
+  auto delete_result = client.Commit(
+      [&client, &delete_actual](Transaction const& txn) -> StatusOr<Mutations> {
+        auto sql = SqlStatement(R"""(
+            DELETE FROM DataTypes
+              WHERE Id LIKE 'Id-Ret-%%'
+              RETURNING Id, Int64Value
+        )""");
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        EXPECT_EQ(rows.RowsModified(), 4);
+        for (auto& row : StreamOf<RowType>(rows)) {
+          if (row) delete_actual.push_back(*std::move(row));
+        }
+        return Mutations{};
+      });
+  ASSERT_THAT(delete_result, IsOk());
+  EXPECT_THAT(delete_actual,
+              ElementsAre(RowType{"Id-Ret-1", 100}, RowType{"Id-Ret-2", 100},
+                          RowType{"Id-Ret-3", 100}, RowType{"Id-Ret-4", 100}));
 }
 
 // This test differs a lot from the other tests since Spanner STRUCT types may
@@ -425,8 +758,8 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
             txn,
             SqlStatement(
                 "INSERT INTO DataTypes (Id, StringValue, ArrayInt64Value)"
-                "VALUES(@id, @struct.StringValue, @struct.ArrayInt64Value)",
-                {{"id", Value("id-1")}, {"struct", Value(data)}}));
+                "  VALUES(@id, @struct.StringValue, @struct.ArrayInt64Value)",
+                {{"id", Value("Id-1")}, {"struct", Value(data)}}));
         if (!dml_result) return dml_result.status();
         return Mutations{};
       });
@@ -442,39 +775,6 @@ TEST_F(DataTypeIntegrationTest, InsertAndQueryWithStruct) {
   auto const& v = std::get<0>(*row);
   EXPECT_EQ(1, v.size());
   EXPECT_EQ(data, v[0]);
-}
-
-// Verify maximum JSON nesting.
-TEST_F(DataTypeIntegrationTest, DISABLED_JsonMaxNesting) {
-  // TODO(#6873): Remove this check when the emulator supports JSON.
-  if (UsingEmulator()) GTEST_SKIP();
-
-  // The default value of the backend max-nesting-level flag.
-  int const k_spanner_json_max_nesting_level = 100;
-
-  // Nested arrays that exceed `k_spanner_json_max_nesting_level` by one.
-  std::string bad_json;
-  for (int i = 0; i != k_spanner_json_max_nesting_level + 1; ++i)
-    bad_json.append(1, '[');
-  bad_json.append("null");
-  for (int i = 0; i != k_spanner_json_max_nesting_level + 1; ++i)
-    bad_json.append(1, ']');
-
-  // Nested arrays that match `k_spanner_json_max_nesting_level`.
-  std::string good_json = bad_json.substr(1, bad_json.size() - 2);
-
-  std::vector<Json> const good_data = {Json(good_json)};
-  auto result = WriteReadData(*client_, good_data, "JsonValue");
-  ASSERT_THAT(result, IsOk());
-  EXPECT_THAT(*result, UnorderedElementsAreArray(good_data));
-
-  std::vector<Json> const bad_data = {Json(bad_json)};
-  result = WriteReadData(*client_, bad_data, "JsonValue");
-  // NOTE: The backend is currently dropping a more specific "Max nesting
-  // of 100 had been exceeded [INVALID_ARGUMENT]" error, so expect this
-  // expectation to change when that problem is fixed.
-  EXPECT_THAT(result, StatusIs(StatusCode::kFailedPrecondition,
-                               HasSubstr("Expected JSON")));
 }
 
 }  // namespace

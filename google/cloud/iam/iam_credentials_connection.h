@@ -45,6 +45,18 @@ using IAMCredentialsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         iam_internal::IAMCredentialsRetryTraits>;
 
+/**
+ * The `IAMCredentialsConnection` object for `IAMCredentialsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `IAMCredentialsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `IAMCredentialsClient`.
+ *
+ * To create a concrete instance, see `MakeIAMCredentialsConnection()`.
+ *
+ * For mocking, see `iam_mocks::MockIAMCredentialsConnection`.
+ */
 class IAMCredentialsConnection {
  public:
   virtual ~IAMCredentialsConnection() = 0;
@@ -66,26 +78,33 @@ class IAMCredentialsConnection {
       google::iam::credentials::v1::SignJwtRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `IAMCredentialsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of IAMCredentialsClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `IAMCredentialsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::iam::IAMCredentialsPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `IAMCredentialsConnection` created by
+ * this function.
+ */
 std::shared_ptr<IAMCredentialsConnection> MakeIAMCredentialsConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace iam_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<iam::IAMCredentialsConnection> MakeIAMCredentialsConnection(
-    std::shared_ptr<IAMCredentialsStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
-}  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google
 

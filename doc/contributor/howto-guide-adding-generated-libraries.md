@@ -1,12 +1,11 @@
 # How-to Guide: Adding generated libraries
 
 This document describes the steps required to add a new library to
-`google-cloud-cpp`. The document is intended for contributors to the
-`google-cloud-cpp` libraries, it assumes you are familiar with the build systems
-used in these libraries, that you are familiar with existing libraries, and with
-which libraries are based on gRPC.
+`google-cloud-cpp`. It is intended for contributors, and assumes you are
+familiar with the existing libraries, the build systems used in those
+libraries, and which libraries are based on gRPC.
 
-> :warning: for libraries that include multiple services, the scaffold README
+> :warning: For libraries that include multiple services, the scaffold README
 > files (and any other documentation) will use the **last** service description
 > as the description of the library. Adjust the ordering and/or fix the
 > documentation after the fact.
@@ -36,10 +35,6 @@ bazel --batch query --noshow_progress --noshow_loading_progress \
 If this fails, send a CL to add the rule. Wait until that is submitted and
 exported before proceeding any further.
 
-## Edit the top-level CHANGELOG file
-
-Announce the new library in the CHANGELOG for the next release.
-
 ## Edit the scripts and configuration
 
 Update the `external/googleapis/update_libraries.sh` script.
@@ -65,14 +60,13 @@ index cdaa0bc9f..b0381d72d 100755
      printf ",%s" \
        "@com_google_googleapis//google/spanner/v1:spanner_cc_grpc" \
 ```
+
 </details>
 
 ## Update the Generator Configuration
 
 Determine the retryable status codes by looking in the service config JSON. For
 example, [here][retryable-status-codes].
-
-[retryable-status-codes]: https://github.com/googleapis/googleapis/blob/0fea253787a4f2769b97b0ed3a8f5b28ef17ffa7/google/cloud/secretmanager/v1/secretmanager_grpc_service_config.json#L77-L80
 
 Manually edit `generator/generator_config.textproto` and add the new service.
 
@@ -91,12 +85,13 @@ index ab033dde9..3753287d8 100644
 +# Secret Manager
 +service {
 +  service_proto_path: "google/cloud/secretmanager/v1/service.proto"
-+  product_path: "google/cloud/secretmanager"
++  product_path: "google/cloud/secretmanager/v1"
 +  initial_copyright_year: "2021"
-+  retryable_status_codes: ["kDeadlineExceeded", "kUnavailable"]
++  retryable_status_codes: ["kUnavailable"]
 +}
 +
 ```
+
 </details>
 
 ## Commit these changes
@@ -104,7 +99,7 @@ index ab033dde9..3753287d8 100644
 Create your first commit with purely hand-crafted changes
 
 ```shell
-git checkout -b feat-${library}-generate-library # Don't forget
+git checkout -b feat-${library}-generate-library
 git commit -m"feat(${library}): generate library" external/ generator/
 ```
 
@@ -126,8 +121,12 @@ bazel run \
   --googleapis_proto_path="${bazel_output_base}"/external/com_google_googleapis \
   --output_path="${PWD}" \
   --config_file="${PWD}/generator/generator_config.textproto" \
-  --scaffold="google/cloud/${library}"
+  --scaffold_templates_path="${PWD}/generator/templates/" \
+  --scaffold="google/cloud/${library}/"
 ```
+
+To generate a library that is initially experimental, add an
+`--experimental_scaffold` flag.
 
 ## Fix formatting of existing libraries and the generated code
 
@@ -160,13 +159,73 @@ add one dependency from `@com_github_googleapis//${subdir}`, which might not be
 correct. You may need to modify that dependency and/or add additional
 dependencies for more complex libraries.
 
+## Potentially update the service directories
+
+A library may contain services in several subdirectories. The scaffold only
+knows about one such subdirectory. You may need to manually update the
+`service_dirs` lists to include all subdirectories in the following files:
+
+- `google/cloud/${library}/BUILD.bazel`
+- `google/cloud/${library}/CMakeLists.txt`
+
+[#10237] offers one way to automate this step.
+
+## Update the root files
+
+Manually edit the top level `BUILD.bazel` to include the new target.
+
+<details>
+<summary>Expand for an example</summary>
+
+If you are generating a GA library, add it to `GA_LIBRARIES`.
+
+```diff
+diff --git a/BUILD.bazel b/BUILD.bazel
+index 2c08e2a73..3a61351d2 100644
+--- a/BUILD.bazel
++++ b/BUILD.bazel
+@@ -52,6 +52,7 @@ GA_LIBRARIES = [
+     "automl",
+     "billing",
+     "binaryauthorization",
++    "bms",
+     "channel",
+     "cloudbuild",
+     "composer",
+```
+
+Otherwise, if you are generating an experimental library, add it to
+`EXPERIMENTAL_LIBRARIES` and take note of when the library was generated.
+
+```diff
+diff --git a/BUILD.bazel b/BUILD.bazel
+index e43d85b64..1c35cf61d 100644
+--- a/BUILD.bazel
++++ b/BUILD.bazel
+@@ -21,6 +21,8 @@ exports_files([
+ ])
+
+ EXPERIMENTAL_LIBRARIES = [
++    # Introduced in 2022-05
++    "bms",
+     # Introduced in 2022-04
+     "dataplex",
+     "dialogflow_cx",
+```
+
+</details>
+
 ## Update the quickstart
 
 The generated quickstart will need some editing. Use a simple operation, maybe
 an admin operation listing top-level resources, to demonstrate how to use the
-API.
+API. Test your changes with:
 
-Also edit the tests so this new quickstart receives the right command-line
+```sh
+bazel run -- //google/cloud/${library}/quickstart:quickstart $params
+```
+
+Edit the tests so this new quickstart receives the right command-line
 arguments in the CI builds.
 
 - `google/cloud/${library}/CMakeLists.txt`
@@ -179,16 +238,14 @@ were written by a robot:
 - `google/cloud/${library}/README.md`
 - `google/cloud/${library}/quickstart/README.md`
 - `google/cloud/${library}/doc/main.dox`
+- `google/cloud/${library}/doc/options.dox`
 
 The Cloud documentation links (`cloud.google.com/*/docs/*`) in these files are
 not always valid. Find the correct urls and update the links.
 
-## Update the root files
+## Edit the top-level CHANGELOG file
 
-Manually edit the following files:
-
-- `BUILD.bazel` to reference the new targets in `//google/cloud/${library}`.
-  Initially prefix your targets with `:experimental-`.
+Announce the new library in the CHANGELOG for the next release.
 
 ## Fix formatting nits
 
@@ -225,11 +282,15 @@ index c4ce00489..1858b48dc 100755
    ./include/google/cloud/spanner/internal
    ./include/google/cloud/spanner/mocks
 ```
+
 </details>
 
 ## Commit these changes
 
 ```shell
 git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
-   "google/cloud/${library}" BUILD.bazel ci
+   "google/cloud/${library}" BUILD.bazel CHANGELOG.md ci README.md
 ```
+
+[#10237]: https://github.com/googleapis/google-cloud-cpp/issues/10237
+[retryable-status-codes]: https://github.com/googleapis/googleapis/blob/0fea253787a4f2769b97b0ed3a8f5b28ef17ffa7/google/cloud/secretmanager/v1/secretmanager_grpc_service_config.json#L77-L80

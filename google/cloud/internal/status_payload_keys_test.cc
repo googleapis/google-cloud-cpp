@@ -22,7 +22,7 @@ namespace internal {
 
 TEST(StatusPayloadKeys, Basics) {
   std::string const empty{};
-  EXPECT_NE(empty, kStatusPayloadGrpcProto);
+  EXPECT_NE(empty, StatusPayloadGrpcProto());
 }
 
 }  // namespace internal

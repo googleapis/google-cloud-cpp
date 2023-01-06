@@ -48,6 +48,18 @@ using ServicesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         appengine_internal::ServicesRetryTraits>;
 
+/**
+ * The `ServicesConnection` object for `ServicesClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ServicesClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ServicesClient`.
+ *
+ * To create a concrete instance, see `MakeServicesConnection()`.
+ *
+ * For mocking, see `appengine_mocks::MockServicesConnection`.
+ */
 class ServicesConnection {
  public:
   virtual ~ServicesConnection() = 0;
@@ -67,24 +79,32 @@ class ServicesConnection {
   DeleteService(google::appengine::v1::DeleteServiceRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `ServicesConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of ServicesClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `ServicesConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::appengine::ServicesPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `ServicesConnection` created by
+ * this function.
+ */
 std::shared_ptr<ServicesConnection> MakeServicesConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace appengine_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<appengine::ServicesConnection> MakeServicesConnection(
-    std::shared_ptr<ServicesStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace appengine_internal
 }  // namespace cloud
 }  // namespace google
 

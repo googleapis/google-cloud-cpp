@@ -15,7 +15,7 @@
 # This file shows how to use the Web Security Scanner API C++ client library
 # from a larger CMake project.
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10...3.24)
 project(google-cloud-cpp-websecurityscanner-quickstart CXX)
 
 find_package(google_cloud_cpp_websecurityscanner REQUIRED)
@@ -29,5 +29,4 @@ endif ()
 
 # Define your targets.
 add_executable(quickstart quickstart.cc)
-target_link_libraries(quickstart
-                      google-cloud-cpp::experimental-websecurityscanner)
+target_link_libraries(quickstart google-cloud-cpp::websecurityscanner)

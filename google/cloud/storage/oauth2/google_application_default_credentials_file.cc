@@ -13,23 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/oauth2/google_application_default_credentials_file.h"
-#include "google/cloud/internal/getenv.h"
-#include <cstdlib>
-
-namespace {
-
-std::string const& GoogleWellKnownAdcFilePathSuffix() {
-#ifdef _WIN32
-  static auto const* const kSuffix =
-      new std::string("/gcloud/application_default_credentials.json");
-#else
-  static auto const* const kSuffix =
-      new std::string("/.config/gcloud/application_default_credentials.json");
-#endif
-  return *kSuffix;
-}
-
-}  // anonymous namespace
+#include "google/cloud/internal/oauth2_google_application_default_credentials_file.h"
 
 namespace google {
 namespace cloud {
@@ -37,28 +21,24 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
 
+char const* GoogleAdcEnvVar() {
+  return google::cloud::oauth2_internal::GoogleAdcEnvVar();
+}
+
 std::string GoogleAdcFilePathFromEnvVarOrEmpty() {
-  auto override_value = google::cloud::internal::GetEnv(GoogleAdcEnvVar());
-  if (override_value.has_value()) {
-    return *override_value;
-  }
-  return "";
+  return oauth2_internal::GoogleAdcFilePathFromEnvVarOrEmpty();
 }
 
 std::string GoogleAdcFilePathFromWellKnownPathOrEmpty() {
-  // Allow mocking out this value for testing.
-  auto override_path =
-      google::cloud::internal::GetEnv(GoogleGcloudAdcFileEnvVar());
-  if (override_path.has_value()) {
-    return *override_path;
-  }
+  return oauth2_internal::GoogleAdcFilePathFromWellKnownPathOrEmpty();
+}
 
-  // Search well known gcloud ADC path.
-  auto adc_path_root = google::cloud::internal::GetEnv(GoogleAdcHomeEnvVar());
-  if (adc_path_root.has_value()) {
-    return *adc_path_root + GoogleWellKnownAdcFilePathSuffix();
-  }
-  return "";
+char const* GoogleGcloudAdcFileEnvVar() {
+  return google::cloud::oauth2_internal::GoogleGcloudAdcFileEnvVar();
+}
+
+char const* GoogleAdcHomeEnvVar() {
+  return google::cloud::oauth2_internal::GoogleAdcHomeEnvVar();
 }
 
 }  // namespace oauth2

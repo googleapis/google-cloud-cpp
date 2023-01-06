@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options UptimeCheckServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_UPTIME_CHECK_SERVICE_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_UPTIME_CHECK_SERVICE_AUTHORITY",
       "monitoring.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

@@ -23,6 +23,11 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 using seconds = std::chrono::seconds;
 
+// Cannot delegate on `SubscriberOptions(Options)` as it is deprecated.
+SubscriberOptions::SubscriberOptions() {
+  opts_ = pubsub_internal::DefaultSubscriberOptionsOnly(Options{});
+}
+
 SubscriberOptions::SubscriberOptions(Options opts) {
   internal::CheckExpectedOptions<SubscriberOptionList>(opts, __func__);
   opts_ = pubsub_internal::DefaultSubscriberOptionsOnly(std::move(opts));

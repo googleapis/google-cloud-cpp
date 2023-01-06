@@ -29,11 +29,10 @@ namespace oauth2 {
  *
  * This environment variable should be checked for a valid file path when
  * attempting to load Google Application Default %Credentials.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
-inline char const* GoogleAdcEnvVar() {
-  static constexpr char kEnvVarName[] = "GOOGLE_APPLICATION_CREDENTIALS";
-  return kEnvVarName;
-}
+char const* GoogleAdcEnvVar();
 
 /**
  * Returns the path to the Application Default %Credentials file, if set.
@@ -41,6 +40,8 @@ inline char const* GoogleAdcEnvVar() {
  * If the Application Default %Credentials environment variable is set, we check
  * the path specified by its value for a file containing ADCs. Returns an
  * empty string if no such path exists or the environment variable is not set.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 std::string GoogleAdcFilePathFromEnvVarOrEmpty();
 
@@ -50,6 +51,8 @@ std::string GoogleAdcFilePathFromEnvVarOrEmpty();
  * If the gcloud utility has configured an Application Default %Credentials
  * file, the path to that file is returned. Returns an empty string if no such
  * file exists at the well known path.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
 
@@ -58,11 +61,10 @@ std::string GoogleAdcFilePathFromWellKnownPathOrEmpty();
  *
  * This environment variable is used for testing to override the path that
  * should be searched for the gcloud Application Default %Credentials file.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
-inline char const* GoogleGcloudAdcFileEnvVar() {
-  static constexpr char kEnvVarName[] = "GOOGLE_GCLOUD_ADC_PATH_OVERRIDE";
-  return kEnvVarName;
-}
+char const* GoogleGcloudAdcFileEnvVar();
 
 /**
  * Returns the environment variable used to construct the well known ADC path.
@@ -71,15 +73,10 @@ inline char const* GoogleGcloudAdcFileEnvVar() {
  * by this environment variable, varies across environments. That directory is
  * used when constructing the well known path of the Application Default
  * Credentials file.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
-inline char const* GoogleAdcHomeEnvVar() {
-#ifdef _WIN32
-  static constexpr char kHomeEnvVar[] = "APPDATA";
-#else
-  static constexpr char kHomeEnvVar[] = "HOME";
-#endif
-  return kHomeEnvVar;
-}
+char const* GoogleAdcHomeEnvVar();
 
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

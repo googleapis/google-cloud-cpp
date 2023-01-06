@@ -46,6 +46,18 @@ using SearchServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         retail_internal::SearchServiceRetryTraits>;
 
+/**
+ * The `SearchServiceConnection` object for `SearchServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `SearchServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `SearchServiceClient`.
+ *
+ * To create a concrete instance, see `MakeSearchServiceConnection()`.
+ *
+ * For mocking, see `retail_mocks::MockSearchServiceConnection`.
+ */
 class SearchServiceConnection {
  public:
   virtual ~SearchServiceConnection() = 0;
@@ -56,24 +68,32 @@ class SearchServiceConnection {
   Search(google::cloud::retail::v2::SearchRequest request);
 };
 
+/**
+ * A factory function to construct an object of type `SearchServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of SearchServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `SearchServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::retail::SearchServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `SearchServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<SearchServiceConnection> MakeSearchServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace retail_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<retail::SearchServiceConnection> MakeSearchServiceConnection(
-    std::shared_ptr<SearchServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace retail_internal
 }  // namespace cloud
 }  // namespace google
 

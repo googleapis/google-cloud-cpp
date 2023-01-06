@@ -32,50 +32,45 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ManagedIdentitiesServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~ManagedIdentitiesServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~ManagedIdentitiesServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency CreateMicrosoftAdDomain(
       google::cloud::managedidentities::v1::
-          CreateMicrosoftAdDomainRequest const& request) = 0;
+          CreateMicrosoftAdDomainRequest const& request);
 
   virtual google::cloud::Idempotency ResetAdminPassword(
       google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency ListDomains(
-      google::cloud::managedidentities::v1::ListDomainsRequest request) = 0;
+      google::cloud::managedidentities::v1::ListDomainsRequest request);
 
   virtual google::cloud::Idempotency GetDomain(
-      google::cloud::managedidentities::v1::GetDomainRequest const&
-          request) = 0;
+      google::cloud::managedidentities::v1::GetDomainRequest const& request);
 
   virtual google::cloud::Idempotency UpdateDomain(
-      google::cloud::managedidentities::v1::UpdateDomainRequest const&
-          request) = 0;
+      google::cloud::managedidentities::v1::UpdateDomainRequest const& request);
 
   virtual google::cloud::Idempotency DeleteDomain(
-      google::cloud::managedidentities::v1::DeleteDomainRequest const&
-          request) = 0;
+      google::cloud::managedidentities::v1::DeleteDomainRequest const& request);
 
   virtual google::cloud::Idempotency AttachTrust(
-      google::cloud::managedidentities::v1::AttachTrustRequest const&
-          request) = 0;
+      google::cloud::managedidentities::v1::AttachTrustRequest const& request);
 
   virtual google::cloud::Idempotency ReconfigureTrust(
       google::cloud::managedidentities::v1::ReconfigureTrustRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DetachTrust(
-      google::cloud::managedidentities::v1::DetachTrustRequest const&
-          request) = 0;
+      google::cloud::managedidentities::v1::DetachTrustRequest const& request);
 
   virtual google::cloud::Idempotency ValidateTrust(
       google::cloud::managedidentities::v1::ValidateTrustRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<ManagedIdentitiesServiceConnectionIdempotencyPolicy>

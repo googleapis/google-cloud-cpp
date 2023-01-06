@@ -31,21 +31,38 @@ namespace cloud {
 namespace composer {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-composer-options
+ */
 struct ImageVersionsRetryPolicyOption {
   using Type = std::shared_ptr<ImageVersionsRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-composer-options
+ */
 struct ImageVersionsBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-composer-options
+ */
 struct ImageVersionsConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<ImageVersionsConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to ImageVersions.
+ *
+ * @ingroup google-cloud-composer-options
+ */
 using ImageVersionsPolicyOptionList =
     OptionList<ImageVersionsRetryPolicyOption, ImageVersionsBackoffPolicyOption,
                ImageVersionsConnectionIdempotencyPolicyOption>;

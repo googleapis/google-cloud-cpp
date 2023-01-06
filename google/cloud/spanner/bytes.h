@@ -45,7 +45,7 @@ class Bytes {
   /// An empty sequence.
   Bytes() = default;
 
-  /// Construction from a sequence of octets.
+  /// @name Construction from a sequence of octets.
   ///@{
   template <typename InputIt>
   Bytes(InputIt first, InputIt last) {

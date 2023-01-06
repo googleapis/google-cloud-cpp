@@ -35,16 +35,15 @@ ImageVersionsConnectionImpl::ImageVersionsConnectionImpl(
     std::shared_ptr<composer_internal::ImageVersionsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), composer_internal::ImageVersionsDefaultOptions(
-                                  ImageVersionsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ImageVersionsConnection::options())) {}
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::ImageVersion>
 ImageVersionsConnectionImpl::ListImageVersions(
     google::cloud::orchestration::airflow::service::v1::ListImageVersionsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<composer::ImageVersionsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

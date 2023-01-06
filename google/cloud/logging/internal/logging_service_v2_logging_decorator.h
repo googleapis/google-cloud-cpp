@@ -66,6 +66,12 @@ class LoggingServiceV2Logging : public LoggingServiceV2Stub {
   AsyncTailLogEntries(google::cloud::CompletionQueue const& cq,
                       std::unique_ptr<grpc::ClientContext> context) override;
 
+  future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>
+  AsyncWriteLogEntries(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::logging::v2::WriteLogEntriesRequest const& request) override;
+
  private:
   std::shared_ptr<LoggingServiceV2Stub> child_;
   TracingOptions tracing_options_;

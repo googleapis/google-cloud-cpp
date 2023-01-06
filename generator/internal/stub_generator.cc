@@ -49,19 +49,25 @@ Status StubGenerator::GenerateHeader() {
 
   // includes
   HeaderPrint("\n");
+  auto const needs_completion_queue =
+      HasAsyncMethod() || HasBidirStreamingMethod();
   HeaderLocalIncludes(
-      {HasAsyncMethod() ? "google/cloud/completion_queue.h" : "",
+      {HasBidirStreamingMethod()
+           ? "google/cloud/async_streaming_read_write_rpc.h"
+           : "",
+       needs_completion_queue ? "google/cloud/completion_queue.h" : "",
        HasAsyncMethod() ? "google/cloud/future.h" : "",
-       "google/cloud/status_or.h",
+       HasAsynchronousStreamingReadMethod()
+           ? "google/cloud/internal/async_streaming_read_rpc.h"
+           : "",
+       HasAsynchronousStreamingWriteMethod()
+           ? "google/cloud/internal/async_streaming_write_rpc.h"
+           : "",
        HasStreamingReadMethod() ? "google/cloud/internal/streaming_read_rpc.h"
                                 : "",
        HasStreamingWriteMethod() ? "google/cloud/internal/streaming_write_rpc.h"
                                  : "",
-       HasBidirStreamingMethod()
-           ? "google/cloud/async_streaming_read_write_rpc.h"
-           : "",
-       HasBidirStreamingMethod() ? "google/cloud/completion_queue.h" : "",
-       "google/cloud/version.h"});
+       "google/cloud/status_or.h", "google/cloud/version.h"});
   std::vector<std::string> additional_pb_header_paths =
       absl::StrSplit(vars("additional_pb_header_paths"), absl::ByChar(','));
   HeaderSystemIncludes(additional_pb_header_paths);
@@ -138,6 +144,29 @@ Status StubGenerator::GenerateHeader() {
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) {
+      auto constexpr kDeclaration = R"""(
+  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) = 0;
+)""";
+      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      continue;
+    }
+    if (IsStreamingWrite(method)) {
+      auto constexpr kDeclaration = R"""(
+  virtual std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+      $request_type$, $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) = 0;
+)""";
+      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {
@@ -255,6 +284,29 @@ Status StubGenerator::GenerateHeader() {
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) {
+      auto constexpr kDeclaration = R"""(
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+      $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      $request_type$ const& request) override;
+)""";
+      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      continue;
+    }
+    if (IsStreamingWrite(method)) {
+      auto constexpr kDeclaration = R"""(
+  std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+      $request_type$, $response_type$>>
+  Async$method_name$(
+      google::cloud::CompletionQueue const& cq,
+      std::unique_ptr<grpc::ClientContext> context) override;
+)""";
+      HeaderPrintMethod(method, __FILE__, __LINE__, kDeclaration);
+      continue;
+    }
     HeaderPrintMethod(
         method,
         {
@@ -320,13 +372,22 @@ Status StubGenerator::GenerateCc() {
 
   // includes
   CcPrint("\n");
-  CcLocalIncludes({vars("stub_header_path"),
-                   HasStreamingReadMethod() ? "absl/memory/memory.h" : "",
-                   HasBidirStreamingMethod()
-                       ? "google/cloud/internal/async_read_write_stream_impl.h"
-                       : "",
-                   "google/cloud/grpc_error_delegate.h",
-                   "google/cloud/status_or.h"});
+  CcLocalIncludes(
+      {vars("stub_header_path"),
+       HasStreamingReadMethod() ? "absl/memory/memory.h" : "",
+       HasBidirStreamingMethod()
+           ? "google/cloud/internal/async_read_write_stream_impl.h"
+           : "",
+       HasAsynchronousStreamingReadMethod()
+           ? "google/cloud/internal/async_streaming_read_rpc_impl.h"
+           : "",
+       HasAsynchronousStreamingWriteMethod()
+           ? "google/cloud/internal/async_streaming_write_rpc_impl.h"
+           : "",
+       HasStreamingWriteMethod()
+           ? "google/cloud/internal/streaming_write_rpc_impl.h"
+           : "",
+       "google/cloud/grpc_error_delegate.h", "google/cloud/status_or.h"});
   CcSystemIncludes(
       {vars("proto_grpc_header_path"),
        HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
@@ -433,6 +494,41 @@ Default$stub_class_name$::Async$method_name$(
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) {
+      auto constexpr kDefinition = R"""(
+std::unique_ptr<::google::cloud::internal::AsyncStreamingReadRpc<
+    $response_type$>>
+Default$stub_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    $request_type$ const& request) {
+  return google::cloud::internal::MakeStreamingReadRpc<$request_type$, $response_type$>(
+    cq, std::move(context), request,
+    [this](grpc::ClientContext* context, $request_type$ const& request, grpc::CompletionQueue* cq) {
+      return grpc_stub_->PrepareAsync$method_name$(context, request, cq);
+    });
+}
+)""";
+      CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
+      continue;
+    }
+    if (IsStreamingWrite(method)) {
+      auto constexpr kDefinition = R"""(
+std::unique_ptr<::google::cloud::internal::AsyncStreamingWriteRpc<
+    $request_type$, $response_type$>>
+Default$stub_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue const& cq,
+    std::unique_ptr<grpc::ClientContext> context) {
+  return google::cloud::internal::MakeStreamingWriteRpc<$request_type$, $response_type$>(
+    cq, std::move(context),
+    [this](grpc::ClientContext* context, $response_type$* response, grpc::CompletionQueue* cq) {
+      return grpc_stub_->PrepareAsync$method_name$(context, response, cq);
+    });
+}
+)""";
+      CcPrintMethod(method, __FILE__, __LINE__, kDefinition);
+      continue;
+    }
     CcPrintMethod(
         method,
         {MethodPattern(

@@ -36,7 +36,7 @@ ctest_args=("$@")
 cd "${BINARY_DIR}"
 start_emulator
 
-ctest -R "^rest_" "${ctest_args[@]}"
+ctest -R "^common_" "${ctest_args[@]}"
 exit_status=$?
 
 kill_emulator

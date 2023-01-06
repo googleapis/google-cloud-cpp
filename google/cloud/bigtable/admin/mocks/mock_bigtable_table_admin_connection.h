@@ -27,6 +27,21 @@ namespace cloud {
 namespace bigtable_admin_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `BigtableTableAdminConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `BigtableTableAdminClient`. To do
+ * so, construct an object of type `BigtableTableAdminClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockBigtableTableAdminConnection
     : public bigtable_admin::BigtableTableAdminConnection {
  public:
@@ -44,9 +59,18 @@ class MockBigtableTableAdminConnection
               (google::bigtable::admin::v2::GetTableRequest const& request),
               (override));
 
+  MOCK_METHOD(future<StatusOr<google::bigtable::admin::v2::Table>>, UpdateTable,
+              (google::bigtable::admin::v2::UpdateTableRequest const& request),
+              (override));
+
   MOCK_METHOD(Status, DeleteTable,
               (google::bigtable::admin::v2::DeleteTableRequest const& request),
               (override));
+
+  MOCK_METHOD(
+      future<StatusOr<google::bigtable::admin::v2::Table>>, UndeleteTable,
+      (google::bigtable::admin::v2::UndeleteTableRequest const& request),
+      (override));
 
   MOCK_METHOD(
       StatusOr<google::bigtable::admin::v2::Table>, ModifyColumnFamilies,

@@ -20,13 +20,16 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
 ObjectRewriter::ObjectRewriter(std::shared_ptr<internal::RawClient> client,
                                internal::RewriteObjectRequest request)
     : client_(std::move(client)),
       request_(std::move(request)),
-      progress_{0, 0, false} {}
+      progress_{0, 0, false},
+      options_(google::cloud::internal::CurrentOptions()) {}
 
 StatusOr<RewriteProgress> ObjectRewriter::Iterate() {
+  google::cloud::internal::OptionsSpan span(options_);
   StatusOr<internal::RewriteObjectResponse> response =
       client_->RewriteObject(request_);
   if (!response.ok()) {

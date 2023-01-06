@@ -35,15 +35,14 @@ FirewallConnectionImpl::FirewallConnectionImpl(
     std::shared_ptr<appengine_internal::FirewallStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), appengine_internal::FirewallDefaultOptions(
-                                  FirewallConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      FirewallConnection::options())) {}
 
 StreamRange<google::appengine::v1::FirewallRule>
 FirewallConnectionImpl::ListIngressRules(
     google::appengine::v1::ListIngressRulesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<appengine::FirewallRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

@@ -31,27 +31,49 @@ namespace cloud {
 namespace contactcenterinsights {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-contactcenterinsights-options
+ */
 struct ContactCenterInsightsRetryPolicyOption {
   using Type = std::shared_ptr<ContactCenterInsightsRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-contactcenterinsights-options
+ */
 struct ContactCenterInsightsBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct ContactCenterInsightsPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-contactcenterinsights-options
+ */
 struct ContactCenterInsightsConnectionIdempotencyPolicyOption {
   using Type =
       std::shared_ptr<ContactCenterInsightsConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-contactcenterinsights-options
+ */
+struct ContactCenterInsightsPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to ContactCenterInsights.
+ *
+ * @ingroup google-cloud-contactcenterinsights-options
+ */
 using ContactCenterInsightsPolicyOptionList =
     OptionList<ContactCenterInsightsRetryPolicyOption,
                ContactCenterInsightsBackoffPolicyOption,

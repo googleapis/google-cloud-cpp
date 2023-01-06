@@ -21,41 +21,20 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::IsProtoEqual;
 using ::testing::ElementsAreArray;
 
-TEST(GrpcBucketMetadataParser, PublicAccessPreventionToProto) {
-  using google::storage::v2::Bucket;
-  EXPECT_EQ(
-      Bucket::IamConfig::INHERITED,
-      GrpcBucketMetadataParser::ToProtoPublicAccessPrevention("inherited"));
-  EXPECT_EQ(
-      Bucket::IamConfig::ENFORCED,
-      GrpcBucketMetadataParser::ToProtoPublicAccessPrevention("enforced"));
-  EXPECT_EQ(Bucket::IamConfig::PUBLIC_ACCESS_PREVENTION_UNSPECIFIED,
-            GrpcBucketMetadataParser::ToProtoPublicAccessPrevention("invalid"));
-}
-
-TEST(GrpcBucketMetadataParser, PublicAccessPreventionFromProto) {
-  using google::storage::v2::Bucket;
-  EXPECT_EQ("inherited",
-            GrpcBucketMetadataParser::FromProto(Bucket::IamConfig::INHERITED));
-  EXPECT_EQ("enforced",
-            GrpcBucketMetadataParser::FromProto(Bucket::IamConfig::ENFORCED));
-}
-
 TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
   google::storage::v2::Bucket input;
   // Keep the proto fields in the order they show up in the proto file. It is
   // easier to add new fields and to inspect the test for missing fields
   auto constexpr kText = R"pb(
-    name: "projects/_/buckets/test-bucket-id"
+    name: "projects/_/buckets/test-bucket-name"
     bucket_id: "test-bucket-id"
     project: "projects/123456"
     metageneration: 1234567
@@ -63,10 +42,18 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     location_type: "REGIONAL"
     storage_class: "test-storage-class"
     rpo: "test-rpo"
-    acl: { role: "test-role1" entity: "test-entity1" }
-    acl: { role: "test-role2" entity: "test-entity2" }
-    default_object_acl: { role: "test-role3" entity: "test-entity3" }
-    default_object_acl: { role: "test-role4" entity: "test-entity4" }
+    acl: { role: "test-role1" entity: "test-entity1", etag: "test-etag1" }
+    acl: { role: "test-role2" entity: "test-entity2", etag: "test-etag2" }
+    default_object_acl: {
+      role: "test-role3"
+      entity: "test-entity3",
+      etag: "test-etag3"
+    }
+    default_object_acl: {
+      role: "test-role4"
+      entity: "test-entity4",
+      etag: "test-etag4"
+    }
     lifecycle {
       rule {
         action { type: "Delete" }
@@ -107,9 +94,13 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     labels: { key: "test-key-1" value: "test-value-1" }
     labels: { key: "test-key-2" value: "test-value-2" }
     website { main_page_suffix: "index.html" not_found_page: "404.html" }
+    custom_placement_config {
+      data_locations: "us-central1"
+      data_locations: "us-east4"
+    }
     versioning { enabled: true }
     logging {
-      log_bucket: "test-log-bucket"
+      log_bucket: "projects/_/buckets/test-log-bucket"
       log_object_prefix: "test-log-object-prefix"
     }
     owner { entity: "test-entity" entity_id: "test-entity-id" }
@@ -125,35 +116,45 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
         enabled: true
         lock_time { seconds: 1565194927 nanos: 123456000 }
       }
-      public_access_prevention: INHERITED
+      public_access_prevention: "inherited"
+    }
+    etag: "test-etag"
+    autoclass {
+      enabled: true
+      toggle_time { seconds: 1665108184 nanos: 123456000 }
     }
   )pb";
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &input));
 
   // To get the dates in RFC-3339 format I used:
   //     date --rfc-3339=seconds --date=@1565194924
-  auto const expected = BucketMetadataParser::FromString(R"""({
+  auto const expected =
+      storage::internal::BucketMetadataParser::FromString(R"""({
     "acl": [{
       "kind": "storage#bucketAccessControl",
       "bucket": "test-bucket-id",
       "role": "test-role1",
-      "entity": "test-entity1"
+      "entity": "test-entity1",
+      "etag": "test-etag1"
     }, {
       "kind": "storage#bucketAccessControl",
       "bucket": "test-bucket-id",
       "role": "test-role2",
-      "entity": "test-entity2"
+      "entity": "test-entity2",
+      "etag": "test-etag2"
     }],
     "defaultObjectAcl": [{
       "kind": "storage#objectAccessControl",
       "bucket": "test-bucket-id",
       "role": "test-role3",
-      "entity": "test-entity3"
+      "entity": "test-entity3",
+      "etag": "test-etag3"
     }, {
       "kind": "storage#objectAccessControl",
       "bucket": "test-bucket-id",
       "role": "test-role4",
-      "entity": "test-entity4"
+      "entity": "test-entity4",
+      "etag": "test-etag4"
     }],
     "lifecycle": {
       "rule": [{
@@ -176,7 +177,7 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
     "timeCreated": "2019-08-07T16:22:04.123456000Z",
     "id": "test-bucket-id",
     "kind": "storage#bucket",
-    "name": "test-bucket-id",
+    "name": "test-bucket-name",
     "projectNumber": 123456,
     "metageneration": "1234567",
     "cors": [{
@@ -202,6 +203,9 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
       "mainPageSuffix": "index.html",
       "notFoundPage": "404.html"
     },
+    "customPlacementConfig": {
+      "dataLocations": ["us-central1", "us-east4"]
+    },
     "versioning": { "enabled": true },
     "logging": {
       "logBucket": "test-log-bucket",
@@ -223,19 +227,41 @@ TEST(GrpcBucketMetadataParser, BucketAllFieldsRoundtrip) {
         "lockedTime": "2019-08-07T16:22:07.123456000Z"
       },
       "publicAccessPrevention": "inherited"
+    },
+    "etag": "test-etag",
+    "autoclass": {
+      "enabled": true,
+      "toggleTime": "2022-10-07T02:03:04.123456000Z"
     }
   })""");
   ASSERT_THAT(expected, IsOk());
 
-  auto const middle = GrpcBucketMetadataParser::FromProto(input);
+  auto const middle = FromProto(input);
   EXPECT_EQ(middle, *expected);
 
-  auto const p1 = GrpcBucketMetadataParser::ToProto(middle);
-  auto const p2 = GrpcBucketMetadataParser::ToProto(*expected);
+  auto const p1 = ToProto(middle);
+  auto const p2 = ToProto(*expected);
   EXPECT_THAT(p1, IsProtoEqual(p2));
 
-  auto const actual = GrpcBucketMetadataParser::ToProto(middle);
+  auto const actual = ToProto(middle);
   EXPECT_THAT(actual, IsProtoEqual(input));
+}
+
+TEST(GrpcBucketMetadataParser, BucketAutoclassRoundtrip) {
+  auto constexpr kText = R"pb(
+    enabled: true
+    toggle_time { seconds: 1665108184 nanos: 123456000 }
+  )pb";
+  google::storage::v2::Bucket::Autoclass start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected_toggle =
+      google::cloud::internal::ParseRfc3339("2022-10-07T02:03:04.123456000Z");
+  ASSERT_STATUS_OK(expected_toggle);
+  auto const expected = storage::BucketAutoclass{true, *expected_toggle};
+  auto const middle = FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
 }
 
 TEST(GrpcBucketMetadataParser, BucketBillingRoundtrip) {
@@ -244,10 +270,10 @@ TEST(GrpcBucketMetadataParser, BucketBillingRoundtrip) {
   )pb";
   google::storage::v2::Bucket::Billing start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
-  auto const expected = BucketBilling{true};
-  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+  auto const expected = storage::BucketBilling{true};
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
@@ -263,13 +289,13 @@ TEST(GrpcBucketMetadataParser, BucketCorsRoundtrip) {
   )pb";
   google::storage::v2::Bucket::Cors start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
-  auto const expected = CorsEntry{3600,
-                                  {"GET", "PUT"},
-                                  {"test-origin-1", "test-origin-2"},
-                                  {"test-header-1", "test-header-2"}};
-  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+  auto const expected = storage::CorsEntry{3600,
+                                           {"GET", "PUT"},
+                                           {"test-origin-1", "test-origin-2"},
+                                           {"test-header-1", "test-header-2"}};
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
@@ -279,11 +305,11 @@ TEST(GrpcBucketMetadataParser, BucketEncryptionRoundtrip) {
   )pb";
   google::storage::v2::Bucket::Encryption start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
-  auto const expected = BucketEncryption{
+  auto const expected = storage::BucketEncryption{
       "projects/test-p/locations/us/keyRings/test-kr/cryptoKeys/test-key"};
-  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
@@ -293,19 +319,20 @@ TEST(GrpcBucketMetadataParser, BucketIamConfigRoundtrip) {
       enabled: true
       lock_time { seconds: 1234 nanos: 5678000 }
     }
-    public_access_prevention: ENFORCED
+    public_access_prevention: "enforced"
   )pb";
   google::storage::v2::Bucket::IamConfig start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
   auto tp = std::chrono::system_clock::time_point{} +
             std::chrono::duration_cast<std::chrono::system_clock::duration>(
                 std::chrono::seconds(1234) + std::chrono::nanoseconds(5678000));
-  auto const expected = BucketIamConfiguration{
-      /*.uniform_bucket_level_access=*/UniformBucketLevelAccess{true, tp},
-      /*.public_access_prevention=*/PublicAccessPreventionEnforced()};
-  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+  auto const expected = storage::BucketIamConfiguration{
+      /*.uniform_bucket_level_access=*/storage::UniformBucketLevelAccess{true,
+                                                                         tp},
+      /*.public_access_prevention=*/storage::PublicAccessPreventionEnforced()};
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
@@ -315,10 +342,10 @@ TEST(GrpcBucketMetadataParser, LifecycleRuleActionRoundtrip) {
   )pb";
   google::storage::v2::Bucket::Lifecycle::Rule::Action start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
-  auto const expected = LifecycleRule::SetStorageClass("COLDLINE");
-  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+  auto const expected = storage::LifecycleRule::SetStorageClass("COLDLINE");
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
@@ -334,21 +361,28 @@ TEST(GrpcBucketMetadataParser, LifecycleRuleConditionRoundtrip) {
     custom_time_before { year: 2022 month: 2 day: 15 }
     days_since_noncurrent_time: 5
     noncurrent_time_before { year: 2022 month: 1 day: 2 }
+    matches_prefix: "p1/"
+    matches_prefix: "p2/"
+    matches_suffix: ".txt"
+    matches_suffix: ".html"
   )pb";
   google::storage::v2::Bucket::Lifecycle::Rule::Condition start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
-  auto const expected = LifecycleRule::ConditionConjunction(
-      LifecycleRule::MaxAge(7),
-      LifecycleRule::CreatedBefore(absl::CivilDay(2021, 12, 20)),
-      LifecycleRule::IsLive(true), LifecycleRule::NumNewerVersions(3),
-      LifecycleRule::MatchesStorageClasses({"STANDARD", "NEARLINE"}),
-      LifecycleRule::DaysSinceCustomTime(4),
-      LifecycleRule::CustomTimeBefore(absl::CivilDay(2022, 2, 15)),
-      LifecycleRule::DaysSinceNoncurrentTime(5),
-      LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2022, 1, 2)));
-  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+  auto const expected = storage::LifecycleRule::ConditionConjunction(
+      storage::LifecycleRule::MaxAge(7),
+      storage::LifecycleRule::CreatedBefore(absl::CivilDay(2021, 12, 20)),
+      storage::LifecycleRule::IsLive(true),
+      storage::LifecycleRule::NumNewerVersions(3),
+      storage::LifecycleRule::MatchesStorageClasses({"STANDARD", "NEARLINE"}),
+      storage::LifecycleRule::DaysSinceCustomTime(4),
+      storage::LifecycleRule::CustomTimeBefore(absl::CivilDay(2022, 2, 15)),
+      storage::LifecycleRule::DaysSinceNoncurrentTime(5),
+      storage::LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2022, 1, 2)),
+      storage::LifecycleRule::MatchesPrefixes({"p1/", "p2/"}),
+      storage::LifecycleRule::MatchesSuffixes({".txt", ".html"}));
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
@@ -362,20 +396,28 @@ TEST(GrpcBucketMetadataParser, LifecycleRuleRoundtrip) {
       num_newer_versions: 3
       matches_storage_class: "STANDARD"
       matches_storage_class: "NEARLINE"
+      matches_prefix: "p1/"
+      matches_prefix: "p2/"
+      matches_suffix: ".txt"
+      matches_suffix: ".html"
     }
   )pb";
   google::storage::v2::Bucket::Lifecycle::Rule start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
-  auto const expected = LifecycleRule(
-      LifecycleRule::ConditionConjunction(
-          LifecycleRule::MaxAge(7),
-          LifecycleRule::CreatedBefore(absl::CivilDay(2021, 12, 20)),
-          LifecycleRule::IsLive(true), LifecycleRule::NumNewerVersions(3),
-          LifecycleRule::MatchesStorageClasses({"STANDARD", "NEARLINE"})),
-      LifecycleRule::Delete());
-  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+  auto const expected = storage::LifecycleRule(
+      storage::LifecycleRule::ConditionConjunction(
+          storage::LifecycleRule::MaxAge(7),
+          storage::LifecycleRule::CreatedBefore(absl::CivilDay(2021, 12, 20)),
+          storage::LifecycleRule::IsLive(true),
+          storage::LifecycleRule::NumNewerVersions(3),
+          storage::LifecycleRule::MatchesStorageClasses(
+              {"STANDARD", "NEARLINE"}),
+          storage::LifecycleRule::MatchesPrefixes({"p1/", "p2/"}),
+          storage::LifecycleRule::MatchesSuffixes({".txt", ".html"})),
+      storage::LifecycleRule::Delete());
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
@@ -392,34 +434,37 @@ TEST(GrpcBucketMetadataParser, BucketLifecycleRoundtrip) {
   )pb";
   google::storage::v2::Bucket::Lifecycle start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
-  auto const expected = BucketLifecycle{{
-      LifecycleRule(LifecycleRule::ConditionConjunction(
-                        LifecycleRule::MaxAge(7), LifecycleRule::IsLive(true),
-                        LifecycleRule::MatchesStorageClassStandard()),
-                    LifecycleRule::SetStorageClassNearline()),
-      LifecycleRule(LifecycleRule::ConditionConjunction(
-                        LifecycleRule::MaxAge(180),
-                        LifecycleRule::MatchesStorageClassNearline()),
-                    LifecycleRule::Delete()),
+  auto const expected = storage::BucketLifecycle{{
+      storage::LifecycleRule(
+          storage::LifecycleRule::ConditionConjunction(
+              storage::LifecycleRule::MaxAge(7),
+              storage::LifecycleRule::IsLive(true),
+              storage::LifecycleRule::MatchesStorageClassStandard()),
+          storage::LifecycleRule::SetStorageClassNearline()),
+      storage::LifecycleRule(
+          storage::LifecycleRule::ConditionConjunction(
+              storage::LifecycleRule::MaxAge(180),
+              storage::LifecycleRule::MatchesStorageClassNearline()),
+          storage::LifecycleRule::Delete()),
   }};
-  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+  auto const middle = FromProto(start);
   EXPECT_THAT(expected.rule, ElementsAreArray(middle.rule));
-  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
 TEST(GrpcBucketMetadataParser, BucketLoggingRoundtrip) {
   auto constexpr kText = R"pb(
-    log_bucket: "test-bucket-name"
+    log_bucket: "projects/_/buckets/test-bucket-name"
     log_object_prefix: "test-object-prefix/"
   )pb";
   google::storage::v2::Bucket::Logging start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
   auto const expected =
-      BucketLogging{"test-bucket-name", "test-object-prefix/"};
-  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+      storage::BucketLogging{"test-bucket-name", "test-object-prefix/"};
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
@@ -435,10 +480,10 @@ TEST(GrpcBucketMetadataParser, BucketRetentionPolicyRoundtrip) {
             std::chrono::duration_cast<std::chrono::system_clock::duration>(
                 std::chrono::seconds(1234) + std::chrono::nanoseconds(5678000));
   auto const expected =
-      BucketRetentionPolicy{std::chrono::seconds(3600), tp, true};
-  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+      storage::BucketRetentionPolicy{std::chrono::seconds(3600), tp, true};
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
@@ -448,10 +493,10 @@ TEST(GrpcBucketMetadataParser, BucketVersioningRoundtrip) {
   )pb";
   google::storage::v2::Bucket::Versioning start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
-  auto const expected = BucketVersioning{true};
-  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+  auto const expected = storage::BucketVersioning{true};
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
@@ -462,16 +507,30 @@ TEST(GrpcBucketMetadataParser, BucketWebsiteRoundtrip) {
   )pb";
   google::storage::v2::Bucket::Website start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
-  auto const expected = BucketWebsite{"index.html", "404.html"};
-  auto const middle = GrpcBucketMetadataParser::FromProto(start);
+  auto const expected = storage::BucketWebsite{"index.html", "404.html"};
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcBucketMetadataParser::ToProto(middle);
+  auto const end = ToProto(middle);
+  EXPECT_THAT(end, IsProtoEqual(start));
+}
+
+TEST(GrpcBucketMetadataParser, BucketCustomPlacementConfigRoundtrip) {
+  auto constexpr kText = R"pb(
+    data_locations: "us-central1"
+    data_locations: "us-east4"
+  )pb";
+  google::storage::v2::Bucket::CustomPlacementConfig start;
+  EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
+  auto const expected =
+      storage::BucketCustomPlacementConfig{{"us-central1", "us-east4"}};
+  auto const middle = FromProto(start);
+  EXPECT_EQ(middle, expected);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

@@ -17,7 +17,6 @@
 // source: google/cloud/retail/v2/user_event_service.proto
 
 #include "google/cloud/retail/user_event_client.h"
-#include "google/cloud/retail/internal/user_event_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 UserEventServiceClient::UserEventServiceClient(
     std::shared_ptr<UserEventServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), retail_internal::UserEventServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 UserEventServiceClient::~UserEventServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::UserEvent>

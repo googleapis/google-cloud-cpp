@@ -46,6 +46,18 @@ using PolicyTagManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         datacatalog_internal::PolicyTagManagerRetryTraits>;
 
+/**
+ * The `PolicyTagManagerConnection` object for `PolicyTagManagerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `PolicyTagManagerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `PolicyTagManagerClient`.
+ *
+ * To create a concrete instance, see `MakePolicyTagManagerConnection()`.
+ *
+ * For mocking, see `datacatalog_mocks::MockPolicyTagManagerConnection`.
+ */
 class PolicyTagManagerConnection {
  public:
   virtual ~PolicyTagManagerConnection() = 0;
@@ -92,25 +104,33 @@ class PolicyTagManagerConnection {
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `PolicyTagManagerConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of PolicyTagManagerClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `PolicyTagManagerConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::datacatalog::PolicyTagManagerPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `PolicyTagManagerConnection` created
+ * by this function.
+ */
 std::shared_ptr<PolicyTagManagerConnection> MakePolicyTagManagerConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace datacatalog
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace datacatalog_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<datacatalog::PolicyTagManagerConnection>
-MakePolicyTagManagerConnection(std::shared_ptr<PolicyTagManagerStub> stub,
-                               Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace datacatalog_internal
 }  // namespace cloud
 }  // namespace google
 

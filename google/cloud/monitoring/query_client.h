@@ -66,16 +66,16 @@ class QueryServiceClient {
       std::shared_ptr<QueryServiceConnection> connection, Options opts = {});
   ~QueryServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   QueryServiceClient(QueryServiceClient const&) = default;
   QueryServiceClient& operator=(QueryServiceClient const&) = default;
   QueryServiceClient(QueryServiceClient&&) = default;
   QueryServiceClient& operator=(QueryServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(QueryServiceClient const& a,
                          QueryServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -84,23 +84,23 @@ class QueryServiceClient {
                          QueryServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Queries time series using Monitoring Query Language. This method does not
   /// require a Workspace.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::QueryTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L476}
+  /// @googleapis_link{google::monitoring::v3::QueryTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L474}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::TimeSeriesData,google/monitoring/v3/metric.proto#L135}
+  /// @googleapis_link{google::monitoring::v3::TimeSeriesData,google/monitoring/v3/metric.proto#L133}
   ///
   /// [google.monitoring.v3.QueryTimeSeriesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L476}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L474}
   /// [google.monitoring.v3.TimeSeriesData]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric.proto#L135}
+  /// @googleapis_reference_link{google/monitoring/v3/metric.proto#L133}
   ///
   StreamRange<google::monitoring::v3::TimeSeriesData> QueryTimeSeries(
       google::monitoring::v3::QueryTimeSeriesRequest request,

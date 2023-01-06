@@ -118,7 +118,7 @@ TEST(MakeStatusFromRpcError, AllCodesWithPayload) {
 
     auto expected = google::cloud::Status(codes.expected, message);
     google::cloud::internal::SetPayload(
-        expected, google::cloud::internal::kStatusPayloadGrpcProto, payload);
+        expected, google::cloud::internal::StatusPayloadGrpcProto(), payload);
 
     auto const actual = MakeStatusFromRpcError(original);
     EXPECT_EQ(expected, actual);
@@ -127,7 +127,7 @@ TEST(MakeStatusFromRpcError, AllCodesWithPayload) {
 
     // Make sure the actual payload is what we expect.
     auto actual_payload = google::cloud::internal::GetPayload(
-        actual, google::cloud::internal::kStatusPayloadGrpcProto);
+        actual, google::cloud::internal::StatusPayloadGrpcProto());
     EXPECT_TRUE(actual_payload.has_value());
     EXPECT_EQ(payload, actual_payload.value());
   }
@@ -168,7 +168,7 @@ TEST(MakeStatusFromRpcError, AllCodesWithPayloadAndErrorDetails) {
 
     auto expected = google::cloud::Status(codes.expected, message, error_info);
     google::cloud::internal::SetPayload(
-        expected, google::cloud::internal::kStatusPayloadGrpcProto, payload);
+        expected, google::cloud::internal::StatusPayloadGrpcProto(), payload);
 
     auto const actual = MakeStatusFromRpcError(original);
     EXPECT_EQ(expected, actual);
@@ -177,7 +177,7 @@ TEST(MakeStatusFromRpcError, AllCodesWithPayloadAndErrorDetails) {
 
     // Make sure the actual payload is what we expect.
     auto actual_payload = google::cloud::internal::GetPayload(
-        actual, google::cloud::internal::kStatusPayloadGrpcProto);
+        actual, google::cloud::internal::StatusPayloadGrpcProto());
     EXPECT_TRUE(actual_payload.has_value());
     EXPECT_EQ(payload, actual_payload.value());
   }
@@ -217,7 +217,7 @@ TEST(MakeStatusFromRpcError, ProtoValidCode) {
     auto const actual = MakeStatusFromRpcError(original);
     auto expected = google::cloud::Status(codes.expected, message);
     google::cloud::internal::SetPayload(
-        expected, google::cloud::internal::kStatusPayloadGrpcProto,
+        expected, google::cloud::internal::StatusPayloadGrpcProto(),
         MakeErrorDetails(original));
 
     EXPECT_EQ(expected, actual);
@@ -235,7 +235,7 @@ TEST(MakeStatusFromRpcError, ProtoInvalidCode) {
     auto const actual = MakeStatusFromRpcError(original);
     auto expected = google::cloud::Status(StatusCode::kUnknown, message);
     google::cloud::internal::SetPayload(
-        expected, google::cloud::internal::kStatusPayloadGrpcProto,
+        expected, google::cloud::internal::StatusPayloadGrpcProto(),
         MakeErrorDetails(original));
     EXPECT_EQ(expected, actual);
   }

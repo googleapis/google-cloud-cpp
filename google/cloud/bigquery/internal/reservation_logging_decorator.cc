@@ -283,6 +283,20 @@ ReservationServiceLogging::MoveAssignment(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+ReservationServiceLogging::UpdateAssignment(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::bigquery::reservation::v1::
+                 UpdateAssignmentRequest const& request) {
+        return child_->UpdateAssignment(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceLogging::GetBiReservation(
     grpc::ClientContext& context,

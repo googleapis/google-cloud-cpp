@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_INVOKE_RESULT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_INVOKE_RESULT_H
 
+#include "google/cloud/internal/type_traits.h"
 #include "google/cloud/version.h"
 #include <type_traits>
 
@@ -22,20 +23,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-/**
- * A helper to detect if expressions are valid and use SFINAE.
- *
- * This class will be introduced in C++17, it makes it easier to write SFINAE
- * expressions, basically you use `void_t< some expression here >` in the SFINAE
- * branch that is trying to test if `some expression here` is valid. If the
- * expression is valid it expands to `void` and your branch continues, if it is
- * invalid it fails and the default SFINAE branch is used.
- *
- * @see https://en.cppreference.com/w/cpp/types/void_t for more details about
- *   this class.
- */
-template <typename...>
-using void_t = void;
 
 /**
  * A helper class to determine the result type of a function-like object.

@@ -35,7 +35,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options ManagedNotebookServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_MANAGED_NOTEBOOK_SERVICE_ENDPOINT",
-      "", "notebooks.googleapis.com");
+      "", "GOOGLE_CLOUD_CPP_MANAGED_NOTEBOOK_SERVICE_AUTHORITY",
+      "notebooks.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<notebooks::ManagedNotebookServiceRetryPolicyOption>()) {

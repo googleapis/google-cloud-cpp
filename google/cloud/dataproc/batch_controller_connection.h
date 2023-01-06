@@ -31,6 +31,7 @@
 #include "google/cloud/version.h"
 #include <google/longrunning/operations.grpc.pb.h>
 #include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -49,6 +50,18 @@ using BatchControllerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         dataproc_internal::BatchControllerRetryTraits>;
 
+/**
+ * The `BatchControllerConnection` object for `BatchControllerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `BatchControllerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `BatchControllerClient`.
+ *
+ * To create a concrete instance, see `MakeBatchControllerConnection()`.
+ *
+ * For mocking, see `dataproc_mocks::MockBatchControllerConnection`.
+ */
 class BatchControllerConnection {
  public:
   virtual ~BatchControllerConnection() = 0;
@@ -68,25 +81,44 @@ class BatchControllerConnection {
       google::cloud::dataproc::v1::DeleteBatchRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `BatchControllerConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of BatchControllerClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `BatchControllerConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::dataproc::BatchControllerPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param location Sets the prefix for the default `EndpointOption` value.
+ * @param options (optional) Configure the `BatchControllerConnection` created
+ * by this function.
+ */
+std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
+    std::string const& location, Options options = {});
+
+/**
+ * A backwards-compatible version of the previous factory function.  Unless
+ * the service also offers a global endpoint, the default value of the
+ * `EndpointOption` may be useless, in which case it must be overridden.
+ *
+ * @deprecated Please use the `location` overload instead.
+ */
 std::shared_ptr<BatchControllerConnection> MakeBatchControllerConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dataproc
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace dataproc_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<dataproc::BatchControllerConnection>
-MakeBatchControllerConnection(std::shared_ptr<BatchControllerStub> stub,
-                              Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc_internal
 }  // namespace cloud
 }  // namespace google
 

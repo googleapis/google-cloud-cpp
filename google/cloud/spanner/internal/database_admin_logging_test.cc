@@ -28,10 +28,11 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+namespace gsad = ::google::spanner::admin::database;
+
 using ::testing::Contains;
 using ::testing::HasSubstr;
 using ::testing::Return;
-namespace gcsa = ::google::spanner::admin::database::v1;
 
 class DatabaseAdminLoggingTest : public ::testing::Test {
  protected:
@@ -50,7 +51,7 @@ class DatabaseAdminLoggingTest : public ::testing::Test {
 TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
   EXPECT_CALL(*mock_, AsyncCreateDatabase)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::CreateDatabaseRequest const&) {
+                   gsad::v1::CreateDatabaseRequest const&) {
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
@@ -60,7 +61,7 @@ TEST_F(DatabaseAdminLoggingTest, CreateDatabase) {
   CompletionQueue cq;
   auto response =
       stub.AsyncCreateDatabase(cq, absl::make_unique<grpc::ClientContext>(),
-                               gcsa::CreateDatabaseRequest{});
+                               gsad::v1::CreateDatabaseRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
@@ -74,7 +75,7 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabase) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
-  auto response = stub.GetDatabase(context, gcsa::GetDatabaseRequest{});
+  auto response = stub.GetDatabase(context, gsad::v1::GetDatabaseRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -88,7 +89,8 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
-  auto response = stub.GetDatabaseDdl(context, gcsa::GetDatabaseDdlRequest{});
+  auto response =
+      stub.GetDatabaseDdl(context, gsad::v1::GetDatabaseDdlRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -99,7 +101,7 @@ TEST_F(DatabaseAdminLoggingTest, GetDatabaseDdl) {
 TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
   EXPECT_CALL(*mock_, AsyncUpdateDatabaseDdl)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::UpdateDatabaseDdlRequest const&) {
+                   gsad::v1::UpdateDatabaseDdlRequest const&) {
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
@@ -109,7 +111,7 @@ TEST_F(DatabaseAdminLoggingTest, UpdateDatabase) {
   CompletionQueue cq;
   auto response =
       stub.AsyncUpdateDatabaseDdl(cq, absl::make_unique<grpc::ClientContext>(),
-                                  gcsa::UpdateDatabaseDdlRequest{});
+                                  gsad::v1::UpdateDatabaseDdlRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
@@ -123,7 +125,7 @@ TEST_F(DatabaseAdminLoggingTest, DropDatabase) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
-  auto status = stub.DropDatabase(context, gcsa::DropDatabaseRequest{});
+  auto status = stub.DropDatabase(context, gsad::v1::DropDatabaseRequest{});
   EXPECT_EQ(TransientError(), status);
 
   auto const log_lines = log_.ExtractLines();
@@ -137,7 +139,7 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
-  auto response = stub.ListDatabases(context, gcsa::ListDatabasesRequest{});
+  auto response = stub.ListDatabases(context, gsad::v1::ListDatabasesRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -148,7 +150,7 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabases) {
 TEST_F(DatabaseAdminLoggingTest, RestoreDatabase) {
   EXPECT_CALL(*mock_, AsyncRestoreDatabase)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::RestoreDatabaseRequest const&) {
+                   gsad::v1::RestoreDatabaseRequest const&) {
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
@@ -158,7 +160,7 @@ TEST_F(DatabaseAdminLoggingTest, RestoreDatabase) {
   CompletionQueue cq;
   auto response =
       stub.AsyncRestoreDatabase(cq, absl::make_unique<grpc::ClientContext>(),
-                                gcsa::RestoreDatabaseRequest{});
+                                gsad::v1::RestoreDatabaseRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
@@ -214,7 +216,7 @@ TEST_F(DatabaseAdminLoggingTest, TestIamPermissions) {
 TEST_F(DatabaseAdminLoggingTest, CreateBackup) {
   EXPECT_CALL(*mock_, AsyncCreateBackup)
       .WillOnce([](CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
-                   gcsa::CreateBackupRequest const&) {
+                   gsad::v1::CreateBackupRequest const&) {
         return make_ready_future(
             StatusOr<google::longrunning::Operation>(TransientError()));
       });
@@ -224,7 +226,7 @@ TEST_F(DatabaseAdminLoggingTest, CreateBackup) {
   CompletionQueue cq;
   auto response =
       stub.AsyncCreateBackup(cq, absl::make_unique<grpc::ClientContext>(),
-                             gcsa::CreateBackupRequest{});
+                             gsad::v1::CreateBackupRequest{});
   EXPECT_EQ(TransientError(), response.get().status());
 
   auto const log_lines = log_.ExtractLines();
@@ -238,7 +240,7 @@ TEST_F(DatabaseAdminLoggingTest, GetBackup) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
-  auto status = stub.GetBackup(context, gcsa::GetBackupRequest{});
+  auto status = stub.GetBackup(context, gsad::v1::GetBackupRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -252,7 +254,7 @@ TEST_F(DatabaseAdminLoggingTest, DeleteBackup) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
-  auto status = stub.DeleteBackup(context, gcsa::DeleteBackupRequest{});
+  auto status = stub.DeleteBackup(context, gsad::v1::DeleteBackupRequest{});
   EXPECT_EQ(TransientError(), status);
 
   auto const log_lines = log_.ExtractLines();
@@ -266,7 +268,7 @@ TEST_F(DatabaseAdminLoggingTest, ListBackups) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
-  auto response = stub.ListBackups(context, gcsa::ListBackupsRequest{});
+  auto response = stub.ListBackups(context, gsad::v1::ListBackupsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -280,7 +282,7 @@ TEST_F(DatabaseAdminLoggingTest, UpdateBackup) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
-  auto status = stub.UpdateBackup(context, gcsa::UpdateBackupRequest{});
+  auto status = stub.UpdateBackup(context, gsad::v1::UpdateBackupRequest{});
   EXPECT_EQ(TransientError(), status.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -294,8 +296,8 @@ TEST_F(DatabaseAdminLoggingTest, ListBackupOperations) {
   DatabaseAdminLogging stub(mock_, TracingOptions{});
 
   grpc::ClientContext context;
-  auto response =
-      stub.ListBackupOperations(context, gcsa::ListBackupOperationsRequest{});
+  auto response = stub.ListBackupOperations(
+      context, gsad::v1::ListBackupOperationsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
   auto const log_lines = log_.ExtractLines();
@@ -311,7 +313,7 @@ TEST_F(DatabaseAdminLoggingTest, ListDatabaseOperations) {
 
   grpc::ClientContext context;
   auto response = stub.ListDatabaseOperations(
-      context, gcsa::ListDatabaseOperationsRequest{});
+      context, gsad::v1::ListDatabaseOperationsRequest{});
   EXPECT_EQ(TransientError(), response.status());
 
   auto const log_lines = log_.ExtractLines();

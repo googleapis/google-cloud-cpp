@@ -23,6 +23,7 @@
 #include "google/cloud/privateca/internal/certificate_authority_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -48,9 +49,9 @@ CertificateAuthorityServiceConnection::GetCertificate(
 }
 
 StreamRange<google::cloud::security::privateca::v1::Certificate>
-    CertificateAuthorityServiceConnection::ListCertificates(
-        google::cloud::security::privateca::v1::
-            ListCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CertificateAuthorityServiceConnection::ListCertificates(
+    google::cloud::security::privateca::v1::
+        ListCertificatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::security::privateca::v1::Certificate>>();
 }
@@ -119,9 +120,9 @@ CertificateAuthorityServiceConnection::GetCertificateAuthority(
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
-    CertificateAuthorityServiceConnection::ListCertificateAuthorities(
-        google::cloud::security::privateca::v1::
-            ListCertificateAuthoritiesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CertificateAuthorityServiceConnection::ListCertificateAuthorities(
+    google::cloud::security::privateca::v1::
+        ListCertificateAuthoritiesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::security::privateca::v1::CertificateAuthority>>();
 }
@@ -176,9 +177,9 @@ CertificateAuthorityServiceConnection::GetCaPool(
 }
 
 StreamRange<google::cloud::security::privateca::v1::CaPool>
-    CertificateAuthorityServiceConnection::ListCaPools(
-        google::cloud::security::privateca::v1::
-            ListCaPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CertificateAuthorityServiceConnection::ListCaPools(
+    google::cloud::security::privateca::v1::
+        ListCaPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::security::privateca::v1::CaPool>>();
 }
@@ -205,9 +206,9 @@ CertificateAuthorityServiceConnection::GetCertificateRevocationList(
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
-    CertificateAuthorityServiceConnection::ListCertificateRevocationLists(
-        google::cloud::security::privateca::v1::
-            ListCertificateRevocationListsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CertificateAuthorityServiceConnection::ListCertificateRevocationLists(
+    google::cloud::security::privateca::v1::
+        ListCertificateRevocationListsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::security::privateca::v1::CertificateRevocationList>>();
 }
@@ -248,9 +249,9 @@ CertificateAuthorityServiceConnection::GetCertificateTemplate(
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>
-    CertificateAuthorityServiceConnection::ListCertificateTemplates(
-        google::cloud::security::privateca::v1::
-            ListCertificateTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CertificateAuthorityServiceConnection::ListCertificateTemplates(
+    google::cloud::security::privateca::v1::
+        ListCertificateTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::security::privateca::v1::CertificateTemplate>>();
 }
@@ -267,6 +268,7 @@ CertificateAuthorityServiceConnection::UpdateCertificateTemplate(
 std::shared_ptr<CertificateAuthorityServiceConnection>
 MakeCertificateAuthorityServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CertificateAuthorityServicePolicyOptionList>(
       options, __func__);
   options = privateca_internal::CertificateAuthorityServiceDefaultOptions(
@@ -281,25 +283,5 @@ MakeCertificateAuthorityServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace privateca
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace privateca_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<privateca::CertificateAuthorityServiceConnection>
-MakeCertificateAuthorityServiceConnection(
-    std::shared_ptr<CertificateAuthorityServiceStub> stub, Options options) {
-  options = CertificateAuthorityServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      privateca_internal::CertificateAuthorityServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace privateca_internal
 }  // namespace cloud
 }  // namespace google

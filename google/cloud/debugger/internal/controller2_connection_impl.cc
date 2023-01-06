@@ -34,9 +34,8 @@ Controller2ConnectionImpl::Controller2ConnectionImpl(
     std::shared_ptr<debugger_internal::Controller2Stub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), debugger_internal::Controller2DefaultOptions(
-                                  Controller2Connection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      Controller2Connection::options())) {}
 
 StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
 Controller2ConnectionImpl::RegisterDebuggee(

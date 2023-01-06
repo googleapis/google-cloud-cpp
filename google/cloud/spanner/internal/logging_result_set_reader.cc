@@ -28,15 +28,21 @@ void LoggingResultSetReader::TryCancel() {
   GCP_LOG(DEBUG) << __func__ << "() >> (void)";
 }
 
-absl::optional<google::spanner::v1::PartialResultSet>
-LoggingResultSetReader::Read() {
-  GCP_LOG(DEBUG) << __func__ << "() << (void)";
-  auto result = impl_->Read();
+absl::optional<PartialResultSet> LoggingResultSetReader::Read(
+    absl::optional<std::string> const& resume_token) {
+  if (resume_token) {
+    GCP_LOG(DEBUG) << __func__ << "() << \""
+                   << DebugString(*resume_token, tracing_options_) << "\"";
+  } else {
+    GCP_LOG(DEBUG) << __func__ << "() << (unresumable)";
+  }
+  auto result = impl_->Read(resume_token);
   if (!result) {
     GCP_LOG(DEBUG) << __func__ << "() >> (optional-with-no-value)";
   } else {
     GCP_LOG(DEBUG) << __func__ << "() >> "
-                   << DebugString(*result, tracing_options_);
+                   << (result->resumption ? "resumption " : "")
+                   << DebugString(result->result, tracing_options_);
   }
   return result;
 }
@@ -44,7 +50,8 @@ LoggingResultSetReader::Read() {
 Status LoggingResultSetReader::Finish() {
   GCP_LOG(DEBUG) << __func__ << "() << (void)";
   auto status = impl_->Finish();
-  GCP_LOG(DEBUG) << __func__ << "() >> " << status;
+  GCP_LOG(DEBUG) << __func__ << "() >> "
+                 << DebugString(status, tracing_options_);
   return status;
 }
 

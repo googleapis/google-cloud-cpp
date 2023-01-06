@@ -204,6 +204,13 @@ ClusterManagerMetadata::DeleteNodePool(
   return child_->DeleteNodePool(context, request);
 }
 
+Status ClusterManagerMetadata::CompleteNodePoolUpgrade(
+    grpc::ClientContext& context,
+    google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->CompleteNodePoolUpgrade(context, request);
+}
+
 StatusOr<google::container::v1::Operation>
 ClusterManagerMetadata::RollbackNodePoolUpgrade(
     grpc::ClientContext& context,
@@ -296,9 +303,8 @@ void ClusterManagerMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

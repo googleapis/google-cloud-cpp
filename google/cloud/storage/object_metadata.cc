@@ -27,26 +27,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 using ::google::cloud::internal::FormatRfc3339;
 
 bool operator==(ObjectMetadata const& lhs, ObjectMetadata const& rhs) {
-  return static_cast<internal::CommonMetadata<ObjectMetadata> const&>(lhs) ==
-             rhs &&
-         lhs.acl_ == rhs.acl_ && lhs.bucket_ == rhs.bucket_ &&
-         lhs.cache_control_ == rhs.cache_control_ &&
-         lhs.component_count_ == rhs.component_count_ &&
-         lhs.content_disposition_ == rhs.content_disposition_ &&
-         lhs.content_encoding_ == rhs.content_encoding_ &&
-         lhs.content_language_ == rhs.content_language_ &&
-         lhs.content_type_ == rhs.content_type_ && lhs.crc32c_ == rhs.crc32c_ &&
-         lhs.customer_encryption_ == rhs.customer_encryption_ &&
-         lhs.event_based_hold_ == rhs.event_based_hold_ &&
-         lhs.generation_ == rhs.generation_ &&
-         lhs.kms_key_name_ == rhs.kms_key_name_ &&
-         lhs.md5_hash_ == rhs.md5_hash_ && lhs.media_link_ == rhs.media_link_ &&
-         lhs.metadata_ == rhs.metadata_ &&
-         lhs.retention_expiration_time_ == rhs.retention_expiration_time_ &&
-         lhs.temporary_hold_ == rhs.temporary_hold_ &&
-         lhs.time_deleted_ == rhs.time_deleted_ &&
-         lhs.time_storage_class_updated_ == rhs.time_storage_class_updated_ &&
-         lhs.size_ == rhs.size_ && lhs.custom_time_ == rhs.custom_time_;
+  return lhs.acl_ == rhs.acl_ && lhs.bucket_ == rhs.bucket_                   //
+         && lhs.cache_control_ == rhs.cache_control_                          //
+         && lhs.component_count_ == rhs.component_count_                      //
+         && lhs.content_disposition_ == rhs.content_disposition_              //
+         && lhs.content_encoding_ == rhs.content_encoding_                    //
+         && lhs.content_language_ == rhs.content_language_                    //
+         && lhs.content_type_ == rhs.content_type_                            //
+         && lhs.crc32c_ == rhs.crc32c_                                        //
+         && lhs.custom_time_ == rhs.custom_time_                              //
+         && lhs.customer_encryption_ == rhs.customer_encryption_              //
+         && lhs.etag_ == rhs.etag_                                            //
+         && lhs.event_based_hold_ == rhs.event_based_hold_                    //
+         && lhs.generation_ == rhs.generation_                                //
+         && lhs.id_ == rhs.id_                                                //
+         && lhs.kind_ == rhs.kind_                                            //
+         && lhs.kms_key_name_ == rhs.kms_key_name_                            //
+         && lhs.md5_hash_ == rhs.md5_hash_                                    //
+         && lhs.media_link_ == rhs.media_link_                                //
+         && lhs.metadata_ == rhs.metadata_                                    //
+         && lhs.metageneration_ == rhs.metageneration_                        //
+         && lhs.name_ == rhs.name_                                            //
+         && lhs.owner_ == rhs.owner_                                          //
+         && lhs.retention_expiration_time_ == rhs.retention_expiration_time_  //
+         && lhs.self_link_ == rhs.self_link_                                  //
+         && lhs.size_ == rhs.size_                                            //
+         && lhs.storage_class_ == rhs.storage_class_                          //
+         && lhs.temporary_hold_ == rhs.temporary_hold_                        //
+         && lhs.time_created_ == rhs.time_created_                            //
+         && lhs.time_deleted_ == rhs.time_deleted_                            //
+         && (lhs.time_storage_class_updated_ ==
+             rhs.time_storage_class_updated_)  //
+         && lhs.updated_ == rhs.updated_;
 }
 
 std::ostream& operator<<(std::ostream& os, ObjectMetadata const& rhs) {

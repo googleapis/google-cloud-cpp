@@ -32,15 +32,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class VideoIntelligenceServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~VideoIntelligenceServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~VideoIntelligenceServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency AnnotateVideo(
       google::cloud::videointelligence::v1::AnnotateVideoRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<VideoIntelligenceServiceConnectionIdempotencyPolicy>

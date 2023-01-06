@@ -67,6 +67,18 @@ class EnvironmentsStub {
                          google::cloud::orchestration::airflow::service::v1::
                              DeleteEnvironmentRequest const& request) = 0;
 
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncSaveSnapshot(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::orchestration::airflow::service::v1::
+          SaveSnapshotRequest const& request) = 0;
+
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncLoadSnapshot(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::orchestration::airflow::service::v1::
+          LoadSnapshotRequest const& request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -116,6 +128,18 @@ class DefaultEnvironmentsStub : public EnvironmentsStub {
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::orchestration::airflow::service::v1::
           DeleteEnvironmentRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncSaveSnapshot(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::orchestration::airflow::service::v1::
+          SaveSnapshotRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncLoadSnapshot(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::orchestration::airflow::service::v1::
+          LoadSnapshotRequest const& request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

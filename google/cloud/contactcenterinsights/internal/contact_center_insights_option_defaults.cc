@@ -35,7 +35,8 @@ auto constexpr kBackoffScaling = 2.0;
 Options ContactCenterInsightsDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_CONTACT_CENTER_INSIGHTS_ENDPOINT",
-      "", "contactcenterinsights.googleapis.com");
+      "", "GOOGLE_CLOUD_CPP_CONTACT_CENTER_INSIGHTS_AUTHORITY",
+      "contactcenterinsights.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<

@@ -17,7 +17,6 @@
 // source: google/devtools/clouddebugger/v2/controller.proto
 
 #include "google/cloud/debugger/controller2_client.h"
-#include "google/cloud/debugger/internal/controller2_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 Controller2Client::Controller2Client(
     std::shared_ptr<Controller2Connection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), debugger_internal::Controller2DefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 Controller2Client::~Controller2Client() = default;
 
 StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>

@@ -32,15 +32,15 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class SystemPolicyV1ConnectionIdempotencyPolicy {
  public:
-  virtual ~SystemPolicyV1ConnectionIdempotencyPolicy() = 0;
+  virtual ~SystemPolicyV1ConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency GetSystemPolicy(
       google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<SystemPolicyV1ConnectionIdempotencyPolicy>

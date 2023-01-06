@@ -45,11 +45,27 @@ using OsLoginServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         oslogin_internal::OsLoginServiceRetryTraits>;
 
+/**
+ * The `OsLoginServiceConnection` object for `OsLoginServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `OsLoginServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `OsLoginServiceClient`.
+ *
+ * To create a concrete instance, see `MakeOsLoginServiceConnection()`.
+ *
+ * For mocking, see `oslogin_mocks::MockOsLoginServiceConnection`.
+ */
 class OsLoginServiceConnection {
  public:
   virtual ~OsLoginServiceConnection() = 0;
 
   virtual Options options() { return Options{}; }
+
+  virtual StatusOr<google::cloud::oslogin::common::SshPublicKey>
+  CreateSshPublicKey(
+      google::cloud::oslogin::v1::CreateSshPublicKeyRequest const& request);
 
   virtual Status DeletePosixAccount(
       google::cloud::oslogin::v1::DeletePosixAccountRequest const& request);
@@ -73,24 +89,32 @@ class OsLoginServiceConnection {
       google::cloud::oslogin::v1::UpdateSshPublicKeyRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `OsLoginServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of OsLoginServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `OsLoginServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::oslogin::OsLoginServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `OsLoginServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<OsLoginServiceConnection> MakeOsLoginServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oslogin
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace oslogin_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<oslogin::OsLoginServiceConnection> MakeOsLoginServiceConnection(
-    std::shared_ptr<OsLoginServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace oslogin_internal
 }  // namespace cloud
 }  // namespace google
 

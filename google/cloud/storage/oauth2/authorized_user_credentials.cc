@@ -20,43 +20,19 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
+
 StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
     std::string const& content, std::string const& source,
     std::string const& default_token_uri) {
-  auto credentials = nlohmann::json::parse(content, nullptr, false);
-  if (!credentials.is_object()) {
-    return Status(
-        StatusCode::kInvalidArgument,
-        "Invalid AuthorizedUserCredentials, parsing failed on data from " +
-            source);
-  }
-
-  std::string const client_id_key = "client_id";
-  std::string const client_secret_key = "client_secret";
-  std::string const refresh_token_key = "refresh_token";
-  for (auto const& key :
-       {client_id_key, client_secret_key, refresh_token_key}) {
-    if (credentials.count(key) == 0) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid AuthorizedUserCredentials, the " +
-                        std::string(key) +
-                        " field is missing on data loaded from " + source);
-    }
-    if (credentials.value(key, "").empty()) {
-      return Status(StatusCode::kInvalidArgument,
-                    "Invalid AuthorizedUserCredentials, the " +
-                        std::string(key) +
-                        " field is empty on data loaded from " + source);
-    }
-  }
-  return AuthorizedUserCredentialsInfo{
-      credentials.value(client_id_key, ""),
-      credentials.value(client_secret_key, ""),
-      credentials.value(refresh_token_key, ""),
-      // Some credential formats (e.g. gcloud's ADC file) don't contain a
-      // "token_uri" attribute in the JSON object.  In this case, we try using
-      // the default value.
-      credentials.value("token_uri", default_token_uri)};
+  auto info = google::cloud::oauth2_internal::ParseAuthorizedUserCredentials(
+      content, source, default_token_uri);
+  if (!info.ok()) return info.status();
+  AuthorizedUserCredentialsInfo i;
+  i.token_uri = std::move(info->token_uri);
+  i.refresh_token = std::move(info->refresh_token);
+  i.client_secret = std::move(info->client_secret);
+  i.client_id = std::move(info->client_id);
+  return i;
 }
 
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
@@ -71,7 +47,8 @@ ParseAuthorizedUserRefreshResponse(
     auto payload =
         response.payload +
         "Could not find all required fields in response (access_token,"
-        " id_token, expires_in, token_type).";
+        " id_token, expires_in, token_type) while trying to obtain an access"
+        " token for authorized user credentials.";
     return AsStatus(storage::internal::HttpResponse{response.status_code,
                                                     payload, response.headers});
   }
@@ -80,12 +57,34 @@ ParseAuthorizedUserRefreshResponse(
   header += ' ';
   header += access_token.value("access_token", "");
   std::string new_id = access_token.value("id_token", "");
-  auto expires_in =
-      std::chrono::seconds(access_token.value("expires_in", int(0)));
+  auto expires_in = std::chrono::seconds(access_token.value("expires_in", 0));
   auto new_expiration = now + expires_in;
   return RefreshingCredentialsWrapper::TemporaryToken{std::move(header),
                                                       new_expiration};
 }
+
+AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
+                          std::chrono::system_clock>::
+    AuthorizedUserCredentials(AuthorizedUserCredentialsInfo const& info,
+                              ChannelOptions const& channel_options)
+    : AuthorizedUserCredentials(
+          google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo{
+              info.client_id, info.client_secret, info.refresh_token,
+              info.token_uri},
+          channel_options) {}
+
+AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
+                          std::chrono::system_clock>::
+    AuthorizedUserCredentials(
+        google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo info,
+        ChannelOptions const& channel_options)
+    : impl_(
+          std::move(info),
+          Options{}.set<CARootsFilePathOption>(channel_options.ssl_root_path()),
+          [](Options const& o) {
+            return rest_internal::MakeDefaultRestClient(std::string{}, o);
+          }) {}
+
 }  // namespace oauth2
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage

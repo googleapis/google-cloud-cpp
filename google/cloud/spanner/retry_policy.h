@@ -32,23 +32,9 @@ struct SafeGrpcRetry {
     return status.ok();
   }
   static inline bool IsTransientFailure(google::cloud::Status const& status) {
-    if (status.code() == StatusCode::kUnavailable ||
-        status.code() == StatusCode::kResourceExhausted) {
-      return true;
-    }
-    // Treat the unexpected termination of the gRPC connection as retryable.
-    // There is no explicit indication of this, but it will result in an
-    // INTERNAL status with one of the `kTransientFailureMessages`.
-    if (status.code() == StatusCode::kInternal) {
-      constexpr char const* kTransientFailureMessages[] = {
-          "Received unexpected EOS on DATA frame from server",
-          "Connection closed with unknown cause",
-          "HTTP/2 error code: INTERNAL_ERROR", "RST_STREAM"};
-      for (auto const& message : kTransientFailureMessages) {
-        if (absl::StrContains(status.message(), message)) return true;
-      }
-    }
-    return false;
+    return status.code() == StatusCode::kUnavailable ||
+           status.code() == StatusCode::kResourceExhausted ||
+           internal::IsTransientInternalError(status);
   }
   static inline bool IsPermanentFailure(google::cloud::Status const& status) {
     return !IsOk(status) && !IsTransientFailure(status);

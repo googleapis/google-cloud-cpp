@@ -50,5 +50,20 @@ void MetadataUpdatePolicy::Setup(grpc::ClientContext& context) const {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable
+namespace bigtable_internal {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+bigtable::MetadataUpdatePolicy MakeMetadataUpdatePolicy(
+    std::string const& table_name, std::string const& app_profile_id) {
+  // The rule is the same for all RPCs in the Data API. We always include the
+  // table name. We append an app profile id only if one was provided.
+  return bigtable::MetadataUpdatePolicy(
+      table_name +
+          (app_profile_id.empty() ? "" : "&app_profile_id=" + app_profile_id),
+      bigtable::MetadataParamTypes::TABLE_NAME);
+}
+
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace bigtable_internal
 }  // namespace cloud
 }  // namespace google

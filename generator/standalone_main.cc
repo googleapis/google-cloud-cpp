@@ -17,6 +17,7 @@
 #include "google/cloud/status_or.h"
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
+#include "absl/strings/match.h"
 #include "generator/generator.h"
 #include "generator/generator_config.pb.h"
 #include "generator/internal/scaffold_generator.h"
@@ -37,11 +38,20 @@ ABSL_FLAG(std::string, golden_proto_path, "",
           "Path to root dir of protos distributed with googleapis.");
 ABSL_FLAG(std::string, output_path, ".",
           "Path to root dir where code is emitted.");
+ABSL_FLAG(std::string, scaffold_templates_path, ".",
+          "Path to directory where we store scaffold templates.");
 ABSL_FLAG(std::string, scaffold, "",
           "Generate the library support files for the given directory.");
+ABSL_FLAG(bool, experimental_scaffold, false,
+          "Generate experimental library support files.");
 ABSL_FLAG(bool, update_ci, true, "Update the CI support files.");
 
 namespace {
+
+using google::cloud::generator_internal::GenerateScaffold;
+using google::cloud::generator_internal::LibraryName;
+using google::cloud::generator_internal::LibraryPath;
+
 google::cloud::StatusOr<google::cloud::cpp::generator::GeneratorConfiguration>
 GetConfig(std::string const& filepath) {
   std::ifstream input(filepath);
@@ -72,7 +82,7 @@ std::string Dirname(std::string const& path) {
 std::vector<std::string> Parents(std::string path) {
   std::vector<std::string> p;
   p.push_back(path);
-  while (path.find('/') != std::string::npos) {
+  while (absl::StrContains(path, '/')) {
     path = Dirname(path);
     p.push_back(path);
   }
@@ -104,13 +114,19 @@ int WriteInstallDirectories(
          Parents("./include/" + Dirname(service.service_proto_path()))) {
       install_directories.push_back(p);
     }
-    auto const lib = google::cloud::generator_internal::LibraryName(service);
-    // Bigtable and Spanner use a custom path for generated code.
-    if (lib == "admin") continue;
     // Services without a connection do not create mocks.
     if (!service.omit_connection()) {
       install_directories.push_back("./include/" + product_path + "/mocks");
     }
+    auto const& forwarding_product_path = service.forwarding_product_path();
+    if (!forwarding_product_path.empty()) {
+      install_directories.push_back("./include/" + forwarding_product_path);
+      if (!service.omit_connection()) {
+        install_directories.push_back("./include/" + forwarding_product_path +
+                                      "/mocks");
+      }
+    }
+    auto const lib = LibraryName(product_path);
     install_directories.push_back("./lib64/cmake/google_cloud_cpp_" + lib);
   }
   std::sort(install_directories.begin(), install_directories.end());
@@ -132,10 +148,7 @@ int WriteFeatureList(
                      << service.DebugString() << "\n";
       return 1;
     }
-    auto feature = google::cloud::generator_internal::LibraryName(service);
-    // Spanner and Bigtable use a custom directory for generated files
-    if (feature == "admin") continue;
-    features.push_back(std::move(feature));
+    features.push_back(LibraryName(service.product_path()));
   }
   std::sort(features.begin(), features.end());
   auto const end = std::unique(features.begin(), features.end());
@@ -170,6 +183,8 @@ int main(int argc, char** argv) {
   auto config_file = absl::GetFlag(FLAGS_config_file);
   auto output_path = absl::GetFlag(FLAGS_output_path);
   auto scaffold = absl::GetFlag(FLAGS_scaffold);
+  auto scaffold_templates_path = absl::GetFlag(FLAGS_scaffold_templates_path);
+  auto experimental_scaffold = absl::GetFlag(FLAGS_experimental_scaffold);
 
   GCP_LOG(INFO) << "proto_path = " << proto_path << "\n";
   GCP_LOG(INFO) << "googleapis_path = " << googleapis_path << "\n";
@@ -190,9 +205,9 @@ int main(int argc, char** argv) {
 
   std::vector<std::future<google::cloud::Status>> tasks;
   for (auto const& service : config->service()) {
-    if (service.product_path() == scaffold) {
-      google::cloud::generator_internal::GenerateScaffold(googleapis_path,
-                                                          output_path, service);
+    if (LibraryPath(service.product_path()) == scaffold) {
+      GenerateScaffold(googleapis_path, scaffold_templates_path, output_path,
+                       service, experimental_scaffold);
     }
     std::vector<std::string> args;
     // empty arg prevents first real arg from being ignored.
@@ -229,10 +244,18 @@ int main(int argc, char** argv) {
     if (service.omit_stub_factory()) {
       args.emplace_back("--cpp_codegen_opt=omit_stub_factory=true");
     }
+    if (service.generate_round_robin_decorator()) {
+      args.emplace_back(
+          "--cpp_codegen_opt=generate_round_robin_decorator=true");
+    }
     args.emplace_back("--cpp_codegen_opt=service_endpoint_env_var=" +
                       service.service_endpoint_env_var());
     args.emplace_back("--cpp_codegen_opt=emulator_endpoint_env_var=" +
                       service.emulator_endpoint_env_var());
+    args.emplace_back(
+        "--cpp_codegen_opt=endpoint_location_style=" +
+        google::cloud::cpp::generator::ServiceConfiguration::
+            EndpointLocationStyle_Name(service.endpoint_location_style()));
     for (auto const& gen_async_rpc : service.gen_async_rpcs()) {
       args.emplace_back("--cpp_codegen_opt=gen_async_rpc=" + gen_async_rpc);
     }
@@ -240,9 +263,19 @@ int main(int argc, char** argv) {
       args.emplace_back("--cpp_codegen_opt=additional_proto_file=" +
                         additional_proto_file);
     }
+    if (service.generate_rest_transport()) {
+      args.emplace_back("--cpp_codegen_opt=generate_rest_transport=true");
+    }
     args.emplace_back(service.service_proto_path());
     for (auto const& additional_proto_file : service.additional_proto_files()) {
       args.emplace_back(additional_proto_file);
+    }
+    if (service.experimental()) {
+      args.emplace_back("--cpp_codegen_opt=experimental=true");
+    }
+    if (!service.forwarding_product_path().empty()) {
+      args.emplace_back("--cpp_codegen_opt=forwarding_product_path=" +
+                        service.forwarding_product_path());
     }
 
     GCP_LOG(INFO) << "Generating service code using: "

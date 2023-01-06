@@ -198,6 +198,7 @@ class SubscriptionAdminConnection {
  *
  * @deprecated Please use `MakeSubscriptionAdminConnection()` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED("use MakeSubscriptionAdminConnection() instead")
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
     std::initializer_list<internal::NonConstructible>);
 
@@ -243,7 +244,7 @@ std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
  * should be shared and reused when possible. Note that gRPC reuses existing OS
  * resources (sockets) whenever possible, so applications may experience better
  * performance on the second (and subsequent) calls to this function with the
- * same `ConnectionOptions` parameters. However, this behavior is not guaranteed
+ * identical values for @p options. However, this behavior is not guaranteed
  * and applications should not rely on it.
  *
  * @see `SubscriberConnection`
@@ -258,6 +259,8 @@ std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
  * @deprecated Please use the `MakeSubscriptionAdminConnection` function that
  *     accepts `google::cloud::Options` instead.
  */
+GOOGLE_CLOUD_CPP_DEPRECATED(
+    "use the overload consuming google::cloud::Options instead")
 std::shared_ptr<SubscriptionAdminConnection> MakeSubscriptionAdminConnection(
     ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},

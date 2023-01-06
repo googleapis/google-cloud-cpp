@@ -18,7 +18,6 @@
 
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_client.h"
 #include "google/cloud/bigtable/admin/bigtable_instance_admin_options.h"
-#include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_option_defaults.h"
 #include <memory>
 #include <thread>
 
@@ -30,10 +29,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 BigtableInstanceAdminClient::BigtableInstanceAdminClient(
     std::shared_ptr<BigtableInstanceAdminConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          bigtable_admin_internal::BigtableInstanceAdminDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 BigtableInstanceAdminClient::~BigtableInstanceAdminClient() = default;
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
@@ -349,8 +346,10 @@ StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::SetIamPolicy(
   google::iam::v1::SetIamPolicyRequest set_request;
   set_request.set_resource(resource);
   auto backoff_policy = internal::CurrentOptions()
-                            .get<BigtableInstanceAdminBackoffPolicyOption>()
-                            ->clone();
+                            .get<BigtableInstanceAdminBackoffPolicyOption>();
+  if (backoff_policy != nullptr) {
+    backoff_policy = backoff_policy->clone();
+  }
   for (;;) {
     auto recent = connection_->GetIamPolicy(get_request);
     if (!recent) {
@@ -362,7 +361,8 @@ StatusOr<google::iam::v1::Policy> BigtableInstanceAdminClient::SetIamPolicy(
     }
     *set_request.mutable_policy() = *std::move(policy);
     auto result = connection_->SetIamPolicy(set_request);
-    if (result || result.status().code() != StatusCode::kAborted) {
+    if (result || result.status().code() != StatusCode::kAborted ||
+        backoff_policy == nullptr) {
       return result;
     }
     std::this_thread::sleep_for(backoff_policy->OnCompletion());
@@ -391,6 +391,22 @@ BigtableInstanceAdminClient::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->TestIamPermissions(request);
+}
+
+StreamRange<google::bigtable::admin::v2::HotTablet>
+BigtableInstanceAdminClient::ListHotTablets(std::string const& parent,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::bigtable::admin::v2::ListHotTabletsRequest request;
+  request.set_parent(parent);
+  return connection_->ListHotTablets(request);
+}
+
+StreamRange<google::bigtable::admin::v2::HotTablet>
+BigtableInstanceAdminClient::ListHotTablets(
+    google::bigtable::admin::v2::ListHotTabletsRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListHotTablets(std::move(request));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

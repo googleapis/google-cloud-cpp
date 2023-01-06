@@ -27,13 +27,13 @@
 #include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/internal/object_read_source.h"
 #include "google/cloud/storage/internal/object_requests.h"
-#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/internal/service_account_requests.h"
 #include "google/cloud/storage/internal/sign_blob_requests.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/service_account.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/options.h"
 #include "google/cloud/status.h"
 #include "google/cloud/status_or.h"
 #include <string>
@@ -44,7 +44,6 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 class ObjectReadStreambuf;
-class ObjectWriteStreambuf;
 
 /**
  * Defines the interface used to communicate with Google Cloud Storage.
@@ -54,6 +53,8 @@ class RawClient {
   virtual ~RawClient() = default;
 
   virtual ClientOptions const& client_options() const = 0;
+
+  virtual google::cloud::Options options() const { return {}; }
 
   //@{
   /// @name Bucket resource operations
@@ -67,12 +68,8 @@ class RawClient {
   virtual StatusOr<BucketMetadata> UpdateBucket(UpdateBucketRequest const&) = 0;
   virtual StatusOr<BucketMetadata> PatchBucket(
       PatchBucketRequest const& request) = 0;
-  virtual StatusOr<google::cloud::IamPolicy> GetBucketIamPolicy(
-      GetBucketIamPolicyRequest const& request) = 0;
   virtual StatusOr<NativeIamPolicy> GetNativeBucketIamPolicy(
       GetBucketIamPolicyRequest const& request) = 0;
-  virtual StatusOr<google::cloud::IamPolicy> SetBucketIamPolicy(
-      SetBucketIamPolicyRequest const& request) = 0;
   virtual StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(
       SetNativeBucketIamPolicyRequest const& request) = 0;
   virtual StatusOr<TestBucketIamPermissionsResponse> TestBucketIamPermissions(
@@ -99,14 +96,15 @@ class RawClient {
       ComposeObjectRequest const&) = 0;
   virtual StatusOr<RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) = 0;
-  virtual StatusOr<std::unique_ptr<ResumableUploadSession>>
-  CreateResumableSession(ResumableUploadRequest const& request) = 0;
-  /// @deprecated this function is no longer used, see #7282 for details.
-  GOOGLE_CLOUD_CPP_STORAGE_RESTORE_UPLOAD_DEPRECATED()
-  virtual StatusOr<std::unique_ptr<ResumableUploadSession>>
-  RestoreResumableSession(std::string const& session_id);
+
+  virtual StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
+      ResumableUploadRequest const& request) = 0;
+  virtual StatusOr<QueryResumableUploadResponse> QueryResumableUpload(
+      QueryResumableUploadRequest const& request) = 0;
   virtual StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) = 0;
+  virtual StatusOr<QueryResumableUploadResponse> UploadChunk(
+      UploadChunkRequest const& request) = 0;
   //@}
 
   //@{
@@ -183,6 +181,15 @@ class RawClient {
       DeleteNotificationRequest const&) = 0;
   //@}
 };
+
+struct CreateOrResumeResponse {
+  std::string upload_id;
+  std::uint64_t committed_size;
+  absl::optional<ObjectMetadata> metadata;
+};
+
+StatusOr<CreateOrResumeResponse> CreateOrResume(
+    RawClient& client, ResumableUploadRequest const& request);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/oauth2_credentials.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 
 namespace google {
 namespace cloud {
@@ -20,9 +21,26 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 StatusOr<std::vector<std::uint8_t>> Credentials::SignBlob(
-    std::string const&, std::string const&) const {
+    absl::optional<std::string> const&, std::string const&) const {
   return Status(StatusCode::kUnimplemented,
                 "The current credentials cannot sign blobs locally");
+}
+
+StatusOr<std::pair<std::string, std::string>> AuthorizationHeader(
+    Credentials& credentials, std::chrono::system_clock::time_point tp) {
+  auto token = credentials.GetToken(tp);
+  if (!token) return std::move(token).status();
+  if (token->token.empty()) return std::make_pair(std::string{}, std::string{});
+  return std::make_pair(std::string{"Authorization"},
+                        absl::StrCat("Bearer ", token->token));
+}
+
+StatusOr<std::string> AuthorizationHeaderJoined(
+    Credentials& credentials, std::chrono::system_clock::time_point tp) {
+  auto token = credentials.GetToken(tp);
+  if (!token) return std::move(token).status();
+  if (token->token.empty()) return std::string{};
+  return absl::StrCat("Authorization: Bearer ", token->token);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -22,12 +22,15 @@ namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::IsEmpty;
+
 /// @test Verify `AnonymousCredentials` works as expected.
-TEST(AnonymousCredentialsTest, AuthorizationHeaderReturnsEmptyString) {
+TEST(AnonymousCredentialsTest, ReturnsEmptyString) {
   AnonymousCredentials credentials;
-  auto header = credentials.AuthorizationHeader();
-  ASSERT_STATUS_OK(header);
-  EXPECT_EQ(std::make_pair(std::string{}, std::string{}), header.value());
+  auto const now = std::chrono::system_clock::now();
+  auto const actual = credentials.GetToken(now);
+  ASSERT_STATUS_OK(actual);
+  EXPECT_THAT(actual->token, IsEmpty());
 }
 
 }  // namespace

@@ -46,6 +46,20 @@ using ResourceSettingsServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         resourcesettings_internal::ResourceSettingsServiceRetryTraits>;
 
+/**
+ * The `ResourceSettingsServiceConnection` object for
+ * `ResourceSettingsServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ResourceSettingsServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `ResourceSettingsServiceClient`.
+ *
+ * To create a concrete instance, see `MakeResourceSettingsServiceConnection()`.
+ *
+ * For mocking, see
+ * `resourcesettings_mocks::MockResourceSettingsServiceConnection`.
+ */
 class ResourceSettingsServiceConnection {
  public:
   virtual ~ResourceSettingsServiceConnection() = 0;
@@ -63,25 +77,34 @@ class ResourceSettingsServiceConnection {
       google::cloud::resourcesettings::v1::UpdateSettingRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `ResourceSettingsServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * ResourceSettingsServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `ResourceSettingsServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::resourcesettings::ResourceSettingsServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `ResourceSettingsServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<ResourceSettingsServiceConnection>
 MakeResourceSettingsServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcesettings
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace resourcesettings_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<resourcesettings::ResourceSettingsServiceConnection>
-MakeResourceSettingsServiceConnection(
-    std::shared_ptr<ResourceSettingsServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcesettings_internal
 }  // namespace cloud
 }  // namespace google
 

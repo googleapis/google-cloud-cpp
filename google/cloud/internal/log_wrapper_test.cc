@@ -13,10 +13,15 @@
 // limitations under the License.
 
 #include "google/cloud/internal/log_wrapper.h"
+#include "google/cloud/grpc_error_delegate.h"
 #include "google/cloud/testing_util/scoped_log.h"
 #include "google/cloud/tracing_options.h"
 #include <google/bigtable/v2/bigtable.grpc.pb.h>
+#include <google/protobuf/duration.pb.h>
 #include <google/protobuf/text_format.h>
+#include <google/protobuf/timestamp.pb.h>
+#include <google/rpc/error_details.pb.h>
+#include <google/rpc/status.pb.h>
 #include <google/spanner/v1/mutation.pb.h>
 #include <gmock/gmock.h>
 
@@ -56,103 +61,25 @@ google::spanner::v1::Mutation MakeMutation() {
   return mutation;
 }
 
-TEST(LogWrapper, DefaultOptions) {
-  TracingOptions tracing_options;
-  // clang-format off
-  std::string const text =
-      R"pb(google.spanner.v1.Mutation { )pb"
-      R"pb(insert { )pb"
-      R"pb(table: "Singers" )pb"
-      R"pb(columns: "SingerId" )pb"
-      R"pb(columns: "FirstName" )pb"
-      R"pb(columns: "LastName" )pb"
-      R"pb(values { values { string_value: "1" } )pb"
-      R"pb(values { string_value: "test-fname-1" } )pb"
-      R"pb(values { string_value: "test-lname-1" } } )pb"
-      R"pb(values { values { string_value: "2" } )pb"
-      R"pb(values { string_value: "test-fname-2" } )pb"
-      R"pb(values { string_value: "test-lname-2" } )pb"
-      R"pb(} )pb"
-      R"pb(} )pb"
-      R"pb(})pb";
-  // clang-format on
-  EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
-}
+TEST(LogWrapper, StatusDetails) {
+  google::rpc::ResourceInfo resource_info;
+  resource_info.set_resource_type(
+      "type.googleapis.com/google.cloud.service.v1.Resource");
+  resource_info.set_resource_name("projects/project/resources/resource");
+  resource_info.set_description("Resource does not exist.");
 
-TEST(LogWrapper, MultiLine) {
-  TracingOptions tracing_options;
-  tracing_options.SetOptions("single_line_mode=off");
-  // clang-format off
-  std::string const text = R"pb(google.spanner.v1.Mutation {
-  insert {
-    table: "Singers"
-    columns: "SingerId"
-    columns: "FirstName"
-    columns: "LastName"
-    values {
-      values {
-        string_value: "1"
-      }
-      values {
-        string_value: "test-fname-1"
-      }
-      values {
-        string_value: "test-lname-1"
-      }
-    }
-    values {
-      values {
-        string_value: "2"
-      }
-      values {
-        string_value: "test-fname-2"
-      }
-      values {
-        string_value: "test-lname-2"
-      }
-    }
-  }
-})pb";
-  // clang-format on
-  EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
-}
+  google::rpc::Status proto;
+  proto.set_code(grpc::StatusCode::NOT_FOUND);
+  proto.set_message("Resource not found");
+  proto.add_details()->PackFrom(resource_info);
 
-TEST(LogWrapper, Truncate) {
   TracingOptions tracing_options;
-  tracing_options.SetOptions("truncate_string_field_longer_than=8");
-  // clang-format off
-  std::string const text =
-            R"pb(google.spanner.v1.Mutation { )pb"
-            R"pb(insert { )pb"
-            R"pb(table: "Singers" )pb"
-            R"pb(columns: "SingerId" )pb"
-            R"pb(columns: "FirstNam...<truncated>..." )pb"
-            R"pb(columns: "LastName" )pb"
-            R"pb(values { values { string_value: "1" } )pb"
-            R"pb(values { string_value: "test-fna...<truncated>..." } )pb"
-            R"pb(values { string_value: "test-lna...<truncated>..." } } )pb"
-            R"pb(values { values { string_value: "2" } )pb"
-            R"pb(values { string_value: "test-fna...<truncated>..." } )pb"
-            R"pb(values { string_value: "test-lna...<truncated>..." } )pb"
-            R"pb(} )pb"
-            R"pb(} )pb"
-            R"pb(})pb";
-  // clang-format on
-  EXPECT_EQ(text, internal::DebugString(MakeMutation(), tracing_options));
-}
-
-TEST(LogWrapper, FutureStatus) {
-  struct Case {
-    std::future_status actual;
-    std::string expected;
-  } cases[] = {
-      {std::future_status::deferred, "deferred"},
-      {std::future_status::timeout, "timeout"},
-      {std::future_status::ready, "ready"},
-  };
-  for (auto const& c : cases) {
-    EXPECT_EQ(c.expected, DebugFutureStatus(c.actual));
-  }
+  auto s = DebugString(MakeStatusFromRpcError(proto), tracing_options);
+  EXPECT_THAT(s, HasSubstr("NOT_FOUND: Resource not found"));
+  EXPECT_THAT(s, HasSubstr(" + google.rpc.ResourceInfo {"));
+  EXPECT_THAT(s, HasSubstr(resource_info.resource_type()));
+  EXPECT_THAT(s, HasSubstr(resource_info.resource_name()));
+  EXPECT_THAT(s, HasSubstr(resource_info.description()));
 }
 
 /// @test the overload for functions returning FutureStatusOr
@@ -318,8 +245,8 @@ TEST(LogWrapper, StatusValueError) {
   EXPECT_THAT(log_lines,
               Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
   EXPECT_THAT(log_lines,
-              Contains(AllOf(HasSubstr("in-test("),
-                             HasSubstr(" >> status=" + status_as_string))));
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> status="),
+                             HasSubstr(status_as_string))));
 }
 
 /// @test the overload for functions returning ClientReaderInterface

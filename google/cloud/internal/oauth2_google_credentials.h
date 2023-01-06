@@ -16,25 +16,15 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_INTERNAL_OAUTH2_GOOGLE_CREDENTIALS_H
 
 #include "google/cloud/internal/oauth2_credentials.h"
-#include "google/cloud/optional.h"
+#include "google/cloud/internal/oauth2_http_client_factory.h"
 #include "google/cloud/options.h"
 #include "google/cloud/version.h"
-#include "absl/types/optional.h"
 #include <memory>
-#include <set>
-#include <string>
 
 namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-/**
- * Forces credentials creation as if the program is running on a GCE instance.
- */
-struct ForceGceOption {
-  using Type = bool;
-};
 
 /**
  * Produces a Credentials type based on the runtime environment.
@@ -49,7 +39,7 @@ struct ForceGceOption {
  * about Application Default %Credentials.
  */
 StatusOr<std::shared_ptr<Credentials>> GoogleDefaultCredentials(
-    Options const& options = {});
+    Options const& options, HttpClientFactory client_factory);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace oauth2_internal

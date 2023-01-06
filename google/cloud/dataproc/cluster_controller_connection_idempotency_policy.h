@@ -32,35 +32,35 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ClusterControllerConnectionIdempotencyPolicy {
  public:
-  virtual ~ClusterControllerConnectionIdempotencyPolicy() = 0;
+  virtual ~ClusterControllerConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ClusterControllerConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateCluster(
-      google::cloud::dataproc::v1::CreateClusterRequest const& request) = 0;
+      google::cloud::dataproc::v1::CreateClusterRequest const& request);
 
   virtual google::cloud::Idempotency UpdateCluster(
-      google::cloud::dataproc::v1::UpdateClusterRequest const& request) = 0;
+      google::cloud::dataproc::v1::UpdateClusterRequest const& request);
 
   virtual google::cloud::Idempotency StopCluster(
-      google::cloud::dataproc::v1::StopClusterRequest const& request) = 0;
+      google::cloud::dataproc::v1::StopClusterRequest const& request);
 
   virtual google::cloud::Idempotency StartCluster(
-      google::cloud::dataproc::v1::StartClusterRequest const& request) = 0;
+      google::cloud::dataproc::v1::StartClusterRequest const& request);
 
   virtual google::cloud::Idempotency DeleteCluster(
-      google::cloud::dataproc::v1::DeleteClusterRequest const& request) = 0;
+      google::cloud::dataproc::v1::DeleteClusterRequest const& request);
 
   virtual google::cloud::Idempotency GetCluster(
-      google::cloud::dataproc::v1::GetClusterRequest const& request) = 0;
+      google::cloud::dataproc::v1::GetClusterRequest const& request);
 
   virtual google::cloud::Idempotency ListClusters(
-      google::cloud::dataproc::v1::ListClustersRequest request) = 0;
+      google::cloud::dataproc::v1::ListClustersRequest request);
 
   virtual google::cloud::Idempotency DiagnoseCluster(
-      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request) = 0;
+      google::cloud::dataproc::v1::DiagnoseClusterRequest const& request);
 };
 
 std::unique_ptr<ClusterControllerConnectionIdempotencyPolicy>

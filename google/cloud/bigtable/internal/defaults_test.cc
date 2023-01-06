@@ -125,12 +125,37 @@ TEST(OptionsTest, DefaultOptionsDoesNotOverride) {
   EXPECT_THAT(*s, HasSubstr("test-prefix"));
 }
 
-TEST(OptionsTest, DefaultDataOptions) {
+TEST(OptionsTest, EndpointOptionSetsAll) {
+  auto options = Options{}.set<EndpointOption>("endpoint-option");
+  options = DefaultOptions(std::move(options));
+  EXPECT_EQ("endpoint-option", options.get<EndpointOption>());
+  EXPECT_EQ("endpoint-option", options.get<DataEndpointOption>());
+  EXPECT_EQ("endpoint-option", options.get<AdminEndpointOption>());
+  EXPECT_EQ("endpoint-option", options.get<InstanceAdminEndpointOption>());
+}
+
+TEST(OptionsTest, EndpointOptionOverridden) {
+  auto options = Options{}
+                     .set<EndpointOption>("ignored")
+                     .set<DataEndpointOption>("data")
+                     .set<AdminEndpointOption>("table-admin")
+                     .set<InstanceAdminEndpointOption>("instance-admin");
+  options = DefaultOptions(std::move(options));
+  EXPECT_EQ("data", options.get<DataEndpointOption>());
+  EXPECT_EQ("table-admin", options.get<AdminEndpointOption>());
+  EXPECT_EQ("instance-admin", options.get<InstanceAdminEndpointOption>());
+}
+
+TEST(OptionsTest, DefaultDataOptionsEndpoint) {
   auto options =
       Options{}
           .set<DataEndpointOption>("data.googleapis.com")
           .set<AdminEndpointOption>("tableadmin.googleapis.com")
           .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
+  options = DefaultDataOptions(std::move(options));
+  EXPECT_EQ("data.googleapis.com", options.get<EndpointOption>());
+
+  options = Options{}.set<EndpointOption>("data.googleapis.com");
   options = DefaultDataOptions(std::move(options));
   EXPECT_EQ("data.googleapis.com", options.get<EndpointOption>());
 }
@@ -143,6 +168,10 @@ TEST(OptionsTest, DefaultInstanceAdminOptions) {
           .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
   options = DefaultInstanceAdminOptions(std::move(options));
   EXPECT_EQ("instanceadmin.googleapis.com", options.get<EndpointOption>());
+
+  options = Options{}.set<EndpointOption>("instanceadmin.googleapis.com");
+  options = DefaultInstanceAdminOptions(std::move(options));
+  EXPECT_EQ("instanceadmin.googleapis.com", options.get<EndpointOption>());
 }
 
 TEST(OptionsTest, DefaultTableAdminOptions) {
@@ -153,6 +182,17 @@ TEST(OptionsTest, DefaultTableAdminOptions) {
           .set<InstanceAdminEndpointOption>("instanceadmin.googleapis.com");
   options = DefaultTableAdminOptions(std::move(options));
   EXPECT_EQ("tableadmin.googleapis.com", options.get<EndpointOption>());
+
+  options = Options{}.set<EndpointOption>("tableadmin.googleapis.com");
+  options = DefaultTableAdminOptions(std::move(options));
+  EXPECT_EQ("tableadmin.googleapis.com", options.get<EndpointOption>());
+}
+
+TEST(OptionsTest, DefaultDataOptionsPolicies) {
+  auto options = DefaultDataOptions(Options{});
+  EXPECT_TRUE(options.has<bigtable::DataRetryPolicyOption>());
+  EXPECT_TRUE(options.has<bigtable::DataBackoffPolicyOption>());
+  EXPECT_TRUE(options.has<bigtable::IdempotentMutationPolicyOption>());
 }
 
 TEST(OptionsTest, DataUserProjectOption) {
@@ -161,7 +201,7 @@ TEST(OptionsTest, DataUserProjectOption) {
       DefaultDataOptions(Options{}.set<UserProjectOption>("test-project"));
   EXPECT_EQ(options.get<UserProjectOption>(), "test-project");
 
-  env = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "env-project");
+  auto env2 = ScopedEnvironment("GOOGLE_CLOUD_CPP_USER_PROJECT", "env-project");
   options =
       DefaultDataOptions(Options{}.set<UserProjectOption>("test-project"));
   EXPECT_EQ(options.get<UserProjectOption>(), "env-project");
@@ -213,6 +253,7 @@ TEST(EndpointEnvTest, EmulatorEnvOverridesUserOptions) {
 
   auto opts = DefaultOptions(
       Options{}
+          .set<EndpointOption>("ignored-any")
           .set<DataEndpointOption>("ignored-data")
           .set<AdminEndpointOption>("ignored-admin")
           .set<InstanceAdminEndpointOption>("ignored-instance-admin"));
@@ -227,7 +268,9 @@ TEST(EndpointEnvTest, InstanceEmulatorEnvOverridesUserOption) {
                                       "instance-emulator-host:9000");
 
   auto opts = DefaultOptions(
-      Options{}.set<InstanceAdminEndpointOption>("ignored-instance-admin"));
+      Options{}
+          .set<EndpointOption>("ignored-any")
+          .set<InstanceAdminEndpointOption>("ignored-instance-admin"));
 
   EXPECT_EQ("instance-emulator-host:9000",
             opts.get<InstanceAdminEndpointOption>());
@@ -249,6 +292,51 @@ TEST(EndpointEnvTest, UserCredentialsOverrideEmulatorEnv) {
 
   EXPECT_EQ(typeid(grpc::GoogleDefaultCredentials()),
             typeid(opts.get<GrpcCredentialOption>()));
+}
+
+TEST(EndpointEnvTest, DirectPathEnabled) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
+                                "storage,bigtable");
+
+  auto opts = DefaultOptions();
+  EXPECT_EQ("google-c2p:///directpath-bigtable.googleapis.com",
+            opts.get<DataEndpointOption>());
+  EXPECT_EQ("directpath-bigtable.googleapis.com", opts.get<AuthorityOption>());
+  // Admin endpoints are not affected.
+  EXPECT_EQ("bigtableadmin.googleapis.com", opts.get<AdminEndpointOption>());
+  EXPECT_EQ("bigtableadmin.googleapis.com",
+            opts.get<InstanceAdminEndpointOption>());
+  EXPECT_EQ(1, opts.get<GrpcNumChannelsOption>());
+}
+
+TEST(EndpointEnvTest, DirectPathNoMatch) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH",
+                                "bigtable-not,almost-bigtable");
+
+  auto opts = DefaultDataOptions(Options{});
+  EXPECT_EQ("bigtable.googleapis.com", opts.get<EndpointOption>());
+  EXPECT_EQ("bigtable.googleapis.com", opts.get<AuthorityOption>());
+}
+
+TEST(EndpointEnvTest, DirectPathOverridesUserEndpoints) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", absl::nullopt);
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
+
+  auto opts = DefaultDataOptions(
+      Options{}.set<EndpointOption>("ignored").set<AuthorityOption>("ignored"));
+  EXPECT_EQ("google-c2p:///directpath-bigtable.googleapis.com",
+            opts.get<EndpointOption>());
+  EXPECT_EQ("directpath-bigtable.googleapis.com", opts.get<AuthorityOption>());
+}
+
+TEST(EndpointEnvTest, EmulatorOverridesDirectPath) {
+  ScopedEnvironment emulator("BIGTABLE_EMULATOR_HOST", "emulator-host:8000");
+  ScopedEnvironment direct_path("GOOGLE_CLOUD_ENABLE_DIRECT_PATH", "bigtable");
+
+  auto opts = DefaultDataOptions(Options{});
+  EXPECT_EQ("emulator-host:8000", opts.get<EndpointOption>());
 }
 
 TEST(ConnectionRefreshRange, BothUnset) {

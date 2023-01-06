@@ -50,6 +50,68 @@ InstanceAdminAuth::GetInstanceConfig(
   return child_->GetInstanceConfig(context, request);
 }
 
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminAuth::AsyncCreateInstanceConfig(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncCreateInstanceConfig(cq, *std::move(context),
+                                                request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
+InstanceAdminAuth::AsyncUpdateInstanceConfig(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+        request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncUpdateInstanceConfig(cq, *std::move(context),
+                                                request);
+      });
+}
+
+Status InstanceAdminAuth::DeleteInstanceConfig(
+    grpc::ClientContext& context,
+    google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteInstanceConfig(context, request);
+}
+
+StatusOr<
+    google::spanner::admin::instance::v1::ListInstanceConfigOperationsResponse>
+InstanceAdminAuth::ListInstanceConfigOperations(
+    grpc::ClientContext& context,
+    google::spanner::admin::instance::v1::
+        ListInstanceConfigOperationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListInstanceConfigOperations(context, request);
+}
+
 StatusOr<google::spanner::admin::instance::v1::ListInstancesResponse>
 InstanceAdminAuth::ListInstances(
     grpc::ClientContext& context,
@@ -75,7 +137,7 @@ InstanceAdminAuth::AsyncCreateInstance(
     google::spanner::admin::instance::v1::CreateInstanceRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -95,7 +157,7 @@ InstanceAdminAuth::AsyncUpdateInstance(
     google::spanner::admin::instance::v1::UpdateInstanceRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -148,7 +210,7 @@ InstanceAdminAuth::AsyncGetOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -165,7 +227,7 @@ future<Status> InstanceAdminAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

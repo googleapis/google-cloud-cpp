@@ -29,11 +29,13 @@ readonly LIBRARY=$1
 
 (
   sed '/<!-- inject-quickstart-start -->/q' "google/cloud/${LIBRARY}/README.md"
+  echo ''
   echo '```cc'
   # Dumps the contents of quickstart.cc starting at the first #include, so we
   # skip the license header comment.
   sed -n -e '/END .*quickstart/,$d' -e '/^#/,$p' "google/cloud/${LIBRARY}/quickstart/quickstart.cc"
   echo '```'
+  echo ''
   sed -n '/<!-- inject-quickstart-end -->/,$p' "google/cloud/${LIBRARY}/README.md"
 ) >"google/cloud/${LIBRARY}/README.md.tmp"
 mv "google/cloud/${LIBRARY}/README.md.tmp" "google/cloud/${LIBRARY}/README.md"

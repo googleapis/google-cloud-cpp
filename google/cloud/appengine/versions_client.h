@@ -66,38 +66,38 @@ class VersionsClient {
                           Options opts = {});
   ~VersionsClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   VersionsClient(VersionsClient const&) = default;
   VersionsClient& operator=(VersionsClient const&) = default;
   VersionsClient(VersionsClient&&) = default;
   VersionsClient& operator=(VersionsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(VersionsClient const& a, VersionsClient const& b) {
     return a.connection_ == b.connection_;
   }
   friend bool operator!=(VersionsClient const& a, VersionsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the versions of a service.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::ListVersionsRequest,google/appengine/v1/appengine.proto#L344}
+  /// @googleapis_link{google::appengine::v1::ListVersionsRequest,google/appengine/v1/appengine.proto#L346}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L36}
+  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L34}
   ///
   /// [google.appengine.v1.ListVersionsRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L344}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L346}
   /// [google.appengine.v1.Version]:
-  /// @googleapis_reference_link{google/appengine/v1/version.proto#L36}
+  /// @googleapis_reference_link{google/appengine/v1/version.proto#L34}
   ///
   StreamRange<google::appengine::v1::Version> ListVersions(
       google::appengine::v1::ListVersionsRequest request, Options opts = {});
@@ -108,16 +108,16 @@ class VersionsClient {
   /// Specify the `FULL_VIEW` parameter to get the full resource.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::GetVersionRequest,google/appengine/v1/appengine.proto#L369}
+  /// @googleapis_link{google::appengine::v1::GetVersionRequest,google/appengine/v1/appengine.proto#L384}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L36}
+  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L34}
   ///
   /// [google.appengine.v1.GetVersionRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L369}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L384}
   /// [google.appengine.v1.Version]:
-  /// @googleapis_reference_link{google/appengine/v1/version.proto#L36}
+  /// @googleapis_reference_link{google/appengine/v1/version.proto#L34}
   ///
   StatusOr<google::appengine::v1::Version> GetVersion(
       google::appengine::v1::GetVersionRequest const& request,
@@ -127,16 +127,16 @@ class VersionsClient {
   /// Deploys code and resource files to a new version.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::CreateVersionRequest,google/appengine/v1/appengine.proto#L379}
+  /// @googleapis_link{google::appengine::v1::CreateVersionRequest,google/appengine/v1/appengine.proto#L394}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L36}
+  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L34}
   ///
   /// [google.appengine.v1.CreateVersionRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L379}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L394}
   /// [google.appengine.v1.Version]:
-  /// @googleapis_reference_link{google/appengine/v1/version.proto#L36}
+  /// @googleapis_reference_link{google/appengine/v1/version.proto#L34}
   ///
   future<StatusOr<google::appengine::v1::Version>> CreateVersion(
       google::appengine::v1::CreateVersionRequest const& request,
@@ -181,16 +181,16 @@ class VersionsClient {
   /// * [`manual_scaling.instances`](https://cloud.google.com/appengine/docs/admin-api/reference/rest/v1/apps.services.versions#manualscaling)
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::UpdateVersionRequest,google/appengine/v1/appengine.proto#L389}
+  /// @googleapis_link{google::appengine::v1::UpdateVersionRequest,google/appengine/v1/appengine.proto#L404}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L36}
+  /// @googleapis_link{google::appengine::v1::Version,google/appengine/v1/version.proto#L34}
   ///
   /// [google.appengine.v1.UpdateVersionRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L389}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L404}
   /// [google.appengine.v1.Version]:
-  /// @googleapis_reference_link{google/appengine/v1/version.proto#L36}
+  /// @googleapis_reference_link{google/appengine/v1/version.proto#L34}
   ///
   future<StatusOr<google::appengine::v1::Version>> UpdateVersion(
       google::appengine::v1::UpdateVersionRequest const& request,
@@ -200,16 +200,16 @@ class VersionsClient {
   /// Deletes an existing Version resource.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::DeleteVersionRequest,google/appengine/v1/appengine.proto#L416}
+  /// @googleapis_link{google::appengine::v1::DeleteVersionRequest,google/appengine/v1/appengine.proto#L418}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L32}
+  /// @googleapis_link{google::appengine::v1::OperationMetadataV1,google/appengine/v1/operation.proto#L30}
   ///
   /// [google.appengine.v1.DeleteVersionRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L416}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L418}
   /// [google.appengine.v1.OperationMetadataV1]:
-  /// @googleapis_reference_link{google/appengine/v1/operation.proto#L32}
+  /// @googleapis_reference_link{google/appengine/v1/operation.proto#L30}
   ///
   future<StatusOr<google::appengine::v1::OperationMetadataV1>> DeleteVersion(
       google::appengine::v1::DeleteVersionRequest const& request,

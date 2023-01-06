@@ -37,15 +37,13 @@ VpcAccessServiceConnectionImpl::VpcAccessServiceConnectionImpl(
     Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          vpcaccess_internal::VpcAccessServiceDefaultOptions(
-              VpcAccessServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      VpcAccessServiceConnection::options())) {}
 
 future<StatusOr<google::cloud::vpcaccess::v1::Connector>>
 VpcAccessServiceConnectionImpl::CreateConnector(
     google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vpcaccess::v1::Connector>(
       background_->cq(), request,
@@ -89,7 +87,7 @@ StreamRange<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceConnectionImpl::ListConnectors(
     google::cloud::vpcaccess::v1::ListConnectorsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<vpcaccess::VpcAccessServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -121,7 +119,7 @@ VpcAccessServiceConnectionImpl::ListConnectors(
 future<StatusOr<google::cloud::vpcaccess::v1::OperationMetadata>>
 VpcAccessServiceConnectionImpl::DeleteConnector(
     google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::vpcaccess::v1::OperationMetadata>(
       background_->cq(), request,

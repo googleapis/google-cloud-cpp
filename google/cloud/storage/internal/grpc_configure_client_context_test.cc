@@ -19,14 +19,16 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::ValidateMetadataFixture;
+using ::testing::_;
 using ::testing::Contains;
 using ::testing::IsEmpty;
+using ::testing::MockFunction;
+using ::testing::Not;
 using ::testing::Pair;
 
 class GrpcConfigureClientContext : public ::testing::Test {
@@ -42,8 +44,8 @@ class GrpcConfigureClientContext : public ::testing::Test {
 
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersEmpty) {
   grpc::ClientContext context;
-  ApplyQueryParameters(context,
-                       ReadObjectRangeRequest("test-bucket", "test-object"));
+  ApplyQueryParameters(context, storage::internal::ReadObjectRangeRequest(
+                                    "test-bucket", "test-object"));
   auto metadata = GetMetadata(context);
   EXPECT_THAT(metadata, IsEmpty());
 }
@@ -51,8 +53,9 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersEmpty) {
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersWithFields) {
   grpc::ClientContext context;
   ApplyQueryParameters(
-      context, ReadObjectRangeRequest("test-bucket", "test-object")
-                   .set_option(Fields("bucket,name,generation,contentType")));
+      context,
+      storage::internal::ReadObjectRangeRequest("test-bucket", "test-object")
+          .set_option(storage::Fields("bucket,name,generation,contentType")));
   auto metadata = GetMetadata(context);
   EXPECT_THAT(metadata, Contains(Pair("x-goog-fieldmask",
                                       "bucket,name,generation,contentType")));
@@ -62,8 +65,9 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersWithFieldsAndPrefix) {
   grpc::ClientContext context;
   ApplyQueryParameters(
       context,
-      InsertObjectMediaRequest("test-bucket", "test-object", "content")
-          .set_option(Fields("bucket,name,generation,contentType")),
+      storage::internal::InsertObjectMediaRequest("test-bucket", "test-object",
+                                                  "content")
+          .set_option(storage::Fields("bucket,name,generation,contentType")),
       "resource");
   auto metadata = GetMetadata(context);
   EXPECT_THAT(metadata,
@@ -73,17 +77,18 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersWithFieldsAndPrefix) {
 
 TEST_F(GrpcConfigureClientContext, ApplyQueryParametersQuotaUserAndUserIp) {
   struct {
-    ReadObjectRangeRequest request;
+    storage::internal::ReadObjectRangeRequest request;
     std::string expected;
   } cases[] = {
-      {ReadObjectRangeRequest("b", "o").set_option(UserIp("1.2.3.4")),
+      {storage::internal::ReadObjectRangeRequest("b", "o").set_option(
+           storage::UserIp("1.2.3.4")),
        "1.2.3.4"},
-      {ReadObjectRangeRequest("b", "o")
-           .set_option(QuotaUser("test-only-quota-user"))
-           .set_option(UserIp("1.2.3.4")),
+      {storage::internal::ReadObjectRangeRequest("b", "o")
+           .set_option(storage::QuotaUser("test-only-quota-user"))
+           .set_option(storage::UserIp("1.2.3.4")),
        "test-only-quota-user"},
-      {ReadObjectRangeRequest("b", "o").set_option(
-           QuotaUser("test-only-quota-user")),
+      {storage::internal::ReadObjectRangeRequest("b", "o").set_option(
+           storage::QuotaUser("test-only-quota-user")),
        "test-only-quota-user"},
   };
 
@@ -101,9 +106,54 @@ TEST_F(GrpcConfigureClientContext, ApplyQueryParametersQuotaUserAndUserIp) {
   }
 }
 
+TEST_F(GrpcConfigureClientContext, ApplyQueryParametersGrpcOptions) {
+  MockFunction<void(grpc::ClientContext&)> mock;
+  EXPECT_CALL(mock, Call);
+
+  google::cloud::internal::OptionsSpan span(
+      Options{}.set<google::cloud::internal::GrpcSetupOption>(
+          mock.AsStdFunction()));
+
+  grpc::ClientContext context;
+  ApplyQueryParameters(context, storage::internal::ReadObjectRangeRequest(
+                                    "test-bucket", "test-object"));
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersInsertObjectMedia) {
+  storage::internal::InsertObjectMediaRequest req("test-bucket", "test-object",
+                                                  "content");
+
+  grpc::ClientContext context;
+  ApplyRoutingHeaders(context, req);
+  auto metadata = GetMetadata(context);
+  EXPECT_THAT(metadata,
+              Contains(Pair("x-goog-request-params",
+                            "bucket=projects/_/buckets/test-bucket")));
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkMatch) {
+  storage::internal::UploadChunkRequest req(
+      "projects/_/buckets/test-bucket/blah/blah", 0, {});
+
+  grpc::ClientContext context;
+  ApplyRoutingHeaders(context, req);
+  auto metadata = GetMetadata(context);
+  EXPECT_THAT(metadata,
+              Contains(Pair("x-goog-request-params",
+                            "bucket=projects/_/buckets/test-bucket")));
+}
+
+TEST_F(GrpcConfigureClientContext, ApplyRoutingHeadersUploadChunkNoMatch) {
+  storage::internal::UploadChunkRequest req("does-not-match", 0, {});
+
+  grpc::ClientContext context;
+  ApplyRoutingHeaders(context, req);
+  auto metadata = GetMetadata(context);
+  EXPECT_THAT(metadata, Not(Contains(Pair("x-goog-request-params", _))));
+}
+
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

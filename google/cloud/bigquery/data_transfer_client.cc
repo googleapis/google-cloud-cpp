@@ -17,7 +17,6 @@
 // source: google/cloud/bigquery/datatransfer/v1/datatransfer.proto
 
 #include "google/cloud/bigquery/data_transfer_client.h"
-#include "google/cloud/bigquery/internal/data_transfer_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DataTransferServiceClient::DataTransferServiceClient(
     std::shared_ptr<DataTransferServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), bigquery_internal::DataTransferServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DataTransferServiceClient::~DataTransferServiceClient() = default;
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>

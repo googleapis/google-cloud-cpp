@@ -94,6 +94,16 @@ class IAMStub {
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const&
           request) = 0;
 
+  virtual Status DisableServiceAccountKey(
+      grpc::ClientContext& context,
+      google::iam::admin::v1::DisableServiceAccountKeyRequest const&
+          request) = 0;
+
+  virtual Status EnableServiceAccountKey(
+      grpc::ClientContext& context,
+      google::iam::admin::v1::EnableServiceAccountKeyRequest const&
+          request) = 0;
+
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       grpc::ClientContext& context,
       google::iam::v1::GetIamPolicyRequest const& request) = 0;
@@ -222,6 +232,16 @@ class DefaultIAMStub : public IAMStub {
   Status DeleteServiceAccountKey(
       grpc::ClientContext& client_context,
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request)
+      override;
+
+  Status DisableServiceAccountKey(
+      grpc::ClientContext& client_context,
+      google::iam::admin::v1::DisableServiceAccountKeyRequest const& request)
+      override;
+
+  Status EnableServiceAccountKey(
+      grpc::ClientContext& client_context,
+      google::iam::admin::v1::EnableServiceAccountKeyRequest const& request)
       override;
 
   StatusOr<google::iam::v1::Policy> GetIamPolicy(

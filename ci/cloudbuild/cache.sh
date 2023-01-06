@@ -117,28 +117,32 @@ function save_cache() {
   fi
   io::log "Saving ( ${paths[*]} ) to ${PRIMARY_CACHE_URL}"
   du -sh "${paths[@]}"
-  # We use a temp file here so gsutil can retry failed uploads. See #6508.
+  # We use a temp file here so gcloud can retry failed uploads. See #6508.
+  local tmpd
   tmpd="$(mktemp -d)"
-  tmpf="${tmpd}/cache.tar.gz"
+  local tmpf="${tmpd}/cache.tar.gz"
   tar -czf "${tmpf}" "${paths[@]}"
-  gsutil cp "${tmpf}" "${PRIMARY_CACHE_URL}"
+  gcloud --quiet alpha storage cp "${tmpf}" "${PRIMARY_CACHE_URL}"
   gsutil stat "${PRIMARY_CACHE_URL}"
-  rm "${tmpf}"
-  rmdir "${tmpd}"
+  rm -fr "${tmpd}" || true
 }
 
 function restore_cache() {
   local urls=("${PRIMARY_CACHE_URL}")
+  local tmpd
+  tmpd="$(mktemp -d)"
+  local tmpf="${tmpd}/cache.tar.gz"
   if [[ -n "${FALLBACK_KEY}" ]]; then
     urls+=("${BUCKET_URL}/${FALLBACK_KEY}/cache.tar.gz")
   fi
   for url in "${urls[@]}"; do
     if gsutil stat "${url}"; then
       io::log "Fetching cache url ${url}"
-      gsutil cp "${url}" - | tar -zxf - || continue
+      (gcloud --quiet alpha storage cp "${url}" "${tmpf}" && tar -zxf "${tmpf}") || continue
       break
     fi
   done
+  rm -fr "${tmpd}" || true
   return 0
 }
 

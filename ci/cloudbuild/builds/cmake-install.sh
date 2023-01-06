@@ -59,38 +59,35 @@ expected_dirs+=(
   # no RPC services in google/cloud/appengine/logging
   ./include/google/appengine/logging
   ./include/google/appengine/logging/v1
-  ./include/google/bigtable/v2
   ./include/google/cloud/bigquery/logging
   ./include/google/cloud/bigquery/logging/v1
-  ./include/google/cloud/bigtable/admin/mocks
-  ./include/google/cloud/bigtable/internal
+  ./include/google/cloud/bigtable/mocks
+  # no RPC services in google/cloud/certificatemanager/logging
+  ./include/google/cloud/certificatemanager/logging
+  ./include/google/cloud/certificatemanager/logging/v1
   # no RPC services in google/cloud/clouddms
   ./include/google/cloud/clouddms/logging
   ./include/google/cloud/clouddms/logging/v1
   # no RPC services in google/cloud/common
   ./include/google/cloud/common
-  ./include/google/cloud/dialogflow
-  ./include/google/cloud/dialogflow/v2
   ./include/google/cloud/gkehub/v1/configmanagement
   ./include/google/cloud/gkehub/v1/multiclusteringress
   ./include/google/cloud/grpc_utils
   ./include/google/cloud/internal
+  ./include/google/cloud/mocks
   # orgpolicy/v1 is not automatically added. It is used by
   # google/cloud/asset, while google/cloud/orgpolicy uses
   # the **v2** protos.
   ./include/google/cloud/orgpolicy/v1
   # no RPC services in google/cloud/oslogin/common
   ./include/google/cloud/oslogin/common
-  ./include/google/cloud/pubsub
-  ./include/google/cloud/pubsub/internal
+  ./include/google/cloud/pubsub/mocks
   # no gRPC services in google/cloud/recommender/logging
   ./include/google/cloud/recommender/logging
   ./include/google/cloud/recommender/logging/v1
   # no gRPC services in google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging
   ./include/google/cloud/secretmanager/logging/v1
-  ./include/google/cloud/pubsub/mocks
-  ./include/google/cloud/spanner/admin/mocks
   ./include/google/cloud/spanner/internal
   ./include/google/cloud/spanner/mocks
   ./include/google/cloud/storage/oauth2
@@ -99,26 +96,23 @@ expected_dirs+=(
   ./include/google/cloud/workflows/type
   ./include/google/devtools/source
   ./include/google/devtools/source/v1
-  ./include/google/iam/v1
   # no gRPC services in google/identity/accesscontextmanager/type
   ./include/google/identity/accesscontextmanager/type
   ./include/google/logging/type
   ./include/google/longrunning
-  ./include/google/pubsub
-  ./include/google/pubsub/v1
   ./include/google/rpc
   ./include/google/spanner/v1
   ./include/google/type
   ./include/grafeas
   ./include/grafeas/v1
-  ./lib64/cmake/google_cloud_cpp_bigtable
   ./lib64/cmake/google_cloud_cpp_common
   ./lib64/cmake/google_cloud_cpp_googleapis
   ./lib64/cmake/google_cloud_cpp_grafeas
   ./lib64/cmake/google_cloud_cpp_grpc_utils
-  ./lib64/cmake/google_cloud_cpp_pubsub
+  ./lib64/cmake/google_cloud_cpp_mocks
+  ./lib64/cmake/google_cloud_cpp_pubsub_mocks
   ./lib64/cmake/google_cloud_cpp_rest_internal
-  ./lib64/cmake/google_cloud_cpp_spanner
+  ./lib64/cmake/google_cloud_cpp_rest_protobuf_internal
   ./lib64/pkgconfig
 )
 
@@ -170,8 +164,9 @@ env -C "${out_dir}" ctest "${ctest_args[@]}"
 
 # Tests the installed artifacts by building and running the quickstarts.
 # shellcheck disable=SC2046
-libraries="$(printf ";%s" $(features::list_full | grep -v experimental- | grep -v grafeas))"
-libraries="${libraries:1}"
+libraries="$(printf "%s;" $(features::libraries))"
+# GCS+gRPC is not a library, but it has a quickstart.
+libraries="${libraries}experimental-storage-grpc"
 cmake -G Ninja \
   -S "${PROJECT_ROOT}/ci/verify_quickstart" \
   -B "${PROJECT_ROOT}/cmake-out/quickstart" \
@@ -184,6 +179,7 @@ cmake --build "${PROJECT_ROOT}/cmake-out/quickstart"
 rm -rf "${INSTALL_PREFIX:?}"/{include,lib64}
 cmake --install cmake-out --component google_cloud_cpp_runtime
 quickstart::run_cmake_and_make "${INSTALL_PREFIX}"
+quickstart::run_gcs_grpc_quickstart "${INSTALL_PREFIX}"
 
 # Be a little more explicit because we often run this manually
 io::log_h1 "SUCCESS"

@@ -49,6 +49,21 @@ using GameServerClustersServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         gameservices_internal::GameServerClustersServiceRetryTraits>;
 
+/**
+ * The `GameServerClustersServiceConnection` object for
+ * `GameServerClustersServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `GameServerClustersServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `GameServerClustersServiceClient`.
+ *
+ * To create a concrete instance, see
+ * `MakeGameServerClustersServiceConnection()`.
+ *
+ * For mocking, see
+ * `gameservices_mocks::MockGameServerClustersServiceConnection`.
+ */
 class GameServerClustersServiceConnection {
  public:
   virtual ~GameServerClustersServiceConnection() = 0;
@@ -94,25 +109,34 @@ class GameServerClustersServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `GameServerClustersServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * GameServerClustersServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `GameServerClustersServiceConnection`. Expected options are any of
+ * the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::gameservices::GameServerClustersServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `GameServerClustersServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<GameServerClustersServiceConnection>
 MakeGameServerClustersServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace gameservices
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace gameservices_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<gameservices::GameServerClustersServiceConnection>
-MakeGameServerClustersServiceConnection(
-    std::shared_ptr<GameServerClustersServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace gameservices_internal
 }  // namespace cloud
 }  // namespace google
 

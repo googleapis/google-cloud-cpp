@@ -14,6 +14,7 @@
 
 #include "google/cloud/storage/internal/retry_object_read_source.h"
 #include "google/cloud/log.h"
+#include <algorithm>
 #include <thread>
 
 namespace google {
@@ -21,6 +22,9 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
+using ::google::cloud::internal::CurrentOptions;
+using ::google::cloud::internal::OptionsSpan;
 
 std::uint64_t InitialOffset(OffsetDirection const& offset_direction,
                             ReadObjectRangeRequest const& request) {
@@ -42,31 +46,18 @@ RetryObjectReadSource::RetryObjectReadSource(
       backoff_policy_prototype_(std::move(backoff_policy)),
       offset_direction_(request_.HasOption<ReadLast>() ? kFromEnd
                                                        : kFromBeginning),
-      current_offset_(InitialOffset(offset_direction_, request_)) {}
+      current_offset_(InitialOffset(offset_direction_, request_)),
+      span_options_(CurrentOptions()) {}
 
 StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
                                                        std::size_t n) {
   if (!child_) {
     return Status(StatusCode::kFailedPrecondition, "Stream is not open");
   }
-  // This lambda handles a successful read, avoiding some repetition below.
-  auto handle_result = [this](StatusOr<ReadSourceResult> const& r) {
-    if (!r) {
-      GCP_LOG(INFO) << "current_offset=" << current_offset_
-                    << ", status=" << r.status();
-      return false;
-    }
-    if (r->generation) generation_ = *r->generation;
-    if (offset_direction_ == kFromEnd) {
-      current_offset_ -= r->bytes_received;
-    } else {
-      current_offset_ += r->bytes_received;
-    }
-    return true;
-  };
+
   // Read some data, if successful return immediately, saving some allocations.
   auto result = child_->Read(buf, n);
-  if (handle_result(result)) return result;
+  if (HandleResult(result)) return result;
   bool has_emulator_instructions = false;
   std::string instructions;
   if (request_.HasOption<CustomHeader>()) {
@@ -102,16 +93,10 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     if (generation_) {
       request_.set_option(Generation(*generation_));
     }
-    auto new_child =
-        client_->ReadObjectNotWrapped(request_, *retry_policy, *backoff_policy);
-    if (!new_child) {
-      // We've exhausted the retry policy while trying to create the child.
-      // There is nothing else we can do, return immediately.
-      return new_child.status();
-    }
-    child_ = std::move(*new_child);
+    auto status = MakeChild(*retry_policy, *backoff_policy);
+    if (!status.ok()) return status;
   }
-  if (handle_result(result)) return result;
+  if (HandleResult(result)) return result;
   // We have exhausted the retry policy, return the error.
   auto status = std::move(result).status();
   std::stringstream os;
@@ -121,6 +106,82 @@ StatusOr<ReadSourceResult> RetryObjectReadSource::Read(char* buf,
     os << "Retry policy exhausted in Read(): " << status.message();
   }
   return Status(status.code(), std::move(os).str());
+}
+
+bool RetryObjectReadSource::HandleResult(StatusOr<ReadSourceResult> const& r) {
+  if (!r) {
+    GCP_LOG(INFO) << "current_offset=" << current_offset_
+                  << ", is_gunzipped=" << is_gunzipped_
+                  << ", status=" << r.status();
+    return false;
+  }
+  GCP_LOG(INFO) << "current_offset=" << current_offset_
+                << ", is_gunzipped=" << is_gunzipped_
+                << ", response=" << r->response;
+
+  if (r->generation) generation_ = *r->generation;
+  if (r->transformation.value_or("") == "gunzipped") is_gunzipped_ = true;
+  // Since decompressive transcoding does not respect `ReadLast()` we need
+  // to ensure the offset is incremented, so the discard loop works.
+  if (is_gunzipped_) offset_direction_ = kFromBeginning;
+  if (offset_direction_ == kFromEnd) {
+    current_offset_ -= r->bytes_received;
+  } else {
+    current_offset_ += r->bytes_received;
+  }
+  return true;
+}
+
+// NOLINTNEXTLINE(misc-no-recursion)
+Status RetryObjectReadSource::MakeChild(RetryPolicy& retry_policy,
+                                        BackoffPolicy& backoff_policy) {
+  GCP_LOG(INFO) << "current_offset=" << current_offset_
+                << ", is_gunzipped=" << is_gunzipped_;
+
+  auto on_success = [this](std::unique_ptr<ObjectReadSource> child) {
+    child_ = std::move(child);
+    return Status{};
+  };
+
+  OptionsSpan const span(span_options_);
+  auto child =
+      client_->ReadObjectNotWrapped(request_, retry_policy, backoff_policy);
+  if (!child) return std::move(child).status();
+  if (!is_gunzipped_) return on_success(*std::move(child));
+
+  // Downloads under decompressive transcoding do not respect the Read-Range
+  // header. Restarting the download effectively restarts the read from the
+  // first byte.
+  child = ReadDiscard(*std::move(child), current_offset_);
+  if (child) return on_success(*std::move(child));
+
+  // Try again, eventually the retry policy will expire and this will fail.
+  if (!retry_policy.OnFailure(child.status())) return std::move(child).status();
+  std::this_thread::sleep_for(backoff_policy.OnCompletion());
+
+  return MakeChild(retry_policy, backoff_policy);
+}
+
+StatusOr<std::unique_ptr<ObjectReadSource>> RetryObjectReadSource::ReadDiscard(
+    std::unique_ptr<ObjectReadSource> child, std::int64_t count) const {
+  GCP_LOG(INFO) << "discarding " << count << " bytes to reach previous offset";
+  // Discard data until we are at the same offset as before.
+  std::vector<char> buffer(128 * 1024);
+  while (count > 0) {
+    auto const read_size =
+        (std::min)(static_cast<std::int64_t>(buffer.size()), count);
+    auto result =
+        child->Read(buffer.data(), static_cast<std::size_t>(read_size));
+    if (!result) return std::move(result).status();
+    count -= result->bytes_received;
+    if (result->response.status_code != HttpStatusCode::kContinue &&
+        count != 0) {
+      return Status{StatusCode::kInternal,
+                    "could not read back to previous offset (" +
+                        std::to_string(current_offset_) + ")"};
+    }
+  }
+  return child;
 }
 
 }  // namespace internal

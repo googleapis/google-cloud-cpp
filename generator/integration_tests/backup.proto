@@ -21,7 +21,6 @@ import "google/api/resource.proto";
 import "google/longrunning/operations.proto";
 import "google/protobuf/field_mask.proto";
 import "google/protobuf/timestamp.proto";
-import "google/api/annotations.proto";
 import "generator/integration_tests/common.proto";
 
 option csharp_namespace = "Google.Cloud.Test.Admin.Database.V1";

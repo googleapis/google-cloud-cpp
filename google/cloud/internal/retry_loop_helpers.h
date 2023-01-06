@@ -34,7 +34,7 @@ Status GetResultStatus(StatusOr<T> result) {
 
 /// Generate an error Status for `RetryLoop()` and `AsyncRetryLoop()`
 Status RetryLoopError(char const* loop_message, char const* location,
-                      Status const& last_status);
+                      Status const& status);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

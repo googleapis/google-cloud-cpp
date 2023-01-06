@@ -129,6 +129,8 @@ class future<void> final : private internal::future_base<void> {
 
   template <typename U>
   friend class future;
+
+  friend struct internal::CoroutineSupport;
 };
 
 /**

@@ -23,6 +23,7 @@
 #include "google/cloud/vpcaccess/vpc_access_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -49,9 +50,9 @@ VpcAccessServiceConnection::GetConnector(
 }
 
 StreamRange<google::cloud::vpcaccess::v1::Connector>
-    VpcAccessServiceConnection::ListConnectors(
-        google::cloud::vpcaccess::v1::
-            ListConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
+VpcAccessServiceConnection::ListConnectors(
+    google::cloud::vpcaccess::v1::
+        ListConnectorsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::vpcaccess::v1::Connector>>();
 }
@@ -67,6 +68,7 @@ VpcAccessServiceConnection::DeleteConnector(
 std::shared_ptr<VpcAccessServiceConnection> MakeVpcAccessServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  VpcAccessServicePolicyOptionList>(options,
                                                                    __func__);
   options =
@@ -80,24 +82,5 @@ std::shared_ptr<VpcAccessServiceConnection> MakeVpcAccessServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vpcaccess
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace vpcaccess_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<vpcaccess::VpcAccessServiceConnection>
-MakeVpcAccessServiceConnection(std::shared_ptr<VpcAccessServiceStub> stub,
-                               Options options) {
-  options = VpcAccessServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<vpcaccess_internal::VpcAccessServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace vpcaccess_internal
 }  // namespace cloud
 }  // namespace google

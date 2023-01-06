@@ -22,12 +22,17 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class BucketAccessControlPatchBuilder;
+class BucketMetadataPatchBuilder;
+class ObjectAccessControlPatchBuilder;
+class ObjectMetadataPatchBuilder;
+
 namespace internal {
 
 class PatchBuilder;
 
 /**
- * Get a JSON patch from a PatchBuilder.
+ * Get a JSON patch from a *PatchBuilder.
  *
  * The PatchBuilder class cannot expose any API returning `nlohmann::json`
  * because we do not want to expose the `nlohmann::json` in any of our public
@@ -36,6 +41,18 @@ class PatchBuilder;
  * `friend`s to achieve this.
  */
 struct PatchBuilderDetails {
+  static nlohmann::json const& GetPatch(
+      storage::BucketAccessControlPatchBuilder const& patch);
+  static nlohmann::json const& GetPatch(
+      storage::BucketMetadataPatchBuilder const& patch);
+  static nlohmann::json const& GetLabelsSubPatch(
+      storage::BucketMetadataPatchBuilder const& patch);
+  static nlohmann::json const& GetPatch(
+      storage::ObjectAccessControlPatchBuilder const& patch);
+  static nlohmann::json const& GetPatch(
+      storage::ObjectMetadataPatchBuilder const& patch);
+  static nlohmann::json const& GetMetadataSubPatch(
+      storage::ObjectMetadataPatchBuilder const& patch);
   static nlohmann::json const& GetPatch(PatchBuilder const& patch);
 };
 

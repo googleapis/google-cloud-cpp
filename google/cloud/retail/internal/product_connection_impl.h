@@ -84,6 +84,16 @@ class ProductServiceConnectionImpl : public retail::ProductServiceConnection {
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request)
       override;
 
+  future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+  AddLocalInventories(
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request)
+      override;
+
+  future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+  RemoveLocalInventories(
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request)
+      override;
+
  private:
   std::unique_ptr<retail::ProductServiceRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

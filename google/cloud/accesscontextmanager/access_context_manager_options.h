@@ -31,26 +31,48 @@ namespace cloud {
 namespace accesscontextmanager {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-accesscontextmanager-options
+ */
 struct AccessContextManagerRetryPolicyOption {
   using Type = std::shared_ptr<AccessContextManagerRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-accesscontextmanager-options
+ */
 struct AccessContextManagerBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct AccessContextManagerPollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-accesscontextmanager-options
+ */
 struct AccessContextManagerConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<AccessContextManagerConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-accesscontextmanager-options
+ */
+struct AccessContextManagerPollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to AccessContextManager.
+ *
+ * @ingroup google-cloud-accesscontextmanager-options
+ */
 using AccessContextManagerPolicyOptionList =
     OptionList<AccessContextManagerRetryPolicyOption,
                AccessContextManagerBackoffPolicyOption,

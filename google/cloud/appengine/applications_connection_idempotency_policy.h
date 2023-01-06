@@ -32,23 +32,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ApplicationsConnectionIdempotencyPolicy {
  public:
-  virtual ~ApplicationsConnectionIdempotencyPolicy() = 0;
+  virtual ~ApplicationsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ApplicationsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency GetApplication(
-      google::appengine::v1::GetApplicationRequest const& request) = 0;
+      google::appengine::v1::GetApplicationRequest const& request);
 
   virtual google::cloud::Idempotency CreateApplication(
-      google::appengine::v1::CreateApplicationRequest const& request) = 0;
+      google::appengine::v1::CreateApplicationRequest const& request);
 
   virtual google::cloud::Idempotency UpdateApplication(
-      google::appengine::v1::UpdateApplicationRequest const& request) = 0;
+      google::appengine::v1::UpdateApplicationRequest const& request);
 
   virtual google::cloud::Idempotency RepairApplication(
-      google::appengine::v1::RepairApplicationRequest const& request) = 0;
+      google::appengine::v1::RepairApplicationRequest const& request);
 };
 
 std::unique_ptr<ApplicationsConnectionIdempotencyPolicy>

@@ -46,6 +46,18 @@ using BudgetServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         billing_internal::BudgetServiceRetryTraits>;
 
+/**
+ * The `BudgetServiceConnection` object for `BudgetServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `BudgetServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `BudgetServiceClient`.
+ *
+ * To create a concrete instance, see `MakeBudgetServiceConnection()`.
+ *
+ * For mocking, see `billing_mocks::MockBudgetServiceConnection`.
+ */
 class BudgetServiceConnection {
  public:
   virtual ~BudgetServiceConnection() = 0;
@@ -68,24 +80,32 @@ class BudgetServiceConnection {
       google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `BudgetServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of BudgetServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `BudgetServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::billing::BudgetServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `BudgetServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<BudgetServiceConnection> MakeBudgetServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace billing
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace billing_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<billing::BudgetServiceConnection> MakeBudgetServiceConnection(
-    std::shared_ptr<BudgetServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace billing_internal
 }  // namespace cloud
 }  // namespace google
 

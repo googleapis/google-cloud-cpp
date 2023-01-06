@@ -31,6 +31,11 @@ export GOOGLE_CLOUD_CPP_TEST_REGION="us-central1"
 # Some quickstart programs require a zone.
 export GOOGLE_CLOUD_CPP_TEST_ZONE="us-central1-a"
 
+# This file contains an invalidated service account key.  That is, the file is
+# in the right format for a service account, but it is not associated with a
+# valid service account or service account key.
+export GOOGLE_CLOUD_CPP_TEST_SERVICE_ACCOUNT_KEYFILE="${PROJECT_ROOT}/ci/etc/invalidated-keyfile.json"
+
 # Enable the self-test for the sample programs. Normally the example drivers
 # require the name of the example to run as a command-line argument, with this
 # environment variable the sample drivers run all the examples.
@@ -38,10 +43,10 @@ export GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES="yes"
 
 # A number of options to improve logging during the CI builds. They are useful
 # when troubleshooting problems.
-export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,100,WARNING"
+export GOOGLE_CLOUD_CPP_EXPERIMENTAL_LOG_CONFIG="lastN,1024,WARNING"
 export GOOGLE_CLOUD_CPP_ENABLE_TRACING="rpc,rpc-streams"
-export GOOGLE_CLOUD_CPP_TRACING_OPTIONS="truncate_string_field_longer_than=512"
-export CLOUD_STORAGE_ENABLE_TRACING="raw-client"
+export GOOGLE_CLOUD_CPP_TRACING_OPTIONS="single_line_mode=off,truncate_string_field_longer_than=512"
+export CLOUD_STORAGE_ENABLE_TRACING="raw-client,rpc,rpc-streams"
 
 # Cloud Bigtable configuration parameters
 export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_INSTANCE_ID="test-instance"
@@ -53,12 +58,12 @@ export GOOGLE_CLOUD_CPP_BIGTABLE_TEST_QUICKSTART_TABLE="quickstart"
 
 # Cloud Storage configuration parameters
 # An existing bucket, used in small tests that do not change the bucket metadata.
-export GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="cloud-cpp-testing-bucket"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_BUCKET_NAME="gcs-grpc-team-cloud-cpp-testing-bucket"
 # A bucket with a different location and/or storage class from
 # `cloud-cpp-testing-bucket`, some requests (object copy and rewrite) succeed
 # immediately with buckets in the same location, and we want to demonstrate we
 # can handle partial success.
-export GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME="cloud-cpp-testing-regional"
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_DESTINATION_BUCKET_NAME="gcs-grpc-team-cloud-cpp-testing-regional"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID="us-central1"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_LOCATION="${GOOGLE_CLOUD_CPP_STORAGE_TEST_REGION_ID}"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_SERVICE_ACCOUNT="storage-test-iam-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
@@ -66,20 +71,28 @@ export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_SERVICE_ACCOUNT="kokoro-run@${GOOGL
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_CMEK_KEY="projects/${GOOGLE_CLOUD_PROJECT}/locations/us/keyRings/gcs-testing-us-kr/cryptoKeys/integration-tests-key"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_TOPIC_NAME="projects/${GOOGLE_CLOUD_PROJECT}/topics/gcs-changes"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_HMAC_SERVICE_ACCOUNT="fake-service-account-hmac@example.com"
-export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_KEYFILE="${PROJECT_ROOT}/google/cloud/storage/tests/test_service_account.not-a-test.json"
 export GOOGLE_CLOUD_CPP_STORAGE_TEST_SIGNING_CONFORMANCE_FILENAME="${PROJECT_ROOT}/google/cloud/storage/tests/v4_signatures.json"
+# We need a gzip file to test ReadObject() with decompressive transcoding
+#  https://cloud.google.com/storage/docs/transcoding#decompressive_transcoding
+export GOOGLE_CLOUD_CPP_STORAGE_TEST_GZIP_FILENAME="${PROJECT_ROOT}/ci/data/fox.txt.gz"
 
 # Cloud Spanner configuration parameters
 export GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID="test-instance"
 export GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT="spanner-iam-test-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"
 export GOOGLE_CLOUD_CPP_SPANNER_TEST_QUICKSTART_DATABASE="quickstart-db"
 #export GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT="staging-wrenchworks.sandbox.googleapis.com"
+#export GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_AUTHORITY="${GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT}"
 
 # Cloud Pub/Sub configuration parameters
 export GOOGLE_CLOUD_CPP_PUBSUB_TEST_QUICKSTART_TOPIC="quickstart"
 
 # Cloud BigQuery configuration parameters
 export GOOGLE_CLOUD_CPP_BIGQUERY_TEST_QUICKSTART_TABLE="projects/bigquery-public-data/datasets/usa_names/tables/usa_1910_current"
+
+# Document AI
+export GOOGLE_CLOUD_CPP_DOCUMENTAI_TEST_LOCATION_ID="us"
+export GOOGLE_CLOUD_CPP_DOCUMENTAI_TEST_PROCESSOR_ID="3cb572567f9df97f"
+export GOOGLE_CLOUD_CPP_DOCUMENTAI_TEST_FILENAME="${PROJECT_ROOT}/google/cloud/documentai/quickstart/resources/invoice.pdf"
 
 # Cloud IAM configuration parameters
 export GOOGLE_CLOUD_CPP_IAM_CREDENTIALS_TEST_SERVICE_ACCOUNT="iam-credentials-test-sa@${GOOGLE_CLOUD_PROJECT}.iam.gserviceaccount.com"

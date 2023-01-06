@@ -30,44 +30,34 @@ using ::google::cloud::Idempotency;
 ModelServiceConnectionIdempotencyPolicy::
     ~ModelServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultModelServiceConnectionIdempotencyPolicy
-    : public ModelServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultModelServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
+ModelServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ModelServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ModelServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultModelServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency ModelServiceConnectionIdempotencyPolicy::GetModel(
+    google::cloud::bigquery::v2::GetModelRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetModel(
-      google::cloud::bigquery::v2::GetModelRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ModelServiceConnectionIdempotencyPolicy::ListModels(
+    google::cloud::bigquery::v2::ListModelsRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListModels(
-      google::cloud::bigquery::v2::ListModelsRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ModelServiceConnectionIdempotencyPolicy::PatchModel(
+    google::cloud::bigquery::v2::PatchModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency PatchModel(
-      google::cloud::bigquery::v2::PatchModelRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteModel(
-      google::cloud::bigquery::v2::DeleteModelRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ModelServiceConnectionIdempotencyPolicy::DeleteModel(
+    google::cloud::bigquery::v2::DeleteModelRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ModelServiceConnectionIdempotencyPolicy>
 MakeDefaultModelServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultModelServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<ModelServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

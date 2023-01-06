@@ -38,7 +38,7 @@ Controller2Metadata::RegisterDebuggee(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::RegisterDebuggeeRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->RegisterDebuggee(context, request);
 }
 
@@ -47,7 +47,7 @@ Controller2Metadata::ListActiveBreakpoints(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListActiveBreakpoints(context, request);
 }
 
@@ -56,7 +56,7 @@ Controller2Metadata::UpdateActiveBreakpoint(
     grpc::ClientContext& context,
     google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest const&
         request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->UpdateActiveBreakpoint(context, request);
 }
 
@@ -73,9 +73,8 @@ void Controller2Metadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

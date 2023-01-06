@@ -65,16 +65,16 @@ class ModelServiceClient {
       std::shared_ptr<ModelServiceConnection> connection, Options opts = {});
   ~ModelServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   ModelServiceClient(ModelServiceClient const&) = default;
   ModelServiceClient& operator=(ModelServiceClient const&) = default;
   ModelServiceClient(ModelServiceClient&&) = default;
   ModelServiceClient& operator=(ModelServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(ModelServiceClient const& a,
                          ModelServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -83,7 +83,7 @@ class ModelServiceClient {
                          ModelServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Gets the specified model resource by model ID.

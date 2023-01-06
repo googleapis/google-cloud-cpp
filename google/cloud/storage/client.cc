@@ -16,12 +16,13 @@
 #include "google/cloud/storage/internal/curl_client.h"
 #include "google/cloud/storage/internal/curl_handle.h"
 #include "google/cloud/storage/internal/openssl_util.h"
+#include "google/cloud/storage/internal/rest_client.h"
 #include "google/cloud/storage/oauth2/service_account_credentials.h"
 #include "google/cloud/internal/algorithm.h"
+#include "google/cloud/internal/curl_options.h"
 #include "google/cloud/internal/filesystem.h"
 #include "google/cloud/log.h"
 #include "absl/memory/memory.h"
-#include <openssl/md5.h>
 #include <fstream>
 #include <thread>
 
@@ -49,11 +50,15 @@ std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
   if (enable_logging) {
     client = std::make_shared<internal::LoggingClient>(std::move(client));
   }
-  return std::make_shared<internal::RetryClient>(std::move(client), opts);
+  return internal::RetryClient::Create(std::move(client), opts);
 }
 
 std::shared_ptr<internal::RawClient> Client::CreateDefaultInternalClient(
     Options const& opts) {
+  if (opts.get<internal::UseRestClientOption>()) {
+    return CreateDefaultInternalClient(opts,
+                                       internal::RestClient::Create(opts));
+  }
   return CreateDefaultInternalClient(opts, internal::CurlClient::Create(opts));
 }
 
@@ -86,16 +91,11 @@ ObjectReadStream Client::ReadObjectImpl(
 
 ObjectWriteStream Client::WriteObjectImpl(
     internal::ResumableUploadRequest const& request) {
-  auto session = raw_client_->CreateResumableSession(request);
-  if (!session) {
-    auto error = absl::make_unique<internal::ResumableUploadSessionError>(
-        std::move(session).status());
-
+  auto response = internal::CreateOrResume(*raw_client_, request);
+  if (!response) {
     ObjectWriteStream error_stream(
         absl::make_unique<internal::ObjectWriteStreambuf>(
-            std::move(error), 0, internal::CreateNullHashFunction(),
-            internal::HashValues{}, internal::CreateNullHashValidator(),
-            AutoFinalizeConfig::kDisabled));
+            std::move(response).status()));
     error_stream.setstate(std::ios::badbit | std::ios::eofbit);
     error_stream.Close();
     return error_stream;
@@ -103,7 +103,9 @@ ObjectWriteStream Client::WriteObjectImpl(
   auto const buffer_size = request.GetOption<UploadBufferSize>().value_or(
       raw_client_->client_options().upload_buffer_size());
   return ObjectWriteStream(absl::make_unique<internal::ObjectWriteStreambuf>(
-      *std::move(session), buffer_size, internal::CreateHashFunction(request),
+      raw_client_, request, std::move(response->upload_id),
+      response->committed_size, std::move(response->metadata), buffer_size,
+      internal::CreateHashFunction(request),
       internal::HashValues{
           request.GetOption<Crc32cChecksumValue>().value_or(""),
           request.GetOption<MD5HashValue>().value_or(""),
@@ -152,6 +154,8 @@ StatusOr<ObjectMetadata> Client::UploadFileSimple(
 
   std::string payload(static_cast<std::size_t>(upload_size), char{});
   is.seekg(upload_offset, std::ios::beg);
+  // We need to use `&payload[0]` until C++17
+  // NOLINTNEXTLINE(readability-container-data-pointer)
   is.read(&payload[0], payload.size());
   if (static_cast<std::size_t>(is.gcount()) < payload.size()) {
     std::ostringstream os;
@@ -216,83 +220,77 @@ integrity checks using the DisableMD5Hash() and DisableCrc32cChecksum() options.
   return UploadStreamResumable(source, request);
 }
 
-// NOLINTNEXTLINE(readability-make-member-function-const)
 StatusOr<ObjectMetadata> Client::UploadStreamResumable(
-    std::istream& source, internal::ResumableUploadRequest const& request) {
-  StatusOr<std::unique_ptr<internal::ResumableUploadSession>> session_status =
-      raw_client_->CreateResumableSession(request);
-  if (!session_status) {
-    return std::move(session_status).status();
-  }
+    std::istream& source,
+    internal::ResumableUploadRequest const& request) const {
+  auto response = internal::CreateOrResume(*raw_client_, request);
+  if (!response) return std::move(response).status();
 
-  auto session = std::move(*session_status);
+  if (response->metadata.has_value()) return *std::move(response->metadata);
+
   // How many bytes of the local file are uploaded to the GCS server.
-  auto server_size = session->next_expected_byte();
+  auto upload_id = std::move(response->upload_id);
+  auto committed_size = response->committed_size;
   auto upload_limit = request.GetOption<UploadLimit>().value_or(
       (std::numeric_limits<std::uint64_t>::max)());
-  // If `server_size == upload_limit`, we will upload an empty string and
+  // If `committed_size == upload_limit`, we will upload an empty string and
   // finalize the upload.
-  if (server_size > upload_limit) {
+  if (committed_size > upload_limit) {
     return Status(StatusCode::kOutOfRange,
                   "UploadLimit (" + std::to_string(upload_limit) +
                       ") is not bigger than the uploaded size (" +
-                      std::to_string(server_size) + ") on GCS server");
+                      std::to_string(committed_size) + ") on GCS server");
   }
-  source.seekg(server_size, std::ios::cur);
+  source.seekg(committed_size, std::ios::cur);
 
   // GCS requires chunks to be a multiple of 256KiB.
   auto chunk_size = internal::UploadChunkRequest::RoundUpToQuantum(
       raw_client_->client_options().upload_buffer_size());
 
-  StatusOr<internal::ResumableUploadResponse> upload_response(
-      internal::ResumableUploadResponse{});
   // We iterate while `source` is good, the upload size does not reach the
   // `UploadLimit` and the retry policy has not been exhausted.
   bool reach_upload_limit = false;
   internal::ConstBufferSequence buffers(1);
   std::vector<char> buffer(chunk_size);
-  while (!source.eof() && upload_response &&
-         !upload_response->payload.has_value() && !reach_upload_limit) {
+  while (!source.eof() && !reach_upload_limit) {
     // Read a chunk of data from the source file.
-    if (upload_limit - server_size <= chunk_size) {
+    if (upload_limit - committed_size <= chunk_size) {
       // We don't want the `source_size` to exceed `upload_limit`.
-      chunk_size = static_cast<std::size_t>(upload_limit - server_size);
+      chunk_size = static_cast<std::size_t>(upload_limit - committed_size);
       reach_upload_limit = true;
     }
     source.read(buffer.data(), buffer.size());
     auto gcount = static_cast<std::size_t>(source.gcount());
-    bool final_chunk = (gcount < buffer.size()) || reach_upload_limit;
-    auto source_size = session->next_expected_byte() + gcount;
-    auto expected = source_size;
+    auto expected = committed_size + gcount;
     buffers[0] = internal::ConstBuffer{buffer.data(), gcount};
-    if (final_chunk) {
-      upload_response = session->UploadFinalChunk(buffers, source_size, {});
-    } else {
-      upload_response = session->UploadChunk(buffers);
-    }
-    if (!upload_response) {
-      return std::move(upload_response).status();
-    }
-    if (session->next_expected_byte() != expected) {
+    auto upload_request = [&] {
+      bool final_chunk = (gcount < buffer.size()) || reach_upload_limit;
+      if (!final_chunk) {
+        return internal::UploadChunkRequest(upload_id, committed_size, buffers);
+      }
+      return internal::UploadChunkRequest(upload_id, committed_size, buffers,
+                                          internal::HashValues{});
+    }();
+    request.ForEachOption(internal::CopyCommonOptions(upload_request));
+    auto upload = raw_client_->UploadChunk(upload_request);
+    if (!upload) return std::move(upload).status();
+    if (upload->payload.has_value()) return *std::move(upload->payload);
+    auto const actual_committed_size = upload->committed_size.value_or(0);
+    if (actual_committed_size != expected) {
       // Defensive programming: unless there is a bug, this should be dead code.
       return Status(
           StatusCode::kInternal,
-          "Unexpected last committed byte expected=" +
-              std::to_string(expected) +
-              " got=" + std::to_string(session->next_expected_byte()) +
+          "Mismatch in committed size expected=" + std::to_string(expected) +
+              " got=" + std::to_string(actual_committed_size) +
               ". This is a bug, please report it at "
               "https://github.com/googleapis/google-cloud-cpp/issues/new");
     }
 
-    // We only update `server_size` when uploading is successful.
-    server_size = expected;
+    // We only update `committed_size` when uploading is successful.
+    committed_size = expected;
   }
-
-  if (!upload_response) {
-    return std::move(upload_response).status();
-  }
-
-  return *std::move(upload_response->payload);
+  return Status(StatusCode::kInternal,
+                "Upload did not complete but source is exhausted");
 }
 
 Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
@@ -319,10 +317,10 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
         Status(StatusCode::kInvalidArgument, "ofstream::open()"));
   }
 
-  std::string buffer;
-  buffer.resize(raw_client_->client_options().download_buffer_size(), '\0');
+  std::vector<char> buffer(
+      raw_client_->client_options().download_buffer_size());
   do {
-    stream.read(&buffer[0], buffer.size());
+    stream.read(buffer.data(), buffer.size());
     os.write(buffer.data(), stream.gcount());
   } while (os.good() && stream.good());
   os.close();
@@ -337,8 +335,7 @@ Status Client::DownloadFileImpl(internal::ReadObjectRangeRequest const& request,
   return Status();
 }
 
-// NOLINTNEXTLINE(readability-make-member-function-const)
-std::string Client::SigningEmail(SigningAccount const& signing_account) {
+std::string Client::SigningEmail(SigningAccount const& signing_account) const {
   if (signing_account.has_value()) {
     return signing_account.value();
   }
@@ -407,7 +404,8 @@ StatusOr<std::string> Client::SignUrlV4(internal::V4SignUrlRequest request) {
     return signed_blob.status();
   }
 
-  std::string signature = internal::HexEncode(signed_blob->signed_blob);
+  std::string signature =
+      google::cloud::internal::HexEncode(signed_blob->signed_blob);
   internal::CurlHandle curl;
   std::ostringstream os;
   os << request.HostnameWithBucket();
@@ -451,7 +449,8 @@ StatusOr<PolicyDocumentV4Result> Client::SignPolicyDocumentV4(
   if (!signed_blob) {
     return signed_blob.status();
   }
-  std::string signature = internal::HexEncode(signed_blob->signed_blob);
+  std::string signature =
+      google::cloud::internal::HexEncode(signed_blob->signed_blob);
   auto required_fields = request.RequiredFormFields();
   required_fields["x-goog-signature"] = signature;
   required_fields["policy"] = base64_policy;
@@ -474,8 +473,8 @@ std::string CreateRandomPrefixName(std::string const& prefix) {
 namespace internal {
 
 ScopedDeleter::ScopedDeleter(
-    std::function<Status(std::string, std::int64_t)> delete_fun)
-    : enabled_(true), delete_fun_(std::move(delete_fun)) {}
+    std::function<Status(std::string, std::int64_t)> df)
+    : delete_fun_(std::move(df)) {}
 
 ScopedDeleter::~ScopedDeleter() {
   if (enabled_) {

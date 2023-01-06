@@ -7,7 +7,7 @@ In this document we describe how to write unit tests that mock
 reader is familiar with the Google Test and Google Mock frameworks and with
 the Cloud Spanner C++ Client.
 
-## Mocking a successful `ExecuteQuery`
+## Mocking a successful ExecuteQuery
 
 First include the headers for the Cloud Spanner Client, the mocking class, and
 the Google Mock framework.
@@ -55,12 +55,10 @@ without a value:
 
 @snippet mock_execute_query.cc simulate-streaming-end
 
-
 Once the `source` has been created and its behavior mocked, you mock the
 behavior for `ExecuteQuery`:
 
 @snippet mock_execute_query.cc mock-execute-query
-
 
 ## Full Listing
 

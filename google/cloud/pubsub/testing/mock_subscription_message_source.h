@@ -31,8 +31,10 @@ class MockSubscriptionMessageSource
   MOCK_METHOD(void, Start, (pubsub_internal::MessageCallback), (override));
   MOCK_METHOD(void, Shutdown, (), (override));
   MOCK_METHOD(void, Read, (std::size_t max_callbacks), (override));
-  MOCK_METHOD(void, AckMessage, (std::string const& ack_id), (override));
-  MOCK_METHOD(void, NackMessage, (std::string const& ack_id), (override));
+  MOCK_METHOD(future<Status>, AckMessage, (std::string const& ack_id),
+              (override));
+  MOCK_METHOD(future<Status>, NackMessage, (std::string const& ack_id),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -30,53 +30,40 @@ using ::google::cloud::Idempotency;
 BigQueryWriteConnectionIdempotencyPolicy::
     ~BigQueryWriteConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultBigQueryWriteConnectionIdempotencyPolicy
-    : public BigQueryWriteConnectionIdempotencyPolicy {
- public:
-  ~DefaultBigQueryWriteConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy>
+BigQueryWriteConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<BigQueryWriteConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultBigQueryWriteConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency BigQueryWriteConnectionIdempotencyPolicy::CreateWriteStream(
+    google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateWriteStream(
-      google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigQueryWriteConnectionIdempotencyPolicy::GetWriteStream(
+    google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency GetWriteStream(
-      google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigQueryWriteConnectionIdempotencyPolicy::FinalizeWriteStream(
+    google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency FinalizeWriteStream(
-      google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency BigQueryWriteConnectionIdempotencyPolicy::BatchCommitWriteStreams(
+    google::cloud::bigquery::storage::v1::
+        BatchCommitWriteStreamsRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency BatchCommitWriteStreams(
-      google::cloud::bigquery::storage::v1::
-          BatchCommitWriteStreamsRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency FlushRows(
-      google::cloud::bigquery::storage::v1::FlushRowsRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency BigQueryWriteConnectionIdempotencyPolicy::FlushRows(
+    google::cloud::bigquery::storage::v1::FlushRowsRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<BigQueryWriteConnectionIdempotencyPolicy>
 MakeDefaultBigQueryWriteConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultBigQueryWriteConnectionIdempotencyPolicy>();
+  return absl::make_unique<BigQueryWriteConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

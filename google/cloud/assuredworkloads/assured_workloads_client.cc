@@ -17,7 +17,6 @@
 // source: google/cloud/assuredworkloads/v1/assuredworkloads.proto
 
 #include "google/cloud/assuredworkloads/assured_workloads_client.h"
-#include "google/cloud/assuredworkloads/internal/assured_workloads_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 AssuredWorkloadsServiceClient::AssuredWorkloadsServiceClient(
     std::shared_ptr<AssuredWorkloadsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          assuredworkloads_internal::AssuredWorkloadsServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 AssuredWorkloadsServiceClient::~AssuredWorkloadsServiceClient() = default;
 
 future<StatusOr<google::cloud::assuredworkloads::v1::Workload>>
@@ -71,6 +68,15 @@ AssuredWorkloadsServiceClient::UpdateWorkload(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateWorkload(request);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+AssuredWorkloadsServiceClient::RestrictAllowedResources(
+    google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RestrictAllowedResources(request);
 }
 
 Status AssuredWorkloadsServiceClient::DeleteWorkload(std::string const& name,
@@ -120,6 +126,49 @@ AssuredWorkloadsServiceClient::ListWorkloads(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ListWorkloads(std::move(request));
+}
+
+StreamRange<google::cloud::assuredworkloads::v1::Violation>
+AssuredWorkloadsServiceClient::ListViolations(std::string const& parent,
+                                              Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::assuredworkloads::v1::ListViolationsRequest request;
+  request.set_parent(parent);
+  return connection_->ListViolations(request);
+}
+
+StreamRange<google::cloud::assuredworkloads::v1::Violation>
+AssuredWorkloadsServiceClient::ListViolations(
+    google::cloud::assuredworkloads::v1::ListViolationsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListViolations(std::move(request));
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::Violation>
+AssuredWorkloadsServiceClient::GetViolation(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::assuredworkloads::v1::GetViolationRequest request;
+  request.set_name(name);
+  return connection_->GetViolation(request);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::Violation>
+AssuredWorkloadsServiceClient::GetViolation(
+    google::cloud::assuredworkloads::v1::GetViolationRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetViolation(request);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+AssuredWorkloadsServiceClient::AcknowledgeViolation(
+    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AcknowledgeViolation(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

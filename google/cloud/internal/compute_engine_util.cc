@@ -21,6 +21,8 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+std::string GceMetadataScheme() { return "http"; }
+
 std::string GceMetadataHostname() {
   return google::cloud::internal::GetEnv(GceMetadataHostnameEnvVar())
       .value_or("metadata.google.internal");

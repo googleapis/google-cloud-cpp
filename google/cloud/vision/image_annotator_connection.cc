@@ -23,6 +23,7 @@
 #include "google/cloud/vision/internal/image_annotator_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -64,6 +65,7 @@ ImageAnnotatorConnection::AsyncBatchAnnotateFiles(
 std::shared_ptr<ImageAnnotatorConnection> MakeImageAnnotatorConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ImageAnnotatorPolicyOptionList>(options,
                                                                  __func__);
   options = vision_internal::ImageAnnotatorDefaultOptions(std::move(options));
@@ -76,23 +78,5 @@ std::shared_ptr<ImageAnnotatorConnection> MakeImageAnnotatorConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vision
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace vision_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<vision::ImageAnnotatorConnection> MakeImageAnnotatorConnection(
-    std::shared_ptr<ImageAnnotatorStub> stub, Options options) {
-  options = ImageAnnotatorDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<vision_internal::ImageAnnotatorConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace vision_internal
 }  // namespace cloud
 }  // namespace google

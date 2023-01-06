@@ -35,7 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options EventServiceDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_EVENT_SERVICE_ENDPOINT", "",
-      "jobs.googleapis.com");
+      "GOOGLE_CLOUD_CPP_EVENT_SERVICE_AUTHORITY", "jobs.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");
   if (!options.has<talent::EventServiceRetryPolicyOption>()) {

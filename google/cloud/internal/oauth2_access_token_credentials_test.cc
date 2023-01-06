@@ -25,16 +25,12 @@ namespace {
 using ::google::cloud::internal::AccessToken;
 
 TEST(AccessTokenCredentials, Simple) {
-  auto const expiration =
-      std::chrono::system_clock::now() - std::chrono::minutes(10);
-
-  AccessTokenCredentials tested(AccessToken{"token1", expiration});
-  EXPECT_EQ(std::make_pair(std::string{"Authorization"},
-                           std::string{"Bearer token1"}),
-            tested.AuthorizationHeader().value());
-  EXPECT_EQ(std::make_pair(std::string{"Authorization"},
-                           std::string{"Bearer token1"}),
-            tested.AuthorizationHeader().value());
+  auto const now = std::chrono::system_clock::now();
+  auto const expiration = now - std::chrono::minutes(10);
+  auto const expected = AccessToken{"token1", expiration};
+  AccessTokenCredentials tested(expected);
+  EXPECT_EQ(expected, tested.GetToken(now).value());
+  EXPECT_EQ(expected, tested.GetToken(now).value());
 }
 
 }  // namespace

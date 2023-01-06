@@ -20,12 +20,15 @@
 #include "google/cloud/storage/hashing_options.h"
 #include "google/cloud/storage/internal/const_buffer.h"
 #include "google/cloud/storage/internal/generic_object_request.h"
+#include "google/cloud/storage/internal/hash_values.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/object_metadata.h"
 #include "google/cloud/storage/upload_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/storage/well_known_parameters.h"
+#include "absl/types/optional.h"
 #include "absl/types/span.h"
+#include <map>
 #include <numeric>
 #include <string>
 #include <vector>
@@ -64,6 +67,8 @@ std::ostream& operator<<(std::ostream& os, ListObjectsRequest const& r);
 struct ListObjectsResponse {
   static StatusOr<ListObjectsResponse> FromHttpResponse(
       std::string const& payload);
+  static StatusOr<ListObjectsResponse> FromHttpResponse(
+      HttpResponse const& response);
 
   std::string next_page_token;
   std::vector<ObjectMetadata> items;
@@ -167,13 +172,14 @@ class ReadObjectRangeRequest
           ReadObjectRangeRequest, DisableCrc32cChecksum, DisableMD5Hash,
           EncryptionKey, Generation, IfGenerationMatch, IfGenerationNotMatch,
           IfMetagenerationMatch, IfMetagenerationNotMatch, ReadFromOffset,
-          ReadRange, ReadLast, UserProject> {
+          ReadRange, ReadLast, UserProject, AcceptEncoding> {
  public:
   using GenericObjectRequest::GenericObjectRequest;
 
   bool RequiresNoCache() const;
   bool RequiresRangeHeader() const;
   std::string RangeHeader() const;
+  std::string RangeHeaderValue() const;
   std::int64_t StartingByte() const;
 };
 
@@ -322,6 +328,8 @@ std::ostream& operator<<(std::ostream& os, RewriteObjectRequest const& r);
 struct RewriteObjectResponse {
   static StatusOr<RewriteObjectResponse> FromHttpResponse(
       std::string const& payload);
+  static StatusOr<RewriteObjectResponse> FromHttpResponse(
+      HttpResponse const& response);
 
   std::uint64_t total_bytes_rewritten;
   std::uint64_t object_size;
@@ -359,6 +367,23 @@ class ResumableUploadRequest
 
 std::ostream& operator<<(std::ostream& os, ResumableUploadRequest const& r);
 
+struct CreateResumableUploadResponse {
+  static StatusOr<CreateResumableUploadResponse> FromHttpResponse(
+      HttpResponse response);
+
+  std::string upload_id;
+};
+
+bool operator==(CreateResumableUploadResponse const& lhs,
+                CreateResumableUploadResponse const& rhs);
+inline bool operator!=(CreateResumableUploadResponse const& lhs,
+                       CreateResumableUploadResponse const& rhs) {
+  return !(lhs == rhs);
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         CreateResumableUploadResponse const& r);
+
 /**
  * A request to cancel a resumable upload.
  */
@@ -381,29 +406,44 @@ std::ostream& operator<<(std::ostream& os,
 /**
  * A request to send one chunk in an upload session.
  */
-class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
+class UploadChunkRequest
+    : public GenericRequest<UploadChunkRequest, UserProject> {
  public:
   UploadChunkRequest() = default;
-  UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
+
+  // A non-final chunk
+  UploadChunkRequest(std::string upload_session_url, std::uint64_t offset,
                      ConstBufferSequence payload)
       : upload_session_url_(std::move(upload_session_url)),
-        range_begin_(range_begin),
-        payload_(std::move(payload)) {}
-  UploadChunkRequest(std::string upload_session_url, std::uint64_t range_begin,
-                     ConstBufferSequence payload, std::uint64_t source_size)
-      : upload_session_url_(std::move(upload_session_url)),
-        range_begin_(range_begin),
-        source_size_(source_size),
-        last_chunk_(true),
+        offset_(offset),
         payload_(std::move(payload)) {}
 
+  UploadChunkRequest(std::string upload_session_url, std::uint64_t offset,
+                     ConstBufferSequence payload, HashValues full_object_hashes)
+      : upload_session_url_(std::move(upload_session_url)),
+        offset_(offset),
+        upload_size_(offset + TotalBytes(payload)),
+        payload_(std::move(payload)),
+        full_object_hashes_(std::move(full_object_hashes)) {}
+
   std::string const& upload_session_url() const { return upload_session_url_; }
-  std::uint64_t range_begin() const { return range_begin_; }
-  std::uint64_t range_end() const { return range_begin_ + payload_size() - 1; }
-  std::uint64_t source_size() const { return source_size_; }
-  std::size_t payload_size() const { return TotalBytes(payload_); }
+  std::uint64_t offset() const { return offset_; }
+  absl::optional<std::uint64_t> upload_size() const { return upload_size_; }
   ConstBufferSequence const& payload() const { return payload_; }
+  HashValues const& full_object_hashes() const { return full_object_hashes_; }
+
+  bool last_chunk() const { return upload_size_.has_value(); }
+  std::size_t payload_size() const { return TotalBytes(payload_); }
   std::string RangeHeader() const;
+  std::string RangeHeaderValue() const;
+
+  /**
+   * Returns the request to continue writing at @p new_offset.
+   *
+   * @note the result of calling this with an out of range value is undefined
+   *     behavior.
+   */
+  UploadChunkRequest RemainingChunk(std::uint64_t new_offset) const;
 
   // Chunks must be multiples of 256 KiB:
   //  https://cloud.google.com/storage/docs/json_api/v1/how-tos/resumable-upload
@@ -422,10 +462,10 @@ class UploadChunkRequest : public GenericRequest<UploadChunkRequest> {
 
  private:
   std::string upload_session_url_;
-  std::uint64_t range_begin_ = 0;
-  std::uint64_t source_size_ = 0;
-  bool last_chunk_ = false;
+  std::uint64_t offset_ = 0;
+  absl::optional<std::uint64_t> upload_size_;
   ConstBufferSequence payload_;
+  HashValues full_object_hashes_;
 };
 
 std::ostream& operator<<(std::ostream& os, UploadChunkRequest const& r);
@@ -448,6 +488,47 @@ class QueryResumableUploadRequest
 
 std::ostream& operator<<(std::ostream& os,
                          QueryResumableUploadRequest const& r);
+
+StatusOr<std::uint64_t> ParseRangeHeader(std::string const& range);
+
+/**
+ * The response from uploading a chunk and querying a resumable upload.
+ *
+ * We use the same type to represent the response for a UploadChunkRequest and a
+ * QueryResumableUploadRequest because they are the same response.  Once a chunk
+ * is successfully uploaded the response is the new status for the resumable
+ * upload.
+ */
+struct QueryResumableUploadResponse {
+  static StatusOr<QueryResumableUploadResponse> FromHttpResponse(
+      HttpResponse response);
+  QueryResumableUploadResponse() = default;
+  QueryResumableUploadResponse(
+      absl::optional<std::uint64_t> cs,
+      absl::optional<google::cloud::storage::ObjectMetadata> p)
+      : committed_size(std::move(cs)), payload(std::move(p)) {}
+  QueryResumableUploadResponse(
+      absl::optional<std::uint64_t> cs,
+      absl::optional<google::cloud::storage::ObjectMetadata> p,
+      std::multimap<std::string, std::string> rm)
+      : committed_size(std::move(cs)),
+        payload(std::move(p)),
+        request_metadata(std::move(rm)) {}
+
+  absl::optional<std::uint64_t> committed_size;
+  absl::optional<google::cloud::storage::ObjectMetadata> payload;
+  std::multimap<std::string, std::string> request_metadata;
+};
+
+bool operator==(QueryResumableUploadResponse const& lhs,
+                QueryResumableUploadResponse const& rhs);
+inline bool operator!=(QueryResumableUploadResponse const& lhs,
+                       QueryResumableUploadResponse const& rhs) {
+  return !(lhs == rhs);
+}
+
+std::ostream& operator<<(std::ostream& os,
+                         QueryResumableUploadResponse const& r);
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

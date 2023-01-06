@@ -1,0 +1,9 @@
+/*!
+@defgroup storage-options GCS Client Library Configuration Options
+
+The GCS client library uses the same mechanism as all other C++ client
+libraries for configuration. As usual for the C++ client libraries, it adds a
+number of unique options only applicable for the GCS library.
+
+@see @ref options - for an overview of client library configuration.
+*/

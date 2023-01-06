@@ -30,7 +30,6 @@ function (spanner_client_define_integration_tests)
         data_types_integration_test.cc
         database_admin_integration_test.cc
         instance_admin_integration_test.cc
-        rpc_failure_threshold_integration_test.cc
         session_pool_integration_test.cc)
 
     # Export the list of unit tests to a .bzl file so we do not need to maintain

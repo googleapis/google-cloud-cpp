@@ -88,17 +88,16 @@ using bigtable::benchmarks::ParseArgs;
 
 /// Run an iteration of the test.
 google::cloud::StatusOr<BenchmarkResult> RunSyncBenchmark(
-    bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
-    std::string const& table_id, std::chrono::seconds test_duration);
+    bigtable::benchmarks::Benchmark const& benchmark,
+    std::chrono::seconds test_duration);
 
 class AsyncBenchmark {
  public:
-  AsyncBenchmark(bigtable::benchmarks::Benchmark& benchmark,
-                 google::cloud::CompletionQueue cq,
-                 std::string const& app_profile_id, std::string const& table_id)
+  AsyncBenchmark(bigtable::benchmarks::Benchmark const& benchmark,
+                 google::cloud::CompletionQueue cq)
       : cq_(std::move(cq)),
         benchmark_(benchmark),
-        table_(benchmark_.MakeDataClient(), app_profile_id, table_id),
+        table_(benchmark_.MakeTable()),
         generator_(std::random_device{}()) {}
 
   ~AsyncBenchmark() {
@@ -121,7 +120,7 @@ class AsyncBenchmark {
   std::condition_variable cv_;
   google::cloud::CompletionQueue cq_;
   std::vector<std::thread> cq_threads_;
-  bigtable::benchmarks::Benchmark& benchmark_;
+  bigtable::benchmarks::Benchmark const& benchmark_;
   bigtable::Table table_;
   google::cloud::internal::DefaultPRNG generator_;
   int outstanding_requests_ = 0;
@@ -164,8 +163,7 @@ int main(int argc, char* argv[]) {
   std::cout << "# Running ReadRow/AsyncReadRow Throughput Benchmark "
             << std::flush;
 
-  AsyncBenchmark async_benchmark(benchmark, cq, options->app_profile_id,
-                                 options->table_id);
+  AsyncBenchmark async_benchmark(benchmark, cq);
   // Start the benchmark threads.
   auto test_start = std::chrono::steady_clock::now();
   auto elapsed = [test_start] {
@@ -177,8 +175,7 @@ int main(int argc, char* argv[]) {
     std::cout << '=' << std::flush;
     async_benchmark.ActivateCompletionQueue();
     tasks.emplace_back(std::async(std::launch::async, RunSyncBenchmark,
-                                  std::ref(benchmark), options->app_profile_id,
-                                  options->table_id, options->test_duration));
+                                  std::ref(benchmark), options->test_duration));
   }
 
   // Wait for the threads and combine all the results.
@@ -298,13 +295,11 @@ OperationResult RunOneReadRow(bigtable::Table& table, std::string row_key) {
 }
 
 google::cloud::StatusOr<BenchmarkResult> RunSyncBenchmark(
-    bigtable::benchmarks::Benchmark& benchmark, std::string app_profile_id,
-    std::string const& table_id, std::chrono::seconds test_duration) {
+    bigtable::benchmarks::Benchmark const& benchmark,
+    std::chrono::seconds test_duration) {
   BenchmarkResult result = {};
 
-  auto data_client = benchmark.MakeDataClient();
-  bigtable::Table table(std::move(data_client), std::move(app_profile_id),
-                        table_id);
+  auto table = benchmark.MakeTable();
 
   // Don't eat all the entropy to generate random keys.
   google::cloud::internal::DefaultPRNG generator(std::random_device{}());

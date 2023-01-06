@@ -36,15 +36,14 @@ InstancesConnectionImpl::InstancesConnectionImpl(
     std::shared_ptr<appengine_internal::InstancesStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), appengine_internal::InstancesDefaultOptions(
-                                  InstancesConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      InstancesConnection::options())) {}
 
 StreamRange<google::appengine::v1::Instance>
 InstancesConnectionImpl::ListInstances(
     google::appengine::v1::ListInstancesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<appengine::InstancesRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -87,7 +86,7 @@ StatusOr<google::appengine::v1::Instance> InstancesConnectionImpl::GetInstance(
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>
 InstancesConnectionImpl::DeleteInstance(
     google::appengine::v1::DeleteInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::OperationMetadataV1>(
       background_->cq(), request,
@@ -116,7 +115,7 @@ InstancesConnectionImpl::DeleteInstance(
 future<StatusOr<google::appengine::v1::Instance>>
 InstancesConnectionImpl::DebugInstance(
     google::appengine::v1::DebugInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::appengine::v1::Instance>(
       background_->cq(), request,

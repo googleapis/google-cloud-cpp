@@ -31,27 +31,49 @@ namespace cloud {
 namespace privateca {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-privateca-options
+ */
 struct CertificateAuthorityServiceRetryPolicyOption {
   using Type = std::shared_ptr<CertificateAuthorityServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-privateca-options
+ */
 struct CertificateAuthorityServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct CertificateAuthorityServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-privateca-options
+ */
 struct CertificateAuthorityServiceConnectionIdempotencyPolicyOption {
   using Type =
       std::shared_ptr<CertificateAuthorityServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-privateca-options
+ */
+struct CertificateAuthorityServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to CertificateAuthorityService.
+ *
+ * @ingroup google-cloud-privateca-options
+ */
 using CertificateAuthorityServicePolicyOptionList =
     OptionList<CertificateAuthorityServiceRetryPolicyOption,
                CertificateAuthorityServiceBackoffPolicyOption,

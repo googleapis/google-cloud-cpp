@@ -45,7 +45,7 @@ StatusOr<google::cloud::resourcemanager::v3::ListProjectsResponse>
 ProjectsMetadata::ListProjects(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::ListProjectsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->ListProjects(context, request);
 }
 
@@ -53,7 +53,7 @@ StatusOr<google::cloud::resourcemanager::v3::SearchProjectsResponse>
 ProjectsMetadata::SearchProjects(
     grpc::ClientContext& context,
     google::cloud::resourcemanager::v3::SearchProjectsRequest const& request) {
-  SetMetadata(context, {});
+  SetMetadata(context);
   return child_->SearchProjects(context, request);
 }
 
@@ -62,7 +62,7 @@ ProjectsMetadata::AsyncCreateProject(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::resourcemanager::v3::CreateProjectRequest const& request) {
-  SetMetadata(*context, {});
+  SetMetadata(*context);
   return child_->AsyncCreateProject(cq, std::move(context), request);
 }
 
@@ -154,9 +154,8 @@ void ProjectsMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

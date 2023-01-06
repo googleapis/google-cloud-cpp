@@ -16,8 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_CURL_HANDLE_H
 
 #include "google/cloud/storage/client_options.h"
-#include "google/cloud/storage/internal/curl_wrappers.h"
+#include "google/cloud/storage/internal/curl_handle_factory.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/curl_wrappers.h"
 #include "google/cloud/status_or.h"
 #include "absl/functional/function_ref.h"
 #include <curl/curl.h>
@@ -29,38 +30,6 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-void AssertOptionSuccessImpl(
-    CURLcode e, CURLoption opt, char const* where,
-    absl::FunctionRef<std::string()> const& format_parameter);
-
-inline void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where,
-                                char const* param) {
-  if (e == CURLE_OK) return;
-  AssertOptionSuccessImpl(e, opt, where,
-                          [param] { return std::string{param}; });
-}
-
-inline void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where,
-                                std::intmax_t param) {
-  if (e == CURLE_OK) return;
-  AssertOptionSuccessImpl(e, opt, where,
-                          [param] { return std::to_string(param); });
-}
-
-inline void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where,
-                                std::nullptr_t) {
-  if (e == CURLE_OK) return;
-  AssertOptionSuccessImpl(e, opt, where, [] { return "nullptr"; });
-}
-
-template <typename T,
-          typename std::enable_if<!std::is_integral<T>::value, int>::type = 0>
-void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where, T) {
-  if (e == CURLE_OK) return;
-  AssertOptionSuccessImpl(e, opt, where, [] {
-    return std::string{"a value of type="} + typeid(T).name();
-  });
-}
 
 /**
  * Wraps CURL* handles in a safer C++ interface.
@@ -71,6 +40,12 @@ void AssertOptionSuccess(CURLcode e, CURLoption opt, char const* where, T) {
  */
 class CurlHandle {
  public:
+  static CurlHandle MakeFromPool(rest_internal::CurlHandleFactory& factory);
+  static void ReturnToPool(rest_internal::CurlHandleFactory& factory,
+                           CurlHandle h);
+  static void DiscardFromPool(rest_internal::CurlHandleFactory& factory,
+                              CurlHandle h);
+
   explicit CurlHandle();
   ~CurlHandle();
 
@@ -97,21 +72,21 @@ class CurlHandle {
   void SetSocketCallback(SocketOptions const& options);
 
   /// URL-escapes a string.
-  CurlString MakeEscapedString(std::string const& s) {
-    return CurlString(
+  rest_internal::CurlString MakeEscapedString(std::string const& s) {
+    return rest_internal::CurlString(
         curl_easy_escape(handle_.get(), s.data(), static_cast<int>(s.length())),
         &curl_free);
   }
 
   template <typename T>
-  void SetOption(CURLoption option, T&& param) {
+  Status SetOption(CURLoption option, T&& param) {
     auto e = curl_easy_setopt(handle_.get(), option, std::forward<T>(param));
-    AssertOptionSuccess(e, option, __func__, param);
+    return AsStatus(e, __func__);
   }
 
-  void SetOption(CURLoption option, std::nullptr_t) {
+  Status SetOption(CURLoption option, std::nullptr_t) {
     auto e = curl_easy_setopt(handle_.get(), option, nullptr);
-    AssertOptionSuccess(e, option, __func__, nullptr);
+    return AsStatus(e, __func__);
   }
 
   /**
@@ -164,13 +139,15 @@ class CurlHandle {
   };
 
  private:
-  explicit CurlHandle(CurlPtr ptr) : handle_(std::move(ptr)) {}
+  struct InternalOnly {};
+  explicit CurlHandle(InternalOnly, rest_internal::CurlPtr ptr)
+      : handle_(std::move(ptr)) {}
 
   friend class CurlDownloadRequest;
   friend class CurlRequestBuilder;
   friend class CurlHandleFactory;
 
-  CurlPtr handle_;
+  rest_internal::CurlPtr handle_;
   std::shared_ptr<DebugInfo> debug_info_;
   SocketOptions socket_options_;
 };

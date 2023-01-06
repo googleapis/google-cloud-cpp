@@ -27,6 +27,21 @@ namespace cloud {
 namespace channel_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `CloudChannelServiceConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `CloudChannelServiceClient`. To do
+ * so, construct an object of type `CloudChannelServiceClient` with an instance
+ * of this class. Then use the Google Test framework functions to program the
+ * behavior of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockCloudChannelServiceConnection
     : public channel::CloudChannelServiceConnection {
  public:
@@ -181,6 +196,72 @@ class MockCloudChannelServiceConnection
       (google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>,
+      GetCustomerRepricingConfig,
+      (google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>,
+      ListCustomerRepricingConfigs,
+      (google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>,
+      CreateCustomerRepricingConfig,
+      (google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>,
+      UpdateCustomerRepricingConfig,
+      (google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteCustomerRepricingConfig,
+      (google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>,
+      GetChannelPartnerRepricingConfig,
+      (google::cloud::channel::v1::
+           GetChannelPartnerRepricingConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>,
+      ListChannelPartnerRepricingConfigs,
+      (google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
+           request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>,
+      CreateChannelPartnerRepricingConfig,
+      (google::cloud::channel::v1::
+           CreateChannelPartnerRepricingConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>,
+      UpdateChannelPartnerRepricingConfig,
+      (google::cloud::channel::v1::
+           UpdateChannelPartnerRepricingConfigRequest const& request),
+      (override));
+
+  MOCK_METHOD(Status, DeleteChannelPartnerRepricingConfig,
+              (google::cloud::channel::v1::
+                   DeleteChannelPartnerRepricingConfigRequest const& request),
+              (override));
 
   MOCK_METHOD(StatusOr<google::cloud::channel::v1::Offer>, LookupOffer,
               (google::cloud::channel::v1::LookupOfferRequest const& request),

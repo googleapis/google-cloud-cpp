@@ -29,12 +29,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::testing::HasSubstr;
-using testing::MockObjectReadSource;
-using ::testing::Return;
-using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::google::cloud::storage::testing::MockObjectReadSource;
 using ::google::cloud::storage::testing::canonical_errors::PermanentError;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::testing::_;
+using ::testing::Contains;
+using ::testing::HasSubstr;
+using ::testing::Pair;
+using ::testing::Return;
 
 class BackoffPolicyMockState {
  public:
@@ -68,19 +70,21 @@ class BackoffPolicyMock : public BackoffPolicy {
 };
 
 Options BasicTestPolicies() {
+  using us = std::chrono::microseconds;
   return Options{}
       .set<RetryPolicyOption>(LimitedErrorCountRetryPolicy(3).clone())
       .set<BackoffPolicyOption>(
           // Make the tests faster.
-          ExponentialBackoffPolicy(1_us, 2_us, 2).clone())
+          ExponentialBackoffPolicy(us(1), us(2), 2).clone())
       .set<IdempotencyPolicyOption>(StrictIdempotencyPolicy().clone());
 }
 
 /// @test No failures scenario.
 TEST(RetryObjectReadSourceTest, NoFailures) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) {
@@ -97,8 +101,9 @@ TEST(RetryObjectReadSourceTest, NoFailures) {
 /// @test Permanent failure when creating the raw source
 TEST(RetryObjectReadSourceTest, PermanentFailureOnSessionCreation) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) { return PermanentError(); });
@@ -111,8 +116,9 @@ TEST(RetryObjectReadSourceTest, PermanentFailureOnSessionCreation) {
 /// @test Transient failures exhaust retry policy when creating the raw source
 TEST(RetryObjectReadSourceTest, TransientFailuresExhaustOnSessionCreation) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .Times(4)
@@ -127,8 +133,9 @@ TEST(RetryObjectReadSourceTest, TransientFailuresExhaustOnSessionCreation) {
 /// @test Recovery from a transient failures when creating the raw source
 TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) { return TransientError(); })
@@ -148,8 +155,9 @@ TEST(RetryObjectReadSourceTest, SessionCreationRecoversFromTransientFailures) {
 TEST(RetryObjectReadSourceTest, PermanentReadFailure) {
   auto raw_client = std::make_shared<testing::MockClient>();
   auto* raw_source = new MockObjectReadSource;
-  auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([raw_source](ReadObjectRangeRequest const&) {
@@ -176,8 +184,9 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
     ++num_backoff_policy_called;
     return std::chrono::milliseconds(0);
   });
-  auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client),
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(
       BasicTestPolicies().set<BackoffPolicyOption>(
           backoff_policy_mock.clone()));
 
@@ -207,10 +216,12 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       });
 
+  // We really do not care how many times the policy is closed before we make
+  // the first `Read()` call.  We only care about how it increases.
+  auto const initial_clone_count = backoff_policy_mock.NumClones();
   auto source = client->ReadObject(ReadObjectRangeRequest{});
   ASSERT_STATUS_OK(source);
-  // The policy was cloned by the options, the ctor, and once by the RetryClient
-  EXPECT_EQ(3, backoff_policy_mock.NumClones());
+  EXPECT_EQ(initial_clone_count + 1, backoff_policy_mock.NumClones());
   EXPECT_EQ(0, num_backoff_policy_called);
 
   // raw_source1 and raw_source2 fail, then a success
@@ -218,7 +229,7 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
   // Two retries, so the backoff policy was called twice.
   EXPECT_EQ(2, num_backoff_policy_called);
   // The backoff should have been cloned during the read.
-  EXPECT_EQ(4, backoff_policy_mock.NumClones());
+  EXPECT_EQ(initial_clone_count + 2, backoff_policy_mock.NumClones());
   // The backoff policy was used twice in the first retry.
   EXPECT_EQ(2, backoff_policy_mock.NumCallsFromLastClone());
 
@@ -227,7 +238,7 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
   // This read caused a third retry.
   EXPECT_EQ(3, num_backoff_policy_called);
   // The backoff should have been cloned during the read.
-  EXPECT_EQ(5, backoff_policy_mock.NumClones());
+  EXPECT_EQ(initial_clone_count + 3, backoff_policy_mock.NumClones());
   // The backoff policy was only once in the second retry.
   EXPECT_EQ(1, backoff_policy_mock.NumCallsFromLastClone());
 }
@@ -235,8 +246,9 @@ TEST(RetryObjectReadSourceTest, BackoffPolicyResetOnSuccess) {
 /// @test Check that retry policy is shared between reads and resetting session
 TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const&) {
@@ -264,8 +276,9 @@ TEST(RetryObjectReadSourceTest, RetryPolicyExhaustedOnResetSession) {
 /// @test `ReadLast` behaviour after a transient failure
 TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const& req) {
@@ -273,7 +286,7 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
         auto source = absl::make_unique<MockObjectReadSource>();
         EXPECT_CALL(*source, Read)
             .WillOnce(Return(ReadSourceResult{static_cast<std::size_t>(1024),
-                                              HttpResponse{200, "", {}}}))
+                                              HttpResponse{100, "", {}}}))
             .WillOnce(Return(TransientError()));
         return std::unique_ptr<ObjectReadSource>(std::move(source));
       })
@@ -296,8 +309,9 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithReadLastOption) {
 /// @test The generation is captured such that we resume from the same version
 TEST(RetryObjectReadSourceTest, TransientFailureWithGeneration) {
   auto raw_client = std::make_shared<testing::MockClient>();
-  auto client = std::make_shared<RetryClient>(
-      std::shared_ptr<internal::RawClient>(raw_client), BasicTestPolicies());
+  auto client =
+      RetryClient::Create(std::shared_ptr<internal::RawClient>(raw_client));
+  google::cloud::internal::OptionsSpan const span(BasicTestPolicies());
 
   EXPECT_CALL(*raw_client, ReadObject)
       .WillOnce([](ReadObjectRangeRequest const& req) {
@@ -326,6 +340,106 @@ TEST(RetryObjectReadSourceTest, TransientFailureWithGeneration) {
   ASSERT_STATUS_OK((*source)->Read(nullptr, 1024));
   auto res = (*source)->Read(nullptr, 1024);
   ASSERT_TRUE(res);
+}
+
+/// @test Downloads with decompressive transcoding require discarding data.
+TEST(RetryObjectReadSourceTest, DiscardDataForDecompressiveTranscoding) {
+  auto mock = std::make_shared<testing::MockClient>();
+  auto client = RetryClient::Create(std::shared_ptr<internal::RawClient>(mock));
+  google::cloud::internal::OptionsSpan const span(
+      BasicTestPolicies().set<RetryPolicyOption>(
+          LimitedErrorCountRetryPolicy(10).clone()));
+
+  EXPECT_CALL(*mock, ReadObject)
+      .WillOnce([](ReadObjectRangeRequest const&) {
+        // Simulate an initial download that reveals the object is subject to
+        // decompressive transcoding. It returns the requested amount of data
+        // (512 * 1024 bytes), and then fails with a transient error.
+        auto source = absl::make_unique<MockObjectReadSource>();
+        auto r0 = ReadSourceResult{
+            static_cast<std::size_t>(512 * 1024),
+            HttpResponse{100, "", {{"x-test-only", "download 1 r0"}}}};
+        r0.generation = 23456;
+        r0.transformation = "gunzipped";
+        EXPECT_CALL(*source, Read)
+            .WillOnce(Return(r0))
+            .WillOnce(Return(TransientError()));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
+      })
+      .WillOnce([](ReadObjectRangeRequest const& req) {
+        // The previous transient error should trigger a second download. We
+        // simulate a successful start, but the download is interrupted before
+        // it can reach the previous offset.
+        EXPECT_EQ(512 * 1024, req.GetOption<ReadFromOffset>().value_or(0));
+        EXPECT_EQ(23456, req.GetOption<Generation>().value_or(0));
+        auto r0 = ReadSourceResult{
+            static_cast<std::size_t>(128 * 1024),
+            HttpResponse{100, "", {{"x-test-only", "download 2 r0"}}}};
+        r0.generation = 23456;
+        r0.transformation = "gunzipped";
+
+        auto r1 = ReadSourceResult{
+            static_cast<std::size_t>(128 * 1024),
+            HttpResponse{200, "", {{"x-test-only", "download 2 r1"}}}};
+
+        auto source = absl::make_unique<MockObjectReadSource>();
+        EXPECT_CALL(*source, Read).WillOnce(Return(r0)).WillOnce(Return(r1));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
+      })
+      .WillOnce([](ReadObjectRangeRequest const&) {
+        // Because the previous download "completes" before reaching the desired
+        // offset, we need to start a third download. Let's have this one fail
+        // immediately.
+        return TransientError();
+      })
+      .WillOnce([](ReadObjectRangeRequest const& req) {
+        // That triggers a fourth download. We simulate a successful download.
+        EXPECT_EQ(512 * 1024, req.GetOption<ReadFromOffset>().value_or(0));
+        EXPECT_EQ(23456, req.GetOption<Generation>().value_or(0));
+        // We expect the RetryReadObjectSource class to initiative a third
+        // download. Let's make it succeed, but then return a short download
+        // on the next attempt.
+        auto r0 = ReadSourceResult{
+            static_cast<std::size_t>(128 * 1024),
+            HttpResponse{100, "", {{"x-test-only", "download 3 r0"}}}};
+        r0.generation = 23456;
+        r0.transformation = "gunzipped";
+
+        auto r1 = ReadSourceResult{
+            static_cast<std::size_t>(64 * 1024),
+            HttpResponse{200, "", {{"x-test-only", "download 3 r1"}}}};
+        r1.generation = 23456;
+        r1.transformation = "gunzipped";
+
+        auto source = absl::make_unique<MockObjectReadSource>();
+        // We expect 4 reads to reach the desired offset, and then return the
+        // real data.
+        ::testing::InSequence sequence;
+        EXPECT_CALL(*source, Read(_, 128 * 1024L))
+            .Times(4)
+            .WillRepeatedly(Return(r0));
+        EXPECT_CALL(*source, Read(_, 256 * 1024L)).WillOnce(Return(r1));
+        return std::unique_ptr<ObjectReadSource>(std::move(source));
+      });
+
+  std::vector<char> buffer(1024 * 1024L);
+
+  ReadObjectRangeRequest req("test_bucket", "test_object");
+  auto source = client->ReadObject(req);
+  ASSERT_STATUS_OK(source);
+  auto response = (*source)->Read(nullptr, 512 * 1024);
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->bytes_received, 512 * 1024);
+  EXPECT_EQ(response->transformation.value_or(""), "gunzipped");
+  EXPECT_THAT(response->response.headers,
+              Contains(Pair("x-test-only", "download 1 r0")));
+
+  response = (*source)->Read(nullptr, 256 * 1024);
+  ASSERT_STATUS_OK(response);
+  EXPECT_EQ(response->bytes_received, 64 * 1024);
+  EXPECT_EQ(response->transformation.value_or(""), "gunzipped");
+  EXPECT_THAT(response->response.headers,
+              Contains(Pair("x-test-only", "download 3 r1")));
 }
 
 }  // namespace

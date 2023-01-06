@@ -44,6 +44,18 @@ using CompletionLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         talent_internal::CompletionRetryTraits>;
 
+/**
+ * The `CompletionConnection` object for `CompletionClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `CompletionClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `CompletionClient`.
+ *
+ * To create a concrete instance, see `MakeCompletionConnection()`.
+ *
+ * For mocking, see `talent_mocks::MockCompletionConnection`.
+ */
 class CompletionConnection {
  public:
   virtual ~CompletionConnection() = 0;
@@ -54,24 +66,32 @@ class CompletionConnection {
   CompleteQuery(google::cloud::talent::v4::CompleteQueryRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `CompletionConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of CompletionClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `CompletionConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::talent::CompletionPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `CompletionConnection` created by
+ * this function.
+ */
 std::shared_ptr<CompletionConnection> MakeCompletionConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace talent_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<talent::CompletionConnection> MakeCompletionConnection(
-    std::shared_ptr<CompletionStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace talent_internal
 }  // namespace cloud
 }  // namespace google
 

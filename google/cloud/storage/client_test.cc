@@ -14,12 +14,16 @@
 
 #include "google/cloud/storage/client.h"
 #include "google/cloud/storage/internal/curl_client.h"
+#include "google/cloud/storage/internal/rest_client.h"
 #include "google/cloud/storage/oauth2/google_credentials.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/testing/canonical_errors.h"
 #include "google/cloud/storage/testing/mock_client.h"
+#include "google/cloud/internal/getenv.h"
+#include "google/cloud/testing_util/mock_backoff_policy.h"
 #include "google/cloud/testing_util/scoped_environment.h"
 #include <gmock/gmock.h>
+#include <chrono>
 
 namespace google {
 namespace cloud {
@@ -29,6 +33,7 @@ namespace {
 
 using ::google::cloud::storage::internal::ClientImplDetails;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
+using ::google::cloud::testing_util::MockBackoffPolicy;
 using ::google::cloud::testing_util::ScopedEnvironment;
 using ::testing::Return;
 
@@ -101,8 +106,7 @@ TEST_F(ClientTest, Equality) {
 }
 
 TEST_F(ClientTest, OverrideRetryPolicy) {
-  auto client = internal::ClientImplDetails::CreateClient(
-      std::shared_ptr<internal::RawClient>(mock_), ObservableRetryPolicy(3));
+  auto client = testing::ClientFromMock(mock_, ObservableRetryPolicy(3));
 
   // Reset the counters at the beginning of the test.
 
@@ -118,9 +122,8 @@ TEST_F(ClientTest, OverrideRetryPolicy) {
 
 TEST_F(ClientTest, OverrideBackoffPolicy) {
   using ms = std::chrono::milliseconds;
-  auto client = internal::ClientImplDetails::CreateClient(
-      std::shared_ptr<internal::RawClient>(mock_),
-      ObservableBackoffPolicy(ms(20), ms(100), 2.0));
+  auto client = testing::ClientFromMock(
+      mock_, ObservableBackoffPolicy(ms(20), ms(100), 2.0));
 
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
@@ -134,9 +137,9 @@ TEST_F(ClientTest, OverrideBackoffPolicy) {
 
 TEST_F(ClientTest, OverrideBothPolicies) {
   using ms = std::chrono::milliseconds;
-  auto client = internal::ClientImplDetails::CreateClient(
-      std::shared_ptr<internal::RawClient>(mock_),
-      ObservableBackoffPolicy(ms(20), ms(100), 2.0), ObservableRetryPolicy(3));
+  auto client = testing::ClientFromMock(
+      mock_, ObservableBackoffPolicy(ms(20), ms(100), 2.0),
+      ObservableRetryPolicy(3));
 
   // Call an API (any API) on the client, we do not care about the status, just
   // that our policy is called.
@@ -149,8 +152,11 @@ TEST_F(ClientTest, OverrideBothPolicies) {
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
-TEST_F(ClientTest, DefaultDecorators) {
+TEST_F(ClientTest, DefaultDecoratorsCurlClient) {
   ScopedEnvironment disable_grpc("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+  ScopedEnvironment disable_rest("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
+                                 "yes");
+
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
   auto tested =
@@ -168,7 +174,9 @@ TEST_F(ClientTest, DefaultDecorators) {
 }
 
 /// @test Verify the constructor creates the right set of RawClient decorations.
-TEST_F(ClientTest, LoggingDecorators) {
+TEST_F(ClientTest, LoggingDecoratorsCurlClient) {
+  ScopedEnvironment disable_rest("GOOGLE_CLOUD_CPP_STORAGE_USE_LEGACY_HTTP",
+                                 "yes");
   // Create a client, use the anonymous credentials because on the CI
   // environment there may not be other credentials configured.
   auto tested =
@@ -188,6 +196,47 @@ TEST_F(ClientTest, LoggingDecorators) {
   ASSERT_TRUE(curl != nullptr);
 }
 
+/// @test Verify the constructor creates the right set of RawClient decorations.
+TEST_F(ClientTest, DefaultDecoratorsRestClient) {
+  ScopedEnvironment disable_grpc("CLOUD_STORAGE_ENABLE_TRACING", absl::nullopt);
+
+  // Create a client, use the anonymous credentials because on the CI
+  // environment there may not be other credentials configured.
+  auto tested =
+      Client(Options{}
+                 .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                 .set<TracingComponentsOption>({}));
+
+  EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
+  auto* retry = dynamic_cast<internal::RetryClient*>(
+      ClientImplDetails::GetRawClient(tested).get());
+  ASSERT_TRUE(retry != nullptr);
+
+  auto* rest = dynamic_cast<internal::RestClient*>(retry->client().get());
+  ASSERT_TRUE(rest != nullptr);
+}
+
+/// @test Verify the constructor creates the right set of RawClient decorations.
+TEST_F(ClientTest, LoggingDecoratorsRestClient) {
+  // Create a client, use the anonymous credentials because on the CI
+  // environment there may not be other credentials configured.
+  auto tested =
+      Client(Options{}
+                 .set<UnifiedCredentialsOption>(MakeInsecureCredentials())
+                 .set<TracingComponentsOption>({"raw-client"}));
+
+  EXPECT_TRUE(ClientImplDetails::GetRawClient(tested) != nullptr);
+  auto* retry = dynamic_cast<internal::RetryClient*>(
+      ClientImplDetails::GetRawClient(tested).get());
+  ASSERT_TRUE(retry != nullptr);
+
+  auto* logging = dynamic_cast<internal::LoggingClient*>(retry->client().get());
+  ASSERT_TRUE(logging != nullptr);
+
+  auto* rest = dynamic_cast<internal::RestClient*>(logging->client().get());
+  ASSERT_TRUE(rest != nullptr);
+}
+
 #include "google/cloud/internal/disable_deprecation_warnings.inc"
 
 TEST_F(ClientTest, DeprecatedButNotDecommissioned) {
@@ -199,6 +248,31 @@ TEST_F(ClientTest, DeprecatedButNotDecommissioned) {
   auto m2 = std::make_shared<testing::MockClient>();
   auto c2 = storage::Client(m2, LimitedErrorCountRetryPolicy(3));
   EXPECT_NE(c2.raw_client().get(), m2.get());
+}
+
+TEST_F(ClientTest, DeprecatedRetryPolicies) {
+  auto constexpr kNumRetries = 2;
+  auto mock_b = absl::make_unique<MockBackoffPolicy>();
+  EXPECT_CALL(*mock_b, clone).WillOnce([=] {
+    auto clone_1 = absl::make_unique<MockBackoffPolicy>();
+    EXPECT_CALL(*clone_1, clone).WillOnce([=] {
+      auto clone_2 = absl::make_unique<MockBackoffPolicy>();
+      EXPECT_CALL(*clone_2, OnCompletion)
+          .Times(kNumRetries)
+          .WillRepeatedly(Return(std::chrono::milliseconds(0)));
+      return clone_2;
+    });
+    return clone_1;
+  });
+
+  auto mock = std::make_shared<testing::MockClient>();
+  EXPECT_CALL(*mock, ListBuckets)
+      .Times(kNumRetries + 1)
+      .WillRepeatedly(Return(TransientError()));
+
+  auto client = storage::Client(mock, LimitedErrorCountRetryPolicy(kNumRetries),
+                                std::move(*mock_b));
+  (void)client.ListBuckets();
 }
 
 }  // namespace

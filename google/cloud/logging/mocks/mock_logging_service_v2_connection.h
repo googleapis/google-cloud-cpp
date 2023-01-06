@@ -27,6 +27,21 @@ namespace cloud {
 namespace logging_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `LoggingServiceV2Connection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `LoggingServiceV2Client`. To do so,
+ * construct an object of type `LoggingServiceV2Client` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockLoggingServiceV2Connection
     : public logging::LoggingServiceV2Connection {
  public:
@@ -56,7 +71,12 @@ class MockLoggingServiceV2Connection
   MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    google::logging::v2::TailLogEntriesRequest,
                    google::logging::v2::TailLogEntriesResponse>>),
-              AsyncTailLogEntries, (ExperimentalTag), (override));
+              AsyncTailLogEntries, (), (override));
+
+  MOCK_METHOD(future<StatusOr<google::logging::v2::WriteLogEntriesResponse>>,
+              AsyncWriteLogEntries,
+              (google::logging::v2::WriteLogEntriesRequest const& request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

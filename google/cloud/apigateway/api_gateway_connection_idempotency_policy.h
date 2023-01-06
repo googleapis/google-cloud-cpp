@@ -32,56 +32,56 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ApiGatewayServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~ApiGatewayServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~ApiGatewayServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ApiGatewayServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListGateways(
-      google::cloud::apigateway::v1::ListGatewaysRequest request) = 0;
+      google::cloud::apigateway::v1::ListGatewaysRequest request);
 
   virtual google::cloud::Idempotency GetGateway(
-      google::cloud::apigateway::v1::GetGatewayRequest const& request) = 0;
+      google::cloud::apigateway::v1::GetGatewayRequest const& request);
 
   virtual google::cloud::Idempotency CreateGateway(
-      google::cloud::apigateway::v1::CreateGatewayRequest const& request) = 0;
+      google::cloud::apigateway::v1::CreateGatewayRequest const& request);
 
   virtual google::cloud::Idempotency UpdateGateway(
-      google::cloud::apigateway::v1::UpdateGatewayRequest const& request) = 0;
+      google::cloud::apigateway::v1::UpdateGatewayRequest const& request);
 
   virtual google::cloud::Idempotency DeleteGateway(
-      google::cloud::apigateway::v1::DeleteGatewayRequest const& request) = 0;
+      google::cloud::apigateway::v1::DeleteGatewayRequest const& request);
 
   virtual google::cloud::Idempotency ListApis(
-      google::cloud::apigateway::v1::ListApisRequest request) = 0;
+      google::cloud::apigateway::v1::ListApisRequest request);
 
   virtual google::cloud::Idempotency GetApi(
-      google::cloud::apigateway::v1::GetApiRequest const& request) = 0;
+      google::cloud::apigateway::v1::GetApiRequest const& request);
 
   virtual google::cloud::Idempotency CreateApi(
-      google::cloud::apigateway::v1::CreateApiRequest const& request) = 0;
+      google::cloud::apigateway::v1::CreateApiRequest const& request);
 
   virtual google::cloud::Idempotency UpdateApi(
-      google::cloud::apigateway::v1::UpdateApiRequest const& request) = 0;
+      google::cloud::apigateway::v1::UpdateApiRequest const& request);
 
   virtual google::cloud::Idempotency DeleteApi(
-      google::cloud::apigateway::v1::DeleteApiRequest const& request) = 0;
+      google::cloud::apigateway::v1::DeleteApiRequest const& request);
 
   virtual google::cloud::Idempotency ListApiConfigs(
-      google::cloud::apigateway::v1::ListApiConfigsRequest request) = 0;
+      google::cloud::apigateway::v1::ListApiConfigsRequest request);
 
   virtual google::cloud::Idempotency GetApiConfig(
-      google::cloud::apigateway::v1::GetApiConfigRequest const& request) = 0;
+      google::cloud::apigateway::v1::GetApiConfigRequest const& request);
 
   virtual google::cloud::Idempotency CreateApiConfig(
-      google::cloud::apigateway::v1::CreateApiConfigRequest const& request) = 0;
+      google::cloud::apigateway::v1::CreateApiConfigRequest const& request);
 
   virtual google::cloud::Idempotency UpdateApiConfig(
-      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request) = 0;
+      google::cloud::apigateway::v1::UpdateApiConfigRequest const& request);
 
   virtual google::cloud::Idempotency DeleteApiConfig(
-      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request) = 0;
+      google::cloud::apigateway::v1::DeleteApiConfigRequest const& request);
 };
 
 std::unique_ptr<ApiGatewayServiceConnectionIdempotencyPolicy>

@@ -17,6 +17,7 @@
 
 #include "google/cloud/optional.h"
 #include <google/protobuf/descriptor.h>
+#include <algorithm>
 #include <functional>
 #include <vector>
 
@@ -30,6 +31,12 @@ namespace generator_internal {
  * https://google.aip.dev/client-libraries/4233
  */
 bool IsPaginated(google::protobuf::MethodDescriptor const& method);
+
+/**
+ * Determines if the given method has either client-side streaming,
+ * or server-side streaming, or both.
+ */
+bool IsStreaming(google::protobuf::MethodDescriptor const& method);
 
 /**
  * Determines if the given method has neither client-side streaming, server-side
@@ -75,6 +82,12 @@ bool IsLongrunningMetadataTypeUsedAsResponse(
  * Determines if the method contains a routing header as specified in AIP-4222.
  */
 bool HasRoutingHeader(google::protobuf::MethodDescriptor const& method);
+
+/**
+ * Determines if the method contains a google.api.http annotation necessary for
+ * supporting REST transport.
+ */
+bool HasHttpAnnotation(google::protobuf::MethodDescriptor const& method);
 
 /**
  * If method meets pagination criteria, provides paginated field type and field

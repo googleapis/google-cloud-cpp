@@ -26,7 +26,7 @@ namespace internal {
 namespace {
 
 using ::testing::HasSubstr;
-using testing_util::chrono_literals::operator"" _us;
+using testing_util::chrono_literals::operator"" _us;  // NOLINT
 using testing_util::ExpectFutureError;
 using testing_util::NoDefaultConstructor;
 using testing_util::Observable;

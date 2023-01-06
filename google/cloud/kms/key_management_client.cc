@@ -17,7 +17,6 @@
 // source: google/cloud/kms/v1/service.proto
 
 #include "google/cloud/kms/key_management_client.h"
-#include "google/cloud/kms/internal/key_management_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 KeyManagementServiceClient::KeyManagementServiceClient(
     std::shared_ptr<KeyManagementServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), kms_internal::KeyManagementServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 KeyManagementServiceClient::~KeyManagementServiceClient() = default;
 
 StreamRange<google::cloud::kms::v1::KeyRing>

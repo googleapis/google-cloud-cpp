@@ -45,9 +45,9 @@ class TableReadModifyWriteTest : public bigtable::testing::TableTestFixture {
                grpc::ClientContext* context,
                btproto::ReadModifyWriteRowRequest const& request,
                btproto::ReadModifyWriteRowResponse* response) {
-      EXPECT_STATUS_OK(validate_metadata_fixture_.IsContextMDValid(
-          *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow",
-          google::cloud::internal::ApiClientHeader()));
+      validate_metadata_fixture_.IsContextMDValid(
+          *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow", request,
+          google::cloud::internal::ApiClientHeader());
       btproto::ReadModifyWriteRowRequest expected_request;
       EXPECT_TRUE(::google::protobuf::TextFormat::ParseFromString(
           expected_request_string, &expected_request));
@@ -270,15 +270,16 @@ TEST_F(TableReadModifyWriteTest, UnrecoverableFailureTest) {
   std::string const column_id1 = "colid1";
 
   EXPECT_CALL(*client_, ReadModifyWriteRow)
-      .WillRepeatedly([](grpc::ClientContext* context,
-                         google::bigtable::v2::ReadModifyWriteRowRequest const&,
-                         google::bigtable::v2::ReadModifyWriteRowResponse*) {
-        ::google::cloud::testing_util::ValidateMetadataFixture fixture;
-        EXPECT_STATUS_OK(fixture.IsContextMDValid(
-            *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow",
-            google::cloud::internal::ApiClientHeader()));
-        return grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh");
-      });
+      .WillRepeatedly(
+          [](grpc::ClientContext* context,
+             google::bigtable::v2::ReadModifyWriteRowRequest const& request,
+             google::bigtable::v2::ReadModifyWriteRowResponse*) {
+            ::google::cloud::testing_util::ValidateMetadataFixture fixture;
+            fixture.IsContextMDValid(
+                *context, "google.bigtable.v2.Bigtable.ReadModifyWriteRow",
+                request, google::cloud::internal::ApiClientHeader());
+            return grpc::Status(grpc::StatusCode::PERMISSION_DENIED, "uh oh");
+          });
 
   EXPECT_FALSE(table_.ReadModifyWriteRow(
       row_key,

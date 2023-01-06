@@ -38,15 +38,13 @@ GameServerConfigsServiceConnectionImpl::GameServerConfigsServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          gameservices_internal::GameServerConfigsServiceDefaultOptions(
-              GameServerConfigsServiceConnection::options()))) {}
+          std::move(options), GameServerConfigsServiceConnection::options())) {}
 
 StreamRange<google::cloud::gaming::v1::GameServerConfig>
 GameServerConfigsServiceConnectionImpl::ListGameServerConfigs(
     google::cloud::gaming::v1::ListGameServerConfigsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<gameservices::GameServerConfigsServiceRetryPolicy const>(
           retry_policy());
@@ -94,7 +92,7 @@ GameServerConfigsServiceConnectionImpl::GetGameServerConfig(
 future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>
 GameServerConfigsServiceConnectionImpl::CreateGameServerConfig(
     google::cloud::gaming::v1::CreateGameServerConfigRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gaming::v1::GameServerConfig>(
       background_->cq(), request,
@@ -125,7 +123,7 @@ GameServerConfigsServiceConnectionImpl::CreateGameServerConfig(
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
 GameServerConfigsServiceConnectionImpl::DeleteGameServerConfig(
     google::cloud::gaming::v1::DeleteGameServerConfigRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::gaming::v1::OperationMetadata>(
       background_->cq(), request,

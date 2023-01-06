@@ -49,6 +49,18 @@ using ProductServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         retail_internal::ProductServiceRetryTraits>;
 
+/**
+ * The `ProductServiceConnection` object for `ProductServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ProductServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ProductServiceClient`.
+ *
+ * To create a concrete instance, see `MakeProductServiceConnection()`.
+ *
+ * For mocking, see `retail_mocks::MockProductServiceConnection`.
+ */
 class ProductServiceConnection {
  public:
   virtual ~ProductServiceConnection() = 0;
@@ -86,26 +98,44 @@ class ProductServiceConnection {
       StatusOr<google::cloud::retail::v2::RemoveFulfillmentPlacesResponse>>
   RemoveFulfillmentPlaces(
       google::cloud::retail::v2::RemoveFulfillmentPlacesRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+  AddLocalInventories(
+      google::cloud::retail::v2::AddLocalInventoriesRequest const& request);
+
+  virtual future<
+      StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+  RemoveLocalInventories(
+      google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `ProductServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of ProductServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `ProductServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::retail::ProductServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `ProductServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace retail_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<retail::ProductServiceConnection> MakeProductServiceConnection(
-    std::shared_ptr<ProductServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace retail_internal
 }  // namespace cloud
 }  // namespace google
 

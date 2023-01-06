@@ -78,6 +78,97 @@ DefaultCatalogServiceStub::GetDefaultBranch(
   return response;
 }
 
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+DefaultCatalogServiceStub::GetCompletionConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::retail::v2::GetCompletionConfigRequest const& request) {
+  google::cloud::retail::v2::CompletionConfig response;
+  auto status =
+      grpc_stub_->GetCompletionConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+DefaultCatalogServiceStub::UpdateCompletionConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) {
+  google::cloud::retail::v2::CompletionConfig response;
+  auto status =
+      grpc_stub_->UpdateCompletionConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+DefaultCatalogServiceStub::GetAttributesConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::retail::v2::GetAttributesConfigRequest const& request) {
+  google::cloud::retail::v2::AttributesConfig response;
+  auto status =
+      grpc_stub_->GetAttributesConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+DefaultCatalogServiceStub::UpdateAttributesConfig(
+    grpc::ClientContext& client_context,
+    google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) {
+  google::cloud::retail::v2::AttributesConfig response;
+  auto status =
+      grpc_stub_->UpdateAttributesConfig(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+DefaultCatalogServiceStub::AddCatalogAttribute(
+    grpc::ClientContext& client_context,
+    google::cloud::retail::v2::AddCatalogAttributeRequest const& request) {
+  google::cloud::retail::v2::AttributesConfig response;
+  auto status =
+      grpc_stub_->AddCatalogAttribute(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+DefaultCatalogServiceStub::RemoveCatalogAttribute(
+    grpc::ClientContext& client_context,
+    google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) {
+  google::cloud::retail::v2::AttributesConfig response;
+  auto status =
+      grpc_stub_->RemoveCatalogAttribute(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+DefaultCatalogServiceStub::ReplaceCatalogAttribute(
+    grpc::ClientContext& client_context,
+    google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) {
+  google::cloud::retail::v2::AttributesConfig response;
+  auto status =
+      grpc_stub_->ReplaceCatalogAttribute(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail_internal
 }  // namespace cloud

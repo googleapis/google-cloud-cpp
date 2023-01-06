@@ -30,29 +30,20 @@ using ::google::cloud::Idempotency;
 ImageVersionsConnectionIdempotencyPolicy::
     ~ImageVersionsConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultImageVersionsConnectionIdempotencyPolicy
-    : public ImageVersionsConnectionIdempotencyPolicy {
- public:
-  ~DefaultImageVersionsConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
+ImageVersionsConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ImageVersionsConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultImageVersionsConnectionIdempotencyPolicy>(
-        *this);
-  }
-
-  Idempotency ListImageVersions(google::cloud::orchestration::airflow::service::
-                                    v1::ListImageVersionsRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency ImageVersionsConnectionIdempotencyPolicy::ListImageVersions(
+    google::cloud::orchestration::airflow::service::v1::
+        ListImageVersionsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<ImageVersionsConnectionIdempotencyPolicy>
 MakeDefaultImageVersionsConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultImageVersionsConnectionIdempotencyPolicy>();
+  return absl::make_unique<ImageVersionsConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

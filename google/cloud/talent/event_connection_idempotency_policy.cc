@@ -30,29 +30,19 @@ using ::google::cloud::Idempotency;
 EventServiceConnectionIdempotencyPolicy::
     ~EventServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultEventServiceConnectionIdempotencyPolicy
-    : public EventServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultEventServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<EventServiceConnectionIdempotencyPolicy>
+EventServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<EventServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<EventServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultEventServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
-
-  Idempotency CreateClientEvent(
-      google::cloud::talent::v4::CreateClientEventRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency EventServiceConnectionIdempotencyPolicy::CreateClientEvent(
+    google::cloud::talent::v4::CreateClientEventRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<EventServiceConnectionIdempotencyPolicy>
 MakeDefaultEventServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultEventServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<EventServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

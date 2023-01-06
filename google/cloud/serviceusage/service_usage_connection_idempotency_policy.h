@@ -32,31 +32,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class ServiceUsageConnectionIdempotencyPolicy {
  public:
-  virtual ~ServiceUsageConnectionIdempotencyPolicy() = 0;
+  virtual ~ServiceUsageConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<ServiceUsageConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency EnableService(
-      google::api::serviceusage::v1::EnableServiceRequest const& request) = 0;
+      google::api::serviceusage::v1::EnableServiceRequest const& request);
 
   virtual google::cloud::Idempotency DisableService(
-      google::api::serviceusage::v1::DisableServiceRequest const& request) = 0;
+      google::api::serviceusage::v1::DisableServiceRequest const& request);
 
   virtual google::cloud::Idempotency GetService(
-      google::api::serviceusage::v1::GetServiceRequest const& request) = 0;
+      google::api::serviceusage::v1::GetServiceRequest const& request);
 
   virtual google::cloud::Idempotency ListServices(
-      google::api::serviceusage::v1::ListServicesRequest request) = 0;
+      google::api::serviceusage::v1::ListServicesRequest request);
 
   virtual google::cloud::Idempotency BatchEnableServices(
-      google::api::serviceusage::v1::BatchEnableServicesRequest const&
-          request) = 0;
+      google::api::serviceusage::v1::BatchEnableServicesRequest const& request);
 
   virtual google::cloud::Idempotency BatchGetServices(
-      google::api::serviceusage::v1::BatchGetServicesRequest const&
-          request) = 0;
+      google::api::serviceusage::v1::BatchGetServicesRequest const& request);
 };
 
 std::unique_ptr<ServiceUsageConnectionIdempotencyPolicy>

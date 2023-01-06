@@ -17,7 +17,6 @@
 // source: google/cloud/retail/v2/product_service.proto
 
 #include "google/cloud/retail/product_client.h"
-#include "google/cloud/retail/internal/product_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ProductServiceClient::ProductServiceClient(
     std::shared_ptr<ProductServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), retail_internal::ProductServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ProductServiceClient::~ProductServiceClient() = default;
 
 StatusOr<google::cloud::retail::v2::Product>
@@ -176,6 +174,40 @@ ProductServiceClient::RemoveFulfillmentPlaces(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->RemoveFulfillmentPlaces(request);
+}
+
+future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+ProductServiceClient::AddLocalInventories(std::string const& product,
+                                          Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::retail::v2::AddLocalInventoriesRequest request;
+  request.set_product(product);
+  return connection_->AddLocalInventories(request);
+}
+
+future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+ProductServiceClient::AddLocalInventories(
+    google::cloud::retail::v2::AddLocalInventoriesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AddLocalInventories(request);
+}
+
+future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+ProductServiceClient::RemoveLocalInventories(std::string const& product,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::retail::v2::RemoveLocalInventoriesRequest request;
+  request.set_product(product);
+  return connection_->RemoveLocalInventories(request);
+}
+
+future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+ProductServiceClient::RemoveLocalInventories(
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RemoveLocalInventories(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -48,6 +48,18 @@ using JobServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         talent_internal::JobServiceRetryTraits>;
 
+/**
+ * The `JobServiceConnection` object for `JobServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `JobServiceClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `JobServiceClient`.
+ *
+ * To create a concrete instance, see `MakeJobServiceConnection()`.
+ *
+ * For mocking, see `talent_mocks::MockJobServiceConnection`.
+ */
 class JobServiceConnection {
  public:
   virtual ~JobServiceConnection() = 0;
@@ -89,24 +101,32 @@ class JobServiceConnection {
       google::cloud::talent::v4::SearchJobsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `JobServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of JobServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `JobServiceConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::talent::JobServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `JobServiceConnection` created by
+ * this function.
+ */
 std::shared_ptr<JobServiceConnection> MakeJobServiceConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace talent
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace talent_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<talent::JobServiceConnection> MakeJobServiceConnection(
-    std::shared_ptr<JobServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace talent_internal
 }  // namespace cloud
 }  // namespace google
 

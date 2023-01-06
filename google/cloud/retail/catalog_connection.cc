@@ -23,6 +23,7 @@
 #include "google/cloud/retail/internal/catalog_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CatalogServiceConnection::~CatalogServiceConnection() = default;
 
 StreamRange<google::cloud::retail::v2::Catalog>
-    CatalogServiceConnection::ListCatalogs(
-        google::cloud::retail::v2::
-            ListCatalogsRequest) {  // NOLINT(performance-unnecessary-value-param)
+CatalogServiceConnection::ListCatalogs(
+    google::cloud::retail::v2::
+        ListCatalogsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::Catalog>>();
 }
@@ -59,9 +60,52 @@ CatalogServiceConnection::GetDefaultBranch(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+CatalogServiceConnection::GetCompletionConfig(
+    google::cloud::retail::v2::GetCompletionConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+CatalogServiceConnection::UpdateCompletionConfig(
+    google::cloud::retail::v2::UpdateCompletionConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnection::GetAttributesConfig(
+    google::cloud::retail::v2::GetAttributesConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnection::UpdateAttributesConfig(
+    google::cloud::retail::v2::UpdateAttributesConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnection::AddCatalogAttribute(
+    google::cloud::retail::v2::AddCatalogAttributeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnection::RemoveCatalogAttribute(
+    google::cloud::retail::v2::RemoveCatalogAttributeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnection::ReplaceCatalogAttribute(
+    google::cloud::retail::v2::ReplaceCatalogAttributeRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<CatalogServiceConnection> MakeCatalogServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CatalogServicePolicyOptionList>(options,
                                                                  __func__);
   options = retail_internal::CatalogServiceDefaultOptions(std::move(options));
@@ -74,23 +118,5 @@ std::shared_ptr<CatalogServiceConnection> MakeCatalogServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace retail_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<retail::CatalogServiceConnection> MakeCatalogServiceConnection(
-    std::shared_ptr<CatalogServiceStub> stub, Options options) {
-  options = CatalogServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<retail_internal::CatalogServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace retail_internal
 }  // namespace cloud
 }  // namespace google

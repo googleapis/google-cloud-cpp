@@ -38,7 +38,10 @@
  * @see `google::cloud::GrpcOptionList`
  */
 
+#include "google/cloud/bigtable/idempotent_mutation_policy.h"
+#include "google/cloud/bigtable/rpc_retry_policy.h"
 #include "google/cloud/bigtable/version.h"
+#include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include <chrono>
 #include <string>
@@ -48,12 +51,45 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// The endpoint for data operations.
+/**
+ * The application profile id.
+ *
+ * An application profile, or app profile, stores settings that tell your Cloud
+ * Bigtable instance how to handle incoming requests from an application. When
+ * an applications connects to a Bigtable instance, it can specify an app
+ * profile, and Bigtable uses that app profile for requests that the application
+ * sends over that connection.
+ *
+ * This option is always used in conjunction with a `bigtable::Table`. The app
+ * profile belongs to the table's instance, with an id given by the value of
+ * this option.
+ *
+ * @see https://cloud.google.com/bigtable/docs/app-profiles for an overview of
+ *     app profiles.
+ *
+ * @see https://cloud.google.com/bigtable/docs/replication-overview#app-profiles
+ *     for how app profiles are used to achieve replication.
+ *
+ * @ingroup bigtable-options
+ */
+struct AppProfileIdOption {
+  using Type = std::string;
+};
+
+/**
+ * The endpoint for data operations.
+ *
+ * @deprecated Please use `google::cloud::EndpointOption` instead.
+ */
 struct DataEndpointOption {
   using Type = std::string;
 };
 
-/// The endpoint for table admin operations.
+/**
+ * The endpoint for table admin operations.
+ *
+ * @deprecated Please use `google::cloud::EndpointOption` instead.
+ */
 struct AdminEndpointOption {
   using Type = std::string;
 };
@@ -64,6 +100,8 @@ struct AdminEndpointOption {
  * In most scenarios this should have the same value as `AdminEndpointOption`.
  * The most common exception is testing, where the emulator for instance admin
  * operations may be different than the emulator for admin and data operations.
+ *
+ * @deprecated Please use `google::cloud::EndpointOption` instead.
  */
 struct InstanceAdminEndpointOption {
   using Type = std::string;
@@ -73,6 +111,8 @@ struct InstanceAdminEndpointOption {
  * Minimum time in ms to refresh connections.
  *
  * The server will not disconnect idle connections before this time.
+ *
+ * @ingroup bigtable-options
  */
 struct MinConnectionRefreshOption {
   using Type = std::chrono::milliseconds;
@@ -87,6 +127,8 @@ struct MinConnectionRefreshOption {
  *
  * @note If this value is less than the value of `MinConnectionRefreshOption`,
  * it will be set to the value of `MinConnectionRefreshOption`.
+ *
+ * @ingroup bigtable-options
  */
 struct MaxConnectionRefreshOption {
   using Type = std::chrono::milliseconds;
@@ -97,6 +139,48 @@ using ClientOptionList =
     OptionList<DataEndpointOption, AdminEndpointOption,
                InstanceAdminEndpointOption, MinConnectionRefreshOption,
                MaxConnectionRefreshOption>;
+
+using DataRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
+    bigtable::internal::SafeGrpcRetry>;
+
+using DataLimitedTimeRetryPolicy =
+    ::google::cloud::internal::LimitedTimeRetryPolicy<
+        bigtable::internal::SafeGrpcRetry>;
+
+using DataLimitedErrorCountRetryPolicy =
+    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
+        bigtable::internal::SafeGrpcRetry>;
+
+/**
+ * Option to configure the retry policy used by `Table`.
+ *
+ * @ingroup bigtable-options
+ */
+struct DataRetryPolicyOption {
+  using Type = std::shared_ptr<DataRetryPolicy>;
+};
+
+/**
+ * Option to configure the backoff policy used by `Table`.
+ *
+ * @ingroup bigtable-options
+ */
+struct DataBackoffPolicyOption {
+  using Type = std::shared_ptr<BackoffPolicy>;
+};
+
+/**
+ *  Option to configure the idempotency policy used by `Table`.
+ *
+ * @ingroup bigtable-options
+ */
+struct IdempotentMutationPolicyOption {
+  using Type = std::shared_ptr<bigtable::IdempotentMutationPolicy>;
+};
+
+using DataPolicyOptionList =
+    OptionList<DataRetryPolicyOption, DataBackoffPolicyOption,
+               IdempotentMutationPolicyOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable

@@ -21,39 +21,51 @@ exports_files([
 ])
 
 EXPERIMENTAL_LIBRARIES = [
-    "apigeeconnect",
-    "contactcenterinsights",
-    "datacatalog",
-    "dataproc",
-    "documentai",
-    "language",
-    "logging",
-    "managedidentities",
-    "osconfig",
-    "profiler",
-    "resourcesettings",
-    "speech",
+    # Introduced circa 2022-08-17
+    "apikeys",
+    # This is WIP, it needs a number of hand-crafted APIs.
+    "pubsublite",
 ]
 
 TRANSITION_LIBRARIES = [
+    # Promoted to GA circa 2022-10-12
+    "batch",
+]
+
+GA_LIBRARIES = [
     "accessapproval",
     "accesscontextmanager",
     "apigateway",
+    "apigeeconnect",
     "appengine",
     "artifactregistry",
     "asset",
     "assuredworkloads",
     "automl",
+    "baremetalsolution",
+    "beyondcorp",
     "billing",
     "binaryauthorization",
+    "certificatemanager",
     "channel",
     "cloudbuild",
     "composer",
+    "connectors",
+    "contactcenterinsights",
     "container",
     "containeranalysis",
+    "datacatalog",
     "datamigration",
+    "dataplex",
+    "dataproc",
+    "datastream",
     "debugger",
+    "deploy",
+    "dialogflow_cx",
+    "dialogflow_es",
     "dlp",
+    "documentai",
+    "edgecontainer",
     "eventarc",
     "filestore",
     "functions",
@@ -63,19 +75,27 @@ TRANSITION_LIBRARIES = [
     "ids",
     "iot",
     "kms",
+    "language",
+    "logging",
+    "managedidentities",
     "memcache",
     "monitoring",
+    "networkconnectivity",
     "networkmanagement",
     "notebooks",
+    "optimization",
     "orgpolicy",
+    "osconfig",
     "oslogin",
     "policytroubleshooter",
     "privateca",
-    "pubsublite",
+    "profiler",
     "recommender",
     "redis",
     "resourcemanager",
+    "resourcesettings",
     "retail",
+    "run",
     "scheduler",
     "secretmanager",
     "securitycenter",
@@ -84,6 +104,7 @@ TRANSITION_LIBRARIES = [
     "servicemanagement",
     "serviceusage",
     "shell",
+    "speech",
     "storagetransfer",
     "talent",
     "tasks",
@@ -91,16 +112,15 @@ TRANSITION_LIBRARIES = [
     "tpu",
     "trace",
     "translate",
+    "video",
     "videointelligence",
     "vision",
     "vmmigration",
+    "vmwareengine",
     "vpcaccess",
     "webrisk",
     "websecurityscanner",
     "workflows",
-]
-
-GA_LIBRARIES = [
 ]
 
 [cc_library(
@@ -112,6 +132,7 @@ GA_LIBRARIES = [
 
 [cc_library(
     name = "experimental-{library}_mocks".format(library = library),
+    testonly = True,
     deps = [
         "//google/cloud/{library}:google_cloud_cpp_{library}_mocks".format(library = library),
     ],
@@ -128,6 +149,7 @@ GA_LIBRARIES = [
 
 [cc_library(
     name = "experimental-{library}_mocks".format(library = library),
+    testonly = True,
     deprecation = "this library is now GA, please use //:{library}_mocks instead.".format(library = library),
     tags = ["manual"],
     deps = [
@@ -144,6 +166,7 @@ GA_LIBRARIES = [
 
 [cc_library(
     name = "{library}_mocks".format(library = library),
+    testonly = True,
     deps = [
         "//google/cloud/{library}:google_cloud_cpp_{library}_mocks".format(library = library),
     ],
@@ -158,6 +181,7 @@ cc_library(
 
 cc_library(
     name = "bigquery-mocks",
+    testonly = True,
     deprecation = "please use //:bigquery_mocks instead.",
     tags = ["manual"],
     deps = [
@@ -167,6 +191,7 @@ cc_library(
 
 cc_library(
     name = "bigquery_mocks",
+    testonly = True,
     deps = [
         "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
     ],
@@ -188,6 +213,7 @@ cc_library(
 
 cc_library(
     name = "iam-mocks",
+    testonly = True,
     deprecation = "please use //:iam_mocks instead.",
     tags = ["manual"],
     deps = [
@@ -197,6 +223,7 @@ cc_library(
 
 cc_library(
     name = "iam_mocks",
+    testonly = True,
     deps = [
         "//google/cloud/iam:google_cloud_cpp_iam_mocks",
     ],
@@ -211,6 +238,7 @@ cc_library(
 
 cc_library(
     name = "pubsub_mocks",
+    testonly = True,
     deps = [
         "//google/cloud/pubsub:google_cloud_cpp_pubsub_mocks",
     ],
@@ -225,6 +253,7 @@ cc_library(
 
 cc_library(
     name = "spanner_mocks",
+    testonly = True,
     deps = [
         "//google/cloud/spanner:google_cloud_cpp_spanner_mocks",
     ],
@@ -243,4 +272,34 @@ cc_library(
     deps = [
         "//google/cloud/storage:google_cloud_cpp_storage_grpc",
     ],
+)
+
+cc_library(
+    name = "common",
+    deps = [
+        "//google/cloud:google_cloud_cpp_common_private",
+    ],
+)
+
+cc_library(
+    name = "grpc_utils",
+    deps = [
+        "//google/cloud:google_cloud_cpp_grpc_utils_private",
+    ],
+)
+
+cc_library(
+    name = "mocks",
+    testonly = True,
+    deps = [
+        "//google/cloud:google_cloud_cpp_mocks",
+    ],
+)
+
+load("@bazel_skylib//rules:common_settings.bzl", "bool_flag")
+
+bool_flag(
+    name = "experimental-opentelemetry",
+    build_setting_default = False,
+    visibility = ["//:__subpackages__"],
 )

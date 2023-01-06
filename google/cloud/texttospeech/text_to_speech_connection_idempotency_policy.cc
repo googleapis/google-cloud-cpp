@@ -30,35 +30,24 @@ using ::google::cloud::Idempotency;
 TextToSpeechConnectionIdempotencyPolicy::
     ~TextToSpeechConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultTextToSpeechConnectionIdempotencyPolicy
-    : public TextToSpeechConnectionIdempotencyPolicy {
- public:
-  ~DefaultTextToSpeechConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy>
+TextToSpeechConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<TextToSpeechConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultTextToSpeechConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency TextToSpeechConnectionIdempotencyPolicy::ListVoices(
+    google::cloud::texttospeech::v1::ListVoicesRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListVoices(
-      google::cloud::texttospeech::v1::ListVoicesRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency SynthesizeSpeech(
-      google::cloud::texttospeech::v1::SynthesizeSpeechRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency TextToSpeechConnectionIdempotencyPolicy::SynthesizeSpeech(
+    google::cloud::texttospeech::v1::SynthesizeSpeechRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<TextToSpeechConnectionIdempotencyPolicy>
 MakeDefaultTextToSpeechConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultTextToSpeechConnectionIdempotencyPolicy>();
+  return absl::make_unique<TextToSpeechConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

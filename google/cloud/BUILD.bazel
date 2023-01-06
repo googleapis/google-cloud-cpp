@@ -12,38 +12,95 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-package(default_visibility = ["//visibility:public"])
+package(default_visibility = ["//visibility:private"])
 
 licenses(["notice"])  # Apache 2.0
 
-genrule(
+load(":capture_build_info.bzl", "capture_build_info")
+
+capture_build_info(
     name = "generate_build_info",
-    srcs = ["internal/build_info.cc.in"],
-    outs = ["internal/build_info.cc"],
-    cmd = """
-sed -e "s;@CMAKE_CXX_FLAGS@;$(CC_FLAGS);" \
-    -e "s;\\$${CMAKE_CXX_FLAGS_.*};$(COMPILATION_MODE);" \
-    -e "s;@GOOGLE_CLOUD_CPP_BUILD_METADATA@;;" < $< > $@
-  """,
-    stamp = True,
+    output_file = "internal/build_info.cc",
+    template = "internal/build_info.cc.in",
     toolchains = [
         "@bazel_tools//tools/cpp:current_cc_toolchain",
-        "@bazel_tools//tools/cpp:cc_flags",
     ],
+)
+
+config_setting(
+    name = "enable_opentelemetry_valid",
+    flag_values = {
+        "//:experimental-opentelemetry": "true",
+        "@io_opentelemetry_cpp//api:with_abseil": "true",
+    },
+)
+
+config_setting(
+    name = "disable_opentelemetry",
+    flag_values = {"//:experimental-opentelemetry": "false"},
 )
 
 load(":google_cloud_cpp_common.bzl", "google_cloud_cpp_common_hdrs", "google_cloud_cpp_common_srcs")
 
 cc_library(
-    name = "google_cloud_cpp_common",
+    name = "google_cloud_cpp_common_private",
     srcs = google_cloud_cpp_common_srcs + ["internal/build_info.cc"],
     hdrs = google_cloud_cpp_common_hdrs,
+    defines = select({
+        ":enable_opentelemetry_valid": [
+            # Enable OpenTelemetry features in google-cloud-cpp
+            "GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY",
+        ],
+        "//conditions:default": [],
+    }),
+    target_compatible_with = select(
+        {
+            ":enable_opentelemetry_valid": [],
+            ":disable_opentelemetry": [],
+        },
+        # else, OpenTelemetry is enabled, but with an invalid configuration.
+        no_match_error = """
+
+
+You requested OpenTelemetry support for `google-cloud-cpp`, but OpenTelemetry is
+configured without Abseil support. This configuration will result in ODR
+violations, and possibly build-time errors, as OpenTelemetry redefines Abseil
+symbols in this case, and `google-cloud-cpp` uses Abseil directly too.
+
+To fix this problem, supply the `--@io_opentelemetry_cpp//api:with_abseil` flag
+to your build command, or set this value in your `.bazelrc` file(s).
+""",
+    ),
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
     deps = [
+        "@boringssl//:crypto",
+        "@com_google_absl//absl/base",
         "@com_google_absl//absl/memory",
         "@com_google_absl//absl/time",
         "@com_google_absl//absl/types:optional",
+        "@com_google_absl//absl/types:span",
         "@com_google_absl//absl/types:variant",
-    ],
+    ] + select({
+        ":enable_opentelemetry_valid": [
+            "@io_opentelemetry_cpp//api",
+        ],
+        "//conditions:default": [],
+    }),
+)
+
+cc_library(
+    name = "google_cloud_cpp_common",
+    deprecation = """
+    This target is deprecated and will be removed on or after 2023-04-01. Use
+    //:common instead. More info:
+    https://github.com/googleapis/google-cloud-cpp/issues/3701
+    """,
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [":google_cloud_cpp_common_private"],
 )
 
 load(
@@ -60,7 +117,8 @@ load(
     }),
     deps = [
         ":google_cloud_cpp_common",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        ":google_cloud_cpp_mocks",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_absl//absl/memory",
         "@com_google_googletest//:gtest_main",
     ],
@@ -81,13 +139,17 @@ load(":google_cloud_cpp_common_benchmarks.bzl", "google_cloud_cpp_common_benchma
 load(":google_cloud_cpp_grpc_utils.bzl", "google_cloud_cpp_grpc_utils_hdrs", "google_cloud_cpp_grpc_utils_srcs")
 
 cc_library(
-    name = "google_cloud_cpp_grpc_utils",
+    name = "google_cloud_cpp_grpc_utils_private",
     srcs = google_cloud_cpp_grpc_utils_srcs,
     # TODO(#3932) - remove the filtering comprehension.
     hdrs = [
         header
         for header in google_cloud_cpp_grpc_utils_hdrs
         if not "grpc_utils/" in header
+    ],
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
     ],
     deps = [
         ":google_cloud_cpp_common",
@@ -103,6 +165,18 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "google_cloud_cpp_grpc_utils",
+    deprecation = """
+    This target is deprecated and will be removed on or after 2023-04-01. Use
+    //:grpc_utils instead. More info:
+    https://github.com/googleapis/google-cloud-cpp/issues/3701
+    """,
+    tags = ["manual"],
+    visibility = ["//visibility:public"],
+    deps = [":google_cloud_cpp_grpc_utils_private"],
+)
+
 load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils_unit_tests")
 
 [cc_test(
@@ -111,8 +185,8 @@ load(":google_cloud_cpp_grpc_utils_unit_tests.bzl", "google_cloud_cpp_grpc_utils
     deps = [
         ":google_cloud_cpp_common",
         ":google_cloud_cpp_grpc_utils",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_absl//absl/memory",
         "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
@@ -132,8 +206,8 @@ load(":google_cloud_cpp_grpc_utils_integration_tests.bzl", "google_cloud_cpp_grp
     deps = [
         ":google_cloud_cpp_common",
         ":google_cloud_cpp_grpc_utils",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_absl//absl/memory",
         "@com_google_googleapis//google/bigtable/admin/v2:admin_cc_grpc",
         "@com_google_googleapis//google/bigtable/v2:bigtable_cc_grpc",
@@ -158,15 +232,33 @@ load(":google_cloud_cpp_grpc_utils_benchmarks.bzl", "google_cloud_cpp_grpc_utils
     ],
 ) for test in google_cloud_cpp_grpc_utils_benchmarks]
 
+load(":google_cloud_cpp_mocks.bzl", "google_cloud_cpp_mocks_hdrs")
+
+cc_library(
+    name = "google_cloud_cpp_mocks",
+    testonly = True,
+    srcs = [],
+    hdrs = google_cloud_cpp_mocks_hdrs,
+    visibility = [
+        ":__subpackages__",
+        "//:__pkg__",
+    ],
+    deps = [
+        ":google_cloud_cpp_common",
+    ],
+)
+
 load(":google_cloud_cpp_rest_internal.bzl", "google_cloud_cpp_rest_internal_hdrs", "google_cloud_cpp_rest_internal_srcs")
 
 cc_library(
     name = "google_cloud_cpp_rest_internal",
     srcs = google_cloud_cpp_rest_internal_srcs,
     hdrs = google_cloud_cpp_rest_internal_hdrs,
-    copts = select({
+    # These are needed to use the BoringSSL libraries, and should be set in
+    # any downstream dependency too.
+    defines = select({
         "@platforms//os:windows": [
-            "/DWIN32_LEAN_AND_MEAN",
+            "WIN32_LEAN_AND_MEAN",
         ],
         "//conditions:default": [],
     }),
@@ -189,8 +281,8 @@ load(":google_cloud_cpp_rest_internal_unit_tests.bzl", "google_cloud_cpp_rest_in
     srcs = [test],
     deps = [
         ":google_cloud_cpp_rest_internal",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
-        "//google/cloud/testing_util:google_cloud_cpp_testing_rest",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_internal_unit_tests]
@@ -205,7 +297,7 @@ load(":google_cloud_cpp_rest_internal_emulator_integration_tests.bzl", "google_c
     ],
     deps = [
         ":google_cloud_cpp_rest_internal",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_internal_emulator_integration_tests]
@@ -220,7 +312,47 @@ load(":google_cloud_cpp_rest_internal_production_integration_tests.bzl", "google
     ],
     deps = [
         ":google_cloud_cpp_rest_internal",
-        "//google/cloud/testing_util:google_cloud_cpp_testing",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_internal_production_integration_tests]
+
+load(":google_cloud_cpp_rest_internal_benchmarks.bzl", "google_cloud_cpp_rest_internal_benchmarks")
+
+[cc_binary(
+    name = benchmark.replace("/", "_").replace(".cc", ""),
+    srcs = [benchmark],
+    tags = ["benchmark"],
+    deps = [
+        ":google_cloud_cpp_rest_internal",
+        "@com_google_benchmark//:benchmark_main",
+    ],
+) for benchmark in google_cloud_cpp_rest_internal_benchmarks]
+
+load(":google_cloud_cpp_rest_protobuf_internal.bzl", "google_cloud_cpp_rest_protobuf_internal_hdrs", "google_cloud_cpp_rest_protobuf_internal_srcs")
+
+cc_library(
+    name = "google_cloud_cpp_rest_protobuf_internal",
+    srcs = google_cloud_cpp_rest_protobuf_internal_srcs,
+    hdrs = google_cloud_cpp_rest_protobuf_internal_hdrs,
+    visibility = ["//:__subpackages__"],
+    deps = [
+        ":google_cloud_cpp_common",
+        ":google_cloud_cpp_grpc_utils",
+        ":google_cloud_cpp_rest_internal",
+    ],
+)
+
+load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cpp_rest_protobuf_internal_unit_tests")
+
+[cc_test(
+    name = test.replace("/", "_").replace(".cc", ""),
+    srcs = [test],
+    deps = [
+        ":google_cloud_cpp_rest_protobuf_internal",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+        "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
+        "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc",
+        "@com_google_googletest//:gtest_main",
+    ],
+) for test in google_cloud_cpp_rest_protobuf_internal_unit_tests]

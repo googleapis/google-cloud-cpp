@@ -37,15 +37,13 @@ UptimeCheckServiceConnectionImpl::UptimeCheckServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          monitoring_internal::UptimeCheckServiceDefaultOptions(
-              UptimeCheckServiceConnection::options()))) {}
+          std::move(options), UptimeCheckServiceConnection::options())) {}
 
 StreamRange<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceConnectionImpl::ListUptimeCheckConfigs(
     google::monitoring::v3::ListUptimeCheckConfigsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<monitoring::UptimeCheckServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -133,7 +131,7 @@ StreamRange<google::monitoring::v3::UptimeCheckIp>
 UptimeCheckServiceConnectionImpl::ListUptimeCheckIps(
     google::monitoring::v3::ListUptimeCheckIpsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<monitoring::UptimeCheckServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

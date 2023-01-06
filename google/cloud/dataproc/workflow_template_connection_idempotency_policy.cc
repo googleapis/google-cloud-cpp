@@ -30,66 +30,59 @@ using ::google::cloud::Idempotency;
 WorkflowTemplateServiceConnectionIdempotencyPolicy::
     ~WorkflowTemplateServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultWorkflowTemplateServiceConnectionIdempotencyPolicy
-    : public WorkflowTemplateServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultWorkflowTemplateServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy>
+WorkflowTemplateServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<WorkflowTemplateServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultWorkflowTemplateServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency
+WorkflowTemplateServiceConnectionIdempotencyPolicy::CreateWorkflowTemplate(
+    google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateWorkflowTemplate(
-      google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+WorkflowTemplateServiceConnectionIdempotencyPolicy::GetWorkflowTemplate(
+    google::cloud::dataproc::v1::GetWorkflowTemplateRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetWorkflowTemplate(
-      google::cloud::dataproc::v1::GetWorkflowTemplateRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+WorkflowTemplateServiceConnectionIdempotencyPolicy::InstantiateWorkflowTemplate(
+    google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency InstantiateWorkflowTemplate(
-      google::cloud::dataproc::v1::InstantiateWorkflowTemplateRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency WorkflowTemplateServiceConnectionIdempotencyPolicy::
+    InstantiateInlineWorkflowTemplate(
+        google::cloud::dataproc::v1::
+            InstantiateInlineWorkflowTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency InstantiateInlineWorkflowTemplate(
-      google::cloud::dataproc::v1::
-          InstantiateInlineWorkflowTemplateRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+WorkflowTemplateServiceConnectionIdempotencyPolicy::UpdateWorkflowTemplate(
+    google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency UpdateWorkflowTemplate(
-      google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const&)
-      override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+WorkflowTemplateServiceConnectionIdempotencyPolicy::ListWorkflowTemplates(
+    google::cloud::dataproc::v1::ListWorkflowTemplatesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListWorkflowTemplates(
-      google::cloud::dataproc::v1::ListWorkflowTemplatesRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency DeleteWorkflowTemplate(
-      google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency
+WorkflowTemplateServiceConnectionIdempotencyPolicy::DeleteWorkflowTemplate(
+    google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<WorkflowTemplateServiceConnectionIdempotencyPolicy>
 MakeDefaultWorkflowTemplateServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultWorkflowTemplateServiceConnectionIdempotencyPolicy>();
+      WorkflowTemplateServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

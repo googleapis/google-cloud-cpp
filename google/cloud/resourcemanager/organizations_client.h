@@ -64,16 +64,16 @@ class OrganizationsClient {
       std::shared_ptr<OrganizationsConnection> connection, Options opts = {});
   ~OrganizationsClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   OrganizationsClient(OrganizationsClient const&) = default;
   OrganizationsClient& operator=(OrganizationsClient const&) = default;
   OrganizationsClient(OrganizationsClient&&) = default;
   OrganizationsClient& operator=(OrganizationsClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(OrganizationsClient const& a,
                          OrganizationsClient const& b) {
     return a.connection_ == b.connection_;
@@ -82,7 +82,7 @@ class OrganizationsClient {
                          OrganizationsClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Fetches an organization resource identified by the specified resource
@@ -95,12 +95,12 @@ class OrganizationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   /// [google.cloud.resourcemanager.v3.GetOrganizationRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L170}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L169}
   /// [google.cloud.resourcemanager.v3.Organization]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
       std::string const& name, Options opts = {});
@@ -110,16 +110,16 @@ class OrganizationsClient {
   /// name.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::GetOrganizationRequest,google/cloud/resourcemanager/v3/organizations.proto#L170}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::GetOrganizationRequest,google/cloud/resourcemanager/v3/organizations.proto#L169}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   /// [google.cloud.resourcemanager.v3.GetOrganizationRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L170}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L169}
   /// [google.cloud.resourcemanager.v3.Organization]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   StatusOr<google::cloud::resourcemanager::v3::Organization> GetOrganization(
       google::cloud::resourcemanager::v3::GetOrganizationRequest const& request,
@@ -153,12 +153,12 @@ class OrganizationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   /// [google.cloud.resourcemanager.v3.SearchOrganizationsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L183}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L182}
   /// [google.cloud.resourcemanager.v3.Organization]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Organization>
   SearchOrganizations(std::string const& query, Options opts = {});
@@ -173,16 +173,16 @@ class OrganizationsClient {
   /// `resourcemanager.organizations.get`
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchOrganizationsRequest,google/cloud/resourcemanager/v3/organizations.proto#L183}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::SearchOrganizationsRequest,google/cloud/resourcemanager/v3/organizations.proto#L182}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_link{google::cloud::resourcemanager::v3::Organization,google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   /// [google.cloud.resourcemanager.v3.SearchOrganizationsRequest]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L183}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L182}
   /// [google.cloud.resourcemanager.v3.Organization]:
-  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L109}
+  /// @googleapis_reference_link{google/cloud/resourcemanager/v3/organizations.proto#L108}
   ///
   StreamRange<google::cloud::resourcemanager::v3::Organization>
   SearchOrganizations(
@@ -205,12 +205,12 @@ class OrganizationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(std::string const& resource,
                                                  Options opts = {});
@@ -226,16 +226,16 @@ class OrganizationsClient {
   /// organization.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_link{google::iam::v1::GetIamPolicyRequest,google/iam/v1/iam_policy.proto#L123}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.GetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L113}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L123}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request, Options opts = {});
@@ -255,12 +255,12 @@ class OrganizationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(std::string const& resource,
                                                  Options opts = {});
@@ -275,16 +275,16 @@ class OrganizationsClient {
   /// organization.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_link{google::iam::v1::SetIamPolicyRequest,google/iam/v1/iam_policy.proto#L101}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L88}
+  /// @googleapis_link{google::iam::v1::Policy,google/iam/v1/policy.proto#L96}
   ///
   /// [google.iam.v1.SetIamPolicyRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L98}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L101}
   /// [google.iam.v1.Policy]:
-  /// @googleapis_reference_link{google/iam/v1/policy.proto#L88}
+  /// @googleapis_reference_link{google/iam/v1/policy.proto#L96}
   ///
   StatusOr<google::iam::v1::Policy> SetIamPolicy(
       google::iam::v1::SetIamPolicyRequest const& request, Options opts = {});
@@ -307,12 +307,12 @@ class OrganizationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
   /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       std::string const& resource, std::vector<std::string> const& permissions,
@@ -326,16 +326,16 @@ class OrganizationsClient {
   /// There are no permissions required for making this API call.
   ///
   /// @param request
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsRequest,google/iam/v1/iam_policy.proto#L136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_link{google::iam::v1::TestIamPermissionsResponse,google/iam/v1/iam_policy.proto#L151}
   ///
   /// [google.iam.v1.TestIamPermissionsRequest]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L126}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L136}
   /// [google.iam.v1.TestIamPermissionsResponse]:
-  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L141}
+  /// @googleapis_reference_link{google/iam/v1/iam_policy.proto#L151}
   ///
   StatusOr<google::iam::v1::TestIamPermissionsResponse> TestIamPermissions(
       google::iam::v1::TestIamPermissionsRequest const& request,

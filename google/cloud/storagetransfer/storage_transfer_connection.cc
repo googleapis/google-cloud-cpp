@@ -23,6 +23,7 @@
 #include "google/cloud/storagetransfer/storage_transfer_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -59,9 +60,9 @@ StorageTransferServiceConnection::GetTransferJob(
 }
 
 StreamRange<google::storagetransfer::v1::TransferJob>
-    StorageTransferServiceConnection::ListTransferJobs(
-        google::storagetransfer::v1::
-            ListTransferJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
+StorageTransferServiceConnection::ListTransferJobs(
+    google::storagetransfer::v1::
+        ListTransferJobsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::storagetransfer::v1::TransferJob>>();
 }
@@ -84,9 +85,46 @@ StorageTransferServiceConnection::RunTransferJob(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+Status StorageTransferServiceConnection::DeleteTransferJob(
+    google::storagetransfer::v1::DeleteTransferJobRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceConnection::CreateAgentPool(
+    google::storagetransfer::v1::CreateAgentPoolRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceConnection::UpdateAgentPool(
+    google::storagetransfer::v1::UpdateAgentPoolRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceConnection::GetAgentPool(
+    google::storagetransfer::v1::GetAgentPoolRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StreamRange<google::storagetransfer::v1::AgentPool>
+StorageTransferServiceConnection::ListAgentPools(
+    google::storagetransfer::v1::
+        ListAgentPoolsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::storagetransfer::v1::AgentPool>>();
+}
+
+Status StorageTransferServiceConnection::DeleteAgentPool(
+    google::storagetransfer::v1::DeleteAgentPoolRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<StorageTransferServiceConnection>
 MakeStorageTransferServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  StorageTransferServicePolicyOptionList>(
       options, __func__);
   options = storagetransfer_internal::StorageTransferServiceDefaultOptions(
@@ -101,25 +139,5 @@ MakeStorageTransferServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace storagetransfer_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<storagetransfer::StorageTransferServiceConnection>
-MakeStorageTransferServiceConnection(
-    std::shared_ptr<StorageTransferServiceStub> stub, Options options) {
-  options = StorageTransferServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      storagetransfer_internal::StorageTransferServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storagetransfer_internal
 }  // namespace cloud
 }  // namespace google

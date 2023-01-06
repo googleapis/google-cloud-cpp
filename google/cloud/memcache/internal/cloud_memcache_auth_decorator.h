@@ -78,6 +78,12 @@ class CloudMemcacheAuth : public CloudMemcacheStub {
       google::cloud::memcache::v1::ApplyParametersRequest const& request)
       override;
 
+  future<StatusOr<google::longrunning::Operation>> AsyncRescheduleMaintenance(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

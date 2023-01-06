@@ -143,6 +143,14 @@ NativeExpression& NativeExpression::operator=(NativeExpression&& rhs) noexcept {
   return *this;
 }
 
+bool operator==(NativeExpression const& a, NativeExpression const& b) noexcept {
+  return a.pimpl_->native_json == b.pimpl_->native_json;
+}
+
+bool operator!=(NativeExpression const& a, NativeExpression const& b) noexcept {
+  return !(a == b);
+}
+
 std::string NativeExpression::expression() const {
   return pimpl_->native_json.value("expression", "");
 }
@@ -292,6 +300,16 @@ NativeIamBinding& NativeIamBinding::operator=(NativeIamBinding&& rhs) noexcept {
   return *this;
 }
 
+bool operator==(NativeIamBinding const& a, NativeIamBinding const& b) noexcept {
+  return a.pimpl_->native_json == b.pimpl_->native_json &&
+         a.members() == b.members() &&
+         a.pimpl_->condition == b.pimpl_->condition;
+}
+
+bool operator!=(NativeIamBinding const& a, NativeIamBinding const& b) noexcept {
+  return !(a == b);
+}
+
 std::string NativeIamBinding::role() const {
   return pimpl_->native_json.value("role", "");
 }
@@ -428,32 +446,35 @@ NativeIamPolicy& NativeIamPolicy::operator=(NativeIamPolicy const& other) {
   return *this;
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
+bool operator==(NativeIamPolicy const& a, NativeIamPolicy const& b) noexcept {
+  return a.pimpl_->native_json == b.pimpl_->native_json &&
+         a.bindings() == b.bindings();
+}
+
+bool operator!=(NativeIamPolicy const& a, NativeIamPolicy const& b) noexcept {
+  return !(a == b);
+}
+
 std::int32_t NativeIamPolicy::version() const {
   return pimpl_->native_json.value("version", 0);
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 void NativeIamPolicy::set_version(std::int32_t version) {
   pimpl_->native_json["version"] = version;
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::string NativeIamPolicy::etag() const {
   return pimpl_->native_json.value("etag", "");
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 void NativeIamPolicy::set_etag(std::string etag) {
   pimpl_->native_json["etag"] = std::move(etag);
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::vector<NativeIamBinding>& NativeIamPolicy::bindings() {
   return pimpl_->bindings;
 }
 
-// NOLINTNEXTLINE(readability-identifier-naming)
 std::vector<NativeIamBinding> const& NativeIamPolicy::bindings() const {
   return pimpl_->bindings;
 }

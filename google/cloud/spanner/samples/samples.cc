@@ -21,10 +21,11 @@
 #include "google/cloud/spanner/admin/instance_admin_options.h"
 #include "google/cloud/spanner/backoff_policy.h"
 #include "google/cloud/spanner/backup.h"
-#include "google/cloud/spanner/connection_options.h"
 #include "google/cloud/spanner/create_instance_request_builder.h"
 #include "google/cloud/spanner/row.h"
+#include "google/cloud/spanner/testing/debug_log.h"  // TODO(#4758): remove
 #include "google/cloud/spanner/testing/instance_location.h"
+#include "google/cloud/spanner/testing/pick_instance_config.h"
 #include "google/cloud/spanner/testing/pick_random_instance.h"
 #include "google/cloud/spanner/testing/random_backup_name.h"
 #include "google/cloud/spanner/testing/random_database_name.h"
@@ -35,6 +36,8 @@
 #include "google/cloud/kms_key_name.h"
 #include "google/cloud/log.h"
 #include "google/cloud/project.h"
+#include "absl/strings/match.h"
+#include "absl/strings/string_view.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
 #include "absl/types/optional.h"
@@ -48,150 +51,27 @@
 
 namespace {
 
-//! [get-instance]
-void GetInstance(google::cloud::spanner_admin::InstanceAdminClient client,
-                 std::string const& project_id,
-                 std::string const& instance_id) {
-  google::cloud::spanner::Instance in(project_id, instance_id);
-  auto instance = client.GetInstance(in.FullName());
-  if (!instance) throw std::runtime_error(instance.status().message());
-
-  std::cout << "The instance " << instance->name()
+//! [START spanner_get_instance_config] [get-instance-config]
+void GetInstanceConfig(google::cloud::spanner_admin::InstanceAdminClient client,
+                       std::string const& project_id,
+                       std::string const& config_id) {
+  auto project = google::cloud::Project(project_id);
+  auto config = client.GetInstanceConfig(project.FullName() +
+                                         "/instanceConfigs/" + config_id);
+  if (!config) throw std::move(config).status();
+  std::cout << "The instanceConfig " << config->name()
             << " exists and its metadata is:\n"
-            << instance->DebugString();
+            << config->DebugString();
 }
-//! [get-instance]
+//! [END spanner_get_instance_config] [get-instance-config]
 
-void GetInstanceCommand(std::vector<std::string> argv) {
+void GetInstanceConfigCommand(std::vector<std::string> argv) {
   if (argv.size() != 2) {
-    throw std::runtime_error("get-instance <project-id> <instance-id>");
+    throw std::runtime_error("get-instance-config <project-id> <config-id>");
   }
   google::cloud::spanner_admin::InstanceAdminClient client(
       google::cloud::spanner_admin::MakeInstanceAdminConnection());
-  GetInstance(std::move(client), argv[0], argv[1]);
-}
-
-//! [START spanner_create_instance] [create-instance]
-void CreateInstance(google::cloud::spanner_admin::InstanceAdminClient client,
-                    std::string const& project_id,
-                    std::string const& instance_id,
-                    std::string const& display_name,
-                    std::string const& config) {
-  namespace spanner = ::google::cloud::spanner;
-  spanner::Instance in(project_id, instance_id);
-
-  auto project = google::cloud::Project(project_id);
-  std::string instance_config =
-      project.FullName() + "/instanceConfigs/" + config;
-  auto instance =
-      client
-          .CreateInstance(
-              spanner::CreateInstanceRequestBuilder(in, instance_config)
-                  .SetDisplayName(display_name)
-                  .SetNodeCount(1)
-                  .SetLabels({{"cloud_spanner_samples", "true"}})
-                  .Build())
-          .get();
-  if (!instance) throw std::runtime_error(instance.status().message());
-  std::cout << "Created instance [" << in << "]:\n" << instance->DebugString();
-}
-//! [END spanner_create_instance] [create-instance]
-
-// [START spanner_create_instance_with_processing_units]
-void CreateInstanceWithProcessingUnits(
-    google::cloud::spanner_admin::InstanceAdminClient client,
-    std::string const& project_id, std::string const& instance_id,
-    std::string const& display_name, std::string const& config) {
-  namespace spanner = ::google::cloud::spanner;
-  spanner::Instance in(project_id, instance_id);
-
-  auto project = google::cloud::Project(project_id);
-  std::string instance_config =
-      project.FullName() + "/instanceConfigs/" + config;
-  auto instance =
-      client
-          .CreateInstance(
-              spanner::CreateInstanceRequestBuilder(in, instance_config)
-                  .SetDisplayName(display_name)
-                  .SetProcessingUnits(500)
-                  .SetLabels({{"cloud_spanner_samples", "true"}})
-                  .Build())
-          .get();
-  if (!instance) throw std::runtime_error(instance.status().message());
-  std::cout << "Created instance [" << in << "]:\n" << instance->DebugString();
-
-  instance = client.GetInstance(in.FullName());
-  if (!instance) throw std::runtime_error(instance.status().message());
-  std::cout << "Instance " << in << " has " << instance->processing_units()
-            << " processing units.\n";
-}
-// [END spanner_create_instance_with_processing_units]
-
-void CreateInstanceCommand(std::vector<std::string> argv) {
-  bool low_cost = !argv.empty() && argv.front() == "--low-cost";
-  if (low_cost) argv.erase(argv.begin());
-  if (argv.size() != 3 && argv.size() != 4) {
-    throw std::runtime_error(
-        "create-instance [--low-cost] <project-id> <instance-id>"
-        " <display_name> [config]");
-  }
-  google::cloud::spanner_admin::InstanceAdminClient client(
-      google::cloud::spanner_admin::MakeInstanceAdminConnection());
-  std::string config = argv.size() == 4 ? argv[3] : "regional-us-central1";
-  if (low_cost) {
-    CreateInstanceWithProcessingUnits(std::move(client), argv[0], argv[1],
-                                      argv[2], config);
-  } else {
-    CreateInstance(std::move(client), argv[0], argv[1], argv[2], config);
-  }
-}
-
-//! [update-instance]
-void UpdateInstance(google::cloud::spanner_admin::InstanceAdminClient client,
-                    std::string const& project_id,
-                    std::string const& instance_id,
-                    std::string const& new_display_name) {
-  google::cloud::spanner::Instance in(project_id, instance_id);
-
-  auto f = client.UpdateInstance(
-      google::cloud::spanner::UpdateInstanceRequestBuilder(in)
-          .SetDisplayName(new_display_name)
-          .Build());
-  auto instance = f.get();
-  if (!instance) throw std::runtime_error(instance.status().message());
-  std::cout << "Updated instance [" << in << "]\n";
-}
-//! [update-instance]
-
-void UpdateInstanceCommand(std::vector<std::string> argv) {
-  if (argv.size() != 3) {
-    throw std::runtime_error(
-        "update-instance <project-id> <instance-id> <new_display_name>");
-  }
-  google::cloud::spanner_admin::InstanceAdminClient client(
-      google::cloud::spanner_admin::MakeInstanceAdminConnection());
-  UpdateInstance(std::move(client), argv[0], argv[1], argv[2]);
-}
-
-//! [delete-instance]
-void DeleteInstance(google::cloud::spanner_admin::InstanceAdminClient client,
-                    std::string const& project_id,
-                    std::string const& instance_id) {
-  google::cloud::spanner::Instance in(project_id, instance_id);
-
-  auto status = client.DeleteInstance(in.FullName());
-  if (!status.ok()) throw std::runtime_error(status.message());
-  std::cout << "Deleted instance [" << in << "]\n";
-}
-//! [delete-instance]
-
-void DeleteInstanceCommand(std::vector<std::string> argv) {
-  if (argv.size() != 2) {
-    throw std::runtime_error("delete-instance <project-id> <instance-id>");
-  }
-  google::cloud::spanner_admin::InstanceAdminClient client(
-      google::cloud::spanner_admin::MakeInstanceAdminConnection());
-  DeleteInstance(std::move(client), argv[0], argv[1]);
+  GetInstanceConfig(std::move(client), argv[0], argv[1]);
 }
 
 //! [START spanner_list_instance_configs] [list-instance-configs]
@@ -200,14 +80,11 @@ void ListInstanceConfigs(
     std::string const& project_id) {
   int count = 0;
   auto project = google::cloud::Project(project_id);
-  for (auto const& instance_config :
-       client.ListInstanceConfigs(project.FullName())) {
-    if (!instance_config) {
-      throw std::runtime_error(instance_config.status().message());
-    }
+  for (auto& config : client.ListInstanceConfigs(project.FullName())) {
+    if (!config) throw std::move(config).status();
     ++count;
     std::cout << "Instance config [" << count << "]:\n"
-              << instance_config->DebugString();
+              << config->DebugString();
   }
   if (count == 0) {
     std::cout << "No instance configs found in project " << project_id << "\n";
@@ -224,31 +101,168 @@ void ListInstanceConfigsCommand(std::vector<std::string> argv) {
   ListInstanceConfigs(std::move(client), argv[0]);
 }
 
-//! [START spanner_get_instance_config] [get-instance-config]
-void GetInstanceConfig(google::cloud::spanner_admin::InstanceAdminClient client,
-                       std::string const& project_id,
-                       std::string const& instance_config_name) {
+// [START spanner_create_instance_config]
+void CreateInstanceConfig(
+    google::cloud::spanner_admin::InstanceAdminClient client,
+    std::string const& project_id, std::string const& user_config_id,
+    std::string const& base_config_id) {
   auto project = google::cloud::Project(project_id);
-  auto instance_config = client.GetInstanceConfig(
-      project.FullName() + "/instanceConfigs/" + instance_config_name);
-  if (!instance_config) {
-    throw std::runtime_error(instance_config.status().message());
+  auto base_config = client.GetInstanceConfig(
+      project.FullName() + "/instanceConfigs/" + base_config_id);
+  if (!base_config) throw std::move(base_config).status();
+  if (base_config->optional_replicas().empty()) {
+    throw std::runtime_error("No optional replicas in base config");
   }
-
-  std::cout << "The instanceConfig " << instance_config->name()
-            << " exists and its metadata is:\n"
-            << instance_config->DebugString();
+  google::spanner::admin::instance::v1::CreateInstanceConfigRequest request;
+  request.set_parent(project.FullName());
+  request.set_instance_config_id(user_config_id);
+  auto* request_config = request.mutable_instance_config();
+  request_config->set_name(project.FullName() + "/instanceConfigs/" +
+                           user_config_id);
+  request_config->set_display_name("My instance config");
+  // The user-managed instance config must contain all the replicas
+  // of the base config plus at least one of the optional replicas.
+  *request_config->mutable_replicas() = base_config->replicas();
+  for (auto const& replica : base_config->optional_replicas()) {
+    *request_config->add_replicas() = replica;
+  }
+  request_config->set_base_config(base_config->name());
+  *request_config->mutable_leader_options() = base_config->leader_options();
+  request.set_validate_only(false);
+  auto user_config = client.CreateInstanceConfig(request).get();
+  if (!user_config) throw std::move(user_config).status();
+  std::cout << "Created instance config [" << user_config_id << "]:\n"
+            << user_config->DebugString();
 }
-//! [END spanner_get_instance_config] [get-instance-config]
+// [END spanner_create_instance_config]
 
-void GetInstanceConfigCommand(std::vector<std::string> argv) {
-  if (argv.size() != 2) {
+void CreateInstanceConfigCommand(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
     throw std::runtime_error(
-        "get-instance-config <project-id> <instance-config-name>");
+        "create-instance-config <project-id> <config-id> <base-config-id>");
   }
   google::cloud::spanner_admin::InstanceAdminClient client(
       google::cloud::spanner_admin::MakeInstanceAdminConnection());
-  GetInstanceConfig(std::move(client), argv[0], argv[1]);
+  CreateInstanceConfig(std::move(client), argv[0], argv[1], argv[2]);
+}
+
+// [START spanner_update_instance_config]
+void UpdateInstanceConfig(
+    google::cloud::spanner_admin::InstanceAdminClient client,
+    std::string const& project_id, std::string const& config_id) {
+  auto project = google::cloud::Project(project_id);
+  auto config = client.GetInstanceConfig(project.FullName() +
+                                         "/instanceConfigs/" + config_id);
+  if (!config) throw std::move(config).status();
+  google::spanner::admin::instance::v1::UpdateInstanceConfigRequest request;
+  auto* request_config = request.mutable_instance_config();
+  request_config->set_name(config->name());
+  request_config->mutable_labels()->insert({"key", "value"});
+  request.mutable_update_mask()->add_paths("labels");
+  request_config->set_etag(config->etag());
+  request.set_validate_only(false);
+  auto updated_config = client.UpdateInstanceConfig(request).get();
+  if (!updated_config) throw std::move(updated_config).status();
+  std::cout << "Updated instance config [" << config_id << "]:\n"
+            << updated_config->DebugString();
+}
+// [END spanner_update_instance_config]
+
+void UpdateInstanceConfigCommand(std::vector<std::string> argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("update-instance-config <project-id> <config-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  UpdateInstanceConfig(std::move(client), argv[0], argv[1]);
+}
+
+// [START spanner_delete_instance_config]
+void DeleteInstanceConfig(
+    google::cloud::spanner_admin::InstanceAdminClient client,
+    std::string const& project_id, std::string const& config_id) {
+  auto project = google::cloud::Project(project_id);
+  auto config_name = project.FullName() + "/instanceConfigs/" + config_id;
+  auto status = client.DeleteInstanceConfig(config_name);
+  if (!status.ok()) throw std::move(status);
+  std::cout << "Instance config " << config_name << " successfully deleted\n";
+}
+// [END spanner_delete_instance_config]
+
+void DeleteInstanceConfigCommand(std::vector<std::string> argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("delete-instance-config <project-id> <config-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  DeleteInstanceConfig(std::move(client), argv[0], argv[1]);
+}
+
+// [START spanner_list_instance_config_operations]
+void ListInstanceConfigOperations(
+    google::cloud::spanner_admin::InstanceAdminClient client,
+    std::string const& project_id) {
+  auto project = google::cloud::Project(project_id);
+
+  google::spanner::admin::database::v1::ListBackupOperationsRequest request;
+  request.set_parent(project.FullName());
+
+  request.set_filter(
+      std::string("metadata.@type=type.googleapis.com/") +
+      "google.spanner.admin.instance.v1.CreateInstanceConfigMetadata");
+  for (auto& operation :
+       client.ListInstanceConfigOperations(project.FullName())) {
+    if (!operation) throw std::move(operation).status();
+    google::spanner::admin::instance::v1::CreateInstanceConfigMetadata metadata;
+    operation->metadata().UnpackTo(&metadata);
+    std::cout << "CreateInstanceConfig metadata is:\n"
+              << metadata.DebugString();
+  }
+
+  request.set_filter(
+      std::string("metadata.@type=type.googleapis.com/") +
+      "google.spanner.admin.instance.v1.UpdateInstanceConfigMetadata");
+  for (auto& operation :
+       client.ListInstanceConfigOperations(project.FullName())) {
+    if (!operation) throw std::move(operation).status();
+    google::spanner::admin::instance::v1::UpdateInstanceConfigMetadata metadata;
+    operation->metadata().UnpackTo(&metadata);
+    std::cout << "UpdateInstanceConfig metadata is:\n"
+              << metadata.DebugString();
+  }
+}
+// [END spanner_list_instance_config_operations]
+
+void ListInstanceConfigOperationsCommand(std::vector<std::string> argv) {
+  if (argv.size() != 1) {
+    throw std::runtime_error("list-instance-config-operations <project-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  ListInstanceConfigOperations(std::move(client), argv[0]);
+}
+
+//! [get-instance]
+void GetInstance(google::cloud::spanner_admin::InstanceAdminClient client,
+                 std::string const& project_id,
+                 std::string const& instance_id) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
+  auto instance = client.GetInstance(in.FullName());
+  if (!instance) throw std::move(instance).status();
+
+  std::cout << "The instance " << instance->name()
+            << " exists and its metadata is:\n"
+            << instance->DebugString();
+}
+//! [get-instance]
+
+void GetInstanceCommand(std::vector<std::string> argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("get-instance <project-id> <instance-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  GetInstance(std::move(client), argv[0], argv[1]);
 }
 
 //! [list-instances]
@@ -256,8 +270,8 @@ void ListInstances(google::cloud::spanner_admin::InstanceAdminClient client,
                    std::string const& project_id) {
   int count = 0;
   auto project = google::cloud::Project(project_id);
-  for (auto const& instance : client.ListInstances(project.FullName())) {
-    if (!instance) throw std::runtime_error(instance.status().message());
+  for (auto& instance : client.ListInstances(project.FullName())) {
+    if (!instance) throw std::move(instance).status();
     ++count;
     std::cout << "Instance [" << count << "]:\n" << instance->DebugString();
   }
@@ -276,13 +290,134 @@ void ListInstancesCommand(std::vector<std::string> argv) {
   ListInstances(std::move(client), argv[0]);
 }
 
+//! [START spanner_create_instance] [create-instance]
+void CreateInstance(google::cloud::spanner_admin::InstanceAdminClient client,
+                    std::string const& project_id,
+                    std::string const& instance_id,
+                    std::string const& display_name,
+                    std::string const& config_id) {
+  namespace spanner = ::google::cloud::spanner;
+  spanner::Instance in(project_id, instance_id);
+
+  auto project = google::cloud::Project(project_id);
+  std::string config_name =
+      project.FullName() + "/instanceConfigs/" + config_id;
+  auto instance =
+      client
+          .CreateInstance(spanner::CreateInstanceRequestBuilder(in, config_name)
+                              .SetDisplayName(display_name)
+                              .SetNodeCount(1)
+                              .SetLabels({{"cloud_spanner_samples", "true"}})
+                              .Build())
+          .get();
+  if (!instance) throw std::move(instance).status();
+  std::cout << "Created instance [" << in << "]:\n" << instance->DebugString();
+}
+//! [END spanner_create_instance] [create-instance]
+
+// [START spanner_create_instance_with_processing_units]
+void CreateInstanceWithProcessingUnits(
+    google::cloud::spanner_admin::InstanceAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& display_name, std::string const& config_id) {
+  namespace spanner = ::google::cloud::spanner;
+  spanner::Instance in(project_id, instance_id);
+
+  auto project = google::cloud::Project(project_id);
+  std::string config_name =
+      project.FullName() + "/instanceConfigs/" + config_id;
+  auto instance =
+      client
+          .CreateInstance(spanner::CreateInstanceRequestBuilder(in, config_name)
+                              .SetDisplayName(display_name)
+                              .SetProcessingUnits(500)
+                              .SetLabels({{"cloud_spanner_samples", "true"}})
+                              .Build())
+          .get();
+  if (!instance) throw std::move(instance).status();
+  std::cout << "Created instance [" << in << "]:\n" << instance->DebugString();
+
+  instance = client.GetInstance(in.FullName());
+  if (!instance) throw std::move(instance).status();
+  std::cout << "Instance " << in << " has " << instance->processing_units()
+            << " processing units.\n";
+}
+// [END spanner_create_instance_with_processing_units]
+
+void CreateInstanceCommand(std::vector<std::string> argv) {
+  bool low_cost = !argv.empty() && argv.front() == "--low-cost";
+  if (low_cost) argv.erase(argv.begin());
+  if (argv.size() != 3 && argv.size() != 4) {
+    throw std::runtime_error(
+        "create-instance [--low-cost] <project-id> <instance-id>"
+        " <display-name> [config-id]");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  std::string config_id = argv.size() == 4 ? argv[3] : "regional-us-central1";
+  if (low_cost) {
+    CreateInstanceWithProcessingUnits(std::move(client), argv[0], argv[1],
+                                      argv[2], config_id);
+  } else {
+    CreateInstance(std::move(client), argv[0], argv[1], argv[2], config_id);
+  }
+}
+
+//! [update-instance]
+void UpdateInstance(google::cloud::spanner_admin::InstanceAdminClient client,
+                    std::string const& project_id,
+                    std::string const& instance_id,
+                    std::string const& new_display_name) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
+
+  auto f = client.UpdateInstance(
+      google::cloud::spanner::UpdateInstanceRequestBuilder(in)
+          .SetDisplayName(new_display_name)
+          .Build());
+  auto instance = f.get();
+  if (!instance) throw std::move(instance).status();
+  std::cout << "Updated instance [" << in << "]\n";
+}
+//! [update-instance]
+
+void UpdateInstanceCommand(std::vector<std::string> argv) {
+  if (argv.size() != 3) {
+    throw std::runtime_error(
+        "update-instance <project-id> <instance-id> <new-display-name>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  UpdateInstance(std::move(client), argv[0], argv[1], argv[2]);
+}
+
+//! [delete-instance]
+void DeleteInstance(google::cloud::spanner_admin::InstanceAdminClient client,
+                    std::string const& project_id,
+                    std::string const& instance_id) {
+  google::cloud::spanner::Instance in(project_id, instance_id);
+
+  auto status = client.DeleteInstance(in.FullName());
+  if (!status.ok()) throw std::move(status);
+  std::cout << "Deleted instance [" << in << "]\n";
+}
+//! [delete-instance]
+
+void DeleteInstanceCommand(std::vector<std::string> argv) {
+  if (argv.size() != 2) {
+    throw std::runtime_error("delete-instance <project-id> <instance-id>");
+  }
+  google::cloud::spanner_admin::InstanceAdminClient client(
+      google::cloud::spanner_admin::MakeInstanceAdminConnection());
+  DeleteInstance(std::move(client), argv[0], argv[1]);
+}
+
 //! [instance-get-iam-policy]
 void InstanceGetIamPolicy(
     google::cloud::spanner_admin::InstanceAdminClient client,
     std::string const& project_id, std::string const& instance_id) {
   google::cloud::spanner::Instance in(project_id, instance_id);
   auto actual = client.GetIamPolicy(in.FullName());
-  if (!actual) throw std::runtime_error(actual.status().message());
+  if (!actual) throw std::move(actual).status();
 
   std::cout << "The IAM policy for instance " << instance_id << " is:\n"
             << actual->DebugString();
@@ -338,7 +473,7 @@ void AddDatabaseReader(google::cloud::spanner_admin::InstanceAdminClient client,
         return current;
       });
 
-  if (!result) throw std::runtime_error(result.status().message());
+  if (!result) throw std::move(result).status();
   std::cout << "Successfully added " << new_reader
             << " to the database reader role:\n"
             << result->DebugString();
@@ -387,7 +522,7 @@ void RemoveDatabaseReader(
         return current;
       });
 
-  if (!result) throw std::runtime_error(result.status().message());
+  if (!result) throw std::move(result).status();
   std::cout << "Successfully removed " << reader
             << " from the database reader role:\n"
             << result->DebugString();
@@ -411,7 +546,7 @@ void InstanceTestIamPermissions(
   google::cloud::spanner::Instance in(project_id, instance_id);
   auto actual =
       client.TestIamPermissions(in.FullName(), {"spanner.databases.list"});
-  if (!actual) throw std::runtime_error(actual.status().message());
+  if (!actual) throw std::move(actual).status();
 
   char const* msg = actual->permissions().empty() ? "does not" : "does";
 
@@ -439,7 +574,7 @@ google::cloud::spanner::Timestamp DatabaseNow(
   using RowType = std::tuple<google::cloud::spanner::Timestamp>;
   auto row = google::cloud::spanner::GetSingularRow(
       google::cloud::spanner::StreamOf<RowType>(rows));
-  if (!row) throw std::runtime_error(row.status().message());
+  if (!row) throw std::move(row).status();
   return std::get<0>(*row);
 }
 
@@ -472,7 +607,9 @@ void CreateDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
           SingerId   INT64 NOT NULL,
           FirstName  STRING(1024),
           LastName   STRING(1024),
-          SingerInfo BYTES(MAX)
+          SingerInfo BYTES(MAX),
+          FullName   STRING(2049)
+              AS (ARRAY_TO_STRING([FirstName, LastName], " ")) STORED
       ) PRIMARY KEY (SingerId))""");
   request.add_extra_statements(R"""(
       CREATE TABLE Albums (
@@ -482,7 +619,7 @@ void CreateDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
       ) PRIMARY KEY (SingerId, AlbumId),
           INTERLEAVE IN PARENT Singers ON DELETE CASCADE)""");
   auto db = client.CreateDatabase(request).get();
-  if (!db) throw std::runtime_error(db.status().message());
+  if (!db) throw std::move(db).status();
   std::cout << "Database " << db->name() << " created.\n";
 }
 //! [create-database] [END spanner_create_database]
@@ -506,7 +643,9 @@ void CreateDatabaseWithVersionRetentionPeriod(
           SingerId   INT64 NOT NULL,
           FirstName  STRING(1024),
           LastName   STRING(1024),
-          SingerInfo BYTES(MAX)
+          SingerInfo BYTES(MAX),
+          FullName   STRING(2049)
+              AS (ARRAY_TO_STRING([FirstName, LastName], " ")) STORED
       ) PRIMARY KEY (SingerId))""");
   request.add_extra_statements(R"""(
       CREATE TABLE Albums (
@@ -516,11 +655,11 @@ void CreateDatabaseWithVersionRetentionPeriod(
       ) PRIMARY KEY (SingerId, AlbumId),
           INTERLEAVE IN PARENT Singers ON DELETE CASCADE)""");
   auto db = client.CreateDatabase(request).get();
-  if (!db) throw std::runtime_error(db.status().message());
+  if (!db) throw std::move(db).status();
   std::cout << "Database " << db->name() << " created.\n";
 
   auto ddl = client.GetDatabaseDdl(db->name());
-  if (!ddl) throw std::runtime_error(ddl.status().message());
+  if (!ddl) throw std::move(ddl).status();
   std::cout << "Database DDL is:\n" << ddl->DebugString();
 }
 // [END spanner_create_database_with_version_retention_period]
@@ -540,7 +679,7 @@ void CreateDatabaseWithDefaultLeader(
                                "SET OPTIONS (default_leader='" +
                                default_leader + "')");
   auto db = client.CreateDatabase(request).get();
-  if (!db) throw std::runtime_error(db.status().message());
+  if (!db) throw std::move(db).status();
   std::cout << "Database " << db->name() << " created.\n" << db->DebugString();
 }
 // [END spanner_create_database_with_default_leader]
@@ -558,7 +697,9 @@ void UpdateDatabaseWithDefaultLeader(
   auto metadata =
       client.UpdateDatabaseDdl(database.FullName(), std::move(statements))
           .get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "`default_leader` altered, new DDL metadata:\n"
             << metadata->DebugString();
 }
@@ -586,7 +727,9 @@ void CreateTableWithDatatypes(
                                 (allow_commit_timestamp=true)
                         ) PRIMARY KEY (VenueId))"""})
                       .get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "`Venues` table created, new DDL:\n" << metadata->DebugString();
 }
 // [END spanner_create_table_with_datatypes]
@@ -610,7 +753,9 @@ void CreateTableWithTimestamp(
                         ) PRIMARY KEY (SingerId, VenueId, EventDate),
                             INTERLEAVE IN PARENT Singers ON DELETE CASCADE)"""})
                       .get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "`Performances` table created, new DDL:\n"
             << metadata->DebugString();
 }
@@ -628,7 +773,9 @@ void AddIndex(google::cloud::spanner_admin::DatabaseAdminClient client,
               database.FullName(),
               {"CREATE INDEX AlbumsByAlbumTitle ON Albums(AlbumTitle)"})
           .get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "`AlbumsByAlbumTitle` Index successfully added, new DDL:\n"
             << metadata->DebugString();
 }
@@ -641,7 +788,7 @@ void GetDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
   namespace spanner = ::google::cloud::spanner;
   auto database = client.GetDatabase(
       spanner::Database(project_id, instance_id, database_id).FullName());
-  if (!database) throw std::runtime_error(database.status().message());
+  if (!database) throw std::move(database).status();
   std::cout << "Database metadata is:\n" << database->DebugString();
 }
 //! [get-database]
@@ -654,10 +801,114 @@ void GetDatabaseDdl(google::cloud::spanner_admin::DatabaseAdminClient client,
   namespace spanner = ::google::cloud::spanner;
   auto database = client.GetDatabaseDdl(
       spanner::Database(project_id, instance_id, database_id).FullName());
-  if (!database) throw std::runtime_error(database.status().message());
+  if (!database) throw std::move(database).status();
   std::cout << "Database metadata is:\n" << database->DebugString();
 }
 //! [END spanner_get_database_ddl] [get-database-ddl]
+
+//! [START spanner_add_and_drop_database_role]
+void AddAndDropDatabaseRole(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& role_parent,
+    std::string const& role_child) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::vector<std::string> grant_statements = {
+      "CREATE ROLE " + role_parent,
+      "GRANT SELECT ON TABLE Singers TO ROLE " + role_parent,
+      "CREATE ROLE " + role_child,
+      "GRANT ROLE " + role_parent + " TO ROLE " + role_child,
+  };
+  auto metadata =
+      client.UpdateDatabaseDdl(database.FullName(), grant_statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
+  std::cout << "Created roles " << role_parent << " and " << role_child
+            << " and granted privileges\n";
+
+  std::vector<std::string> revoke_statements = {
+      "REVOKE ROLE " + role_parent + " FROM ROLE " + role_child,
+      "DROP ROLE " + role_child,
+  };
+  metadata =
+      client.UpdateDatabaseDdl(database.FullName(), revoke_statements).get();
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
+  std::cout << "Revoked privileges and dropped role " << role_child << "\n";
+}
+//! [END spanner_add_and_drop_database_role]
+
+//! [START spanner_read_data_with_database_role]
+void ReadDataWithDatabaseRole(std::string const& project_id,
+                              std::string const& instance_id,
+                              std::string const& database_id,
+                              std::string const& role) {
+  namespace spanner = ::google::cloud::spanner;
+  auto client = spanner::Client(spanner::MakeConnection(
+      spanner::Database(project_id, instance_id, database_id),
+      google::cloud::Options{}.set<spanner::SessionCreatorRoleOption>(role)));
+  spanner::SqlStatement select_star("SELECT * FROM Singers");
+  auto rows = client.ExecuteQuery(std::move(select_star));
+  using RowType =
+      std::tuple<std::int64_t, std::string, std::string, spanner::Bytes>;
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
+    std::cout << "SingerId: " << std::get<0>(*row) << ", "
+              << "FirstName: " << std::get<1>(*row) << ", "
+              << "LastName: " << std::get<2>(*row) << "\n";
+  }
+}
+//! [END spanner_read_data_with_database_role]
+
+//! [START spanner_list_database_roles]
+void ListDatabaseRoles(google::cloud::spanner_admin::DatabaseAdminClient client,
+                       std::string const& project_id,
+                       std::string const& instance_id,
+                       std::string const& database_id) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+  std::cout << "Database Roles are:\n";
+  for (auto& role : client.ListDatabaseRoles(database.FullName())) {
+    if (!role) throw std::move(role).status();
+    std::cout << role->name() << "\n";
+  }
+}
+//! [END spanner_list_database_roles]
+
+//! [START spanner_enable_fine_grained_access]
+void EnableFineGrainedAccess(
+    google::cloud::spanner_admin::DatabaseAdminClient client,
+    std::string const& project_id, std::string const& instance_id,
+    std::string const& database_id, std::string const& iam_member,
+    std::string const& database_role, std::string const& title) {
+  google::cloud::spanner::Database database(project_id, instance_id,
+                                            database_id);
+
+  google::iam::v1::GetIamPolicyRequest request;
+  request.set_resource(database.FullName());
+  request.mutable_options()->set_requested_policy_version(3);
+  auto policy = client.GetIamPolicy(request);
+  if (!policy) throw std::move(policy).status();
+  if (policy->version() < 3) policy->set_version(3);
+
+  auto& binding = *policy->add_bindings();
+  binding.set_role("roles/spanner.fineGrainedAccessUser");
+  binding.add_members(iam_member);
+  auto& condition = *binding.mutable_condition();
+  condition.set_expression("resource.name.endsWith(\"/databaseRoles/" +
+                           database_role + "\")");
+  condition.set_title(title);
+
+  auto new_policy =
+      client.SetIamPolicy(database.FullName(), *std::move(policy));
+  if (!new_policy) throw std::move(new_policy).status();
+  std::cout << "Enabled fine-grained access in IAM. New policy has version "
+            << new_policy->version() << "\n";
+}
+//! [END spanner_enable_fine_grained_access]
 
 //! [update-database] [START spanner_add_column]
 void AddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
@@ -671,7 +922,9 @@ void AddColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
               database.FullName(),
               {"ALTER TABLE Albums ADD COLUMN MarketingBudget INT64"})
           .get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "Added MarketingBudget column\n";
 }
 //! [update-database] [END spanner_add_column]
@@ -690,7 +943,9 @@ void AddTimestampColumn(
               {"ALTER TABLE Albums ADD COLUMN LastUpdateTime TIMESTAMP "
                "OPTIONS (allow_commit_timestamp=true)"})
           .get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "Added LastUpdateTime column\n";
 }
 // [END spanner_add_timestamp_column]
@@ -707,7 +962,9 @@ void AddStoringIndex(google::cloud::spanner_admin::DatabaseAdminClient client,
                         CREATE INDEX AlbumsByAlbumTitle2 ON Albums(AlbumTitle)
                             STORING (MarketingBudget))"""})
                       .get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "`AlbumsByAlbumTitle2` Index successfully added, new DDL:\n"
             << metadata->DebugString();
 }
@@ -719,8 +976,8 @@ void ListDatabases(google::cloud::spanner_admin::DatabaseAdminClient client,
                    std::string const& instance_id) {
   google::cloud::spanner::Instance in(project_id, instance_id);
   int count = 0;
-  for (auto const& database : client.ListDatabases(in.FullName())) {
-    if (!database) throw std::runtime_error(database.status().message());
+  for (auto& database : client.ListDatabases(in.FullName())) {
+    if (!database) throw std::move(database).status();
     std::cout << "Database " << database->name() << " full metadata:\n"
               << database->DebugString();
     ++count;
@@ -758,10 +1015,11 @@ void CreateBackup(google::cloud::spanner_admin::DatabaseAdminClient client,
   *request.mutable_backup()->mutable_version_time() =
       version_time.get<google::protobuf::Timestamp>().value();
   auto backup = client.CreateBackup(request).get();
-  if (!backup) throw std::runtime_error(backup.status().message());
+  if (!backup) throw std::move(backup).status();
   std::cout
       << "Backup " << backup->name() << " of " << backup->database()
-      << " of size " << backup->size_bytes() << " bytes"
+      << " of size " << backup->size_bytes() << " bytes as of "
+      << google::cloud::spanner::MakeTimestamp(backup->version_time()).value()
       << " was created at "
       << google::cloud::spanner::MakeTimestamp(backup->create_time()).value()
       << ".\n";
@@ -794,9 +1052,7 @@ void RestoreDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
           .RestoreDatabase(database.instance().FullName(),
                            database.database_id(), backup.FullName())
           .get();
-  if (!restored_db) {
-    throw std::runtime_error(restored_db.status().message());
-  }
+  if (!restored_db) throw std::move(restored_db).status();
   std::cout << "Database";
   if (restored_db->restore_info().source_type() ==
       google::spanner::admin::database::v1::BACKUP) {
@@ -829,10 +1085,12 @@ void GetBackup(google::cloud::spanner_admin::DatabaseAdminClient client,
   google::cloud::spanner::Backup backup_name(
       google::cloud::spanner::Instance(project_id, instance_id), backup_id);
   auto backup = client.GetBackup(backup_name.FullName());
-  if (!backup) throw std::runtime_error(backup.status().message());
+  if (!backup) throw std::move(backup).status();
   std::cout
       << "Backup " << backup->name() << " of size " << backup->size_bytes()
-      << " bytes was created at "
+      << " bytes as of "
+      << google::cloud::spanner::MakeTimestamp(backup->version_time()).value()
+      << " was created at "
       << google::cloud::spanner::MakeTimestamp(backup->create_time()).value()
       << ".\n";
 }
@@ -852,16 +1110,33 @@ void GetBackupCommand(std::vector<std::string> argv) {
 void UpdateBackup(google::cloud::spanner_admin::DatabaseAdminClient client,
                   std::string const& project_id, std::string const& instance_id,
                   std::string const& backup_id,
-                  google::cloud::spanner::Timestamp expire_time) {
+                  absl::Duration expiry_extension) {
   google::cloud::spanner::Backup backup_name(
       google::cloud::spanner::Instance(project_id, instance_id), backup_id);
+  auto backup = client.GetBackup(backup_name.FullName());
+  if (!backup) throw std::move(backup).status();
+  auto expire_time =
+      google::cloud::spanner::MakeTimestamp(backup->expire_time())
+          .value()
+          .get<absl::Time>()
+          .value();
+  expire_time += expiry_extension;
+  auto max_expire_time =
+      google::cloud::spanner::MakeTimestamp(backup->max_expire_time())
+          .value()
+          .get<absl::Time>()
+          .value();
+  if (expire_time > max_expire_time) expire_time = max_expire_time;
   google::spanner::admin::database::v1::UpdateBackupRequest request;
   request.mutable_backup()->set_name(backup_name.FullName());
   *request.mutable_backup()->mutable_expire_time() =
-      expire_time.get<google::protobuf::Timestamp>().value();
+      google::cloud::spanner::MakeTimestamp(expire_time)
+          .value()
+          .get<google::protobuf::Timestamp>()
+          .value();
   request.mutable_update_mask()->add_paths("expire_time");
-  auto backup = client.UpdateBackup(request);
-  if (!backup) throw std::runtime_error(backup.status().message());
+  backup = client.UpdateBackup(request);
+  if (!backup) throw std::move(backup).status();
   std::cout
       << "Backup " << backup->name() << " updated to expire at "
       << google::cloud::spanner::MakeTimestamp(backup->expire_time()).value()
@@ -876,9 +1151,58 @@ void UpdateBackupCommand(std::vector<std::string> argv) {
   }
   google::cloud::spanner_admin::DatabaseAdminClient client(
       google::cloud::spanner_admin::MakeDatabaseAdminConnection());
-  auto now = DatabaseNow(MakeSampleClient(argv[0], argv[1], argv[2]));
-  UpdateBackup(std::move(client), argv[0], argv[1], argv[2],
-               TimestampAdd(now, absl::Hours(7)));
+  UpdateBackup(std::move(client), argv[0], argv[1], argv[2], absl::Hours(7));
+}
+
+// [START spanner_copy_backup]
+void CopyBackup(google::cloud::spanner_admin::DatabaseAdminClient client,
+                std::string const& src_project_id,
+                std::string const& src_instance_id,
+                std::string const& src_backup_id,
+                std::string const& dst_project_id,
+                std::string const& dst_instance_id,
+                std::string const& dst_backup_id,
+                google::cloud::spanner::Timestamp expire_time) {
+  google::cloud::spanner::Backup source(
+      google::cloud::spanner::Instance(src_project_id, src_instance_id),
+      src_backup_id);
+  google::cloud::spanner::Instance dst_in(dst_project_id, dst_instance_id);
+  auto copy_backup =
+      client
+          .CopyBackup(dst_in.FullName(), dst_backup_id, source.FullName(),
+                      expire_time.get<google::protobuf::Timestamp>().value())
+          .get();
+  if (!copy_backup) throw std::move(copy_backup).status();
+  std::cout << "Copy Backup " << copy_backup->name()  //
+            << " of " << source.FullName()            //
+            << " of size " << copy_backup->size_bytes() << " bytes as of "
+            << google::cloud::spanner::MakeTimestamp(
+                   copy_backup->version_time())
+                   .value()
+            << " was created at "
+            << google::cloud::spanner::MakeTimestamp(copy_backup->create_time())
+                   .value()
+            << ".\n";
+}
+// [END spanner_copy_backup]
+
+void CopyBackupCommand(std::vector<std::string> argv) {
+  if (argv.size() != 5) {
+    throw std::runtime_error(
+        "copy-backup <project-id> <instance-id> <backup-id>"
+        " <copy-instance-id> <copy-backup-id>");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  google::cloud::spanner::Backup source(
+      google::cloud::spanner::Instance(argv[0], argv[1]), argv[2]);
+  auto backup = client.GetBackup(source.FullName());
+  if (!backup) throw std::move(backup).status();
+  auto expire_time = TimestampAdd(
+      google::cloud::spanner::MakeTimestamp(backup->expire_time()).value(),
+      absl::Hours(7));
+  CopyBackup(std::move(client), argv[0], argv[1], argv[2], argv[0], argv[3],
+             argv[4], expire_time);
 }
 
 //! [delete-backup] [START spanner_delete_backup]
@@ -888,7 +1212,7 @@ void DeleteBackup(google::cloud::spanner_admin::DatabaseAdminClient client,
   google::cloud::spanner::Backup backup(
       google::cloud::spanner::Instance(project_id, instance_id), backup_id);
   auto status = client.DeleteBackup(backup.FullName());
-  if (!status.ok()) throw std::runtime_error(status.message());
+  if (!status.ok()) throw std::move(status);
   std::cout << "Backup " << backup.FullName() << " was deleted.\n";
 }
 //! [delete-backup] [END spanner_delete_backup]
@@ -922,7 +1246,7 @@ void CreateBackupAndCancel(
   auto backup = f.get();
   if (backup) {
     auto status = client.DeleteBackup(backup->name());
-    if (!status.ok()) throw std::runtime_error(status.message());
+    if (!status.ok()) throw std::move(status);
     std::cout << "Backup " << backup->name() << " was deleted.\n";
   } else {
     std::cout << "CreateBackup operation was cancelled with the message '"
@@ -962,7 +1286,9 @@ void CreateDatabaseWithEncryptionKey(
           SingerId   INT64 NOT NULL,
           FirstName  STRING(1024),
           LastName   STRING(1024),
-          SingerInfo BYTES(MAX)
+          SingerInfo BYTES(MAX),
+          FullName   STRING(2049)
+              AS (ARRAY_TO_STRING([FirstName, LastName], " ")) STORED
       ) PRIMARY KEY (SingerId))""");
   request.add_extra_statements(R"""(
       CREATE TABLE Albums (
@@ -974,7 +1300,7 @@ void CreateDatabaseWithEncryptionKey(
   request.mutable_encryption_config()->set_kms_key_name(
       encryption_key.FullName());
   auto db = client.CreateDatabase(request).get();
-  if (!db) throw std::runtime_error(db.status().message());
+  if (!db) throw std::move(db).status();
   std::cout << "Database " << db->name() << " created";
   std::cout << " using encryption key " << encryption_key.FullName();
   std::cout << ".\n";
@@ -1023,10 +1349,11 @@ void CreateBackupWithEncryptionKey(
   request.mutable_encryption_config()->set_kms_key_name(
       encryption_key.FullName());
   auto backup = client.CreateBackup(request).get();
-  if (!backup) throw std::runtime_error(backup.status().message());
+  if (!backup) throw std::move(backup).status();
   std::cout
       << "Backup " << backup->name() << " of " << backup->database()
-      << " of size " << backup->size_bytes() << " bytes"
+      << " of size " << backup->size_bytes() << " bytes as of "
+      << google::cloud::spanner::MakeTimestamp(backup->version_time()).value()
       << " was created at "
       << google::cloud::spanner::MakeTimestamp(backup->create_time()).value()
       << " using encryption key " << encryption_key.FullName() << ".\n";
@@ -1072,9 +1399,7 @@ void RestoreDatabaseWithEncryptionKey(
   request.mutable_encryption_config()->set_kms_key_name(
       encryption_key.FullName());
   auto restored_db = client.RestoreDatabase(request).get();
-  if (!restored_db) {
-    throw std::runtime_error(restored_db.status().message());
-  }
+  if (!restored_db) throw std::move(restored_db).status();
   std::cout << "Database";
   if (restored_db->restore_info().source_type() ==
       google::spanner::admin::database::v1::BACKUP) {
@@ -1114,8 +1439,8 @@ void ListBackups(google::cloud::spanner_admin::DatabaseAdminClient client,
                  std::string const& instance_id) {
   google::cloud::spanner::Instance in(project_id, instance_id);
   std::cout << "All backups:\n";
-  for (auto const& backup : client.ListBackups(in.FullName())) {
-    if (!backup) throw std::runtime_error(backup.status().message());
+  for (auto& backup : client.ListBackups(in.FullName())) {
+    if (!backup) throw std::move(backup).status();
     std::cout << "Backup " << backup->name() << " on database "
               << backup->database() << " with size : " << backup->size_bytes()
               << " bytes.\n";
@@ -1136,25 +1461,50 @@ void ListBackupsCommand(std::vector<std::string> argv) {
 void ListBackupOperations(
     google::cloud::spanner_admin::DatabaseAdminClient client,
     std::string const& project_id, std::string const& instance_id,
-    std::string const& database_id) {
+    std::string const& database_id, std::string const& backup_id) {
   google::cloud::spanner::Instance in(project_id, instance_id);
   google::cloud::spanner::Database database(in, database_id);
+  google::cloud::spanner::Backup backup(in, backup_id);
+
   google::spanner::admin::database::v1::ListBackupOperationsRequest request;
   request.set_parent(in.FullName());
+
   request.set_filter(std::string("(metadata.@type=type.googleapis.com/") +
                      "google.spanner.admin.database.v1.CreateBackupMetadata)" +
                      " AND (metadata.database=" + database.FullName() + ")");
-  for (auto const& operation : client.ListBackupOperations(request)) {
-    if (!operation) throw std::runtime_error(operation.status().message());
+  for (auto& operation : client.ListBackupOperations(request)) {
+    if (!operation) throw std::move(operation).status();
     google::spanner::admin::database::v1::CreateBackupMetadata metadata;
     operation->metadata().UnpackTo(&metadata);
-    std::cout << "Backup " << metadata.name() << " on database "
-              << metadata.database()
-              << " progress: " << metadata.progress().progress_percent()
-              << "% complete.\n";
+    std::cout << "Backup " << metadata.name() << " of database "
+              << metadata.database() << " is "
+              << metadata.progress().progress_percent() << "% complete.\n";
+  }
+
+  request.set_filter(std::string("(metadata.@type:type.googleapis.com/") +
+                     "google.spanner.admin.database.v1.CopyBackupMetadata)" +
+                     " AND (metadata.source_backup=" + backup.FullName() + ")");
+  for (auto& operation : client.ListBackupOperations(request)) {
+    if (!operation) throw std::move(operation).status();
+    google::spanner::admin::database::v1::CopyBackupMetadata metadata;
+    operation->metadata().UnpackTo(&metadata);
+    std::cout << "Copy " << metadata.name() << " of backup "
+              << metadata.source_backup() << " is "
+              << metadata.progress().progress_percent() << "% complete.\n";
   }
 }
 //! [list-backup-operations] [END spanner_list_backup_operations]
+
+void ListBackupOperationsCommand(std::vector<std::string> argv) {
+  if (argv.size() != 4) {
+    throw std::runtime_error(
+        "list-backup-operations <project-id> <instance-id> <database-id>"
+        " <backup-id>");
+  }
+  google::cloud::spanner_admin::DatabaseAdminClient client(
+      google::cloud::spanner_admin::MakeDatabaseAdminConnection());
+  ListBackupOperations(std::move(client), argv[0], argv[1], argv[2], argv[3]);
+}
 
 //! [list-database-operations] [START spanner_list_database_operations]
 void ListDatabaseOperations(
@@ -1166,8 +1516,8 @@ void ListDatabaseOperations(
   request.set_filter(
       "(metadata.@type:type.googleapis.com/"
       "google.spanner.admin.database.v1.OptimizeRestoredDatabaseMetadata)");
-  for (auto const& operation : client.ListDatabaseOperations(request)) {
-    if (!operation) throw std::runtime_error(operation.status().message());
+  for (auto& operation : client.ListDatabaseOperations(request)) {
+    if (!operation) throw std::move(operation).status();
     google::spanner::admin::database::v1::OptimizeRestoredDatabaseMetadata
         metadata;
     operation->metadata().UnpackTo(&metadata);
@@ -1194,7 +1544,7 @@ void DropDatabase(google::cloud::spanner_admin::DatabaseAdminClient client,
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   auto status = client.DropDatabase(database.FullName());
-  if (!status.ok()) throw std::runtime_error(status.message());
+  if (!status.ok()) throw std::move(status);
   std::cout << "Database " << database << " successfully dropped\n";
 }
 //! [drop-database] [END spanner_drop_database]
@@ -1207,7 +1557,7 @@ void DatabaseGetIamPolicy(
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   auto actual = client.GetIamPolicy(database.FullName());
-  if (!actual) throw std::runtime_error(actual.status().message());
+  if (!actual) throw std::move(actual).status();
 
   std::cout << "The IAM policy for database " << database_id << " is:\n"
             << actual->DebugString() << "\n";
@@ -1222,7 +1572,7 @@ void AddDatabaseReaderOnDatabase(
   google::cloud::spanner::Database database(project_id, instance_id,
                                             database_id);
   auto current = client.GetIamPolicy(database.FullName());
-  if (!current) throw std::runtime_error(current.status().message());
+  if (!current) throw std::move(current).status();
 
   // Find (or create) the binding for "roles/spanner.databaseReader".
   auto& binding = [&current]() -> google::iam::v1::Binding& {
@@ -1252,7 +1602,7 @@ void AddDatabaseReaderOnDatabase(
 
   binding.add_members(new_reader);
   auto result = client.SetIamPolicy(database.FullName(), *std::move(current));
-  if (!result) throw std::runtime_error(result.status().message());
+  if (!result) throw std::move(result).status();
 
   std::cout << "Successfully added " << new_reader
             << " to the database reader role:\n"
@@ -1279,7 +1629,7 @@ void DatabaseTestIamPermissions(
     std::string const& database_id, std::string const& permission) {
   google::cloud::spanner::Database db(project_id, instance_id, database_id);
   auto actual = client.TestIamPermissions(db.FullName(), {permission});
-  if (!actual) throw std::runtime_error(actual.status().message());
+  if (!actual) throw std::move(actual).status();
 
   char const* msg = actual->permissions().empty() ? "does not" : "does";
 
@@ -1314,8 +1664,8 @@ void Quickstart(std::string const& project_id, std::string const& instance_id,
   auto rows =
       client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
   using RowType = std::tuple<std::string>;
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << std::get<0>(*row) << "\n";
   }
 }
@@ -1352,9 +1702,7 @@ void InsertData(google::cloud::spanner::Client client) {
 
   auto commit_result =
       client.Commit(spanner::Mutations{insert_singers, insert_albums});
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Insert was successful [spanner_insert_data]\n";
 }
 //! [END spanner_insert_data]
@@ -1369,9 +1717,7 @@ void UpdateData(google::cloud::spanner::Client client) {
           .EmplaceRow(1, 1, 100000)
           .EmplaceRow(2, 2, 500000)
           .Build()});
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   //! [commit-with-mutations]
   std::cout << "Update was successful [spanner_update_data]\n";
 }
@@ -1406,9 +1752,7 @@ void DeleteData(google::cloud::spanner::Client client) {
 
   auto commit_result = client.Commit(spanner::Mutations{
       delete_albums, delete_singers_range, delete_singers_all});
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Delete was successful [spanner_delete_data]\n";
 }
 //! [END spanner_delete_data]
@@ -1441,9 +1785,7 @@ void InsertDatatypesData(google::cloud::spanner::Client client) {
           .Build();
 
   auto commit_result = client.Commit(spanner::Mutations{insert_venues});
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Insert was successful [spanner_insert_datatypes_data]\n";
 }
 //! [END spanner_insert_datatypes_data]
@@ -1461,8 +1803,8 @@ void QueryWithArrayParameter(google::cloud::spanner::Client client) {
   using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
                              absl::optional<absl::CivilDay>>;
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "VenueId: " << std::get<0>(*row) << "\t";
     std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
     std::cout << "AvailableDate: " << std::get<2>(*row).value() << "\n";
@@ -1482,8 +1824,8 @@ void QueryWithBoolParameter(google::cloud::spanner::Client client) {
   using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
                              absl::optional<bool>>;
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "VenueId: " << std::get<0>(*row) << "\t";
     std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
     std::cout << "OutdoorVenue: " << std::get<2>(*row).value() << "\n";
@@ -1502,8 +1844,8 @@ void QueryWithBytesParameter(google::cloud::spanner::Client client) {
       {{"venue_info", spanner::Value(example_bytes)}});
   using RowType = std::tuple<std::int64_t, absl::optional<std::string>>;
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "VenueId: " << std::get<0>(*row) << "\t";
     std::cout << "VenueName: " << std::get<1>(*row).value() << "\n";
   }
@@ -1522,8 +1864,8 @@ void QueryWithDateParameter(google::cloud::spanner::Client client) {
   using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
                              absl::optional<absl::CivilDay>>;
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "VenueId: " << std::get<0>(*row) << "\t";
     std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
     std::cout << "LastContactDate: " << std::get<2>(*row).value() << "\n";
@@ -1543,8 +1885,8 @@ void QueryWithFloatParameter(google::cloud::spanner::Client client) {
   using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
                              absl::optional<double>>;
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "VenueId: " << std::get<0>(*row) << "\t";
     std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
     std::cout << "PopularityScore: " << std::get<2>(*row).value() << "\n";
@@ -1564,8 +1906,8 @@ void QueryWithIntParameter(google::cloud::spanner::Client client) {
   using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
                              absl::optional<std::int64_t>>;
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "VenueId: " << std::get<0>(*row) << "\t";
     std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
     std::cout << "Capacity: " << std::get<2>(*row).value() << "\n";
@@ -1584,8 +1926,8 @@ void QueryWithStringParameter(google::cloud::spanner::Client client) {
       {{"venue_name", spanner::Value(example_string)}});
   using RowType = std::tuple<std::int64_t, absl::optional<std::string>>;
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "VenueId: " << std::get<0>(*row) << "\t";
     std::cout << "VenueName: " << std::get<1>(*row).value() << "\n";
   }
@@ -1605,8 +1947,8 @@ void QueryWithTimestampParameter(
   using RowType = std::tuple<std::int64_t, absl::optional<std::string>,
                              absl::optional<spanner::Timestamp>>;
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "VenueId: " << std::get<0>(*row) << "\t";
     std::cout << "VenueName: " << std::get<1>(*row).value() << "\t";
     std::cout << "LastUpdateTime: " << std::get<2>(*row).value() << "\n";
@@ -1637,7 +1979,7 @@ void DeleteAll(google::cloud::spanner::Client client) {
       spanner::MakeDeleteMutation("Albums", spanner::KeySet::All()),
       spanner::MakeDeleteMutation("Singers", spanner::KeySet::All()),
   });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "delete-all was successful\n";
 }
 //! [keyset-all]
@@ -1662,7 +2004,7 @@ void InsertMutationBuilder(google::cloud::spanner::Client client) {
                              .EmplaceRow(2, 2, "Forever Hold Your Peace")
                              .EmplaceRow(2, 3, "Terrified")
                              .Build()});
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "insert-mutation-builder was successful\n";
 }
 //! [insert-mutation-builder]
@@ -1682,9 +2024,7 @@ void MakeInsertMutation(google::cloud::spanner::Client client) {
           .EmplaceRow(1, 19, absl::CivilDay(2017, 11, 2), 15000,
                       spanner::CommitTimestamp{})
           .Build()});
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "make-insert-mutation was successful\n";
 }
 //! [make-insert-mutation]
@@ -1698,7 +2038,7 @@ void UpdateMutationBuilder(google::cloud::spanner::Client client) {
           .EmplaceRow(1, 1, 100000)
           .EmplaceRow(2, 2, 500000)
           .Build()});
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "update-mutation-builder was successful\n";
 }
 //! [update-mutation-builder]
@@ -1710,7 +2050,7 @@ void MakeUpdateMutation(google::cloud::spanner::Client client) {
       spanner::MakeUpdateMutation(
           "Albums", {"SingerId", "AlbumId", "MarketingBudget"}, 1, 1, 200000),
   });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "make-update-mutation was successful\n";
 }
 //! [make-update-mutation]
@@ -1727,7 +2067,7 @@ void InsertOrUpdateMutationBuilder(google::cloud::spanner::Client client) {
           .EmplaceRow(2, 2, "Forever Hold Your Peace", 400000)
           .EmplaceRow(2, 3, "Terrified", 500000)
           .Build()});
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
 
   std::cout << "insert-or-update-mutation-builder was successful\n";
 }
@@ -1741,7 +2081,7 @@ void MakeInsertOrUpdateMutation(google::cloud::spanner::Client client) {
           "Albums", {"SingerId", "AlbumId", "AlbumTitle", "MarketingBudget"}, 1,
           1, "Total Junk", 200000),
   });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
 
   std::cout << "make-insert-or-update-mutation was successful\n";
 }
@@ -1757,7 +2097,7 @@ void ReplaceMutationBuilder(google::cloud::spanner::Client client) {
           .EmplaceRow(1, 2, "Go, Go, Go", 400000)
           .EmplaceRow(2, 1, "Green", 300000)
           .Build()});
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
 
   std::cout << "replace-mutation-builder was successful\n";
 }
@@ -1771,7 +2111,7 @@ void MakeReplaceMutation(google::cloud::spanner::Client client) {
           "Albums", {"SingerId", "AlbumId", "AlbumTitle", "MarketingBudget"}, 1,
           1, "Go, Go, Go", 600000),
   });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
 
   std::cout << "make-replace-mutation was successful\n";
 }
@@ -1786,7 +2126,7 @@ void DeleteMutationBuilder(google::cloud::spanner::Client client) {
                                            .AddKey(spanner::MakeKey(1, 1))
                                            .AddKey(spanner::MakeKey(1, 2)))
                              .Build()});
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
 
   std::cout << "delete-mutation-builder was successful\n";
 }
@@ -1798,7 +2138,7 @@ void MakeDeleteMutation(google::cloud::spanner::Client client) {
   auto commit = client.Commit(spanner::Mutations{
       spanner::MakeDeleteMutation("Albums", spanner::KeySet::All()),
   });
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
 
   std::cout << "make-delete-mutation was successful\n";
 }
@@ -1818,9 +2158,7 @@ void InsertDataWithTimestamp(google::cloud::spanner::Client client) {
           .EmplaceRow(2, 42, absl::CivilDay(2017, 12, 23), 7000,
                       spanner::CommitTimestamp{})
           .Build()});
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout
       << "Update was successful [spanner_insert_data_with_timestamp_column]\n";
 }
@@ -1836,9 +2174,7 @@ void UpdateDataWithTimestamp(google::cloud::spanner::Client client) {
           .EmplaceRow(1, 1, 1000000, spanner::CommitTimestamp{})
           .EmplaceRow(2, 2, 750000, spanner::CommitTimestamp{})
           .Build()});
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout
       << "Update was successful [spanner_update_data_with_timestamp_column]\n";
 }
@@ -1857,8 +2193,8 @@ void QueryDataWithTimestamp(google::cloud::spanner::Client client) {
                  absl::optional<spanner::Timestamp>>;
 
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << std::get<0>(*row) << " " << std::get<1>(*row);
     auto marketing_budget = std::get<2>(*row);
     if (!marketing_budget) {
@@ -1888,7 +2224,9 @@ void AddJsonColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
                       .UpdateDatabaseDdl(database.FullName(), {R"""(
                         ALTER TABLE Venues ADD COLUMN VenueDetails JSON)"""})
                       .get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "`Venues` table altered, new DDL:\n" << metadata->DebugString();
 }
 // [END spanner_add_json_column]
@@ -1923,9 +2261,7 @@ void UpdateDataWithJson(google::cloud::spanner::Client client) {
           .Build();
 
   auto commit_result = client.Commit(spanner::Mutations{update_venues});
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Insert was successful [spanner_update_data_with_json_column]\n";
 }
 //! [END spanner_update_data_with_json_column]
@@ -1945,8 +2281,8 @@ void QueryWithJsonParameter(google::cloud::spanner::Client client) {
   using RowType = std::tuple<std::int64_t, absl::optional<spanner::Json>>;
 
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "VenueId: " << std::get<0>(*row) << ", ";
     auto venue_details = std::get<1>(*row).value();
     std::cout << "VenueDetails: " << venue_details << "\n";
@@ -1965,7 +2301,9 @@ void AddNumericColumn(google::cloud::spanner_admin::DatabaseAdminClient client,
                       .UpdateDatabaseDdl(database.FullName(), {R"""(
                         ALTER TABLE Venues ADD COLUMN Revenue NUMERIC)"""})
                       .get();
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  google::cloud::spanner_testing::LogUpdateDatabaseDdl(  //! TODO(#4758)
+      client, database, metadata.status());              //! TODO(#4758)
+  if (!metadata) throw std::move(metadata).status();
   std::cout << "`Venues` table altered, new DDL:\n" << metadata->DebugString();
 }
 // [END spanner_add_numeric_column]
@@ -1987,9 +2325,7 @@ void UpdateDataWithNumeric(google::cloud::spanner::Client client) {
           .Build();
 
   auto commit_result = client.Commit(spanner::Mutations{insert_venues});
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout
       << "Insert was successful [spanner_update_data_with_numeric_column]\n";
 }
@@ -2008,8 +2344,8 @@ void QueryWithNumericParameter(google::cloud::spanner::Client client) {
   using RowType = std::tuple<std::int64_t, absl::optional<spanner::Numeric>>;
 
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "VenueId: " << std::get<0>(*row) << "\t";
     auto revenue = std::get<1>(*row).value();
     std::cout << "Revenue: " << revenue.ToString()
@@ -2033,8 +2369,8 @@ void ReadOnlyTransaction(google::cloud::spanner::Client client) {
   // Read#1.
   auto rows1 = client.ExecuteQuery(read_only, select);
   std::cout << "Read 1 results\n";
-  for (auto const& row : spanner::StreamOf<RowType>(rows1)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows1)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row)
               << " AlbumId: " << std::get<1>(*row)
               << " AlbumTitle: " << std::get<2>(*row) << "\n";
@@ -2043,8 +2379,8 @@ void ReadOnlyTransaction(google::cloud::spanner::Client client) {
   // that Read #1 and Read #2 return the same data.
   auto rows2 = client.ExecuteQuery(read_only, select);
   std::cout << "Read 2 results\n";
-  for (auto const& row : spanner::StreamOf<RowType>(rows2)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows2)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row)
               << " AlbumId: " << std::get<1>(*row)
               << " AlbumTitle: " << std::get<2>(*row) << "\n";
@@ -2067,7 +2403,7 @@ void SetTransactionTag(google::cloud::spanner::Client client) {
           spanner::Transaction const& txn) -> StatusOr<spanner::Mutations> {
         spanner::SqlStatement update_statement(
             "UPDATE Venues SET Capacity = CAST(Capacity/4 AS INT64)"
-            " WHERE OutdoorVenue = false");
+            "  WHERE OutdoorVenue = false");
         // Sets the request tag to "app=concert,env=dev,action=update".
         // This will only be set on this request.
         auto update = client.ExecuteDml(
@@ -2097,13 +2433,17 @@ void SetTransactionTag(google::cloud::spanner::Client client) {
         return spanner::Mutations{};
       },
       commit_options);
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
 }
 //! [END spanner_set_transaction_tag]
 
 //! [START spanner_read_stale_data]
 void ReadStaleData(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
+  // The timestamp chosen using the `exact_staleness` parameter is bounded
+  // below by the creation time of the database, so the visible state may only
+  // include that generated by the `extra_statements` executed atomically with
+  // the creation of the database. Here we at least know `Albums` exists.
   auto opts = spanner::Transaction::ReadOnlyOptions(std::chrono::seconds(15));
   auto read_only = spanner::MakeReadOnlyTransaction(std::move(opts));
 
@@ -2112,8 +2452,8 @@ void ReadStaleData(google::cloud::spanner::Client client) {
   using RowType = std::tuple<std::int64_t, std::int64_t, std::string>;
 
   auto rows = client.ExecuteQuery(std::move(read_only), std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row)
               << " AlbumId: " << std::get<1>(*row)
               << " AlbumTitle: " << std::get<2>(*row) << "\n";
@@ -2131,8 +2471,8 @@ void SetRequestTag(google::cloud::spanner::Client client) {
   auto opts = google::cloud::Options{}.set<spanner::RequestTagOption>(
       "app=concert,env=dev,action=select");
   auto rows = client.ExecuteQuery(std::move(select), std::move(opts));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row)
               << " AlbumId: " << std::get<1>(*row)
               << " AlbumTitle: " << std::get<2>(*row) << "\n";
@@ -2151,12 +2491,12 @@ void UsePartitionQuery(google::cloud::spanner::Client client) {
 
   auto partitions =
       client.PartitionQuery(std::move(txn), std::move(select), {});
-  if (!partitions) throw std::runtime_error(partitions.status().message());
+  if (!partitions) throw std::move(partitions).status();
   int number_of_rows = 0;
   for (auto const& partition : *partitions) {
     auto rows = client.ExecuteQuery(partition);
-    for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-      if (!row) throw std::runtime_error(row.status().message());
+    for (auto& row : spanner::StreamOf<RowType>(rows)) {
+      if (!row) throw std::move(row).status();
       number_of_rows++;
     }
   }
@@ -2176,8 +2516,8 @@ void ReadDataWithIndex(google::cloud::spanner::Client client) {
                   google::cloud::Options{}.set<spanner::ReadIndexNameOption>(
                       "AlbumsByAlbumTitle"));
   using RowType = std::tuple<std::int64_t, std::string>;
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "AlbumId: " << std::get<0>(*row) << "\t";
     std::cout << "AlbumTitle: " << std::get<1>(*row) << "\n";
   }
@@ -2195,8 +2535,8 @@ void QueryNewColumn(google::cloud::spanner::Client client) {
       std::tuple<std::int64_t, std::int64_t, absl::optional<std::int64_t>>;
 
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row) << "\t";
     std::cout << "AlbumId: " << std::get<1>(*row) << "\t";
     auto marketing_budget = std::get<2>(*row);
@@ -2218,8 +2558,8 @@ void ProfileQuery(google::cloud::spanner::Client client) {
       " FROM Albums"
       " WHERE AlbumTitle >= 'Aardvark' AND AlbumTitle < 'Goo'");
   auto profile_query_result = client.ProfileQuery(std::move(select));
-  for (auto const& row : profile_query_result) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : profile_query_result) {
+    if (!row) throw std::move(row).status();
     // Discard rows for brevity in this example.
   }
 
@@ -2246,8 +2586,8 @@ void QueryUsingIndex(google::cloud::spanner::Client client) {
   using RowType =
       std::tuple<std::int64_t, std::string, absl::optional<std::int64_t>>;
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "AlbumId: " << std::get<0>(*row) << "\t";
     std::cout << "AlbumTitle: " << std::get<1>(*row) << "\t";
     auto marketing_budget = std::get<2>(*row);
@@ -2296,8 +2636,8 @@ void QueryWithQueryOptions(google::cloud::spanner::Client client) {
   auto rows = client.ExecuteQuery(std::move(sql), std::move(opts));
 
   using RowType = std::tuple<std::int64_t, std::string>;
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row) << "\t";
     std::cout << "FirstName: " << std::get<1>(*row) << "\n";
   }
@@ -2316,8 +2656,8 @@ void ReadDataWithStoringIndex(google::cloud::spanner::Client client) {
                       "AlbumsByAlbumTitle2"));
   using RowType =
       std::tuple<std::int64_t, std::string, absl::optional<std::int64_t>>;
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "AlbumId: " << std::get<0>(*row) << "\t";
     std::cout << "AlbumTitle: " << std::get<1>(*row) << "\t";
     auto marketing_budget = std::get<2>(*row);
@@ -2367,7 +2707,7 @@ void ReadWriteTransaction(google::cloud::spanner::Client client) {
                 .Build()};
       });
 
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "Transfer was successful [spanner_read_write_transaction]\n";
 }
 //! [END spanner_read_write_transaction]
@@ -2387,7 +2727,7 @@ void GetCommitStatistics(google::cloud::spanner::Client client) {
       google::cloud::Options{}.set<spanner::CommitReturnStatsOption>(true));
   //! [commit-options]
 
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   if (commit->commit_stats) {
     std::cout << "Updated data with " << commit->commit_stats->mutation_count
               << " mutations.\n";
@@ -2414,9 +2754,7 @@ void DmlStandardInsert(google::cloud::spanner::Client client) {
         rows_inserted = insert->RowsModified();
         return spanner::Mutations{};
       });
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Rows inserted: " << rows_inserted;
   //! [execute-dml]
   std::cout << "Insert was successful [spanner_dml_standard_insert]\n";
@@ -2434,13 +2772,11 @@ void DmlStandardUpdate(google::cloud::spanner::Client client) {
             std::move(txn),
             spanner::SqlStatement(
                 "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
-                " WHERE SingerId = 1 AND AlbumId = 1"));
+                "  WHERE SingerId = 1 AND AlbumId = 1"));
         if (!update) return std::move(update).status();
         return spanner::Mutations{};
       });
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   //! [commit-with-mutator]
   std::cout << "Update was successful [spanner_dml_standard_update]\n";
 }
@@ -2456,7 +2792,7 @@ void CommitWithPolicies(google::cloud::spanner::Client client) {
             std::move(txn),
             spanner::SqlStatement(
                 "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
-                " WHERE SingerId = 1 AND AlbumId = 1"));
+                "  WHERE SingerId = 1 AND AlbumId = 1"));
         if (!update) return std::move(update).status();
         return spanner::Mutations{};
       },
@@ -2468,7 +2804,7 @@ void CommitWithPolicies(google::cloud::spanner::Client client) {
       spanner::ExponentialBackoffPolicy(std::chrono::seconds(2),
                                         std::chrono::minutes(5), 3.0)
           .clone());
-  if (!commit) throw std::runtime_error(commit.status().message());
+  if (!commit) throw std::move(commit).status();
   std::cout << "commit-with-policies was successful\n";
 }
 //! [commit-with-policies]
@@ -2485,14 +2821,12 @@ void ProfileDmlStandardUpdate(google::cloud::spanner::Client client) {
             std::move(txn),
             spanner::SqlStatement(
                 "UPDATE Albums SET MarketingBudget = MarketingBudget * 2"
-                " WHERE SingerId = 1 AND AlbumId = 1"));
+                "  WHERE SingerId = 1 AND AlbumId = 1"));
         if (!update) return std::move(update).status();
         dml_result = *std::move(update);
         return spanner::Mutations{};
       });
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
 
   // Stats only available after statement has been executed.
   std::cout << "Rows modified: " << dml_result.RowsModified();
@@ -2514,14 +2848,12 @@ void DmlStandardUpdateWithTimestamp(google::cloud::spanner::Client client) {
         auto update = client.ExecuteDml(
             std::move(txn),
             spanner::SqlStatement(
-                "UPDATE Albums SET LastUpdateTime = PENDING_COMMIT_TIMESTAMP() "
-                "WHERE SingerId = 1"));
+                "UPDATE Albums SET LastUpdateTime = PENDING_COMMIT_TIMESTAMP()"
+                "  WHERE SingerId = 1"));
         if (!update) return std::move(update).status();
         return spanner::Mutations{};
       });
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Update was successful "
             << "[spanner_dml_standard_update_with_timestamp]\n";
 }
@@ -2551,9 +2883,7 @@ void DmlWriteThenRead(google::cloud::spanner::Client client) {
         }
         return spanner::Mutations{};
       });
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Write then read succeeded [spanner_dml_write_then_read]\n";
 }
 //! [END spanner_dml_write_then_read]
@@ -2570,9 +2900,7 @@ void DmlStandardDelete(google::cloud::spanner::Client client) {
     if (!dele) return std::move(dele).status();
     return spanner::Mutations{};
   });
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Delete was successful [spanner_dml_standard_delete]\n";
 }
 //! [END spanner_dml_standard_delete]
@@ -2582,7 +2910,7 @@ void DmlPartitionedDelete(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   auto result = client.ExecutePartitionedDml(
       spanner::SqlStatement("DELETE FROM Singers WHERE SingerId > 10"));
-  if (!result) throw std::runtime_error(result.status().message());
+  if (!result) throw std::move(result).status();
   std::cout << "Delete was successful [spanner_dml_partitioned_delete]\n";
 }
 //! [execute-sql-partitioned] [END spanner_dml_partitioned_delete]
@@ -2592,8 +2920,8 @@ void DmlPartitionedUpdate(google::cloud::spanner::Client client) {
   namespace spanner = ::google::cloud::spanner;
   auto result = client.ExecutePartitionedDml(
       spanner::SqlStatement("UPDATE Albums SET MarketingBudget = 100000"
-                            " WHERE SingerId > 1"));
-  if (!result) throw std::runtime_error(result.status().message());
+                            "  WHERE SingerId > 1"));
+  if (!result) throw std::move(result).status();
   std::cout << "Update was successful [spanner_dml_partitioned_update]\n";
 }
 //! [END spanner_dml_partitioned_update]
@@ -2612,7 +2940,7 @@ void DmlBatchUpdate(google::cloud::spanner::Client client) {
                                   " VALUES (1, 3, 'Test Album Title', 10000)"),
             spanner::SqlStatement("UPDATE Albums"
                                   " SET MarketingBudget = MarketingBudget * 2"
-                                  " WHERE SingerId = 1 and AlbumId = 3")};
+                                  "  WHERE SingerId = 1 and AlbumId = 3")};
         auto result = client.ExecuteBatchDml(txn, statements);
         if (!result) return std::move(result).status();
         for (std::size_t i = 0; i < result->stats.size(); ++i) {
@@ -2625,9 +2953,7 @@ void DmlBatchUpdate(google::cloud::spanner::Client client) {
         if (!result->status.ok()) return result->status;
         return spanner::Mutations{};
       });
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Update was successful [spanner_dml_batch_update]\n";
 }
 //! [END spanner_dml_batch_update]
@@ -2650,9 +2976,7 @@ void DmlStructs(google::cloud::spanner::Client client) {
         rows_modified = dml_result->RowsModified();
         return spanner::Mutations{};
       });
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << rows_modified
             << " update was successful [spanner_dml_structs]\n";
 }
@@ -2669,9 +2993,7 @@ void WriteDataForStructQueries(google::cloud::spanner::Client client) {
                              .EmplaceRow(8, "Benjamin", "Martinez")
                              .EmplaceRow(9, "Hannah", "Harris")
                              .Build()});
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Insert was successful "
             << "[spanner_write_data_for_struct_queries]\n";
 }
@@ -2684,8 +3006,8 @@ void QueryData(google::cloud::spanner::Client client) {
   spanner::SqlStatement select("SELECT SingerId, LastName FROM Singers");
   using RowType = std::tuple<std::int64_t, std::string>;
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row) << "\t";
     std::cout << "LastName: " << std::get<1>(*row) << "\n";
   }
@@ -2712,9 +3034,7 @@ void DmlGettingStartedInsert(google::cloud::spanner::Client client) {
         if (!insert) return std::move(insert).status();
         return spanner::Mutations{};
       });
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Insert was successful [spanner_dml_getting_started_insert]\n";
 }
 //! [END spanner_dml_getting_started_insert]
@@ -2740,8 +3060,8 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
   auto update_budget = [&](spanner::Transaction txn, std::int64_t album_id,
                            std::int64_t singer_id, std::int64_t budget) {
     auto sql = spanner::SqlStatement(
-        "UPDATE Albums SET MarketingBudget = @AlbumBudget "
-        "WHERE SingerId = @SingerId AND AlbumId = @AlbumId",
+        "UPDATE Albums SET MarketingBudget = @AlbumBudget"
+        "  WHERE SingerId = @SingerId AND AlbumId = @AlbumId",
         {{"AlbumBudget", spanner::Value(budget)},
          {"AlbumId", spanner::Value(album_id)},
          {"SingerId", spanner::Value(singer_id)}});
@@ -2767,9 +3087,7 @@ void DmlGettingStartedUpdate(google::cloud::spanner::Client client) {
         if (!update) return std::move(update).status();
         return spanner::Mutations{};
       });
-  if (!commit_result) {
-    throw std::runtime_error(commit_result.status().message());
-  }
+  if (!commit_result) throw std::move(commit_result).status();
   std::cout << "Update was successful [spanner_dml_getting_started_update]\n";
 }
 //! [END spanner_dml_getting_started_update]
@@ -2784,8 +3102,8 @@ void QueryWithParameter(google::cloud::spanner::Client client) {
       {{"last_name", spanner::Value("Garcia")}});
   using RowType = std::tuple<std::int64_t, std::string, std::string>;
   auto rows = client.ExecuteQuery(std::move(select));
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row) << "\t";
     std::cout << "FirstName: " << std::get<1>(*row) << "\t";
     std::cout << "LastName: " << std::get<2>(*row) << "\n";
@@ -2802,8 +3120,8 @@ void ReadData(google::cloud::spanner::Client client) {
   auto rows = client.Read("Albums", google::cloud::spanner::KeySet::All(),
                           {"SingerId", "AlbumId", "AlbumTitle"});
   using RowType = std::tuple<std::int64_t, std::int64_t, std::string>;
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row) << "\t";
     std::cout << "AlbumId: " << std::get<1>(*row) << "\t";
     std::cout << "AlbumTitle: " << std::get<2>(*row) << "\n";
@@ -2821,9 +3139,8 @@ void QueryDataSelectStar(google::cloud::spanner::Client client) {
   // be returned (nor the number of columns). Therefore, we look up each value
   // based on the column name rather than its position.
   spanner::SqlStatement select_star("SELECT * FROM Singers");
-  auto rows = client.ExecuteQuery(std::move(select_star));
-  for (auto const& row : rows) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : client.ExecuteQuery(std::move(select_star))) {
+    if (!row) throw std::move(row).status();
 
     if (auto singer_id = row->get<std::int64_t>("SingerId")) {
       std::cout << "SingerId: " << *singer_id << "\t";
@@ -2858,8 +3175,8 @@ void QueryDataWithStruct(google::cloud::spanner::Client client) {
       {{"name", spanner::Value(singer_info)}}));
   //! [spanner-sql-statement-params]
 
-  for (auto const& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row) << "\n";
   }
   std::cout << "Query completed for [spanner_query_data_with_struct]\n";
@@ -2892,8 +3209,8 @@ void QueryDataWithArrayOfStruct(google::cloud::spanner::Client client) {
       "    IN UNNEST(@names)",
       {{"names", spanner::Value(singer_info)}}));
 
-  for (auto const& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row) << "\n";
   }
   std::cout << "Query completed for"
@@ -2915,8 +3232,8 @@ void FieldAccessOnStructParameters(google::cloud::spanner::Client client) {
       "SELECT SingerId FROM Singers WHERE FirstName = @name.FirstName",
       {{"name", spanner::Value(name)}}));
 
-  for (auto const& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<std::tuple<std::int64_t>>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row) << "\n";
   }
   std::cout << "Query completed for"
@@ -2951,14 +3268,101 @@ void FieldAccessOnNestedStruct(google::cloud::spanner::Client client) {
       {{"songinfo", spanner::Value(songinfo)}}));
 
   using RowType = std::tuple<std::int64_t, std::string>;
-  for (auto const& row : spanner::StreamOf<RowType>(rows)) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : spanner::StreamOf<RowType>(rows)) {
+    if (!row) throw std::move(row).status();
     std::cout << "SingerId: " << std::get<0>(*row)
               << " SongName: " << std::get<1>(*row) << "\n";
   }
   std::cout << "Query completed for [spanner_field_access_on_nested_struct]\n";
 }
 //! [END spanner_field_access_on_nested_struct_parameters]
+
+// [START spanner_update_dml_returning] [spanner-update-dml-returning]
+void UpdateUsingDmlReturning(google::cloud::spanner::Client client) {
+  // Update MarketingBudget column for records satisfying a particular
+  // condition and return the modified MarketingBudget column of the
+  // updated records using `THEN RETURN MarketingBudget`.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            UPDATE Albums SET MarketingBudget = MarketingBudget * 2
+              WHERE SingerId = 1 AND AlbumId = 1
+              THEN RETURN MarketingBudget
+        )""");
+        using RowType = std::tuple<absl::optional<std::int64_t>>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+          if (!row) return std::move(row).status();
+          std::cout << "MarketingBudget: ";
+          if (std::get<0>(*row).has_value()) {
+            std::cout << *std::get<0>(*row);
+          } else {
+            std::cout << "NULL";
+          }
+          std::cout << "\n";
+        }
+        std::cout << "Updated row(s) count: " << rows.RowsModified() << "\n";
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::move(commit).status();
+}
+// [END spanner_update_dml_returning] [spanner-update-dml-returning]
+
+// [START spanner_insert_dml_returning]
+void InsertUsingDmlReturning(google::cloud::spanner::Client client) {
+  // Insert records into SINGERS table and return the generated column
+  // FullName of the inserted records using `THEN RETURN FullName`.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            INSERT INTO Singers (SingerId, FirstName, LastName)
+              VALUES (12, 'Melissa', 'Garcia'),
+                     (13, 'Russell', 'Morales'),
+                     (14, 'Jacqueline', 'Long'),
+                     (15, 'Dylan', 'Shaw')
+              THEN RETURN FullName
+        )""");
+        using RowType = std::tuple<std::string>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+          if (!row) return std::move(row).status();
+          std::cout << "FullName: " << std::get<0>(*row) << "\n";
+        }
+        std::cout << "Inserted row(s) count: " << rows.RowsModified() << "\n";
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::move(commit).status();
+}
+// [END spanner_insert_dml_returning]
+
+// [START spanner_delete_dml_returning]
+void DeleteUsingDmlReturning(google::cloud::spanner::Client client) {
+  // Delete records from SINGERS table satisfying a particular condition
+  // and return the SingerId and FullName column of the deleted records
+  // using `THEN RETURN SingerId, FullName'.
+  auto commit = client.Commit(
+      [&client](google::cloud::spanner::Transaction txn)
+          -> google::cloud::StatusOr<google::cloud::spanner::Mutations> {
+        auto sql = google::cloud::spanner::SqlStatement(R"""(
+            DELETE FROM Singers
+              WHERE FirstName = 'Alice'
+              THEN RETURN SingerId, FullName
+        )""");
+        using RowType = std::tuple<std::int64_t, std::string>;
+        auto rows = client.ExecuteQuery(std::move(txn), std::move(sql));
+        for (auto& row : google::cloud::spanner::StreamOf<RowType>(rows)) {
+          if (!row) return std::move(row).status();
+          std::cout << "SingerId: " << std::get<0>(*row) << " ";
+          std::cout << "FullName: " << std::get<1>(*row) << "\n";
+        }
+        std::cout << "Deleted row(s) count: " << rows.RowsModified() << "\n";
+        return google::cloud::spanner::Mutations{};
+      });
+  if (!commit) throw std::move(commit).status();
+}
+// [END spanner_delete_dml_returning]
 
 void ExampleStatusOr(google::cloud::spanner::Client client) {
   //! [example-status-or]
@@ -2999,28 +3403,27 @@ void CustomRetryPolicy(std::vector<std::string> argv) {
   namespace spanner = ::google::cloud::spanner;
   [](std::string const& project_id, std::string const& instance_id,
      std::string const& database_id) {
+    // Use a truncated exponential backoff with jitter to wait between
+    // retries:
+    //   https://en.wikipedia.org/wiki/Exponential_backoff
+    //   https://cloud.google.com/storage/docs/exponential-backoff
     auto client = spanner::Client(spanner::MakeConnection(
         spanner::Database(project_id, instance_id, database_id),
-        spanner::ConnectionOptions{}, spanner::SessionPoolOptions{},
-        // Retry for at most 25 minutes.
-        spanner::LimitedTimeRetryPolicy(
-            /*maximum_duration=*/std::chrono::minutes(25))
-            .clone(),
-        // Use an truncated exponential backoff with jitter to wait between
-        // retries:
-        //   https://en.wikipedia.org/wiki/Exponential_backoff
-        //   https://cloud.google.com/storage/docs/exponential-backoff
-        spanner::ExponentialBackoffPolicy(
-            /*initial_delay=*/std::chrono::seconds(2),
-            /*maximum_delay=*/std::chrono::minutes(10),
-            /*scaling=*/1.5)
-            .clone()));
+        google::cloud::Options{}
+            .set<spanner::SpannerRetryPolicyOption>(
+                std::make_shared<spanner::LimitedTimeRetryPolicy>(
+                    /*maximum_duration=*/std::chrono::minutes(25)))
+            .set<spanner::SpannerBackoffPolicyOption>(
+                std::make_shared<spanner::ExponentialBackoffPolicy>(
+                    /*initial_delay=*/std::chrono::seconds(2),
+                    /*maximum_delay=*/std::chrono::minutes(10),
+                    /*scaling=*/1.5))));
 
     auto rows =
         client.ExecuteQuery(spanner::SqlStatement("SELECT 'Hello World'"));
 
-    for (auto const& row : spanner::StreamOf<std::tuple<std::string>>(rows)) {
-      if (!row) throw std::runtime_error(row.status().message());
+    for (auto& row : spanner::StreamOf<std::tuple<std::string>>(rows)) {
+      if (!row) throw std::move(row).status();
       std::cout << std::get<0>(*row) << "\n";
     }
   }
@@ -3081,8 +3484,8 @@ void CustomInstanceAdminPolicies(std::vector<std::string> argv) {
     // Use the client as usual.
     std::cout << "Available configs for project " << project_id << "\n";
     auto project = google::cloud::Project(project_id);
-    for (auto const& cfg : client.ListInstanceConfigs(project.FullName())) {
-      if (!cfg) throw std::runtime_error(cfg.status().message());
+    for (auto& cfg : client.ListInstanceConfigs(project.FullName())) {
+      if (!cfg) throw std::move(cfg).status();
       std::cout << cfg->name() << "\n";
     }
     std::cout << "End of available configs\n";
@@ -3145,8 +3548,8 @@ void CustomDatabaseAdminPolicies(std::vector<std::string> argv) {
     // Use the client as usual.
     spanner::Instance instance(project_id, instance_id);
     std::cout << "Available databases for instance " << instance << "\n";
-    for (auto const& db : client.ListDatabases(instance.FullName())) {
-      if (!db) throw std::runtime_error(db.status().message());
+    for (auto& db : client.ListDatabases(instance.FullName())) {
+      if (!db) throw std::move(db).status();
       std::cout << db->name() << "\n";
     }
     std::cout << "End of available databases\n";
@@ -3166,7 +3569,7 @@ void GetSingularRow(google::cloud::spanner::Client client) {
   // helper returns a single row or an error:
   using RowType = std::tuple<std::string, std::string>;
   auto row = GetSingularRow(spanner::StreamOf<RowType>(query));
-  if (!row) throw std::runtime_error(row.status().message());
+  if (!row) throw std::move(row).status();
   std::cout << "FirstName: " << std::get<0>(*row)
             << "\nLastName: " << std::get<1>(*row) << "\n";
 }
@@ -3182,9 +3585,10 @@ void StreamOf(google::cloud::spanner::Client client) {
   using RowType = std::tuple<std::int64_t, std::string, std::string>;
 
   for (auto& row : spanner::StreamOf<RowType>(query)) {
-    if (!row) throw std::runtime_error(row.status().message());
-    std::cout << "  FirstName: " << std::get<0>(*row)
-              << "\n  LastName: " << std::get<1>(*row) << "\n";
+    if (!row) throw std::move(row).status();
+    std::cout << "  SingerId: " << std::get<0>(*row) << "\n"
+              << "  FirstName: " << std::get<1>(*row) << "\n"
+              << "  LastName: " << std::get<2>(*row) << "\n";
   }
   std::cout << "end of results\n";
 }
@@ -3202,9 +3606,7 @@ class RemoteConnectionFake {
     namespace spanner = ::google::cloud::spanner;
     google::cloud::StatusOr<std::string> serialized_partition =
         spanner::SerializeReadPartition(partition);
-    if (!serialized_partition) {
-      throw std::runtime_error(serialized_partition.status().message());
-    }
+    if (!serialized_partition) throw std::move(serialized_partition).status();
     std::string const& bytes = *serialized_partition;
     // `bytes` contains the serialized data, which may contain NULs and other
     // non-printable characters.
@@ -3218,9 +3620,7 @@ class RemoteConnectionFake {
     namespace spanner = ::google::cloud::spanner;
     google::cloud::StatusOr<std::string> serialized_partition =
         spanner::SerializeQueryPartition(partition);
-    if (!serialized_partition) {
-      throw std::runtime_error(serialized_partition.status().message());
-    }
+    if (!serialized_partition) throw std::move(serialized_partition).status();
     std::string const& bytes = *serialized_partition;
     // `bytes` contains the serialized data, which may contain NULs and other
     // non-printable characters.
@@ -3264,7 +3664,7 @@ void PartitionRead(google::cloud::spanner::Client client) {
   google::cloud::StatusOr<std::vector<spanner::ReadPartition>> partitions =
       client.PartitionRead(ro_transaction, "Singers", key_set,
                            {"SingerId", "FirstName", "LastName"});
-  if (!partitions) throw std::runtime_error(partitions.status().message());
+  if (!partitions) throw std::move(partitions).status();
   for (auto& partition : *partitions) {
     remote_connection.SendPartitionToRemoteMachine(partition);
   }
@@ -3273,10 +3673,9 @@ void PartitionRead(google::cloud::spanner::Client client) {
   //! [read-read-partition]
   google::cloud::StatusOr<spanner::ReadPartition> partition =
       remote_connection.ReceiveReadPartitionFromRemoteMachine();
-  if (!partition) throw std::runtime_error(partition.status().message());
-  auto rows = client.Read(*partition);
-  for (auto const& row : rows) {
-    if (!row) throw std::runtime_error(row.status().message());
+  if (!partition) throw std::move(partition).status();
+  for (auto& row : client.Read(*partition)) {
+    if (!row) throw std::move(row).status();
     ProcessRow(*row);
   }
   //! [read-read-partition]
@@ -3300,7 +3699,7 @@ void PartitionQuery(google::cloud::spanner::Client client) {
       spanner::MakeReadOnlyTransaction(),
       spanner::SqlStatement(
           "SELECT SingerId, FirstName, LastName FROM Singers"));
-  if (!plan) throw std::runtime_error(plan.status().message());
+  if (!plan) throw std::move(plan).status();
   if (!is_partitionable(*plan)) {
     throw std::runtime_error("Query is not partitionable");
   }
@@ -3312,7 +3711,7 @@ void PartitionQuery(google::cloud::spanner::Client client) {
           spanner::MakeReadOnlyTransaction(),
           spanner::SqlStatement(
               "SELECT SingerId, FirstName, LastName FROM Singers"));
-  if (!partitions) throw std::runtime_error(partitions.status().message());
+  if (!partitions) throw std::move(partitions).status();
   for (auto& partition : *partitions) {
     remote_connection.SendPartitionToRemoteMachine(partition);
   }
@@ -3321,10 +3720,10 @@ void PartitionQuery(google::cloud::spanner::Client client) {
   //! [execute-sql-query-partition]
   google::cloud::StatusOr<spanner::QueryPartition> partition =
       remote_connection.ReceiveQueryPartitionFromRemoteMachine();
-  if (!partition) throw std::runtime_error(partition.status().message());
-  auto rows = client.ExecuteQuery(*partition);
-  for (auto const& row : rows) {
-    if (!row) throw std::runtime_error(row.status().message());
+  if (!partition) throw std::move(partition).status();
+  for (auto& row : client.ExecuteQuery(*partition)) {
+    ;
+    if (!row) throw std::move(row).status();
     ProcessRow(*row);
   }
   //! [execute-sql-query-partition]
@@ -3345,7 +3744,7 @@ void QueryInformationSchemaDatabaseOptions(
       )"""));
     using RowType = std::tuple<std::string, std::string>;
     for (auto& row : spanner::StreamOf<RowType>(rows)) {
-      if (!row) throw std::runtime_error(row.status().message());
+      if (!row) throw std::move(row).status();
       std::cout << std::get<0>(*row) << "=" << std::get<1>(*row) << "\n";
     }
   }
@@ -3357,12 +3756,18 @@ void QueryInformationSchemaDatabaseOptions(
       )"""));
     using RowType = std::tuple<std::string, std::string>;
     for (auto& row : spanner::StreamOf<RowType>(rows)) {
-      if (!row) throw std::runtime_error(row.status().message());
+      if (!row) throw std::move(row).status();
       std::cout << std::get<0>(*row) << "=" << std::get<1>(*row) << "\n";
     }
   }
 }
 // [END spanner_query_information_schema_database_options]
+
+std::string Basename(absl::string_view name) {
+  auto last_sep = name.find_last_of("/\\");
+  if (last_sep != absl::string_view::npos) name.remove_prefix(last_sep + 1);
+  return std::string(name);
+}
 
 int RunOneCommand(std::vector<std::string> argv) {
   using CommandType = std::function<void(std::vector<std::string> const&)>;
@@ -3408,13 +3813,17 @@ int RunOneCommand(std::vector<std::string> argv) {
   };
 
   CommandMap commands = {
+      {"get-instance-config", GetInstanceConfigCommand},
+      {"list-instance-configs", ListInstanceConfigsCommand},
+      {"create-instance-config", CreateInstanceConfigCommand},
+      {"update-instance-config", UpdateInstanceConfigCommand},
+      {"delete-instance-config", DeleteInstanceConfigCommand},
+      {"list-instance-config-operations", ListInstanceConfigOperationsCommand},
       {"get-instance", GetInstanceCommand},
+      {"list-instances", ListInstancesCommand},
       {"create-instance", CreateInstanceCommand},
       {"update-instance", UpdateInstanceCommand},
       {"delete-instance", DeleteInstanceCommand},
-      {"list-instance-configs", ListInstanceConfigsCommand},
-      {"get-instance-config", GetInstanceConfigCommand},
-      {"list-instances", ListInstancesCommand},
       {"instance-get-iam-policy", InstanceGetIamPolicyCommand},
       {"add-database-reader", AddDatabaseReaderCommand},
       {"remove-database-reader", RemoveDatabaseReaderCommand},
@@ -3430,6 +3839,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       make_database_command_entry("add-storing-index", AddStoringIndex),
       make_database_command_entry("get-database", GetDatabase),
       make_database_command_entry("get-database-ddl", GetDatabaseDdl),
+      make_database_command_entry("list-database-roles", ListDatabaseRoles),
       make_database_command_entry("add-column", AddColumn),
       make_database_command_entry("add-timestamp-column", AddTimestampColumn),
       {"list-databases", ListDatabasesCommand},
@@ -3437,6 +3847,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"restore-database", RestoreDatabaseCommand},
       {"get-backup", GetBackupCommand},
       {"update-backup", UpdateBackupCommand},
+      {"copy-backup", CopyBackupCommand},
       {"delete-backup", DeleteBackupCommand},
       {"create-backup-and-cancel", CreateBackupAndCancelCommand},
       {"create-database-with-encryption-key",
@@ -3446,8 +3857,7 @@ int RunOneCommand(std::vector<std::string> argv) {
       {"restore-database-with-encryption-key",
        RestoreDatabaseWithEncryptionKeyCommand},
       {"list-backups", ListBackupsCommand},
-      make_database_command_entry("list-backup-operations",
-                                  ListBackupOperations),
+      {"list-backup-operations", ListBackupOperationsCommand},
       {"list-database-operations", ListDatabaseOperationsCommand},
       make_database_command_entry("drop-database", DropDatabase),
       make_database_command_entry("database-get-iam-policy",
@@ -3540,6 +3950,9 @@ int RunOneCommand(std::vector<std::string> argv) {
                          MakeInsertOrUpdateMutation),
       make_command_entry("replace-mutation-builder", ReplaceMutationBuilder),
       make_command_entry("make-replace-mutation", MakeReplaceMutation),
+      make_command_entry("delete-mutation-builder", UpdateUsingDmlReturning),
+      make_command_entry("delete-mutation-builder", InsertUsingDmlReturning),
+      make_command_entry("delete-mutation-builder", DeleteUsingDmlReturning),
       make_command_entry("delete-mutation-builder", DeleteMutationBuilder),
       make_command_entry("make-delete-mutation", MakeDeleteMutation),
       make_command_entry("query-information-schema-database-options",
@@ -3547,11 +3960,9 @@ int RunOneCommand(std::vector<std::string> argv) {
   };
 
   static std::string usage_msg = [&argv, &commands] {
-    auto last_slash = std::string(argv[0]).find_last_of("/\\");
-    auto program = argv[0].substr(last_slash + 1);
     std::string usage;
     usage += "Usage: ";
-    usage += program;
+    usage += Basename(argv[0]);
     usage += " <command> [arguments]\n\n";
     usage += "Commands:\n";
     for (auto&& kv : commands) {
@@ -3594,54 +4005,15 @@ void SampleBanner(std::string const& name) {
   GCP_LOG(DEBUG) << "Running " << name << " sample";
 }
 
-std::string PickConfig(google::cloud::spanner_admin::InstanceAdminClient client,
-                       std::string const& project_id,
-                       google::cloud::internal::DefaultPRNG& generator) {
-  // Skip non-US configs. They are too slow.
-  std::string const included_prefix = "regional-us-";
-  // Exclude the US configs where we keep most of our test instances.
-  std::vector<std::string> const excluded{"regional-us-central1",
-                                          "regional-us-east1"};
-
-  auto project = google::cloud::Project(project_id);
-  std::string const config_prefix = project.FullName() + "/instanceConfigs/";
-
-  // Log the config names to aid in troubleshooting. This is only used during
-  // an AutoRun() invocation, so it will not pollute the output for users.
-  std::cout << "\n" << __func__ << ":\n";
-
-  std::string ret;
-  std::string last;
-  int i = 0;
-  for (auto const& instance_config :
-       client.ListInstanceConfigs(project.FullName())) {
-    if (!instance_config) break;
-    if (instance_config->name().rfind(config_prefix, 0) != 0) continue;
-    auto const config = instance_config->name().substr(config_prefix.size());
-    last = config;
-    if (config.rfind(included_prefix, 0) != 0) continue;
-    if (std::find(excluded.begin(), excluded.end(), config) != excluded.end()) {
-      continue;
-    }
-    // Use a reservoir sampler of size k==1 to pick a region at random.
-    auto const selected =
-        std::uniform_int_distribution<int>(1, ++i)(generator) == 1;
-    if (selected) ret = config;
-    std::cout << "    " << i << " " << config << " " << selected << " " << ret
-              << "\n";
-  }
-  return ret.empty() ? last : ret;
-}
-
 std::vector<std::string> LeaderOptions(
     google::cloud::spanner_admin::InstanceAdminClient client,
     std::string const& project_id, std::string const& instance_id) {
   google::cloud::spanner::Instance in(project_id, instance_id);
   auto instance = client.GetInstance(in.FullName());
-  if (!instance) throw std::runtime_error(instance.status().message());
+  if (!instance) throw std::move(instance).status();
 
   auto config = client.GetInstanceConfig(instance->config());
-  if (!config) throw std::runtime_error(config.status().message());
+  if (!config) throw std::move(config).status();
 
   auto* leader_options = config->mutable_leader_options();
   return std::vector<std::string>(
@@ -3660,23 +4032,42 @@ void RunAllSlowInstanceTests(
           "GOOGLE_CLOUD_CPP_SPANNER_SLOW_INTEGRATION_TESTS")
           .value_or("");
   auto const run_slow_backup_tests =
-      run_slow_integration_tests.find("backup") != std::string::npos;
+      absl::StrContains(run_slow_integration_tests, "backup");
   auto const run_slow_instance_tests =
-      run_slow_integration_tests.find("instance") != std::string::npos;
+      absl::StrContains(run_slow_integration_tests, "instance");
 
   if (!run_slow_instance_tests) return;
+
+  auto const prod_service = google::cloud::internal::GetEnv(
+                                "GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT")
+                                .value_or("")
+                                .empty();
+  auto const instance_config_predicate =
+      [prod_service](
+          google::spanner::admin::instance::v1::InstanceConfig const& config) {
+        auto config_id = Basename(config.name());
+        // Skip non-US configs. They are too slow.
+        if (!absl::StartsWith(config_id, "regional-us-")) return false;
+        // Allow all US configs for non-production services.
+        if (!prod_service) return true;
+        // Exclude the US configs where we keep most prod test instances.
+        return config_id != "regional-us-central1" &&
+               config_id != "regional-us-east1";
+      };
+  auto const config_id =
+      Basename(google::cloud::spanner_testing::PickInstanceConfig(
+          google::cloud::Project(project_id), generator,
+          instance_config_predicate));
+  if (config_id.empty()) throw std::runtime_error("Failed to pick a config");
 
   auto const crud_instance_id =
       google::cloud::spanner_testing::RandomInstanceName(generator);
   auto const database_id =
       google::cloud::spanner_testing::RandomDatabaseName(generator);
 
-  auto const config = PickConfig(instance_admin_client, project_id, generator);
-  if (config.empty()) throw std::runtime_error("Failed to pick a config");
-
-  SampleBanner("create-instance");
+  SampleBanner("spanner_create_instance");
   CreateInstance(instance_admin_client, project_id, crud_instance_id,
-                 "Test Instance", config);
+                 "Test Instance", config_id);
 
   if (!emulator) {
     SampleBanner("update-instance");
@@ -3692,6 +4083,8 @@ void RunAllSlowInstanceTests(
                          "serviceAccount:" + test_iam_service_account);
 
     auto const backup_id =
+        google::cloud::spanner_testing::RandomBackupName(generator);
+    auto const copy_backup_id =
         google::cloud::spanner_testing::RandomBackupName(generator);
     auto const restore_database_id =
         google::cloud::spanner_testing::RandomDatabaseName(generator);
@@ -3713,9 +4106,20 @@ void RunAllSlowInstanceTests(
       GetBackup(database_admin_client, project_id, crud_instance_id, backup_id);
 
       SampleBanner("spanner_update_backup");
-      expire_time = TimestampAdd(expire_time, absl::Hours(1));
       UpdateBackup(database_admin_client, project_id, crud_instance_id,
-                   backup_id, expire_time);
+                   backup_id, absl::Hours(1));
+
+      SampleBanner("spanner_copy_backup");
+      CopyBackup(database_admin_client, project_id, crud_instance_id, backup_id,
+                 project_id, crud_instance_id, copy_backup_id, expire_time);
+
+      SampleBanner("spanner_list_backup_operations");
+      ListBackupOperations(database_admin_client, project_id, crud_instance_id,
+                           database_id, backup_id);
+
+      SampleBanner("spanner_delete_backup");
+      DeleteBackup(database_admin_client, project_id, crud_instance_id,
+                   copy_backup_id);
 
       SampleBanner("spanner_restore_backup");
       RestoreDatabase(database_admin_client, project_id, crud_instance_id,
@@ -3732,10 +4136,6 @@ void RunAllSlowInstanceTests(
       SampleBanner("spanner_cancel_backup_create");
       CreateBackupAndCancel(database_admin_client, project_id, crud_instance_id,
                             database_id, backup_id, expire_time);
-
-      SampleBanner("spanner_list_backup_operations");
-      ListBackupOperations(database_admin_client, project_id, crud_instance_id,
-                           database_id);
 
       SampleBanner("spanner_list_backups");
       ListBackups(database_admin_client, project_id, crud_instance_id);
@@ -3791,14 +4191,41 @@ void RunAllSlowInstanceTests(
   SampleBanner("delete-instance");
   DeleteInstance(instance_admin_client, project_id, crud_instance_id);
 
-  if (!emulator) {
-    SampleBanner("spanner_create_instance_with_processing_units");
-    CreateInstanceWithProcessingUnits(instance_admin_client, project_id,
-                                      crud_instance_id,
-                                      "Test Low-Cost Instance", config);
+  SampleBanner("spanner_create_instance_with_processing_units");
+  CreateInstanceWithProcessingUnits(instance_admin_client, project_id,
+                                    crud_instance_id, "Test Low-Cost Instance",
+                                    config_id);
 
-    SampleBanner("delete-instance");
-    DeleteInstance(instance_admin_client, project_id, crud_instance_id);
+  SampleBanner("delete-instance");
+  DeleteInstance(instance_admin_client, project_id, crud_instance_id);
+
+  if (!emulator) {
+    auto const base_config_id =
+        Basename(google::cloud::spanner_testing::PickInstanceConfig(
+            google::cloud::Project(project_id), generator,
+            [](google::spanner::admin::instance::v1::InstanceConfig const&
+                   config) { return !config.optional_replicas().empty(); }));
+    if (base_config_id.empty()) {
+      throw std::runtime_error("Failed to pick a base config");
+    }
+    auto const user_config_id =
+        google::cloud::spanner_testing::RandomInstanceConfigName(generator);
+
+    SampleBanner("spanner_create_instance_config");
+    CreateInstanceConfig(instance_admin_client, project_id, user_config_id,
+                         base_config_id);
+
+    SampleBanner("spanner_update_instance_config");
+    UpdateInstanceConfig(instance_admin_client, project_id, user_config_id);
+
+    SampleBanner("spanner_list_instance_config_operations");
+    ListInstanceConfigOperations(instance_admin_client, project_id);
+
+    SampleBanner("spanner_list_instance_configs");
+    ListInstanceConfigs(instance_admin_client, project_id);
+
+    SampleBanner("spanner_delete_instance_config");
+    DeleteInstanceConfig(instance_admin_client, project_id, user_config_id);
   }
 }
 
@@ -3845,11 +4272,11 @@ void RunAll(bool emulator) {
   SampleBanner("get-instance");
   GetInstance(instance_admin_client, project_id, instance_id);
 
-  SampleBanner("get-instance-config");
+  SampleBanner("spanner_get_instance_config");
   GetInstanceConfig(instance_admin_client, project_id,
                     emulator ? "emulator-config" : "regional-us-central1");
 
-  SampleBanner("list-instance-configs");
+  SampleBanner("spanner_list_instance_configs");
   ListInstanceConfigs(instance_admin_client, project_id);
 
   SampleBanner("list-instances");
@@ -3896,8 +4323,7 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_create_database");
   CreateDatabase(database_admin_client, project_id, instance_id, database_id);
 
-  // TODO(#5479): Awaiting emulator support for version_retention_period.
-  if (!emulator) {
+  if (!emulator) {  // version_retention_period
     SampleBanner("spanner_drop_database");
     DropDatabase(database_admin_client, project_id, instance_id, database_id);
 
@@ -3906,8 +4332,7 @@ void RunAll(bool emulator) {
                                              instance_id, database_id);
   }
 
-  // TODO(#5048): Remove this check when the emulator supports CMEK.
-  if (!emulator) {
+  if (!emulator) {  // CMEK
     auto location = google::cloud::spanner_testing::InstanceLocation(
         google::cloud::spanner::Instance(project_id, instance_id));
     if (!location) {
@@ -3942,7 +4367,27 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_get_database_ddl");
   GetDatabaseDdl(database_admin_client, project_id, instance_id, database_id);
 
-  SampleBanner("list-databases");
+  if (!emulator) {
+    SampleBanner("spanner_add_and_drop_database_role");
+    AddAndDropDatabaseRole(database_admin_client, project_id, instance_id,
+                           database_id, "new_parent", "new_child");
+
+    SampleBanner("spanner_read_data_with_database_role");
+    ReadDataWithDatabaseRole(project_id, instance_id, database_id,
+                             "new_parent");
+
+    SampleBanner("spanner_list_database_roles");
+    ListDatabaseRoles(database_admin_client, project_id, instance_id,
+                      database_id);
+
+    SampleBanner("spanner_enable_fine_grained_access");
+    EnableFineGrainedAccess(database_admin_client, project_id, instance_id,
+                            database_id,
+                            "serviceAccount:" + test_iam_service_account,
+                            "new_parent", "condition title");
+  }
+
+  SampleBanner("spanner_list_databases");
   ListDatabases(database_admin_client, project_id, instance_id);
 
   SampleBanner("spanner_add_column");
@@ -4022,30 +4467,23 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_query_data_with_timestamp_column");
   QueryDataWithTimestamp(client);
 
-  // TODO(#6873): Remove this check when the emulator supports JSON.
-  if (!emulator) {
-    SampleBanner("spanner_add_json_column");
-    AddJsonColumn(database_admin_client, project_id, instance_id, database_id);
+  SampleBanner("spanner_add_json_column");
+  AddJsonColumn(database_admin_client, project_id, instance_id, database_id);
 
-    SampleBanner("spanner_update_data_with_json_column");
-    UpdateDataWithJson(client);
+  SampleBanner("spanner_update_data_with_json_column");
+  UpdateDataWithJson(client);
 
-    SampleBanner("spanner_query_with_json_parameter");
-    QueryWithJsonParameter(client);
-  }
+  SampleBanner("spanner_query_with_json_parameter");
+  QueryWithJsonParameter(client);
 
-  // TODO(#5024): Remove this check when the emulator supports NUMERIC.
-  if (!emulator) {
-    SampleBanner("spanner_add_numeric_column");
-    AddNumericColumn(database_admin_client, project_id, instance_id,
-                     database_id);
+  SampleBanner("spanner_add_numeric_column");
+  AddNumericColumn(database_admin_client, project_id, instance_id, database_id);
 
-    SampleBanner("spanner_update_data_with_numeric_column");
-    UpdateDataWithNumeric(client);
+  SampleBanner("spanner_update_data_with_numeric_column");
+  UpdateDataWithNumeric(client);
 
-    SampleBanner("spanner_query_with_numeric_parameter");
-    QueryWithNumericParameter(client);
-  }
+  SampleBanner("spanner_query_with_numeric_parameter");
+  QueryWithNumericParameter(client);
 
   SampleBanner("spanner_read_only_transaction");
   ReadOnlyTransaction(client);
@@ -4059,10 +4497,8 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_set_request_tag");
   SetRequestTag(client);
 
-  if (!emulator) {
-    SampleBanner("spanner_batch_client");
-    UsePartitionQuery(client);
-  }
+  SampleBanner("spanner_batch_client");
+  UsePartitionQuery(client);
 
   SampleBanner("spanner_read_data_with_index");
   ReadDataWithIndex(client);
@@ -4106,10 +4542,8 @@ void RunAll(bool emulator) {
   SampleBanner("spanner_dml_write_then_read");
   DmlWriteThenRead(client);
 
-  if (!emulator) {
-    SampleBanner("spanner_dml_batch_update");
-    DmlBatchUpdate(client);
-  }
+  SampleBanner("spanner_dml_batch_update");
+  DmlBatchUpdate(client);
 
   SampleBanner("spanner_write_data_for_struct_queries");
   WriteDataForStructQueries(client);
@@ -4172,13 +4606,11 @@ void RunAll(bool emulator) {
   RunOneCommand(
       {"", "custom-database-admin-policies", project_id, instance_id});
 
-  if (!emulator) {
-    SampleBanner("spanner_dml_partitioned_update");
-    DmlPartitionedUpdate(client);
+  SampleBanner("spanner_dml_partitioned_update");
+  DmlPartitionedUpdate(client);
 
-    SampleBanner("spanner_dml_partitioned_delete");
-    DmlPartitionedDelete(client);
-  }
+  SampleBanner("spanner_dml_partitioned_delete");
+  DmlPartitionedDelete(client);
 
   SampleBanner("spanner_dml_structs");
   DmlStructs(client);
@@ -4216,6 +4648,17 @@ void RunAll(bool emulator) {
   SampleBanner("make-replace-mutation");
   MakeReplaceMutation(client);
 
+  if (!emulator) {
+    SampleBanner("spanner_update_dml_returning");
+    UpdateUsingDmlReturning(client);
+
+    SampleBanner("spanner_insert_dml_returning");
+    InsertUsingDmlReturning(client);
+
+    SampleBanner("spanner_delete_dml_returning");
+    DeleteUsingDmlReturning(client);
+  }
+
   SampleBanner("delete-mutation-builder");
   DeleteMutationBuilder(client);
 
@@ -4231,8 +4674,7 @@ void RunAll(bool emulator) {
   DeleteAll(client);
   DropDatabase(database_admin_client, project_id, instance_id, database_id);
 
-  // TODO(#7144): Awaiting emulator support for default_leader.
-  if (!emulator) {
+  if (!emulator) {  // default_leader
     auto random_instance = google::cloud::spanner_testing::PickRandomInstance(
         generator, project_id,
         "labels.samples:yes AND name:/instances/test-instance-mr-");
@@ -4283,10 +4725,20 @@ int main(int ac, char* av[]) try {
     RunAll(Emulator());
     return 0;
   }
-
   return RunOneCommand({av, av + ac});
+} catch (google::cloud::Status const& status) {
+  std::cerr << status << "\n";
+  google::cloud::LogSink::Instance().Flush();
+  // TODO(#8616): Remove this when we know how to deal with the issue.
+  if (status.message() ==
+      "CreateBackup() - polling loop terminated by polling policy") {
+    // The backup is still in progress (and may eventually complete), and
+    // we can't drop the database while it has pending backups, so we
+    // simply abandon it, to be cleaned up offline, and declare victory.
+    return 0;
+  }
+  return 1;
 } catch (std::exception const& ex) {
   std::cerr << ex.what() << "\n";
-  google::cloud::LogSink::Instance().Flush();
   return 1;
 }

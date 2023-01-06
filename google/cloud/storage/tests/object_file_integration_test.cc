@@ -55,40 +55,6 @@ Client ClientWithSimpleUploadDisabled() {
   return Client(Options{}.set<MaximumSimpleUploadSizeOption>(0));
 }
 
-TEST_F(ObjectFileIntegrationTest, XmlDownloadFile) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto object_name = MakeRandomObjectName();
-  auto file_name = MakeRandomFilename();
-
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-  // Create an object with the contents to download.
-  auto upload =
-      client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
-  upload.exceptions(std::ios_base::failbit);
-  WriteRandomLines(upload, expected);
-  upload.Close();
-  ASSERT_STATUS_OK(upload.metadata());
-  auto meta = upload.metadata().value();
-  ScheduleForDelete(meta);
-
-  auto status = client->DownloadToFile(bucket_name_, object_name, file_name);
-  ASSERT_STATUS_OK(status);
-  // Create an iostream to read the object back.
-  std::ifstream stream(file_name, std::ios::binary);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  ASSERT_FALSE(actual.empty());
-  auto expected_str = expected.str();
-  ASSERT_EQ(expected_str.size(), actual.size()) << " meta=" << meta;
-  EXPECT_EQ(expected_str, actual);
-
-  // On Windows one must close the stream before removing the file.
-  stream.close();
-  EXPECT_EQ(0, std::remove(file_name.c_str()));
-}
-
 TEST_F(ObjectFileIntegrationTest, JsonDownloadFile) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -146,7 +112,7 @@ TEST_F(ObjectFileIntegrationTest, DownloadFileCannotOpenFile) {
   ScheduleForDelete(*meta);
 
   // Create an invalid path for the destination object.
-  auto file_name = MakeRandomFilename() + "/" + MakeRandomFilename();
+  auto file_name = MakeRandomFilename() + "/should-not-exist";
 
   auto status = client->DownloadToFile(bucket_name_, object_name, file_name);
   EXPECT_THAT(status, StatusIs(Not(StatusCode::kOk), HasSubstr(object_name)));
@@ -184,8 +150,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFile) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -218,8 +183,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileBinary) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // Create a file with the contents to upload.
@@ -260,8 +224,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileEmpty) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // Create a file with the contents to upload.
@@ -301,8 +264,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileUploadFailure) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // Create the file.
@@ -335,8 +297,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileNonRegularWarning) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   ASSERT_NE(-1, mkfifo(file_name.c_str(), 0777));
@@ -361,55 +322,9 @@ TEST_F(ObjectFileIntegrationTest, UploadFileNonRegularWarning) {
 #endif  // GTEST_OS_LINUX
 }
 
-TEST_F(ObjectFileIntegrationTest, XmlUploadFile) {
-  StatusOr<Client> client = MakeIntegrationTestClient();
-  ASSERT_STATUS_OK(client);
-
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
-  auto object_name = MakeRandomObjectName();
-
-  // We will construct the expected response while streaming the data up.
-  std::ostringstream expected;
-
-  auto generate_random_line = [this] {
-    std::string const characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-        "abcdefghijklmnopqrstuvwxyz"
-        "0123456789"
-        ".,/;:'[{]}=+-_}]`~!@#$%^&*()";
-    return google::cloud::internal::Sample(generator_, 200, characters);
-  };
-
-  // Create a file with the contents to upload.
-  std::ofstream os(file_name, std::ios::binary);
-  for (int line = 0; line != 1000; ++line) {
-    std::string random = generate_random_line() + "\n";
-    os << line << ": " << random;
-    expected << line << ": " << random;
-  }
-  os.close();
-
-  StatusOr<ObjectMetadata> meta = client->UploadFile(
-      file_name, bucket_name_, object_name, IfGenerationMatch(0), Fields(""));
-  ASSERT_STATUS_OK(meta);
-  ScheduleForDelete(*meta);
-  auto expected_str = expected.str();
-
-  // Create an iostream to read the object back.
-  auto stream = client->ReadObject(bucket_name_, object_name);
-  std::string actual(std::istreambuf_iterator<char>{stream}, {});
-  ASSERT_FALSE(actual.empty());
-  EXPECT_EQ(expected_str.size(), actual.size()) << " meta=" << *meta;
-  EXPECT_EQ(expected_str, actual);
-
-  EXPECT_EQ(0, std::remove(file_name.c_str()));
-}
-
 TEST_F(ObjectFileIntegrationTest, UploadFileResumableBySize) {
   auto client = ClientWithSimpleUploadDisabled();
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -447,8 +362,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableByOption) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -485,8 +399,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableByOption) {
 
 TEST_F(ObjectFileIntegrationTest, UploadFileResumableQuantum) {
   auto client = ClientWithSimpleUploadDisabled();
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -522,8 +435,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableQuantum) {
 
 TEST_F(ObjectFileIntegrationTest, UploadFileResumableNonQuantum) {
   auto client = ClientWithSimpleUploadDisabled();
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -558,8 +470,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileResumableNonQuantum) {
 
 TEST_F(ObjectFileIntegrationTest, UploadFileResumableUploadFailure) {
   auto client = ClientWithSimpleUploadDisabled();
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto bucket_name = MakeRandomBucketName();
   auto object_name = MakeRandomObjectName();
 
@@ -578,8 +489,7 @@ TEST_F(ObjectFileIntegrationTest, UploadPortionRegularFile) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -616,8 +526,7 @@ TEST_F(ObjectFileIntegrationTest, ResumableUploadFileCustomHeader) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   // We will construct the expected response while streaming the data up.
@@ -659,8 +568,7 @@ TEST_F(ObjectFileIntegrationTest, UploadFileWithContentType) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
 
-  auto file_name = google::cloud::internal::PathAppend(::testing::TempDir(),
-                                                       MakeRandomFilename());
+  auto file_name = MakeRandomFilename();
   auto object_name = MakeRandomObjectName();
 
   std::ofstream os(file_name, std::ios::binary);

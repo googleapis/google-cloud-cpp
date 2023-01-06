@@ -48,23 +48,6 @@ function quickstart::build_cmake_and_make() {
   done
 }
 
-function quickstart::build_gcs_grpc_quickstart() {
-  local prefix="$1"
-  local src_dir="${PROJECT_ROOT}/google/cloud/storage/quickstart"
-
-  io::log "[ CMake ]"
-  local cmake_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/cmake-storage"
-  cmake -H"${src_dir}" -B"${cmake_bin_dir}" "-DCMAKE_PREFIX_PATH=${prefix}"
-  cmake --build "${cmake_bin_dir}" --target quickstart_grpc
-
-  echo
-  io::log "[ Make ]"
-  local makefile_bin_dir="${PROJECT_ROOT}/cmake-out/quickstart/makefile-storage"
-  mkdir -p "${makefile_bin_dir}"
-  PKG_CONFIG_PATH="${prefix}/lib64/pkgconfig:${prefix}/lib/pkgconfig:${PKG_CONFIG_PATH:-}" \
-    make -C "${src_dir}" BIN="${makefile_bin_dir}" "${makefile_bin_dir}/quickstart_grpc"
-}
-
 function quickstart::build_one_quickstart() {
   local prefix="$1"
   local src_dir="$2"

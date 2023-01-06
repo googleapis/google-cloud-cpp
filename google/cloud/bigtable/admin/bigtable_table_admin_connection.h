@@ -49,6 +49,18 @@ using BigtableTableAdminLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         bigtable_admin_internal::BigtableTableAdminRetryTraits>;
 
+/**
+ * The `BigtableTableAdminConnection` object for `BigtableTableAdminClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `BigtableTableAdminClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `BigtableTableAdminClient`.
+ *
+ * To create a concrete instance, see `MakeBigtableTableAdminConnection()`.
+ *
+ * For mocking, see `bigtable_admin_mocks::MockBigtableTableAdminConnection`.
+ */
 class BigtableTableAdminConnection {
  public:
   virtual ~BigtableTableAdminConnection() = 0;
@@ -64,8 +76,14 @@ class BigtableTableAdminConnection {
   virtual StatusOr<google::bigtable::admin::v2::Table> GetTable(
       google::bigtable::admin::v2::GetTableRequest const& request);
 
+  virtual future<StatusOr<google::bigtable::admin::v2::Table>> UpdateTable(
+      google::bigtable::admin::v2::UpdateTableRequest const& request);
+
   virtual Status DeleteTable(
       google::bigtable::admin::v2::DeleteTableRequest const& request);
+
+  virtual future<StatusOr<google::bigtable::admin::v2::Table>> UndeleteTable(
+      google::bigtable::admin::v2::UndeleteTableRequest const& request);
 
   virtual StatusOr<google::bigtable::admin::v2::Table> ModifyColumnFamilies(
       google::bigtable::admin::v2::ModifyColumnFamiliesRequest const& request);
@@ -116,25 +134,34 @@ class BigtableTableAdminConnection {
       google::bigtable::admin::v2::CheckConsistencyRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `BigtableTableAdminConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * BigtableTableAdminClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `BigtableTableAdminConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::bigtable_admin::BigtableTableAdminPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `BigtableTableAdminConnection`
+ * created by this function.
+ */
 std::shared_ptr<BigtableTableAdminConnection> MakeBigtableTableAdminConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace bigtable_admin_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<bigtable_admin::BigtableTableAdminConnection>
-MakeBigtableTableAdminConnection(std::shared_ptr<BigtableTableAdminStub> stub,
-                                 Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_admin_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -17,7 +17,6 @@
 // source: google/cloud/dataproc/v1/jobs.proto
 
 #include "google/cloud/dataproc/job_controller_client.h"
-#include "google/cloud/dataproc/internal/job_controller_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 JobControllerClient::JobControllerClient(
     std::shared_ptr<JobControllerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), dataproc_internal::JobControllerDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 JobControllerClient::~JobControllerClient() = default;
 
 StatusOr<google::cloud::dataproc::v1::Job> JobControllerClient::SubmitJob(

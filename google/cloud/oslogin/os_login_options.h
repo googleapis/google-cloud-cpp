@@ -31,21 +31,38 @@ namespace cloud {
 namespace oslogin {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-oslogin-options
+ */
 struct OsLoginServiceRetryPolicyOption {
   using Type = std::shared_ptr<OsLoginServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-oslogin-options
+ */
 struct OsLoginServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-oslogin-options
+ */
 struct OsLoginServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<OsLoginServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to OsLoginService.
+ *
+ * @ingroup google-cloud-oslogin-options
+ */
 using OsLoginServicePolicyOptionList =
     OptionList<OsLoginServiceRetryPolicyOption,
                OsLoginServiceBackoffPolicyOption,

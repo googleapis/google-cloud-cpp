@@ -17,7 +17,6 @@
 // source: google/cloud/talent/v4/tenant_service.proto
 
 #include "google/cloud/talent/tenant_client.h"
-#include "google/cloud/talent/internal/tenant_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 TenantServiceClient::TenantServiceClient(
     std::shared_ptr<TenantServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), talent_internal::TenantServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TenantServiceClient::~TenantServiceClient() = default;
 
 StatusOr<google::cloud::talent::v4::Tenant> TenantServiceClient::CreateTenant(

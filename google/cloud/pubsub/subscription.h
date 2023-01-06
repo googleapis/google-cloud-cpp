@@ -36,6 +36,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class Subscription {
  public:
+  /// The default constructor creates an invalid subscription.
+  Subscription();
   Subscription(std::string project_id, std::string subscription_id)
       : project_id_(std::move(project_id)),
         subscription_id_(std::move(subscription_id)) {}

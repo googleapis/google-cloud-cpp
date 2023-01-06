@@ -32,26 +32,26 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class DomainMappingsConnectionIdempotencyPolicy {
  public:
-  virtual ~DomainMappingsConnectionIdempotencyPolicy() = 0;
+  virtual ~DomainMappingsConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency ListDomainMappings(
-      google::appengine::v1::ListDomainMappingsRequest request) = 0;
+      google::appengine::v1::ListDomainMappingsRequest request);
 
   virtual google::cloud::Idempotency GetDomainMapping(
-      google::appengine::v1::GetDomainMappingRequest const& request) = 0;
+      google::appengine::v1::GetDomainMappingRequest const& request);
 
   virtual google::cloud::Idempotency CreateDomainMapping(
-      google::appengine::v1::CreateDomainMappingRequest const& request) = 0;
+      google::appengine::v1::CreateDomainMappingRequest const& request);
 
   virtual google::cloud::Idempotency UpdateDomainMapping(
-      google::appengine::v1::UpdateDomainMappingRequest const& request) = 0;
+      google::appengine::v1::UpdateDomainMappingRequest const& request);
 
   virtual google::cloud::Idempotency DeleteDomainMapping(
-      google::appengine::v1::DeleteDomainMappingRequest const& request) = 0;
+      google::appengine::v1::DeleteDomainMappingRequest const& request);
 };
 
 std::unique_ptr<DomainMappingsConnectionIdempotencyPolicy>

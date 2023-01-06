@@ -34,11 +34,9 @@ struct AggregateUploadThroughputOptions {
   std::int64_t resumable_upload_chunk_size = 64 * kMiB;
   int thread_count = 1;
   int iteration_count = 1;
-  ApiName api = ApiName::kApiGrpc;
-  int grpc_channel_count = 0;
-  std::string grpc_plugin_config;
-  std::string rest_http_version;
+  std::string api = "JSON";
   bool client_per_thread = false;
+  Options client_options;
   bool exit_after_parse = false;
 };
 

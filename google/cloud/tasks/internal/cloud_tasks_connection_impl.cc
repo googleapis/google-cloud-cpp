@@ -36,14 +36,13 @@ CloudTasksConnectionImpl::CloudTasksConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(std::move(options),
-                                      tasks_internal::CloudTasksDefaultOptions(
-                                          CloudTasksConnection::options()))) {}
+                                      CloudTasksConnection::options())) {}
 
 StreamRange<google::cloud::tasks::v2::Queue>
 CloudTasksConnectionImpl::ListQueues(
     google::cloud::tasks::v2::ListQueuesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<tasks::CloudTasksRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -193,7 +192,7 @@ CloudTasksConnectionImpl::TestIamPermissions(
 StreamRange<google::cloud::tasks::v2::Task> CloudTasksConnectionImpl::ListTasks(
     google::cloud::tasks::v2::ListTasksRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<tasks::CloudTasksRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

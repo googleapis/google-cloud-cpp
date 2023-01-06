@@ -17,7 +17,6 @@
 // source: google/cloud/osconfig/v1/osconfig_service.proto
 
 #include "google/cloud/osconfig/os_config_client.h"
-#include "google/cloud/osconfig/internal/os_config_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 OsConfigServiceClient::OsConfigServiceClient(
     std::shared_ptr<OsConfigServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), osconfig_internal::OsConfigServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 OsConfigServiceClient::~OsConfigServiceClient() = default;
 
 StatusOr<google::cloud::osconfig::v1::PatchJob>
@@ -165,6 +163,59 @@ Status OsConfigServiceClient::DeletePatchDeployment(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->DeletePatchDeployment(request);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceClient::UpdatePatchDeployment(
+    google::cloud::osconfig::v1::PatchDeployment const& patch_deployment,
+    google::protobuf::FieldMask const& update_mask, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::osconfig::v1::UpdatePatchDeploymentRequest request;
+  *request.mutable_patch_deployment() = patch_deployment;
+  *request.mutable_update_mask() = update_mask;
+  return connection_->UpdatePatchDeployment(request);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceClient::UpdatePatchDeployment(
+    google::cloud::osconfig::v1::UpdatePatchDeploymentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdatePatchDeployment(request);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceClient::PausePatchDeployment(std::string const& name,
+                                            Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::osconfig::v1::PausePatchDeploymentRequest request;
+  request.set_name(name);
+  return connection_->PausePatchDeployment(request);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceClient::PausePatchDeployment(
+    google::cloud::osconfig::v1::PausePatchDeploymentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->PausePatchDeployment(request);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceClient::ResumePatchDeployment(std::string const& name,
+                                             Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::osconfig::v1::ResumePatchDeploymentRequest request;
+  request.set_name(name);
+  return connection_->ResumePatchDeployment(request);
+}
+
+StatusOr<google::cloud::osconfig::v1::PatchDeployment>
+OsConfigServiceClient::ResumePatchDeployment(
+    google::cloud::osconfig::v1::ResumePatchDeploymentRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ResumePatchDeployment(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

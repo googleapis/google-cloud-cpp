@@ -24,6 +24,16 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
+
+TEST(PatchBuilderTest, Equality) {
+  auto b1 = PatchBuilder{}.AddStringField("field1", "lhs", "rhs");
+  auto b2 = PatchBuilder{};
+  EXPECT_NE(b1, b2);
+
+  b2 = b1;
+  EXPECT_EQ(b1, b2);
+}
+
 TEST(PatchBuilderTest, Empty) {
   PatchBuilder builder;
   EXPECT_TRUE(builder.empty());
@@ -56,9 +66,12 @@ TEST(PatchBuilderTest, Bool) {
 
 TEST(PatchBuilderTest, Int) {
   PatchBuilder builder;
-  builder.AddIntField("set-value", std::int32_t(0), std::int32_t(42));
-  builder.AddIntField("unset-value", std::int32_t(42), std::int32_t(0));
-  builder.AddIntField("untouched-value", std::int32_t(7), std::int32_t(7));
+  builder.AddIntField("set-value", static_cast<std::int32_t>(0),
+                      static_cast<std::int32_t>(42));
+  builder.AddIntField("unset-value", static_cast<std::int32_t>(42),
+                      static_cast<std::int32_t>(0));
+  builder.AddIntField("untouched-value", static_cast<std::int32_t>(7),
+                      static_cast<std::int32_t>(7));
   nlohmann::json expected{
       {"set-value", 42},
       {"unset-value", nullptr},
@@ -121,19 +134,23 @@ TEST(PatchBuilderTest, SetBoolField) {
 
 TEST(PatchBuilderTest, SetIntField) {
   PatchBuilder builder;
-  builder.SetIntField("field-32-7", std::int32_t(7));
-  builder.SetIntField("field-32-0", std::int32_t(0));
-  builder.SetIntField("field-u32-7", std::uint32_t(7));
-  builder.SetIntField("field-u32-0", std::uint32_t(0));
-  builder.SetIntField("field-64-7", std::int64_t(7));
-  builder.SetIntField("field-64-0", std::int64_t(0));
-  builder.SetIntField("field-u64-7", std::uint64_t(7));
-  builder.SetIntField("field-u64-0", std::uint64_t(0));
+  builder.SetIntField("field-32-7", static_cast<std::int32_t>(7));
+  builder.SetIntField("field-32-0", static_cast<std::int32_t>(0));
+  builder.SetIntField("field-u32-7", static_cast<std::uint32_t>(7));
+  builder.SetIntField("field-u32-0", static_cast<std::uint32_t>(0));
+  builder.SetIntField("field-64-7", static_cast<std::int64_t>(7));
+  builder.SetIntField("field-64-0", static_cast<std::int64_t>(0));
+  builder.SetIntField("field-u64-7", static_cast<std::uint64_t>(7));
+  builder.SetIntField("field-u64-0", static_cast<std::uint64_t>(0));
   nlohmann::json expected{
-      {"field-32-7", std::int32_t(7)},   {"field-32-0", std::int32_t(0)},
-      {"field-u32-7", std::uint32_t(7)}, {"field-u32-0", std::uint32_t(0)},
-      {"field-64-7", std::int64_t(7)},   {"field-64-0", std::int64_t(0)},
-      {"field-u64-7", std::uint64_t(7)}, {"field-u64-0", std::uint64_t(0)},
+      {"field-32-7", static_cast<std::int32_t>(7)},
+      {"field-32-0", static_cast<std::int32_t>(0)},
+      {"field-u32-7", static_cast<std::uint32_t>(7)},
+      {"field-u32-0", static_cast<std::uint32_t>(0)},
+      {"field-64-7", static_cast<std::int64_t>(7)},
+      {"field-64-0", static_cast<std::int64_t>(0)},
+      {"field-u64-7", static_cast<std::uint64_t>(7)},
+      {"field-u64-0", static_cast<std::uint64_t>(0)},
   };
   auto actual = nlohmann::json::parse(builder.ToString());
   EXPECT_EQ(expected, actual) << builder.ToString();

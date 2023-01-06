@@ -23,6 +23,7 @@
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/getenv.h"
+#include "google/cloud/internal/oauth2_compute_engine_credentials.h"
 #include "google/cloud/status.h"
 #include <chrono>
 #include <ctime>
@@ -35,18 +36,32 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
-/// A helper struct that contains service account metadata.
+
+/**
+ * A helper struct that contains service account metadata.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 struct ServiceAccountMetadata {
   std::set<std::string> scopes;
   std::string email;
 };
 
-/// Parses a metadata server response JSON string into a ServiceAccountMetadata.
+/**
+ * Parses a metadata server response JSON string into a ServiceAccountMetadata.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 StatusOr<ServiceAccountMetadata> ParseMetadataServerResponse(
     storage::internal::HttpResponse const& response);
 
-/// Parses a refresh response JSON string into an authorization header. The
-/// header and the current time (for the expiration) form a TemporaryToken.
+/**
+ * Parses a refresh response JSON string into an authorization header.
+ *
+ * The header and the current time (for the expiration) form a TemporaryToken.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseComputeEngineRefreshResponse(
     storage::internal::HttpResponse const& response,
@@ -74,10 +89,54 @@ ParseComputeEngineRefreshResponse(
  *     be overridden except for testing.
  * @tparam ClockType a dependency injection point to fetch the current time.
  *     This should generally not be overridden except for testing.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
           typename ClockType = std::chrono::system_clock>
+class ComputeEngineCredentials;
+
+/// @copydoc ComputeEngineCredentials
+template <>
+class ComputeEngineCredentials<storage::internal::CurlRequestBuilder,
+                               std::chrono::system_clock> : public Credentials {
+ public:
+  explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}
+  explicit ComputeEngineCredentials(std::string service_account_email);
+
+  StatusOr<std::string> AuthorizationHeader() override {
+    return oauth2_internal::AuthorizationHeaderJoined(impl_);
+  }
+
+  std::string AccountEmail() const override { return impl_.AccountEmail(); }
+
+  /**
+   * Returns the email or alias of this credential's service account.
+   *
+   * @note This class must query the Compute Engine instance's metadata server
+   * to fetch service account metadata. Because of this, if an alias (e.g.
+   * "default") was supplied in place of an actual email address when
+   * initializing this credential, that alias is returned as this credential's
+   * email address if the credential has not been refreshed yet.
+   */
+  std::string service_account_email() { return impl_.service_account_email(); }
+
+  /**
+   * Returns the set of scopes granted to this credential's service account.
+   *
+   * @note Because this class must query the Compute Engine instance's metadata
+   * server to fetch service account metadata, this method will return an empty
+   * set if the credential has not been refreshed yet.
+   */
+  std::set<std::string> scopes() const { return impl_.scopes(); }
+
+ private:
+  google::cloud::oauth2_internal::ComputeEngineCredentials impl_;
+};
+
+/// @copydoc ComputeEngineCredentials
+template <typename HttpRequestBuilderType, typename ClockType>
 class ComputeEngineCredentials : public Credentials {
  public:
   explicit ComputeEngineCredentials() : ComputeEngineCredentials("default") {}

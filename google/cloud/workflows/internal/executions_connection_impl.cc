@@ -35,15 +35,14 @@ ExecutionsConnectionImpl::ExecutionsConnectionImpl(
     std::shared_ptr<workflows_internal::ExecutionsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), workflows_internal::ExecutionsDefaultOptions(
-                                  ExecutionsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      ExecutionsConnection::options())) {}
 
 StreamRange<google::cloud::workflows::executions::v1::Execution>
 ExecutionsConnectionImpl::ListExecutions(
     google::cloud::workflows::executions::v1::ListExecutionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<workflows::ExecutionsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

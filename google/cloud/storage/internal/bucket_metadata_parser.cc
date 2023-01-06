@@ -14,8 +14,8 @@
 
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
-#include "google/cloud/storage/internal/common_metadata_parser.h"
 #include "google/cloud/storage/internal/lifecycle_rule_parser.h"
+#include "google/cloud/storage/internal/metadata_parser.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
 #include "absl/strings/str_format.h"
 #include <nlohmann/json.hpp>
@@ -68,8 +68,7 @@ StatusOr<UniformBucketLevelAccess> ParseUniformBucketLevelAccess(
   return UniformBucketLevelAccess{*enabled, *locked_time};
 }
 
-Status ParseAcl(std::vector<BucketAccessControl>& acl,
-                nlohmann::json const& json) {
+Status ParseAcl(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("acl")) return Status{};
 
   std::vector<BucketAccessControl> value;
@@ -78,21 +77,31 @@ Status ParseAcl(std::vector<BucketAccessControl>& acl,
     if (!parsed.ok()) return std::move(parsed).status();
     value.push_back(std::move(*parsed));
   }
-  acl = std::move(value);
+  meta.set_acl(std::move(value));
   return Status{};
 }
 
-Status ParseBilling(absl::optional<BucketBilling>& billing,
-                    nlohmann::json const& json) {
+Status ParseAutoclass(BucketMetadata& meta, nlohmann::json const& json) {
+  auto f = json.find("autoclass");
+  if (f == json.end()) return Status{};
+  auto enabled = internal::ParseBoolField(*f, "enabled");
+  if (!enabled) return std::move(enabled).status();
+  auto toggle = internal::ParseTimestampField(*f, "toggleTime");
+  if (!toggle) return std::move(toggle).status();
+  meta.set_autoclass(BucketAutoclass{*enabled, *toggle});
+  return Status{};
+}
+
+Status ParseBilling(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("billing")) return Status{};
-  auto b = json["billing"];
+  auto const& b = json["billing"];
   auto requester_pays = internal::ParseBoolField(b, "requesterPays");
   if (!requester_pays) return std::move(requester_pays).status();
-  billing = BucketBilling{*requester_pays};
+  meta.set_billing(BucketBilling{*requester_pays});
   return Status{};
 }
 
-Status ParseCorsList(std::vector<CorsEntry>& list, nlohmann::json const& json) {
+Status ParseCorsList(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("cors")) return Status{};
   std::vector<CorsEntry> value;
   for (auto const& kv : json["cors"].items()) {
@@ -100,20 +109,33 @@ Status ParseCorsList(std::vector<CorsEntry>& list, nlohmann::json const& json) {
     if (!cors) return std::move(cors).status();
     value.push_back(*std::move(cors));
   }
-  list = std::move(value);
+  meta.set_cors(std::move(value));
   return Status{};
 }
 
-Status ParseDefaultEventBasedHold(bool& default_event_based_hold,
+Status ParseCustomPlacementConfig(BucketMetadata& meta,
                                   nlohmann::json const& json) {
-  if (json.contains("defaultEventBasedHold")) {
-    default_event_based_hold = json.value("defaultEventBasedHold", false);
+  if (!json.contains("customPlacementConfig")) return Status{};
+  auto const& field = json["customPlacementConfig"];
+  auto error = [] {
+    return Status{StatusCode::kInvalidArgument,
+                  "malformed customPlacementConfig"};
+  };
+  if (!field.is_object()) return error();
+  if (!field.contains("dataLocations")) return Status{};
+  auto const& locations = field["dataLocations"];
+  if (!locations.is_array()) return error();
+
+  BucketCustomPlacementConfig value;
+  for (auto const& i : locations.items()) {
+    if (!i.value().is_string()) return error();
+    value.data_locations.push_back(i.value().get<std::string>());
   }
+  meta.set_custom_placement_config(std::move(value));
   return Status{};
 }
 
-Status ParseDefaultObjectAcl(std::vector<ObjectAccessControl>& acl,
-                             nlohmann::json const& json) {
+Status ParseDefaultObjectAcl(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("defaultObjectAcl")) return Status{};
   std::vector<ObjectAccessControl> value;
   for (auto const& kv : json["defaultObjectAcl"].items()) {
@@ -121,23 +143,20 @@ Status ParseDefaultObjectAcl(std::vector<ObjectAccessControl>& acl,
     if (!parsed.ok()) return std::move(parsed).status();
     value.push_back(std::move(*parsed));
   }
-  acl = std::move(value);
+  meta.set_default_acl(std::move(value));
   return Status{};
 }
 
-Status ParseEncryption(absl::optional<BucketEncryption>& encryption,
-                       nlohmann::json const& json) {
+Status ParseEncryption(BucketMetadata& meta, nlohmann::json const& json) {
   if (json.contains("encryption")) {
     BucketEncryption e;
     e.default_kms_key_name = json["encryption"].value("defaultKmsKeyName", "");
-    encryption = std::move(e);
+    meta.set_encryption(std::move(e));
   }
   return Status{};
 }
 
-Status ParseIamConfiguration(
-    absl::optional<BucketIamConfiguration>& iam_configuration,
-    nlohmann::json const& json) {
+Status ParseIamConfiguration(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("iamConfiguration")) return Status{};
   BucketIamConfiguration value;
   auto c = json["iamConfiguration"];
@@ -149,14 +168,13 @@ Status ParseIamConfiguration(
   if (c.contains("publicAccessPrevention")) {
     value.public_access_prevention = c.value("publicAccessPrevention", "");
   }
-  iam_configuration = std::move(value);
+  meta.set_iam_configuration(std::move(value));
   return Status{};
 }
 
-Status ParseLifecycle(absl::optional<BucketLifecycle>& lifecycle,
-                      nlohmann::json const& json) {
+Status ParseLifecycle(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("lifecycle")) return Status{};
-  auto l = json["lifecycle"];
+  auto const& l = json["lifecycle"];
   BucketLifecycle value;
   if (l.contains("rule")) {
     for (auto const& kv : l["rule"].items()) {
@@ -165,18 +183,17 @@ Status ParseLifecycle(absl::optional<BucketLifecycle>& lifecycle,
       value.rule.emplace_back(std::move(*parsed));
     }
   }
-  lifecycle = std::move(value);
+  meta.set_lifecycle(std::move(value));
   return Status{};
 }
 
-Status ParseLogging(absl::optional<BucketLogging>& logging,
-                    nlohmann::json const& json) {
+Status ParseLogging(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("logging")) return Status{};
-  auto l = json["logging"];
+  auto const& l = json["logging"];
   BucketLogging value;
   value.log_bucket = l.value("logBucket", "");
   value.log_object_prefix = l.value("logObjectPrefix", "");
-  logging = std::move(value);
+  meta.set_logging(std::move(value));
   return Status{};
 }
 
@@ -189,49 +206,61 @@ std::map<std::string, std::string> ParseLabels(nlohmann::json const& json) {
   return value;
 }
 
-Status ParseProjectNumber(std::int64_t& project_number,
-                          nlohmann::json const& json) {
-  auto p = internal::ParseLongField(json, "projectNumber");
-  if (!p) return std::move(p).status();
-  project_number = *p;
+Status ParseOwner(BucketMetadata& meta, nlohmann::json const& json) {
+  if (!json.contains("owner")) return Status{};
+  auto const& o = json["owner"];
+  Owner owner;
+  owner.entity = o.value("entity", "");
+  owner.entity_id = o.value("entityId", "");
+  meta.set_owner(std::move(owner));
   return Status{};
 }
 
-Status ParseRetentionPolicy(
-    absl::optional<BucketRetentionPolicy>& retention_policy,
-    nlohmann::json const& json) {
+Status ParseRetentionPolicy(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("retentionPolicy")) return Status{};
-  auto r = json["retentionPolicy"];
-  auto is_locked = internal::ParseBoolField(r, "isLocked");
+  auto const& r = json["retentionPolicy"];
+  auto const is_locked = internal::ParseBoolField(r, "isLocked");
   if (!is_locked) return std::move(is_locked).status();
   auto retention_period = internal::ParseLongField(r, "retentionPeriod");
   if (!retention_period) return std::move(retention_period).status();
   auto effective_time = internal::ParseTimestampField(r, "effectiveTime");
   if (!effective_time) return std::move(effective_time).status();
-  retention_policy = BucketRetentionPolicy{
-      std::chrono::seconds(*retention_period), *effective_time, *is_locked};
+  meta.set_retention_policy(BucketRetentionPolicy{
+      std::chrono::seconds(*retention_period), *effective_time, *is_locked});
   return Status{};
 }
 
-Status ParseVersioning(absl::optional<BucketVersioning>& versioning,
-                       nlohmann::json const& json) {
+Status ParseTimeCreated(BucketMetadata& meta, nlohmann::json const& json) {
+  auto v = ParseTimestampField(json, "timeCreated");
+  if (!v) return std::move(v).status();
+  meta.set_time_created(*std::move(v));
+  return Status{};
+}
+
+Status ParseUpdated(BucketMetadata& meta, nlohmann::json const& json) {
+  auto v = ParseTimestampField(json, "updated");
+  if (!v) return std::move(v).status();
+  meta.set_updated(*std::move(v));
+  return Status{};
+}
+
+Status ParseVersioning(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("versioning")) return Status{};
-  auto v = json["versioning"];
+  auto const& v = json["versioning"];
   if (!v.contains("enabled")) return Status{};
-  auto enabled = internal::ParseBoolField(v, "enabled");
+  auto const& enabled = internal::ParseBoolField(v, "enabled");
   if (!enabled) return std::move(enabled).status();
-  versioning = BucketVersioning{*enabled};
+  meta.set_versioning(BucketVersioning{*enabled});
   return Status{};
 }
 
-Status ParseWebsite(absl::optional<BucketWebsite>& website,
-                    nlohmann::json const& json) {
+Status ParseWebsite(BucketMetadata& meta, nlohmann::json const& json) {
   if (!json.contains("website")) return Status{};
-  auto w = json["website"];
+  auto const& w = json["website"];
   BucketWebsite value;
   value.main_page_suffix = w.value("mainPageSuffix", "");
   value.not_found_page = w.value("notFoundPage", "");
-  website = std::move(value);
+  meta.set_website(std::move(value));
   return Status{};
 }
 
@@ -267,6 +296,13 @@ void ToJsonCors(nlohmann::json& json, BucketMetadata const& meta) {
     value.emplace_back(std::move(cors_as_json));
   }
   json["cors"] = std::move(value);
+}
+
+void ToJsonAutoclass(nlohmann::json& json, BucketMetadata const& meta) {
+  if (!meta.has_autoclass()) return;
+  json["autoclass"] = nlohmann::json{
+      {"enabled", meta.autoclass().enabled},
+  };
 }
 
 void ToJsonBilling(nlohmann::json& json, BucketMetadata const& meta) {
@@ -336,9 +372,7 @@ void ToJsonLifecycle(nlohmann::json& json, BucketMetadata const& meta) {
       condition["age"] = *c.age;
     }
     if (c.created_before.has_value()) {
-      condition["createdBefore"] =
-          absl::StrFormat("%04d-%02d-%02d", c.created_before->year(),
-                          c.created_before->month(), c.created_before->day());
+      condition["createdBefore"] = ToJsonString(*c.created_before);
     }
     if (c.is_live) {
       condition["isLive"] = *c.is_live;
@@ -349,7 +383,19 @@ void ToJsonLifecycle(nlohmann::json& json, BucketMetadata const& meta) {
     if (c.num_newer_versions) {
       condition["numNewerVersions"] = *c.num_newer_versions;
     }
+    if (c.days_since_custom_time) {
+      condition["daysSinceCustomTime"] = *c.days_since_custom_time;
+    }
+    if (c.custom_time_before) {
+      condition["customTimeBefore"] = ToJsonString(*c.custom_time_before);
+    }
+    if (c.matches_prefix) condition["matchesPrefix"] = *c.matches_prefix;
+    if (c.matches_suffix) condition["matchesSuffix"] = *c.matches_suffix;
+
     nlohmann::json action{{"type", v.action().type}};
+    if (!v.action().storage_class.empty()) {
+      action["storageClass"] = v.action().storage_class;
+    }
     if (!v.action().storage_class.empty()) {
       action["storageClass"] = v.action().storage_class;
     }
@@ -406,6 +452,14 @@ void ToJsonWebsite(nlohmann::json& json, BucketMetadata const& meta) {
   json["website"] = std::move(value);
 }
 
+void ToJsonCustomPlacementConfig(nlohmann::json& json,
+                                 BucketMetadata const& meta) {
+  if (!meta.has_custom_placement_config()) return;
+  json["customPlacementConfig"] = nlohmann::json{
+      {"dataLocations", meta.custom_placement_config().data_locations},
+  };
+}
+
 }  // namespace
 
 StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
@@ -416,64 +470,81 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromJson(
 
   using Parser = std::function<Status(BucketMetadata&, nlohmann::json const&)>;
   Parser parsers[] = {
+      ParseAcl,
+      ParseAutoclass,
+      ParseBilling,
+      ParseCorsList,
+      ParseCustomPlacementConfig,
       [](BucketMetadata& meta, nlohmann::json const& json) {
-        return CommonMetadataParser<BucketMetadata>::FromJson(meta, json);
+        if (json.contains("defaultEventBasedHold")) {
+          meta.set_default_event_based_hold(
+              json.value("defaultEventBasedHold", false));
+        }
+        return Status{};
       },
+      ParseDefaultObjectAcl,
+      ParseEncryption,
       [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseAcl(meta.acl_, json);
+        meta.set_etag(json.value("etag", ""));
+        return Status{};
       },
+      ParseIamConfiguration,
       [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseBilling(meta.billing_, json);
-      },
-      [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseCorsList(meta.cors_, json);
-      },
-      [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseDefaultEventBasedHold(meta.default_event_based_hold_, json);
-      },
-      [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseDefaultObjectAcl(meta.default_acl_, json);
-      },
-      [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseEncryption(meta.encryption_, json);
-      },
-      [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseIamConfiguration(meta.iam_configuration_, json);
-      },
-      [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseLifecycle(meta.lifecycle_, json);
-      },
-      [](BucketMetadata& meta, nlohmann::json const& json) {
-        meta.location_ = json.value("location", "");
+        meta.set_id(json.value("id", ""));
         return Status{};
       },
       [](BucketMetadata& meta, nlohmann::json const& json) {
-        meta.location_type_ = json.value("locationType", "");
+        meta.set_kind(json.value("kind", ""));
         return Status{};
       },
       [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseLogging(meta.logging_, json);
+        meta.mutable_labels() = ParseLabels(json);
+        return Status{};
       },
+      ParseLifecycle,
       [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseProjectNumber(meta.project_number_, json);
-      },
-      [](BucketMetadata& meta, nlohmann::json const& json) {
-        meta.labels_ = ParseLabels(json);
+        meta.set_location(json.value("location", ""));
         return Status{};
       },
       [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseRetentionPolicy(meta.retention_policy_, json);
+        meta.set_location_type(json.value("locationType", ""));
+        return Status{};
       },
+      ParseLogging,
       [](BucketMetadata& meta, nlohmann::json const& json) {
-        meta.rpo_ = json.value("rpo", "");
+        auto v = internal::ParseLongField(json, "metageneration");
+        if (!v) return std::move(v).status();
+        meta.set_metageneration(*v);
         return Status{};
       },
       [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseVersioning(meta.versioning_, json);
+        meta.set_name(json.value("name", ""));
+        return Status{};
       },
       [](BucketMetadata& meta, nlohmann::json const& json) {
-        return ParseWebsite(meta.website_, json);
+        auto v = internal::ParseLongField(json, "projectNumber");
+        if (!v) return std::move(v).status();
+        meta.set_project_number(*v);
+        return Status{};
       },
+      ParseOwner,
+      ParseRetentionPolicy,
+      [](BucketMetadata& meta, nlohmann::json const& json) {
+        meta.set_rpo(json.value("rpo", ""));
+        return Status{};
+      },
+      [](BucketMetadata& meta, nlohmann::json const& json) {
+        meta.set_self_link(json.value("selfLink", ""));
+        return Status{};
+      },
+      [](BucketMetadata& meta, nlohmann::json const& json) {
+        meta.set_storage_class(json.value("storageClass", ""));
+        return Status{};
+      },
+      ParseTimeCreated,
+      ParseUpdated,
+      ParseVersioning,
+      ParseWebsite,
   };
 
   BucketMetadata meta{};
@@ -490,9 +561,15 @@ StatusOr<BucketMetadata> BucketMetadataParser::FromString(
   return FromJson(json);
 }
 
+std::string ToJsonString(absl::CivilDay date) {
+  return absl::StrFormat("%04d-%02d-%02d", date.year(), date.month(),
+                         date.day());
+}
+
 std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   nlohmann::json json;
   ToJsonAcl(json, meta);
+  ToJsonAutoclass(json, meta);
   ToJsonBilling(json, meta);
   ToJsonCors(json, meta);
   ToJsonDefaultEventBasedHold(json, meta);
@@ -510,6 +587,7 @@ std::string BucketMetadataToJsonString(BucketMetadata const& meta) {
   ToJsonStorageClass(json, meta);
   ToJsonVersioning(json, meta);
   ToJsonWebsite(json, meta);
+  ToJsonCustomPlacementConfig(json, meta);
 
   return json.dump();
 }

@@ -23,6 +23,7 @@
 #include "google/cloud/retail/product_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -47,9 +48,9 @@ ProductServiceConnection::GetProduct(
 }
 
 StreamRange<google::cloud::retail::v2::Product>
-    ProductServiceConnection::ListProducts(
-        google::cloud::retail::v2::
-            ListProductsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ProductServiceConnection::ListProducts(
+    google::cloud::retail::v2::
+        ListProductsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::retail::v2::Product>>();
 }
@@ -97,9 +98,26 @@ ProductServiceConnection::RemoveFulfillmentPlaces(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>
+ProductServiceConnection::AddLocalInventories(
+    google::cloud::retail::v2::AddLocalInventoriesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::retail::v2::AddLocalInventoriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>
+ProductServiceConnection::RemoveLocalInventories(
+    google::cloud::retail::v2::RemoveLocalInventoriesRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::retail::v2::RemoveLocalInventoriesResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ProductServicePolicyOptionList>(options,
                                                                  __func__);
   options = retail_internal::ProductServiceDefaultOptions(std::move(options));
@@ -112,23 +130,5 @@ std::shared_ptr<ProductServiceConnection> MakeProductServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace retail
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace retail_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<retail::ProductServiceConnection> MakeProductServiceConnection(
-    std::shared_ptr<ProductServiceStub> stub, Options options) {
-  options = ProductServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<retail_internal::ProductServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace retail_internal
 }  // namespace cloud
 }  // namespace google

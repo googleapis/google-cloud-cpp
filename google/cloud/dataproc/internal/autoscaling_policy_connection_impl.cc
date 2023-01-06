@@ -37,9 +37,7 @@ AutoscalingPolicyServiceConnectionImpl::AutoscalingPolicyServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          dataproc_internal::AutoscalingPolicyServiceDefaultOptions(
-              AutoscalingPolicyServiceConnection::options()))) {}
+          std::move(options), AutoscalingPolicyServiceConnection::options())) {}
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceConnectionImpl::CreateAutoscalingPolicy(
@@ -89,7 +87,7 @@ StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceConnectionImpl::ListAutoscalingPolicies(
     google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dataproc::AutoscalingPolicyServiceRetryPolicy const>(
           retry_policy());

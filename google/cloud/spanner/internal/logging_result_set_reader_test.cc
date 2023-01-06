@@ -27,9 +27,9 @@ namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::_;
 using ::testing::Contains;
 using ::testing::HasSubstr;
-namespace spanner_proto = ::google::spanner::v1;
 
 class LoggingResultSetReaderTest : public ::testing::Test {
  protected:
@@ -47,25 +47,25 @@ TEST_F(LoggingResultSetReaderTest, TryCancel) {
 
 TEST_F(LoggingResultSetReaderTest, Read) {
   auto mock = absl::make_unique<spanner_testing::MockPartialResultSetReader>();
-  EXPECT_CALL(*mock, Read())
+  EXPECT_CALL(*mock, Read(_))
       .WillOnce([] {
-        spanner_proto::PartialResultSet result;
+        google::spanner::v1::PartialResultSet result;
         result.set_resume_token("test-token");
-        return result;
+        return PartialResultSet{std::move(result), false};
       })
-      .WillOnce(
-          [] { return absl::optional<spanner_proto::PartialResultSet>{}; });
+      .WillOnce([] { return absl::optional<PartialResultSet>{}; });
   LoggingResultSetReader reader(std::move(mock), TracingOptions{});
-  auto result = reader.Read();
+  auto result = reader.Read("");
   ASSERT_TRUE(result.has_value());
-  EXPECT_EQ("test-token", result->resume_token());
+  EXPECT_EQ("test-token", result->result.resume_token());
 
   auto log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("Read")));
   EXPECT_THAT(log_lines, Contains(HasSubstr("test-token")));
 
-  result = reader.Read();
+  result = reader.Read("test-token");
   ASSERT_FALSE(result.has_value());
+
   log_lines = log_.ExtractLines();
   EXPECT_THAT(log_lines, Contains(HasSubstr("(optional-with-no-value)")));
 }

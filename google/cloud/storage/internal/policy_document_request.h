@@ -27,6 +27,9 @@
 
 namespace google {
 namespace cloud {
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+class Options;
+GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
@@ -70,6 +73,26 @@ class PolicyDocumentRequest {
   }
 
   PolicyDocumentRequest& set_multiple_options() { return *this; }
+  template <typename... T>
+  PolicyDocumentRequest& set_multiple_options(google::cloud::Options const&&,
+                                              T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  PolicyDocumentRequest& set_multiple_options(google::cloud::Options const&,
+                                              T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  PolicyDocumentRequest& set_multiple_options(google::cloud::Options&&,
+                                              T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  PolicyDocumentRequest& set_multiple_options(google::cloud::Options&,
+                                              T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
 
  private:
   PolicyDocument document_;
@@ -125,6 +148,26 @@ class PolicyDocumentV4Request {
   }
 
   PolicyDocumentV4Request& set_multiple_options() { return *this; }
+  template <typename... T>
+  PolicyDocumentV4Request& set_multiple_options(google::cloud::Options const&&,
+                                                T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  PolicyDocumentV4Request& set_multiple_options(google::cloud::Options const&,
+                                                T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  PolicyDocumentV4Request& set_multiple_options(google::cloud::Options&&,
+                                                T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
+  template <typename... T>
+  PolicyDocumentV4Request& set_multiple_options(google::cloud::Options&,
+                                                T&&... tail) {
+    return set_multiple_options(std::forward<T>(tail)...);
+  }
 
   std::chrono::system_clock::time_point ExpirationDate() const;
   std::string Url() const;

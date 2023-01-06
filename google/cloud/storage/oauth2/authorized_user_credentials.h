@@ -15,12 +15,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_OAUTH2_AUTHORIZED_USER_CREDENTIALS_H
 
+#include "google/cloud/storage/client_options.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
 #include "google/cloud/storage/internal/http_response.h"
 #include "google/cloud/storage/oauth2/credential_constants.h"
 #include "google/cloud/storage/oauth2/credentials.h"
 #include "google/cloud/storage/oauth2/refreshing_credentials_wrapper.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/oauth2_authorized_user_credentials.h"
+#include "google/cloud/internal/oauth2_credential_constants.h"
 #include "google/cloud/status.h"
 #include <chrono>
 #include <iostream>
@@ -32,7 +35,12 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace oauth2 {
-/// Object to hold information used to instantiate an AuthorizedUserCredentials.
+
+/**
+ * Object to hold information used to instantiate an AuthorizedUserCredentials.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 struct AuthorizedUserCredentialsInfo {
   std::string client_id;
   std::string client_secret;
@@ -40,17 +48,27 @@ struct AuthorizedUserCredentialsInfo {
   std::string token_uri;
 };
 
-/// Parses a user credentials JSON string into an AuthorizedUserCredentialsInfo.
-StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
-    std::string const& content, std::string const& source,
-    std::string const& default_token_uri = GoogleOAuthRefreshEndpoint());
-
-/// Parses a refresh response JSON string into an authorization header. The
-/// header and the current time (for the expiration) form a TemporaryToken.
+/**
+ * Parses a refresh response JSON string into an authorization header.
+ *
+ * The header and the current time (for the expiration) form a TemporaryToken.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
 StatusOr<RefreshingCredentialsWrapper::TemporaryToken>
 ParseAuthorizedUserRefreshResponse(
     storage::internal::HttpResponse const& response,
     std::chrono::system_clock::time_point now);
+
+/**
+ * Parses a user credentials JSON string into an AuthorizedUserCredentialsInfo.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
+ */
+StatusOr<AuthorizedUserCredentialsInfo> ParseAuthorizedUserCredentials(
+    std::string const& content, std::string const& source,
+    std::string const& default_token_uri =
+        google::cloud::oauth2_internal::GoogleOAuthRefreshEndpoint());
 
 /**
  * Wrapper class for Google OAuth 2.0 user account credentials.
@@ -73,10 +91,38 @@ ParseAuthorizedUserRefreshResponse(
  *     overridden except for testing.
  * @tparam ClockType a dependency injection point to fetch the current time.
  *     This should generally not be overridden except for testing.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 template <typename HttpRequestBuilderType =
               storage::internal::CurlRequestBuilder,
           typename ClockType = std::chrono::system_clock>
+class AuthorizedUserCredentials;
+
+/// @copydoc AuthorizedUserCredentials
+template <>
+class AuthorizedUserCredentials<storage::internal::CurlRequestBuilder,
+                                std::chrono::system_clock>
+    : public Credentials {
+ public:
+  explicit AuthorizedUserCredentials(
+      AuthorizedUserCredentialsInfo const& info,
+      ChannelOptions const& channel_options = {});
+
+  explicit AuthorizedUserCredentials(
+      google::cloud::oauth2_internal::AuthorizedUserCredentialsInfo info,
+      ChannelOptions const& channel_options = {});
+
+  StatusOr<std::string> AuthorizationHeader() override {
+    return oauth2_internal::AuthorizationHeaderJoined(impl_);
+  }
+
+ private:
+  google::cloud::oauth2_internal::AuthorizedUserCredentials impl_;
+};
+
+/// @copydoc AuthorizedUserCredentials
+template <typename HttpRequestBuilderType, typename ClockType>
 class AuthorizedUserCredentials : public Credentials {
  public:
   explicit AuthorizedUserCredentials(AuthorizedUserCredentialsInfo info,

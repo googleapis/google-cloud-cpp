@@ -17,7 +17,6 @@
 // source: google/api/servicemanagement/v1/servicemanager.proto
 
 #include "google/cloud/servicemanagement/service_manager_client.h"
-#include "google/cloud/servicemanagement/internal/service_manager_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,10 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ServiceManagerClient::ServiceManagerClient(
     std::shared_ptr<ServiceManagerConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          servicemanagement_internal::ServiceManagerDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 ServiceManagerClient::~ServiceManagerClient() = default;
 
 StreamRange<google::api::servicemanagement::v1::ManagedService>
@@ -262,44 +259,6 @@ ServiceManagerClient::GenerateConfigReport(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->GenerateConfigReport(request);
-}
-
-future<StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>
-ServiceManagerClient::EnableService(std::string const& service_name,
-                                    std::string const& consumer_id,
-                                    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::api::servicemanagement::v1::EnableServiceRequest request;
-  request.set_service_name(service_name);
-  request.set_consumer_id(consumer_id);
-  return connection_->EnableService(request);
-}
-
-future<StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>
-ServiceManagerClient::EnableService(
-    google::api::servicemanagement::v1::EnableServiceRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->EnableService(request);
-}
-
-future<StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>
-ServiceManagerClient::DisableService(std::string const& service_name,
-                                     std::string const& consumer_id,
-                                     Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  google::api::servicemanagement::v1::DisableServiceRequest request;
-  request.set_service_name(service_name);
-  request.set_consumer_id(consumer_id);
-  return connection_->DisableService(request);
-}
-
-future<StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>
-ServiceManagerClient::DisableService(
-    google::api::servicemanagement::v1::DisableServiceRequest const& request,
-    Options opts) {
-  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
-  return connection_->DisableService(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

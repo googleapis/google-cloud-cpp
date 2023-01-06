@@ -158,6 +158,40 @@ Status ContactCenterInsightsLogging::DeleteAnalysis(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsLogging::AsyncBulkAnalyzeConversations(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::contactcenterinsights::v1::
+                 BulkAnalyzeConversationsRequest const& request) {
+        return child_->AsyncBulkAnalyzeConversations(cq, std::move(context),
+                                                     request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsLogging::AsyncIngestConversations(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::contactcenterinsights::v1::
+                 IngestConversationsRequest const& request) {
+        return child_->AsyncIngestConversations(cq, std::move(context),
+                                                request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsLogging::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -310,6 +344,17 @@ ContactCenterInsightsLogging::UpdateIssue(
       [this](grpc::ClientContext& context,
              google::cloud::contactcenterinsights::v1::UpdateIssueRequest const&
                  request) { return child_->UpdateIssue(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+Status ContactCenterInsightsLogging::DeleteIssue(
+    grpc::ClientContext& context,
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
+                 request) { return child_->DeleteIssue(context, request); },
       context, request, __func__, tracing_options_);
 }
 

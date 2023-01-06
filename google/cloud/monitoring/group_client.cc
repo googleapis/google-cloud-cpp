@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/group_service.proto
 
 #include "google/cloud/monitoring/group_client.h"
-#include "google/cloud/monitoring/internal/group_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GroupServiceClient::GroupServiceClient(
     std::shared_ptr<GroupServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), monitoring_internal::GroupServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 GroupServiceClient::~GroupServiceClient() = default;
 
 StreamRange<google::monitoring::v3::Group> GroupServiceClient::ListGroups(

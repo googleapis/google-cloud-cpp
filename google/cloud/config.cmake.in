@@ -15,5 +15,6 @@
 include(CMakeFindDependencyMacro)
 find_dependency(Threads)
 find_dependency(absl)
+@GOOGLE_CLOUD_CPP_FIND_OPTIONAL_DEPENDENCIES@
 
 include("${CMAKE_CURRENT_LIST_DIR}/google_cloud_cpp_common-targets.cmake")

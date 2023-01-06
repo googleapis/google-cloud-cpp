@@ -31,7 +31,8 @@ int main(int argc, char* argv[]) try {
   // Create a namespace alias to make the code easier to read.
   namespace cbt = ::google::cloud::bigtable;
 
-  cbt::Table table(cbt::MakeDataClient(project_id, instance_id), table_id);
+  cbt::Table table(cbt::MakeDataConnection(),
+                   cbt::TableResource(project_id, instance_id, table_id));
 
   std::string row_key = "r1";
   std::string column_family = "cf1";
@@ -39,7 +40,7 @@ int main(int argc, char* argv[]) try {
   std::cout << "Getting a single row by row key:" << std::flush;
   google::cloud::StatusOr<std::pair<bool, cbt::Row>> result =
       table.ReadRow(row_key, cbt::Filter::FamilyRegex(column_family));
-  if (!result) throw std::runtime_error(result.status().message());
+  if (!result) throw std::move(result).status();
   if (!result->first) {
     std::cout << "Cannot find row " << row_key << " in the table: " << table_id
               << "\n";
@@ -52,8 +53,8 @@ int main(int argc, char* argv[]) try {
             << '"' << cell.value() << '"' << "\n";
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard C++ exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
 // [END bigtable_quickstart]

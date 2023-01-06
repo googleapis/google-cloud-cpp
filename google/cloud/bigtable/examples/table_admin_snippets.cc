@@ -17,6 +17,7 @@
 #include "google/cloud/bigtable/table_admin.h"
 #include "google/cloud/bigtable/testing/cleanup_stale_resources.h"
 #include "google/cloud/bigtable/testing/random_names.h"
+#include "google/cloud/bigtable/wait_for_consistency.h"
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/log.h"
 #include <chrono>
@@ -37,12 +38,9 @@ void CreateTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
      std::string const& instance_id, std::string const& table_id) {
     std::string instance_name = cbt::InstanceName(project_id, instance_id);
     // Example garbage collection rule.
-    google::bigtable::admin::v2::GcRule gc;
-    gc.set_max_num_versions(10);
-
     google::bigtable::admin::v2::Table t;
     auto& families = *t.mutable_column_families();
-    *families["fam"].mutable_gc_rule() = std::move(gc);
+    families["fam"].mutable_gc_rule()->set_max_num_versions(10);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.CreateTable(instance_name, table_id, std::move(t));
@@ -204,16 +202,13 @@ void ModifyTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     // Update
     ModifyColumnFamiliesRequest::Modification m2;
     m2.set_id("fam");
-    google::bigtable::admin::v2::GcRule gc2;
-    gc2.set_max_num_versions(5);
-    *m2.mutable_update()->mutable_gc_rule() = std::move(gc2);
+    m2.mutable_update()->mutable_gc_rule()->set_max_num_versions(5);
 
     // Create
     ModifyColumnFamiliesRequest::Modification m3;
     m3.set_id("fam");
-    google::bigtable::admin::v2::GcRule gc3;
-    gc3.mutable_max_age()->set_seconds(7 * kSecondsPerDay);
-    *m3.mutable_update()->mutable_gc_rule() = std::move(gc3);
+    m3.mutable_update()->mutable_gc_rule()->mutable_max_age()->set_seconds(
+        7 * kSecondsPerDay);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(
@@ -243,9 +238,8 @@ void CreateMaxAgeFamily(
 
     ModifyColumnFamiliesRequest::Modification mod;
     mod.set_id(family_name);
-    google::bigtable::admin::v2::GcRule gc;
-    gc.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
-    *mod.mutable_create()->mutable_gc_rule() = std::move(gc);
+    mod.mutable_create()->mutable_gc_rule()->mutable_max_age()->set_seconds(
+        5 * kSecondsPerDay);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
@@ -272,9 +266,7 @@ void CreateMaxVersionsFamily(
 
     ModifyColumnFamiliesRequest::Modification mod;
     mod.set_id(family_name);
-    google::bigtable::admin::v2::GcRule gc;
-    gc.set_max_num_versions(2);
-    *mod.mutable_create()->mutable_gc_rule() = std::move(gc);
+    mod.mutable_create()->mutable_gc_rule()->set_max_num_versions(2);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
@@ -301,19 +293,11 @@ void CreateUnionFamily(
     auto constexpr kSecondsPerDay =
         std::chrono::seconds(std::chrono::hours(24)).count();
 
-    google::bigtable::admin::v2::GcRule gc1;
-    gc1.set_max_num_versions(1);
-
-    google::bigtable::admin::v2::GcRule gc2;
-    gc2.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
-
-    google::bigtable::admin::v2::GcRule gc_union;
-    *gc_union.mutable_union_()->add_rules() = std::move(gc1);
-    *gc_union.mutable_union_()->add_rules() = std::move(gc2);
-
     ModifyColumnFamiliesRequest::Modification mod;
     mod.set_id(family_name);
-    *mod.mutable_create()->mutable_gc_rule() = std::move(gc_union);
+    auto& gc_union = *mod.mutable_create()->mutable_gc_rule()->mutable_union_();
+    gc_union.add_rules()->set_max_num_versions(1);
+    gc_union.add_rules()->mutable_max_age()->set_seconds(5 * kSecondsPerDay);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
@@ -340,19 +324,12 @@ void CreateIntersectionFamily(
     auto constexpr kSecondsPerDay =
         std::chrono::seconds(std::chrono::hours(24)).count();
 
-    google::bigtable::admin::v2::GcRule gc1;
-    gc1.set_max_num_versions(1);
-
-    google::bigtable::admin::v2::GcRule gc2;
-    gc2.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
-
-    google::bigtable::admin::v2::GcRule gc_intersection;
-    *gc_intersection.mutable_intersection()->add_rules() = std::move(gc1);
-    *gc_intersection.mutable_intersection()->add_rules() = std::move(gc2);
-
     ModifyColumnFamiliesRequest::Modification mod;
     mod.set_id(family_name);
-    *mod.mutable_create()->mutable_gc_rule() = std::move(gc_intersection);
+    auto& gc_int =
+        *mod.mutable_create()->mutable_gc_rule()->mutable_intersection();
+    gc_int.add_rules()->set_max_num_versions(1);
+    gc_int.add_rules()->mutable_max_age()->set_seconds(5 * kSecondsPerDay);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
@@ -379,25 +356,17 @@ void CreateNestedFamily(
     auto constexpr kSecondsPerDay =
         std::chrono::seconds(std::chrono::hours(24)).count();
 
-    google::bigtable::admin::v2::GcRule gc1;
-    gc1.set_max_num_versions(10);
-
-    google::bigtable::admin::v2::GcRule gc2_1;
-    gc2_1.set_max_num_versions(1);
-    google::bigtable::admin::v2::GcRule gc2_2;
-    gc2_2.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
-
-    google::bigtable::admin::v2::GcRule gc2;
-    *gc2.mutable_intersection()->add_rules() = std::move(gc2_1);
-    *gc2.mutable_intersection()->add_rules() = std::move(gc2_2);
-
-    google::bigtable::admin::v2::GcRule gc;
-    *gc.mutable_union_()->add_rules() = std::move(gc1);
-    *gc.mutable_union_()->add_rules() = std::move(gc2);
-
     ModifyColumnFamiliesRequest::Modification mod;
     mod.set_id(family_name);
-    *mod.mutable_create()->mutable_gc_rule() = std::move(gc);
+    auto& gc = *mod.mutable_create()->mutable_gc_rule();
+    auto& gc_1 = *gc.mutable_union_()->add_rules();
+    auto& gc_2 = *gc.mutable_union_()->add_rules();
+    auto& gc_2_1 = *gc_2.mutable_intersection()->add_rules();
+    auto& gc_2_2 = *gc_2.mutable_intersection()->add_rules();
+
+    gc_1.set_max_num_versions(10);
+    gc_2_1.set_max_num_versions(1);
+    gc_2_2.mutable_max_age()->set_seconds(5 * kSecondsPerDay);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
@@ -469,9 +438,7 @@ void GetOrCreateFamily(
       // Try to create the column family instead:
       ModifyColumnFamiliesRequest::Modification mod;
       mod.set_id(family_name);
-      google::bigtable::admin::v2::GcRule gc;
-      gc.set_max_num_versions(5);
-      *mod.mutable_create()->mutable_gc_rule() = std::move(gc);
+      mod.mutable_create()->mutable_gc_rule()->set_max_num_versions(5);
 
       auto modified = admin.ModifyColumnFamilies(table_name, {std::move(mod)});
       if (!modified) throw std::runtime_error(schema.status().message());
@@ -593,9 +560,7 @@ void UpdateGcRule(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
 
     ModifyColumnFamiliesRequest::Modification mod;
     mod.set_id(family_name);
-    google::bigtable::admin::v2::GcRule gc;
-    gc.set_max_num_versions(1);
-    *mod.mutable_update()->mutable_gc_rule() = std::move(gc);
+    mod.mutable_update()->mutable_gc_rule()->set_max_num_versions(1);
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
@@ -658,38 +623,43 @@ void DropRowsByPrefix(
   (std::move(admin), argv.at(0), argv.at(1), argv.at(2), argv.at(3));
 }
 
-// TODO(#7732) - update this sample to use the helper method
 void WaitForConsistencyCheck(
-    google::cloud::bigtable_admin::BigtableTableAdminClient const&,
+    google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     std::vector<std::string> const& argv) {
-  auto old_admin = google::cloud::bigtable::TableAdmin(
-      google::cloud::bigtable::MakeAdminClient(argv.at(0)), argv.at(1));
-
   //! [wait for consistency check]
   namespace cbt = ::google::cloud::bigtable;
+  namespace cbta = ::google::cloud::bigtable_admin;
+  using ::google::cloud::CompletionQueue;
   using ::google::cloud::future;
+  using ::google::cloud::Status;
   using ::google::cloud::StatusOr;
-  [](cbt::TableAdmin admin, std::string const& table_id) {
-    StatusOr<std::string> consistency_token =
-        admin.GenerateConsistencyToken(table_id);
+  [](cbta::BigtableTableAdminClient admin, std::string const& project_id,
+     std::string const& instance_id, std::string const& table_id) {
+    std::string table_name = cbt::TableName(project_id, instance_id, table_id);
+    StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
+        consistency_token = admin.GenerateConsistencyToken(table_name);
     if (!consistency_token) {
       throw std::runtime_error(consistency_token.status().message());
     }
-    future<StatusOr<cbt::Consistency>> consistent_future =
-        admin.WaitForConsistency(table_id, *consistency_token);
-    future<void> fut = consistent_future.then(
-        [&consistency_token](future<StatusOr<cbt::Consistency>> f) {
-          auto is_consistent = f.get();
-          if (!is_consistent) {
-            throw std::runtime_error(is_consistent.status().message());
-          }
-          std::cout << "Table is consistent with token " << *consistency_token
-                    << "\n";
-        });
-    fut.get();  // simplify example by blocking until operation is done.
+    // Start a thread to perform the background work.
+    CompletionQueue cq;
+    std::thread cq_runner([&cq] { cq.Run(); });
+
+    std::string token = consistency_token->consistency_token();
+    future<Status> consistent_future =
+        cbta::AsyncWaitForConsistency(cq, admin, table_name, token);
+
+    // Simplify the example by blocking until the operation is done.
+    Status status = consistent_future.get();
+    if (!status.ok()) throw std::runtime_error(status.message());
+    std::cout << "Table is consistent with token " << token << "\n";
+
+    // Shutdown the work queue and join the background thread
+    cq.Shutdown();
+    cq_runner.join();
   }
   //! [wait for consistency check]
-  (std::move(old_admin), argv.at(2));
+  (std::move(admin), argv.at(0), argv.at(1), argv.at(2));
 }
 
 void CheckConsistency(
@@ -774,12 +744,8 @@ void RunAll(std::vector<std::string> const& argv) {
   // Create a table to run the tests on.
   google::bigtable::admin::v2::Table t;
   auto& families = *t.mutable_column_families();
-  google::bigtable::admin::v2::GcRule gc1;
-  gc1.set_max_num_versions(10);
-  *families["fam"].mutable_gc_rule() = std::move(gc1);
-  google::bigtable::admin::v2::GcRule gc2;
-  gc2.set_max_num_versions(3);
-  *families["foo"].mutable_gc_rule() = std::move(gc2);
+  families["fam"].mutable_gc_rule()->set_max_num_versions(10);
+  families["foo"].mutable_gc_rule()->set_max_num_versions(3);
 
   auto table_1 = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                    table_id_1, std::move(t));

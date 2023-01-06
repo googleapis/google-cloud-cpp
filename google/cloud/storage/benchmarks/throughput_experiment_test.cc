@@ -26,9 +26,14 @@ namespace {
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AnyOf;
 
+struct TestParam {
+  ExperimentLibrary library;
+  ExperimentTransport transport;
+};
+
 class ThroughputExperimentIntegrationTest
     : public google::cloud::storage::testing::StorageIntegrationTest,
-      public ::testing::WithParamInterface<ApiName> {
+      public ::testing::WithParamInterface<TestParam> {
  protected:
   void SetUp() override {
     bucket_name_ = google::cloud::internal::GetEnv(
@@ -40,8 +45,10 @@ class ThroughputExperimentIntegrationTest
   std::string bucket_name_;
 };
 
-bool ProductionOnly(ApiName api) {
-  return api == ApiName::kApiRawGrpc || api == ApiName::kApiGrpc;
+bool ProductionOnly(TestParam c) {
+  return c.library == ExperimentLibrary::kRaw &&
+         (c.transport == ExperimentTransport::kGrpc ||
+          c.transport == ExperimentTransport::kDirectPath);
 }
 
 TEST_P(ThroughputExperimentIntegrationTest, Upload) {
@@ -51,21 +58,18 @@ TEST_P(ThroughputExperimentIntegrationTest, Upload) {
   ASSERT_STATUS_OK(client);
 
   ThroughputOptions options;
-  options.minimum_write_size = 1 * kMiB;
-  options.enabled_apis = {GetParam()};
+  options.minimum_write_buffer_size = 1 * kMiB;
+  options.libs = {GetParam().library};
+  options.transports = {GetParam().transport};
 
-  auto const& client_options =
-      google::cloud::storage::internal::ClientImplDetails::GetRawClient(*client)
-          ->client_options();
-  auto experiments = CreateUploadExperiments(options, *client, *client, {});
+  auto provider = [&](ExperimentTransport) { return *client; };
+  auto experiments = CreateUploadExperiments(options, provider);
   for (auto& e : experiments) {
     auto object_name = MakeRandomObjectName();
-    ThroughputExperimentConfig config{OpType::kOpInsert,
-                                      16 * kKiB,
-                                      1 * kMiB,
-                                      client_options.upload_buffer_size(),
-                                      /*enable_crc32c=*/false,
-                                      /*enable_md5=*/false};
+    ThroughputExperimentConfig config{
+        OpType::kOpInsert,       16 * kKiB,    1 * kMiB,
+        /*enable_crc32c=*/false,
+        /*enable_md5=*/false,    absl::nullopt};
     auto result = e->Run(bucket_name_, object_name, config);
     ASSERT_STATUS_OK(result.status);
     auto status = client->DeleteObject(bucket_name_, object_name);
@@ -81,14 +85,13 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
   ASSERT_STATUS_OK(client);
 
   ThroughputOptions options;
-  options.minimum_write_size = 1 * kMiB;
-  options.enabled_apis = {GetParam()};
+  options.minimum_write_buffer_size = 1 * kMiB;
+  options.libs = {GetParam().library};
+  options.transports = {GetParam().transport};
 
-  auto const& client_options =
-      google::cloud::storage::internal::ClientImplDetails::GetRawClient(*client)
-          ->client_options();
+  auto provider = [&](ExperimentTransport) { return *client; };
   auto experiments =
-      CreateDownloadExperiments(options, *client, *client, {}, /*thread_id=*/0);
+      CreateDownloadExperiments(options, provider, /*thread_id=*/0);
   for (auto& e : experiments) {
     auto object_name = MakeRandomObjectName();
 
@@ -96,9 +99,9 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
     ThroughputExperimentConfig config{OpType::kOpRead0,
                                       kObjectSize,
                                       1 * kMiB,
-                                      client_options.upload_buffer_size(),
                                       /*enable_crc32c=*/false,
-                                      /*enable_md5=*/false};
+                                      /*enable_md5=*/false,
+                                      std::make_pair(128 * kKiB, 256 * kKiB)};
 
     auto contents = MakeRandomData(kObjectSize);
     auto insert =
@@ -117,22 +120,24 @@ TEST_P(ThroughputExperimentIntegrationTest, Download) {
 
 INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestJson,
                          ThroughputExperimentIntegrationTest,
-                         ::testing::Values(ApiName::kApiJson));
-INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestXml,
-                         ThroughputExperimentIntegrationTest,
-                         ::testing::Values(ApiName::kApiXml));
-INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawJson,
-                         ThroughputExperimentIntegrationTest,
-                         ::testing::Values(ApiName::kApiRawJson));
-INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawXml,
-                         ThroughputExperimentIntegrationTest,
-                         ::testing::Values(ApiName::kApiRawXml));
+                         ::testing::Values(TestParam{
+                             ExperimentLibrary::kCppClient,
+                             ExperimentTransport::kJson}));
 INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestGrpc,
                          ThroughputExperimentIntegrationTest,
-                         ::testing::Values(ApiName::kApiGrpc));
+                         ::testing::Values(TestParam{
+                             ExperimentLibrary::kCppClient,
+                             ExperimentTransport::kGrpc}));
+INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawJson,
+                         ThroughputExperimentIntegrationTest,
+                         ::testing::Values(TestParam{
+                             ExperimentLibrary::kRaw,
+                             ExperimentTransport::kJson}));
 INSTANTIATE_TEST_SUITE_P(ThroughputExperimentIntegrationTestRawGrpc,
                          ThroughputExperimentIntegrationTest,
-                         ::testing::Values(ApiName::kApiRawGrpc));
+                         ::testing::Values(TestParam{
+                             ExperimentLibrary::kRaw,
+                             ExperimentTransport::kGrpc}));
 
 }  // namespace
 }  // namespace storage_benchmarks

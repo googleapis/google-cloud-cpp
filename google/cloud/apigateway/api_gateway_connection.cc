@@ -23,6 +23,7 @@
 #include "google/cloud/apigateway/internal/api_gateway_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ApiGatewayServiceConnection::~ApiGatewayServiceConnection() = default;
 
 StreamRange<google::cloud::apigateway::v1::Gateway>
-    ApiGatewayServiceConnection::ListGateways(
-        google::cloud::apigateway::v1::
-            ListGatewaysRequest) {  // NOLINT(performance-unnecessary-value-param)
+ApiGatewayServiceConnection::ListGateways(
+    google::cloud::apigateway::v1::
+        ListGatewaysRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apigateway::v1::Gateway>>();
 }
@@ -73,9 +74,9 @@ ApiGatewayServiceConnection::DeleteGateway(
 }
 
 StreamRange<google::cloud::apigateway::v1::Api>
-    ApiGatewayServiceConnection::ListApis(
-        google::cloud::apigateway::v1::
-            ListApisRequest) {  // NOLINT(performance-unnecessary-value-param)
+ApiGatewayServiceConnection::ListApis(
+    google::cloud::apigateway::v1::
+        ListApisRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apigateway::v1::Api>>();
 }
@@ -111,9 +112,9 @@ ApiGatewayServiceConnection::DeleteApi(
 }
 
 StreamRange<google::cloud::apigateway::v1::ApiConfig>
-    ApiGatewayServiceConnection::ListApiConfigs(
-        google::cloud::apigateway::v1::
-            ListApiConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ApiGatewayServiceConnection::ListApiConfigs(
+    google::cloud::apigateway::v1::
+        ListApiConfigsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::apigateway::v1::ApiConfig>>();
 }
@@ -151,6 +152,7 @@ ApiGatewayServiceConnection::DeleteApiConfig(
 std::shared_ptr<ApiGatewayServiceConnection> MakeApiGatewayServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ApiGatewayServicePolicyOptionList>(options,
                                                                     __func__);
   options =
@@ -164,24 +166,5 @@ std::shared_ptr<ApiGatewayServiceConnection> MakeApiGatewayServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace apigateway
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace apigateway_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<apigateway::ApiGatewayServiceConnection>
-MakeApiGatewayServiceConnection(std::shared_ptr<ApiGatewayServiceStub> stub,
-                                Options options) {
-  options = ApiGatewayServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<apigateway_internal::ApiGatewayServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace apigateway_internal
 }  // namespace cloud
 }  // namespace google

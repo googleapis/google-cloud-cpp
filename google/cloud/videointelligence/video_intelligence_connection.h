@@ -48,6 +48,21 @@ using VideoIntelligenceServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         videointelligence_internal::VideoIntelligenceServiceRetryTraits>;
 
+/**
+ * The `VideoIntelligenceServiceConnection` object for
+ * `VideoIntelligenceServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `VideoIntelligenceServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `VideoIntelligenceServiceClient`.
+ *
+ * To create a concrete instance, see
+ * `MakeVideoIntelligenceServiceConnection()`.
+ *
+ * For mocking, see
+ * `videointelligence_mocks::MockVideoIntelligenceServiceConnection`.
+ */
 class VideoIntelligenceServiceConnection {
  public:
   virtual ~VideoIntelligenceServiceConnection() = 0;
@@ -61,25 +76,35 @@ class VideoIntelligenceServiceConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `VideoIntelligenceServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * VideoIntelligenceServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `VideoIntelligenceServiceConnection`. Expected options are any of
+ * the types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * -
+ * `google::cloud::videointelligence::VideoIntelligenceServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `VideoIntelligenceServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<VideoIntelligenceServiceConnection>
 MakeVideoIntelligenceServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace videointelligence
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace videointelligence_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<videointelligence::VideoIntelligenceServiceConnection>
-MakeVideoIntelligenceServiceConnection(
-    std::shared_ptr<VideoIntelligenceServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace videointelligence_internal
 }  // namespace cloud
 }  // namespace google
 

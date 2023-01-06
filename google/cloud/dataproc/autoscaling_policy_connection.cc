@@ -23,6 +23,7 @@
 #include "google/cloud/dataproc/internal/autoscaling_policy_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -54,9 +55,9 @@ AutoscalingPolicyServiceConnection::GetAutoscalingPolicy(
 }
 
 StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
-    AutoscalingPolicyServiceConnection::ListAutoscalingPolicies(
-        google::cloud::dataproc::v1::
-            ListAutoscalingPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+AutoscalingPolicyServiceConnection::ListAutoscalingPolicies(
+    google::cloud::dataproc::v1::
+        ListAutoscalingPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>>();
 }
@@ -67,12 +68,14 @@ Status AutoscalingPolicyServiceConnection::DeleteAutoscalingPolicy(
 }
 
 std::shared_ptr<AutoscalingPolicyServiceConnection>
-MakeAutoscalingPolicyServiceConnection(Options options) {
+MakeAutoscalingPolicyServiceConnection(std::string const& location,
+                                       Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  AutoscalingPolicyServicePolicyOptionList>(
       options, __func__);
   options = dataproc_internal::AutoscalingPolicyServiceDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultAutoscalingPolicyServiceStub(
       background->cq(), options);
@@ -81,27 +84,13 @@ MakeAutoscalingPolicyServiceConnection(Options options) {
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace dataproc_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<dataproc::AutoscalingPolicyServiceConnection>
-MakeAutoscalingPolicyServiceConnection(
-    std::shared_ptr<AutoscalingPolicyServiceStub> stub, Options options) {
-  options = AutoscalingPolicyServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      dataproc_internal::AutoscalingPolicyServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+std::shared_ptr<AutoscalingPolicyServiceConnection>
+MakeAutoscalingPolicyServiceConnection(Options options) {
+  return MakeAutoscalingPolicyServiceConnection(std::string{},
+                                                std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc_internal
+}  // namespace dataproc
 }  // namespace cloud
 }  // namespace google

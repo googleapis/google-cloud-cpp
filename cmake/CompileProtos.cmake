@@ -80,9 +80,10 @@ function (google_cloud_cpp_generate_proto SRCS)
     foreach (file_path ${_opt_UNPARSED_ARGUMENTS})
         get_filename_component(file_directory "${file_path}" DIRECTORY)
         get_filename_component(file_name "${file_path}" NAME)
-        # This gets the filename without the extension, analogous to $(basename
-        # "${file_path}" .proto)
-        get_filename_component(file_stem "${file_path}" NAME_WE)
+        # This gets the file name without the ".proto" extension. We would like
+        # to use get_filename_component with the option NAME_WLE, but that is
+        # not available until CMake 3.14
+        string(REPLACE ".proto" "" file_stem "${file_name}")
 
         # Strip all the prefixes in ${_opt_PROTO_PATH_DIRECTORIES} from the
         # source proto directory
@@ -175,11 +176,13 @@ function (google_cloud_cpp_generate_grpcpp SRCS)
     endforeach ()
 
     set(${SRCS})
-    foreach (filename ${_opt_UNPARSED_ARGUMENTS})
-        get_filename_component(file_directory "${filename}" DIRECTORY)
-        # This gets the filename without the extension, analogous to $(basename
-        # "${filename}" .proto)
-        get_filename_component(file_stem "${filename}" NAME_WE)
+    foreach (file_path ${_opt_UNPARSED_ARGUMENTS})
+        get_filename_component(file_directory "${file_path}" DIRECTORY)
+        get_filename_component(file_name "${file_path}" NAME)
+        # This gets the file name without the ".proto" extension. We would like
+        # to use get_filename_component with the option NAME_WLE, but that is
+        # not available until CMake 3.14
+        string(REPLACE ".proto" "" file_stem "${file_name}")
 
         # Strip all the prefixes in ${_opt_PROTO_PATH_DIRECTORIES} from the
         # source proto directory
@@ -201,9 +204,9 @@ function (google_cloud_cpp_generate_grpcpp SRCS)
                 --plugin=protoc-gen-grpc=$<TARGET_FILE:gRPC::grpc_cpp_plugin>
                 "--grpc_out=${CMAKE_CURRENT_BINARY_DIR}"
                 "--cpp_out=${CMAKE_CURRENT_BINARY_DIR}" ${protobuf_include_path}
-                "${filename}"
-            DEPENDS "${filename}" protobuf::protoc gRPC::grpc_cpp_plugin
-            COMMENT "Running gRPC C++ protocol buffer compiler on ${filename}"
+                "${file_path}"
+            DEPENDS "${file_path}" protobuf::protoc gRPC::grpc_cpp_plugin
+            COMMENT "Running gRPC C++ protocol buffer compiler on ${file_path}"
             VERBATIM)
     endforeach ()
 
@@ -262,8 +265,23 @@ endfunction ()
 #
 function (google_cloud_cpp_load_protodeps var file)
     file(READ "${file}" contents)
-    string(REGEX REPLACE "\n" ";" contents "${contents}")
+    string(REPLACE "\n" ";" contents "${contents}")
     set(deps)
+
+    # Omit a target from deps.
+    set(targets_to_omit
+        "google-cloud-cpp::cloud_orgpolicy_v1_orgpolicy_protos"
+        "google-cloud-cpp::cloud_oslogin_common_common_protos"
+        "google-cloud-cpp::cloud_recommender_v1_recommender_protos"
+        "google-cloud-cpp::identity_accesscontextmanager_type_type_protos")
+    # Replace "google-cloud-cpp::$1" with "google-cloud-cpp:$2" in deps.
+    set(target_substitutions
+        "grafeas_v1_grafeas_protos\;grafeas_protos"
+        "identity_accesscontextmanager_v1_accesscontextmanager_protos\;accesscontextmanager_protos"
+        "cloud_osconfig_v1_osconfig_protos\;osconfig_protos"
+        "devtools_source_v1_source_protos\;devtools_source_v1_source_context_protos"
+    )
+
     foreach (line IN LISTS contents)
         if ("${line}" STREQUAL "")
             continue()
@@ -276,6 +294,16 @@ function (google_cloud_cpp_load_protodeps var file)
         string(REPLACE "google-cloud-cpp::google/" "google-cloud-cpp::" line
                        "${line}")
         string(REPLACE "/" "_" line "${line}")
+        if ("${line}" IN_LIST targets_to_omit)
+            continue()
+        endif ()
+        foreach (substitution IN LISTS target_substitutions)
+            set(from_to "${substitution}")
+            list(GET from_to 0 from)
+            list(GET from_to 1 to)
+            string(REPLACE "google-cloud-cpp::${from}"
+                           "google-cloud-cpp::${to}" line "${line}")
+        endforeach ()
         list(APPEND deps "${line}")
     endforeach ()
     set(${var}
@@ -355,12 +383,7 @@ function (google_cloud_cpp_proto_library libname)
         ${libname} SYSTEM PUBLIC $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
                                  $<INSTALL_INTERFACE:include>)
     google_cloud_cpp_silence_warnings_in_deps(${libname})
-    # Disable clang-tidy for generated code, note that the CXX_CLANG_TIDY
-    # property was introduced in 3.6, and we do not use clang-tidy with older
-    # versions
-    if (NOT ("${CMAKE_VERSION}" VERSION_LESS 3.6))
-        set_target_properties(${libname} PROPERTIES CXX_CLANG_TIDY "")
-    endif ()
+    set_target_properties(${libname} PROPERTIES CXX_CLANG_TIDY "")
     if (MSVC)
         # The protobuf-generated files have warnings under the default MSVC
         # settings. We are not interested in these warnings, because we cannot
@@ -427,10 +450,14 @@ macro (external_googleapis_install_pc_common target)
     endif ()
 endmacro ()
 
+include(AddPkgConfig)
+
 # Use a function to create a scope for the variables.
-function (external_googleapis_install_pc target source_dir)
+function (external_googleapis_install_pc target)
     external_googleapis_install_pc_common("${target}")
-    configure_file("${source_dir}/config.pc.in" "${target}.pc" @ONLY)
+    google_cloud_cpp_set_pkgconfig_paths()
+    configure_file("${PROJECT_SOURCE_DIR}/cmake/templates/config.pc.in"
+                   "${target}.pc" @ONLY)
     install(
         FILES "${CMAKE_CURRENT_BINARY_DIR}/${target}.pc"
         DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"

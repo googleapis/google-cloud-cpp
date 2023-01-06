@@ -73,38 +73,38 @@ class FirewallClient {
                           Options opts = {});
   ~FirewallClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   FirewallClient(FirewallClient const&) = default;
   FirewallClient& operator=(FirewallClient const&) = default;
   FirewallClient(FirewallClient&&) = default;
   FirewallClient& operator=(FirewallClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(FirewallClient const& a, FirewallClient const& b) {
     return a.connection_ == b.connection_;
   }
   friend bool operator!=(FirewallClient const& a, FirewallClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists the firewall rules of an application.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::ListIngressRulesRequest,google/appengine/v1/appengine.proto#L475}
+  /// @googleapis_link{google::appengine::v1::ListIngressRulesRequest,google/appengine/v1/appengine.proto#L611}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L31}
+  /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L29}
   ///
   /// [google.appengine.v1.ListIngressRulesRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L475}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L611}
   /// [google.appengine.v1.FirewallRule]:
-  /// @googleapis_reference_link{google/appengine/v1/firewall.proto#L31}
+  /// @googleapis_reference_link{google/appengine/v1/firewall.proto#L29}
   ///
   StreamRange<google::appengine::v1::FirewallRule> ListIngressRules(
       google::appengine::v1::ListIngressRulesRequest request,
@@ -118,16 +118,16 @@ class FirewallClient {
   /// then an "allow all" rule is explicitly added to the end of the list.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::BatchUpdateIngressRulesRequest,google/appengine/v1/appengine.proto#L569}
+  /// @googleapis_link{google::appengine::v1::BatchUpdateIngressRulesRequest,google/appengine/v1/appengine.proto#L638}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::BatchUpdateIngressRulesResponse,google/appengine/v1/appengine.proto#L579}
+  /// @googleapis_link{google::appengine::v1::BatchUpdateIngressRulesResponse,google/appengine/v1/appengine.proto#L648}
   ///
   /// [google.appengine.v1.BatchUpdateIngressRulesRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L569}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L638}
   /// [google.appengine.v1.BatchUpdateIngressRulesResponse]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L579}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L648}
   ///
   StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
   BatchUpdateIngressRules(
@@ -138,16 +138,16 @@ class FirewallClient {
   /// Creates a firewall rule for the application.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::CreateIngressRuleRequest,google/appengine/v1/appengine.proto#L585}
+  /// @googleapis_link{google::appengine::v1::CreateIngressRuleRequest,google/appengine/v1/appengine.proto#L654}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L31}
+  /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L29}
   ///
   /// [google.appengine.v1.CreateIngressRuleRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L585}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L654}
   /// [google.appengine.v1.FirewallRule]:
-  /// @googleapis_reference_link{google/appengine/v1/firewall.proto#L31}
+  /// @googleapis_reference_link{google/appengine/v1/firewall.proto#L29}
   ///
   StatusOr<google::appengine::v1::FirewallRule> CreateIngressRule(
       google::appengine::v1::CreateIngressRuleRequest const& request,
@@ -157,16 +157,16 @@ class FirewallClient {
   /// Gets the specified firewall rule.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::GetIngressRuleRequest,google/appengine/v1/appengine.proto#L604}
+  /// @googleapis_link{google::appengine::v1::GetIngressRuleRequest,google/appengine/v1/appengine.proto#L673}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L31}
+  /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L29}
   ///
   /// [google.appengine.v1.GetIngressRuleRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L604}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L673}
   /// [google.appengine.v1.FirewallRule]:
-  /// @googleapis_reference_link{google/appengine/v1/firewall.proto#L31}
+  /// @googleapis_reference_link{google/appengine/v1/firewall.proto#L29}
   ///
   StatusOr<google::appengine::v1::FirewallRule> GetIngressRule(
       google::appengine::v1::GetIngressRuleRequest const& request,
@@ -176,16 +176,16 @@ class FirewallClient {
   /// Updates the specified firewall rule.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::UpdateIngressRuleRequest,google/appengine/v1/appengine.proto#L611}
+  /// @googleapis_link{google::appengine::v1::UpdateIngressRuleRequest,google/appengine/v1/appengine.proto#L680}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L31}
+  /// @googleapis_link{google::appengine::v1::FirewallRule,google/appengine/v1/firewall.proto#L29}
   ///
   /// [google.appengine.v1.UpdateIngressRuleRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L611}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L680}
   /// [google.appengine.v1.FirewallRule]:
-  /// @googleapis_reference_link{google/appengine/v1/firewall.proto#L31}
+  /// @googleapis_reference_link{google/appengine/v1/firewall.proto#L29}
   ///
   StatusOr<google::appengine::v1::FirewallRule> UpdateIngressRule(
       google::appengine::v1::UpdateIngressRuleRequest const& request,
@@ -195,12 +195,12 @@ class FirewallClient {
   /// Deletes the specified firewall rule.
   ///
   /// @param request
-  /// @googleapis_link{google::appengine::v1::DeleteIngressRuleRequest,google/appengine/v1/appengine.proto#L624}
+  /// @googleapis_link{google::appengine::v1::DeleteIngressRuleRequest,google/appengine/v1/appengine.proto#L693}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.appengine.v1.DeleteIngressRuleRequest]:
-  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L624}
+  /// @googleapis_reference_link{google/appengine/v1/appengine.proto#L693}
   ///
   Status DeleteIngressRule(
       google::appengine::v1::DeleteIngressRuleRequest const& request,

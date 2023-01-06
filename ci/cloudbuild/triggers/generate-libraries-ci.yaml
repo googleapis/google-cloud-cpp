@@ -3,11 +3,12 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^(master|main|v\d+\..*)$
+    branch: ^main$
 name: generate-libraries-ci
 substitutions:
   _BUILD_NAME: generate-libraries
-  _DISTRO: fedora-34
+  _DISTRO: checkers
   _TRIGGER_TYPE: ci
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - ci

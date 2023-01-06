@@ -14,6 +14,7 @@
 
 #include "google/cloud/bigtable/internal/defaults.h"
 #include "google/cloud/bigtable/internal/client_options_defaults.h"
+#include "google/cloud/bigtable/internal/rpc_policy_parameters.h"
 #include "google/cloud/bigtable/options.h"
 #include "google/cloud/common_options.h"
 #include "google/cloud/connection_options.h"
@@ -21,6 +22,8 @@
 #include "google/cloud/internal/getenv.h"
 #include "google/cloud/internal/user_agent_prefix.h"
 #include "google/cloud/options.h"
+#include "absl/algorithm/container.h"
+#include "absl/strings/str_split.h"
 #include <chrono>
 #include <string>
 
@@ -31,6 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 namespace {
+
+auto constexpr kBackoffScaling = 2.0;
 
 // As learned from experiments, idle gRPC connections enter IDLE state after 4m.
 auto constexpr kDefaultMaxRefreshPeriod =
@@ -57,63 +62,7 @@ auto constexpr kDefaultKeepaliveTime = std::chrono::seconds(30);
 // for a keepalive ping.
 auto constexpr kDefaultKeepaliveTimeout = std::chrono::seconds(10);
 
-}  // namespace
-
-int DefaultConnectionPoolSize() {
-  // For better resource utilization and greater throughput, it is recommended
-  // to calculate the default pool size based on cores(CPU) available. However,
-  // as per C++11 documentation `std::thread::hardware_concurrency()` cannot be
-  // fully relied upon. It is only a hint and the value can be 0 if it is not
-  // well defined or not computable. Apart from CPU count, multiple channels
-  // can be opened for each CPU to increase throughput. The pool size is also
-  // capped so that servers with many cores do not create too many channels.
-  int cpu_count = std::thread::hardware_concurrency();
-  if (cpu_count == 0) return BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE;
-  return (std::min)(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE_MAX,
-                    cpu_count * BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU);
-}
-
-Options DefaultOptions(Options opts) {
-  using ::google::cloud::internal::GetEnv;
-
-  auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
-  if (emulator) {
-    opts.set<DataEndpointOption>(*emulator);
-    opts.set<AdminEndpointOption>(*emulator);
-    opts.set<InstanceAdminEndpointOption>(*emulator);
-  }
-
-  auto instance_admin_emulator =
-      GetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
-  if (instance_admin_emulator) {
-    opts.set<InstanceAdminEndpointOption>(*std::move(instance_admin_emulator));
-  }
-
-  if (!opts.has<DataEndpointOption>()) {
-    opts.set<DataEndpointOption>("bigtable.googleapis.com");
-  }
-  if (!opts.has<AdminEndpointOption>()) {
-    opts.set<AdminEndpointOption>("bigtableadmin.googleapis.com");
-  }
-  if (!opts.has<InstanceAdminEndpointOption>()) {
-    opts.set<InstanceAdminEndpointOption>("bigtableadmin.googleapis.com");
-  }
-  if (!opts.has<GrpcCredentialOption>()) {
-    opts.set<GrpcCredentialOption>(emulator ? grpc::InsecureChannelCredentials()
-                                            : grpc::GoogleDefaultCredentials());
-  }
-  if (!opts.has<TracingComponentsOption>()) {
-    opts.set<TracingComponentsOption>(
-        ::google::cloud::internal::DefaultTracingComponents());
-  }
-  if (!opts.has<GrpcTracingOptionsOption>()) {
-    opts.set<GrpcTracingOptionsOption>(
-        ::google::cloud::internal::DefaultTracingOptions());
-  }
-  if (!opts.has<GrpcNumChannelsOption>()) {
-    opts.set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
-  }
-
+Options DefaultConnectionRefreshOptions(Options opts) {
   auto const has_min = opts.has<MinConnectionRefreshOption>();
   auto const has_max = opts.has<MaxConnectionRefreshOption>();
   if (!has_min && !has_max) {
@@ -132,7 +81,10 @@ Options DefaultOptions(Options opts) {
       opts.set<MaxConnectionRefreshOption>(std::move(p));
     }
   }
+  return opts;
+}
 
+Options DefaultChannelArgumentOptions(Options opts) {
   using ::google::cloud::internal::GetIntChannelArgument;
   auto c_arg = [](std::chrono::milliseconds ms) {
     return static_cast<int>(ms.count());
@@ -150,6 +102,90 @@ Options DefaultOptions(Options opts) {
   if (!GetIntChannelArgument(args, GRPC_ARG_KEEPALIVE_TIMEOUT_MS)) {
     args.SetInt(GRPC_ARG_KEEPALIVE_TIMEOUT_MS, c_arg(kDefaultKeepaliveTimeout));
   }
+  return opts;
+}
+
+}  // namespace
+
+int DefaultConnectionPoolSize() {
+  // For better resource utilization and greater throughput, it is recommended
+  // to calculate the default pool size based on cores(CPU) available. However,
+  // as per C++11 documentation `std::thread::hardware_concurrency()` cannot be
+  // fully relied upon. It is only a hint and the value can be 0 if it is not
+  // well-defined or not computable. Apart from CPU count, multiple channels
+  // can be opened for each CPU to increase throughput. The pool size is also
+  // capped so that servers with many cores do not create too many channels.
+  int cpu_count = std::thread::hardware_concurrency();
+  if (cpu_count == 0) return BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE;
+  return (std::min)(BIGTABLE_CLIENT_DEFAULT_CONNECTION_POOL_SIZE_MAX,
+                    cpu_count * BIGTABLE_CLIENT_DEFAULT_CHANNELS_PER_CPU);
+}
+
+Options DefaultOptions(Options opts) {
+  using ::google::cloud::internal::GetEnv;
+
+  if (opts.has<EndpointOption>()) {
+    auto const& ep = opts.get<EndpointOption>();
+    if (!opts.has<DataEndpointOption>()) {
+      opts.set<DataEndpointOption>(ep);
+    }
+    if (!opts.has<AdminEndpointOption>()) {
+      opts.set<AdminEndpointOption>(ep);
+    }
+    if (!opts.has<InstanceAdminEndpointOption>()) {
+      opts.set<InstanceAdminEndpointOption>(ep);
+    }
+  }
+
+  auto const direct_path =
+      google::cloud::internal::GetEnv("GOOGLE_CLOUD_ENABLE_DIRECT_PATH")
+          .value_or("");
+  if (absl::c_any_of(absl::StrSplit(direct_path, ','),
+                     [](absl::string_view v) { return v == "bigtable"; })) {
+    opts.set<DataEndpointOption>(
+            "google-c2p:///directpath-bigtable.googleapis.com")
+        .set<AuthorityOption>("directpath-bigtable.googleapis.com");
+
+    // When using DirectPath the gRPC library already does load balancing across
+    // multiple sockets, it makes little sense to perform additional load
+    // balancing in the client library.
+    if (!opts.has<GrpcNumChannelsOption>()) opts.set<GrpcNumChannelsOption>(1);
+  }
+
+  auto emulator = GetEnv("BIGTABLE_EMULATOR_HOST");
+  if (emulator) {
+    opts.set<DataEndpointOption>(*emulator);
+    opts.set<AdminEndpointOption>(*emulator);
+    opts.set<InstanceAdminEndpointOption>(*emulator);
+  }
+
+  auto instance_admin_emulator =
+      GetEnv("BIGTABLE_INSTANCE_ADMIN_EMULATOR_HOST");
+  if (instance_admin_emulator) {
+    opts.set<InstanceAdminEndpointOption>(*std::move(instance_admin_emulator));
+  }
+
+  // Fill any missing default values.
+  auto defaults =
+      Options{}
+          .set<DataEndpointOption>("bigtable.googleapis.com")
+          .set<AdminEndpointOption>("bigtableadmin.googleapis.com")
+          .set<InstanceAdminEndpointOption>("bigtableadmin.googleapis.com")
+          .set<GrpcCredentialOption>(emulator
+                                         ? grpc::InsecureChannelCredentials()
+                                         : grpc::GoogleDefaultCredentials())
+          .set<TracingComponentsOption>(
+              ::google::cloud::internal::DefaultTracingComponents())
+          .set<GrpcTracingOptionsOption>(
+              ::google::cloud::internal::DefaultTracingOptions())
+          .set<GrpcNumChannelsOption>(DefaultConnectionPoolSize());
+
+  opts = google::cloud::internal::MergeOptions(std::move(opts),
+                                               std::move(defaults));
+
+  opts = DefaultConnectionRefreshOptions(std::move(opts));
+  opts = DefaultChannelArgumentOptions(std::move(opts));
+
   // Inserts our user-agent string at the front.
   auto& products = opts.lookup<UserAgentProductsOption>();
   products.insert(products.begin(),
@@ -166,6 +202,22 @@ Options DefaultDataOptions(Options opts) {
   }
   if (!opts.has<AuthorityOption>()) {
     opts.set<AuthorityOption>("bigtable.googleapis.com");
+  }
+  if (!opts.has<bigtable::DataRetryPolicyOption>()) {
+    opts.set<bigtable::DataRetryPolicyOption>(
+        bigtable::DataLimitedTimeRetryPolicy(
+            kBigtableLimits.maximum_retry_period)
+            .clone());
+  }
+  if (!opts.has<bigtable::DataBackoffPolicyOption>()) {
+    opts.set<bigtable::DataBackoffPolicyOption>(
+        ExponentialBackoffPolicy(kBigtableLimits.initial_delay / 2,
+                                 kBigtableLimits.maximum_delay, kBackoffScaling)
+            .clone());
+  }
+  if (!opts.has<bigtable::IdempotentMutationPolicyOption>()) {
+    opts.set<bigtable::IdempotentMutationPolicyOption>(
+        bigtable::DefaultIdempotentMutationPolicy());
   }
   opts = DefaultOptions(std::move(opts));
   return opts.set<EndpointOption>(opts.get<DataEndpointOption>());

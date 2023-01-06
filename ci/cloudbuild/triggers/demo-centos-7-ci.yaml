@@ -3,11 +3,12 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^(master|main|v\d+\..*)$
+    branch: ^main$
 name: demo-centos-7-ci
 substitutions:
   _BUILD_NAME: demo-install
   _DISTRO: demo-centos-7
   _TRIGGER_TYPE: ci
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - ci

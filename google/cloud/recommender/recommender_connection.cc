@@ -23,6 +23,7 @@
 #include "google/cloud/recommender/recommender_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 RecommenderConnection::~RecommenderConnection() = default;
 
 StreamRange<google::cloud::recommender::v1::Insight>
-    RecommenderConnection::ListInsights(
-        google::cloud::recommender::v1::
-            ListInsightsRequest) {  // NOLINT(performance-unnecessary-value-param)
+RecommenderConnection::ListInsights(
+    google::cloud::recommender::v1::
+        ListInsightsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::recommender::v1::Insight>>();
 }
@@ -55,9 +56,9 @@ RecommenderConnection::MarkInsightAccepted(
 }
 
 StreamRange<google::cloud::recommender::v1::Recommendation>
-    RecommenderConnection::ListRecommendations(
-        google::cloud::recommender::v1::
-            ListRecommendationsRequest) {  // NOLINT(performance-unnecessary-value-param)
+RecommenderConnection::ListRecommendations(
+    google::cloud::recommender::v1::
+        ListRecommendationsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::recommender::v1::Recommendation>>();
 }
@@ -86,9 +87,34 @@ RecommenderConnection::MarkRecommendationFailed(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderConnection::GetRecommenderConfig(
+    google::cloud::recommender::v1::GetRecommenderConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+RecommenderConnection::UpdateRecommenderConfig(
+    google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderConnection::GetInsightTypeConfig(
+    google::cloud::recommender::v1::GetInsightTypeConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+RecommenderConnection::UpdateInsightTypeConfig(
+    google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  RecommenderPolicyOptionList>(options,
                                                               __func__);
   options = recommender_internal::RecommenderDefaultOptions(std::move(options));
@@ -101,23 +127,5 @@ std::shared_ptr<RecommenderConnection> MakeRecommenderConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace recommender
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace recommender_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<recommender::RecommenderConnection> MakeRecommenderConnection(
-    std::shared_ptr<RecommenderStub> stub, Options options) {
-  options = RecommenderDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<recommender_internal::RecommenderConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace recommender_internal
 }  // namespace cloud
 }  // namespace google

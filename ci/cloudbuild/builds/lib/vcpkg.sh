@@ -24,15 +24,15 @@ source module ci/lib/io.sh
 
 TIMEFORMAT="==> 🕑 vcpkg installed in %R seconds"
 time {
-  VCPKG_COMMIT="$(<ci/etc/vcpkg-commit.txt)"
-  VCPKG_ROOT_DIR="${HOME}/vcpkg-${VCPKG_COMMIT}"
-  io::log_h2 "Installing vcpkg ${VCPKG_COMMIT} -> ${VCPKG_ROOT_DIR}"
+  VCPKG_VERSION="$(<ci/etc/vcpkg-version.txt)"
+  VCPKG_ROOT_DIR="${HOME}/vcpkg-${VCPKG_VERSION}"
+  io::log_h2 "Installing vcpkg ${VCPKG_VERSION} -> ${VCPKG_ROOT_DIR}"
   if [[ ! -d "${VCPKG_ROOT_DIR}" ]]; then
     mkdir -p "${VCPKG_ROOT_DIR}"
     # vcpkg needs git history to support versioning, so we clone a recent
     # release tag rather than just extracting a tarball without history.
     git clone https://github.com/microsoft/vcpkg.git "${VCPKG_ROOT_DIR}"
-    git -C "${VCPKG_ROOT_DIR}" checkout "${VCPKG_COMMIT}"
+    git -C "${VCPKG_ROOT_DIR}" checkout "${VCPKG_VERSION}"
     pwd
   fi
   env -C "${VCPKG_ROOT_DIR}" VCPKG_ROOT="${VCPKG_ROOT_DIR}" \

@@ -30,35 +30,24 @@ using ::google::cloud::Idempotency;
 TraceServiceConnectionIdempotencyPolicy::
     ~TraceServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultTraceServiceConnectionIdempotencyPolicy
-    : public TraceServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultTraceServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<TraceServiceConnectionIdempotencyPolicy>
+TraceServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<TraceServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<TraceServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultTraceServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency TraceServiceConnectionIdempotencyPolicy::BatchWriteSpans(
+    google::devtools::cloudtrace::v2::BatchWriteSpansRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency BatchWriteSpans(
-      google::devtools::cloudtrace::v2::BatchWriteSpansRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency CreateSpan(
-      google::devtools::cloudtrace::v2::Span const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency TraceServiceConnectionIdempotencyPolicy::CreateSpan(
+    google::devtools::cloudtrace::v2::Span const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<TraceServiceConnectionIdempotencyPolicy>
 MakeDefaultTraceServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultTraceServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<TraceServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

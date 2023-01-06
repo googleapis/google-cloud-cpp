@@ -25,7 +25,7 @@ namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::chrono_literals::operator"" _us;
+using ::google::cloud::testing_util::chrono_literals::operator"" _us;  // NOLINT
 using ::google::cloud::bigtable::testing::MockSampleRowKeysReader;
 using ::testing::Return;
 using ::testing::Unused;

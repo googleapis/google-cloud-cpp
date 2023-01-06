@@ -22,24 +22,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 void PartialResultSetResume::TryCancel() { child_->TryCancel(); }
 
-absl::optional<google::spanner::v1::PartialResultSet>
-PartialResultSetResume::Read() {
+absl::optional<PartialResultSet> PartialResultSetResume::Read(
+    absl::optional<std::string> const& resume_token) {
+  bool resumption = false;
   do {
-    absl::optional<google::spanner::v1::PartialResultSet> result =
-        child_->Read();
+    absl::optional<PartialResultSet> result = child_->Read(resume_token);
     if (result) {
-      last_resume_token_ = result->resume_token();
+      // Let the caller know if we recreated the PartialResultSetReader using
+      // the resume_token so that they might discard any previous results that
+      // will be contained in the new stream.
+      if (resumption) result->resumption = true;
       return result;
     }
     auto status = Finish();
     if (status.ok()) return {};
+    if (!resume_token) {
+      // Our caller has requested that we not try to resume the stream,
+      // probably because they have already delivered previous results that
+      // would otherwise be replayed.
+      return {};
+    }
     if (idempotency_ == google::cloud::Idempotency::kNonIdempotent ||
         !retry_policy_prototype_->OnFailure(status)) {
       return {};
     }
     std::this_thread::sleep_for(backoff_policy_prototype_->OnCompletion());
+    resumption = true;
     last_status_.reset();
-    child_ = factory_(last_resume_token_);
+    child_ = factory_(*resume_token);
   } while (!retry_policy_prototype_->IsExhausted());
   return {};
 }

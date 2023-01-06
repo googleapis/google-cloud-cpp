@@ -19,9 +19,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsProtoEqual;
@@ -32,16 +31,15 @@ TEST(GrpcClientFromProto, OwnerRoundtrip) {
   )pb";
   google::storage::v2::Owner start;
   EXPECT_TRUE(google::protobuf::TextFormat::ParseFromString(kText, &start));
-  auto const expected = Owner{"test-entity", "test-entity-id"};
-  auto const middle = GrpcOwnerParser::FromProto(start);
+  auto const expected = storage::Owner{"test-entity", "test-entity-id"};
+  auto const middle = FromProto(start);
   EXPECT_EQ(middle, expected);
-  auto const end = GrpcOwnerParser::ToProto(middle);
+  auto const end = ToProto(middle);
   EXPECT_THAT(end, IsProtoEqual(start));
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

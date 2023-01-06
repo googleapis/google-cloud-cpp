@@ -36,15 +36,13 @@ AutoMlConnectionImpl::AutoMlConnectionImpl(
     std::shared_ptr<automl_internal::AutoMlStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options),
-          automl_internal::AutoMlDefaultOptions(AutoMlConnection::options()))) {
-}
+      options_(internal::MergeOptions(std::move(options),
+                                      AutoMlConnection::options())) {}
 
 future<StatusOr<google::cloud::automl::v1::Dataset>>
 AutoMlConnectionImpl::CreateDataset(
     google::cloud::automl::v1::CreateDatasetRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::Dataset>(
       background_->cq(), request,
@@ -85,7 +83,7 @@ StreamRange<google::cloud::automl::v1::Dataset>
 AutoMlConnectionImpl::ListDatasets(
     google::cloud::automl::v1::ListDatasetsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<automl::AutoMlRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListDatasets(request);
@@ -129,7 +127,7 @@ AutoMlConnectionImpl::UpdateDataset(
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::DeleteDataset(
     google::cloud::automl::v1::DeleteDatasetRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
       background_->cq(), request,
@@ -157,7 +155,7 @@ AutoMlConnectionImpl::DeleteDataset(
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::ImportData(
     google::cloud::automl::v1::ImportDataRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
       background_->cq(), request,
@@ -185,7 +183,7 @@ AutoMlConnectionImpl::ImportData(
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::ExportData(
     google::cloud::automl::v1::ExportDataRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
       background_->cq(), request,
@@ -227,7 +225,7 @@ AutoMlConnectionImpl::GetAnnotationSpec(
 future<StatusOr<google::cloud::automl::v1::Model>>
 AutoMlConnectionImpl::CreateModel(
     google::cloud::automl::v1::CreateModelRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::Model>(
       background_->cq(), request,
@@ -266,7 +264,7 @@ StatusOr<google::cloud::automl::v1::Model> AutoMlConnectionImpl::GetModel(
 StreamRange<google::cloud::automl::v1::Model> AutoMlConnectionImpl::ListModels(
     google::cloud::automl::v1::ListModelsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<automl::AutoMlRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListModels(request);
@@ -296,7 +294,7 @@ StreamRange<google::cloud::automl::v1::Model> AutoMlConnectionImpl::ListModels(
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::DeleteModel(
     google::cloud::automl::v1::DeleteModelRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
       background_->cq(), request,
@@ -336,7 +334,7 @@ StatusOr<google::cloud::automl::v1::Model> AutoMlConnectionImpl::UpdateModel(
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::DeployModel(
     google::cloud::automl::v1::DeployModelRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
       background_->cq(), request,
@@ -364,7 +362,7 @@ AutoMlConnectionImpl::DeployModel(
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::UndeployModel(
     google::cloud::automl::v1::UndeployModelRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
       background_->cq(), request,
@@ -392,7 +390,7 @@ AutoMlConnectionImpl::UndeployModel(
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
 AutoMlConnectionImpl::ExportModel(
     google::cloud::automl::v1::ExportModelRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::automl::v1::OperationMetadata>(
       background_->cq(), request,
@@ -435,7 +433,7 @@ StreamRange<google::cloud::automl::v1::ModelEvaluation>
 AutoMlConnectionImpl::ListModelEvaluations(
     google::cloud::automl::v1::ListModelEvaluationsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<automl::AutoMlRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
   auto idempotency = idempotency_policy()->ListModelEvaluations(request);

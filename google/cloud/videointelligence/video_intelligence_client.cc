@@ -17,7 +17,6 @@
 // source: google/cloud/videointelligence/v1/video_intelligence.proto
 
 #include "google/cloud/videointelligence/video_intelligence_client.h"
-#include "google/cloud/videointelligence/internal/video_intelligence_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -29,10 +28,8 @@ VideoIntelligenceServiceClient::VideoIntelligenceServiceClient(
     std::shared_ptr<VideoIntelligenceServiceConnection> connection,
     Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          videointelligence_internal::VideoIntelligenceServiceDefaultOptions(
-              connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 VideoIntelligenceServiceClient::~VideoIntelligenceServiceClient() = default;
 
 future<StatusOr<google::cloud::videointelligence::v1::AnnotateVideoResponse>>

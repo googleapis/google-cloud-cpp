@@ -23,6 +23,7 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_instance_admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -127,9 +128,9 @@ BigtableInstanceAdminConnection::GetAppProfile(
 }
 
 StreamRange<google::bigtable::admin::v2::AppProfile>
-    BigtableInstanceAdminConnection::ListAppProfiles(
-        google::bigtable::admin::v2::
-            ListAppProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
+BigtableInstanceAdminConnection::ListAppProfiles(
+    google::bigtable::admin::v2::
+        ListAppProfilesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::AppProfile>>();
 }
@@ -163,9 +164,18 @@ BigtableInstanceAdminConnection::TestIamPermissions(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<google::bigtable::admin::v2::HotTablet>
+BigtableInstanceAdminConnection::ListHotTablets(
+    google::bigtable::admin::v2::
+        ListHotTabletsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::bigtable::admin::v2::HotTablet>>();
+}
+
 std::shared_ptr<BigtableInstanceAdminConnection>
 MakeBigtableInstanceAdminConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BigtableInstanceAdminPolicyOptionList>(
       options, __func__);
   options = bigtable_admin_internal::BigtableInstanceAdminDefaultOptions(
@@ -180,25 +190,5 @@ MakeBigtableInstanceAdminConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace bigtable_admin_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection>
-MakeBigtableInstanceAdminConnection(
-    std::shared_ptr<BigtableInstanceAdminStub> stub, Options options) {
-  options = BigtableInstanceAdminDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      bigtable_admin_internal::BigtableInstanceAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_admin_internal
 }  // namespace cloud
 }  // namespace google

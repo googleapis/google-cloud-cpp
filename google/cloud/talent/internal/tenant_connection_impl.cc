@@ -35,9 +35,8 @@ TenantServiceConnectionImpl::TenantServiceConnectionImpl(
     std::shared_ptr<talent_internal::TenantServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), talent_internal::TenantServiceDefaultOptions(
-                                  TenantServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      TenantServiceConnection::options())) {}
 
 StatusOr<google::cloud::talent::v4::Tenant>
 TenantServiceConnectionImpl::CreateTenant(
@@ -94,7 +93,7 @@ StreamRange<google::cloud::talent::v4::Tenant>
 TenantServiceConnectionImpl::ListTenants(
     google::cloud::talent::v4::ListTenantsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<talent::TenantServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

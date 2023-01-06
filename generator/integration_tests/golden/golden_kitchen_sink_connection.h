@@ -20,85 +20,30 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_GOLDEN_KITCHEN_SINK_CONNECTION_H
 
 #include "generator/integration_tests/golden/golden_kitchen_sink_connection_idempotency_policy.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_retry_traits.h"
-#include "generator/integration_tests/golden/internal/golden_kitchen_sink_stub.h"
-#include "google/cloud/backoff_policy.h"
-#include "google/cloud/experimental_tag.h"
-#include "google/cloud/internal/async_read_write_stream_impl.h"
-#include "google/cloud/options.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/stream_range.h"
-#include "google/cloud/version.h"
-#include <memory>
+#include "generator/integration_tests/golden/v1/golden_kitchen_sink_connection.h"
 
 namespace google {
 namespace cloud {
 namespace golden {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-using GoldenKitchenSinkRetryPolicy = ::google::cloud::internal::TraitBasedRetryPolicy<
-    golden_internal::GoldenKitchenSinkRetryTraits>;
+/// @deprecated Use golden_v1::MakeGoldenKitchenSinkConnection directly.
+using ::google::cloud::golden_v1::MakeGoldenKitchenSinkConnection;
 
-using GoldenKitchenSinkLimitedTimeRetryPolicy = ::google::cloud::internal::LimitedTimeRetryPolicy<
-    golden_internal::GoldenKitchenSinkRetryTraits>;
+/// @deprecated Use golden_v1::GoldenKitchenSinkConnection directly.
+using ::google::cloud::golden_v1::GoldenKitchenSinkConnection;
 
-using GoldenKitchenSinkLimitedErrorCountRetryPolicy =
-    ::google::cloud::internal::LimitedErrorCountRetryPolicy<
-        golden_internal::GoldenKitchenSinkRetryTraits>;
+/// @deprecated Use golden_v1::GoldenKitchenSinkLimitedErrorCountRetryPolicy directly.
+using ::google::cloud::golden_v1::GoldenKitchenSinkLimitedErrorCountRetryPolicy;
 
-class GoldenKitchenSinkConnection {
- public:
-  virtual ~GoldenKitchenSinkConnection() = 0;
+/// @deprecated Use golden_v1::GoldenKitchenSinkLimitedTimeRetryPolicy directly.
+using ::google::cloud::golden_v1::GoldenKitchenSinkLimitedTimeRetryPolicy;
 
-  virtual Options options() { return Options{}; }
-
-  virtual StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
-  GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request);
-
-  virtual StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
-  GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request);
-
-  virtual StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
-  WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request);
-
-  virtual StreamRange<std::string>
-  ListLogs(google::test::admin::database::v1::ListLogsRequest request);
-
-  virtual StreamRange<google::test::admin::database::v1::TailLogEntriesResponse>
-  TailLogEntries(google::test::admin::database::v1::TailLogEntriesRequest const& request);
-
-  virtual StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
-  ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request);
-
-  virtual Status
-  DoNothing(google::protobuf::Empty const& request);
-
-  virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
-      google::test::admin::database::v1::AppendRowsRequest,
-      google::test::admin::database::v1::AppendRowsResponse>>
-  AsyncAppendRows(ExperimentalTag);
-};
-
-std::shared_ptr<GoldenKitchenSinkConnection> MakeGoldenKitchenSinkConnection(
-    Options options = {});
+/// @deprecated Use golden_v1::GoldenKitchenSinkRetryPolicy directly.
+using ::google::cloud::golden_v1::GoldenKitchenSinkRetryPolicy;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace golden
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace golden_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<golden::GoldenKitchenSinkConnection>
-MakeGoldenKitchenSinkConnection(
-    std::shared_ptr<GoldenKitchenSinkStub> stub,
-    Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace golden_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -17,7 +17,6 @@
 // source: google/cloud/tpu/v1/cloud_tpu.proto
 
 #include "google/cloud/tpu/tpu_client.h"
-#include "google/cloud/tpu/internal/tpu_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -27,9 +26,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 TpuClient::TpuClient(std::shared_ptr<TpuConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          tpu_internal::TpuDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 TpuClient::~TpuClient() = default;
 
 StreamRange<google::cloud::tpu::v1::Node> TpuClient::ListNodes(

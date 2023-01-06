@@ -44,6 +44,18 @@ using Debugger2LimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         debugger_internal::Debugger2RetryTraits>;
 
+/**
+ * The `Debugger2Connection` object for `Debugger2Client`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `Debugger2Client`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `Debugger2Client`.
+ *
+ * To create a concrete instance, see `MakeDebugger2Connection()`.
+ *
+ * For mocking, see `debugger_mocks::MockDebugger2Connection`.
+ */
 class Debugger2Connection {
  public:
   virtual ~Debugger2Connection() = 0;
@@ -72,24 +84,32 @@ class Debugger2Connection {
       google::devtools::clouddebugger::v2::ListDebuggeesRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `Debugger2Connection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of Debugger2Client.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `Debugger2Connection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::debugger::Debugger2PolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `Debugger2Connection` created by
+ * this function.
+ */
 std::shared_ptr<Debugger2Connection> MakeDebugger2Connection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace debugger_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<debugger::Debugger2Connection> MakeDebugger2Connection(
-    std::shared_ptr<Debugger2Stub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace debugger_internal
 }  // namespace cloud
 }  // namespace google
 

@@ -388,6 +388,41 @@ DefaultAccessContextManagerStub::AsyncDeleteGcpUserAccessBinding(
       request, std::move(context));
 }
 
+StatusOr<google::iam::v1::Policy> DefaultAccessContextManagerStub::SetIamPolicy(
+    grpc::ClientContext& client_context,
+    google::iam::v1::SetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->SetIamPolicy(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::Policy> DefaultAccessContextManagerStub::GetIamPolicy(
+    grpc::ClientContext& client_context,
+    google::iam::v1::GetIamPolicyRequest const& request) {
+  google::iam::v1::Policy response;
+  auto status = grpc_stub_->GetIamPolicy(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::iam::v1::TestIamPermissionsResponse>
+DefaultAccessContextManagerStub::TestIamPermissions(
+    grpc::ClientContext& client_context,
+    google::iam::v1::TestIamPermissionsRequest const& request) {
+  google::iam::v1::TestIamPermissionsResponse response;
+  auto status =
+      grpc_stub_->TestIamPermissions(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAccessContextManagerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

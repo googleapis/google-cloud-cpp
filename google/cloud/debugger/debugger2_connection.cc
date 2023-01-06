@@ -23,6 +23,7 @@
 #include "google/cloud/debugger/internal/debugger2_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -64,6 +65,7 @@ Debugger2Connection::ListDebuggees(
 
 std::shared_ptr<Debugger2Connection> MakeDebugger2Connection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  Debugger2PolicyOptionList>(options, __func__);
   options = debugger_internal::Debugger2DefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -75,23 +77,5 @@ std::shared_ptr<Debugger2Connection> MakeDebugger2Connection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace debugger_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<debugger::Debugger2Connection> MakeDebugger2Connection(
-    std::shared_ptr<Debugger2Stub> stub, Options options) {
-  options = Debugger2DefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<debugger_internal::Debugger2ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace debugger_internal
 }  // namespace cloud
 }  // namespace google

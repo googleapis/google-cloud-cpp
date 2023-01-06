@@ -31,22 +31,39 @@ namespace cloud {
 namespace iap {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-iap-options
+ */
 struct IdentityAwareProxyOAuthServiceRetryPolicyOption {
   using Type = std::shared_ptr<IdentityAwareProxyOAuthServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-iap-options
+ */
 struct IdentityAwareProxyOAuthServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-iap-options
+ */
 struct IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<
       IdentityAwareProxyOAuthServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to IdentityAwareProxyOAuthService.
+ *
+ * @ingroup google-cloud-iap-options
+ */
 using IdentityAwareProxyOAuthServicePolicyOptionList =
     OptionList<IdentityAwareProxyOAuthServiceRetryPolicyOption,
                IdentityAwareProxyOAuthServiceBackoffPolicyOption,

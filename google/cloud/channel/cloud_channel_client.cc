@@ -17,7 +17,6 @@
 // source: google/cloud/channel/v1/service.proto
 
 #include "google/cloud/channel/cloud_channel_client.h"
-#include "google/cloud/channel/internal/cloud_channel_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudChannelServiceClient::CloudChannelServiceClient(
     std::shared_ptr<CloudChannelServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), channel_internal::CloudChannelServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudChannelServiceClient::~CloudChannelServiceClient() = default;
 
 StreamRange<google::cloud::channel::v1::Customer>
@@ -254,6 +252,198 @@ CloudChannelServiceClient::UpdateChannelPartnerLink(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->UpdateChannelPartnerLink(request);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceClient::GetCustomerRepricingConfig(std::string const& name,
+                                                      Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::GetCustomerRepricingConfigRequest request;
+  request.set_name(name);
+  return connection_->GetCustomerRepricingConfig(request);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceClient::GetCustomerRepricingConfig(
+    google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetCustomerRepricingConfig(request);
+}
+
+StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceClient::ListCustomerRepricingConfigs(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request;
+  request.set_parent(parent);
+  return connection_->ListCustomerRepricingConfigs(request);
+}
+
+StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceClient::ListCustomerRepricingConfigs(
+    google::cloud::channel::v1::ListCustomerRepricingConfigsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListCustomerRepricingConfigs(std::move(request));
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceClient::CreateCustomerRepricingConfig(
+    std::string const& parent,
+    google::cloud::channel::v1::CustomerRepricingConfig const&
+        customer_repricing_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::CreateCustomerRepricingConfigRequest request;
+  request.set_parent(parent);
+  *request.mutable_customer_repricing_config() = customer_repricing_config;
+  return connection_->CreateCustomerRepricingConfig(request);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceClient::CreateCustomerRepricingConfig(
+    google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateCustomerRepricingConfig(request);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceClient::UpdateCustomerRepricingConfig(
+    google::cloud::channel::v1::CustomerRepricingConfig const&
+        customer_repricing_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest request;
+  *request.mutable_customer_repricing_config() = customer_repricing_config;
+  return connection_->UpdateCustomerRepricingConfig(request);
+}
+
+StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
+CloudChannelServiceClient::UpdateCustomerRepricingConfig(
+    google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateCustomerRepricingConfig(request);
+}
+
+Status CloudChannelServiceClient::DeleteCustomerRepricingConfig(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest request;
+  request.set_name(name);
+  return connection_->DeleteCustomerRepricingConfig(request);
+}
+
+Status CloudChannelServiceClient::DeleteCustomerRepricingConfig(
+    google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteCustomerRepricingConfig(request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceClient::GetChannelPartnerRepricingConfig(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest request;
+  request.set_name(name);
+  return connection_->GetChannelPartnerRepricingConfig(request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceClient::GetChannelPartnerRepricingConfig(
+    google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetChannelPartnerRepricingConfig(request);
+}
+
+StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceClient::ListChannelPartnerRepricingConfigs(
+    std::string const& parent, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest request;
+  request.set_parent(parent);
+  return connection_->ListChannelPartnerRepricingConfigs(request);
+}
+
+StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceClient::ListChannelPartnerRepricingConfigs(
+    google::cloud::channel::v1::ListChannelPartnerRepricingConfigsRequest
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListChannelPartnerRepricingConfigs(std::move(request));
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceClient::CreateChannelPartnerRepricingConfig(
+    std::string const& parent,
+    google::cloud::channel::v1::ChannelPartnerRepricingConfig const&
+        channel_partner_repricing_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::CreateChannelPartnerRepricingConfigRequest
+      request;
+  request.set_parent(parent);
+  *request.mutable_channel_partner_repricing_config() =
+      channel_partner_repricing_config;
+  return connection_->CreateChannelPartnerRepricingConfig(request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceClient::CreateChannelPartnerRepricingConfig(
+    google::cloud::channel::v1::
+        CreateChannelPartnerRepricingConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->CreateChannelPartnerRepricingConfig(request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceClient::UpdateChannelPartnerRepricingConfig(
+    google::cloud::channel::v1::ChannelPartnerRepricingConfig const&
+        channel_partner_repricing_config,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::UpdateChannelPartnerRepricingConfigRequest
+      request;
+  *request.mutable_channel_partner_repricing_config() =
+      channel_partner_repricing_config;
+  return connection_->UpdateChannelPartnerRepricingConfig(request);
+}
+
+StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
+CloudChannelServiceClient::UpdateChannelPartnerRepricingConfig(
+    google::cloud::channel::v1::
+        UpdateChannelPartnerRepricingConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->UpdateChannelPartnerRepricingConfig(request);
+}
+
+Status CloudChannelServiceClient::DeleteChannelPartnerRepricingConfig(
+    std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::channel::v1::DeleteChannelPartnerRepricingConfigRequest
+      request;
+  request.set_name(name);
+  return connection_->DeleteChannelPartnerRepricingConfig(request);
+}
+
+Status CloudChannelServiceClient::DeleteChannelPartnerRepricingConfig(
+    google::cloud::channel::v1::
+        DeleteChannelPartnerRepricingConfigRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->DeleteChannelPartnerRepricingConfig(request);
 }
 
 StatusOr<google::cloud::channel::v1::Offer>

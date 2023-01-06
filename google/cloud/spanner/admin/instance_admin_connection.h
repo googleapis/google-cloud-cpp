@@ -49,6 +49,18 @@ using InstanceAdminLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         spanner_admin_internal::InstanceAdminRetryTraits>;
 
+/**
+ * The `InstanceAdminConnection` object for `InstanceAdminClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `InstanceAdminClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `InstanceAdminClient`.
+ *
+ * To create a concrete instance, see `MakeInstanceAdminConnection()`.
+ *
+ * For mocking, see `spanner_admin_mocks::MockInstanceAdminConnection`.
+ */
 class InstanceAdminConnection {
  public:
   virtual ~InstanceAdminConnection() = 0;
@@ -62,6 +74,25 @@ class InstanceAdminConnection {
   virtual StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
   GetInstanceConfig(
       google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  CreateInstanceConfig(
+      google::spanner::admin::instance::v1::CreateInstanceConfigRequest const&
+          request);
+
+  virtual future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
+  UpdateInstanceConfig(
+      google::spanner::admin::instance::v1::UpdateInstanceConfigRequest const&
+          request);
+
+  virtual Status DeleteInstanceConfig(
+      google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
+          request);
+
+  virtual StreamRange<google::longrunning::Operation>
+  ListInstanceConfigOperations(
+      google::spanner::admin::instance::v1::ListInstanceConfigOperationsRequest
           request);
 
   virtual StreamRange<google::spanner::admin::instance::v1::Instance>
@@ -95,27 +126,33 @@ class InstanceAdminConnection {
   TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `InstanceAdminConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of InstanceAdminClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `InstanceAdminConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::spanner_admin::InstanceAdminPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `InstanceAdminConnection` created by
+ * this function.
+ */
 std::shared_ptr<InstanceAdminConnection> MakeInstanceAdminConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace spanner_admin_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<spanner_admin::InstanceAdminConnection>
-MakeInstanceAdminConnection(std::shared_ptr<InstanceAdminStub> stub,
-                            Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
-}  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google
 

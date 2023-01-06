@@ -17,7 +17,6 @@
 // source: google/monitoring/dashboard/v1/dashboards_service.proto
 
 #include "google/cloud/monitoring/dashboards_client.h"
-#include "google/cloud/monitoring/internal/dashboards_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 DashboardsServiceClient::DashboardsServiceClient(
     std::shared_ptr<DashboardsServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), monitoring_internal::DashboardsServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 DashboardsServiceClient::~DashboardsServiceClient() = default;
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>

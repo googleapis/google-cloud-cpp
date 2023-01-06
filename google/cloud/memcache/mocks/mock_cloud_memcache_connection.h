@@ -27,6 +27,21 @@ namespace cloud {
 namespace memcache_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `CloudMemcacheConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `CloudMemcacheClient`. To do so,
+ * construct an object of type `CloudMemcacheClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockCloudMemcacheConnection : public memcache::CloudMemcacheConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
@@ -64,6 +79,12 @@ class MockCloudMemcacheConnection : public memcache::CloudMemcacheConnection {
       future<StatusOr<google::cloud::memcache::v1::Instance>>, ApplyParameters,
       (google::cloud::memcache::v1::ApplyParametersRequest const& request),
       (override));
+
+  MOCK_METHOD(future<StatusOr<google::cloud::memcache::v1::Instance>>,
+              RescheduleMaintenance,
+              (google::cloud::memcache::v1::RescheduleMaintenanceRequest const&
+                   request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

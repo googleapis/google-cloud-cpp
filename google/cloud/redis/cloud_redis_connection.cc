@@ -23,6 +23,7 @@
 #include "google/cloud/redis/internal/cloud_redis_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,15 +36,21 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudRedisConnection::~CloudRedisConnection() = default;
 
 StreamRange<google::cloud::redis::v1::Instance>
-    CloudRedisConnection::ListInstances(
-        google::cloud::redis::v1::
-            ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
+CloudRedisConnection::ListInstances(
+    google::cloud::redis::v1::
+        ListInstancesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::redis::v1::Instance>>();
 }
 
 StatusOr<google::cloud::redis::v1::Instance> CloudRedisConnection::GetInstance(
     google::cloud::redis::v1::GetInstanceRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+StatusOr<google::cloud::redis::v1::InstanceAuthString>
+CloudRedisConnection::GetInstanceAuthString(
+    google::cloud::redis::v1::GetInstanceAuthStringRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
@@ -103,9 +110,18 @@ CloudRedisConnection::DeleteInstance(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<google::cloud::redis::v1::Instance>>
+CloudRedisConnection::RescheduleMaintenance(
+    google::cloud::redis::v1::RescheduleMaintenanceRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::redis::v1::Instance>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<CloudRedisConnection> MakeCloudRedisConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudRedisPolicyOptionList>(options, __func__);
   options = redis_internal::CloudRedisDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -117,23 +133,5 @@ std::shared_ptr<CloudRedisConnection> MakeCloudRedisConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace redis
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace redis_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<redis::CloudRedisConnection> MakeCloudRedisConnection(
-    std::shared_ptr<CloudRedisStub> stub, Options options) {
-  options = CloudRedisDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<redis_internal::CloudRedisConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace redis_internal
 }  // namespace cloud
 }  // namespace google

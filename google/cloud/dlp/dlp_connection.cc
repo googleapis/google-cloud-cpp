@@ -23,6 +23,7 @@
 #include "google/cloud/dlp/internal/dlp_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -83,9 +84,9 @@ DlpServiceConnection::GetInspectTemplate(
 }
 
 StreamRange<google::privacy::dlp::v2::InspectTemplate>
-    DlpServiceConnection::ListInspectTemplates(
-        google::privacy::dlp::v2::
-            ListInspectTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+DlpServiceConnection::ListInspectTemplates(
+    google::privacy::dlp::v2::
+        ListInspectTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::InspectTemplate>>();
 }
@@ -114,9 +115,9 @@ DlpServiceConnection::GetDeidentifyTemplate(
 }
 
 StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>
-    DlpServiceConnection::ListDeidentifyTemplates(
-        google::privacy::dlp::v2::
-            ListDeidentifyTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+DlpServiceConnection::ListDeidentifyTemplates(
+    google::privacy::dlp::v2::
+        ListDeidentifyTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::DeidentifyTemplate>>();
 }
@@ -151,9 +152,9 @@ DlpServiceConnection::GetJobTrigger(
 }
 
 StreamRange<google::privacy::dlp::v2::JobTrigger>
-    DlpServiceConnection::ListJobTriggers(
-        google::privacy::dlp::v2::
-            ListJobTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
+DlpServiceConnection::ListJobTriggers(
+    google::privacy::dlp::v2::
+        ListJobTriggersRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::JobTrigger>>();
 }
@@ -215,9 +216,9 @@ DlpServiceConnection::GetStoredInfoType(
 }
 
 StreamRange<google::privacy::dlp::v2::StoredInfoType>
-    DlpServiceConnection::ListStoredInfoTypes(
-        google::privacy::dlp::v2::
-            ListStoredInfoTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
+DlpServiceConnection::ListStoredInfoTypes(
+    google::privacy::dlp::v2::
+        ListStoredInfoTypesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::privacy::dlp::v2::StoredInfoType>>();
 }
@@ -241,6 +242,7 @@ Status DlpServiceConnection::FinishDlpJob(
 std::shared_ptr<DlpServiceConnection> MakeDlpServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  DlpServicePolicyOptionList>(options, __func__);
   options = dlp_internal::DlpServiceDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -252,23 +254,5 @@ std::shared_ptr<DlpServiceConnection> MakeDlpServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dlp
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace dlp_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<dlp::DlpServiceConnection> MakeDlpServiceConnection(
-    std::shared_ptr<DlpServiceStub> stub, Options options) {
-  options = DlpServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<dlp_internal::DlpServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dlp_internal
 }  // namespace cloud
 }  // namespace google

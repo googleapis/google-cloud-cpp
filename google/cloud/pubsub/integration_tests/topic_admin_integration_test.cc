@@ -87,10 +87,10 @@ TEST_F(TopicAdminIntegrationTest, TopicCRUD) {
   ASSERT_STATUS_OK(get_response);
   EXPECT_THAT(*create_response, IsProtoEqual(*get_response));
 
-  auto update_response = publisher.UpdateTopic(
-      TopicBuilder(topic).add_label("test-key", "test-value"));
-  // TODO(#4792) - cleanup this workaround whenever the emulator is fixed
+  // Skip, as this is not supported by the emulator.
   if (!UsingEmulator()) {
+    auto update_response = publisher.UpdateTopic(
+        TopicBuilder(topic).add_label("test-key", "test-value"));
     ASSERT_STATUS_OK(update_response);
   }
 

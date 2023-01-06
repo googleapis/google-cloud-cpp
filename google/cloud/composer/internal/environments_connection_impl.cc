@@ -36,16 +36,15 @@ EnvironmentsConnectionImpl::EnvironmentsConnectionImpl(
     std::shared_ptr<composer_internal::EnvironmentsStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), composer_internal::EnvironmentsDefaultOptions(
-                                  EnvironmentsConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      EnvironmentsConnection::options())) {}
 
 future<
     StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>>
 EnvironmentsConnectionImpl::CreateEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         CreateEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::orchestration::airflow::service::v1::Environment>(
       background_->cq(), request,
@@ -92,7 +91,7 @@ EnvironmentsConnectionImpl::ListEnvironments(
     google::cloud::orchestration::airflow::service::v1::ListEnvironmentsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<composer::EnvironmentsRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -129,7 +128,7 @@ future<
 EnvironmentsConnectionImpl::UpdateEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         UpdateEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::orchestration::airflow::service::v1::Environment>(
       background_->cq(), request,
@@ -161,7 +160,7 @@ future<StatusOr<
 EnvironmentsConnectionImpl::DeleteEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         DeleteEnvironmentRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::orchestration::airflow::service::v1::OperationMetadata>(
       background_->cq(), request,
@@ -187,6 +186,70 @@ EnvironmentsConnectionImpl::DeleteEnvironment(
       retry_policy(), backoff_policy(),
       idempotency_policy()->DeleteEnvironment(request), polling_policy(),
       __func__);
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+EnvironmentsConnectionImpl::SaveSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::orchestration::airflow::service::v1::
+                 SaveSnapshotRequest const& request) {
+        return stub->AsyncSaveSnapshot(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::orchestration::airflow::service::v1::
+              SaveSnapshotResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->SaveSnapshot(request), polling_policy(), __func__);
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+EnvironmentsConnectionImpl::LoadSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const& request) {
+  auto& stub = stub_;
+  return google::cloud::internal::AsyncLongRunningOperation<
+      google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>(
+      background_->cq(), request,
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::orchestration::airflow::service::v1::
+                 LoadSnapshotRequest const& request) {
+        return stub->AsyncLoadSnapshot(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::GetOperationRequest const& request) {
+        return stub->AsyncGetOperation(cq, std::move(context), request);
+      },
+      [stub](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return stub->AsyncCancelOperation(cq, std::move(context), request);
+      },
+      &google::cloud::internal::ExtractLongRunningResultResponse<
+          google::cloud::orchestration::airflow::service::v1::
+              LoadSnapshotResponse>,
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->LoadSnapshot(request), polling_policy(), __func__);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -23,6 +23,7 @@
 #include "google/cloud/bigtable/admin/internal/bigtable_table_admin_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -41,9 +42,9 @@ BigtableTableAdminConnection::CreateTable(
 }
 
 StreamRange<google::bigtable::admin::v2::Table>
-    BigtableTableAdminConnection::ListTables(
-        google::bigtable::admin::v2::
-            ListTablesRequest) {  // NOLINT(performance-unnecessary-value-param)
+BigtableTableAdminConnection::ListTables(
+    google::bigtable::admin::v2::
+        ListTablesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::Table>>();
 }
@@ -54,9 +55,25 @@ BigtableTableAdminConnection::GetTable(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminConnection::UpdateTable(
+    google::bigtable::admin::v2::UpdateTableRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::Table>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 Status BigtableTableAdminConnection::DeleteTable(
     google::bigtable::admin::v2::DeleteTableRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::bigtable::admin::v2::Table>>
+BigtableTableAdminConnection::UndeleteTable(
+    google::bigtable::admin::v2::UndeleteTableRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::bigtable::admin::v2::Table>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
 StatusOr<google::bigtable::admin::v2::Table>
@@ -108,9 +125,9 @@ Status BigtableTableAdminConnection::DeleteBackup(
 }
 
 StreamRange<google::bigtable::admin::v2::Backup>
-    BigtableTableAdminConnection::ListBackups(
-        google::bigtable::admin::v2::
-            ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
+BigtableTableAdminConnection::ListBackups(
+    google::bigtable::admin::v2::
+        ListBackupsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::bigtable::admin::v2::Backup>>();
 }
@@ -150,6 +167,7 @@ BigtableTableAdminConnection::AsyncCheckConsistency(
 std::shared_ptr<BigtableTableAdminConnection> MakeBigtableTableAdminConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  BigtableTableAdminPolicyOptionList>(options,
                                                                      __func__);
   options = bigtable_admin_internal::BigtableTableAdminDefaultOptions(
@@ -164,25 +182,5 @@ std::shared_ptr<BigtableTableAdminConnection> MakeBigtableTableAdminConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace bigtable_admin
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace bigtable_admin_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<bigtable_admin::BigtableTableAdminConnection>
-MakeBigtableTableAdminConnection(std::shared_ptr<BigtableTableAdminStub> stub,
-                                 Options options) {
-  options = BigtableTableAdminDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      bigtable_admin_internal::BigtableTableAdminConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace bigtable_admin_internal
 }  // namespace cloud
 }  // namespace google

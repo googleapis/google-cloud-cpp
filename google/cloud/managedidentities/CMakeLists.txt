@@ -20,43 +20,38 @@ set(DOXYGEN_PROJECT_NAME
 set(DOXYGEN_PROJECT_BRIEF
     "A C++ Client Library for the Managed Service for Microsoft Active Directory API"
 )
-set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION} (Experimental)")
+set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "managedidentities_internal"
                             "managedidentities_testing" "examples")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
+                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::managedidentities_protos)
 
 include(GoogleCloudCppCommon)
 
-set(EXTERNAL_GOOGLEAPIS_SOURCE
-    "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
 find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
 if (PROTO_INCLUDE_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
 endif ()
 
 include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/managedidentities.list"
+)
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/managedidentities.deps"
+)
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_managedidentities_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/managedidentities/v1/managed_identities_service.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/managedidentities/v1/resource.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_managedidentities_protos # cmake-format: sort
+    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(managedidentities_protos)
-target_link_libraries(
-    google_cloud_cpp_managedidentities_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::longrunning_operations_protos
-           google-cloud-cpp::rpc_status_protos)
+target_link_libraries(google_cloud_cpp_managedidentities_protos
+                      PUBLIC ${proto_deps})
 
 file(
     GLOB source_files
@@ -76,13 +71,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_managedidentities)
 set_target_properties(
     google_cloud_cpp_managedidentities
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-managedidentities
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::managedidentities
+               VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_managedidentities
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-managedidentities ALIAS
+add_library(google-cloud-cpp::managedidentities ALIAS
             google_cloud_cpp_managedidentities)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -102,12 +97,11 @@ add_library(google_cloud_cpp_managedidentities_mocks INTERFACE)
 target_sources(google_cloud_cpp_managedidentities_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_managedidentities_mocks
-    INTERFACE google-cloud-cpp::experimental-managedidentities
-              GTest::gmock_main GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::managedidentities GTest::gmock_main
+              GTest::gmock GTest::gtest)
 set_target_properties(
     google_cloud_cpp_managedidentities_mocks
-    PROPERTIES EXPORT_NAME
-               google-cloud-cpp::experimental-managedidentities_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::managedidentities_mocks)
 target_include_directories(
     google_cloud_cpp_managedidentities_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -119,9 +113,8 @@ target_compile_options(google_cloud_cpp_managedidentities_mocks
 include(CTest)
 if (BUILD_TESTING)
     add_executable(managedidentities_quickstart "quickstart/quickstart.cc")
-    target_link_libraries(
-        managedidentities_quickstart
-        PRIVATE google-cloud-cpp::experimental-managedidentities)
+    target_link_libraries(managedidentities_quickstart
+                          PRIVATE google-cloud-cpp::managedidentities)
     google_cloud_cpp_add_common_options(managedidentities_quickstart)
     add_test(
         NAME managedidentities_quickstart
@@ -175,28 +168,13 @@ google_cloud_cpp_install_headers("google_cloud_cpp_managedidentities"
 google_cloud_cpp_install_headers("google_cloud_cpp_managedidentities_mocks"
                                  "include/google/cloud/managedidentities")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME
-    "The Managed Service for Microsoft Active Directory API C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION
+google_cloud_cpp_add_pkgconfig(
+    managedidentities
+    "The Managed Service for Microsoft Active Directory API C++ Client Library"
     "Provides C++ APIs to use the Managed Service for Microsoft Active Directory API."
-)
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_managedidentities")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common"
-              " google_cloud_cpp_managedidentities_protos")
-
-# Create and install the pkg-config files.
-configure_file(
-    "${PROJECT_SOURCE_DIR}/google/cloud/managedidentities/config.pc.in"
-    "google_cloud_cpp_managedidentities.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_managedidentities.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+    "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common"
+    " google_cloud_cpp_managedidentities_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -215,5 +193,4 @@ install(
         "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_managedidentities"
     COMPONENT google_cloud_cpp_development)
 
-external_googleapis_install_pc("google_cloud_cpp_managedidentities_protos"
-                               "${PROJECT_SOURCE_DIR}/external/googleapis")
+external_googleapis_install_pc("google_cloud_cpp_managedidentities_protos")

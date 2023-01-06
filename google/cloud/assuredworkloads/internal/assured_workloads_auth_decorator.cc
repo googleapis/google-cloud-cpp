@@ -36,7 +36,7 @@ AssuredWorkloadsServiceAuth::AsyncCreateWorkload(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::assuredworkloads::v1::CreateWorkloadRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -56,6 +56,16 @@ AssuredWorkloadsServiceAuth::UpdateWorkload(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->UpdateWorkload(context, request);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+AssuredWorkloadsServiceAuth::RestrictAllowedResources(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RestrictAllowedResources(context, request);
 }
 
 Status AssuredWorkloadsServiceAuth::DeleteWorkload(
@@ -84,13 +94,41 @@ AssuredWorkloadsServiceAuth::ListWorkloads(
   return child_->ListWorkloads(context, request);
 }
 
+StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
+AssuredWorkloadsServiceAuth::ListViolations(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::ListViolationsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListViolations(context, request);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::Violation>
+AssuredWorkloadsServiceAuth::GetViolation(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetViolation(context, request);
+}
+
+StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+AssuredWorkloadsServiceAuth::AcknowledgeViolation(
+    grpc::ClientContext& context,
+    google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AcknowledgeViolation(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AssuredWorkloadsServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -107,7 +145,7 @@ future<Status> AssuredWorkloadsServiceAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

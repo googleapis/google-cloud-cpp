@@ -40,7 +40,8 @@ using ::testing::HasSubstr;
 using ::testing::Return;
 
 std::shared_ptr<SchemaAdminConnection> MakeTestSchemaAdminConnection(
-    std::shared_ptr<pubsub_internal::SchemaStub> mock, Options opts = {}) {
+    std::shared_ptr<pubsub_internal::SchemaServiceStub> mock,
+    Options opts = {}) {
   opts = pubsub_internal::DefaultCommonOptions(
       pubsub_testing::MakeTestOptions(std::move(opts)));
   return pubsub_internal::MakeTestSchemaAdminConnection(std::move(opts),
@@ -68,14 +69,13 @@ TEST(SchemaAdminConnectionTest, Create) {
   EXPECT_CALL(*mock, CreateSchema(_, IsProtoEqual(request)))
       .WillOnce(Return(Status(StatusCode::kUnavailable, "try-again")))
       .WillOnce([&](grpc::ClientContext& context,
-                    google::pubsub::v1::CreateSchemaRequest const&) {
+                    google::pubsub::v1::CreateSchemaRequest const& request) {
         // Use this test to also verify the metadata decorator is automatically
         // configured.
         google::cloud::testing_util::ValidateMetadataFixture fixture;
-        EXPECT_THAT(fixture.IsContextMDValid(
-                        context, "google.pubsub.v1.SchemaService.CreateSchema",
-                        google::cloud::internal::ApiClientHeader()),
-                    IsOk());
+        fixture.IsContextMDValid(
+            context, "google.pubsub.v1.SchemaService.CreateSchema", request,
+            google::cloud::internal::ApiClientHeader("generator"));
         return make_status_or(response);
       });
 

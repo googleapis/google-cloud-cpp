@@ -15,10 +15,15 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_THROUGHPUT_EXPERIMENT_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_BENCHMARKS_THROUGHPUT_EXPERIMENT_H
 
+#include "google/cloud/storage/benchmarks/benchmark_utils.h"
 #include "google/cloud/storage/benchmarks/throughput_options.h"
 #include "google/cloud/storage/benchmarks/throughput_result.h"
+#include "absl/types/optional.h"
+#include <cstdint>
+#include <functional>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace google {
@@ -29,9 +34,9 @@ struct ThroughputExperimentConfig {
   OpType op;
   std::int64_t object_size;
   std::size_t app_buffer_size;
-  std::size_t lib_buffer_size;
   bool enable_crc32c;
   bool enable_md5;
+  absl::optional<std::pair<std::int64_t, std::int64_t>> read_range;
 };
 
 /**
@@ -39,7 +44,7 @@ struct ThroughputExperimentConfig {
  *
  * Throughput benchmarks typically repeat the same "experiment" multiple times,
  * sometimes choosing at random which experiment to run, and which parameters to
- * use. An experiment might be "upload an object using XML" or "download an
+ * use. An experiment might be "upload an object using JSON" or "download an
  * an object using raw libcurl calls".
  */
 class ThroughputExperiment {
@@ -51,14 +56,14 @@ class ThroughputExperiment {
                                ThroughputExperimentConfig const& config) = 0;
 };
 
+using ClientProvider =
+    std::function<google::cloud::storage::Client(ExperimentTransport)>;
+
 /**
  * Create the list of upload experiments based on the @p options.
  */
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
-    ThroughputOptions const& options,
-    google::cloud::storage::Client rest_client,
-    google::cloud::storage::Client grpc_client,
-    google::cloud::Options const& client_options);
+    ThroughputOptions const& options, ClientProvider const& provider);
 
 /**
  * Create the list of download experiments based on the @p options.
@@ -67,10 +72,8 @@ std::vector<std::unique_ptr<ThroughputExperiment>> CreateUploadExperiments(
  * they depend on the upload experiment to create the objects to be downloaded.
  */
 std::vector<std::unique_ptr<ThroughputExperiment>> CreateDownloadExperiments(
-    ThroughputOptions const& options,
-    google::cloud::storage::Client rest_client,
-    google::cloud::storage::Client grpc_client,
-    google::cloud::Options const& client_options, int thread_id);
+    ThroughputOptions const& options, ClientProvider const& provider,
+    int thread_id);
 
 }  // namespace storage_benchmarks
 }  // namespace cloud

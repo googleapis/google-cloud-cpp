@@ -38,14 +38,12 @@ BigtableInstanceAdminConnectionImpl::BigtableInstanceAdminConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          bigtable_admin_internal::BigtableInstanceAdminDefaultOptions(
-              BigtableInstanceAdminConnection::options()))) {}
+          std::move(options), BigtableInstanceAdminConnection::options())) {}
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnectionImpl::CreateInstance(
     google::bigtable::admin::v2::CreateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Instance>(
       background_->cq(), request,
@@ -114,7 +112,7 @@ BigtableInstanceAdminConnectionImpl::UpdateInstance(
 future<StatusOr<google::bigtable::admin::v2::Instance>>
 BigtableInstanceAdminConnectionImpl::PartialUpdateInstance(
     google::bigtable::admin::v2::PartialUpdateInstanceRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Instance>(
       background_->cq(), request,
@@ -158,7 +156,7 @@ Status BigtableInstanceAdminConnectionImpl::DeleteInstance(
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnectionImpl::CreateCluster(
     google::bigtable::admin::v2::CreateClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Cluster>(
       background_->cq(), request,
@@ -212,7 +210,7 @@ BigtableInstanceAdminConnectionImpl::ListClusters(
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnectionImpl::UpdateCluster(
     google::bigtable::admin::v2::Cluster const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Cluster>(
       background_->cq(), request,
@@ -240,7 +238,7 @@ BigtableInstanceAdminConnectionImpl::UpdateCluster(
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
 BigtableInstanceAdminConnectionImpl::PartialUpdateCluster(
     google::bigtable::admin::v2::PartialUpdateClusterRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::Cluster>(
       background_->cq(), request,
@@ -310,7 +308,7 @@ StreamRange<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminConnectionImpl::ListAppProfiles(
     google::bigtable::admin::v2::ListAppProfilesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy const>(
           retry_policy());
@@ -343,7 +341,7 @@ BigtableInstanceAdminConnectionImpl::ListAppProfiles(
 future<StatusOr<google::bigtable::admin::v2::AppProfile>>
 BigtableInstanceAdminConnectionImpl::UpdateAppProfile(
     google::bigtable::admin::v2::UpdateAppProfileRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::bigtable::admin::v2::AppProfile>(
       background_->cq(), request,
@@ -420,6 +418,40 @@ BigtableInstanceAdminConnectionImpl::TestIamPermissions(
         return stub_->TestIamPermissions(context, request);
       },
       request, __func__);
+}
+
+StreamRange<google::bigtable::admin::v2::HotTablet>
+BigtableInstanceAdminConnectionImpl::ListHotTablets(
+    google::bigtable::admin::v2::ListHotTabletsRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<bigtable_admin::BigtableInstanceAdminRetryPolicy const>(
+          retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListHotTablets(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::bigtable::admin::v2::HotTablet>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::bigtable::admin::v2::ListHotTabletsRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::bigtable::admin::v2::ListHotTabletsRequest const&
+                       request) {
+              return stub->ListHotTablets(context, request);
+            },
+            r, function_name);
+      },
+      [](google::bigtable::admin::v2::ListHotTabletsResponse r) {
+        std::vector<google::bigtable::admin::v2::HotTablet> result(
+            r.hot_tablets().size());
+        auto& messages = *r.mutable_hot_tablets();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

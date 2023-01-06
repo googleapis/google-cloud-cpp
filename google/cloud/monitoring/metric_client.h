@@ -65,16 +65,16 @@ class MetricServiceClient {
       std::shared_ptr<MetricServiceConnection> connection, Options opts = {});
   ~MetricServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   MetricServiceClient(MetricServiceClient const&) = default;
   MetricServiceClient& operator=(MetricServiceClient const&) = default;
   MetricServiceClient(MetricServiceClient&&) = default;
   MetricServiceClient& operator=(MetricServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(MetricServiceClient const& a,
                          MetricServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -83,7 +83,7 @@ class MetricServiceClient {
                          MetricServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists monitored resource descriptors that match a filter. This method does
@@ -99,7 +99,7 @@ class MetricServiceClient {
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
   /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L177}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L175}
   /// [google.api.MonitoredResourceDescriptor]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
   ///
@@ -111,14 +111,14 @@ class MetricServiceClient {
   /// not require a Workspace.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::ListMonitoredResourceDescriptorsRequest,google/monitoring/v3/metric_service.proto#L177}
+  /// @googleapis_link{google::monitoring::v3::ListMonitoredResourceDescriptorsRequest,google/monitoring/v3/metric_service.proto#L175}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
   /// [google.monitoring.v3.ListMonitoredResourceDescriptorsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L177}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L175}
   /// [google.api.MonitoredResourceDescriptor]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
   ///
@@ -142,7 +142,7 @@ class MetricServiceClient {
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
   /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L219}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L217}
   /// [google.api.MonitoredResourceDescriptor]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
   ///
@@ -154,14 +154,14 @@ class MetricServiceClient {
   /// a Workspace.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::GetMonitoredResourceDescriptorRequest,google/monitoring/v3/metric_service.proto#L219}
+  /// @googleapis_link{google::monitoring::v3::GetMonitoredResourceDescriptorRequest,google/monitoring/v3/metric_service.proto#L217}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::MonitoredResourceDescriptor,google/api/monitored_resource.proto#L40}
   ///
   /// [google.monitoring.v3.GetMonitoredResourceDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L219}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L217}
   /// [google.api.MonitoredResourceDescriptor]:
   /// @googleapis_reference_link{google/api/monitored_resource.proto#L40}
   ///
@@ -185,7 +185,7 @@ class MetricServiceClient {
   /// @googleapis_link{google::api::MetricDescriptor,google/api/metric.proto#L33}
   ///
   /// [google.monitoring.v3.ListMetricDescriptorsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L235}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L233}
   /// [google.api.MetricDescriptor]:
   /// @googleapis_reference_link{google/api/metric.proto#L33}
   ///
@@ -197,14 +197,14 @@ class MetricServiceClient {
   /// a Workspace.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::ListMetricDescriptorsRequest,google/monitoring/v3/metric_service.proto#L235}
+  /// @googleapis_link{google::monitoring::v3::ListMetricDescriptorsRequest,google/monitoring/v3/metric_service.proto#L233}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::MetricDescriptor,google/api/metric.proto#L33}
   ///
   /// [google.monitoring.v3.ListMetricDescriptorsRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L235}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L233}
   /// [google.api.MetricDescriptor]:
   /// @googleapis_reference_link{google/api/metric.proto#L33}
   ///
@@ -226,7 +226,7 @@ class MetricServiceClient {
   /// @googleapis_link{google::api::MetricDescriptor,google/api/metric.proto#L33}
   ///
   /// [google.monitoring.v3.GetMetricDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L279}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L277}
   /// [google.api.MetricDescriptor]:
   /// @googleapis_reference_link{google/api/metric.proto#L33}
   ///
@@ -237,14 +237,14 @@ class MetricServiceClient {
   /// Gets a single metric descriptor. This method does not require a Workspace.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::GetMetricDescriptorRequest,google/monitoring/v3/metric_service.proto#L279}
+  /// @googleapis_link{google::monitoring::v3::GetMetricDescriptorRequest,google/monitoring/v3/metric_service.proto#L277}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::MetricDescriptor,google/api/metric.proto#L33}
   ///
   /// [google.monitoring.v3.GetMetricDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L279}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L277}
   /// [google.api.MetricDescriptor]:
   /// @googleapis_reference_link{google/api/metric.proto#L33}
   ///
@@ -273,7 +273,7 @@ class MetricServiceClient {
   /// @googleapis_link{google::api::MetricDescriptor,google/api/metric.proto#L33}
   ///
   /// [google.monitoring.v3.CreateMetricDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L295}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L293}
   /// [google.api.MetricDescriptor]:
   /// @googleapis_reference_link{google/api/metric.proto#L33}
   ///
@@ -290,14 +290,14 @@ class MetricServiceClient {
   /// [custom metrics](https://cloud.google.com/monitoring/custom-metrics).
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::CreateMetricDescriptorRequest,google/monitoring/v3/metric_service.proto#L295}
+  /// @googleapis_link{google::monitoring::v3::CreateMetricDescriptorRequest,google/monitoring/v3/metric_service.proto#L293}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::MetricDescriptor,google/api/metric.proto#L33}
   ///
   /// [google.monitoring.v3.CreateMetricDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L295}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L293}
   /// [google.api.MetricDescriptor]:
   /// @googleapis_reference_link{google/api/metric.proto#L33}
   ///
@@ -319,7 +319,7 @@ class MetricServiceClient {
   ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteMetricDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L313}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L311}
   ///
   Status DeleteMetricDescriptor(std::string const& name, Options opts = {});
 
@@ -329,12 +329,12 @@ class MetricServiceClient {
   /// be deleted.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::DeleteMetricDescriptorRequest,google/monitoring/v3/metric_service.proto#L313}
+  /// @googleapis_link{google::monitoring::v3::DeleteMetricDescriptorRequest,google/monitoring/v3/metric_service.proto#L311}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.monitoring.v3.DeleteMetricDescriptorRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L313}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L311}
   ///
   Status DeleteMetricDescriptor(
       google::monitoring::v3::DeleteMetricDescriptorRequest const& request,
@@ -366,12 +366,12 @@ class MetricServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::TimeSeries,google/monitoring/v3/metric.proto#L55}
+  /// @googleapis_link{google::monitoring::v3::TimeSeries,google/monitoring/v3/metric.proto#L53}
   ///
   /// [google.monitoring.v3.ListTimeSeriesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L329}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L327}
   /// [google.monitoring.v3.TimeSeries]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric.proto#L55}
+  /// @googleapis_reference_link{google/monitoring/v3/metric.proto#L53}
   ///
   StreamRange<google::monitoring::v3::TimeSeries> ListTimeSeries(
       std::string const& name, std::string const& filter,
@@ -384,16 +384,16 @@ class MetricServiceClient {
   /// Workspace.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::ListTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L329}
+  /// @googleapis_link{google::monitoring::v3::ListTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L327}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::monitoring::v3::TimeSeries,google/monitoring/v3/metric.proto#L55}
+  /// @googleapis_link{google::monitoring::v3::TimeSeries,google/monitoring/v3/metric.proto#L53}
   ///
   /// [google.monitoring.v3.ListTimeSeriesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L329}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L327}
   /// [google.monitoring.v3.TimeSeries]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric.proto#L55}
+  /// @googleapis_reference_link{google/monitoring/v3/metric.proto#L53}
   ///
   StreamRange<google::monitoring::v3::TimeSeries> ListTimeSeries(
       google::monitoring::v3::ListTimeSeriesRequest request, Options opts = {});
@@ -419,7 +419,7 @@ class MetricServiceClient {
   ///     backoff policies.
   ///
   /// [google.monitoring.v3.CreateTimeSeriesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L423}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
   ///
   Status CreateTimeSeries(
       std::string const& name,
@@ -433,12 +433,12 @@ class MetricServiceClient {
   /// is included in the error response.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::CreateTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L423}
+  /// @googleapis_link{google::monitoring::v3::CreateTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L421}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.monitoring.v3.CreateTimeSeriesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L423}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
   ///
   Status CreateTimeSeries(
       google::monitoring::v3::CreateTimeSeriesRequest const& request,
@@ -470,7 +470,7 @@ class MetricServiceClient {
   ///     backoff policies.
   ///
   /// [google.monitoring.v3.CreateTimeSeriesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L423}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
   ///
   Status CreateServiceTimeSeries(
       std::string const& name,
@@ -489,14 +489,60 @@ class MetricServiceClient {
   /// instead.
   ///
   /// @param request
-  /// @googleapis_link{google::monitoring::v3::CreateTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L423}
+  /// @googleapis_link{google::monitoring::v3::CreateTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L421}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.monitoring.v3.CreateTimeSeriesRequest]:
-  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L423}
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
   ///
   Status CreateServiceTimeSeries(
+      google::monitoring::v3::CreateTimeSeriesRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Creates or adds data to one or more time series.
+  /// The response is empty if all time series in the request were written.
+  /// If any time series could not be written, a corresponding failure message
+  /// is included in the error response.
+  ///
+  /// @param name  Required. The
+  /// [project](https://cloud.google.com/monitoring/api/v3#project_name) on
+  ///  which to execute the request. The format is:
+  ///      projects/[PROJECT_ID_OR_NUMBER]
+  /// @param time_series  Required. The new data to be added to a list of time
+  /// series.
+  ///  Adds at most one data point to each of several time series.  The new data
+  ///  point must be more recent than any other point in its time series.  Each
+  ///  `TimeSeries` value must fully specify a unique time series by supplying
+  ///  all label values for the metric and the monitored resource.
+  ///  The maximum number of `TimeSeries` objects per `Create` request is 200.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  ///
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
+  ///
+  future<Status> AsyncCreateTimeSeries(
+      std::string const& name,
+      std::vector<google::monitoring::v3::TimeSeries> const& time_series,
+      Options opts = {});
+
+  ///
+  /// Creates or adds data to one or more time series.
+  /// The response is empty if all time series in the request were written.
+  /// If any time series could not be written, a corresponding failure message
+  /// is included in the error response.
+  ///
+  /// @param request
+  /// @googleapis_link{google::monitoring::v3::CreateTimeSeriesRequest,google/monitoring/v3/metric_service.proto#L421}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  ///
+  /// [google.monitoring.v3.CreateTimeSeriesRequest]:
+  /// @googleapis_reference_link{google/monitoring/v3/metric_service.proto#L421}
+  ///
+  future<Status> AsyncCreateTimeSeries(
       google::monitoring::v3::CreateTimeSeriesRequest const& request,
       Options opts = {});
 

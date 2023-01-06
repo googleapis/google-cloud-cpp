@@ -216,36 +216,6 @@ DefaultServiceManagerStub::GenerateConfigReport(
 }
 
 future<StatusOr<google::longrunning::Operation>>
-DefaultServiceManagerStub::AsyncEnableService(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::api::servicemanagement::v1::EnableServiceRequest const& request) {
-  return cq.MakeUnaryRpc(
-      [this](grpc::ClientContext* context,
-             google::api::servicemanagement::v1::EnableServiceRequest const&
-                 request,
-             grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncEnableService(context, request, cq);
-      },
-      request, std::move(context));
-}
-
-future<StatusOr<google::longrunning::Operation>>
-DefaultServiceManagerStub::AsyncDisableService(
-    google::cloud::CompletionQueue& cq,
-    std::unique_ptr<grpc::ClientContext> context,
-    google::api::servicemanagement::v1::DisableServiceRequest const& request) {
-  return cq.MakeUnaryRpc(
-      [this](grpc::ClientContext* context,
-             google::api::servicemanagement::v1::DisableServiceRequest const&
-                 request,
-             grpc::CompletionQueue* cq) {
-        return grpc_stub_->AsyncDisableService(context, request, cq);
-      },
-      request, std::move(context));
-}
-
-future<StatusOr<google::longrunning::Operation>>
 DefaultServiceManagerStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,

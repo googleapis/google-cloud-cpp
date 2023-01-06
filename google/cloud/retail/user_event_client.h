@@ -67,16 +67,16 @@ class UserEventServiceClient {
       Options opts = {});
   ~UserEventServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   UserEventServiceClient(UserEventServiceClient const&) = default;
   UserEventServiceClient& operator=(UserEventServiceClient const&) = default;
   UserEventServiceClient(UserEventServiceClient&&) = default;
   UserEventServiceClient& operator=(UserEventServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(UserEventServiceClient const& a,
                          UserEventServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -85,22 +85,22 @@ class UserEventServiceClient {
                          UserEventServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Writes a single user event.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::WriteUserEventRequest,google/cloud/retail/v2/user_event_service.proto#L118}
+  /// @googleapis_link{google::cloud::retail::v2::WriteUserEventRequest,google/cloud/retail/v2/user_event_service.proto#L120}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::UserEvent,google/cloud/retail/v2/user_event.proto#L37}
+  /// @googleapis_link{google::cloud::retail::v2::UserEvent,google/cloud/retail/v2/user_event.proto#L36}
   ///
   /// [google.cloud.retail.v2.WriteUserEventRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L118}
+  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L120}
   /// [google.cloud.retail.v2.UserEvent]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/user_event.proto#L37}
+  /// @googleapis_reference_link{google/cloud/retail/v2/user_event.proto#L36}
   ///
   StatusOr<google::cloud::retail::v2::UserEvent> WriteUserEvent(
       google::cloud::retail::v2::WriteUserEventRequest const& request,
@@ -114,14 +114,14 @@ class UserEventServiceClient {
   /// Manager. Users should not call this method directly.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::CollectUserEventRequest,google/cloud/retail/v2/user_event_service.proto#L128}
+  /// @googleapis_link{google::cloud::retail::v2::CollectUserEventRequest,google/cloud/retail/v2/user_event_service.proto#L136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::api::HttpBody,google/api/httpbody.proto#L71}
   ///
   /// [google.cloud.retail.v2.CollectUserEventRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L128}
+  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L136}
   /// [google.api.HttpBody]:
   /// @googleapis_reference_link{google/api/httpbody.proto#L71}
   ///
@@ -140,12 +140,12 @@ class UserEventServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::PurgeUserEventsResponse,google/cloud/retail/v2/purge_config.proto#L76}
+  /// @googleapis_link{google::cloud::retail::v2::PurgeUserEventsResponse,google/cloud/retail/v2/purge_config.proto#L79}
   ///
   /// [google.cloud.retail.v2.PurgeUserEventsRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L36}
   /// [google.cloud.retail.v2.PurgeUserEventsResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L76}
+  /// @googleapis_reference_link{google/cloud/retail/v2/purge_config.proto#L79}
   ///
   future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>
   PurgeUserEvents(
@@ -157,21 +157,21 @@ class UserEventServiceClient {
   /// synchronous. Events that already exist are skipped.
   /// Use this method for backfilling historical user events.
   ///
-  /// Operation.response is of type ImportResponse. Note that it is
+  /// `Operation.response` is of type `ImportResponse`. Note that it is
   /// possible for a subset of the items to be successfully inserted.
-  /// Operation.metadata is of type ImportMetadata.
+  /// `Operation.metadata` is of type `ImportMetadata`.
   ///
   /// @param request
   /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsRequest,google/cloud/retail/v2/import_config.proto#L222}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsResponse,google/cloud/retail/v2/import_config.proto#L357}
+  /// @googleapis_link{google::cloud::retail::v2::ImportUserEventsResponse,google/cloud/retail/v2/import_config.proto#L356}
   ///
   /// [google.cloud.retail.v2.ImportUserEventsRequest]:
   /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L222}
   /// [google.cloud.retail.v2.ImportUserEventsResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L357}
+  /// @googleapis_reference_link{google/cloud/retail/v2/import_config.proto#L356}
   ///
   future<StatusOr<google::cloud::retail::v2::ImportUserEventsResponse>>
   ImportUserEvents(
@@ -179,25 +179,26 @@ class UserEventServiceClient {
       Options opts = {});
 
   ///
-  /// Triggers a user event rejoin operation with latest product catalog. Events
-  /// will not be annotated with detailed product information if product is
-  /// missing from the catalog at the time the user event is ingested, and these
-  /// events are stored as unjoined events with a limited usage on training and
-  /// serving. This API can be used to trigger a 'join' operation on specified
-  /// events with latest version of product catalog. It can also be used to
-  /// correct events joined with wrong product catalog.
+  /// Starts a user-event rejoin operation with latest product catalog. Events
+  /// are not annotated with detailed product information for products that are
+  /// missing from the catalog when the user event is ingested. These
+  /// events are stored as unjoined events with limited usage on training and
+  /// serving. You can use this method to start a join operation on specified
+  /// events with the latest version of product catalog. You can also use this
+  /// method to correct events joined with the wrong product catalog. A rejoin
+  /// operation can take hours or days to complete.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::retail::v2::RejoinUserEventsRequest,google/cloud/retail/v2/user_event_service.proto#L150}
+  /// @googleapis_link{google::cloud::retail::v2::RejoinUserEventsRequest,google/cloud/retail/v2/user_event_service.proto#L172}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::retail::v2::RejoinUserEventsResponse,google/cloud/retail/v2/user_event_service.proto#L182}
+  /// @googleapis_link{google::cloud::retail::v2::RejoinUserEventsResponse,google/cloud/retail/v2/user_event_service.proto#L204}
   ///
   /// [google.cloud.retail.v2.RejoinUserEventsRequest]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L150}
+  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L172}
   /// [google.cloud.retail.v2.RejoinUserEventsResponse]:
-  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L182}
+  /// @googleapis_reference_link{google/cloud/retail/v2/user_event_service.proto#L204}
   ///
   future<StatusOr<google::cloud::retail::v2::RejoinUserEventsResponse>>
   RejoinUserEvents(

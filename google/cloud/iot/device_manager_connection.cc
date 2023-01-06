@@ -23,6 +23,7 @@
 #include "google/cloud/iot/internal/device_manager_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -58,9 +59,9 @@ Status DeviceManagerConnection::DeleteDeviceRegistry(
 }
 
 StreamRange<google::cloud::iot::v1::DeviceRegistry>
-    DeviceManagerConnection::ListDeviceRegistries(
-        google::cloud::iot::v1::
-            ListDeviceRegistriesRequest) {  // NOLINT(performance-unnecessary-value-param)
+DeviceManagerConnection::ListDeviceRegistries(
+    google::cloud::iot::v1::
+        ListDeviceRegistriesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::iot::v1::DeviceRegistry>>();
 }
@@ -85,7 +86,8 @@ Status DeviceManagerConnection::DeleteDevice(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
-StreamRange<google::cloud::iot::v1::Device> DeviceManagerConnection::ListDevices(
+StreamRange<google::cloud::iot::v1::Device>
+DeviceManagerConnection::ListDevices(
     google::cloud::iot::v1::
         ListDevicesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
@@ -147,6 +149,7 @@ DeviceManagerConnection::UnbindDeviceFromGateway(
 std::shared_ptr<DeviceManagerConnection> MakeDeviceManagerConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  DeviceManagerPolicyOptionList>(options,
                                                                 __func__);
   options = iot_internal::DeviceManagerDefaultOptions(std::move(options));
@@ -159,23 +162,5 @@ std::shared_ptr<DeviceManagerConnection> MakeDeviceManagerConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace iot
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace iot_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<iot::DeviceManagerConnection> MakeDeviceManagerConnection(
-    std::shared_ptr<DeviceManagerStub> stub, Options options) {
-  options = DeviceManagerDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<iot_internal::DeviceManagerConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace iot_internal
 }  // namespace cloud
 }  // namespace google

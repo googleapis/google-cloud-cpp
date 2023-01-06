@@ -35,6 +35,7 @@ auto constexpr kBackoffScaling = 2.0;
 Options PolicyTagManagerDefaultOptions(Options options) {
   options = google::cloud::internal::PopulateCommonOptions(
       std::move(options), "GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_ENDPOINT", "",
+      "GOOGLE_CLOUD_CPP_POLICY_TAG_MANAGER_AUTHORITY",
       "datacatalog.googleapis.com");
   options =
       google::cloud::internal::PopulateGrpcOptions(std::move(options), "");

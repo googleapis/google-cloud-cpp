@@ -23,6 +23,7 @@
 #include "google/cloud/composer/internal/environments_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -52,9 +53,9 @@ EnvironmentsConnection::GetEnvironment(
 }
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>
-    EnvironmentsConnection::ListEnvironments(
-        google::cloud::orchestration::airflow::service::v1::
-            ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
+EnvironmentsConnection::ListEnvironments(
+    google::cloud::orchestration::airflow::service::v1::
+        ListEnvironmentsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
       google::cloud::orchestration::airflow::service::v1::Environment>>();
 }
@@ -79,9 +80,32 @@ EnvironmentsConnection::DeleteEnvironment(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::SaveSnapshotResponse>>
+EnvironmentsConnection::SaveSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        SaveSnapshotRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::
+                   SaveSnapshotResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<
+    google::cloud::orchestration::airflow::service::v1::LoadSnapshotResponse>>
+EnvironmentsConnection::LoadSnapshot(
+    google::cloud::orchestration::airflow::service::v1::
+        LoadSnapshotRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::orchestration::airflow::service::v1::
+                   LoadSnapshotResponse>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
 std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  EnvironmentsPolicyOptionList>(options,
                                                                __func__);
   options = composer_internal::EnvironmentsDefaultOptions(std::move(options));
@@ -94,23 +118,5 @@ std::shared_ptr<EnvironmentsConnection> MakeEnvironmentsConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace composer
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace composer_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<composer::EnvironmentsConnection> MakeEnvironmentsConnection(
-    std::shared_ptr<EnvironmentsStub> stub, Options options) {
-  options = EnvironmentsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<composer_internal::EnvironmentsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace composer_internal
 }  // namespace cloud
 }  // namespace google

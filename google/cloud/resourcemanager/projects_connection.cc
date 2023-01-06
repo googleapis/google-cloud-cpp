@@ -23,6 +23,7 @@
 #include "google/cloud/resourcemanager/projects_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -41,17 +42,17 @@ ProjectsConnection::GetProject(
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
-    ProjectsConnection::ListProjects(
-        google::cloud::resourcemanager::v3::
-            ListProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ProjectsConnection::ListProjects(
+    google::cloud::resourcemanager::v3::
+        ListProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Project>>();
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
-    ProjectsConnection::SearchProjects(
-        google::cloud::resourcemanager::v3::
-            SearchProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
+ProjectsConnection::SearchProjects(
+    google::cloud::resourcemanager::v3::
+        SearchProjectsRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::resourcemanager::v3::Project>>();
 }
@@ -114,6 +115,7 @@ ProjectsConnection::TestIamPermissions(
 
 std::shared_ptr<ProjectsConnection> MakeProjectsConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ProjectsPolicyOptionList>(options, __func__);
   options =
       resourcemanager_internal::ProjectsDefaultOptions(std::move(options));
@@ -126,23 +128,5 @@ std::shared_ptr<ProjectsConnection> MakeProjectsConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace resourcemanager
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace resourcemanager_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<resourcemanager::ProjectsConnection> MakeProjectsConnection(
-    std::shared_ptr<ProjectsStub> stub, Options options) {
-  options = ProjectsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<resourcemanager_internal::ProjectsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace resourcemanager_internal
 }  // namespace cloud
 }  // namespace google

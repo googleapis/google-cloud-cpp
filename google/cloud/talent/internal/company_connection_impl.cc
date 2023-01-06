@@ -35,9 +35,8 @@ CompanyServiceConnectionImpl::CompanyServiceConnectionImpl(
     std::shared_ptr<talent_internal::CompanyServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), talent_internal::CompanyServiceDefaultOptions(
-                                  CompanyServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      CompanyServiceConnection::options())) {}
 
 StatusOr<google::cloud::talent::v4::Company>
 CompanyServiceConnectionImpl::CreateCompany(
@@ -94,7 +93,7 @@ StreamRange<google::cloud::talent::v4::Company>
 CompanyServiceConnectionImpl::ListCompanies(
     google::cloud::talent::v4::ListCompaniesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<talent::CompanyServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

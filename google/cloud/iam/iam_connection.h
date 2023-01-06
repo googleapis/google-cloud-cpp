@@ -45,6 +45,18 @@ using IAMLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         iam_internal::IAMRetryTraits>;
 
+/**
+ * The `IAMConnection` object for `IAMClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `IAMClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `IAMClient`.
+ *
+ * To create a concrete instance, see `MakeIAMConnection()`.
+ *
+ * For mocking, see `iam_mocks::MockIAMConnection`.
+ */
 class IAMConnection {
  public:
   virtual ~IAMConnection() = 0;
@@ -96,6 +108,12 @@ class IAMConnection {
   virtual Status DeleteServiceAccountKey(
       google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request);
 
+  virtual Status DisableServiceAccountKey(
+      google::iam::admin::v1::DisableServiceAccountKeyRequest const& request);
+
+  virtual Status EnableServiceAccountKey(
+      google::iam::admin::v1::EnableServiceAccountKeyRequest const& request);
+
   virtual StatusOr<google::iam::v1::Policy> GetIamPolicy(
       google::iam::v1::GetIamPolicyRequest const& request);
 
@@ -138,25 +156,32 @@ class IAMConnection {
       google::iam::admin::v1::LintPolicyRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `IAMConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of IAMClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `IAMConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::iam::IAMPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `IAMConnection` created by
+ * this function.
+ */
 std::shared_ptr<IAMConnection> MakeIAMConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace iam
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace iam_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<iam::IAMConnection> MakeIAMConnection(
-    std::shared_ptr<IAMStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
-}  // namespace iam_internal
 }  // namespace cloud
 }  // namespace google
 

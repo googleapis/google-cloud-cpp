@@ -46,6 +46,18 @@ using AuthorizedDomainsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         appengine_internal::AuthorizedDomainsRetryTraits>;
 
+/**
+ * The `AuthorizedDomainsConnection` object for `AuthorizedDomainsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `AuthorizedDomainsClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `AuthorizedDomainsClient`.
+ *
+ * To create a concrete instance, see `MakeAuthorizedDomainsConnection()`.
+ *
+ * For mocking, see `appengine_mocks::MockAuthorizedDomainsConnection`.
+ */
 class AuthorizedDomainsConnection {
  public:
   virtual ~AuthorizedDomainsConnection() = 0;
@@ -57,25 +69,34 @@ class AuthorizedDomainsConnection {
       google::appengine::v1::ListAuthorizedDomainsRequest request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `AuthorizedDomainsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * AuthorizedDomainsClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `AuthorizedDomainsConnection`. Expected options are any of the types
+ * in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::appengine::AuthorizedDomainsPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `AuthorizedDomainsConnection` created
+ * by this function.
+ */
 std::shared_ptr<AuthorizedDomainsConnection> MakeAuthorizedDomainsConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace appengine_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<appengine::AuthorizedDomainsConnection>
-MakeAuthorizedDomainsConnection(std::shared_ptr<AuthorizedDomainsStub> stub,
-                                Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace appengine_internal
 }  // namespace cloud
 }  // namespace google
 

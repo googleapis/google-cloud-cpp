@@ -27,6 +27,21 @@ namespace cloud {
 namespace asset_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `AssetServiceConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `AssetServiceClient`. To do so,
+ * construct an object of type `AssetServiceClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockAssetServiceConnection : public asset::AssetServiceConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
@@ -94,6 +109,42 @@ class MockAssetServiceConnection : public asset::AssetServiceConnection {
               AnalyzeMove,
               (google::cloud::asset::v1::AnalyzeMoveRequest const& request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::QueryAssetsResponse>,
+              QueryAssets,
+              (google::cloud::asset::v1::QueryAssetsRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::asset::v1::SavedQuery>, CreateSavedQuery,
+      (google::cloud::asset::v1::CreateSavedQueryRequest const& request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::asset::v1::SavedQuery>, GetSavedQuery,
+              (google::cloud::asset::v1::GetSavedQueryRequest const& request),
+              (override));
+
+  MOCK_METHOD(StreamRange<google::cloud::asset::v1::SavedQuery>,
+              ListSavedQueries,
+              (google::cloud::asset::v1::ListSavedQueriesRequest request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::asset::v1::SavedQuery>, UpdateSavedQuery,
+      (google::cloud::asset::v1::UpdateSavedQueryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      Status, DeleteSavedQuery,
+      (google::cloud::asset::v1::DeleteSavedQueryRequest const& request),
+      (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::asset::v1::BatchGetEffectiveIamPoliciesResponse>,
+      BatchGetEffectiveIamPolicies,
+      (google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

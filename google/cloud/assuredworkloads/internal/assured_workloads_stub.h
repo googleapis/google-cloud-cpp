@@ -48,6 +48,13 @@ class AssuredWorkloadsServiceStub {
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const&
           request) = 0;
 
+  virtual StatusOr<
+      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+  RestrictAllowedResources(
+      grpc::ClientContext& context,
+      google::cloud::assuredworkloads::v1::
+          RestrictAllowedResourcesRequest const& request) = 0;
+
   virtual Status DeleteWorkload(
       grpc::ClientContext& context,
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const&
@@ -62,6 +69,24 @@ class AssuredWorkloadsServiceStub {
   ListWorkloads(grpc::ClientContext& context,
                 google::cloud::assuredworkloads::v1::ListWorkloadsRequest const&
                     request) = 0;
+
+  virtual StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
+  ListViolations(
+      grpc::ClientContext& context,
+      google::cloud::assuredworkloads::v1::ListViolationsRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
+      grpc::ClientContext& context,
+      google::cloud::assuredworkloads::v1::GetViolationRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+  AcknowledgeViolation(
+      grpc::ClientContext& context,
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+          request) = 0;
 
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
@@ -95,6 +120,13 @@ class DefaultAssuredWorkloadsServiceStub : public AssuredWorkloadsServiceStub {
       google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request)
       override;
 
+  StatusOr<
+      google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
+  RestrictAllowedResources(
+      grpc::ClientContext& client_context,
+      google::cloud::assuredworkloads::v1::
+          RestrictAllowedResourcesRequest const& request) override;
+
   Status DeleteWorkload(
       grpc::ClientContext& client_context,
       google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request)
@@ -109,6 +141,23 @@ class DefaultAssuredWorkloadsServiceStub : public AssuredWorkloadsServiceStub {
   ListWorkloads(grpc::ClientContext& client_context,
                 google::cloud::assuredworkloads::v1::ListWorkloadsRequest const&
                     request) override;
+
+  StatusOr<google::cloud::assuredworkloads::v1::ListViolationsResponse>
+  ListViolations(
+      grpc::ClientContext& client_context,
+      google::cloud::assuredworkloads::v1::ListViolationsRequest const& request)
+      override;
+
+  StatusOr<google::cloud::assuredworkloads::v1::Violation> GetViolation(
+      grpc::ClientContext& client_context,
+      google::cloud::assuredworkloads::v1::GetViolationRequest const& request)
+      override;
+
+  StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
+  AcknowledgeViolation(
+      grpc::ClientContext& client_context,
+      google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
+          request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,

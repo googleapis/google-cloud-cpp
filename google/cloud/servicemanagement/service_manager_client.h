@@ -35,7 +35,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 ///
 /// [Google Service Management
-/// API](https://cloud.google.com/service-management/overview)
+/// API](https://cloud.google.com/service-infrastructure/docs/overview)
 ///
 /// @par Equality
 ///
@@ -66,16 +66,16 @@ class ServiceManagerClient {
       std::shared_ptr<ServiceManagerConnection> connection, Options opts = {});
   ~ServiceManagerClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   ServiceManagerClient(ServiceManagerClient const&) = default;
   ServiceManagerClient& operator=(ServiceManagerClient const&) = default;
   ServiceManagerClient(ServiceManagerClient&&) = default;
   ServiceManagerClient& operator=(ServiceManagerClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(ServiceManagerClient const& a,
                          ServiceManagerClient const& b) {
     return a.connection_ == b.connection_;
@@ -84,7 +84,7 @@ class ServiceManagerClient {
                          ServiceManagerClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists managed services.
@@ -93,21 +93,17 @@ class ServiceManagerClient {
   /// services the calling user has "servicemanagement.services.get" permission
   /// for.
   ///
-  /// **BETA:** If the caller specifies the `consumer_id`, it returns only the
-  /// services enabled on the consumer. The `consumer_id` must have the format
-  /// of "project:{PROJECT-ID}".
-  ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::ListServicesRequest,google/api/servicemanagement/v1/servicemanager.proto#L284}
+  /// @googleapis_link{google::api::servicemanagement::v1::ListServicesRequest,google/api/servicemanagement/v1/servicemanager.proto#L261}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::ManagedService,google/api/servicemanagement/v1/resources.proto#L43}
+  /// @googleapis_link{google::api::servicemanagement::v1::ManagedService,google/api/servicemanagement/v1/resources.proto#L34}
   ///
   /// [google.api.servicemanagement.v1.ListServicesRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L284}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L261}
   /// [google.api.servicemanagement.v1.ManagedService]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L43}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   StreamRange<google::api::servicemanagement::v1::ManagedService> ListServices(
       google::api::servicemanagement::v1::ListServicesRequest request,
@@ -118,17 +114,17 @@ class ServiceManagerClient {
   /// public.
   ///
   /// @param service_name  Required. The name of the service.  See the
-  /// `ServiceManager` overview for naming
-  ///  requirements.  For example: `example.googleapis.com`.
+  /// `ServiceManager` overview for
+  ///  naming requirements.  For example: `example.googleapis.com`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::ManagedService,google/api/servicemanagement/v1/resources.proto#L43}
+  /// @googleapis_link{google::api::servicemanagement::v1::ManagedService,google/api/servicemanagement/v1/resources.proto#L34}
   ///
   /// [google.api.servicemanagement.v1.GetServiceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L314}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L291}
   /// [google.api.servicemanagement.v1.ManagedService]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L43}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   StatusOr<google::api::servicemanagement::v1::ManagedService> GetService(
       std::string const& service_name, Options opts = {});
@@ -138,16 +134,16 @@ class ServiceManagerClient {
   /// public.
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::GetServiceRequest,google/api/servicemanagement/v1/servicemanager.proto#L314}
+  /// @googleapis_link{google::api::servicemanagement::v1::GetServiceRequest,google/api/servicemanagement/v1/servicemanager.proto#L291}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::ManagedService,google/api/servicemanagement/v1/resources.proto#L43}
+  /// @googleapis_link{google::api::servicemanagement::v1::ManagedService,google/api/servicemanagement/v1/resources.proto#L34}
   ///
   /// [google.api.servicemanagement.v1.GetServiceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L314}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L291}
   /// [google.api.servicemanagement.v1.ManagedService]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L43}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   StatusOr<google::api::servicemanagement::v1::ManagedService> GetService(
       google::api::servicemanagement::v1::GetServiceRequest const& request,
@@ -155,7 +151,14 @@ class ServiceManagerClient {
 
   ///
   /// Creates a new managed service.
-  /// Please note one producer project can own no more than 20 services.
+  ///
+  /// A managed service is immutable, and is subject to mandatory 30-day
+  /// data retention. You cannot move a service or recreate it within 30 days
+  /// after deletion.
+  ///
+  /// One producer project can own no more than 500 services. For security and
+  /// reliability purposes, a production service should be hosted in a
+  /// dedicated producer project.
   ///
   /// Operation<response: ManagedService>
   ///
@@ -163,12 +166,12 @@ class ServiceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::ManagedService,google/api/servicemanagement/v1/resources.proto#L43}
+  /// @googleapis_link{google::api::servicemanagement::v1::ManagedService,google/api/servicemanagement/v1/resources.proto#L34}
   ///
   /// [google.api.servicemanagement.v1.CreateServiceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L321}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L298}
   /// [google.api.servicemanagement.v1.ManagedService]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L43}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
   CreateService(
@@ -177,21 +180,28 @@ class ServiceManagerClient {
 
   ///
   /// Creates a new managed service.
-  /// Please note one producer project can own no more than 20 services.
+  ///
+  /// A managed service is immutable, and is subject to mandatory 30-day
+  /// data retention. You cannot move a service or recreate it within 30 days
+  /// after deletion.
+  ///
+  /// One producer project can own no more than 500 services. For security and
+  /// reliability purposes, a production service should be hosted in a
+  /// dedicated producer project.
   ///
   /// Operation<response: ManagedService>
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::CreateServiceRequest,google/api/servicemanagement/v1/servicemanager.proto#L321}
+  /// @googleapis_link{google::api::servicemanagement::v1::CreateServiceRequest,google/api/servicemanagement/v1/servicemanager.proto#L298}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::ManagedService,google/api/servicemanagement/v1/resources.proto#L43}
+  /// @googleapis_link{google::api::servicemanagement::v1::ManagedService,google/api/servicemanagement/v1/resources.proto#L34}
   ///
   /// [google.api.servicemanagement.v1.CreateServiceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L321}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L298}
   /// [google.api.servicemanagement.v1.ManagedService]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L43}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L34}
   ///
   future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
   CreateService(
@@ -209,17 +219,17 @@ class ServiceManagerClient {
   /// Operation<response: google.protobuf.Empty>
   ///
   /// @param service_name  Required. The name of the service.  See the
-  /// [overview](https://cloud.google.com/service-management/overview)
+  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview)
   ///  for naming requirements.  For example: `example.googleapis.com`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::OperationMetadata,google/api/servicemanagement/v1/resources.proto#L53}
+  /// @googleapis_link{google::api::servicemanagement::v1::OperationMetadata,google/api/servicemanagement/v1/resources.proto#L45}
   ///
   /// [google.api.servicemanagement.v1.DeleteServiceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L327}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L304}
   /// [google.api.servicemanagement.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L53}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L45}
   ///
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
   DeleteService(std::string const& service_name, Options opts = {});
@@ -235,16 +245,16 @@ class ServiceManagerClient {
   /// Operation<response: google.protobuf.Empty>
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::DeleteServiceRequest,google/api/servicemanagement/v1/servicemanager.proto#L327}
+  /// @googleapis_link{google::api::servicemanagement::v1::DeleteServiceRequest,google/api/servicemanagement/v1/servicemanager.proto#L304}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::OperationMetadata,google/api/servicemanagement/v1/resources.proto#L53}
+  /// @googleapis_link{google::api::servicemanagement::v1::OperationMetadata,google/api/servicemanagement/v1/resources.proto#L45}
   ///
   /// [google.api.servicemanagement.v1.DeleteServiceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L327}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L304}
   /// [google.api.servicemanagement.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L53}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L45}
   ///
   future<StatusOr<google::api::servicemanagement::v1::OperationMetadata>>
   DeleteService(
@@ -260,17 +270,17 @@ class ServiceManagerClient {
   /// Operation<response: UndeleteServiceResponse>
   ///
   /// @param service_name  Required. The name of the service. See the
-  /// [overview](https://cloud.google.com/service-management/overview)
+  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview)
   ///  for naming requirements. For example: `example.googleapis.com`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::UndeleteServiceResponse,google/api/servicemanagement/v1/servicemanager.proto#L341}
+  /// @googleapis_link{google::api::servicemanagement::v1::UndeleteServiceResponse,google/api/servicemanagement/v1/servicemanager.proto#L320}
   ///
   /// [google.api.servicemanagement.v1.UndeleteServiceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L334}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L312}
   /// [google.api.servicemanagement.v1.UndeleteServiceResponse]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L341}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L320}
   ///
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
   UndeleteService(std::string const& service_name, Options opts = {});
@@ -284,16 +294,16 @@ class ServiceManagerClient {
   /// Operation<response: UndeleteServiceResponse>
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::UndeleteServiceRequest,google/api/servicemanagement/v1/servicemanager.proto#L334}
+  /// @googleapis_link{google::api::servicemanagement::v1::UndeleteServiceRequest,google/api/servicemanagement/v1/servicemanager.proto#L312}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::UndeleteServiceResponse,google/api/servicemanagement/v1/servicemanager.proto#L341}
+  /// @googleapis_link{google::api::servicemanagement::v1::UndeleteServiceResponse,google/api/servicemanagement/v1/servicemanager.proto#L320}
   ///
   /// [google.api.servicemanagement.v1.UndeleteServiceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L334}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L312}
   /// [google.api.servicemanagement.v1.UndeleteServiceResponse]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L341}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L320}
   ///
   future<StatusOr<google::api::servicemanagement::v1::UndeleteServiceResponse>>
   UndeleteService(
@@ -305,17 +315,17 @@ class ServiceManagerClient {
   /// from the newest to the oldest.
   ///
   /// @param service_name  Required. The name of the service.  See the
-  /// [overview](https://cloud.google.com/service-management/overview)
+  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview)
   ///  for naming requirements.  For example: `example.googleapis.com`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::Service,google/api/service.proto#L71}
+  /// @googleapis_link{google::api::Service,google/api/service.proto#L80}
   ///
   /// [google.api.servicemanagement.v1.ListServiceConfigsRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L375}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L355}
   /// [google.api.Service]:
-  /// @googleapis_reference_link{google/api/service.proto#L71}
+  /// @googleapis_reference_link{google/api/service.proto#L80}
   ///
   StreamRange<google::api::Service> ListServiceConfigs(
       std::string const& service_name, Options opts = {});
@@ -325,16 +335,16 @@ class ServiceManagerClient {
   /// from the newest to the oldest.
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::ListServiceConfigsRequest,google/api/servicemanagement/v1/servicemanager.proto#L375}
+  /// @googleapis_link{google::api::servicemanagement::v1::ListServiceConfigsRequest,google/api/servicemanagement/v1/servicemanager.proto#L355}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::Service,google/api/service.proto#L71}
+  /// @googleapis_link{google::api::Service,google/api/service.proto#L80}
   ///
   /// [google.api.servicemanagement.v1.ListServiceConfigsRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L375}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L355}
   /// [google.api.Service]:
-  /// @googleapis_reference_link{google/api/service.proto#L71}
+  /// @googleapis_reference_link{google/api/service.proto#L80}
   ///
   StreamRange<google::api::Service> ListServiceConfigs(
       google::api::servicemanagement::v1::ListServiceConfigsRequest request,
@@ -344,7 +354,7 @@ class ServiceManagerClient {
   /// Gets a service configuration (version) for a managed service.
   ///
   /// @param service_name  Required. The name of the service.  See the
-  /// [overview](https://cloud.google.com/service-management/overview)
+  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview)
   ///  for naming requirements.  For example: `example.googleapis.com`.
   /// @param config_id  Required. The id of the service configuration resource.
   ///  This field must be specified for the server to return all fields,
@@ -355,12 +365,12 @@ class ServiceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::Service,google/api/service.proto#L71}
+  /// @googleapis_link{google::api::Service,google/api/service.proto#L80}
   ///
   /// [google.api.servicemanagement.v1.GetServiceConfigRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L347}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L326}
   /// [google.api.Service]:
-  /// @googleapis_reference_link{google/api/service.proto#L71}
+  /// @googleapis_reference_link{google/api/service.proto#L80}
   ///
   StatusOr<google::api::Service> GetServiceConfig(
       std::string const& service_name, std::string const& config_id,
@@ -372,16 +382,16 @@ class ServiceManagerClient {
   /// Gets a service configuration (version) for a managed service.
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::GetServiceConfigRequest,google/api/servicemanagement/v1/servicemanager.proto#L347}
+  /// @googleapis_link{google::api::servicemanagement::v1::GetServiceConfigRequest,google/api/servicemanagement/v1/servicemanager.proto#L326}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::Service,google/api/service.proto#L71}
+  /// @googleapis_link{google::api::Service,google/api/service.proto#L80}
   ///
   /// [google.api.servicemanagement.v1.GetServiceConfigRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L347}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L326}
   /// [google.api.Service]:
-  /// @googleapis_reference_link{google/api/service.proto#L71}
+  /// @googleapis_reference_link{google/api/service.proto#L80}
   ///
   StatusOr<google::api::Service> GetServiceConfig(
       google::api::servicemanagement::v1::GetServiceConfigRequest const&
@@ -399,18 +409,18 @@ class ServiceManagerClient {
   /// eventually.
   ///
   /// @param service_name  Required. The name of the service.  See the
-  /// [overview](https://cloud.google.com/service-management/overview)
+  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview)
   ///  for naming requirements.  For example: `example.googleapis.com`.
   /// @param service_config  Required. The service configuration resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::Service,google/api/service.proto#L71}
+  /// @googleapis_link{google::api::Service,google/api/service.proto#L80}
   ///
   /// [google.api.servicemanagement.v1.CreateServiceConfigRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L398}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L379}
   /// [google.api.Service]:
-  /// @googleapis_reference_link{google/api/service.proto#L71}
+  /// @googleapis_reference_link{google/api/service.proto#L80}
   ///
   StatusOr<google::api::Service> CreateServiceConfig(
       std::string const& service_name,
@@ -427,16 +437,16 @@ class ServiceManagerClient {
   /// eventually.
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::CreateServiceConfigRequest,google/api/servicemanagement/v1/servicemanager.proto#L398}
+  /// @googleapis_link{google::api::servicemanagement::v1::CreateServiceConfigRequest,google/api/servicemanagement/v1/servicemanager.proto#L379}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::Service,google/api/service.proto#L71}
+  /// @googleapis_link{google::api::Service,google/api/service.proto#L80}
   ///
   /// [google.api.servicemanagement.v1.CreateServiceConfigRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L398}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L379}
   /// [google.api.Service]:
-  /// @googleapis_reference_link{google/api/service.proto#L71}
+  /// @googleapis_reference_link{google/api/service.proto#L80}
   ///
   StatusOr<google::api::Service> CreateServiceConfig(
       google::api::servicemanagement::v1::CreateServiceConfigRequest const&
@@ -459,7 +469,7 @@ class ServiceManagerClient {
   /// Operation<response: SubmitConfigSourceResponse>
   ///
   /// @param service_name  Required. The name of the service.  See the
-  /// [overview](https://cloud.google.com/service-management/overview)
+  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview)
   ///  for naming requirements.  For example: `example.googleapis.com`.
   /// @param config_source  Required. The source configuration for the service.
   /// @param validate_only  Optional. If set, this will result in the generation
@@ -469,12 +479,12 @@ class ServiceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::SubmitConfigSourceResponse,google/api/servicemanagement/v1/servicemanager.proto#L423}
+  /// @googleapis_link{google::api::servicemanagement::v1::SubmitConfigSourceResponse,google/api/servicemanagement/v1/servicemanager.proto#L407}
   ///
   /// [google.api.servicemanagement.v1.SubmitConfigSourceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L408}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L391}
   /// [google.api.servicemanagement.v1.SubmitConfigSourceResponse]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L423}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L407}
   ///
   future<
       StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
@@ -499,16 +509,16 @@ class ServiceManagerClient {
   /// Operation<response: SubmitConfigSourceResponse>
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::SubmitConfigSourceRequest,google/api/servicemanagement/v1/servicemanager.proto#L408}
+  /// @googleapis_link{google::api::servicemanagement::v1::SubmitConfigSourceRequest,google/api/servicemanagement/v1/servicemanager.proto#L391}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::SubmitConfigSourceResponse,google/api/servicemanagement/v1/servicemanager.proto#L423}
+  /// @googleapis_link{google::api::servicemanagement::v1::SubmitConfigSourceResponse,google/api/servicemanagement/v1/servicemanager.proto#L407}
   ///
   /// [google.api.servicemanagement.v1.SubmitConfigSourceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L408}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L391}
   /// [google.api.servicemanagement.v1.SubmitConfigSourceResponse]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L423}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L407}
   ///
   future<
       StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
@@ -522,7 +532,7 @@ class ServiceManagerClient {
   /// service, from the newest to the oldest.
   ///
   /// @param service_name  Required. The name of the service.  See the
-  /// [overview](https://cloud.google.com/service-management/overview)
+  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview)
   ///  for naming requirements.  For example: `example.googleapis.com`.
   /// @param filter  Required. Use `filter` to return subset of rollouts.
   ///  The following filters are supported:
@@ -535,12 +545,12 @@ class ServiceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::Rollout,google/api/servicemanagement/v1/resources.proto#L198}
+  /// @googleapis_link{google::api::servicemanagement::v1::Rollout,google/api/servicemanagement/v1/resources.proto#L190}
   ///
   /// [google.api.servicemanagement.v1.ListServiceRolloutsRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L439}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L424}
   /// [google.api.servicemanagement.v1.Rollout]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L198}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   StreamRange<google::api::servicemanagement::v1::Rollout> ListServiceRollouts(
       std::string const& service_name, std::string const& filter,
@@ -551,16 +561,16 @@ class ServiceManagerClient {
   /// service, from the newest to the oldest.
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::ListServiceRolloutsRequest,google/api/servicemanagement/v1/servicemanager.proto#L439}
+  /// @googleapis_link{google::api::servicemanagement::v1::ListServiceRolloutsRequest,google/api/servicemanagement/v1/servicemanager.proto#L424}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::Rollout,google/api/servicemanagement/v1/resources.proto#L198}
+  /// @googleapis_link{google::api::servicemanagement::v1::Rollout,google/api/servicemanagement/v1/resources.proto#L190}
   ///
   /// [google.api.servicemanagement.v1.ListServiceRolloutsRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L439}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L424}
   /// [google.api.servicemanagement.v1.Rollout]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L198}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   StreamRange<google::api::servicemanagement::v1::Rollout> ListServiceRollouts(
       google::api::servicemanagement::v1::ListServiceRolloutsRequest request,
@@ -571,18 +581,18 @@ class ServiceManagerClient {
   /// [rollout][google.api.servicemanagement.v1.Rollout].
   ///
   /// @param service_name  Required. The name of the service.  See the
-  /// [overview](https://cloud.google.com/service-management/overview)
+  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview)
   ///  for naming requirements.  For example: `example.googleapis.com`.
   /// @param rollout_id  Required. The id of the rollout resource.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::Rollout,google/api/servicemanagement/v1/resources.proto#L198}
+  /// @googleapis_link{google::api::servicemanagement::v1::Rollout,google/api/servicemanagement/v1/resources.proto#L190}
   ///
   /// [google.api.servicemanagement.v1.GetServiceRolloutRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L472}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L458}
   /// [google.api.servicemanagement.v1.Rollout]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L198}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   StatusOr<google::api::servicemanagement::v1::Rollout> GetServiceRollout(
       std::string const& service_name, std::string const& rollout_id,
@@ -593,16 +603,16 @@ class ServiceManagerClient {
   /// [rollout][google.api.servicemanagement.v1.Rollout].
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::GetServiceRolloutRequest,google/api/servicemanagement/v1/servicemanager.proto#L472}
+  /// @googleapis_link{google::api::servicemanagement::v1::GetServiceRolloutRequest,google/api/servicemanagement/v1/servicemanager.proto#L458}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::Rollout,google/api/servicemanagement/v1/resources.proto#L198}
+  /// @googleapis_link{google::api::servicemanagement::v1::Rollout,google/api/servicemanagement/v1/resources.proto#L190}
   ///
   /// [google.api.servicemanagement.v1.GetServiceRolloutRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L472}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L458}
   /// [google.api.servicemanagement.v1.Rollout]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L198}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   StatusOr<google::api::servicemanagement::v1::Rollout> GetServiceRollout(
       google::api::servicemanagement::v1::GetServiceRolloutRequest const&
@@ -626,19 +636,19 @@ class ServiceManagerClient {
   /// Operation<response: Rollout>
   ///
   /// @param service_name  Required. The name of the service.  See the
-  /// [overview](https://cloud.google.com/service-management/overview)
+  ///  [overview](https://cloud.google.com/service-infrastructure/docs/overview)
   ///  for naming requirements.  For example: `example.googleapis.com`.
   /// @param rollout  Required. The rollout resource. The `service_name` field
   /// is output only.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::Rollout,google/api/servicemanagement/v1/resources.proto#L198}
+  /// @googleapis_link{google::api::servicemanagement::v1::Rollout,google/api/servicemanagement/v1/resources.proto#L190}
   ///
   /// [google.api.servicemanagement.v1.CreateServiceRolloutRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L429}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L413}
   /// [google.api.servicemanagement.v1.Rollout]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L198}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   future<StatusOr<google::api::servicemanagement::v1::Rollout>>
   CreateServiceRollout(
@@ -663,16 +673,16 @@ class ServiceManagerClient {
   /// Operation<response: Rollout>
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::CreateServiceRolloutRequest,google/api/servicemanagement/v1/servicemanager.proto#L429}
+  /// @googleapis_link{google::api::servicemanagement::v1::CreateServiceRolloutRequest,google/api/servicemanagement/v1/servicemanager.proto#L413}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::Rollout,google/api/servicemanagement/v1/resources.proto#L198}
+  /// @googleapis_link{google::api::servicemanagement::v1::Rollout,google/api/servicemanagement/v1/resources.proto#L190}
   ///
   /// [google.api.servicemanagement.v1.CreateServiceRolloutRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L429}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L413}
   /// [google.api.servicemanagement.v1.Rollout]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L198}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/resources.proto#L190}
   ///
   future<StatusOr<google::api::servicemanagement::v1::Rollout>>
   CreateServiceRollout(
@@ -708,12 +718,12 @@ class ServiceManagerClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::GenerateConfigReportResponse,google/api/servicemanagement/v1/servicemanager.proto#L545}
+  /// @googleapis_link{google::api::servicemanagement::v1::GenerateConfigReportResponse,google/api/servicemanagement/v1/servicemanager.proto#L486}
   ///
   /// [google.api.servicemanagement.v1.GenerateConfigReportRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L528}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L469}
   /// [google.api.servicemanagement.v1.GenerateConfigReportResponse]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L545}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L486}
   ///
   StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
   GenerateConfigReport(google::protobuf::Any const& new_config,
@@ -734,135 +744,21 @@ class ServiceManagerClient {
   /// service configuration.
   ///
   /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::GenerateConfigReportRequest,google/api/servicemanagement/v1/servicemanager.proto#L528}
+  /// @googleapis_link{google::api::servicemanagement::v1::GenerateConfigReportRequest,google/api/servicemanagement/v1/servicemanager.proto#L469}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::GenerateConfigReportResponse,google/api/servicemanagement/v1/servicemanager.proto#L545}
+  /// @googleapis_link{google::api::servicemanagement::v1::GenerateConfigReportResponse,google/api/servicemanagement/v1/servicemanager.proto#L486}
   ///
   /// [google.api.servicemanagement.v1.GenerateConfigReportRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L528}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L469}
   /// [google.api.servicemanagement.v1.GenerateConfigReportResponse]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L545}
+  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L486}
   ///
   StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
   GenerateConfigReport(
       google::api::servicemanagement::v1::GenerateConfigReportRequest const&
           request,
-      Options opts = {});
-
-  ///
-  /// Enables a [service][google.api.servicemanagement.v1.ManagedService] for a
-  /// project, so it can be used for the project. See [Cloud Auth
-  /// Guide](https://cloud.google.com/docs/authentication) for more information.
-  ///
-  /// Operation<response: EnableServiceResponse>
-  ///
-  /// @param service_name  Required. Name of the service to enable. Specifying
-  /// an unknown service name will
-  ///  cause the request to fail.
-  /// @param consumer_id  Required. The identity of consumer resource which
-  /// service enablement will be
-  ///  applied to.
-  ///  The Google Service Management implementation accepts the following
-  ///  forms:
-  ///  - "project:<project_id>"
-  ///  Note: this is made compatible with
-  ///  google.api.servicecontrol.v1.Operation.consumer_id.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::EnableServiceResponse,google/api/servicemanagement/v1/servicemanager.proto#L500}
-  ///
-  /// [google.api.servicemanagement.v1.EnableServiceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L482}
-  /// [google.api.servicemanagement.v1.EnableServiceResponse]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L500}
-  ///
-  future<StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>
-  EnableService(std::string const& service_name, std::string const& consumer_id,
-                Options opts = {});
-
-  ///
-  /// Enables a [service][google.api.servicemanagement.v1.ManagedService] for a
-  /// project, so it can be used for the project. See [Cloud Auth
-  /// Guide](https://cloud.google.com/docs/authentication) for more information.
-  ///
-  /// Operation<response: EnableServiceResponse>
-  ///
-  /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::EnableServiceRequest,google/api/servicemanagement/v1/servicemanager.proto#L482}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::EnableServiceResponse,google/api/servicemanagement/v1/servicemanager.proto#L500}
-  ///
-  /// [google.api.servicemanagement.v1.EnableServiceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L482}
-  /// [google.api.servicemanagement.v1.EnableServiceResponse]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L500}
-  ///
-  future<StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>
-  EnableService(
-      google::api::servicemanagement::v1::EnableServiceRequest const& request,
-      Options opts = {});
-
-  ///
-  /// Disables a [service][google.api.servicemanagement.v1.ManagedService] for a
-  /// project, so it can no longer be be used for the project. It prevents
-  /// accidental usage that may cause unexpected billing charges or security
-  /// leaks.
-  ///
-  /// Operation<response: DisableServiceResponse>
-  ///
-  /// @param service_name  Required. Name of the service to disable. Specifying
-  /// an unknown service name
-  ///  will cause the request to fail.
-  /// @param consumer_id  Required. The identity of consumer resource which
-  /// service disablement will be
-  ///  applied to.
-  ///  The Google Service Management implementation accepts the following
-  ///  forms:
-  ///  - "project:<project_id>"
-  ///  Note: this is made compatible with
-  ///  google.api.servicecontrol.v1.Operation.consumer_id.
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::DisableServiceResponse,google/api/servicemanagement/v1/servicemanager.proto#L523}
-  ///
-  /// [google.api.servicemanagement.v1.DisableServiceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L505}
-  /// [google.api.servicemanagement.v1.DisableServiceResponse]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L523}
-  ///
-  future<StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>
-  DisableService(std::string const& service_name,
-                 std::string const& consumer_id, Options opts = {});
-
-  ///
-  /// Disables a [service][google.api.servicemanagement.v1.ManagedService] for a
-  /// project, so it can no longer be be used for the project. It prevents
-  /// accidental usage that may cause unexpected billing charges or security
-  /// leaks.
-  ///
-  /// Operation<response: DisableServiceResponse>
-  ///
-  /// @param request
-  /// @googleapis_link{google::api::servicemanagement::v1::DisableServiceRequest,google/api/servicemanagement/v1/servicemanager.proto#L505}
-  /// @param opts Optional. Override the class-level options, such as retry and
-  ///     backoff policies.
-  /// @return
-  /// @googleapis_link{google::api::servicemanagement::v1::DisableServiceResponse,google/api/servicemanagement/v1/servicemanager.proto#L523}
-  ///
-  /// [google.api.servicemanagement.v1.DisableServiceRequest]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L505}
-  /// [google.api.servicemanagement.v1.DisableServiceResponse]:
-  /// @googleapis_reference_link{google/api/servicemanagement/v1/servicemanager.proto#L523}
-  ///
-  future<StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>
-  DisableService(
-      google::api::servicemanagement::v1::DisableServiceRequest const& request,
       Options opts = {});
 
  private:

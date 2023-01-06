@@ -31,10 +31,6 @@ namespace google {
 namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
-struct LifecycleRuleParser;
-struct GrpcBucketMetadataParser;
-}  // namespace internal
 
 /// Implement a wrapper for Lifecycle Rules actions.
 struct LifecycleRuleAction {
@@ -87,31 +83,15 @@ struct LifecycleRuleCondition {
   absl::optional<absl::CivilDay> noncurrent_time_before;
   absl::optional<std::int32_t> days_since_custom_time;
   absl::optional<absl::CivilDay> custom_time_before;
+  absl::optional<std::vector<std::string>> matches_prefix;
+  absl::optional<std::vector<std::string>> matches_suffix;
 };
 
-inline bool operator==(LifecycleRuleCondition const& lhs,
-                       LifecycleRuleCondition const& rhs) {
-  return lhs.age == rhs.age && lhs.created_before == rhs.created_before &&
-         lhs.is_live == rhs.is_live &&
-         lhs.matches_storage_class == rhs.matches_storage_class &&
-         lhs.num_newer_versions == rhs.num_newer_versions &&
-         lhs.days_since_noncurrent_time == rhs.days_since_noncurrent_time &&
-         lhs.noncurrent_time_before == rhs.noncurrent_time_before &&
-         lhs.days_since_custom_time == rhs.days_since_custom_time &&
-         lhs.custom_time_before == rhs.custom_time_before;
-}
+bool operator==(LifecycleRuleCondition const& lhs,
+                LifecycleRuleCondition const& rhs);
 
-inline bool operator<(LifecycleRuleCondition const& lhs,
-                      LifecycleRuleCondition const& rhs) {
-  return std::tie(lhs.age, lhs.created_before, lhs.is_live,
-                  lhs.matches_storage_class, lhs.num_newer_versions,
-                  lhs.days_since_noncurrent_time, lhs.noncurrent_time_before,
-                  lhs.days_since_custom_time, lhs.custom_time_before) <
-         std::tie(rhs.age, rhs.created_before, rhs.is_live,
-                  rhs.matches_storage_class, rhs.num_newer_versions,
-                  rhs.days_since_noncurrent_time, rhs.noncurrent_time_before,
-                  rhs.days_since_custom_time, rhs.custom_time_before);
-}
+bool operator<(LifecycleRuleCondition const& lhs,
+               LifecycleRuleCondition const& rhs);
 
 inline bool operator!=(LifecycleRuleCondition const& lhs,
                        LifecycleRuleCondition const& rhs) {
@@ -153,11 +133,12 @@ class LifecycleRule {
   LifecycleRuleAction const& action() const { return action_; }
   LifecycleRuleCondition const& condition() const { return condition_; }
 
-  //@{
   /**
    * @name Creates different types of LifecycleRule actions.
    */
+  ///@{
   static LifecycleRuleAction Delete();
+  static LifecycleRuleAction AbortIncompleteMultipartUpload();
   static LifecycleRuleAction SetStorageClassStandard();
   static LifecycleRuleAction SetStorageClassMultiRegional();
   static LifecycleRuleAction SetStorageClassRegional();
@@ -166,12 +147,12 @@ class LifecycleRule {
   static LifecycleRuleAction SetStorageClassDurableReducedAvailability();
   static LifecycleRuleAction SetStorageClassArchive();
   static LifecycleRuleAction SetStorageClass(std::string storage_class);
-  //@}
+  ///@}
 
-  //@{
   /**
    * @name Creates different types of LifecycleRule rules.
    */
+  ///@{
   static LifecycleRuleCondition MaxAge(std::int32_t days) {
     LifecycleRuleCondition result;
     result.age.emplace(std::move(days));
@@ -273,7 +254,39 @@ class LifecycleRule {
     result.custom_time_before = date;
     return result;
   }
-  //@}
+
+  static LifecycleRuleCondition MatchesPrefix(std::string prefix) {
+    std::vector<std::string> value;
+    value.emplace_back(std::move(prefix));
+    LifecycleRuleCondition result;
+    result.matches_prefix.emplace(std::move(value));
+    return result;
+  }
+
+  static LifecycleRuleCondition MatchesPrefixes(
+      std::initializer_list<std::string> list) {
+    std::vector<std::string> classes(std::move(list));
+    LifecycleRuleCondition result;
+    result.matches_prefix.emplace(std::move(classes));
+    return result;
+  }
+
+  static LifecycleRuleCondition MatchesSuffix(std::string suffix) {
+    std::vector<std::string> value;
+    value.emplace_back(std::move(suffix));
+    LifecycleRuleCondition result;
+    result.matches_suffix.emplace(std::move(value));
+    return result;
+  }
+
+  static LifecycleRuleCondition MatchesSuffixes(
+      std::initializer_list<std::string> list) {
+    std::vector<std::string> classes(std::move(list));
+    LifecycleRuleCondition result;
+    result.matches_suffix.emplace(std::move(classes));
+    return result;
+  }
+  ///@}
 
   /**
    * Combines multiple LifecycleRule conditions using conjunction.
@@ -308,9 +321,6 @@ class LifecycleRule {
   }
 
  private:
-  friend struct internal::LifecycleRuleParser;
-  friend struct internal::GrpcBucketMetadataParser;
-
   LifecycleRule() = default;
 
   static void MergeConditions(LifecycleRuleCondition& result,

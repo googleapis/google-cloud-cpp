@@ -14,12 +14,14 @@
 
 #include "google/cloud/pubsub/schema_admin_connection.h"
 #include "google/cloud/pubsub/internal/defaults.h"
-#include "google/cloud/pubsub/internal/schema_auth.h"
-#include "google/cloud/pubsub/internal/schema_logging.h"
-#include "google/cloud/pubsub/internal/schema_metadata.h"
+#include "google/cloud/pubsub/internal/schema_auth_decorator.h"
+#include "google/cloud/pubsub/internal/schema_logging_decorator.h"
+#include "google/cloud/pubsub/internal/schema_metadata_decorator.h"
 #include "google/cloud/pubsub/internal/schema_stub.h"
+#include "google/cloud/pubsub/internal/schema_stub_factory.h"
 #include "google/cloud/pubsub/options.h"
 #include "google/cloud/pubsub/retry_policy.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/internal/retry_loop.h"
 #include "google/cloud/log.h"
 #include <memory>
@@ -37,7 +39,7 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
  public:
   explicit SchemaAdminConnectionImpl(
       std::unique_ptr<google::cloud::BackgroundThreads> background,
-      std::shared_ptr<pubsub_internal::SchemaStub> stub, Options options)
+      std::shared_ptr<pubsub_internal::SchemaServiceStub> stub, Options options)
       : background_(std::move(background)),
         stub_(std::move(stub)),
         options_(std::move(options)) {}
@@ -148,24 +150,26 @@ class SchemaAdminConnectionImpl : public pubsub::SchemaAdminConnection {
   }
 
   std::unique_ptr<google::cloud::BackgroundThreads> background_;
-  std::shared_ptr<pubsub_internal::SchemaStub> stub_;
+  std::shared_ptr<pubsub_internal::SchemaServiceStub> stub_;
   Options options_;
 };
 
 // Decorates a SchemaAdminStub. This works for both mock and real stubs.
-std::shared_ptr<pubsub_internal::SchemaStub> DecorateSchemaAdminStub(
+std::shared_ptr<pubsub_internal::SchemaServiceStub> DecorateSchemaAdminStub(
     Options const& opts,
     std::shared_ptr<internal::GrpcAuthenticationStrategy> auth,
-    std::shared_ptr<pubsub_internal::SchemaStub> stub) {
+    std::shared_ptr<pubsub_internal::SchemaServiceStub> stub) {
   if (auth->RequiresConfigureContext()) {
-    stub = std::make_shared<pubsub_internal::SchemaAuth>(std::move(auth),
-                                                         std::move(stub));
+    stub = std::make_shared<pubsub_internal::SchemaServiceAuth>(
+        std::move(auth), std::move(stub));
   }
-  stub = std::make_shared<pubsub_internal::SchemaMetadata>(std::move(stub));
+  stub =
+      std::make_shared<pubsub_internal::SchemaServiceMetadata>(std::move(stub));
   if (internal::Contains(opts.get<TracingComponentsOption>(), "rpc")) {
     GCP_LOG(INFO) << "Enabled logging for gRPC calls";
-    stub = std::make_shared<pubsub_internal::SchemaLogging>(
-        std::move(stub), opts.get<GrpcTracingOptionsOption>());
+    stub = std::make_shared<pubsub_internal::SchemaServiceLogging>(
+        std::move(stub), opts.get<GrpcTracingOptionsOption>(),
+        opts.get<TracingComponentsOption>());
   }
   return stub;
 }
@@ -181,6 +185,7 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
 
 std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(Options opts) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  PolicyOptionList>(opts, __func__);
   opts = pubsub_internal::DefaultCommonOptions(std::move(opts));
 
@@ -213,7 +218,7 @@ namespace pubsub_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 std::shared_ptr<pubsub::SchemaAdminConnection> MakeTestSchemaAdminConnection(
-    Options const& opts, std::shared_ptr<SchemaStub> stub) {
+    Options const& opts, std::shared_ptr<SchemaServiceStub> stub) {
   auto background = internal::MakeBackgroundThreadsFactory(opts)();
   auto auth = google::cloud::internal::CreateAuthenticationStrategy(
       background->cq(), opts);

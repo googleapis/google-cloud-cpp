@@ -23,6 +23,7 @@
 #include "google/cloud/tasks/internal/cloud_tasks_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -122,6 +123,7 @@ StatusOr<google::cloud::tasks::v2::Task> CloudTasksConnection::RunTask(
 std::shared_ptr<CloudTasksConnection> MakeCloudTasksConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  CloudTasksPolicyOptionList>(options, __func__);
   options = tasks_internal::CloudTasksDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -133,23 +135,5 @@ std::shared_ptr<CloudTasksConnection> MakeCloudTasksConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace tasks
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace tasks_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<tasks::CloudTasksConnection> MakeCloudTasksConnection(
-    std::shared_ptr<CloudTasksStub> stub, Options options) {
-  options = CloudTasksDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<tasks_internal::CloudTasksConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace tasks_internal
 }  // namespace cloud
 }  // namespace google

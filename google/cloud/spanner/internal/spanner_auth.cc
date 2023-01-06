@@ -41,22 +41,6 @@ SpannerAuth::BatchCreateSessions(
   return child_->BatchCreateSessions(context, request);
 }
 
-StatusOr<google::spanner::v1::Session> SpannerAuth::GetSession(
-    grpc::ClientContext& context,
-    google::spanner::v1::GetSessionRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->GetSession(context, request);
-}
-
-StatusOr<google::spanner::v1::ListSessionsResponse> SpannerAuth::ListSessions(
-    grpc::ClientContext& context,
-    google::spanner::v1::ListSessionsRequest const& request) {
-  auto status = auth_->ConfigureContext(context);
-  if (!status.ok()) return status;
-  return child_->ListSessions(context, request);
-}
-
 Status SpannerAuth::DeleteSession(
     grpc::ClientContext& context,
     google::spanner::v1::DeleteSessionRequest const& request) {
@@ -150,7 +134,7 @@ SpannerAuth::AsyncBatchCreateSessions(
     CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
     google::spanner::v1::BatchCreateSessionsRequest const& request) {
   using ReturnType = StatusOr<google::spanner::v1::BatchCreateSessionsResponse>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -167,7 +151,7 @@ SpannerAuth::AsyncBatchCreateSessions(
 future<Status> SpannerAuth::AsyncDeleteSession(
     CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
     google::spanner::v1::DeleteSessionRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -182,7 +166,7 @@ future<StatusOr<google::spanner::v1::ResultSet>> SpannerAuth::AsyncExecuteSql(
     CompletionQueue& cq, std::unique_ptr<grpc::ClientContext> context,
     google::spanner::v1::ExecuteSqlRequest const& request) {
   using ReturnType = StatusOr<google::spanner::v1::ResultSet>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

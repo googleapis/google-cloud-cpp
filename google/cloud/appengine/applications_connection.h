@@ -48,6 +48,18 @@ using ApplicationsLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         appengine_internal::ApplicationsRetryTraits>;
 
+/**
+ * The `ApplicationsConnection` object for `ApplicationsClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ApplicationsClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ApplicationsClient`.
+ *
+ * To create a concrete instance, see `MakeApplicationsConnection()`.
+ *
+ * For mocking, see `appengine_mocks::MockApplicationsConnection`.
+ */
 class ApplicationsConnection {
  public:
   virtual ~ApplicationsConnection() = 0;
@@ -70,24 +82,32 @@ class ApplicationsConnection {
       google::appengine::v1::RepairApplicationRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `ApplicationsConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of ApplicationsClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `ApplicationsConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::appengine::ApplicationsPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `ApplicationsConnection` created by
+ * this function.
+ */
 std::shared_ptr<ApplicationsConnection> MakeApplicationsConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace appengine_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<appengine::ApplicationsConnection> MakeApplicationsConnection(
-    std::shared_ptr<ApplicationsStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace appengine_internal
 }  // namespace cloud
 }  // namespace google
 

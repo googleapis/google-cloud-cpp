@@ -32,10 +32,12 @@ function features::always_build() {
     pubsub
     pubsublite
     # While these libraries are automatically generated, they contain
-    # hand-crafted tests
+    # hand-crafted tests.
     bigquery
     iam
     logging
+    # By default, build the library with OpenTelemetry in our CI.
+    experimental-opentelemetry
   )
   printf "%s\n" "${list[@]}" | sort -u
 }
@@ -50,14 +52,14 @@ function features::always_build_cmake() {
 function features::libraries() {
   local feature_list
   mapfile -t feature_list <ci/etc/full_feature_list
-  mapfile -t always < <(features::always_build)
-  printf "%s\n" "${feature_list[@]}" "${always[@]}" | sort -u
+  printf "%s\n" "${feature_list[@]}" | sort -u
 }
 
 function features::list_full() {
   local feature_list
   mapfile -t feature_list < <(features::libraries)
-  printf "%s\n" "${feature_list[@]}" experimental-storage-grpc grafeas | sort -u
+  feature_list+=(experimental-opentelemetry experimental-storage-grpc grafeas)
+  printf "%s\n" "${feature_list[@]}" | sort -u
 }
 
 function features::list_full_cmake() {

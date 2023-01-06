@@ -35,9 +35,8 @@ DeviceManagerConnectionImpl::DeviceManagerConnectionImpl(
     std::shared_ptr<iot_internal::DeviceManagerStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), iot_internal::DeviceManagerDefaultOptions(
-                                  DeviceManagerConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      DeviceManagerConnection::options())) {}
 
 StatusOr<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerConnectionImpl::CreateDeviceRegistry(
@@ -97,7 +96,7 @@ StreamRange<google::cloud::iot::v1::DeviceRegistry>
 DeviceManagerConnectionImpl::ListDeviceRegistries(
     google::cloud::iot::v1::ListDeviceRegistriesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<iot::DeviceManagerRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -180,7 +179,7 @@ StreamRange<google::cloud::iot::v1::Device>
 DeviceManagerConnectionImpl::ListDevices(
     google::cloud::iot::v1::ListDevicesRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<iot::DeviceManagerRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

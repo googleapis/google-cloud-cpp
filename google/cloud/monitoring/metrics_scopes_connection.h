@@ -48,6 +48,18 @@ using MetricsScopesLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         monitoring_internal::MetricsScopesRetryTraits>;
 
+/**
+ * The `MetricsScopesConnection` object for `MetricsScopesClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `MetricsScopesClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `MetricsScopesClient`.
+ *
+ * To create a concrete instance, see `MakeMetricsScopesConnection()`.
+ *
+ * For mocking, see `monitoring_mocks::MockMetricsScopesConnection`.
+ */
 class MetricsScopesConnection {
  public:
   virtual ~MetricsScopesConnection() = 0;
@@ -78,25 +90,32 @@ class MetricsScopesConnection {
           request);
 };
 
+/**
+ * A factory function to construct an object of type `MetricsScopesConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of MetricsScopesClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `MetricsScopesConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::monitoring::MetricsScopesPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `MetricsScopesConnection` created by
+ * this function.
+ */
 std::shared_ptr<MetricsScopesConnection> MakeMetricsScopesConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace monitoring
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace monitoring_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<monitoring::MetricsScopesConnection>
-MakeMetricsScopesConnection(std::shared_ptr<MetricsScopesStub> stub,
-                            Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace monitoring_internal
 }  // namespace cloud
 }  // namespace google
 

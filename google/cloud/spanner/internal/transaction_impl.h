@@ -32,11 +32,16 @@ namespace cloud {
 namespace spanner_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+struct TransactionContext {
+  std::string const& tag;
+  std::int64_t seqno;
+};
+
 template <typename Functor>
 using VisitInvokeResult = ::google::cloud::internal::invoke_result_t<
     Functor, SessionHolder&,
-    StatusOr<google::spanner::v1::TransactionSelector>&, std::string const&,
-    std::int64_t>;
+    StatusOr<google::spanner::v1::TransactionSelector>&,
+    TransactionContext const&>;
 
 /**
  * The internal representation of a google::cloud::spanner::Transaction.
@@ -81,23 +86,23 @@ class TransactionImpl {
   // must not modify it. Rather it should use either the transaction ID or
   // the error state in a manner appropriate for the operation.
   //
-  // A tag string and a monotonically-increasing sequence number are also
-  // passed to the functor.
+  // Additional transaction context is also passed to the functor, including
+  // a tag string, and a monotonically-increasing sequence number.
   template <typename Functor>
   VisitInvokeResult<Functor> Visit(Functor&& f) {
     static_assert(google::cloud::internal::is_invocable<
                       Functor, SessionHolder&,
                       StatusOr<google::spanner::v1::TransactionSelector>&,
-                      std::string const&, std::int64_t>::value,
+                      TransactionContext const&>::value,
                   "TransactionImpl::Visit() functor has incompatible type.");
-    std::int64_t seqno;
+    TransactionContext ctx{tag_, 0};
     {
       std::unique_lock<std::mutex> lock(mu_);
-      seqno = ++seqno_;  // what about overflow?
+      ctx.seqno = ++seqno_;  // what about overflow?
       cond_.wait(lock, [this] { return state_ != State::kPending; });
       if (state_ == State::kDone) {
         lock.unlock();
-        return f(session_, selector_, tag_, seqno);
+        return f(session_, selector_, ctx);
       }
       state_ = State::kPending;
     }
@@ -105,7 +110,7 @@ class TransactionImpl {
 #if GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS
     try {
 #endif
-      auto r = f(session_, selector_, tag_, seqno);
+      auto r = f(session_, selector_, ctx);
       bool done = false;
       {
         std::lock_guard<std::mutex> lock(mu_);

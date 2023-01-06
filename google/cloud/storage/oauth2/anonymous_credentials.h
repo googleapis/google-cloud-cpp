@@ -33,6 +33,8 @@ namespace oauth2 {
  * (b) when accessing publicly readable resources (e.g. a Google Cloud Storage
  * object that is readable by the "allUsers" entity), which requires no
  * authentication or authorization.
+ *
+ * @deprecated Prefer using the unified credentials documented in @ref guac
  */
 class AnonymousCredentials : public Credentials {
  public:

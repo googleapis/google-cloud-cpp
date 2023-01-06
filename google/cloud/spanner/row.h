@@ -80,9 +80,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *   std::cout << "LastName=" << *x << "\n";
  * }
  * @endcode
- *
- * @note There is a helper function defined below named `MakeTestRow()` to make
- *     creating `Row` instances for testing easier.
  */
 class Row {
  public:
@@ -211,6 +208,7 @@ class Row {
  * This function is intended for application developers who are mocking the
  * results of a `Client::ExecuteQuery` call.
  */
+GOOGLE_CLOUD_CPP_SPANNER_MAKE_TEST_ROW_DEPRECATED()
 Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs);
 
 /**
@@ -226,6 +224,7 @@ Row MakeTestRow(std::vector<std::pair<std::string, Value>> pairs);
  * results of a `Client::ExecuteQuery` call.
  */
 template <typename... Ts>
+GOOGLE_CLOUD_CPP_SPANNER_MAKE_TEST_ROW_DEPRECATED()
 Row MakeTestRow(Ts&&... ts) {
   auto columns = std::make_shared<std::vector<std::string>>();
   for (std::size_t i = 0; i < sizeof...(ts); ++i) {

@@ -31,26 +31,48 @@ namespace cloud {
 namespace gameservices {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-gameservices-options
+ */
 struct RealmsServiceRetryPolicyOption {
   using Type = std::shared_ptr<RealmsServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-gameservices-options
+ */
 struct RealmsServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct RealmsServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-gameservices-options
+ */
 struct RealmsServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<RealmsServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-gameservices-options
+ */
+struct RealmsServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to RealmsService.
+ *
+ * @ingroup google-cloud-gameservices-options
+ */
 using RealmsServicePolicyOptionList =
     OptionList<RealmsServiceRetryPolicyOption, RealmsServiceBackoffPolicyOption,
                RealmsServicePollingPolicyOption,

@@ -46,6 +46,18 @@ using KeyManagementServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         kms_internal::KeyManagementServiceRetryTraits>;
 
+/**
+ * The `KeyManagementServiceConnection` object for `KeyManagementServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `KeyManagementServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `KeyManagementServiceClient`.
+ *
+ * To create a concrete instance, see `MakeKeyManagementServiceConnection()`.
+ *
+ * For mocking, see `kms_mocks::MockKeyManagementServiceConnection`.
+ */
 class KeyManagementServiceConnection {
  public:
   virtual ~KeyManagementServiceConnection() = 0;
@@ -142,25 +154,34 @@ class KeyManagementServiceConnection {
       google::cloud::kms::v1::GenerateRandomBytesRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `KeyManagementServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * KeyManagementServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `KeyManagementServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::kms::KeyManagementServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `KeyManagementServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<KeyManagementServiceConnection>
 MakeKeyManagementServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace kms
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace kms_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<kms::KeyManagementServiceConnection>
-MakeKeyManagementServiceConnection(
-    std::shared_ptr<KeyManagementServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace kms_internal
 }  // namespace cloud
 }  // namespace google
 

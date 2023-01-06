@@ -121,6 +121,20 @@ Status DefaultSecurityCenterStub::DeleteNotificationConfig(
   return google::cloud::Status();
 }
 
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+DefaultSecurityCenterStub::GetBigQueryExport(
+    grpc::ClientContext& client_context,
+    google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+        request) {
+  google::cloud::securitycenter::v1::BigQueryExport response;
+  auto status =
+      grpc_stub_->GetBigQueryExport(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 StatusOr<google::iam::v1::Policy> DefaultSecurityCenterStub::GetIamPolicy(
     grpc::ClientContext& client_context,
     google::iam::v1::GetIamPolicyRequest const& request) {
@@ -423,6 +437,61 @@ DefaultSecurityCenterStub::UpdateSecurityMarks(
   google::cloud::securitycenter::v1::SecurityMarks response;
   auto status =
       grpc_stub_->UpdateSecurityMarks(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+DefaultSecurityCenterStub::CreateBigQueryExport(
+    grpc::ClientContext& client_context,
+    google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+        request) {
+  google::cloud::securitycenter::v1::BigQueryExport response;
+  auto status =
+      grpc_stub_->CreateBigQueryExport(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+Status DefaultSecurityCenterStub::DeleteBigQueryExport(
+    grpc::ClientContext& client_context,
+    google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+        request) {
+  google::protobuf::Empty response;
+  auto status =
+      grpc_stub_->DeleteBigQueryExport(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return google::cloud::Status();
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+DefaultSecurityCenterStub::UpdateBigQueryExport(
+    grpc::ClientContext& client_context,
+    google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+        request) {
+  google::cloud::securitycenter::v1::BigQueryExport response;
+  auto status =
+      grpc_stub_->UpdateBigQueryExport(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
+DefaultSecurityCenterStub::ListBigQueryExports(
+    grpc::ClientContext& client_context,
+    google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
+        request) {
+  google::cloud::securitycenter::v1::ListBigQueryExportsResponse response;
+  auto status =
+      grpc_stub_->ListBigQueryExports(&client_context, request, &response);
   if (!status.ok()) {
     return google::cloud::MakeStatusFromRpcError(status);
   }

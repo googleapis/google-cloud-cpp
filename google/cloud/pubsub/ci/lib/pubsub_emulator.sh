@@ -22,7 +22,7 @@ fi # include guard
 
 source module /ci/lib/io.sh
 
-# Global variable that holds the PID of the Pubsub emulator. This will be set
+# Global variable that holds the PID of the Pub/Sub emulator. This will be set
 # when the emulator is started, and it will be used to kill the emulator.
 PUBSUB_EMULATOR_PID=0
 
@@ -33,8 +33,8 @@ function pubsub_emulator::internal::read_emulator_port() {
 
   local emulator_port="0"
   local -r expected=": Server started, listening on "
-  for _ in $(seq 1 12); do
-    if grep -q "${expected}" "${logfile}"; then
+  for _ in $(seq 1 60); do
+    if grep -q -s "${expected}" "${logfile}"; then
       # The port number is whatever is after 'listening on'.
       emulator_port=$(grep "${expected}" "${logfile}" | awk -F' ' '{print $NF}')
       break
@@ -73,7 +73,7 @@ function pubsub_emulator::start() {
 
   local -r emulator_port="$(pubsub_emulator::internal::read_emulator_port emulator.log)"
   if [[ "${emulator_port}" = "0" ]]; then
-    echo "Cannot determine Cloud Pub/Sub emulator port." >&2
+    io::log_red "Cannot determine Cloud Pub/Sub emulator port." >&2
     cat emulator.log >&2
     pubsub_emulator::kill
     return 1

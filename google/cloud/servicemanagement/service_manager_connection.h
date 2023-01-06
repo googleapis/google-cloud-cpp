@@ -49,6 +49,18 @@ using ServiceManagerLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         servicemanagement_internal::ServiceManagerRetryTraits>;
 
+/**
+ * The `ServiceManagerConnection` object for `ServiceManagerClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `ServiceManagerClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `ServiceManagerClient`.
+ *
+ * To create a concrete instance, see `MakeServiceManagerConnection()`.
+ *
+ * For mocking, see `servicemanagement_mocks::MockServiceManagerConnection`.
+ */
 class ServiceManagerConnection {
  public:
   virtual ~ServiceManagerConnection() = 0;
@@ -113,37 +125,34 @@ class ServiceManagerConnection {
   GenerateConfigReport(
       google::api::servicemanagement::v1::GenerateConfigReportRequest const&
           request);
-
-  virtual future<
-      StatusOr<google::api::servicemanagement::v1::EnableServiceResponse>>
-  EnableService(
-      google::api::servicemanagement::v1::EnableServiceRequest const& request);
-
-  virtual future<
-      StatusOr<google::api::servicemanagement::v1::DisableServiceResponse>>
-  DisableService(
-      google::api::servicemanagement::v1::DisableServiceRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type `ServiceManagerConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of ServiceManagerClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `ServiceManagerConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::servicemanagement::ServiceManagerPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `ServiceManagerConnection` created by
+ * this function.
+ */
 std::shared_ptr<ServiceManagerConnection> MakeServiceManagerConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace servicemanagement
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace servicemanagement_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<servicemanagement::ServiceManagerConnection>
-MakeServiceManagerConnection(std::shared_ptr<ServiceManagerStub> stub,
-                             Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace servicemanagement_internal
 }  // namespace cloud
 }  // namespace google
 

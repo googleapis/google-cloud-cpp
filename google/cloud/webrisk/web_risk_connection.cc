@@ -23,6 +23,7 @@
 #include "google/cloud/webrisk/web_risk_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -60,6 +61,7 @@ WebRiskServiceConnection::CreateSubmission(
 std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  WebRiskServicePolicyOptionList>(options,
                                                                  __func__);
   options = webrisk_internal::WebRiskServiceDefaultOptions(std::move(options));
@@ -72,23 +74,5 @@ std::shared_ptr<WebRiskServiceConnection> MakeWebRiskServiceConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace webrisk
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace webrisk_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<webrisk::WebRiskServiceConnection> MakeWebRiskServiceConnection(
-    std::shared_ptr<WebRiskServiceStub> stub, Options options) {
-  options = WebRiskServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<webrisk_internal::WebRiskServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace webrisk_internal
 }  // namespace cloud
 }  // namespace google

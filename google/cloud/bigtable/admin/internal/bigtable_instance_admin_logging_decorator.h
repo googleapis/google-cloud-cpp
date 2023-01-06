@@ -136,6 +136,11 @@ class BigtableInstanceAdminLogging : public BigtableInstanceAdminStub {
       grpc::ClientContext& context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
+  StatusOr<google::bigtable::admin::v2::ListHotTabletsResponse> ListHotTablets(
+      grpc::ClientContext& context,
+      google::bigtable::admin::v2::ListHotTabletsRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

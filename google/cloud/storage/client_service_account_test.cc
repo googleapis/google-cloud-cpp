@@ -29,6 +29,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::internal::CurrentOptions;
 using ::google::cloud::storage::testing::canonical_errors::TransientError;
 using ::testing::Return;
 using ms = std::chrono::milliseconds;
@@ -49,13 +50,15 @@ TEST_F(ServiceAccountTest, GetProjectServiceAccount) {
       .WillOnce(Return(StatusOr<ServiceAccount>(TransientError())))
       .WillOnce(
           [&expected](internal::GetProjectServiceAccountRequest const& r) {
+            EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+            EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
             EXPECT_EQ("test-project", r.project_id());
 
             return make_status_or(expected);
           });
   auto client = ClientForMock();
-  StatusOr<ServiceAccount> actual =
-      client.GetServiceAccountForProject("test-project");
+  StatusOr<ServiceAccount> actual = client.GetServiceAccountForProject(
+      "test-project", Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected, *actual);
 }
@@ -89,6 +92,8 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
       .WillOnce(
           Return(StatusOr<internal::CreateHmacKeyResponse>(TransientError())))
       .WillOnce([&expected](internal::CreateHmacKeyRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-project", r.project_id());
         EXPECT_EQ("test-service-account", r.service_account());
 
@@ -97,7 +102,8 @@ TEST_F(ServiceAccountTest, CreateHmacKey) {
   auto client = ClientForMock();
   StatusOr<std::pair<HmacKeyMetadata, std::string>> actual =
       client.CreateHmacKey("test-service-account",
-                           OverrideDefaultProject("test-project"));
+                           OverrideDefaultProject("test-project"),
+                           Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected.metadata, actual->first);
   EXPECT_EQ(expected.secret, actual->second);
@@ -126,14 +132,17 @@ TEST_F(ServiceAccountTest, DeleteHmacKey) {
   EXPECT_CALL(*mock_, DeleteHmacKey)
       .WillOnce(Return(StatusOr<internal::EmptyResponse>(TransientError())))
       .WillOnce([](internal::DeleteHmacKeyRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-project", r.project_id());
         EXPECT_EQ("test-access-id-1", r.access_id());
 
         return make_status_or(internal::EmptyResponse{});
       });
   auto client = ClientForMock();
-  Status actual = client.DeleteHmacKey("test-access-id-1",
-                                       OverrideDefaultProject("test-project"));
+  Status actual = client.DeleteHmacKey(
+      "test-access-id-1", OverrideDefaultProject("test-project"),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
 }
 
@@ -161,6 +170,8 @@ TEST_F(ServiceAccountTest, GetHmacKey) {
   EXPECT_CALL(*mock_, GetHmacKey)
       .WillOnce(Return(StatusOr<HmacKeyMetadata>(TransientError())))
       .WillOnce([&expected](internal::GetHmacKeyRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-project", r.project_id());
         EXPECT_EQ("test-access-id-1", r.access_id());
 
@@ -168,7 +179,8 @@ TEST_F(ServiceAccountTest, GetHmacKey) {
       });
   auto client = ClientForMock();
   StatusOr<HmacKeyMetadata> actual = client.GetHmacKey(
-      "test-access-id-1", OverrideDefaultProject("test-project"));
+      "test-access-id-1", OverrideDefaultProject("test-project"),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected.access_id(), actual->access_id());
   EXPECT_EQ(expected.state(), actual->state());
@@ -202,6 +214,8 @@ TEST_F(ServiceAccountTest, UpdateHmacKey) {
   EXPECT_CALL(*mock_, UpdateHmacKey)
       .WillOnce(Return(StatusOr<HmacKeyMetadata>(TransientError())))
       .WillOnce([&expected](internal::UpdateHmacKeyRequest const& r) {
+        EXPECT_EQ(CurrentOptions().get<AuthorityOption>(), "a-default");
+        EXPECT_EQ(CurrentOptions().get<UserProjectOption>(), "u-p-test");
         EXPECT_EQ("test-project", r.project_id());
         EXPECT_EQ("test-access-id-1", r.access_id());
 
@@ -210,7 +224,8 @@ TEST_F(ServiceAccountTest, UpdateHmacKey) {
   auto client = ClientForMock();
   StatusOr<HmacKeyMetadata> actual = client.UpdateHmacKey(
       "test-access-id-1", HmacKeyMetadata().set_state("ACTIVE"),
-      OverrideDefaultProject("test-project"));
+      OverrideDefaultProject("test-project"),
+      Options{}.set<UserProjectOption>("u-p-test"));
   ASSERT_STATUS_OK(actual);
   EXPECT_EQ(expected.access_id(), actual->access_id());
   EXPECT_EQ(expected.state(), actual->state());

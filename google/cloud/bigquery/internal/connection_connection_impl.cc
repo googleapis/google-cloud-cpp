@@ -37,9 +37,7 @@ ConnectionServiceConnectionImpl::ConnectionServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          bigquery_internal::ConnectionServiceDefaultOptions(
-              ConnectionServiceConnection::options()))) {}
+          std::move(options), ConnectionServiceConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceConnectionImpl::CreateConnection(
@@ -74,7 +72,7 @@ StreamRange<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceConnectionImpl::ListConnections(
     google::cloud::bigquery::connection::v1::ListConnectionsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::ConnectionServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

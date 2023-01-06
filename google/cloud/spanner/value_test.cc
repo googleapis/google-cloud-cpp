@@ -150,6 +150,16 @@ TEST(Value, BasicSemantics) {
     TestBasicSemantics(v);
   }
 
+  for (auto const& x : std::vector<JsonB>{JsonB(), JsonB(R"("Hello world!")"),
+                                          JsonB("42"), JsonB("true")}) {
+    SCOPED_TRACE("Testing: JSONB " + std::string(x));
+    TestBasicSemantics(x);
+    TestBasicSemantics(std::vector<JsonB>(5, x));
+    std::vector<absl::optional<JsonB>> v(5, x);
+    v.resize(10);
+    TestBasicSemantics(v);
+  }
+
   for (auto const& x : {
            MakeNumeric(-0.9e29).value(),
            MakeNumeric(-1).value(),
@@ -224,7 +234,9 @@ TEST(Value, Equality) {
       {Value("foo"), Value("bar")},
       {Value(Bytes("foo")), Value(Bytes("bar"))},
       {Value(Json("42")), Value(Json("true"))},
+      {Value(JsonB("42")), Value(JsonB("true"))},
       {Value(MakeNumeric(0).value()), Value(MakeNumeric(1).value())},
+      {Value(MakePgNumeric(0).value()), Value(MakePgNumeric(1).value())},
       {Value(absl::CivilDay(1970, 1, 1)), Value(absl::CivilDay(2020, 3, 15))},
       {Value(std::vector<double>{1.2, 3.4}),
        Value(std::vector<double>{4.5, 6.7})},
@@ -350,10 +362,11 @@ TEST(Value, DoubleNaN) {
   Value v{nan};
   EXPECT_TRUE(std::isnan(*v.get<double>()));
 
-  // Since IEEE 754 defines that nan is not equal to itself, then a Value with
-  // NaN should not be equal to itself.
+  // Unlike IEEE 754, which defines that NaN is not equal to itself,
+  // Spanner NaN values are considered equal (for easy sorting), so
+  // spanner::Value behaves the same way.
   EXPECT_NE(nan, nan);
-  EXPECT_NE(v, v);
+  EXPECT_EQ(v, v);
 }
 
 TEST(Value, BytesDecodingError) {
@@ -387,6 +400,14 @@ TEST(Value, JsonRelationalOperators) {
 
   EXPECT_EQ(j1, j1);
   EXPECT_NE(j1, j2);
+}
+
+TEST(Value, JsonBRelationalOperators) {
+  JsonB jb1("42");
+  JsonB jb2("true");
+
+  EXPECT_EQ(jb1, jb1);
+  EXPECT_NE(jb1, jb2);
 }
 
 TEST(Value, ConstructionFromLiterals) {
@@ -655,9 +676,9 @@ TEST(Value, ProtoConversionFloat64) {
   auto const nan = std::nan("NaN");
   v = Value(nan);
   p = spanner_internal::ToProto(v);
-  // Note: NaN is defined to be not equal to everything, including itself, so
-  // we instead ensure that it is not equal with EXPECT_NE.
-  EXPECT_NE(v, spanner_internal::FromProto(p.first, p.second));
+  // Note: Unlike IEEE 754, Spanner NaN values are considered equal
+  // (for easy sorting), so spanner::Value behaves the same way.
+  EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
   EXPECT_EQ(google::spanner::v1::TypeCode::FLOAT64, p.first.code());
   EXPECT_EQ("NaN", p.second.string_value());
 }
@@ -691,6 +712,22 @@ TEST(Value, ProtoConversionJson) {
     auto const p = spanner_internal::ToProto(v);
     EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
     EXPECT_EQ(google::spanner::v1::TypeCode::JSON, p.first.code());
+    EXPECT_EQ(google::spanner::v1::TypeAnnotationCode::
+                  TYPE_ANNOTATION_CODE_UNSPECIFIED,
+              p.first.type_annotation());
+    EXPECT_EQ(std::string(x), p.second.string_value());
+  }
+}
+
+TEST(Value, ProtoConversionJsonB) {
+  for (auto const& x : std::vector<JsonB>{JsonB(), JsonB(R"("Hello world!")"),
+                                          JsonB("42"), JsonB("true")}) {
+    Value const v(x);
+    auto const p = spanner_internal::ToProto(v);
+    EXPECT_EQ(v, spanner_internal::FromProto(p.first, p.second));
+    EXPECT_EQ(google::spanner::v1::TypeCode::JSON, p.first.code());
+    EXPECT_EQ(google::spanner::v1::TypeAnnotationCode::PG_JSONB,
+              p.first.type_annotation());
     EXPECT_EQ(std::string(x), p.second.string_value());
   }
 }
@@ -908,6 +945,21 @@ TEST(Value, GetBadJson) {
   EXPECT_THAT(v.get<Json>(), Not(IsOk()));
 }
 
+TEST(Value, GetBadJsonB) {
+  Value v(JsonB("true"));
+  ClearProtoKind(v);
+  EXPECT_THAT(v.get<JsonB>(), Not(IsOk()));
+
+  SetProtoKind(v, google::protobuf::NULL_VALUE);
+  EXPECT_THAT(v.get<JsonB>(), Not(IsOk()));
+
+  SetProtoKind(v, true);
+  EXPECT_THAT(v.get<JsonB>(), Not(IsOk()));
+
+  SetProtoKind(v, 0.0);
+  EXPECT_THAT(v.get<JsonB>(), Not(IsOk()));
+}
+
 TEST(Value, GetBadNumeric) {
   Value v(MakeNumeric(0).value());
   ClearProtoKind(v);
@@ -1094,7 +1146,6 @@ TEST(Value, OutputStream) {
   };
 
   auto const inf = std::numeric_limits<double>::infinity();
-  auto const nan = std::nan("NaN");
 
   struct TestCase {
     Value value;
@@ -1113,14 +1164,16 @@ TEST(Value, OutputStream) {
       {Value(42.0), "42.00", float4},
       {Value(inf), "inf", normal},
       {Value(-inf), "-inf", normal},
-      {Value(nan), "nan", normal},
       {Value(""), "", normal},
       {Value("foo"), "foo", normal},
       {Value("NULL"), "NULL", normal},
       {Value(Bytes(std::string("DEADBEEF"))), R"(B"DEADBEEF")", normal},
       {Value(Json()), "null", normal},
       {Value(Json("true")), "true", normal},
+      {Value(JsonB()), "null", normal},
+      {Value(JsonB("true")), "true", normal},
       {Value(MakeNumeric(1234567890).value()), "1234567890", normal},
+      {Value(MakePgNumeric(1234567890).value()), "1234567890", normal},
       {Value(absl::CivilDay()), "1970-01-01", normal},
       {Value(Timestamp()), "1970-01-01T00:00:00Z", normal},
 
@@ -1144,6 +1197,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::string>(), "NULL", normal},
       {MakeNullValue<Bytes>(), "NULL", normal},
       {MakeNullValue<Json>(), "NULL", normal},
+      {MakeNullValue<JsonB>(), "NULL", normal},
       {MakeNullValue<Numeric>(), "NULL", normal},
       {MakeNullValue<absl::CivilDay>(), "NULL", normal},
       {MakeNullValue<Timestamp>(), "NULL", normal},
@@ -1158,10 +1212,13 @@ TEST(Value, OutputStream) {
       {Value(std::vector<std::string>{"a", "b"}), R"(["a", "b"])", normal},
       {Value(std::vector<Bytes>{2}), R"([B"", B""])", normal},
       {Value(std::vector<Json>{2}), R"([null, null])", normal},
+      {Value(std::vector<JsonB>{2}), R"([null, null])", normal},
       {Value(std::vector<Numeric>{2}), "[0, 0]", normal},
       {Value(std::vector<absl::CivilDay>{2}), "[1970-01-01, 1970-01-01]",
        normal},
       {Value(std::vector<Timestamp>{1}), "[1970-01-01T00:00:00Z]", normal},
+
+      // Tests arrays with null elements
       {Value(std::vector<absl::optional<double>>{1, {}, 2}), "[1, NULL, 2]",
        normal},
 
@@ -1172,6 +1229,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::vector<std::string>>(), "NULL", normal},
       {MakeNullValue<std::vector<Bytes>>(), "NULL", normal},
       {MakeNullValue<std::vector<Json>>(), "NULL", normal},
+      {MakeNullValue<std::vector<JsonB>>(), "NULL", normal},
       {MakeNullValue<std::vector<Numeric>>(), "NULL", normal},
       {MakeNullValue<std::vector<absl::CivilDay>>(), "NULL", normal},
       {MakeNullValue<std::vector<Timestamp>>(), "NULL", normal},
@@ -1216,6 +1274,7 @@ TEST(Value, OutputStream) {
       {MakeNullValue<std::tuple<double, Bytes, Timestamp>>(), "NULL", normal},
       {MakeNullValue<std::tuple<Numeric, absl::CivilDay>>(), "NULL", normal},
       {MakeNullValue<std::tuple<Json, std::vector<bool>>>(), "NULL", normal},
+      {MakeNullValue<std::tuple<JsonB, std::vector<bool>>>(), "NULL", normal},
   };
 
   for (auto const& tc : test_case) {
@@ -1223,6 +1282,12 @@ TEST(Value, OutputStream) {
     tc.manip(ss) << tc.value;
     EXPECT_EQ(ss.str(), tc.expected);
   }
+
+  // `double std::nan("")` is a special case because the output conversion
+  // is implementation defined. So, we just look for a "nan" substring.
+  std::stringstream ss;
+  ss << Value(std::nan(""));
+  EXPECT_THAT(ss.str(), HasSubstr("nan"));
 }
 
 // Ensures that the following expressions produce the same output.
@@ -1271,10 +1336,22 @@ TEST(Value, OutputStreamMatchesT) {
   StreamMatchesValueStream(Json("42"));
   StreamMatchesValueStream(Json("true"));
 
+  // JSONB
+  StreamMatchesValueStream(JsonB());
+  StreamMatchesValueStream(JsonB(R"("Hello world!")"));
+  StreamMatchesValueStream(JsonB("42"));
+  StreamMatchesValueStream(JsonB("true"));
+
   // Numeric
   StreamMatchesValueStream(MakeNumeric("999").value());
   StreamMatchesValueStream(MakeNumeric(3.14159).value());
   StreamMatchesValueStream(MakeNumeric(42).value());
+
+  // PgNumeric
+  StreamMatchesValueStream(MakePgNumeric("999").value());
+  StreamMatchesValueStream(MakePgNumeric(3.14159).value());
+  StreamMatchesValueStream(MakePgNumeric(42).value());
+  StreamMatchesValueStream(MakePgNumeric("NaN").value());
 
   // Date
   StreamMatchesValueStream(absl::CivilDay(1, 1, 1));

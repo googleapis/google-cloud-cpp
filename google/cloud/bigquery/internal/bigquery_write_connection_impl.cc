@@ -34,9 +34,8 @@ BigQueryWriteConnectionImpl::BigQueryWriteConnectionImpl(
     std::shared_ptr<bigquery_internal::BigQueryWriteStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), bigquery_internal::BigQueryWriteDefaultOptions(
-                                  BigQueryWriteConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      BigQueryWriteConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
 BigQueryWriteConnectionImpl::CreateWriteStream(

@@ -14,13 +14,11 @@
 
 #include "google/cloud/storage/bucket_metadata.h"
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
-#include "google/cloud/storage/internal/bucket_acl_requests.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
-#include "google/cloud/storage/internal/bucket_requests.h"
 #include "google/cloud/storage/internal/object_access_control_parser.h"
-#include "google/cloud/storage/internal/object_acl_requests.h"
 #include "google/cloud/storage/storage_class.h"
 #include "google/cloud/internal/format_time_point.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <nlohmann/json.hpp>
 
@@ -30,6 +28,7 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
 
@@ -69,6 +68,10 @@ BucketMetadata CreateBucketMetadataForTest() {
         "etag": "AYX="
       }
       ],
+      "autoclass": {
+        "enabled": true,
+        "toggleTime": "2022-10-07T01:02:03Z"
+      },
       "billing": {
         "requesterPays": true
       },
@@ -126,7 +129,9 @@ BucketMetadata CreateBucketMetadataForTest() {
           }
         }, {
           "condition": {
-            "createdBefore": "2016-01-01"
+            "createdBefore": "2016-01-01",
+            "matchesPrefix": [ "archive/", "obsolete/"],
+            "matchesSuffix": [ ".bak", ".delete-me"]
           },
           "action": {
             "type": "Delete"
@@ -162,6 +167,9 @@ BucketMetadata CreateBucketMetadataForTest() {
       "website": {
         "mainPageSuffix": "index.html",
         "notFoundPage": "404.html"
+      },
+      "customPlacementConfig": {
+        "dataLocations": ["us-central1", "us-east1"]
       }
 })""";
   return internal::BucketMetadataParser::FromString(text).value();
@@ -174,6 +182,14 @@ TEST(BucketMetadataTest, Parse) {
   EXPECT_EQ(2, actual.acl().size());
   EXPECT_EQ("acl-id-0", actual.acl().at(0).id());
   EXPECT_EQ("acl-id-1", actual.acl().at(1).id());
+
+  auto const expected_autoclass_toggle =
+      google::cloud::internal::ParseRfc3339("2022-10-07T01:02:03Z");
+  ASSERT_STATUS_OK(expected_autoclass_toggle);
+  ASSERT_TRUE(actual.has_autoclass());
+  EXPECT_EQ(actual.autoclass(),
+            BucketAutoclass(true, *expected_autoclass_toggle));
+
   EXPECT_TRUE(actual.billing().requester_pays);
   EXPECT_EQ(2, actual.cors().size());
   auto expected_cors_0 =
@@ -216,22 +232,20 @@ TEST(BucketMetadataTest, Parse) {
 
   EXPECT_TRUE(actual.has_lifecycle());
   EXPECT_EQ(2, actual.lifecycle().rule.size());
-  LifecycleRuleCondition expected_condition_0 =
-      LifecycleRule::ConditionConjunction(
-          LifecycleRule::MaxAge(30),
-          LifecycleRule::MatchesStorageClassStandard());
-  EXPECT_EQ(expected_condition_0, actual.lifecycle().rule.at(0).condition());
 
-  LifecycleRuleAction expected_action_0 =
-      LifecycleRule::SetStorageClassNearline();
-  EXPECT_EQ(expected_action_0, actual.lifecycle().rule.at(0).action());
-
-  LifecycleRuleCondition expected_condition_1 =
-      LifecycleRule::CreatedBefore(absl::CivilDay(2016, 1, 1));
-  EXPECT_EQ(expected_condition_1, actual.lifecycle().rule.at(1).condition());
-
-  LifecycleRuleAction expected_action_1 = LifecycleRule::Delete();
-  EXPECT_EQ(expected_action_1, actual.lifecycle().rule.at(1).action());
+  EXPECT_THAT(
+      actual.lifecycle().rule,
+      ElementsAre(
+          LifecycleRule{LifecycleRule::ConditionConjunction(
+                            LifecycleRule::MaxAge(30),
+                            LifecycleRule::MatchesStorageClassStandard()),
+                        LifecycleRule::SetStorageClassNearline()},
+          LifecycleRule{
+              LifecycleRule::ConditionConjunction(
+                  LifecycleRule::CreatedBefore(absl::CivilDay(2016, 1, 1)),
+                  LifecycleRule::MatchesPrefixes({"archive/", "obsolete/"}),
+                  LifecycleRule::MatchesSuffixes({".bak", ".delete-me"})),
+              LifecycleRule::Delete()}));
 
   EXPECT_EQ("US", actual.location());
   EXPECT_EQ("regional", actual.location_type());
@@ -278,6 +292,14 @@ TEST(BucketMetadataTest, Parse) {
   ASSERT_TRUE(actual.has_website());
   EXPECT_EQ("index.html", actual.website().main_page_suffix);
   EXPECT_EQ("404.html", actual.website().not_found_page);
+
+  // custom placement config
+  ASSERT_TRUE(actual.has_custom_placement_config());
+  EXPECT_THAT(actual.custom_placement_config().data_locations,
+              ElementsAre("us-central1", "us-east1"));
+  ASSERT_TRUE(actual.custom_placement_config_as_optional().has_value());
+  EXPECT_THAT(actual.custom_placement_config_as_optional()->data_locations,
+              ElementsAre("us-central1", "us-east1"));
 }
 
 /// @test Verify that the IOStream operator works as expected.
@@ -292,6 +314,12 @@ TEST(BucketMetadataTest, IOStream) {
   // acl()
   EXPECT_THAT(actual, HasSubstr("acl-id-0"));
   EXPECT_THAT(actual, HasSubstr("acl-id-1"));
+
+  // autoclass()
+  EXPECT_THAT(
+      actual,
+      HasSubstr("autoclass={enabled=true, toggle_time=2022-10-07T01:02:03Z}"));
+
   // billing()
   EXPECT_THAT(actual, HasSubstr("enabled=true"));
 
@@ -351,6 +379,12 @@ TEST(BucketMetadataTest, IOStream) {
   // website()
   EXPECT_THAT(actual, HasSubstr("index.html"));
   EXPECT_THAT(actual, HasSubstr("404.html"));
+
+  // custom_placement_config()
+  EXPECT_THAT(
+      actual,
+      HasSubstr(
+          "custom_placement_config.data_locations=[us-central1, us-east1]"));
 }
 
 /// @test Verify we can convert a BucketMetadata object to a JSON string.
@@ -366,6 +400,15 @@ TEST(BucketMetadataTest, ToJsonString) {
   EXPECT_EQ(2, actual["acl"].size()) << actual;
   EXPECT_EQ("user-test-user", actual["acl"][0].value("entity", ""));
   EXPECT_EQ("user-test-user2", actual["acl"][1].value("entity", ""));
+
+  // autoclass()
+  ASSERT_TRUE(actual.contains("autoclass"));
+  auto const expected_autoclass = nlohmann::json{
+      {"enabled", true},
+      // "toggleTime" is OUTPUT_ONLY and thus not included in the
+      // JSON string for create/update.
+  };
+  EXPECT_EQ(actual["autoclass"], expected_autoclass);
 
   // billing()
   ASSERT_EQ(1U, actual.count("billing")) << actual;
@@ -426,8 +469,13 @@ TEST(BucketMetadataTest, ToJsonString) {
             rule.value("action", nlohmann::json{}));
 
   rule = actual["lifecycle"]["rule"][1];
-  EXPECT_EQ(nlohmann::json({{"createdBefore", "2016-01-01"}}),
-            rule.value("condition", nlohmann::json{}));
+  EXPECT_EQ(
+      nlohmann::json({
+          {"createdBefore", "2016-01-01"},
+          {"matchesPrefix", std::vector<std::string>{"archive/", "obsolete/"}},
+          {"matchesSuffix", std::vector<std::string>{".bak", ".delete-me"}},
+      }),
+      rule.value("condition", nlohmann::json{}));
   EXPECT_EQ(nlohmann::json({{"type", "Delete"}}),
             rule.value("action", nlohmann::json{}));
 
@@ -472,6 +520,27 @@ TEST(BucketMetadataTest, ToJsonString) {
   ASSERT_TRUE(actual["website"].is_object()) << actual;
   EXPECT_EQ("index.html", actual["website"].value("mainPageSuffix", ""));
   EXPECT_EQ("404.html", actual["website"].value("notFoundPage", ""));
+
+  // custom_placement_config()
+  ASSERT_TRUE(actual.contains("customPlacementConfig")) << actual;
+  auto expected_custom_placement_config = nlohmann::json{
+      {"dataLocations", std::vector<std::string>{"us-central1", "us-east1"}},
+  };
+  EXPECT_EQ(actual["customPlacementConfig"], expected_custom_placement_config);
+}
+
+TEST(BucketMetadataTest, ToJsonLifecycleRoundtrip) {
+  auto input = CreateBucketMetadataForTest();
+  auto const actual_string = internal::BucketMetadataToJsonString(input);
+  auto actual = internal::BucketMetadataParser::FromString(actual_string);
+  ASSERT_STATUS_OK(actual);
+  // ToJsonString() drops many fields (it is used in requests that should only
+  // send mutable fields). We want test that complex fields are preserved.  The
+  // other fields are tested elsewhere.
+  EXPECT_EQ(actual->billing(), input.billing());
+  EXPECT_EQ(actual->cors(), input.cors());
+  EXPECT_EQ(actual->lifecycle(), input.lifecycle());
+  EXPECT_EQ(actual->website(), input.website());
 }
 
 /// @test Verify we can delete label fields.
@@ -529,6 +598,32 @@ TEST(BucketMetadataTest, SetAcl) {
   copy.set_acl(std::move(acl));
   EXPECT_NE(expected, copy);
   EXPECT_EQ("READER", copy.acl().at(0).role());
+}
+
+/// @test Verify we can change the autoclass configuration in BucketMetadata.
+TEST(BucketMetadataTest, SetAutoclass) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  ASSERT_TRUE(copy.has_autoclass());
+  ASSERT_TRUE(copy.autoclass().enabled);
+  copy.set_autoclass(
+      BucketAutoclass{false, std::chrono::system_clock::time_point()});
+  EXPECT_NE(expected, copy);
+  ASSERT_TRUE(copy.has_autoclass());
+  ASSERT_FALSE(copy.autoclass().enabled);
+}
+
+/// @test Verify we can reset the autoclass configuration in BucketMetadata.
+TEST(BucketMetadataTest, ResetAutoclass) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_autoclass());
+  auto copy = expected;
+  copy.reset_autoclass();
+  EXPECT_FALSE(copy.has_autoclass());
+  EXPECT_NE(expected, copy);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("autoclass")));
 }
 
 /// @test Verify we can change the billing configuration in BucketMetadata.
@@ -845,6 +940,39 @@ TEST(BucketMetadataTest, ResetWebsite) {
   EXPECT_THAT(os.str(), Not(HasSubstr("website.")));
 }
 
+/// @test Verify we can set the custom_placement_config field in BucketMetadata.
+TEST(BucketMetadataTest, SetCustomPlacementConfig) {
+  auto expected = CreateBucketMetadataForTest();
+  auto copy = expected;
+  copy.set_custom_placement_config(
+      BucketCustomPlacementConfig{{"test-location-1", "test-location-2"}});
+  ASSERT_TRUE(copy.has_custom_placement_config());
+  EXPECT_THAT(copy.custom_placement_config().data_locations,
+              ElementsAre("test-location-1", "test-location-2"));
+  ASSERT_TRUE(copy.custom_placement_config_as_optional().has_value());
+  EXPECT_THAT(copy.custom_placement_config_as_optional()->data_locations,
+              ElementsAre("test-location-1", "test-location-2"));
+  EXPECT_NE(copy, expected);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), HasSubstr("custom_placement_config"));
+}
+
+/// @test Verify we can set the custom_placement_config field in BucketMetadata.
+TEST(BucketMetadataTest, ResetCustomPlacementConfig) {
+  auto expected = CreateBucketMetadataForTest();
+  EXPECT_TRUE(expected.has_custom_placement_config());
+  EXPECT_TRUE(expected.custom_placement_config_as_optional().has_value());
+  auto copy = expected;
+  copy.reset_custom_placement_config();
+  EXPECT_FALSE(copy.has_custom_placement_config());
+  EXPECT_FALSE(copy.custom_placement_config_as_optional().has_value());
+  EXPECT_NE(copy, expected);
+  std::ostringstream os;
+  os << copy;
+  EXPECT_THAT(os.str(), Not(HasSubstr("custom_placement_config")));
+}
+
 TEST(BucketMetadataPatchBuilder, SetAcl) {
   BucketMetadataPatchBuilder builder;
   builder.SetAcl({internal::BucketAccessControlParser::FromString(
@@ -868,6 +996,27 @@ TEST(BucketMetadataPatchBuilder, ResetAcl) {
   auto json = nlohmann::json::parse(actual);
   ASSERT_EQ(1U, json.count("acl")) << json;
   ASSERT_TRUE(json["acl"].is_null()) << json;
+}
+
+TEST(BucketMetadataPatchBuilder, SetAutoclass) {
+  BucketMetadataPatchBuilder builder;
+  builder.SetAutoclass(BucketAutoclass(true));
+
+  auto actual = builder.BuildPatch();
+  auto const json = nlohmann::json::parse(actual);
+  ASSERT_TRUE(json.contains("autoclass")) << json;
+  auto const expected_autoclass = nlohmann::json{{"enabled", true}};
+  EXPECT_EQ(expected_autoclass, json["autoclass"]);
+}
+
+TEST(BucketMetadataPatchBuilder, ResetAutoclass) {
+  BucketMetadataPatchBuilder builder;
+  builder.ResetAutoclass();
+
+  auto actual = builder.BuildPatch();
+  auto json = nlohmann::json::parse(actual);
+  ASSERT_TRUE(json.contains("autoclass")) << json;
+  ASSERT_TRUE(json["autoclass"].is_null()) << json;
 }
 
 TEST(BucketMetadataPatchBuilder, SetBilling) {
@@ -1068,7 +1217,9 @@ TEST(BucketMetadataPatchBuilder, SetLifecycle) {
           LifecycleRule::DaysSinceNoncurrentTime(3),
           LifecycleRule::NoncurrentTimeBefore(absl::CivilDay(2022, 01, 02)),
           LifecycleRule::DaysSinceCustomTime(4),
-          LifecycleRule::CustomTimeBefore(absl::CivilDay(2022, 01, 03))),
+          LifecycleRule::CustomTimeBefore(absl::CivilDay(2022, 01, 03)),
+          LifecycleRule::MatchesPrefixes({"p1/", "p2/"}),
+          LifecycleRule::MatchesSuffixes({".exe", ".com"})),
       LifecycleRule::SetStorageClassColdline());
   lifecycle.rule.emplace_back(r1);
   lifecycle.rule.emplace_back(r2);
@@ -1093,7 +1244,9 @@ TEST(BucketMetadataPatchBuilder, SetLifecycle) {
             "daysSinceNoncurrentTime": 3,
             "noncurrentTimeBefore": "2022-01-02",
             "daysSinceCustomTime": 4,
-            "customTimeBefore": "2022-01-03"
+            "customTimeBefore": "2022-01-03",
+            "matchesPrefix": [ "p1/", "p2/" ],
+            "matchesSuffix": [ ".exe", ".com" ]
          }
         }
       ]

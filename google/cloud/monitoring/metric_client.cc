@@ -17,7 +17,6 @@
 // source: google/monitoring/v3/metric_service.proto
 
 #include "google/cloud/monitoring/metric_client.h"
-#include "google/cloud/monitoring/internal/metric_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 MetricServiceClient::MetricServiceClient(
     std::shared_ptr<MetricServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), monitoring_internal::MetricServiceDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 MetricServiceClient::~MetricServiceClient() = default;
 
 StreamRange<google::api::MonitoredResourceDescriptor>
@@ -192,6 +190,24 @@ Status MetricServiceClient::CreateServiceTimeSeries(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->CreateServiceTimeSeries(request);
+}
+
+future<Status> MetricServiceClient::AsyncCreateTimeSeries(
+    std::string const& name,
+    std::vector<google::monitoring::v3::TimeSeries> const& time_series,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::monitoring::v3::CreateTimeSeriesRequest request;
+  request.set_name(name);
+  *request.mutable_time_series() = {time_series.begin(), time_series.end()};
+  return connection_->AsyncCreateTimeSeries(request);
+}
+
+future<Status> MetricServiceClient::AsyncCreateTimeSeries(
+    google::monitoring::v3::CreateTimeSeriesRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AsyncCreateTimeSeries(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

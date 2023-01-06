@@ -75,6 +75,117 @@ EventarcMetadata::AsyncDeleteTrigger(
   return child_->AsyncDeleteTrigger(cq, std::move(context), request);
 }
 
+StatusOr<google::cloud::eventarc::v1::Channel> EventarcMetadata::GetChannel(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::GetChannelRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetChannel(context, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListChannelsResponse>
+EventarcMetadata::ListChannels(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::ListChannelsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListChannels(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcMetadata::AsyncCreateChannel(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::CreateChannelRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCreateChannel(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcMetadata::AsyncUpdateChannel(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::UpdateChannelRequest const& request) {
+  SetMetadata(*context, "channel.name=" + request.channel().name());
+  return child_->AsyncUpdateChannel(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcMetadata::AsyncDeleteChannel(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::DeleteChannelRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteChannel(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::eventarc::v1::Provider> EventarcMetadata::GetProvider(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::GetProviderRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetProvider(context, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListProvidersResponse>
+EventarcMetadata::ListProviders(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::ListProvidersRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListProviders(context, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ChannelConnection>
+EventarcMetadata::GetChannelConnection(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::GetChannelConnectionRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetChannelConnection(context, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::ListChannelConnectionsResponse>
+EventarcMetadata::ListChannelConnections(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::ListChannelConnectionsRequest const& request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListChannelConnections(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcMetadata::AsyncCreateChannelConnection(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::CreateChannelConnectionRequest const&
+        request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncCreateChannelConnection(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+EventarcMetadata::AsyncDeleteChannelConnection(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::eventarc::v1::DeleteChannelConnectionRequest const&
+        request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDeleteChannelConnection(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcMetadata::GetGoogleChannelConfig(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetGoogleChannelConfig(context, request);
+}
+
+StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
+EventarcMetadata::UpdateGoogleChannelConfig(
+    grpc::ClientContext& context,
+    google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
+        request) {
+  SetMetadata(context, "google_channel_config.name=" +
+                           request.google_channel_config().name());
+  return child_->UpdateGoogleChannelConfig(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 EventarcMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
@@ -105,9 +216,8 @@ void EventarcMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

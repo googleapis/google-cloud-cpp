@@ -23,6 +23,7 @@
 #include "google/cloud/dataproc/workflow_template_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -71,9 +72,9 @@ WorkflowTemplateServiceConnection::UpdateWorkflowTemplate(
 }
 
 StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
-    WorkflowTemplateServiceConnection::ListWorkflowTemplates(
-        google::cloud::dataproc::v1::
-            ListWorkflowTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
+WorkflowTemplateServiceConnection::ListWorkflowTemplates(
+    google::cloud::dataproc::v1::
+        ListWorkflowTemplatesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>>();
 }
@@ -84,12 +85,14 @@ Status WorkflowTemplateServiceConnection::DeleteWorkflowTemplate(
 }
 
 std::shared_ptr<WorkflowTemplateServiceConnection>
-MakeWorkflowTemplateServiceConnection(Options options) {
+MakeWorkflowTemplateServiceConnection(std::string const& location,
+                                      Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  WorkflowTemplateServicePolicyOptionList>(
       options, __func__);
   options = dataproc_internal::WorkflowTemplateServiceDefaultOptions(
-      std::move(options));
+      location, std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = dataproc_internal::CreateDefaultWorkflowTemplateServiceStub(
       background->cq(), options);
@@ -98,27 +101,13 @@ MakeWorkflowTemplateServiceConnection(Options options) {
       std::move(background), std::move(stub), std::move(options));
 }
 
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace dataproc_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<dataproc::WorkflowTemplateServiceConnection>
-MakeWorkflowTemplateServiceConnection(
-    std::shared_ptr<WorkflowTemplateServiceStub> stub, Options options) {
-  options = WorkflowTemplateServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      dataproc_internal::WorkflowTemplateServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
+std::shared_ptr<WorkflowTemplateServiceConnection>
+MakeWorkflowTemplateServiceConnection(Options options) {
+  return MakeWorkflowTemplateServiceConnection(std::string{},
+                                               std::move(options));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace dataproc_internal
+}  // namespace dataproc
 }  // namespace cloud
 }  // namespace google

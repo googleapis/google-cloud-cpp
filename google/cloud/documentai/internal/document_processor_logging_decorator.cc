@@ -62,6 +62,210 @@ DocumentProcessorServiceLogging::AsyncBatchProcessDocuments(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
+DocumentProcessorServiceLogging::FetchProcessorTypes(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::documentai::v1::FetchProcessorTypesRequest const&
+                 request) {
+        return child_->FetchProcessorTypes(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::documentai::v1::ListProcessorTypesResponse>
+DocumentProcessorServiceLogging::ListProcessorTypes(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::ListProcessorTypesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::documentai::v1::ListProcessorTypesRequest const&
+                 request) {
+        return child_->ListProcessorTypes(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::documentai::v1::ListProcessorsResponse>
+DocumentProcessorServiceLogging::ListProcessors(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::ListProcessorsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::documentai::v1::ListProcessorsRequest const& request) {
+        return child_->ListProcessors(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceLogging::GetProcessor(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::GetProcessorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::documentai::v1::GetProcessorRequest const& request) {
+        return child_->GetProcessor(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::documentai::v1::ProcessorVersion>
+DocumentProcessorServiceLogging::GetProcessorVersion(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::documentai::v1::GetProcessorVersionRequest const&
+                 request) {
+        return child_->GetProcessorVersion(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::documentai::v1::ListProcessorVersionsResponse>
+DocumentProcessorServiceLogging::ListProcessorVersions(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::ListProcessorVersionsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::documentai::v1::ListProcessorVersionsRequest const&
+                 request) {
+        return child_->ListProcessorVersions(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceLogging::AsyncDeleteProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::DeleteProcessorVersionRequest const&
+                 request) {
+        return child_->AsyncDeleteProcessorVersion(cq, std::move(context),
+                                                   request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceLogging::AsyncDeployProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::DeployProcessorVersionRequest const&
+                 request) {
+        return child_->AsyncDeployProcessorVersion(cq, std::move(context),
+                                                   request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceLogging::AsyncUndeployProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          google::cloud::CompletionQueue& cq,
+          std::unique_ptr<grpc::ClientContext> context,
+          google::cloud::documentai::v1::UndeployProcessorVersionRequest const&
+              request) {
+        return child_->AsyncUndeployProcessorVersion(cq, std::move(context),
+                                                     request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::documentai::v1::Processor>
+DocumentProcessorServiceLogging::CreateProcessor(
+    grpc::ClientContext& context,
+    google::cloud::documentai::v1::CreateProcessorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::documentai::v1::CreateProcessorRequest const&
+                 request) { return child_->CreateProcessor(context, request); },
+      context, request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceLogging::AsyncDeleteProcessor(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::DeleteProcessorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::DeleteProcessorRequest const&
+                 request) {
+        return child_->AsyncDeleteProcessor(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceLogging::AsyncEnableProcessor(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::EnableProcessorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::EnableProcessorRequest const&
+                 request) {
+        return child_->AsyncEnableProcessor(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceLogging::AsyncDisableProcessor(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::DisableProcessorRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::DisableProcessorRequest const&
+                 request) {
+        return child_->AsyncDisableProcessor(cq, std::move(context), request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+DocumentProcessorServiceLogging::AsyncSetDefaultProcessorVersion(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::documentai::v1::SetDefaultProcessorVersionRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](google::cloud::CompletionQueue& cq,
+             std::unique_ptr<grpc::ClientContext> context,
+             google::cloud::documentai::v1::
+                 SetDefaultProcessorVersionRequest const& request) {
+        return child_->AsyncSetDefaultProcessorVersion(cq, std::move(context),
+                                                       request);
+      },
+      cq, std::move(context), request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DocumentProcessorServiceLogging::AsyncReviewDocument(
     google::cloud::CompletionQueue& cq,

@@ -28,6 +28,7 @@
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
+#include "google/cloud/stream_range.h"
 #include "google/cloud/version.h"
 #include <memory>
 
@@ -62,6 +63,25 @@ class IdentityAwareProxyAdminServiceConnectionImpl
 
   StatusOr<google::cloud::iap::v1::IapSettings> UpdateIapSettings(
       google::cloud::iap::v1::UpdateIapSettingsRequest const& request) override;
+
+  StreamRange<google::cloud::iap::v1::TunnelDestGroup> ListTunnelDestGroups(
+      google::cloud::iap::v1::ListTunnelDestGroupsRequest request) override;
+
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup> CreateTunnelDestGroup(
+      google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request)
+      override;
+
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup> GetTunnelDestGroup(
+      google::cloud::iap::v1::GetTunnelDestGroupRequest const& request)
+      override;
+
+  Status DeleteTunnelDestGroup(
+      google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request)
+      override;
+
+  StatusOr<google::cloud::iap::v1::TunnelDestGroup> UpdateTunnelDestGroup(
+      google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request)
+      override;
 
  private:
   std::unique_ptr<iap::IdentityAwareProxyAdminServiceRetryPolicy>

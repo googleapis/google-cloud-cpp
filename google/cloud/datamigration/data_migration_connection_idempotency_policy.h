@@ -32,73 +32,65 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class DataMigrationServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~DataMigrationServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~DataMigrationServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<DataMigrationServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency ListMigrationJobs(
-      google::cloud::clouddms::v1::ListMigrationJobsRequest request) = 0;
+      google::cloud::clouddms::v1::ListMigrationJobsRequest request);
 
   virtual google::cloud::Idempotency GetMigrationJob(
-      google::cloud::clouddms::v1::GetMigrationJobRequest const& request) = 0;
+      google::cloud::clouddms::v1::GetMigrationJobRequest const& request);
 
   virtual google::cloud::Idempotency CreateMigrationJob(
-      google::cloud::clouddms::v1::CreateMigrationJobRequest const&
-          request) = 0;
+      google::cloud::clouddms::v1::CreateMigrationJobRequest const& request);
 
   virtual google::cloud::Idempotency UpdateMigrationJob(
-      google::cloud::clouddms::v1::UpdateMigrationJobRequest const&
-          request) = 0;
+      google::cloud::clouddms::v1::UpdateMigrationJobRequest const& request);
 
   virtual google::cloud::Idempotency DeleteMigrationJob(
-      google::cloud::clouddms::v1::DeleteMigrationJobRequest const&
-          request) = 0;
+      google::cloud::clouddms::v1::DeleteMigrationJobRequest const& request);
 
   virtual google::cloud::Idempotency StartMigrationJob(
-      google::cloud::clouddms::v1::StartMigrationJobRequest const& request) = 0;
+      google::cloud::clouddms::v1::StartMigrationJobRequest const& request);
 
   virtual google::cloud::Idempotency StopMigrationJob(
-      google::cloud::clouddms::v1::StopMigrationJobRequest const& request) = 0;
+      google::cloud::clouddms::v1::StopMigrationJobRequest const& request);
 
   virtual google::cloud::Idempotency ResumeMigrationJob(
-      google::cloud::clouddms::v1::ResumeMigrationJobRequest const&
-          request) = 0;
+      google::cloud::clouddms::v1::ResumeMigrationJobRequest const& request);
 
   virtual google::cloud::Idempotency PromoteMigrationJob(
-      google::cloud::clouddms::v1::PromoteMigrationJobRequest const&
-          request) = 0;
+      google::cloud::clouddms::v1::PromoteMigrationJobRequest const& request);
 
   virtual google::cloud::Idempotency VerifyMigrationJob(
-      google::cloud::clouddms::v1::VerifyMigrationJobRequest const&
-          request) = 0;
+      google::cloud::clouddms::v1::VerifyMigrationJobRequest const& request);
 
   virtual google::cloud::Idempotency RestartMigrationJob(
-      google::cloud::clouddms::v1::RestartMigrationJobRequest const&
-          request) = 0;
+      google::cloud::clouddms::v1::RestartMigrationJobRequest const& request);
 
   virtual google::cloud::Idempotency GenerateSshScript(
-      google::cloud::clouddms::v1::GenerateSshScriptRequest const& request) = 0;
+      google::cloud::clouddms::v1::GenerateSshScriptRequest const& request);
 
   virtual google::cloud::Idempotency ListConnectionProfiles(
-      google::cloud::clouddms::v1::ListConnectionProfilesRequest request) = 0;
+      google::cloud::clouddms::v1::ListConnectionProfilesRequest request);
 
   virtual google::cloud::Idempotency GetConnectionProfile(
-      google::cloud::clouddms::v1::GetConnectionProfileRequest const&
-          request) = 0;
+      google::cloud::clouddms::v1::GetConnectionProfileRequest const& request);
 
   virtual google::cloud::Idempotency CreateConnectionProfile(
       google::cloud::clouddms::v1::CreateConnectionProfileRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateConnectionProfile(
       google::cloud::clouddms::v1::UpdateConnectionProfileRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency DeleteConnectionProfile(
       google::cloud::clouddms::v1::DeleteConnectionProfileRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<DataMigrationServiceConnectionIdempotencyPolicy>

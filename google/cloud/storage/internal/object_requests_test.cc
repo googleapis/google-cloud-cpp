@@ -28,9 +28,12 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::IsOk;
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Not;
+using ::testing::Pair;
+using ::testing::UnorderedElementsAre;
 
 TEST(ObjectRequestsTest, ParseFailure) {
   auto actual = internal::ObjectMetadataParser::FromString("{123");
@@ -528,18 +531,34 @@ TEST(ObjectRequestsTest, UploadChunk) {
       "https://storage.googleapis.com/upload/storage/v1/b/"
       "myBucket/o?uploadType=resumable"
       "&upload_id=xa298sd_sdlkj2";
-  UploadChunkRequest request(url, 0, {ConstBuffer{"abc123", 6}}, 2048);
+  auto const payload = std::string(2048, 'A');
+  UploadChunkRequest request(url, 0, {{payload}}, HashValues{});
   EXPECT_EQ(url, request.upload_session_url());
-  EXPECT_EQ(0, request.range_begin());
-  EXPECT_EQ(5, request.range_end());
-  EXPECT_EQ(2048, request.source_size());
-  EXPECT_EQ("Content-Range: bytes 0-5/2048", request.RangeHeader());
+  EXPECT_EQ(0, request.offset());
+  EXPECT_EQ(2048, request.upload_size().value_or(0));
+  EXPECT_EQ("Content-Range: bytes 0-2047/2048", request.RangeHeader());
 
   std::ostringstream os;
   os << request;
   std::string actual = os.str();
   EXPECT_THAT(actual, HasSubstr(url));
-  EXPECT_THAT(actual, HasSubstr("<Content-Range: bytes 0-5/2048>"));
+  EXPECT_THAT(actual, HasSubstr("<Content-Range: bytes 0-2047/2048>"));
+}
+
+TEST(ObjectRequestsTest, UploadChunkRemainingChunk) {
+  auto const p0 = std::string(128, '0');
+  auto const p1 = std::string(256, '1');
+  auto const p2 = std::string(1024, '2');
+  auto const base_offset = 123456;
+  auto request = UploadChunkRequest("unused", base_offset, {{p0, p1, p2}});
+  EXPECT_EQ(request.offset(), base_offset);
+  EXPECT_THAT(request.payload(), ElementsAre(p0, p1, p2));
+  auto remaining = request.RemainingChunk(base_offset + 42);
+  EXPECT_THAT(remaining.payload(), ElementsAre(p0.substr(42), p1, p2));
+  remaining = request.RemainingChunk(base_offset + 128 + 42);
+  EXPECT_THAT(remaining.payload(), ElementsAre(p1.substr(42), p2));
+  remaining = request.RemainingChunk(base_offset + 128 + 256 + 42);
+  EXPECT_THAT(remaining.payload(), ElementsAre(p2.substr(42)));
 }
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeNotLast) {
@@ -550,8 +569,8 @@ TEST(ObjectRequestsTest, UploadChunkContentRangeNotLast) {
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 2045, {ConstBuffer{"1234", 4}}, 2048U);
-  EXPECT_EQ("Content-Range: bytes 2045-2048/2048", request.RangeHeader());
+  UploadChunkRequest request(url, 2045, {ConstBuffer{"1234", 4}}, HashValues{});
+  EXPECT_EQ("Content-Range: bytes 2045-2048/2049", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadNotLast) {
@@ -562,16 +581,16 @@ TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadNotLast) {
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadLast) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest request(url, 2047, {}, 2048U);
-  EXPECT_EQ("Content-Range: bytes */2048", request.RangeHeader());
+  UploadChunkRequest request(url, 2047, {}, HashValues{});
+  EXPECT_EQ("Content-Range: bytes */2047", request.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, UploadChunkContentRangeEmptyPayloadEmpty) {
   std::string const url = "https://unused.googleapis.com/test-only";
-  UploadChunkRequest r0(url, 1024, {}, 0U);
-  EXPECT_EQ("Content-Range: bytes */0", r0.RangeHeader());
-  UploadChunkRequest r1(url, 1024, {{}, {}, {}}, 0U);
-  EXPECT_EQ("Content-Range: bytes */0", r1.RangeHeader());
+  UploadChunkRequest r0(url, 1024, {}, HashValues{});
+  EXPECT_EQ("Content-Range: bytes */1024", r0.RangeHeader());
+  UploadChunkRequest r1(url, 1024, {{}, {}, {}}, HashValues{});
+  EXPECT_EQ("Content-Range: bytes */1024", r1.RangeHeader());
 }
 
 TEST(ObjectRequestsTest, QueryResumableUpload) {
@@ -951,6 +970,104 @@ TEST(DefaultCtorsWork, Trivial) {
   EXPECT_FALSE(DisableCrc32cChecksum().has_value());
   EXPECT_FALSE(WithObjectMetadata().has_value());
   EXPECT_FALSE(UseResumableUploadSession().has_value());
+}
+
+TEST(CreateResumableUploadResponseTest, Base) {
+  auto actual = CreateResumableUploadResponse::FromHttpResponse(
+                    HttpResponse{200,
+                                 R"""({"name": "test-object-name"})""",
+                                 {
+                                     {"ignored-header", "value"},
+                                     {"location", "location-value"},
+                                 }})
+                    .value();
+  EXPECT_EQ("location-value", actual.upload_id);
+
+  std::ostringstream os;
+  os << actual;
+  auto actual_str = os.str();
+  EXPECT_THAT(actual_str, HasSubstr("upload_id=location-value"));
+}
+
+TEST(CreateResumableUploadResponseTest, NoLocation) {
+  auto actual = CreateResumableUploadResponse::FromHttpResponse(
+      HttpResponse{201,
+                   R"""({"name": "test-object-name"})""",
+                   {{"uh-oh", "location-value"}}});
+  EXPECT_THAT(actual, Not(IsOk()));
+}
+
+TEST(QueryResumableUploadResponseTest, Base) {
+  auto actual = QueryResumableUploadResponse::FromHttpResponse(
+                    HttpResponse{200,
+                                 R"""({"name": "test-object-name"})""",
+                                 {{"ignored-header", "value"},
+                                  {"location", "location-value"},
+                                  {"range", "bytes=0-1999"}}})
+                    .value();
+  ASSERT_TRUE(actual.payload.has_value());
+  EXPECT_EQ("test-object-name", actual.payload->name());
+  EXPECT_EQ(2000, actual.committed_size.value_or(0));
+  EXPECT_THAT(actual.request_metadata,
+              UnorderedElementsAre(Pair("ignored-header", "value"),
+                                   Pair("location", "location-value"),
+                                   Pair("range", "bytes=0-1999")));
+
+  std::ostringstream os;
+  os << actual;
+  auto actual_str = os.str();
+  EXPECT_THAT(actual_str, HasSubstr("committed_size=2000"));
+}
+
+TEST(QueryResumableUploadResponseTest, NoRange) {
+  auto actual = QueryResumableUploadResponse::FromHttpResponse(
+                    HttpResponse{201,
+                                 R"""({"name": "test-object-name"})""",
+                                 {{"location", "location-value"}}})
+                    .value();
+  ASSERT_TRUE(actual.payload.has_value());
+  EXPECT_EQ("test-object-name", actual.payload->name());
+  EXPECT_FALSE(actual.committed_size.has_value());
+}
+
+TEST(QueryResumableUploadResponseTest, MissingBytesInRange) {
+  auto actual = QueryResumableUploadResponse::FromHttpResponse(HttpResponse{
+      308, {}, {{"location", "location-value"}, {"range", "units=0-2000"}}});
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInternal, HasSubstr("units=0-2000")));
+}
+
+TEST(QueryResumableUploadResponseTest, MissingRangeEnd) {
+  auto actual = QueryResumableUploadResponse::FromHttpResponse(
+      HttpResponse{308, {}, {{"range", "bytes=0-"}}});
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInternal, HasSubstr("bytes=0-")));
+}
+
+TEST(QueryResumableUploadResponseTest, InvalidRangeEnd) {
+  auto actual = QueryResumableUploadResponse::FromHttpResponse(
+      HttpResponse{308, {}, {{"range", "bytes=0-abcd"}}});
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInternal, HasSubstr("bytes=0-abcd")));
+}
+
+TEST(QueryResumableUploadResponseTest, InvalidRangeBegin) {
+  auto actual = QueryResumableUploadResponse::FromHttpResponse(
+      HttpResponse{308, {}, {{"range", "bytes=abcd-2000"}}});
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInternal, HasSubstr("bytes=abcd-2000")));
+}
+
+TEST(QueryResumableUploadResponseTest, UnexpectedRangeBegin) {
+  auto actual = QueryResumableUploadResponse::FromHttpResponse(
+      HttpResponse{308, {}, {{"range", "bytes=3000-2000"}}});
+  EXPECT_THAT(actual,
+              StatusIs(StatusCode::kInternal, HasSubstr("bytes=3000-2000")));
+}
+
+TEST(QueryResumableUploadResponseTest, NegativeEnd) {
+  auto actual = QueryResumableUploadResponse::FromHttpResponse(
+      HttpResponse{308, {}, {{"range", "bytes=0--7"}}});
+  EXPECT_THAT(actual, StatusIs(StatusCode::kInternal, HasSubstr("bytes=0--7")));
 }
 
 }  // namespace

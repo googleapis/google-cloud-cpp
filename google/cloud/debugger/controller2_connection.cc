@@ -23,6 +23,7 @@
 #include "google/cloud/debugger/internal/controller2_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -54,6 +55,7 @@ Controller2Connection::UpdateActiveBreakpoint(
 std::shared_ptr<Controller2Connection> MakeController2Connection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  Controller2PolicyOptionList>(options,
                                                               __func__);
   options = debugger_internal::Controller2DefaultOptions(std::move(options));
@@ -66,23 +68,5 @@ std::shared_ptr<Controller2Connection> MakeController2Connection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace debugger
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace debugger_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<debugger::Controller2Connection> MakeController2Connection(
-    std::shared_ptr<Controller2Stub> stub, Options options) {
-  options = Controller2DefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<debugger_internal::Controller2ConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace debugger_internal
 }  // namespace cloud
 }  // namespace google

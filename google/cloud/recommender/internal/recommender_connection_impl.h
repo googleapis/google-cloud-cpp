@@ -82,6 +82,26 @@ class RecommenderConnectionImpl : public recommender::RecommenderConnection {
       google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
           request) override;
 
+  StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  GetRecommenderConfig(
+      google::cloud::recommender::v1::GetRecommenderConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recommender::v1::RecommenderConfig>
+  UpdateRecommenderConfig(
+      google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  GetInsightTypeConfig(
+      google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
+          request) override;
+
+  StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
+  UpdateInsightTypeConfig(
+      google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
+          request) override;
+
  private:
   std::unique_ptr<recommender::RecommenderRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

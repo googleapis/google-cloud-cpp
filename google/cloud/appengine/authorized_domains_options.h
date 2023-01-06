@@ -31,21 +31,38 @@ namespace cloud {
 namespace appengine {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-appengine-options
+ */
 struct AuthorizedDomainsRetryPolicyOption {
   using Type = std::shared_ptr<AuthorizedDomainsRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-appengine-options
+ */
 struct AuthorizedDomainsBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-appengine-options
+ */
 struct AuthorizedDomainsConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<AuthorizedDomainsConnectionIdempotencyPolicy>;
 };
 
+/**
+ * The options applicable to AuthorizedDomains.
+ *
+ * @ingroup google-cloud-appengine-options
+ */
 using AuthorizedDomainsPolicyOptionList =
     OptionList<AuthorizedDomainsRetryPolicyOption,
                AuthorizedDomainsBackoffPolicyOption,

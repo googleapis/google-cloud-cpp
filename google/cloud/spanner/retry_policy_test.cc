@@ -33,6 +33,8 @@ TEST(RetryPolicyTest, PermanentFailure) {
       Status(StatusCode::kAborted, "nothing done")));
   EXPECT_TRUE(spanner_internal::SafeGrpcRetry::IsPermanentFailure(
       Status(StatusCode::kPermissionDenied, "uh oh")));
+  EXPECT_TRUE(spanner_internal::SafeGrpcRetry::IsTransientFailure(
+      Status(StatusCode::kInternal, "RST_STREAM")));
 }
 
 TEST(TransactionRerunPolicyTest, PermanentFailure) {

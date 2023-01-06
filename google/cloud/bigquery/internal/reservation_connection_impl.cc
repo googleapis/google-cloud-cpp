@@ -37,9 +37,7 @@ ReservationServiceConnectionImpl::ReservationServiceConnectionImpl(
     : background_(std::move(background)),
       stub_(std::move(stub)),
       options_(internal::MergeOptions(
-          std::move(options),
-          bigquery_internal::ReservationServiceDefaultOptions(
-              ReservationServiceConnection::options()))) {}
+          std::move(options), ReservationServiceConnection::options())) {}
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceConnectionImpl::CreateReservation(
@@ -60,7 +58,7 @@ StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceConnectionImpl::ListReservations(
     google::cloud::bigquery::reservation::v1::ListReservationsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -153,7 +151,7 @@ ReservationServiceConnectionImpl::ListCapacityCommitments(
     google::cloud::bigquery::reservation::v1::ListCapacityCommitmentsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -279,7 +277,7 @@ StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceConnectionImpl::ListAssignments(
     google::cloud::bigquery::reservation::v1::ListAssignmentsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -328,7 +326,7 @@ ReservationServiceConnectionImpl::SearchAssignments(
     google::cloud::bigquery::reservation::v1::SearchAssignmentsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -364,7 +362,7 @@ ReservationServiceConnectionImpl::SearchAllAssignments(
     google::cloud::bigquery::reservation::v1::SearchAllAssignmentsRequest
         request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry = std::shared_ptr<bigquery::ReservationServiceRetryPolicy const>(
       retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -406,6 +404,21 @@ ReservationServiceConnectionImpl::MoveAssignment(
           grpc::ClientContext& context,
           google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
               request) { return stub_->MoveAssignment(context, request); },
+      request, __func__);
+}
+
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+ReservationServiceConnectionImpl::UpdateAssignment(
+    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateAssignment(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::bigquery::reservation::v1::
+                 UpdateAssignmentRequest const& request) {
+        return stub_->UpdateAssignment(context, request);
+      },
       request, __func__);
 }
 

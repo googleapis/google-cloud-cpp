@@ -17,7 +17,6 @@
 
 #include "google/cloud/storage/idempotency_policy.h"
 #include "google/cloud/storage/internal/raw_client.h"
-#include "google/cloud/storage/internal/resumable_upload_session.h"
 #include "google/cloud/storage/retry_policy.h"
 #include "google/cloud/storage/version.h"
 #include <string>
@@ -33,12 +32,13 @@ namespace internal {
 class RetryClient : public RawClient,
                     public std::enable_shared_from_this<RetryClient> {
  public:
-  explicit RetryClient(std::shared_ptr<RawClient> client,
-                       Options const& options);
+  static std::shared_ptr<RetryClient> Create(std::shared_ptr<RawClient> client,
+                                             Options options = {});
 
   ~RetryClient() override = default;
 
   ClientOptions const& client_options() const override;
+  Options options() const override;
 
   StatusOr<ListBucketsResponse> ListBuckets(
       ListBucketsRequest const& request) override;
@@ -51,12 +51,8 @@ class RetryClient : public RawClient,
       UpdateBucketRequest const& request) override;
   StatusOr<BucketMetadata> PatchBucket(
       PatchBucketRequest const& request) override;
-  StatusOr<IamPolicy> GetBucketIamPolicy(
-      GetBucketIamPolicyRequest const& request) override;
   StatusOr<NativeIamPolicy> GetNativeBucketIamPolicy(
       GetBucketIamPolicyRequest const& request) override;
-  StatusOr<IamPolicy> SetBucketIamPolicy(
-      SetBucketIamPolicyRequest const& request) override;
   StatusOr<NativeIamPolicy> SetNativeBucketIamPolicy(
       SetNativeBucketIamPolicyRequest const& request) override;
   StatusOr<TestBucketIamPermissionsResponse> TestBucketIamPermissions(
@@ -87,10 +83,15 @@ class RetryClient : public RawClient,
       ComposeObjectRequest const& request) override;
   StatusOr<RewriteObjectResponse> RewriteObject(
       RewriteObjectRequest const&) override;
-  StatusOr<std::unique_ptr<ResumableUploadSession>> CreateResumableSession(
+
+  StatusOr<CreateResumableUploadResponse> CreateResumableUpload(
       ResumableUploadRequest const& request) override;
+  StatusOr<QueryResumableUploadResponse> QueryResumableUpload(
+      QueryResumableUploadRequest const& request) override;
   StatusOr<EmptyResponse> DeleteResumableUpload(
       DeleteResumableUploadRequest const& request) override;
+  StatusOr<QueryResumableUploadResponse> UploadChunk(
+      UploadChunkRequest const& request) override;
 
   StatusOr<ListBucketAclResponse> ListBucketAcl(
       ListBucketAclRequest const& request) override;
@@ -154,10 +155,14 @@ class RetryClient : public RawClient,
   std::shared_ptr<RawClient> client() const { return client_; }
 
  private:
+  explicit RetryClient(std::shared_ptr<RawClient> client, Options options);
+
+  static std::unique_ptr<RetryPolicy> current_retry_policy();
+  static std::unique_ptr<BackoffPolicy> current_backoff_policy();
+  static IdempotencyPolicy& current_idempotency_policy();
+
   std::shared_ptr<RawClient> client_;
-  std::shared_ptr<RetryPolicy const> retry_policy_prototype_;
-  std::shared_ptr<BackoffPolicy const> backoff_policy_prototype_;
-  std::shared_ptr<IdempotencyPolicy const> idempotency_policy_;
+  Options options_;
 };
 
 }  // namespace internal

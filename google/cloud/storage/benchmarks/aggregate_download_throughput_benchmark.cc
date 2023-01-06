@@ -39,11 +39,11 @@ using ::google::cloud::storage_experimental::DefaultGrpcClient;
 using ::google::cloud::testing_util::FormatSize;
 using ::google::cloud::testing_util::Timer;
 namespace gcs = ::google::cloud::storage;
-namespace gcs_experimental = ::google::cloud::storage_experimental;
+namespace gcs_ex = ::google::cloud::storage_experimental;
 namespace gcs_bm = ::google::cloud::storage_benchmarks;
 using gcs_bm::AggregateDownloadThroughputOptions;
-using gcs_bm::ApiName;
 using gcs_bm::FormatBandwidthGbPerSecond;
+using gcs_bm::FormatTimestamp;
 
 char const kDescription[] = R"""(A benchmark for aggregated throughput.
 
@@ -90,6 +90,7 @@ using Counters = std::map<std::string, std::int64_t>;
 
 struct DownloadDetail {
   int iteration;
+  std::chrono::system_clock::time_point start_time;
   std::string peer;
   std::uint64_t bytes_downloaded;
   std::chrono::microseconds elapsed_time;
@@ -120,22 +121,20 @@ class Iteration {
 };
 
 gcs::Client MakeClient(AggregateDownloadThroughputOptions const& options) {
-  auto client_options =
-      google::cloud::Options{}
-          .set<gcs_experimental::HttpVersionOption>(options.rest_http_version)
-          .set<gcs::TransferStallTimeoutOption>(options.download_stall_timeout);
+  auto opts = options.client_options;
 #if GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  if (options.api == ApiName::kApiGrpc) {
-    auto channels = options.grpc_channel_count;
-    if (channels == 0) channels = (std::max)(options.thread_count / 4, 4);
-    client_options.set<google::cloud::GrpcNumChannelsOption>(channels)
-        .set<google::cloud::storage_experimental::GrpcPluginOption>(
-            options.grpc_plugin_config);
-    return DefaultGrpcClient(std::move(client_options));
+  if (options.api == "GRPC") {
+    return DefaultGrpcClient(
+        std::move(opts).set<gcs_ex::GrpcPluginOption>("media"));
   }
 #endif  // GOOGLE_CLOUD_CPP_STORAGE_HAVE_GRPC
-  return gcs::Client(std::move(client_options));
+  return gcs::Client(std::move(opts));
 }
+
+void PrintResults(AggregateDownloadThroughputOptions const& options,
+                  std::size_t object_count, std::uint64_t dataset_size,
+                  std::vector<TaskResult> const& iteration_results,
+                  Timer::Snapshot usage);
 
 }  // namespace
 
@@ -145,7 +144,7 @@ int main(int argc, char* argv[]) {
     std::cerr << options.status() << "\n";
     return 1;
   }
-  if (options->exit_after_parse) return 1;
+  if (options->exit_after_parse) return 0;
 
   auto client = MakeClient(*options);
   std::vector<gcs::ObjectMetadata> dataset;
@@ -169,13 +168,7 @@ int main(int argc, char* argv[]) {
   std::transform(notes.begin(), notes.end(), notes.begin(),
                  [](char c) { return c == '\n' ? ';' : c; });
 
-  auto current_time = [] {
-    auto constexpr kFormat = "%E4Y-%m-%dT%H:%M:%E*SZ";
-    auto const t = absl::FromChrono(std::chrono::system_clock::now());
-    return absl::FormatTime(kFormat, t, absl::UTCTimeZone());
-  };
-
-  std::cout << "# Start time: " << current_time()
+  std::cout << "# Start time: " << gcs_bm::CurrentTime()
             << "\n# Labels: " << options->labels
             << "\n# Bucket Name: " << options->bucket_name
             << "\n# Object Prefix: " << options->object_prefix
@@ -184,16 +177,13 @@ int main(int argc, char* argv[]) {
             << "\n# Repeats Per Iteration: " << options->repeats_per_iteration
             << "\n# Read Size: " << options->read_size
             << "\n# Read Buffer Size: " << options->read_buffer_size
-            << "\n# API: " << gcs_bm::ToString(options->api)
-            << "\n# gRPC Channel Count: " << options->grpc_channel_count
-            << "\n# gRPC Plugin Config: " << options->grpc_plugin_config
-            << "\n# HTTP Version: " << options->rest_http_version
+            << "\n# API: " << options->api
             << "\n# Client Per Thread: " << std::boolalpha
-            << options->client_per_thread << "\n# Download Stall Timeout: "
-            << absl::FromChrono(options->download_stall_timeout)
-            << "\n# Build Info: " << notes
+            << options->client_per_thread
             << "\n# Object Count: " << dataset.size()
-            << "\n# Dataset size: " << FormatSize(dataset_size) << std::endl;
+            << "\n# Dataset size: " << FormatSize(dataset_size);
+  gcs_bm::PrintOptions(std::cout, "Client Options", options->client_options);
+  std::cout << "\n# Build Info: " << notes << std::endl;
 
   auto configs = [](AggregateDownloadThroughputOptions const& options,
                     gcs::Client const& default_client) {
@@ -219,21 +209,14 @@ int main(int argc, char* argv[]) {
     objects.insert(objects.end(), dataset.begin(), dataset.end());
   }
 
-  auto accumulate_bytes_downloaded = [](std::vector<TaskResult> const& r) {
-    return std::accumulate(r.begin(), r.end(), std::int64_t{0},
-                           [](std::int64_t a, TaskResult const& b) {
-                             return a + b.bytes_downloaded;
-                           });
-  };
-
   Counters accumulated;
   // Print the header, so it can be easily loaded using the tools available in
   // our analysis tools (typically Python pandas, but could be R). Flush the
   // header because sometimes we interrupt the benchmark and these tools
   // require a header even for empty files.
-  std::cout << "Labels,Iteration,ObjectCount,DatasetSize,ThreadCount"
+  std::cout << "Start,Labels,Iteration,ObjectCount,DatasetSize,ThreadCount"
             << ",RepeatsPerIteration,ReadSize,ReadBufferSize,Api"
-            << ",GrpcChannelCount,GrpcPluginConfig,ClientPerThread"
+            << ",ClientPerThread"
             << ",StatusCode,Peer,BytesDownloaded,ElapsedMicroseconds"
             << ",IterationBytes,IterationElapsedMicroseconds"
             << ",IterationCpuMicroseconds" << std::endl;
@@ -255,57 +238,14 @@ int main(int argc, char* argv[]) {
                    std::make_move_iterator(tasks.end()),
                    iteration_results.begin(),
                    [](std::future<TaskResult> f) { return f.get(); });
-    auto const usage = timer.Sample();
-    auto const downloaded_bytes =
-        accumulate_bytes_downloaded(iteration_results);
 
-    auto clean_csv_field = [](std::string v) {
-      std::replace(v.begin(), v.end(), ',', ';');
-      return v;
-    };
-    auto const labels = clean_csv_field(options->labels);
-    auto const grpc_plugin_config =
-        clean_csv_field(options->grpc_plugin_config);
-    auto const* client_per_thread =
-        options->client_per_thread ? "true" : "false";
-    // Print the results after each iteration. Makes it possible to interrupt
-    // the benchmark in the middle and still get some data.
+    // Update the counters.
     for (auto const& r : iteration_results) {
-      for (auto const& d : r.details) {
-        // Join the iteration details with the per-download details. That makes
-        // it easier to analyze the data in external scripts.
-        std::cout << labels                                 //
-                  << ',' << d.iteration                     //
-                  << ',' << objects.size()                  //
-                  << ',' << dataset_size                    //
-                  << ',' << options->thread_count           //
-                  << ',' << options->repeats_per_iteration  //
-                  << ',' << options->read_size              //
-                  << ',' << options->read_buffer_size       //
-                  << ',' << ToString(options->api)          //
-                  << ',' << options->grpc_channel_count     //
-                  << ',' << grpc_plugin_config              //
-                  << ',' << client_per_thread               //
-                  << ',' << d.status.code()                 //
-                  << ',' << d.peer                          //
-                  << ',' << d.bytes_downloaded              //
-                  << ',' << d.elapsed_time.count()          //
-                  << ',' << downloaded_bytes                //
-                  << ',' << usage.elapsed_time.count()      //
-                  << ',' << usage.cpu_time.count()          //
-                  << "\n";
-      }
-      // Update the counters.
       for (auto const& kv : r.counters) accumulated[kv.first] += kv.second;
     }
-    // After each iteration print a human-readable summary. Flush it because
-    // the operator of these benchmarks (coryan@) is an impatient person.
-    auto const bandwidth =
-        FormatBandwidthGbPerSecond(downloaded_bytes, usage.elapsed_time);
-    std::cout << "# " << current_time() << " downloaded=" << downloaded_bytes
-              << " cpu_time=" << absl::FromChrono(usage.cpu_time)
-              << " elapsed_time=" << absl::FromChrono(usage.elapsed_time)
-              << " Gbit/s=" << bandwidth << std::endl;
+
+    PrintResults(*options, objects.size(), dataset_size, iteration_results,
+                 timer.Sample());
   }
 
   for (auto& kv : accumulated) {
@@ -326,13 +266,8 @@ DownloadDetail DownloadOneObject(
 
   std::vector<char> buffer(options.read_buffer_size);
   auto const buffer_size = static_cast<std::streamsize>(buffer.size());
-  // Using IfGenerationNotMatch(0) triggers JSON, as this feature is not
-  // supported by XML.  Using IfGenerationNotMatch() -- without a value -- has
-  // no effect.
-  auto xml_hack = options.api == ApiName::kApiJson
-                      ? gcs::IfGenerationNotMatch(0)
-                      : gcs::IfGenerationNotMatch();
   auto const object_start = clock::now();
+  auto const start = std::chrono::system_clock::now();
   auto object_bytes = std::uint64_t{0};
   auto const object_size = static_cast<std::int64_t>(object.size());
   auto range = gcs::ReadRange();
@@ -341,9 +276,8 @@ DownloadDetail DownloadOneObject(
         0, object_size - options.read_size);
     range = gcs::ReadRange(read_start(generator), options.read_size);
   }
-  auto stream =
-      client.ReadObject(object.bucket(), object.name(),
-                        gcs::Generation(object.generation()), range, xml_hack);
+  auto stream = client.ReadObject(object.bucket(), object.name(),
+                                  gcs::Generation(object.generation()), range);
   while (stream.read(buffer.data(), buffer_size)) {
     object_bytes += stream.gcount();
   }
@@ -358,8 +292,8 @@ DownloadDetail DownloadOneObject(
   }
   auto const& peer =
       p == stream.headers().end() ? std::string{"unknown"} : p->second;
-  return DownloadDetail{iteration, peer, object_bytes, object_elapsed,
-                        stream.status()};
+  return DownloadDetail{iteration,    start,          peer,
+                        object_bytes, object_elapsed, stream.status()};
 }
 
 TaskResult Iteration::DownloadTask(TaskConfig const& config) {
@@ -410,8 +344,6 @@ google::cloud::StatusOr<AggregateDownloadThroughputOptions> SelfTest(
           "--read-size=32KiB",
           "--read-buffer-size=16KiB",
           "--api=JSON",
-          "--grpc-channel-count=1",
-          "--grpc-plugin-config=dp",
       },
       kDescription);
 }
@@ -422,8 +354,72 @@ google::cloud::StatusOr<AggregateDownloadThroughputOptions> ParseArgs(
       GetEnv("GOOGLE_CLOUD_CPP_AUTO_RUN_EXAMPLES").value_or("") == "yes";
   if (auto_run) return SelfTest(argv[0]);
 
-  return gcs_bm::ParseAggregateDownloadThroughputOptions({argv, argv + argc},
-                                                         kDescription);
+  auto options = gcs_bm::ParseAggregateDownloadThroughputOptions(
+      {argv, argv + argc}, kDescription);
+  if (!options) return options;
+  // We don't want to get the default labels in the unit tests, as they can
+  // flake.
+  options->labels = gcs_bm::AddDefaultLabels(std::move(options->labels));
+  return options;
+}
+
+void PrintResults(AggregateDownloadThroughputOptions const& options,
+                  std::size_t object_count, std::uint64_t dataset_size,
+                  std::vector<TaskResult> const& iteration_results,
+                  Timer::Snapshot usage) {
+  auto accumulate_bytes_downloaded = [](std::vector<TaskResult> const& r) {
+    return std::accumulate(r.begin(), r.end(), std::int64_t{0},
+                           [](std::int64_t a, TaskResult const& b) {
+                             return a + b.bytes_downloaded;
+                           });
+  };
+
+  auto const downloaded_bytes = accumulate_bytes_downloaded(iteration_results);
+
+  auto clean_csv_field = [](std::string v) {
+    std::replace(v.begin(), v.end(), ',', ';');
+    return v;
+  };
+  auto const labels = clean_csv_field(options.labels);
+  auto const grpc_plugin_config =
+      clean_csv_field(options.client_options.get<gcs_ex::GrpcPluginOption>());
+  auto const* client_per_thread = options.client_per_thread ? "true" : "false";
+  // Print the results after each iteration. Makes it possible to interrupt
+  // the benchmark in the middle and still get some data.
+  for (auto const& r : iteration_results) {
+    for (auto const& d : r.details) {
+      // Join the iteration details with the per-download details. That makes
+      // it easier to analyze the data in external scripts.
+      std::cout << FormatTimestamp(d.start_time)         //
+                << ',' << labels                         //
+                << ',' << d.iteration                    //
+                << ',' << object_count                   //
+                << ',' << dataset_size                   //
+                << ',' << options.thread_count           //
+                << ',' << options.repeats_per_iteration  //
+                << ',' << options.read_size              //
+                << ',' << options.read_buffer_size       //
+                << ',' << options.api                    //
+                << ',' << client_per_thread              //
+                << ',' << d.status.code()                //
+                << ',' << d.peer                         //
+                << ',' << d.bytes_downloaded             //
+                << ',' << d.elapsed_time.count()         //
+                << ',' << downloaded_bytes               //
+                << ',' << usage.elapsed_time.count()     //
+                << ',' << usage.cpu_time.count()         //
+                << "\n";
+    }
+  }
+  // After each iteration print a human-readable summary. Flush it because
+  // the operator of these benchmarks (coryan@) is an impatient person.
+  auto const bandwidth =
+      FormatBandwidthGbPerSecond(downloaded_bytes, usage.elapsed_time);
+  std::cout << "# " << gcs_bm::CurrentTime()
+            << " downloaded=" << downloaded_bytes
+            << " cpu_time=" << absl::FromChrono(usage.cpu_time)
+            << " elapsed_time=" << absl::FromChrono(usage.elapsed_time)
+            << " Gbit/s=" << bandwidth << std::endl;
 }
 
 }  // namespace

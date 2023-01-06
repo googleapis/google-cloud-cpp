@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/spanner/row.h"
+#include "google/cloud/spanner/mocks/row.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <tuple>
@@ -64,7 +65,7 @@ TEST(Row, DefaultConstruct) {
 }
 
 TEST(Row, ValueSemantics) {
-  Row row = MakeTestRow(1, "blah", true);
+  Row row = spanner_mocks::MakeRow(1, "blah", true);
 
   Row copy = row;
   EXPECT_EQ(copy, row);
@@ -83,7 +84,7 @@ TEST(Row, ValueSemantics) {
 TEST(Row, BasicAccessors) {
   auto values = std::vector<Value>{Value(1), Value("blah"), Value(true)};
   auto columns = std::vector<std::string>{"a", "b", "c"};
-  Row row = MakeTestRow({
+  Row row = spanner_mocks::MakeRow({
       {columns[0], values[0]},  //
       {columns[1], values[1]},  //
       {columns[2], values[2]}   //
@@ -96,7 +97,7 @@ TEST(Row, BasicAccessors) {
 }
 
 TEST(Row, GetByPosition) {
-  Row row = MakeTestRow(1, "blah", true);
+  Row row = spanner_mocks::MakeRow(1, "blah", true);
 
   EXPECT_STATUS_OK(row.get(0));
   EXPECT_STATUS_OK(row.get(1));
@@ -109,7 +110,7 @@ TEST(Row, GetByPosition) {
 }
 
 TEST(Row, GetByColumnName) {
-  Row row = MakeTestRow({
+  Row row = spanner_mocks::MakeRow({
       {"a", Value(1)},       //
       {"b", Value("blah")},  //
       {"c", Value(true)}     //
@@ -126,7 +127,7 @@ TEST(Row, GetByColumnName) {
 }
 
 TEST(Row, TemplatedGetByPosition) {
-  Row row = MakeTestRow(1, "blah", true);
+  Row row = spanner_mocks::MakeRow(1, "blah", true);
 
   EXPECT_STATUS_OK(row.get<std::int64_t>(0));
   EXPECT_STATUS_OK(row.get<std::string>(1));
@@ -144,7 +145,7 @@ TEST(Row, TemplatedGetByPosition) {
 }
 
 TEST(Row, TemplatedGetByColumnName) {
-  Row row = MakeTestRow({
+  Row row = spanner_mocks::MakeRow({
       {"a", Value(1)},       //
       {"b", Value("blah")},  //
       {"c", Value(true)}     //
@@ -166,7 +167,7 @@ TEST(Row, TemplatedGetByColumnName) {
 }
 
 TEST(Row, TemplatedGetAsTuple) {
-  Row row = MakeTestRow(1, "blah", true);
+  Row row = spanner_mocks::MakeRow(1, "blah", true);
 
   using RowType = std::tuple<std::int64_t, std::string, bool>;
   EXPECT_STATUS_OK(row.get<RowType>());
@@ -190,14 +191,14 @@ TEST(Row, TemplatedGetAsTuple) {
   EXPECT_EQ(std::make_tuple(1, "blah", true), *std::move(row).get<RowType>());
 }
 
-TEST(MakeTestRow, ExplicitColumnNames) {
-  auto row = MakeTestRow({{"a", Value(42)}, {"b", Value(52)}});
+TEST(MakeRow, ExplicitColumnNames) {
+  auto row = spanner_mocks::MakeRow({{"a", Value(42)}, {"b", Value(52)}});
   EXPECT_EQ(Value(42), *row.get("a"));
   EXPECT_EQ(Value(52), *row.get("b"));
 }
 
-TEST(MakeTestRow, ImplicitColumnNames) {
-  auto row = MakeTestRow(42, 52);
+TEST(MakeRow, ImplicitColumnNames) {
+  auto row = spanner_mocks::MakeRow(42, 52);
   EXPECT_EQ(Value(42), *row.get("0"));
   EXPECT_EQ(Value(52), *row.get("1"));
 }
@@ -207,9 +208,9 @@ TEST(RowStreamIterator, Basics) {
   EXPECT_EQ(end, end);
 
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow(1, "foo", true));
-  rows.emplace_back(MakeTestRow(2, "bar", true));
-  rows.emplace_back(MakeTestRow(3, "baz", true));
+  rows.emplace_back(spanner_mocks::MakeRow(1, "foo", true));
+  rows.emplace_back(spanner_mocks::MakeRow(2, "bar", true));
+  rows.emplace_back(spanner_mocks::MakeRow(3, "baz", true));
 
   auto it = RowStreamIterator(MakeRowStreamIteratorSource(rows));
   EXPECT_EQ(it, it);
@@ -250,7 +251,7 @@ TEST(RowStreamIterator, Empty) {
 TEST(RowStreamIterator, OneRow) {
   RowStreamIterator end;
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow(1, "foo", true));
+  rows.emplace_back(spanner_mocks::MakeRow(1, "foo", true));
   auto it = RowStreamIterator(MakeRowStreamIteratorSource(rows));
   EXPECT_NE(it, end);
   EXPECT_STATUS_OK(*it);
@@ -264,9 +265,9 @@ TEST(RowStreamIterator, OneRow) {
 TEST(RowStreamIterator, IterationError) {
   RowStreamIterator end;
   std::vector<StatusOr<Row>> rows;
-  rows.emplace_back(MakeTestRow(1, "foo", true));
+  rows.emplace_back(spanner_mocks::MakeRow(1, "foo", true));
   rows.emplace_back(Status(StatusCode::kUnknown, "some error"));
-  rows.emplace_back(MakeTestRow(2, "bar", true));
+  rows.emplace_back(spanner_mocks::MakeRow(2, "bar", true));
 
   auto it = RowStreamIterator(MakeRowStreamIteratorSource(rows));
   EXPECT_NE(it, end);
@@ -286,9 +287,9 @@ TEST(RowStreamIterator, IterationError) {
 
 TEST(RowStreamIterator, ForLoop) {
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow({{"num", Value(2)}}));
-  rows.emplace_back(MakeTestRow({{"num", Value(3)}}));
-  rows.emplace_back(MakeTestRow({{"num", Value(5)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(2)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(3)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(5)}}));
 
   auto source = MakeRowStreamIteratorSource(rows);
   std::int64_t product = 1;
@@ -303,9 +304,9 @@ TEST(RowStreamIterator, ForLoop) {
 
 TEST(RowStreamIterator, RangeForLoop) {
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow({{"num", Value(2)}}));
-  rows.emplace_back(MakeTestRow({{"num", Value(3)}}));
-  rows.emplace_back(MakeTestRow({{"num", Value(5)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(2)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(3)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(5)}}));
 
   RowRange range(MakeRowStreamIteratorSource(rows));
   std::int64_t product = 1;
@@ -320,8 +321,8 @@ TEST(RowStreamIterator, RangeForLoop) {
 
 TEST(RowStreamIterator, MovedFromValueOk) {
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
-  rows.emplace_back(MakeTestRow({{"num", Value(2)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(1)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(2)}}));
 
   RowRange range(MakeRowStreamIteratorSource(rows));
   auto it = range.begin();
@@ -348,9 +349,9 @@ TEST(RowStreamIterator, MovedFromValueOk) {
 
 TEST(TupleStreamIterator, Basics) {
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow(1, "foo", true));
-  rows.emplace_back(MakeTestRow(2, "bar", true));
-  rows.emplace_back(MakeTestRow(3, "baz", true));
+  rows.emplace_back(spanner_mocks::MakeRow(1, "foo", true));
+  rows.emplace_back(spanner_mocks::MakeRow(2, "bar", true));
+  rows.emplace_back(spanner_mocks::MakeRow(3, "baz", true));
 
   using RowType = std::tuple<std::int64_t, std::string, bool>;
   using TupleIterator = TupleStreamIterator<RowType>;
@@ -404,9 +405,9 @@ TEST(TupleStreamIterator, Empty) {
 
 TEST(TupleStreamIterator, Error) {
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow(1, "foo", true));
-  rows.emplace_back(MakeTestRow(2, "bar", "should be a bool"));
-  rows.emplace_back(MakeTestRow(3, "baz", true));
+  rows.emplace_back(spanner_mocks::MakeRow(1, "foo", true));
+  rows.emplace_back(spanner_mocks::MakeRow(2, "bar", "should be a bool"));
+  rows.emplace_back(spanner_mocks::MakeRow(3, "baz", true));
 
   using RowType = std::tuple<std::int64_t, std::string, bool>;
   using TupleIterator = TupleStreamIterator<RowType>;
@@ -434,8 +435,8 @@ TEST(TupleStreamIterator, Error) {
 
 TEST(TupleStreamIterator, MovedFromValueOk) {
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
-  rows.emplace_back(MakeTestRow({{"num", Value(2)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(1)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(2)}}));
 
   RowRange range(MakeRowStreamIteratorSource(rows));
   using RowType = std::tuple<std::int64_t>;
@@ -460,9 +461,9 @@ TEST(TupleStreamIterator, MovedFromValueOk) {
 
 TEST(TupleStream, Basics) {
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow(1, "foo", true));
-  rows.emplace_back(MakeTestRow(2, "bar", true));
-  rows.emplace_back(MakeTestRow(3, "baz", true));
+  rows.emplace_back(spanner_mocks::MakeRow(1, "foo", true));
+  rows.emplace_back(spanner_mocks::MakeRow(2, "bar", true));
+  rows.emplace_back(spanner_mocks::MakeRow(3, "baz", true));
 
   using RowType = std::tuple<std::int64_t, std::string, bool>;
   RowRange range(MakeRowStreamIteratorSource(rows));
@@ -495,9 +496,9 @@ TEST(TupleStream, Basics) {
 
 TEST(TupleStream, RangeForLoop) {
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow({{"num", Value(2)}}));
-  rows.emplace_back(MakeTestRow({{"num", Value(3)}}));
-  rows.emplace_back(MakeTestRow({{"num", Value(5)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(2)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(3)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(5)}}));
   using RowType = std::tuple<std::int64_t>;
 
   RowRange range(MakeRowStreamIteratorSource(rows));
@@ -511,9 +512,9 @@ TEST(TupleStream, RangeForLoop) {
 
 TEST(TupleStream, IterationError) {
   std::vector<StatusOr<Row>> rows;
-  rows.emplace_back(MakeTestRow(1, "foo", true));
+  rows.emplace_back(spanner_mocks::MakeRow(1, "foo", true));
   rows.emplace_back(Status(StatusCode::kUnknown, "some error"));
-  rows.emplace_back(MakeTestRow(2, "bar", true));
+  rows.emplace_back(spanner_mocks::MakeRow(2, "bar", true));
 
   RowRange range(MakeRowStreamIteratorSource(rows));
 
@@ -555,7 +556,7 @@ TEST(GetSingularRow, TupleStreamEmpty) {
 
 TEST(GetSingularRow, BasicSingleRow) {
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(1)}}));
 
   RowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(range);
@@ -565,7 +566,7 @@ TEST(GetSingularRow, BasicSingleRow) {
 
 TEST(GetSingularRow, TupleStreamSingleRow) {
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(1)}}));
 
   auto row_range = RowRange(MakeRowStreamIteratorSource(rows));
   auto tup_range = StreamOf<std::tuple<std::int64_t>>(row_range);
@@ -577,8 +578,8 @@ TEST(GetSingularRow, TupleStreamSingleRow) {
 
 TEST(GetSingularRow, BasicTooManyRows) {
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
-  rows.emplace_back(MakeTestRow({{"num", Value(2)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(1)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(2)}}));
 
   RowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(range);
@@ -588,8 +589,8 @@ TEST(GetSingularRow, BasicTooManyRows) {
 
 TEST(GetSingularRow, TupleStreamTooManyRows) {
   std::vector<Row> rows;
-  rows.emplace_back(MakeTestRow({{"num", Value(1)}}));
-  rows.emplace_back(MakeTestRow({{"num", Value(2)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(1)}}));
+  rows.emplace_back(spanner_mocks::MakeRow({{"num", Value(2)}}));
 
   RowRange range(MakeRowStreamIteratorSource(rows));
   auto row = GetSingularRow(StreamOf<std::tuple<std::int64_t>>(range));

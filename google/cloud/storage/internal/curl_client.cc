@@ -16,7 +16,6 @@
 #include "google/cloud/storage/internal/bucket_access_control_parser.h"
 #include "google/cloud/storage/internal/bucket_metadata_parser.h"
 #include "google/cloud/storage/internal/curl_request_builder.h"
-#include "google/cloud/storage/internal/curl_resumable_upload_session.h"
 #include "google/cloud/storage/internal/generate_message_boundary.h"
 #include "google/cloud/storage/internal/hmac_key_metadata_parser.h"
 #include "google/cloud/storage/internal/notification_metadata_parser.h"
@@ -27,6 +26,7 @@
 #include "google/cloud/storage/internal/service_account_parser.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/auth_header_error.h"
 #include "google/cloud/internal/getenv.h"
 #include "absl/memory/memory.h"
 #include "absl/strings/match.h"
@@ -37,14 +37,20 @@ namespace cloud {
 namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+
+using ::google::cloud::internal::AuthHeaderError;
+using ::google::cloud::internal::CurrentOptions;
+
 namespace {
 
-std::shared_ptr<CurlHandleFactory> CreateHandleFactory(Options const& options) {
+std::shared_ptr<rest_internal::CurlHandleFactory> CreateHandleFactory(
+    Options const& options) {
   auto const pool_size = options.get<ConnectionPoolSizeOption>();
   if (pool_size == 0) {
-    return std::make_shared<DefaultCurlHandleFactory>(options);
+    return std::make_shared<rest_internal::DefaultCurlHandleFactory>(options);
   }
-  return std::make_shared<PooledCurlHandleFactory>(pool_size, options);
+  return std::make_shared<rest_internal::PooledCurlHandleFactory>(pool_size,
+                                                                  options);
 }
 
 std::string UrlEscapeString(std::string const& value) {
@@ -96,13 +102,6 @@ StatusOr<ReturnType> ParseFromHttpResponse(StatusOr<HttpResponse> response) {
   return ReturnType::FromHttpResponse(response->payload);
 }
 
-bool XmlEnabled() {
-  auto const config =
-      google::cloud::internal::GetEnv("GOOGLE_CLOUD_CPP_STORAGE_REST_CONFIG")
-          .value_or("");
-  return config != "disable-xml";
-}
-
 }  // namespace
 
 std::string HostHeader(Options const& options, char const* service) {
@@ -124,15 +123,14 @@ std::string HostHeader(Options const& options, char const* service) {
 
 Status CurlClient::SetupBuilderCommon(CurlRequestBuilder& builder,
                                       char const* method, char const* service) {
+  auto const& current = CurrentOptions();
   auto auth_header =
-      opts_.get<Oauth2CredentialsOption>()->AuthorizationHeader();
-  if (!auth_header.ok()) {
-    return std::move(auth_header).status();
-  }
+      current.get<Oauth2CredentialsOption>()->AuthorizationHeader();
+  if (!auth_header) return AuthHeaderError(std::move(auth_header).status());
   builder.SetMethod(method)
-      .ApplyClientOptions(opts_)
+      .ApplyClientOptions(current)
       .AddHeader(auth_header.value())
-      .AddHeader(HostHeader(opts_, service))
+      .AddHeader(HostHeader(current, service))
       .AddHeader(x_goog_api_client_header_);
   return Status();
 }
@@ -171,72 +169,15 @@ CurlClient::CurlClient(google::cloud::Options options)
       upload_endpoint_(JsonUploadEndpoint(opts_)),
       xml_endpoint_(XmlEndpoint(opts_)),
       iam_endpoint_(IamEndpoint(opts_)),
-      xml_enabled_(XmlEnabled()),
       generator_(google::cloud::internal::MakeDefaultPRNG()),
       storage_factory_(CreateHandleFactory(opts_)),
       upload_factory_(CreateHandleFactory(opts_)),
       xml_upload_factory_(CreateHandleFactory(opts_)),
       xml_download_factory_(CreateHandleFactory(opts_)) {
-  CurlInitializeOnce(opts_);
+  rest_internal::CurlInitializeOnce(opts_);
 }
 
-StatusOr<ResumableUploadResponse> CurlClient::UploadChunk(
-    UploadChunkRequest const& request) {
-  CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
-  builder.AddHeader(request.RangeHeader());
-  builder.AddHeader("Content-Type: application/octet-stream");
-  builder.AddHeader("Content-Length: " +
-                    std::to_string(request.payload_size()));
-  // We need to explicitly disable chunked transfer encoding. libcurl uses is by
-  // default (at least in this case), and that wastes bandwidth as the content
-  // length is known.
-  builder.AddHeader("Transfer-Encoding:");
-  auto response =
-      std::move(builder).BuildRequest().MakeUploadRequest(request.payload());
-  if (!response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code < HttpStatusCode::kMinNotSuccess ||
-      response->status_code == HttpStatusCode::kResumeIncomplete) {
-    return ResumableUploadResponse::FromHttpResponse(*std::move(response));
-  }
-  return AsStatus(*response);
-}
-
-StatusOr<ResumableUploadResponse> CurlClient::QueryResumableUpload(
-    QueryResumableUploadRequest const& request) {
-  CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
-  builder.AddHeader("Content-Range: bytes */*");
-  builder.AddHeader("Content-Type: application/octet-stream");
-  builder.AddHeader("Content-Length: 0");
-  auto response = std::move(builder).BuildRequest().MakeRequest(std::string{});
-  if (!response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code < HttpStatusCode::kMinNotSuccess ||
-      response->status_code == HttpStatusCode::kResumeIncomplete) {
-    return ResumableUploadResponse::FromHttpResponse(*std::move(response));
-  }
-  return AsStatus(*response);
-}
-
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-CurlClient::FullyRestoreResumableSession(ResumableUploadRequest const& request,
-                                         std::string const& session_id) {
-  auto session = absl::make_unique<CurlResumableUploadSession>(
-      shared_from_this(), request, session_id);
-  auto response = session->ResetSession();
-  if (!response) std::move(response).status();
-  return std::unique_ptr<ResumableUploadSession>(std::move(session));
-}
+Options CurlClient::options() const { return opts_; }
 
 StatusOr<ListBucketsResponse> CurlClient::ListBuckets(
     ListBucketsRequest const& request) {
@@ -255,13 +196,20 @@ StatusOr<BucketMetadata> CurlClient::CreateBucket(
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b", storage_factory_);
   auto status = SetupBuilder(builder, request, "POST");
-  if (!status.ok()) {
-    return status;
-  }
+  if (!status.ok()) return status;
   builder.AddQueryParameter("project", request.project_id());
   builder.AddHeader("Content-Type: application/json");
-  return CheckedFromString<BucketMetadataParser>(
+  auto response = CheckedFromString<BucketMetadataParser>(
       std::move(builder).BuildRequest().MakeRequest(request.json_payload()));
+  // GCS returns a 409 when buckets already exist:
+  //     https://cloud.google.com/storage/docs/json_api/v1/status-codes#409-conflict
+  // This seems to be the only case where kAlreadyExists is a better match
+  // for 409 than kAborted.
+  if (!response && response.status().code() == StatusCode::kAborted) {
+    return Status(StatusCode::kAlreadyExists, response.status().message(),
+                  response.status().error_info());
+  }
+  return response;
 }
 
 StatusOr<BucketMetadata> CurlClient::GetBucketMetadata(
@@ -318,25 +266,6 @@ StatusOr<BucketMetadata> CurlClient::PatchBucket(
       std::move(builder).BuildRequest().MakeRequest(request.payload()));
 }
 
-StatusOr<IamPolicy> CurlClient::GetBucketIamPolicy(
-    GetBucketIamPolicyRequest const& request) {
-  CurlRequestBuilder builder(
-      storage_endpoint_ + "/b/" + request.bucket_name() + "/iam",
-      storage_factory_);
-  auto status = SetupBuilder(builder, request, "GET");
-  if (!status.ok()) {
-    return status;
-  }
-  auto response = std::move(builder).BuildRequest().MakeRequest(std::string{});
-  if (!response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
-    return AsStatus(*response);
-  }
-  return ParseIamPolicyFromString(response->payload);
-}
-
 StatusOr<NativeIamPolicy> CurlClient::GetNativeBucketIamPolicy(
     GetBucketIamPolicyRequest const& request) {
   CurlRequestBuilder builder(
@@ -354,27 +283,6 @@ StatusOr<NativeIamPolicy> CurlClient::GetNativeBucketIamPolicy(
     return AsStatus(*response);
   }
   return NativeIamPolicy::CreateFromJson(response->payload);
-}
-
-StatusOr<IamPolicy> CurlClient::SetBucketIamPolicy(
-    SetBucketIamPolicyRequest const& request) {
-  CurlRequestBuilder builder(
-      storage_endpoint_ + "/b/" + request.bucket_name() + "/iam",
-      storage_factory_);
-  auto status = SetupBuilder(builder, request, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
-  builder.AddHeader("Content-Type: application/json");
-  auto response =
-      std::move(builder).BuildRequest().MakeRequest(request.json_payload());
-  if (!response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
-    return AsStatus(*response);
-  }
-  return ParseIamPolicyFromString(response->payload);
 }
 
 StatusOr<NativeIamPolicy> CurlClient::SetNativeBucketIamPolicy(
@@ -443,15 +351,6 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMedia(
     return InsertObjectMediaMultipart(request);
   }
 
-  // Unless the request uses a feature that disables it, prefer to use XML.
-  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
-      !request.HasOption<IfGenerationNotMatch>() &&
-      !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>() &&
-      !request.HasOption<Projection>() && request.HasOption<Fields>() &&
-      request.GetOption<Fields>().value().empty()) {
-    return InsertObjectMediaXml(request);
-  }
-
   // If the application has set an explicit hash value we need to use multipart
   // uploads. `DisableMD5Hash` and `DisableCrc32cChecksum` should not be
   // dependent on each other.
@@ -504,13 +403,6 @@ StatusOr<ObjectMetadata> CurlClient::GetObjectMetadata(
 
 StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
     ReadObjectRangeRequest const& request) {
-  if (xml_enabled_ && !request.HasOption<IfMetagenerationNotMatch>() &&
-      !request.HasOption<IfGenerationNotMatch>() &&
-      !request.HasOption<IfMetagenerationMatch>() &&
-      !request.HasOption<IfGenerationMatch>() &&
-      !request.HasOption<QuotaUser>() && !request.HasOption<UserIp>()) {
-    return ReadObjectXml(request);
-  }
   // Assume the bucket name is validated by the caller.
   CurlRequestBuilder builder(storage_endpoint_ + "/b/" + request.bucket_name() +
                                  "/o/" + UrlEscapeString(request.object_name()),
@@ -527,8 +419,9 @@ StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObject(
     builder.AddHeader("Cache-Control: no-transform");
   }
 
-  return std::unique_ptr<ObjectReadSource>(
-      std::move(builder).BuildDownloadRequest());
+  auto download = std::move(builder).BuildDownloadRequest();
+  if (!download) return std::move(download).status();
+  return std::unique_ptr<ObjectReadSource>(*std::move(download));
 }
 
 StatusOr<ListObjectsResponse> CurlClient::ListObjects(
@@ -637,13 +530,8 @@ StatusOr<RewriteObjectResponse> CurlClient::RewriteObject(
   return RewriteObjectResponse::FromHttpResponse(response->payload);
 }
 
-StatusOr<std::unique_ptr<ResumableUploadSession>>
-CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
-  auto session_id = request.GetOption<UseResumableUploadSession>().value_or("");
-  if (!session_id.empty()) {
-    return FullyRestoreResumableSession(request, session_id);
-  }
-
+StatusOr<CreateResumableUploadResponse> CurlClient::CreateResumableUpload(
+    ResumableUploadRequest const& request) {
   CurlRequestBuilder builder(
       upload_endpoint_ + "/b/" + request.bucket_name() + "/o", upload_factory_);
   auto status = SetupBuilderCommon(builder, "POST");
@@ -683,26 +571,30 @@ CurlClient::CreateResumableSession(ResumableUploadRequest const& request) {
 
   builder.AddHeader("Content-Length: " +
                     std::to_string(request_payload.size()));
-  auto http_response =
-      std::move(builder).BuildRequest().MakeRequest(request_payload);
-  if (!http_response.ok()) {
-    return std::move(http_response).status();
-  }
-  if (http_response->status_code >= HttpStatusCode::kMinNotSuccess) {
-    return AsStatus(*http_response);
-  }
   auto response =
-      ResumableUploadResponse::FromHttpResponse(*std::move(http_response));
+      std::move(builder).BuildRequest().MakeRequest(request_payload);
   if (!response.ok()) return std::move(response).status();
-  if (response->upload_session_url.empty()) {
-    std::ostringstream os;
-    os << __func__ << " - invalid server response, parsed to " << *response;
-    return Status(StatusCode::kInternal, std::move(os).str());
+  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
+    return AsStatus(*response);
   }
-  return std::unique_ptr<ResumableUploadSession>(
-      absl::make_unique<CurlResumableUploadSession>(
-          shared_from_this(), request,
-          std::move(response->upload_session_url)));
+  return CreateResumableUploadResponse::FromHttpResponse(*std::move(response));
+}
+
+StatusOr<QueryResumableUploadResponse> CurlClient::QueryResumableUpload(
+    QueryResumableUploadRequest const& request) {
+  CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
+  auto status = SetupBuilder(builder, request, "PUT");
+  if (!status.ok()) return status;
+  builder.AddHeader("Content-Range: bytes */*");
+  builder.AddHeader("Content-Type: application/octet-stream");
+  builder.AddHeader("Content-Length: 0");
+  auto response = std::move(builder).BuildRequest().MakeRequest(std::string{});
+  if (!response.ok()) return std::move(response).status();
+  if (response->status_code < HttpStatusCode::kMinNotSuccess ||
+      response->status_code == HttpStatusCode::kResumeIncomplete) {
+    return QueryResumableUploadResponse::FromHttpResponse(*std::move(response));
+  }
+  return AsStatus(*response);
 }
 
 StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
@@ -721,6 +613,29 @@ StatusOr<EmptyResponse> CurlClient::DeleteResumableUpload(
     return AsStatus(*response);
   }
   return EmptyResponse{};
+}
+
+StatusOr<QueryResumableUploadResponse> CurlClient::UploadChunk(
+    UploadChunkRequest const& request) {
+  CurlRequestBuilder builder(request.upload_session_url(), upload_factory_);
+  auto status = SetupBuilder(builder, request, "PUT");
+  if (!status.ok()) return status;
+  builder.AddHeader(request.RangeHeader());
+  builder.AddHeader("Content-Type: application/octet-stream");
+  builder.AddHeader("Content-Length: " +
+                    std::to_string(request.payload_size()));
+  // We need to explicitly disable chunked transfer encoding. libcurl uses is by
+  // default (at least in this case), and that wastes bandwidth as the content
+  // length is known.
+  builder.AddHeader("Transfer-Encoding:");
+  auto response =
+      std::move(builder).BuildRequest().MakeUploadRequest(request.payload());
+  if (!response.ok()) return std::move(response).status();
+  if (response->status_code < HttpStatusCode::kMinNotSuccess ||
+      response->status_code == HttpStatusCode::kResumeIncomplete) {
+    return QueryResumableUploadResponse::FromHttpResponse(*std::move(response));
+  }
+  return AsStatus(*response);
 }
 
 StatusOr<ListBucketAclResponse> CurlClient::ListBucketAcl(
@@ -1172,132 +1087,6 @@ StatusOr<EmptyResponse> CurlClient::DeleteNotification(
       std::move(builder).BuildRequest().MakeRequest(std::string{}));
 }
 
-StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaXml(
-    InsertObjectMediaRequest const& request) {
-  CurlRequestBuilder builder(xml_endpoint_ + "/" + request.bucket_name() + "/" +
-                                 UrlEscapeString(request.object_name()),
-                             xml_upload_factory_);
-  auto status = SetupBuilderCommon(builder, "PUT");
-  if (!status.ok()) {
-    return status;
-  }
-
-  //
-  // Apply the options from InsertObjectMediaRequest that are set, translating
-  // to the XML format for them.
-  //
-  builder.AddOption(request.GetOption<ContentEncoding>());
-  // Set the content type of a sensible value, the application can override this
-  // in the options for the request.
-  if (!request.HasOption<ContentType>()) {
-    builder.AddHeader("content-type: application/octet-stream");
-  } else {
-    builder.AddOption(request.GetOption<ContentType>());
-  }
-  builder.AddOption(request.GetOption<EncryptionKey>());
-  if (request.HasOption<IfGenerationMatch>()) {
-    builder.AddHeader(
-        "x-goog-if-generation-match: " +
-        std::to_string(request.GetOption<IfGenerationMatch>().value()));
-  }
-  // IfGenerationNotMatch cannot be set, checked by the caller.
-  if (request.HasOption<IfMetagenerationMatch>()) {
-    builder.AddHeader(
-        "x-goog-if-metageneration-match: " +
-        std::to_string(request.GetOption<IfMetagenerationMatch>().value()));
-  }
-  // IfMetagenerationNotMatch cannot be set, checked by the caller.
-  if (request.HasOption<KmsKeyName>()) {
-    builder.AddHeader("x-goog-encryption-kms-key-name: " +
-                      request.GetOption<KmsKeyName>().value());
-  }
-  if (request.HasOption<MD5HashValue>()) {
-    builder.AddHeader("x-goog-hash: md5=" +
-                      request.GetOption<MD5HashValue>().value());
-  } else if (!request.GetOption<DisableMD5Hash>().value_or(false)) {
-    builder.AddHeader("x-goog-hash: md5=" + ComputeMD5Hash(request.contents()));
-  }
-  if (request.HasOption<Crc32cChecksumValue>()) {
-    builder.AddHeader("x-goog-hash: crc32c=" +
-                      request.GetOption<Crc32cChecksumValue>().value());
-  } else if (!request.GetOption<DisableCrc32cChecksum>().value_or(false)) {
-    builder.AddHeader("x-goog-hash: crc32c=" +
-                      ComputeCrc32cChecksum(request.contents()));
-  }
-  if (request.HasOption<PredefinedAcl>()) {
-    builder.AddHeader("x-goog-acl: " +
-                      request.GetOption<PredefinedAcl>().HeaderName());
-  }
-  builder.AddOption(request.GetOption<UserProject>());
-
-  //
-  // Apply the options from GenericRequestBase<> that are set, translating
-  // to the XML format for them.
-  //
-  // Fields cannot be set, checked by the caller.
-  builder.AddOption(request.GetOption<CustomHeader>());
-  builder.AddOption(request.GetOption<IfMatchEtag>());
-  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
-  // QuotaUser cannot be set, checked by the caller.
-  // UserIp cannot be set, checked by the caller.
-
-  builder.AddHeader("Content-Length: " +
-                    std::to_string(request.contents().size()));
-  auto response =
-      std::move(builder).BuildRequest().MakeRequest(request.contents());
-  if (!response.ok()) {
-    return std::move(response).status();
-  }
-  if (response->status_code >= HttpStatusCode::kMinNotSuccess) {
-    return AsStatus(*response);
-  }
-  return internal::ObjectMetadataParser::FromJson(nlohmann::json{
-      {"name", request.object_name()},
-      {"bucket", request.bucket_name()},
-  });
-}
-
-StatusOr<std::unique_ptr<ObjectReadSource>> CurlClient::ReadObjectXml(
-    ReadObjectRangeRequest const& request) {
-  CurlRequestBuilder builder(xml_endpoint_ + "/" + request.bucket_name() + "/" +
-                                 UrlEscapeString(request.object_name()),
-                             xml_download_factory_);
-  auto status = SetupBuilderCommon(builder, "GET");
-  if (!status.ok()) {
-    return status;
-  }
-
-  //
-  // Apply the options from ReadObjectMediaRequest that are set, translating
-  // to the XML format for them.
-  //
-  builder.AddOption(request.GetOption<EncryptionKey>());
-  builder.AddOption(request.GetOption<Generation>());
-  // None of the IfGeneration*Match nor IfMetageneration*Match can be set. This
-  // is checked by the caller (in this class).
-  builder.AddOption(request.GetOption<UserProject>());
-
-  //
-  // Apply the options from GenericRequestBase<> that are set, translating
-  // to the XML format for them.
-  //
-  builder.AddOption(request.GetOption<CustomHeader>());
-  builder.AddOption(request.GetOption<IfMatchEtag>());
-  builder.AddOption(request.GetOption<IfNoneMatchEtag>());
-  // QuotaUser cannot be set, checked by the caller.
-  // UserIp cannot be set, checked by the caller.
-
-  if (request.RequiresRangeHeader()) {
-    builder.AddHeader(request.RangeHeader());
-  }
-  if (request.RequiresNoCache()) {
-    builder.AddHeader("Cache-Control: no-transform");
-  }
-
-  return std::unique_ptr<ObjectReadSource>(
-      std::move(builder).BuildDownloadRequest());
-}
-
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
     InsertObjectMediaRequest const& request) {
   // To perform a multipart upload we need to separate the parts as described
@@ -1315,8 +1104,8 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
   AddOptionsWithSkip<CurlRequestBuilder, ContentType> no_content_type{builder};
   request.ForEachOption(no_content_type);
 
-  // 2. Pick a separator that does not conflict with the request contents.
-  auto boundary = PickBoundary(request.contents());
+  // 2. create a random separator which is unlikely to exist in the payload.
+  auto const boundary = MakeBoundary();
   builder.AddHeader("content-type: multipart/related; boundary=" + boundary);
   builder.AddQueryParameter("uploadType", "multipart");
   builder.AddQueryParameter("name", request.object_name());
@@ -1369,23 +1158,9 @@ StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaMultipart(
       std::move(builder).BuildRequest().MakeRequest(contents));
 }
 
-std::string CurlClient::PickBoundary(std::string const& text_to_avoid) {
-  // We need to find a string that is *not* found in `text_to_avoid`, we pick
-  // a string at random, and see if it is in `text_to_avoid`, if it is, we grow
-  // the string with random characters and start from where we last found a
-  // the candidate.  Eventually we will find something, though it might be
-  // larger than `text_to_avoid`.  And we only make (approximately) one pass
-  // over `text_to_avoid`.
-  auto generate_candidate = [this](int n) {
-    static auto const* const kChars = new std::string(
-        "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-    std::unique_lock<std::mutex> lk(mu_);
-    return google::cloud::internal::Sample(generator_, n, *kChars);
-  };
-  constexpr int kCandidateInitialSize = 16;
-  constexpr int kCandidateGrowthSize = 4;
-  return GenerateMessageBoundary(text_to_avoid, std::move(generate_candidate),
-                                 kCandidateInitialSize, kCandidateGrowthSize);
+std::string CurlClient::MakeBoundary() {
+  std::unique_lock<std::mutex> lk(mu_);
+  return GenerateMessageBoundaryCandidate(generator_);
 }
 
 StatusOr<ObjectMetadata> CurlClient::InsertObjectMediaSimple(

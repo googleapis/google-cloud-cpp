@@ -31,26 +31,48 @@ namespace cloud {
 namespace vpcaccess {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the retry policy.
+ *
+ * @ingroup google-cloud-vpcaccess-options
+ */
 struct VpcAccessServiceRetryPolicyOption {
   using Type = std::shared_ptr<VpcAccessServiceRetryPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure the backoff policy.
+ *
+ * @ingroup google-cloud-vpcaccess-options
+ */
 struct VpcAccessServiceBackoffPolicyOption {
   using Type = std::shared_ptr<BackoffPolicy>;
 };
 
-/// Option to use with `google::cloud::Options`.
-struct VpcAccessServicePollingPolicyOption {
-  using Type = std::shared_ptr<PollingPolicy>;
-};
-
-/// Option to use with `google::cloud::Options`.
+/**
+ * Use with `google::cloud::Options` to configure which operations are retried.
+ *
+ * @ingroup google-cloud-vpcaccess-options
+ */
 struct VpcAccessServiceConnectionIdempotencyPolicyOption {
   using Type = std::shared_ptr<VpcAccessServiceConnectionIdempotencyPolicy>;
 };
 
+/**
+ * Use with `google::cloud::Options` to configure the long-running operations
+ * polling policy.
+ *
+ * @ingroup google-cloud-vpcaccess-options
+ */
+struct VpcAccessServicePollingPolicyOption {
+  using Type = std::shared_ptr<PollingPolicy>;
+};
+
+/**
+ * The options applicable to VpcAccessService.
+ *
+ * @ingroup google-cloud-vpcaccess-options
+ */
 using VpcAccessServicePolicyOptionList =
     OptionList<VpcAccessServiceRetryPolicyOption,
                VpcAccessServiceBackoffPolicyOption,

@@ -66,8 +66,8 @@ class VideoIntelligenceServiceClient {
       Options opts = {});
   ~VideoIntelligenceServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   VideoIntelligenceServiceClient(VideoIntelligenceServiceClient const&) =
       default;
   VideoIntelligenceServiceClient& operator=(
@@ -75,10 +75,10 @@ class VideoIntelligenceServiceClient {
   VideoIntelligenceServiceClient(VideoIntelligenceServiceClient&&) = default;
   VideoIntelligenceServiceClient& operator=(VideoIntelligenceServiceClient&&) =
       default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(VideoIntelligenceServiceClient const& a,
                          VideoIntelligenceServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -87,7 +87,7 @@ class VideoIntelligenceServiceClient {
                          VideoIntelligenceServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Performs asynchronous video annotation. Progress and results can be

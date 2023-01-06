@@ -19,39 +19,45 @@ namespace google {
 namespace cloud {
 namespace oauth2_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace {
+
+std::pair<std::string, std::string> MakeHeader(internal::AccessToken const& t) {
+  return {"Authorization", t.token};
+}
+
+}  // namespace
 
 RefreshingCredentialsWrapper::RefreshingCredentialsWrapper(
     CurrentTimeFn current_time_fn)
     : current_time_fn_(std::move(current_time_fn)) {}
 
 bool RefreshingCredentialsWrapper::IsExpired() const {
-  return current_time_fn_() > (temporary_token_.expiration_time -
-                               GoogleOAuthAccessTokenExpirationSlack());
+  return current_time_fn_() >
+         (token_.expiration - GoogleOAuthAccessTokenExpirationSlack());
 }
 
 bool RefreshingCredentialsWrapper::IsValid() const {
-  return !temporary_token_.token.second.empty() &&
-         current_time_fn_() <= temporary_token_.expiration_time;
+  return !token_.token.empty() && current_time_fn_() <= token_.expiration;
 }
 
 bool RefreshingCredentialsWrapper::NeedsRefresh() const {
-  return temporary_token_.token.second.empty() || IsExpired();
+  return token_.token.empty() || IsExpired();
 }
 
 StatusOr<std::pair<std::string, std::string>>
 RefreshingCredentialsWrapper::AuthorizationHeader(
     RefreshFunctor refresh_fn) const {
-  if (!NeedsRefresh()) return temporary_token_.token;
+  if (!NeedsRefresh()) return MakeHeader(token_);
 
   // If successful refreshing token, return it. Otherwise, return the current
   // token if it still has time left on it. If no valid token can be returned,
   // return the status of the refresh failure.
   auto new_token = refresh_fn();
   if (new_token) {
-    temporary_token_ = *std::move(new_token);
-    return temporary_token_.token;
+    token_ = *std::move(new_token);
+    return MakeHeader(token_);
   }
-  if (IsValid()) return temporary_token_.token;
+  if (IsValid()) return MakeHeader(token_);
   return new_token.status();
 }
 

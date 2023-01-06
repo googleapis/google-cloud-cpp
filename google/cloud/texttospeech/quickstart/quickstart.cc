@@ -14,7 +14,6 @@
 
 #include "google/cloud/texttospeech/text_to_speech_client.h"
 #include <iostream>
-#include <stdexcept>
 
 auto constexpr kText = R"""(
 Four score and seven years ago our fathers brought forth on this
@@ -39,7 +38,7 @@ int main(int argc, char* argv[]) try {
   audio.set_audio_encoding(google::cloud::texttospeech::v1::LINEAR16);
 
   auto response = client.SynthesizeSpeech(input, voice, audio);
-  if (!response) throw std::runtime_error(response.status().message());
+  if (!response) throw std::move(response).status();
   // Normally one would play the results (response->audio_content()) over some
   // audio device. For this quickstart, we just print some information.
   auto constexpr kWavHeaderSize = 48;
@@ -49,7 +48,7 @@ int main(int argc, char* argv[]) try {
   std::cout << "The audio has " << sample_count << " samples\n";
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

@@ -36,9 +36,8 @@ JobControllerConnectionImpl::JobControllerConnectionImpl(
     std::shared_ptr<dataproc_internal::JobControllerStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), dataproc_internal::JobControllerDefaultOptions(
-                                  JobControllerConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      JobControllerConnection::options())) {}
 
 StatusOr<google::cloud::dataproc::v1::Job>
 JobControllerConnectionImpl::SubmitJob(
@@ -56,7 +55,7 @@ JobControllerConnectionImpl::SubmitJob(
 future<StatusOr<google::cloud::dataproc::v1::Job>>
 JobControllerConnectionImpl::SubmitJobAsOperation(
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
-  auto stub = stub_;
+  auto& stub = stub_;
   return google::cloud::internal::AsyncLongRunningOperation<
       google::cloud::dataproc::v1::Job>(
       background_->cq(), request,
@@ -97,7 +96,7 @@ StreamRange<google::cloud::dataproc::v1::Job>
 JobControllerConnectionImpl::ListJobs(
     google::cloud::dataproc::v1::ListJobsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<dataproc::JobControllerRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());

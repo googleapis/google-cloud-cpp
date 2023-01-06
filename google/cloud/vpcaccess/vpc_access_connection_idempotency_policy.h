@@ -32,23 +32,23 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class VpcAccessServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~VpcAccessServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~VpcAccessServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency CreateConnector(
-      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request) = 0;
+      google::cloud::vpcaccess::v1::CreateConnectorRequest const& request);
 
   virtual google::cloud::Idempotency GetConnector(
-      google::cloud::vpcaccess::v1::GetConnectorRequest const& request) = 0;
+      google::cloud::vpcaccess::v1::GetConnectorRequest const& request);
 
   virtual google::cloud::Idempotency ListConnectors(
-      google::cloud::vpcaccess::v1::ListConnectorsRequest request) = 0;
+      google::cloud::vpcaccess::v1::ListConnectorsRequest request);
 
   virtual google::cloud::Idempotency DeleteConnector(
-      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request) = 0;
+      google::cloud::vpcaccess::v1::DeleteConnectorRequest const& request);
 };
 
 std::unique_ptr<VpcAccessServiceConnectionIdempotencyPolicy>

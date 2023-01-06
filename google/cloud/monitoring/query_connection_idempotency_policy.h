@@ -32,14 +32,14 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class QueryServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~QueryServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~QueryServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<QueryServiceConnectionIdempotencyPolicy> clone()
-      const = 0;
+      const;
 
   virtual google::cloud::Idempotency QueryTimeSeries(
-      google::monitoring::v3::QueryTimeSeriesRequest request) = 0;
+      google::monitoring::v3::QueryTimeSeriesRequest request);
 };
 
 std::unique_ptr<QueryServiceConnectionIdempotencyPolicy>

@@ -60,6 +60,15 @@ ManagedNotebookServiceMetadata::AsyncCreateRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ManagedNotebookServiceMetadata::AsyncUpdateRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::UpdateRuntimeRequest const& request) {
+  SetMetadata(*context, "runtime.name=" + request.runtime().name());
+  return child_->AsyncUpdateRuntime(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncDeleteRuntime(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -105,12 +114,39 @@ ManagedNotebookServiceMetadata::AsyncResetRuntime(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ManagedNotebookServiceMetadata::AsyncUpgradeRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::UpgradeRuntimeRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncUpgradeRuntime(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ManagedNotebookServiceMetadata::AsyncReportRuntimeEvent(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const& request) {
   SetMetadata(*context, "name=" + request.name());
   return child_->AsyncReportRuntimeEvent(cq, std::move(context), request);
+}
+
+StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+ManagedNotebookServiceMetadata::RefreshRuntimeTokenInternal(
+    grpc::ClientContext& context,
+    google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->RefreshRuntimeTokenInternal(context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ManagedNotebookServiceMetadata::AsyncDiagnoseRuntime(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const& request) {
+  SetMetadata(*context, "name=" + request.name());
+  return child_->AsyncDiagnoseRuntime(cq, std::move(context), request);
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -143,9 +179,8 @@ void ManagedNotebookServiceMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

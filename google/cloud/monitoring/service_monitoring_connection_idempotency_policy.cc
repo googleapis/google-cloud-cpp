@@ -30,79 +30,71 @@ using ::google::cloud::Idempotency;
 ServiceMonitoringServiceConnectionIdempotencyPolicy::
     ~ServiceMonitoringServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultServiceMonitoringServiceConnectionIdempotencyPolicy
-    : public ServiceMonitoringServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultServiceMonitoringServiceConnectionIdempotencyPolicy() override =
-      default;
+std::unique_ptr<ServiceMonitoringServiceConnectionIdempotencyPolicy>
+ServiceMonitoringServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<ServiceMonitoringServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<ServiceMonitoringServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultServiceMonitoringServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency ServiceMonitoringServiceConnectionIdempotencyPolicy::CreateService(
+    google::monitoring::v3::CreateServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateService(
-      google::monitoring::v3::CreateServiceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ServiceMonitoringServiceConnectionIdempotencyPolicy::GetService(
+    google::monitoring::v3::GetServiceRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetService(
-      google::monitoring::v3::GetServiceRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ServiceMonitoringServiceConnectionIdempotencyPolicy::ListServices(
+    google::monitoring::v3::ListServicesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListServices(
-      google::monitoring::v3::ListServicesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ServiceMonitoringServiceConnectionIdempotencyPolicy::UpdateService(
+    google::monitoring::v3::UpdateServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateService(
-      google::monitoring::v3::UpdateServiceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ServiceMonitoringServiceConnectionIdempotencyPolicy::DeleteService(
+    google::monitoring::v3::DeleteServiceRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteService(
-      google::monitoring::v3::DeleteServiceRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency ServiceMonitoringServiceConnectionIdempotencyPolicy::
+    CreateServiceLevelObjective(
+        google::monitoring::v3::CreateServiceLevelObjectiveRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateServiceLevelObjective(
-      google::monitoring::v3::CreateServiceLevelObjectiveRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency
+ServiceMonitoringServiceConnectionIdempotencyPolicy::GetServiceLevelObjective(
+    google::monitoring::v3::GetServiceLevelObjectiveRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetServiceLevelObjective(
-      google::monitoring::v3::GetServiceLevelObjectiveRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency
+ServiceMonitoringServiceConnectionIdempotencyPolicy::ListServiceLevelObjectives(
+    google::monitoring::v3::ListServiceLevelObjectivesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListServiceLevelObjectives(
-      google::monitoring::v3::ListServiceLevelObjectivesRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency ServiceMonitoringServiceConnectionIdempotencyPolicy::
+    UpdateServiceLevelObjective(
+        google::monitoring::v3::UpdateServiceLevelObjectiveRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency UpdateServiceLevelObjective(
-      google::monitoring::v3::UpdateServiceLevelObjectiveRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency DeleteServiceLevelObjective(
-      google::monitoring::v3::DeleteServiceLevelObjectiveRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency ServiceMonitoringServiceConnectionIdempotencyPolicy::
+    DeleteServiceLevelObjective(
+        google::monitoring::v3::DeleteServiceLevelObjectiveRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<ServiceMonitoringServiceConnectionIdempotencyPolicy>
 MakeDefaultServiceMonitoringServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<
-      DefaultServiceMonitoringServiceConnectionIdempotencyPolicy>();
+      ServiceMonitoringServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

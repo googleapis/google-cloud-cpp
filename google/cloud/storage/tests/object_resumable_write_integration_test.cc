@@ -25,10 +25,10 @@ namespace storage {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::IsOk;
 using ::testing::AnyOf;
 using ::testing::Eq;
 using ::testing::HasSubstr;
+using ::testing::IsEmpty;
 using ::testing::Not;
 
 class ObjectResumableWriteIntegrationTest
@@ -157,6 +157,61 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResume) {
   }
 }
 
+TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeWithPartial) {
+  StatusOr<Client> client = MakeIntegrationTestClient();
+  ASSERT_STATUS_OK(client);
+
+  auto object_name = MakeRandomObjectName();
+  auto constexpr kUploadQuantum = 256 * 1024;
+  auto const q0 = MakeRandomData(kUploadQuantum);
+  auto const q1 = MakeRandomData(2 * kUploadQuantum);
+  auto const q2 = MakeRandomData(3 * kUploadQuantum);
+
+  auto const session_id = [&]() {
+    // Start the upload, add some data, and flush it.
+    auto os =
+        client->WriteObject(bucket_name_, object_name, IfGenerationMatch(0));
+    EXPECT_TRUE(os.good()) << "status=" << os.last_status();
+    os.write(q0.data(), q0.size());
+    os.flush();
+    EXPECT_STATUS_OK(os.last_status());
+    auto id = os.resumable_session_id();
+    std::move(os).Suspend();
+    return id;
+  }();
+
+  auto expected_committed_size = static_cast<std::uint64_t>(q0.size());
+  for (auto const& data : {q1, q2}) {
+    auto os = client->WriteObject(bucket_name_, object_name,
+                                  RestoreResumableUploadSession(session_id));
+    ASSERT_TRUE(os.good()) << "status=" << os.last_status();
+    EXPECT_EQ(os.resumable_session_id(), session_id);
+    EXPECT_EQ(os.next_expected_byte(), expected_committed_size);
+    os.write(data.data(), data.size());
+    os.flush();
+    EXPECT_STATUS_OK(os.last_status());
+    expected_committed_size += data.size();
+    std::move(os).Suspend();
+  }
+
+  auto os = client->WriteObject(bucket_name_, object_name,
+                                RestoreResumableUploadSession(session_id));
+  ASSERT_TRUE(os.good()) << "status=" << os.last_status();
+  EXPECT_EQ(os.resumable_session_id(), session_id);
+  EXPECT_EQ(os.next_expected_byte(), expected_committed_size);
+  os.Close();
+  ASSERT_STATUS_OK(os.metadata());
+  auto meta = os.metadata().value();
+  ScheduleForDelete(meta);
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name_, meta.bucket());
+
+  auto stream = client->ReadObject(bucket_name_, object_name);
+  ASSERT_STATUS_OK(stream.status());
+  auto const actual = std::string{std::istreambuf_iterator<char>{stream}, {}};
+  EXPECT_EQ(q0 + q1 + q2, actual);
+}
+
 TEST_F(ObjectResumableWriteIntegrationTest, WriteNotChunked) {
   StatusOr<Client> client = MakeIntegrationTestClient();
   ASSERT_STATUS_OK(client);
@@ -218,15 +273,12 @@ TEST_F(ObjectResumableWriteIntegrationTest, WriteResumeFinalizedUpload) {
   EXPECT_EQ(session_id, os.resumable_session_id());
   ASSERT_STATUS_OK(os.metadata());
   ScheduleForDelete(*os.metadata());
-  // TODO(b/146890058) - gRPC does not return the object metadata.
-  if (!UsingGrpc()) {
-    ObjectMetadata meta = os.metadata().value();
-    EXPECT_EQ(object_name, meta.name());
-    EXPECT_EQ(bucket_name_, meta.bucket());
-    if (UsingEmulator()) {
-      EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
-      EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
-    }
+  ObjectMetadata meta = os.metadata().value();
+  EXPECT_EQ(object_name, meta.name());
+  EXPECT_EQ(bucket_name_, meta.bucket());
+  if (UsingEmulator()) {
+    EXPECT_TRUE(meta.has_metadata("x_emulator_upload"));
+    EXPECT_EQ("resumable", meta.metadata("x_emulator_upload"));
   }
 }
 
@@ -259,6 +311,13 @@ TEST_F(ObjectResumableWriteIntegrationTest, StreamingWriteFailure) {
       os.metadata().status().code(),
       AnyOf(Eq(StatusCode::kFailedPrecondition), Eq(StatusCode::kAborted)))
       << " status=" << os.metadata().status();
+
+  if (os.metadata().status().code() == StatusCode::kFailedPrecondition &&
+      !UsingEmulator() && !UsingGrpc()) {
+    EXPECT_THAT(os.metadata().status().message(), Not(IsEmpty()));
+    EXPECT_EQ(os.metadata().status().error_info().domain(), "global");
+    EXPECT_EQ(os.metadata().status().error_info().reason(), "conditionNotMet");
+  }
 
   auto status = client->DeleteObject(bucket_name_, object_name);
   EXPECT_STATUS_OK(status);
@@ -382,8 +441,8 @@ TEST_F(ObjectResumableWriteIntegrationTest, WithInvalidXUploadContentLength) {
     offset += n;
   }
 
-  // This operation should fail because the x-upload-content-length header does
-  // not match the amount of data sent in the upload.
+  // This operation should fail because the x-upload-content-length header
+  // does not match the amount of data sent in the upload.
   os.Close();
   EXPECT_TRUE(os.bad());
   EXPECT_FALSE(os.metadata().ok());

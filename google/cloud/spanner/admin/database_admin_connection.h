@@ -49,6 +49,18 @@ using DatabaseAdminLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         spanner_admin_internal::DatabaseAdminRetryTraits>;
 
+/**
+ * The `DatabaseAdminConnection` object for `DatabaseAdminClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `DatabaseAdminClient`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `DatabaseAdminClient`.
+ *
+ * To create a concrete instance, see `MakeDatabaseAdminConnection()`.
+ *
+ * For mocking, see `spanner_admin_mocks::MockDatabaseAdminConnection`.
+ */
 class DatabaseAdminConnection {
  public:
   virtual ~DatabaseAdminConnection() = 0;
@@ -94,6 +106,10 @@ class DatabaseAdminConnection {
   CreateBackup(
       google::spanner::admin::database::v1::CreateBackupRequest const& request);
 
+  virtual future<StatusOr<google::spanner::admin::database::v1::Backup>>
+  CopyBackup(
+      google::spanner::admin::database::v1::CopyBackupRequest const& request);
+
   virtual StatusOr<google::spanner::admin::database::v1::Backup> GetBackup(
       google::spanner::admin::database::v1::GetBackupRequest const& request);
 
@@ -118,29 +134,39 @@ class DatabaseAdminConnection {
   virtual StreamRange<google::longrunning::Operation> ListBackupOperations(
       google::spanner::admin::database::v1::ListBackupOperationsRequest
           request);
+
+  virtual StreamRange<google::spanner::admin::database::v1::DatabaseRole>
+  ListDatabaseRoles(
+      google::spanner::admin::database::v1::ListDatabaseRolesRequest request);
 };
 
+/**
+ * A factory function to construct an object of type `DatabaseAdminConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of DatabaseAdminClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `DatabaseAdminConnection`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::spanner_admin::DatabaseAdminPolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `DatabaseAdminConnection` created by
+ * this function.
+ */
 std::shared_ptr<DatabaseAdminConnection> MakeDatabaseAdminConnection(
     Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
 }  // namespace spanner_admin
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace spanner_admin_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<spanner_admin::DatabaseAdminConnection>
-MakeDatabaseAdminConnection(std::shared_ptr<DatabaseAdminStub> stub,
-                            Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-namespace gcpcxxV1 = GOOGLE_CLOUD_CPP_NS;  // NOLINT(misc-unused-alias-decls)
-}  // namespace spanner_admin_internal
 }  // namespace cloud
 }  // namespace google
 

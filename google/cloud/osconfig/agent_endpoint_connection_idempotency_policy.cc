@@ -30,55 +30,42 @@ using ::google::cloud::Idempotency;
 AgentEndpointServiceConnectionIdempotencyPolicy::
     ~AgentEndpointServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultAgentEndpointServiceConnectionIdempotencyPolicy
-    : public AgentEndpointServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultAgentEndpointServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>
+AgentEndpointServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<AgentEndpointServiceConnectionIdempotencyPolicy>(
+      *this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<
-        DefaultAgentEndpointServiceConnectionIdempotencyPolicy>(*this);
-  }
+Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::StartNextTask(
+    google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency StartNextTask(
-      google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::ReportTaskProgress(
+    google::cloud::osconfig::agentendpoint::v1::
+        ReportTaskProgressRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ReportTaskProgress(
-      google::cloud::osconfig::agentendpoint::v1::
-          ReportTaskProgressRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::ReportTaskComplete(
+    google::cloud::osconfig::agentendpoint::v1::
+        ReportTaskCompleteRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency ReportTaskComplete(
-      google::cloud::osconfig::agentendpoint::v1::
-          ReportTaskCompleteRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::RegisterAgent(
+    google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency RegisterAgent(
-      google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ReportInventory(
-      google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&)
-      override {
-    return Idempotency::kNonIdempotent;
-  }
-};
-}  // namespace
+Idempotency AgentEndpointServiceConnectionIdempotencyPolicy::ReportInventory(
+    google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
 std::unique_ptr<AgentEndpointServiceConnectionIdempotencyPolicy>
 MakeDefaultAgentEndpointServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<
-      DefaultAgentEndpointServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<AgentEndpointServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

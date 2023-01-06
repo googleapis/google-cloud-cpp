@@ -15,7 +15,6 @@
 #include "google/cloud/serviceusage/service_usage_client.h"
 #include "google/cloud/project.h"
 #include <iostream>
-#include <stdexcept>
 
 int main(int argc, char* argv[]) try {
   if (argc != 2) {
@@ -32,12 +31,12 @@ int main(int argc, char* argv[]) try {
   request.set_parent(project.FullName());
   request.set_filter("state:ENABLED");
   for (auto s : client.ListServices(request)) {
-    if (!s) throw std::runtime_error(s.status().message());
+    if (!s) throw std::move(s).status();
     std::cout << s->DebugString() << "\n";
   }
 
   return 0;
-} catch (std::exception const& ex) {
-  std::cerr << "Standard exception raised: " << ex.what() << "\n";
+} catch (google::cloud::Status const& status) {
+  std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }

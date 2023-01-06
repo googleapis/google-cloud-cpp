@@ -65,16 +65,16 @@ class ConnectionServiceClient {
       Options opts = {});
   ~ConnectionServiceClient();
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   ConnectionServiceClient(ConnectionServiceClient const&) = default;
   ConnectionServiceClient& operator=(ConnectionServiceClient const&) = default;
   ConnectionServiceClient(ConnectionServiceClient&&) = default;
   ConnectionServiceClient& operator=(ConnectionServiceClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(ConnectionServiceClient const& a,
                          ConnectionServiceClient const& b) {
     return a.connection_ == b.connection_;
@@ -83,7 +83,7 @@ class ConnectionServiceClient {
                          ConnectionServiceClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   ///
   /// Lists connections that are currently active for the given Apigee Connect

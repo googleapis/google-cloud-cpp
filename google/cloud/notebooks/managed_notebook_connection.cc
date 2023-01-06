@@ -23,6 +23,7 @@
 #include "google/cloud/notebooks/managed_notebook_options.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -35,9 +36,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 ManagedNotebookServiceConnection::~ManagedNotebookServiceConnection() = default;
 
 StreamRange<google::cloud::notebooks::v1::Runtime>
-    ManagedNotebookServiceConnection::ListRuntimes(
-        google::cloud::notebooks::v1::
-            ListRuntimesRequest) {  // NOLINT(performance-unnecessary-value-param)
+ManagedNotebookServiceConnection::ListRuntimes(
+    google::cloud::notebooks::v1::
+        ListRuntimesRequest) {  // NOLINT(performance-unnecessary-value-param)
   return google::cloud::internal::MakeUnimplementedPaginationRange<
       StreamRange<google::cloud::notebooks::v1::Runtime>>();
 }
@@ -51,6 +52,14 @@ ManagedNotebookServiceConnection::GetRuntime(
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnection::CreateRuntime(
     google::cloud::notebooks::v1::CreateRuntimeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::notebooks::v1::Runtime>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnection::UpdateRuntime(
+    google::cloud::notebooks::v1::UpdateRuntimeRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Runtime>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -97,8 +106,30 @@ ManagedNotebookServiceConnection::ResetRuntime(
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnection::UpgradeRuntime(
+    google::cloud::notebooks::v1::UpgradeRuntimeRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::notebooks::v1::Runtime>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
 ManagedNotebookServiceConnection::ReportRuntimeEvent(
     google::cloud::notebooks::v1::ReportRuntimeEventRequest const&) {
+  return google::cloud::make_ready_future<
+      StatusOr<google::cloud::notebooks::v1::Runtime>>(
+      Status(StatusCode::kUnimplemented, "not implemented"));
+}
+
+StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
+ManagedNotebookServiceConnection::RefreshRuntimeTokenInternal(
+    google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
+future<StatusOr<google::cloud::notebooks::v1::Runtime>>
+ManagedNotebookServiceConnection::DiagnoseRuntime(
+    google::cloud::notebooks::v1::DiagnoseRuntimeRequest const&) {
   return google::cloud::make_ready_future<
       StatusOr<google::cloud::notebooks::v1::Runtime>>(
       Status(StatusCode::kUnimplemented, "not implemented"));
@@ -107,6 +138,7 @@ ManagedNotebookServiceConnection::ReportRuntimeEvent(
 std::shared_ptr<ManagedNotebookServiceConnection>
 MakeManagedNotebookServiceConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ManagedNotebookServicePolicyOptionList>(
       options, __func__);
   options = notebooks_internal::ManagedNotebookServiceDefaultOptions(
@@ -121,25 +153,5 @@ MakeManagedNotebookServiceConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace notebooks
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace notebooks_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<notebooks::ManagedNotebookServiceConnection>
-MakeManagedNotebookServiceConnection(
-    std::shared_ptr<ManagedNotebookServiceStub> stub, Options options) {
-  options = ManagedNotebookServiceDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<
-      notebooks_internal::ManagedNotebookServiceConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace notebooks_internal
 }  // namespace cloud
 }  // namespace google

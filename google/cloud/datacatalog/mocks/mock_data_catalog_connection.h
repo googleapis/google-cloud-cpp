@@ -27,6 +27,21 @@ namespace cloud {
 namespace datacatalog_mocks {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+/**
+ * A class to mock `DataCatalogConnection`.
+ *
+ * Application developers may want to test their code with simulated responses,
+ * including errors, from an object of type `DataCatalogClient`. To do so,
+ * construct an object of type `DataCatalogClient` with an instance of this
+ * class. Then use the Google Test framework functions to program the behavior
+ * of this mock.
+ *
+ * @see [This example][bq-mock] for how to test your application with
+ * GoogleTest. While the example showcases types from the BigQuery library, the
+ * underlying principles apply for any pair of `*Client` and `*Connection`.
+ *
+ * [bq-mock]: @googleapis_dev_link{bigquery,bigquery-read-mock.html}
+ */
 class MockDataCatalogConnection : public datacatalog::DataCatalogConnection {
  public:
   MOCK_METHOD(Options, options, (), (override));
@@ -87,6 +102,18 @@ class MockDataCatalogConnection : public datacatalog::DataCatalogConnection {
 
   MOCK_METHOD(StreamRange<google::cloud::datacatalog::v1::Entry>, ListEntries,
               (google::cloud::datacatalog::v1::ListEntriesRequest request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::EntryOverview>,
+              ModifyEntryOverview,
+              (google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const&
+                   request),
+              (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::Contacts>,
+              ModifyEntryContacts,
+              (google::cloud::datacatalog::v1::ModifyEntryContactsRequest const&
+                   request),
               (override));
 
   MOCK_METHOD(
@@ -157,6 +184,17 @@ class MockDataCatalogConnection : public datacatalog::DataCatalogConnection {
   MOCK_METHOD(StreamRange<google::cloud::datacatalog::v1::Tag>, ListTags,
               (google::cloud::datacatalog::v1::ListTagsRequest request),
               (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>,
+              StarEntry,
+              (google::cloud::datacatalog::v1::StarEntryRequest const& request),
+              (override));
+
+  MOCK_METHOD(
+      StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>,
+      UnstarEntry,
+      (google::cloud::datacatalog::v1::UnstarEntryRequest const& request),
+      (override));
 
   MOCK_METHOD(StatusOr<google::iam::v1::Policy>, SetIamPolicy,
               (google::iam::v1::SetIamPolicyRequest const& request),

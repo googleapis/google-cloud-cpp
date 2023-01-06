@@ -21,21 +21,18 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
-struct GrpcBucketAccessControlParser {
-  static google::storage::v2::BucketAccessControl ToProto(
-      BucketAccessControl const& acl);
-  static BucketAccessControl FromProto(
-      google::storage::v2::BucketAccessControl acl,
-      std::string const& bucket_name);
-};
+google::storage::v2::BucketAccessControl ToProto(
+    storage::BucketAccessControl const& acl);
+storage::BucketAccessControl FromProto(
+    google::storage::v2::BucketAccessControl acl,
+    std::string const& bucket_name);
+std::string Role(storage::BucketAccessControlPatchBuilder const&);
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 

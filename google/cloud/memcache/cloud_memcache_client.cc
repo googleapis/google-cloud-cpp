@@ -17,7 +17,6 @@
 // source: google/cloud/memcache/v1/cloud_memcache.proto
 
 #include "google/cloud/memcache/cloud_memcache_client.h"
-#include "google/cloud/memcache/internal/cloud_memcache_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 CloudMemcacheClient::CloudMemcacheClient(
     std::shared_ptr<CloudMemcacheConnection> connection, Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts), memcache_internal::CloudMemcacheDefaultOptions(
-                               connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 CloudMemcacheClient::~CloudMemcacheClient() = default;
 
 StreamRange<google::cloud::memcache::v1::Instance>
@@ -159,6 +157,28 @@ CloudMemcacheClient::ApplyParameters(
     Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->ApplyParameters(request);
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheClient::RescheduleMaintenance(
+    std::string const& instance,
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest::RescheduleType
+        reschedule_type,
+    google::protobuf::Timestamp const& schedule_time, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::memcache::v1::RescheduleMaintenanceRequest request;
+  request.set_instance(instance);
+  request.set_reschedule_type(reschedule_type);
+  *request.mutable_schedule_time() = schedule_time;
+  return connection_->RescheduleMaintenance(request);
+}
+
+future<StatusOr<google::cloud::memcache::v1::Instance>>
+CloudMemcacheClient::RescheduleMaintenance(
+    google::cloud::memcache::v1::RescheduleMaintenanceRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->RescheduleMaintenance(request);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

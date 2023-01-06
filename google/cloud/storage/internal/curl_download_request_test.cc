@@ -84,6 +84,30 @@ TEST(CurlDownloadRequest, MakeReadResult) {
   }
 }
 
+TEST(CurlDownloadRequest, MakeReadResultDecompressiveTranscoding) {
+  struct Test {
+    std::string name;
+    std::multimap<std::string, std::string> headers;
+    absl::optional<std::string> expected_transformation;
+  } cases[] = {
+      {"empty", {}, absl::nullopt},
+      {"irrelevant headers",
+       {{"x-generation", "123"},
+        {"x-goog-stuff", "thing"},
+        {"x-hashes", "crc32c=123"}},
+       absl::nullopt},
+      {"guploader",
+       {{"x-guploader-response-body-transformations", "gunzipped"}},
+       "gunzipped"},
+  };
+
+  for (auto const& test : cases) {
+    SCOPED_TRACE("Test case: " + test.name);
+    auto const actual = MakeReadResult(42, HttpResponse{200, {}, test.headers});
+    EXPECT_EQ(test.expected_transformation, actual.transformation);
+  }
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

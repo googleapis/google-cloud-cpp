@@ -19,6 +19,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_INTERNAL_METRIC_STUB_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_MONITORING_INTERNAL_METRIC_STUB_H
 
+#include "google/cloud/completion_queue.h"
+#include "google/cloud/future.h"
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <google/monitoring/v3/metric_service.grpc.pb.h>
@@ -75,6 +77,11 @@ class MetricServiceStub {
   virtual Status CreateServiceTimeSeries(
       grpc::ClientContext& context,
       google::monitoring::v3::CreateTimeSeriesRequest const& request) = 0;
+
+  virtual future<Status> AsyncCreateTimeSeries(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
+      google::monitoring::v3::CreateTimeSeriesRequest const& request) = 0;
 };
 
 class DefaultMetricServiceStub : public MetricServiceStub {
@@ -127,6 +134,11 @@ class DefaultMetricServiceStub : public MetricServiceStub {
 
   Status CreateServiceTimeSeries(
       grpc::ClientContext& client_context,
+      google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
+
+  future<Status> AsyncCreateTimeSeries(
+      google::cloud::CompletionQueue& cq,
+      std::unique_ptr<grpc::ClientContext> context,
       google::monitoring::v3::CreateTimeSeriesRequest const& request) override;
 
  private:

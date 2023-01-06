@@ -50,12 +50,13 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   push:
-    branch: ^(master|main|v\\d+\\..*)$
+    branch: ^main$
 name: ${name}-ci
 substitutions:
   _BUILD_NAME: ${name}
   _DISTRO: fedora
   _TRIGGER_TYPE: ci
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - ci
 EOF
@@ -69,13 +70,14 @@ github:
   name: google-cloud-cpp
   owner: googleapis
   pullRequest:
-    branch: ^(master|main|v\\d+\\..*)$
+    branch: ^main$
     commentControl: COMMENTS_ENABLED_FOR_EXTERNAL_CONTRIBUTORS_ONLY
 name: ${name}-pr
 substitutions:
   _BUILD_NAME: ${name}
   _DISTRO: fedora
   _TRIGGER_TYPE: pr
+includeBuildLogs: INCLUDE_BUILD_LOGS_WITH_STATUS
 tags:
 - pr
 EOF

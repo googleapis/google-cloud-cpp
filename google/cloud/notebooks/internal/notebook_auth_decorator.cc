@@ -54,7 +54,7 @@ NotebookServiceAuth::AsyncCreateInstance(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::CreateInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -73,7 +73,7 @@ NotebookServiceAuth::AsyncRegisterInstance(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::RegisterInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -93,7 +93,7 @@ NotebookServiceAuth::AsyncSetInstanceAccelerator(
     google::cloud::notebooks::v1::SetInstanceAcceleratorRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -114,7 +114,7 @@ NotebookServiceAuth::AsyncSetInstanceMachineType(
     google::cloud::notebooks::v1::SetInstanceMachineTypeRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -134,7 +134,7 @@ NotebookServiceAuth::AsyncUpdateInstanceConfig(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::UpdateInstanceConfigRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -155,7 +155,7 @@ NotebookServiceAuth::AsyncUpdateShieldedInstanceConfig(
     google::cloud::notebooks::v1::UpdateShieldedInstanceConfigRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -175,7 +175,7 @@ NotebookServiceAuth::AsyncSetInstanceLabels(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::SetInstanceLabelsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -188,13 +188,23 @@ NotebookServiceAuth::AsyncSetInstanceLabels(
       });
 }
 
+StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
+NotebookServiceAuth::UpdateInstanceMetadataItems(
+    grpc::ClientContext& context,
+    google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateInstanceMetadataItems(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncDeleteInstance(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::DeleteInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -213,7 +223,7 @@ NotebookServiceAuth::AsyncStartInstance(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::StartInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -232,7 +242,7 @@ NotebookServiceAuth::AsyncStopInstance(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::StopInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -251,7 +261,7 @@ NotebookServiceAuth::AsyncResetInstance(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::ResetInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -270,7 +280,7 @@ NotebookServiceAuth::AsyncReportInstanceInfo(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::ReportInstanceInfoRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -307,7 +317,7 @@ NotebookServiceAuth::AsyncUpgradeInstance(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::UpgradeInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -326,7 +336,7 @@ NotebookServiceAuth::AsyncRollbackInstance(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::RollbackInstanceRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -340,13 +350,32 @@ NotebookServiceAuth::AsyncRollbackInstance(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+NotebookServiceAuth::AsyncDiagnoseInstance(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::notebooks::v1::DiagnoseInstanceRequest const& request) {
+  using ReturnType = StatusOr<google::longrunning::Operation>;
+  auto& child = child_;
+  return auth_->AsyncConfigureContext(std::move(context))
+      .then([cq, child,
+             request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
+                          f) mutable {
+        auto context = f.get();
+        if (!context) {
+          return make_ready_future(ReturnType(std::move(context).status()));
+        }
+        return child->AsyncDiagnoseInstance(cq, *std::move(context), request);
+      });
+}
+
+future<StatusOr<google::longrunning::Operation>>
 NotebookServiceAuth::AsyncUpgradeInstanceInternal(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::UpgradeInstanceInternalRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -384,7 +413,7 @@ NotebookServiceAuth::AsyncCreateEnvironment(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::CreateEnvironmentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -403,7 +432,7 @@ NotebookServiceAuth::AsyncDeleteEnvironment(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::DeleteEnvironmentRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -440,7 +469,7 @@ NotebookServiceAuth::AsyncDeleteSchedule(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::DeleteScheduleRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -459,7 +488,7 @@ NotebookServiceAuth::AsyncCreateSchedule(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::CreateScheduleRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -478,7 +507,7 @@ NotebookServiceAuth::AsyncTriggerSchedule(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::TriggerScheduleRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -515,7 +544,7 @@ NotebookServiceAuth::AsyncDeleteExecution(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::DeleteExecutionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -534,7 +563,7 @@ NotebookServiceAuth::AsyncCreateExecution(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::notebooks::v1::CreateExecutionRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -553,7 +582,7 @@ NotebookServiceAuth::AsyncGetOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -570,7 +599,7 @@ future<Status> NotebookServiceAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

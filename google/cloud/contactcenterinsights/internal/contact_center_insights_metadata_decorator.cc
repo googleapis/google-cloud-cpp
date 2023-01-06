@@ -115,6 +115,26 @@ Status ContactCenterInsightsMetadata::DeleteAnalysis(
 }
 
 future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsMetadata::AsyncBulkAnalyzeConversations(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::
+        BulkAnalyzeConversationsRequest const& request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncBulkAnalyzeConversations(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+ContactCenterInsightsMetadata::AsyncIngestConversations(
+    google::cloud::CompletionQueue& cq,
+    std::unique_ptr<grpc::ClientContext> context,
+    google::cloud::contactcenterinsights::v1::IngestConversationsRequest const&
+        request) {
+  SetMetadata(*context, "parent=" + request.parent());
+  return child_->AsyncIngestConversations(cq, std::move(context), request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
 ContactCenterInsightsMetadata::AsyncExportInsightsData(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
@@ -215,6 +235,14 @@ ContactCenterInsightsMetadata::UpdateIssue(
         request) {
   SetMetadata(context, "issue.name=" + request.issue().name());
   return child_->UpdateIssue(context, request);
+}
+
+Status ContactCenterInsightsMetadata::DeleteIssue(
+    grpc::ClientContext& context,
+    google::cloud::contactcenterinsights::v1::DeleteIssueRequest const&
+        request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DeleteIssue(context, request);
 }
 
 StatusOr<
@@ -371,9 +399,8 @@ void ContactCenterInsightsMetadata::SetMetadata(grpc::ClientContext& context) {
     context.AddMetadata("x-goog-user-project",
                         options.get<UserProjectOption>());
   }
-  if (options.has<AuthorityOption>()) {
-    context.set_authority(options.get<AuthorityOption>());
-  }
+  auto const& authority = options.get<AuthorityOption>();
+  if (!authority.empty()) context.set_authority(authority);
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

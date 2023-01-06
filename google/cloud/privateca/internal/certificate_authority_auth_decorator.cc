@@ -87,7 +87,7 @@ CertificateAuthorityServiceAuth::AsyncActivateCertificateAuthority(
     google::cloud::security::privateca::v1::
         ActivateCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -108,7 +108,7 @@ CertificateAuthorityServiceAuth::AsyncCreateCertificateAuthority(
     google::cloud::security::privateca::v1::
         CreateCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -129,7 +129,7 @@ CertificateAuthorityServiceAuth::AsyncDisableCertificateAuthority(
     google::cloud::security::privateca::v1::
         DisableCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -150,7 +150,7 @@ CertificateAuthorityServiceAuth::AsyncEnableCertificateAuthority(
     google::cloud::security::privateca::v1::
         EnableCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -203,7 +203,7 @@ CertificateAuthorityServiceAuth::AsyncUndeleteCertificateAuthority(
     google::cloud::security::privateca::v1::
         UndeleteCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -224,7 +224,7 @@ CertificateAuthorityServiceAuth::AsyncDeleteCertificateAuthority(
     google::cloud::security::privateca::v1::
         DeleteCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -245,7 +245,7 @@ CertificateAuthorityServiceAuth::AsyncUpdateCertificateAuthority(
     google::cloud::security::privateca::v1::
         UpdateCertificateAuthorityRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -266,7 +266,7 @@ CertificateAuthorityServiceAuth::AsyncCreateCaPool(
     google::cloud::security::privateca::v1::CreateCaPoolRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -286,7 +286,7 @@ CertificateAuthorityServiceAuth::AsyncUpdateCaPool(
     google::cloud::security::privateca::v1::UpdateCaPoolRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -324,7 +324,7 @@ CertificateAuthorityServiceAuth::AsyncDeleteCaPool(
     google::cloud::security::privateca::v1::DeleteCaPoolRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -375,7 +375,7 @@ CertificateAuthorityServiceAuth::AsyncUpdateCertificateRevocationList(
     google::cloud::security::privateca::v1::
         UpdateCertificateRevocationListRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -396,7 +396,7 @@ CertificateAuthorityServiceAuth::AsyncCreateCertificateTemplate(
     google::cloud::security::privateca::v1::
         CreateCertificateTemplateRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -417,7 +417,7 @@ CertificateAuthorityServiceAuth::AsyncDeleteCertificateTemplate(
     google::cloud::security::privateca::v1::
         DeleteCertificateTemplateRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -459,7 +459,7 @@ CertificateAuthorityServiceAuth::AsyncUpdateCertificateTemplate(
     google::cloud::security::privateca::v1::
         UpdateCertificateTemplateRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -479,7 +479,7 @@ CertificateAuthorityServiceAuth::AsyncGetOperation(
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -496,7 +496,7 @@ future<Status> CertificateAuthorityServiceAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

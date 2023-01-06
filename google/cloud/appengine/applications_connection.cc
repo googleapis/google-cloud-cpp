@@ -23,6 +23,7 @@
 #include "google/cloud/appengine/internal/applications_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include <memory>
 
@@ -66,6 +67,7 @@ ApplicationsConnection::RepairApplication(
 std::shared_ptr<ApplicationsConnection> MakeApplicationsConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  ApplicationsPolicyOptionList>(options,
                                                                __func__);
   options = appengine_internal::ApplicationsDefaultOptions(std::move(options));
@@ -78,23 +80,5 @@ std::shared_ptr<ApplicationsConnection> MakeApplicationsConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace appengine
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace appengine_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<appengine::ApplicationsConnection> MakeApplicationsConnection(
-    std::shared_ptr<ApplicationsStub> stub, Options options) {
-  options = ApplicationsDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<appengine_internal::ApplicationsConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace appengine_internal
 }  // namespace cloud
 }  // namespace google

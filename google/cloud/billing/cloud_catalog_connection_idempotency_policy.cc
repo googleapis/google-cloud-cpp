@@ -30,33 +30,24 @@ using ::google::cloud::Idempotency;
 CloudCatalogConnectionIdempotencyPolicy::
     ~CloudCatalogConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultCloudCatalogConnectionIdempotencyPolicy
-    : public CloudCatalogConnectionIdempotencyPolicy {
- public:
-  ~DefaultCloudCatalogConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy>
+CloudCatalogConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<CloudCatalogConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultCloudCatalogConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency CloudCatalogConnectionIdempotencyPolicy::ListServices(
+    google::cloud::billing::v1::ListServicesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListServices(
-      google::cloud::billing::v1::ListServicesRequest) override {
-    return Idempotency::kIdempotent;
-  }
-
-  Idempotency ListSkus(google::cloud::billing::v1::ListSkusRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency CloudCatalogConnectionIdempotencyPolicy::ListSkus(
+    google::cloud::billing::v1::ListSkusRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<CloudCatalogConnectionIdempotencyPolicy>
 MakeDefaultCloudCatalogConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultCloudCatalogConnectionIdempotencyPolicy>();
+  return absl::make_unique<CloudCatalogConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

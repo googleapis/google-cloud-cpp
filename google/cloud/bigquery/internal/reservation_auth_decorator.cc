@@ -209,6 +209,16 @@ ReservationServiceAuth::MoveAssignment(
   return child_->MoveAssignment(context, request);
 }
 
+StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
+ReservationServiceAuth::UpdateAssignment(
+    grpc::ClientContext& context,
+    google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateAssignment(context, request);
+}
+
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceAuth::GetBiReservation(
     grpc::ClientContext& context,

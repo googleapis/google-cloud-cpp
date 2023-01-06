@@ -22,6 +22,16 @@ namespace cloud {
 namespace spanner {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+TEST(CreateInstanceRequestBuilder, Equality) {
+  Instance in(Project("test-project"), "test-instance");
+  CreateInstanceRequestBuilder b1(in, "c1");
+  CreateInstanceRequestBuilder b2(in, "c2");
+  EXPECT_NE(b1, b2);
+
+  b2 = b1;
+  EXPECT_EQ(b1, b2);
+}
+
 TEST(CreateInstanceRequestBuilder, DefaultValues) {
   Instance in(Project("test-project"), "test-instance");
   std::string expected_config =

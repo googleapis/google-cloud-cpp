@@ -65,7 +65,8 @@ std::string const kText = R"""(
 
 void BM_BytesCtor(benchmark::State& state) {
   for (auto _ : state) {
-    benchmark::DoNotOptimize(Bytes(kText));
+    auto unused = Bytes(kText);
+    benchmark::DoNotOptimize(unused);
   }
   state.SetBytesProcessed(state.iterations() * kText.size());
 }
@@ -74,7 +75,8 @@ BENCHMARK(BM_BytesCtor);
 void BM_BytesGet(benchmark::State& state) {
   Bytes b(kText);
   for (auto _ : state) {
-    benchmark::DoNotOptimize(b.get<std::string>());
+    auto unused = b.get<std::string>();
+    benchmark::DoNotOptimize(unused);
   }
   state.SetBytesProcessed(state.iterations() *
                           spanner_internal::BytesToBase64(b).size());

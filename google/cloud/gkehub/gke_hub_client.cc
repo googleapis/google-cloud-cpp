@@ -17,7 +17,6 @@
 // source: google/cloud/gkehub/v1/service.proto
 
 #include "google/cloud/gkehub/gke_hub_client.h"
-#include "google/cloud/gkehub/internal/gke_hub_option_defaults.h"
 #include <memory>
 
 namespace google {
@@ -28,9 +27,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 GkeHubClient::GkeHubClient(std::shared_ptr<GkeHubConnection> connection,
                            Options opts)
     : connection_(std::move(connection)),
-      options_(internal::MergeOptions(
-          std::move(opts),
-          gkehub_internal::GkeHubDefaultOptions(connection_->options()))) {}
+      options_(
+          internal::MergeOptions(std::move(opts), connection_->options())) {}
 GkeHubClient::~GkeHubClient() = default;
 
 StreamRange<google::cloud::gkehub::v1::Membership>

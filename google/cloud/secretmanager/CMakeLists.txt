@@ -20,43 +20,33 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Secret Manager API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "secretmanager_internal"
                             "secretmanager_testing" "examples")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
+                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::secretmanager_protos)
 
 include(GoogleCloudCppCommon)
 
-set(EXTERNAL_GOOGLEAPIS_SOURCE
-    "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
 find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
 if (PROTO_INCLUDE_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
 endif ()
 
 include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/secretmanager.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/secretmanager.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_secretmanager_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/secretmanager/logging/v1/secret_event.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/secretmanager/v1/resources.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/cloud/secretmanager/v1/service.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_secretmanager_protos # cmake-format: sort
+    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(secretmanager_protos)
-target_link_libraries(
-    google_cloud_cpp_secretmanager_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_field_behavior_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::api_resource_protos
-           google-cloud-cpp::iam_v1_iam_policy_protos
-           google-cloud-cpp::iam_v1_options_protos
-           google-cloud-cpp::iam_v1_policy_protos
-           google-cloud-cpp::type_expr_protos)
+target_link_libraries(google_cloud_cpp_secretmanager_protos
+                      PUBLIC ${proto_deps})
 
 file(
     GLOB source_files
@@ -76,8 +66,8 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_secretmanager)
 set_target_properties(
     google_cloud_cpp_secretmanager
-    PROPERTIES EXPORT_NAME google-cloud-cpp::secretmanager VERSION
-                                                           "${PROJECT_VERSION}"
+    PROPERTIES EXPORT_NAME google-cloud-cpp::secretmanager
+               VERSION "${PROJECT_VERSION}"
                SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_secretmanager
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
@@ -169,25 +159,13 @@ google_cloud_cpp_install_headers("google_cloud_cpp_secretmanager"
 google_cloud_cpp_install_headers("google_cloud_cpp_secretmanager_mocks"
                                  "include/google/cloud/secretmanager")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The Secret Manager API C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to use the Secret Manager API.")
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_secretmanager")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common"
-              " google_cloud_cpp_secretmanager_protos")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/secretmanager/config.pc.in"
-               "google_cloud_cpp_secretmanager.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_secretmanager.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    secretmanager
+    "The Secret Manager API C++ Client Library"
+    "Provides C++ APIs to use the Secret Manager API."
+    "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common"
+    " google_cloud_cpp_secretmanager_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -205,5 +183,4 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_secretmanager"
     COMPONENT google_cloud_cpp_development)
 
-external_googleapis_install_pc("google_cloud_cpp_secretmanager_protos"
-                               "${PROJECT_SOURCE_DIR}/external/googleapis")
+external_googleapis_install_pc("google_cloud_cpp_secretmanager_protos")

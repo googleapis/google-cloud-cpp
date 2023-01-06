@@ -35,15 +35,14 @@ CatalogServiceConnectionImpl::CatalogServiceConnectionImpl(
     std::shared_ptr<retail_internal::CatalogServiceStub> stub, Options options)
     : background_(std::move(background)),
       stub_(std::move(stub)),
-      options_(internal::MergeOptions(
-          std::move(options), retail_internal::CatalogServiceDefaultOptions(
-                                  CatalogServiceConnection::options()))) {}
+      options_(internal::MergeOptions(std::move(options),
+                                      CatalogServiceConnection::options())) {}
 
 StreamRange<google::cloud::retail::v2::Catalog>
 CatalogServiceConnectionImpl::ListCatalogs(
     google::cloud::retail::v2::ListCatalogsRequest request) {
   request.clear_page_token();
-  auto stub = stub_;
+  auto& stub = stub_;
   auto retry =
       std::shared_ptr<retail::CatalogServiceRetryPolicy const>(retry_policy());
   auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
@@ -108,6 +107,104 @@ CatalogServiceConnectionImpl::GetDefaultBranch(
           grpc::ClientContext& context,
           google::cloud::retail::v2::GetDefaultBranchRequest const& request) {
         return stub_->GetDefaultBranch(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+CatalogServiceConnectionImpl::GetCompletionConfig(
+    google::cloud::retail::v2::GetCompletionConfigRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetCompletionConfig(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::GetCompletionConfigRequest const&
+                 request) {
+        return stub_->GetCompletionConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::retail::v2::CompletionConfig>
+CatalogServiceConnectionImpl::UpdateCompletionConfig(
+    google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateCompletionConfig(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::UpdateCompletionConfigRequest const&
+                 request) {
+        return stub_->UpdateCompletionConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnectionImpl::GetAttributesConfig(
+    google::cloud::retail::v2::GetAttributesConfigRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetAttributesConfig(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::GetAttributesConfigRequest const&
+                 request) {
+        return stub_->GetAttributesConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnectionImpl::UpdateAttributesConfig(
+    google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->UpdateAttributesConfig(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::UpdateAttributesConfigRequest const&
+                 request) {
+        return stub_->UpdateAttributesConfig(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnectionImpl::AddCatalogAttribute(
+    google::cloud::retail::v2::AddCatalogAttributeRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->AddCatalogAttribute(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::AddCatalogAttributeRequest const&
+                 request) {
+        return stub_->AddCatalogAttribute(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnectionImpl::RemoveCatalogAttribute(
+    google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->RemoveCatalogAttribute(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::RemoveCatalogAttributeRequest const&
+                 request) {
+        return stub_->RemoveCatalogAttribute(context, request);
+      },
+      request, __func__);
+}
+
+StatusOr<google::cloud::retail::v2::AttributesConfig>
+CatalogServiceConnectionImpl::ReplaceCatalogAttribute(
+    google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->ReplaceCatalogAttribute(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::retail::v2::ReplaceCatalogAttributeRequest const&
+                 request) {
+        return stub_->ReplaceCatalogAttribute(context, request);
       },
       request, __func__);
 }

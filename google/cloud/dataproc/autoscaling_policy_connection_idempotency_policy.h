@@ -32,30 +32,29 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 class AutoscalingPolicyServiceConnectionIdempotencyPolicy {
  public:
-  virtual ~AutoscalingPolicyServiceConnectionIdempotencyPolicy() = 0;
+  virtual ~AutoscalingPolicyServiceConnectionIdempotencyPolicy();
 
   /// Create a new copy of this object.
   virtual std::unique_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>
-  clone() const = 0;
+  clone() const;
 
   virtual google::cloud::Idempotency CreateAutoscalingPolicy(
       google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency UpdateAutoscalingPolicy(
       google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
-          request) = 0;
+          request);
 
   virtual google::cloud::Idempotency GetAutoscalingPolicy(
-      google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const&
-          request) = 0;
+      google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request);
 
   virtual google::cloud::Idempotency ListAutoscalingPolicies(
-      google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request) = 0;
+      google::cloud::dataproc::v1::ListAutoscalingPoliciesRequest request);
 
   virtual google::cloud::Idempotency DeleteAutoscalingPolicy(
       google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
-          request) = 0;
+          request);
 };
 
 std::unique_ptr<AutoscalingPolicyServiceConnectionIdempotencyPolicy>

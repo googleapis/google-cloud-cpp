@@ -24,6 +24,7 @@ declare -A -r LIBRARIES=(
   )"
   ["apigateway"]="@com_google_googleapis//google/cloud/apigateway/v1:apigateway_cc_grpc"
   ["apigeeconnect"]="@com_google_googleapis//google/cloud/apigeeconnect/v1:apigeeconnect_cc_grpc"
+  ["apikeys"]="@com_google_googleapis//google/api/apikeys/v2:apikeys_cc_grpc"
   ["appengine"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/appengine/v1:appengine_cc_grpc" \
@@ -34,14 +35,28 @@ declare -A -r LIBRARIES=(
   ["asset"]="@com_google_googleapis//google/cloud/asset/v1:asset_cc_grpc"
   ["assuredworkloads"]="@com_google_googleapis//google/cloud/assuredworkloads/v1:assuredworkloads_cc_grpc"
   ["automl"]="@com_google_googleapis//google/cloud/automl/v1:automl_cc_grpc"
-  ["bigquery"]="$(
+  ["baremetalsolution"]="@com_google_googleapis//google/cloud/baremetalsolution/v2:baremetalsolution_cc_grpc"
+  ["batch"]="@com_google_googleapis//google/cloud/batch/v1:batch_cc_grpc"
+  ["beyondcorp"]="$(
     printf ",%s" \
-      "@com_google_googleapis//google/cloud/bigquery/v2:bigquery_cc_grpc" \
-      "@com_google_googleapis//google/cloud/bigquery/storage/v1:storage_cc_grpc" \
-      "@com_google_googleapis//google/cloud/bigquery/reservation/v1:reservation_cc_grpc" \
-      "@com_google_googleapis//google/cloud/bigquery/logging/v1:logging_cc_grpc" \
+      "@com_google_googleapis//google/cloud/beyondcorp/appconnections/v1:appconnections_cc_grpc" \
+      "@com_google_googleapis//google/cloud/beyondcorp/appconnectors/v1:appconnectors_cc_grpc" \
+      "@com_google_googleapis//google/cloud/beyondcorp/appgateways/v1:appgateways_cc_grpc" \
+      "@com_google_googleapis//google/cloud/beyondcorp/clientconnectorservices/v1:clientconnectorservices_cc_grpc" \
+      "@com_google_googleapis//google/cloud/beyondcorp/clientgateways/v1:clientgateways_cc_grpc"
+  )"
+  ["bigquery"]="$(
+    # This is long enough that it needs to be kept in alphabetical order
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/bigquery/analyticshub/v1:analyticshub_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/connection/v1:connection_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/datapolicies/v1:datapolicies_cc_grpc" \
       "@com_google_googleapis//google/cloud/bigquery/datatransfer/v1:datatransfer_cc_grpc" \
-      "@com_google_googleapis//google/cloud/bigquery/connection/v1:connection_cc_grpc"
+      "@com_google_googleapis//google/cloud/bigquery/logging/v1:logging_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/migration/v2:migration_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/reservation/v1:reservation_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/storage/v1:storage_cc_grpc" \
+      "@com_google_googleapis//google/cloud/bigquery/v2:bigquery_cc_grpc"
   )"
   ["bigtable"]="$(
     printf ",%s" \
@@ -54,10 +69,16 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/billing/budgets/v1:budgets_cc_grpc"
   )"
   ["binaryauthorization"]="@com_google_googleapis//google/cloud/binaryauthorization/v1:binaryauthorization_cc_grpc"
+  ["certificatemanager"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/certificatemanager/logging/v1:logging_cc_grpc" \
+      "@com_google_googleapis//google/cloud/certificatemanager/v1:certificatemanager_cc_grpc"
+  )"
   ["channel"]="@com_google_googleapis//google/cloud/channel/v1:channel_cc_grpc"
   ["cloudbuild"]="@com_google_googleapis//google/devtools/cloudbuild/v1:cloudbuild_cc_grpc"
   ["common"]="@com_google_googleapis//google/cloud/common:common_cc_grpc"
   ["composer"]="@com_google_googleapis//google/cloud/orchestration/airflow/service/v1:service_cc_grpc"
+  ["connectors"]="@com_google_googleapis//google/cloud/connectors/v1:connectors_cc_grpc"
   ["contactcenterinsights"]="@com_google_googleapis//google/cloud/contactcenterinsights/v1:contactcenterinsights_cc_grpc"
   ["container"]="@com_google_googleapis//google/container/v1:container_cc_grpc"
   ["containeranalysis"]="@com_google_googleapis//google/devtools/containeranalysis/v1:containeranalysis_cc_grpc"
@@ -67,11 +88,16 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/cloud/clouddms/v1:clouddms_cc_grpc" \
       "@com_google_googleapis//google/cloud/clouddms/logging/v1:logging_cc_grpc"
   )"
+  ["dataplex"]="@com_google_googleapis//google/cloud/dataplex/v1:dataplex_cc_grpc"
   ["dataproc"]="@com_google_googleapis//google/cloud/dataproc/v1:dataproc_cc_grpc"
+  ["datastream"]="@com_google_googleapis//google/cloud/datastream/v1:datastream_cc_grpc"
   ["debugger"]="@com_google_googleapis//google/devtools/clouddebugger/v2:clouddebugger_cc_grpc"
+  ["deploy"]="@com_google_googleapis//google/cloud/deploy/v1:deploy_cc_grpc"
   ["dialogflow"]="@com_google_googleapis//google/cloud/dialogflow/v2:dialogflow_cc_grpc"
+  ["dialogflow_cx"]="@com_google_googleapis//google/cloud/dialogflow/cx/v3:cx_cc_grpc"
   ["dlp"]="@com_google_googleapis//google/privacy/dlp/v2:dlp_cc_grpc"
   ["documentai"]="@com_google_googleapis//google/cloud/documentai/v1:documentai_cc_grpc"
+  ["edgecontainer"]="@com_google_googleapis//google/cloud/edgecontainer/v1:edgecontainer_cc_grpc"
   ["eventarc"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/cloud/eventarc/v1:eventarc_cc_grpc" \
@@ -90,7 +116,17 @@ declare -A -r LIBRARIES=(
   ["iam"]="$(
     printf ",%s" \
       "@com_google_googleapis//google/iam/credentials/v1:credentials_cc_grpc" \
-      "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc"
+      "@com_google_googleapis//google/iam/admin/v1:admin_cc_grpc" \
+      "@com_google_googleapis//google/iam/v2:iam_cc_grpc"
+  )"
+  # We already have libraries, different from `iam_protos` that compile
+  # the protos defined in the following entry. Thus, we cannot merge
+  # the following entry into the existing `iam` entry, that would
+  # introduce either ODR-violations, or break backwards compatibility.
+  ["iam_policy"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/iam/v1:iam_cc_grpc" \
+      "@com_google_googleapis//google/iam/v1/logging:logging_cc_grpc"
   )"
   ["iap"]="@com_google_googleapis//google/cloud/iap/v1:iap_cc_grpc"
   ["ids"]="@com_google_googleapis//google/cloud/ids/v1:ids_cc_grpc"
@@ -107,8 +143,10 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/monitoring/dashboard/v1:dashboard_cc_grpc" \
       "@com_google_googleapis//google/monitoring/metricsscope/v1:metricsscope_cc_grpc"
   )"
+  ["networkconnectivity"]="@com_google_googleapis//google/cloud/networkconnectivity/v1:networkconnectivity_cc_grpc"
   ["networkmanagement"]="@com_google_googleapis//google/cloud/networkmanagement/v1:networkmanagement_cc_grpc"
   ["notebooks"]="@com_google_googleapis//google/cloud/notebooks/v1:notebooks_cc_grpc"
+  ["optimization"]="@com_google_googleapis//google/cloud/optimization/v1:optimization_cc_grpc"
   ["orgpolicy"]="@com_google_googleapis//google/cloud/orgpolicy/v2:orgpolicy_cc_grpc"
   ["osconfig"]="$(
     printf ",%s" \
@@ -134,6 +172,7 @@ declare -A -r LIBRARIES=(
   ["resourcemanager"]="@com_google_googleapis//google/cloud/resourcemanager/v3:resourcemanager_cc_grpc"
   ["resourcesettings"]="@com_google_googleapis//google/cloud/resourcesettings/v1:resourcesettings_cc_grpc"
   ["retail"]="@com_google_googleapis//google/cloud/retail/v2:retail_cc_grpc"
+  ["run"]="@com_google_googleapis//google/cloud/run/v2:run_cc_grpc"
   ["scheduler"]="@com_google_googleapis//google/cloud/scheduler/v1:scheduler_cc_grpc"
   ["secretmanager"]="$(
     printf ",%s" \
@@ -152,7 +191,11 @@ declare -A -r LIBRARIES=(
       "@com_google_googleapis//google/spanner/admin/instance/v1:instance_cc_grpc" \
       "@com_google_googleapis//google/spanner/admin/database/v1:database_cc_grpc"
   )"
-  ["speech"]="@com_google_googleapis//google/cloud/speech/v1:speech_cc_grpc"
+  ["speech"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/speech/v1:speech_cc_grpc" \
+      "@com_google_googleapis//google/cloud/speech/v2:speech_cc_grpc"
+  )"
   ["storage"]="@com_google_googleapis//google/storage/v2:storage_cc_grpc"
   ["storagetransfer"]="@com_google_googleapis//google/storagetransfer/v1:storagetransfer_cc_grpc"
   ["talent"]="@com_google_googleapis//google/cloud/talent/v4:talent_cc_grpc"
@@ -161,9 +204,16 @@ declare -A -r LIBRARIES=(
   ["tpu"]="@com_google_googleapis//google/cloud/tpu/v1:tpu_cc_grpc"
   ["trace"]="@com_google_googleapis//google/devtools/cloudtrace/v2:cloudtrace_cc_grpc"
   ["translate"]="@com_google_googleapis//google/cloud/translate/v3:translation_cc_grpc"
+  ["video"]="$(
+    printf ",%s" \
+      "@com_google_googleapis//google/cloud/video/livestream/v1:livestream_cc_grpc" \
+      "@com_google_googleapis//google/cloud/video/stitcher/v1:stitcher_cc_grpc" \
+      "@com_google_googleapis//google/cloud/video/transcoder/v1:transcoder_cc_grpc"
+  )"
   ["videointelligence"]="@com_google_googleapis//google/cloud/videointelligence/v1:videointelligence_cc_grpc"
   ["vision"]="@com_google_googleapis//google/cloud/vision/v1:vision_cc_grpc"
   ["vmmigration"]="@com_google_googleapis//google/cloud/vmmigration/v1:vmmigration_cc_grpc"
+  ["vmwareengine"]="@com_google_googleapis//google/cloud/vmwareengine/v1:vmwareengine_cc_grpc"
   ["vpcaccess"]="@com_google_googleapis//google/cloud/vpcaccess/v1:vpcaccess_cc_grpc"
   ["webrisk"]="@com_google_googleapis//google/cloud/webrisk/v1:webrisk_cc_grpc"
   ["websecurityscanner"]="@com_google_googleapis//google/cloud/websecurityscanner/v1:websecurityscanner_cc_grpc"

@@ -46,12 +46,6 @@ class MetadataSpannerStub : public SpannerStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::spanner::v1::BatchCreateSessionsRequest const& request) override;
-  StatusOr<google::spanner::v1::Session> GetSession(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::GetSessionRequest const& request) override;
-  StatusOr<google::spanner::v1::ListSessionsResponse> ListSessions(
-      grpc::ClientContext& client_context,
-      google::spanner::v1::ListSessionsRequest const& request) override;
   Status DeleteSession(
       grpc::ClientContext& client_context,
       google::spanner::v1::DeleteSessionRequest const& request) override;

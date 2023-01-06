@@ -20,45 +20,33 @@ set(DOXYGEN_PROJECT_BRIEF "A C++ Client Library for the Service Control API")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "servicecontrol_internal"
                             "servicecontrol_testing" "examples")
-set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
+set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
+                         ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
 # Creates the proto headers needed by doxygen.
 set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::servicecontrol_protos)
 
 include(GoogleCloudCppCommon)
 
-set(EXTERNAL_GOOGLEAPIS_SOURCE
-    "${PROJECT_BINARY_DIR}/external/googleapis/src/googleapis_download")
 find_path(PROTO_INCLUDE_DIR google/protobuf/descriptor.proto)
 if (PROTO_INCLUDE_DIR)
     list(INSERT PROTOBUF_IMPORT_DIRS 0 "${PROTO_INCLUDE_DIR}")
 endif ()
 
 include(CompileProtos)
+google_cloud_cpp_load_protolist(
+    proto_list
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protolists/servicecontrol.list")
+google_cloud_cpp_load_protodeps(
+    proto_deps
+    "${PROJECT_SOURCE_DIR}/external/googleapis/protodeps/servicecontrol.deps")
 google_cloud_cpp_grpcpp_library(
-    google_cloud_cpp_servicecontrol_protos
-    # cmake-format: sort
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/check_error.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/distribution.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/http_request.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/log_entry.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/metric_value.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/operation.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/quota_controller.proto
-    ${EXTERNAL_GOOGLEAPIS_SOURCE}/google/api/servicecontrol/v1/service_controller.proto
-    PROTO_PATH_DIRECTORIES
-    "${EXTERNAL_GOOGLEAPIS_SOURCE}"
+    google_cloud_cpp_servicecontrol_protos # cmake-format: sort
+    ${proto_list} PROTO_PATH_DIRECTORIES "${EXTERNAL_GOOGLEAPIS_SOURCE}"
     "${PROTO_INCLUDE_DIR}")
 external_googleapis_set_version_and_alias(servicecontrol_protos)
-target_link_libraries(
-    google_cloud_cpp_servicecontrol_protos
-    PUBLIC #
-           google-cloud-cpp::api_annotations_protos
-           google-cloud-cpp::api_client_protos
-           google-cloud-cpp::api_distribution_protos
-           google-cloud-cpp::api_http_protos
-           google-cloud-cpp::logging_type_type_protos
-           google-cloud-cpp::rpc_status_protos)
+target_link_libraries(google_cloud_cpp_servicecontrol_protos
+                      PUBLIC ${proto_deps})
 
 file(
     GLOB source_files
@@ -78,13 +66,13 @@ target_link_libraries(
 google_cloud_cpp_add_common_options(google_cloud_cpp_servicecontrol)
 set_target_properties(
     google_cloud_cpp_servicecontrol
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-servicecontrol
-               VERSION "${PROJECT_VERSION}" SOVERSION
-                                            "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::servicecontrol
+               VERSION "${PROJECT_VERSION}"
+               SOVERSION "${PROJECT_VERSION_MAJOR}")
 target_compile_options(google_cloud_cpp_servicecontrol
                        PUBLIC ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 
-add_library(google-cloud-cpp::experimental-servicecontrol ALIAS
+add_library(google-cloud-cpp::servicecontrol ALIAS
             google_cloud_cpp_servicecontrol)
 
 # Create a header-only library for the mocks. We use a CMake `INTERFACE` library
@@ -104,11 +92,11 @@ add_library(google_cloud_cpp_servicecontrol_mocks INTERFACE)
 target_sources(google_cloud_cpp_servicecontrol_mocks INTERFACE ${mock_files})
 target_link_libraries(
     google_cloud_cpp_servicecontrol_mocks
-    INTERFACE google-cloud-cpp::experimental-servicecontrol GTest::gmock_main
-              GTest::gmock GTest::gtest)
+    INTERFACE google-cloud-cpp::servicecontrol GTest::gmock_main GTest::gmock
+              GTest::gtest)
 set_target_properties(
     google_cloud_cpp_servicecontrol_mocks
-    PROPERTIES EXPORT_NAME google-cloud-cpp::experimental-servicecontrol_mocks)
+    PROPERTIES EXPORT_NAME google-cloud-cpp::servicecontrol_mocks)
 target_include_directories(
     google_cloud_cpp_servicecontrol_mocks
     INTERFACE $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}>
@@ -121,7 +109,7 @@ include(CTest)
 if (BUILD_TESTING)
     add_executable(servicecontrol_quickstart "quickstart/quickstart.cc")
     target_link_libraries(servicecontrol_quickstart
-                          PRIVATE google-cloud-cpp::experimental-servicecontrol)
+                          PRIVATE google-cloud-cpp::servicecontrol)
     google_cloud_cpp_add_common_options(servicecontrol_quickstart)
     add_test(
         NAME servicecontrol_quickstart
@@ -130,7 +118,7 @@ if (BUILD_TESTING)
     set_tests_properties(
         servicecontrol_quickstart
         PROPERTIES LABELS "integration-test;quickstart" PASS_REGULAR_EXPRESSION
-                   "Error in non-idempotent operation Check:")
+                   "Error in non-idempotent.*operation Check:")
 endif ()
 
 # Get the destination directories based on the GNU recommendations.
@@ -175,25 +163,13 @@ google_cloud_cpp_install_headers("google_cloud_cpp_servicecontrol"
 google_cloud_cpp_install_headers("google_cloud_cpp_servicecontrol_mocks"
                                  "include/google/cloud/servicecontrol")
 
-# Setup global variables used in the following *.in files.
-set(GOOGLE_CLOUD_CONFIG_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_MINOR ${PROJECT_VERSION_MINOR})
-set(GOOGLE_CLOUD_CONFIG_VERSION_PATCH ${PROJECT_VERSION_PATCH})
-set(GOOGLE_CLOUD_PC_NAME "The Service Control API C++ Client Library")
-set(GOOGLE_CLOUD_PC_DESCRIPTION
-    "Provides C++ APIs to use the Service Control API.")
-set(GOOGLE_CLOUD_PC_LIBS "-lgoogle_cloud_cpp_servicecontrol")
-string(CONCAT GOOGLE_CLOUD_PC_REQUIRES "google_cloud_cpp_grpc_utils"
-              " google_cloud_cpp_common"
-              " google_cloud_cpp_servicecontrol_protos")
-
-# Create and install the pkg-config files.
-configure_file("${PROJECT_SOURCE_DIR}/google/cloud/servicecontrol/config.pc.in"
-               "google_cloud_cpp_servicecontrol.pc" @ONLY)
-install(
-    FILES "${CMAKE_CURRENT_BINARY_DIR}/google_cloud_cpp_servicecontrol.pc"
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/pkgconfig"
-    COMPONENT google_cloud_cpp_development)
+google_cloud_cpp_add_pkgconfig(
+    servicecontrol
+    "The Service Control API C++ Client Library"
+    "Provides C++ APIs to use the Service Control API."
+    "google_cloud_cpp_grpc_utils"
+    " google_cloud_cpp_common"
+    " google_cloud_cpp_servicecontrol_protos")
 
 # Create and install the CMake configuration files.
 include(CMakePackageConfigHelpers)
@@ -211,5 +187,4 @@ install(
     DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/google_cloud_cpp_servicecontrol"
     COMPONENT google_cloud_cpp_development)
 
-external_googleapis_install_pc("google_cloud_cpp_servicecontrol_protos"
-                               "${PROJECT_SOURCE_DIR}/external/googleapis")
+external_googleapis_install_pc("google_cloud_cpp_servicecontrol_protos")

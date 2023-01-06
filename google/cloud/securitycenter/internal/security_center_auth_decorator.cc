@@ -36,7 +36,7 @@ SecurityCenterAuth::AsyncBulkMuteFindings(
     std::unique_ptr<grpc::ClientContext> context,
     google::cloud::securitycenter::v1::BulkMuteFindingsRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -101,6 +101,16 @@ Status SecurityCenterAuth::DeleteNotificationConfig(
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->DeleteNotificationConfig(context, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterAuth::GetBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetBigQueryExport(context, request);
 }
 
 StatusOr<google::iam::v1::Policy> SecurityCenterAuth::GetIamPolicy(
@@ -220,7 +230,7 @@ SecurityCenterAuth::AsyncRunAssetDiscovery(
     google::cloud::securitycenter::v1::RunAssetDiscoveryRequest const&
         request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -335,13 +345,52 @@ SecurityCenterAuth::UpdateSecurityMarks(
   return child_->UpdateSecurityMarks(context, request);
 }
 
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterAuth::CreateBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CreateBigQueryExport(context, request);
+}
+
+Status SecurityCenterAuth::DeleteBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteBigQueryExport(context, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
+SecurityCenterAuth::UpdateBigQueryExport(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->UpdateBigQueryExport(context, request);
+}
+
+StatusOr<google::cloud::securitycenter::v1::ListBigQueryExportsResponse>
+SecurityCenterAuth::ListBigQueryExports(
+    grpc::ClientContext& context,
+    google::cloud::securitycenter::v1::ListBigQueryExportsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListBigQueryExports(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 SecurityCenterAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::GetOperationRequest const& request) {
   using ReturnType = StatusOr<google::longrunning::Operation>;
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>
@@ -358,7 +407,7 @@ future<Status> SecurityCenterAuth::AsyncCancelOperation(
     google::cloud::CompletionQueue& cq,
     std::unique_ptr<grpc::ClientContext> context,
     google::longrunning::CancelOperationRequest const& request) {
-  auto child = child_;
+  auto& child = child_;
   return auth_->AsyncConfigureContext(std::move(context))
       .then([cq, child,
              request](future<StatusOr<std::unique_ptr<grpc::ClientContext>>>

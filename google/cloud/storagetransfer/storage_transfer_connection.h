@@ -49,6 +49,20 @@ using StorageTransferServiceLimitedErrorCountRetryPolicy =
     ::google::cloud::internal::LimitedErrorCountRetryPolicy<
         storagetransfer_internal::StorageTransferServiceRetryTraits>;
 
+/**
+ * The `StorageTransferServiceConnection` object for
+ * `StorageTransferServiceClient`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `StorageTransferServiceClient`. This allows users to inject custom
+ * behavior (e.g., with a Google Mock object) when writing tests that use
+ * objects of type `StorageTransferServiceClient`.
+ *
+ * To create a concrete instance, see `MakeStorageTransferServiceConnection()`.
+ *
+ * For mocking, see
+ * `storagetransfer_mocks::MockStorageTransferServiceConnection`.
+ */
 class StorageTransferServiceConnection {
  public:
   virtual ~StorageTransferServiceConnection() = 0;
@@ -84,27 +98,54 @@ class StorageTransferServiceConnection {
   virtual future<StatusOr<google::storagetransfer::v1::TransferOperation>>
   RunTransferJob(
       google::storagetransfer::v1::RunTransferJobRequest const& request);
+
+  virtual Status DeleteTransferJob(
+      google::storagetransfer::v1::DeleteTransferJobRequest const& request);
+
+  virtual StatusOr<google::storagetransfer::v1::AgentPool> CreateAgentPool(
+      google::storagetransfer::v1::CreateAgentPoolRequest const& request);
+
+  virtual StatusOr<google::storagetransfer::v1::AgentPool> UpdateAgentPool(
+      google::storagetransfer::v1::UpdateAgentPoolRequest const& request);
+
+  virtual StatusOr<google::storagetransfer::v1::AgentPool> GetAgentPool(
+      google::storagetransfer::v1::GetAgentPoolRequest const& request);
+
+  virtual StreamRange<google::storagetransfer::v1::AgentPool> ListAgentPools(
+      google::storagetransfer::v1::ListAgentPoolsRequest request);
+
+  virtual Status DeleteAgentPool(
+      google::storagetransfer::v1::DeleteAgentPoolRequest const& request);
 };
 
+/**
+ * A factory function to construct an object of type
+ * `StorageTransferServiceConnection`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of
+ * StorageTransferServiceClient.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `StorageTransferServiceConnection`. Expected options are any of the
+ * types in the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::storagetransfer::StorageTransferServicePolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *
+ * @param options (optional) Configure the `StorageTransferServiceConnection`
+ * created by this function.
+ */
 std::shared_ptr<StorageTransferServiceConnection>
 MakeStorageTransferServiceConnection(Options options = {});
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storagetransfer
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace storagetransfer_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<storagetransfer::StorageTransferServiceConnection>
-MakeStorageTransferServiceConnection(
-    std::shared_ptr<StorageTransferServiceStub> stub, Options options);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storagetransfer_internal
 }  // namespace cloud
 }  // namespace google
 

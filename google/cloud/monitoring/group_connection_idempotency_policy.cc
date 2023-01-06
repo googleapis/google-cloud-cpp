@@ -30,53 +30,44 @@ using ::google::cloud::Idempotency;
 GroupServiceConnectionIdempotencyPolicy::
     ~GroupServiceConnectionIdempotencyPolicy() = default;
 
-namespace {
-class DefaultGroupServiceConnectionIdempotencyPolicy
-    : public GroupServiceConnectionIdempotencyPolicy {
- public:
-  ~DefaultGroupServiceConnectionIdempotencyPolicy() override = default;
+std::unique_ptr<GroupServiceConnectionIdempotencyPolicy>
+GroupServiceConnectionIdempotencyPolicy::clone() const {
+  return absl::make_unique<GroupServiceConnectionIdempotencyPolicy>(*this);
+}
 
-  /// Create a new copy of this object.
-  std::unique_ptr<GroupServiceConnectionIdempotencyPolicy> clone()
-      const override {
-    return absl::make_unique<DefaultGroupServiceConnectionIdempotencyPolicy>(
-        *this);
-  }
+Idempotency GroupServiceConnectionIdempotencyPolicy::ListGroups(
+    google::monitoring::v3::ListGroupsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency ListGroups(google::monitoring::v3::ListGroupsRequest) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GroupServiceConnectionIdempotencyPolicy::GetGroup(
+    google::monitoring::v3::GetGroupRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency GetGroup(
-      google::monitoring::v3::GetGroupRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GroupServiceConnectionIdempotencyPolicy::CreateGroup(
+    google::monitoring::v3::CreateGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency CreateGroup(
-      google::monitoring::v3::CreateGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
+Idempotency GroupServiceConnectionIdempotencyPolicy::UpdateGroup(
+    google::monitoring::v3::UpdateGroupRequest const&) {
+  return Idempotency::kIdempotent;
+}
 
-  Idempotency UpdateGroup(
-      google::monitoring::v3::UpdateGroupRequest const&) override {
-    return Idempotency::kIdempotent;
-  }
+Idempotency GroupServiceConnectionIdempotencyPolicy::DeleteGroup(
+    google::monitoring::v3::DeleteGroupRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
 
-  Idempotency DeleteGroup(
-      google::monitoring::v3::DeleteGroupRequest const&) override {
-    return Idempotency::kNonIdempotent;
-  }
-
-  Idempotency ListGroupMembers(
-      google::monitoring::v3::ListGroupMembersRequest) override {
-    return Idempotency::kIdempotent;
-  }
-};
-}  // namespace
+Idempotency GroupServiceConnectionIdempotencyPolicy::ListGroupMembers(
+    google::monitoring::v3::ListGroupMembersRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
 
 std::unique_ptr<GroupServiceConnectionIdempotencyPolicy>
 MakeDefaultGroupServiceConnectionIdempotencyPolicy() {
-  return absl::make_unique<DefaultGroupServiceConnectionIdempotencyPolicy>();
+  return absl::make_unique<GroupServiceConnectionIdempotencyPolicy>();
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

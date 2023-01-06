@@ -23,6 +23,7 @@
 #include "google/cloud/ids/internal/ids_stub_factory.h"
 #include "google/cloud/background_threads.h"
 #include "google/cloud/common_options.h"
+#include "google/cloud/credentials.h"
 #include "google/cloud/grpc_options.h"
 #include "google/cloud/internal/pagination_range.h"
 #include <memory>
@@ -64,6 +65,7 @@ IDSConnection::DeleteEndpoint(
 
 std::shared_ptr<IDSConnection> MakeIDSConnection(Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+                                 UnifiedCredentialsOptionList,
                                  IDSPolicyOptionList>(options, __func__);
   options = ids_internal::IDSDefaultOptions(std::move(options));
   auto background = internal::MakeBackgroundThreadsFactory(options)();
@@ -74,23 +76,5 @@ std::shared_ptr<IDSConnection> MakeIDSConnection(Options options) {
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace ids
-}  // namespace cloud
-}  // namespace google
-
-namespace google {
-namespace cloud {
-namespace ids_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<ids::IDSConnection> MakeIDSConnection(
-    std::shared_ptr<IDSStub> stub, Options options) {
-  options = IDSDefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<ids_internal::IDSConnectionImpl>(
-      std::move(background), std::move(stub), std::move(options));
-}
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace ids_internal
 }  // namespace cloud
 }  // namespace google

@@ -45,6 +45,8 @@ Status ConnectionGenerator::GenerateHeader() {
     "#define $header_include_guard$\n");
   // clang-format on
 
+  auto endpoint_location_style = EndpointLocationStyle();
+
   // includes
   HeaderPrint("\n");
   HeaderLocalIncludes(
@@ -60,11 +62,19 @@ Status ConnectionGenerator::GenerateHeader() {
        HasBidirStreamingMethod()
            ? "google/cloud/internal/async_read_write_stream_impl.h"
            : "",
-       HasBidirStreamingMethod() ? "google/cloud/experimental_tag.h" : "",
+       IsExperimental() ? "google/cloud/experimental_tag.h" : "",
        "google/cloud/version.h"});
   HeaderSystemIncludes(
       {HasLongrunningMethod() ? "google/longrunning/operations.grpc.pb.h" : "",
        "memory"});
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      HeaderSystemIncludes({"string"});
+      break;
+    default:
+      break;
+  }
 
   auto result = HeaderOpenNamespaces();
   if (!result.ok()) return result;
@@ -107,14 +117,23 @@ Status ConnectionGenerator::GenerateHeader() {
   }
 
   // Abstract interface Connection base class
-  HeaderPrint(  // clang-format off
-    "\n"
-    "class $connection_class_name$ {\n"
-    " public:\n"
-    "  virtual ~$connection_class_name$() = 0;\n");
-  // clang-format on
-
   HeaderPrint(R"""(
+/**
+ * The `$connection_class_name$` object for `$client_class_name$`.
+ *
+ * This interface defines virtual methods for each of the user-facing overload
+ * sets in `$client_class_name$`. This allows users to inject custom behavior
+ * (e.g., with a Google Mock object) when writing tests that use objects of type
+ * `$client_class_name$`.
+ *
+ * To create a concrete instance, see `Make$connection_class_name$()`.
+ *
+ * For mocking, see `$product_namespace$_mocks::$mock_connection_class_name$`.
+ */
+class $connection_class_name$ {
+ public:
+  virtual ~$connection_class_name$() = 0;
+
   virtual Options options() { return Options{}; }
 )""");
 
@@ -125,7 +144,7 @@ Status ConnectionGenerator::GenerateHeader() {
   virtual std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       $request_type$,
       $response_type$>>
-  Async$method_name$(ExperimentalTag);
+  Async$method_name$();
 )""");
       continue;
     }
@@ -172,6 +191,8 @@ Status ConnectionGenerator::GenerateHeader() {
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) continue;
+    if (IsStreamingWrite(method)) continue;
     HeaderPrintMethod(
         method,
         {MethodPattern(
@@ -191,22 +212,60 @@ Status ConnectionGenerator::GenerateHeader() {
   // close abstract interface Connection base class
   HeaderPrint("};\n");
 
-  HeaderPrint(  // clang-format off
-    "\nstd::shared_ptr<$connection_class_name$> Make$connection_class_name$(\n"
-    "    Options options = {});\n");
-  // clang-format on
+  HeaderPrint(R"""(
+/**
+ * A factory function to construct an object of type `$connection_class_name$`.
+ *
+ * The returned connection object should not be used directly; instead it
+ * should be passed as an argument to the constructor of $client_class_name$.
+ *
+ * The optional @p options argument may be used to configure aspects of the
+ * returned `$connection_class_name$`. Expected options are any of the types in
+ * the following option lists:
+ *
+ * - `google::cloud::CommonOptionList`
+ * - `google::cloud::GrpcOptionList`
+ * - `google::cloud::UnifiedCredentialsOptionList`
+ * - `google::cloud::$product_namespace$::$service_name$PolicyOptionList`
+ *
+ * @note Unexpected options will be ignored. To log unexpected options instead,
+ *     set `GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes` in the environment.
+ *)""");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      HeaderPrint(R"""(
+ * @param location Sets the prefix for the default `EndpointOption` value.)""");
+      break;
+    default:
+      break;
+  }
+  HeaderPrint(R"""(
+ * @param options (optional) Configure the `$connection_class_name$` created by
+ * this function.
+ */
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
+)""");
+  HeaderPrint("    " + ConnectionFactoryFunctionArguments() + " = {});\n");
 
-  HeaderCloseNamespaces();
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      HeaderPrint(R"""(
+/**
+ * A backwards-compatible version of the previous factory function.  Unless
+ * the service also offers a global endpoint, the default value of the
+ * `EndpointOption` may be useless, in which case it must be overridden.
+ *
+ * @deprecated Please use the `location` overload instead.
+ */
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
+    Options options = {});
+)""");
+      break;
+    default:
+      break;
+  }
 
-  HeaderOpenNamespaces(NamespaceType::kInternal);
-  HeaderPrint(
-      // clang-format off
-      "\n"
-      "std::shared_ptr<$product_namespace$::$connection_class_name$>\n"
-      "Make$connection_class_name$(\n"
-      "    std::shared_ptr<$stub_class_name$> stub,\n"
-      "    Options options);\n");
-  // clang-format on
   HeaderCloseNamespaces();
 
   // close header guard
@@ -229,7 +288,8 @@ Status ConnectionGenerator::GenerateCc() {
       {vars("connection_header_path"), vars("options_header_path"),
        vars("connection_impl_header_path"), vars("option_defaults_header_path"),
        vars("stub_factory_header_path"), "google/cloud/background_threads.h",
-       "google/cloud/common_options.h", "google/cloud/grpc_options.h",
+       "google/cloud/common_options.h", "google/cloud/credentials.h",
+       "google/cloud/grpc_options.h",
        HasPaginatedMethod() ? "google/cloud/internal/pagination_range.h" : ""});
   CcSystemIncludes({"memory"});
 
@@ -258,7 +318,7 @@ $connection_class_name$::~$connection_class_name$() = default;
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
     $request_type$,
     $response_type$>>
-$connection_class_name$::Async$method_name$(ExperimentalTag) {
+$connection_class_name$::Async$method_name$() {
   return absl::make_unique<
       ::google::cloud::internal::AsyncStreamingReadWriteRpcError<
           $request_type$,
@@ -333,6 +393,8 @@ $connection_class_name$::Async$method_name$(ExperimentalTag) {
   }
 
   for (auto const& method : async_methods()) {
+    if (IsStreamingRead(method)) continue;
+    if (IsStreamingWrite(method)) continue;
     CcPrintMethod(
         method,
         {MethodPattern({{IsResponseTypeEmpty, R"""(
@@ -357,13 +419,29 @@ $connection_class_name$::Async$method_name$(
         __FILE__, __LINE__);
   }
 
+  auto endpoint_location_style = EndpointLocationStyle();
+
   CcPrint(R"""(
 std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
-    Options options) {
+)""");
+  CcPrint("    " + ConnectionFactoryFunctionArguments() + ") {");
+  CcPrint(R"""(
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,
+      UnifiedCredentialsOptionList,
       $service_name$PolicyOptionList>(options, __func__);
   options = $product_internal_namespace$::$service_name$DefaultOptions(
-      std::move(options));
+)""");
+  CcPrint("      ");
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      CcPrint("location, ");
+      break;
+    default:
+      break;
+  }
+  CcPrint("std::move(options));");
+  CcPrint(R"""(
   auto background = internal::MakeBackgroundThreadsFactory(options)();
   auto stub = $product_internal_namespace$::CreateDefault$stub_class_name$(
     background->cq(), options);
@@ -372,24 +450,37 @@ std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
 }
 )""");
 
-  CcCloseNamespaces();
-
-  CcOpenNamespaces(NamespaceType::kInternal);
-
-  CcPrint(
-      R"""(
-std::shared_ptr<$product_namespace$::$connection_class_name$>
-Make$connection_class_name$(
-    std::shared_ptr<$stub_class_name$> stub, Options options) {
-  options = $service_name$DefaultOptions(std::move(options));
-  auto background = internal::MakeBackgroundThreadsFactory(options)();
-  return std::make_shared<$product_internal_namespace$::$connection_class_name$Impl>(
-      std::move(background), std::move(stub), std::move(options));
+  switch (endpoint_location_style) {
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      CcPrint(R"""(
+std::shared_ptr<$connection_class_name$> Make$connection_class_name$(
+    Options options) {
+  return Make$connection_class_name$(std::string{}, std::move(options));
 }
 )""");
+      break;
+    default:
+      break;
+  }
 
   CcCloseNamespaces();
+
   return {};
+}
+
+std::string ConnectionGenerator::ConnectionFactoryFunctionArguments() const {
+  std::string args;
+  if (IsExperimental()) args += "ExperimentalTag, ";
+  switch (EndpointLocationStyle()) {
+    case ServiceConfiguration::LOCATION_DEPENDENT:
+    case ServiceConfiguration::LOCATION_DEPENDENT_COMPAT:
+      args += "std::string const& location, ";
+      break;
+    default:
+      break;
+  }
+  args += "Options options";
+  return args;
 }
 
 }  // namespace generator_internal
