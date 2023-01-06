@@ -1,7 +1,13 @@
 # Anthos Multi-Cloud API C++ Client Library
 
 This directory contains an idiomatic C++ client library for the
-[Anthos Multi-Cloud API][cloud-service-docs], a service to Anthos Multi-Cloud provides a way to manage Kubernetes clusters that run on AWS and Azure infrastructure using the Anthos Multi-Cloud API. Combined with Connect, you can manage Kubernetes clusters on Google Cloud, AWS, and Azure from the Google Cloud Console.  When you create a cluster with Anthos Multi-Cloud, Google creates the resources needed and brings up a cluster on your behalf. You can deploy workloads with the Anthos Multi-Cloud API or the gcloud and kubectl command-line tools.
+[Anthos Multi-Cloud API][cloud-service-docs]. This API provides a way to manage
+Kubernetes clusters that run on AWS and Azure infrastructure. Combined with
+Connect, you can manage Kubernetes clusters on Google Cloud, AWS, and Azure
+from the Google Cloud Console.  When you create a cluster with Anthos
+Multi-Cloud, Google creates the resources needed and brings up a cluster on
+your behalf. You can deploy workloads with the Anthos Multi-Cloud API or the
+gcloud and kubectl command-line tools.
 
 While this library is **GA**, please note that the Google Cloud C++ client
 libraries do **not** follow [Semantic Versioning](https://semver.org/).
@@ -31,21 +37,23 @@ this library.
 <!-- inject-quickstart-start -->
 
 ```cc
-#include "google/cloud/gkemulticloud/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/gkemulticloud/v1/attached_clusters_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id region-id\n";
     return 1;
   }
 
-  namespace gkemulticloud = ::google::cloud::gkemulticloud;
-  auto client = gkemulticloud::Client(gkemulticloud::MakeConnection());
+  namespace gkemulticloud = ::google::cloud::gkemulticloud_v1;
+  auto const region = std::string{argv[2]};
+  auto client = gkemulticloud::AttachedClustersClient(
+      gkemulticloud::MakeAttachedClustersConnection(region));
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + region;
+  for (auto r : client.ListAttachedClusters(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }
@@ -86,7 +94,7 @@ as well as how to properly format your code.
 
 Apache 2.0; see [`LICENSE`](/LICENSE) for details.
 
-[cloud-service-docs]: https://cloud.google.com/gkemulticloud
+[cloud-service-docs]: https://cloud.google.com/anthos/clusters/docs/multi-cloud
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-gkemulticloud/latest/
 [howto-setup-dev-workstation]: /doc/contributor/howto-guide-setup-development-workstation.md
 [source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/gkemulticloud

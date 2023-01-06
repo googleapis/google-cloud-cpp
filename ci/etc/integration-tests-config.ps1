@@ -93,3 +93,6 @@ $env:GOOGLE_CLOUD_CPP_GAMESERVICES_TEST_REALM="test-realm"
 
 # To run google/cloud/resourcemanager's quickstart, this is the Cloud C++ team community folder
 $env:GOOGLE_CLOUD_CPP_RESOURCEMANAGER_TEST_FOLDER="204009073908"
+
+# To run google/cloud/gkemulticloud's quickstart. The service is not available in `us-central1`
+$env:GOOGLE_CLOUD_CPP_GKEMULTICLOUD_TEST_REGION="us-west1"

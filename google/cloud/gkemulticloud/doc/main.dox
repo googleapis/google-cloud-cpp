@@ -2,8 +2,14 @@
 
 @mainpage Anthos Multi-Cloud API C++ Client Library
 
-An idiomatic C++ client library for the [Anthos Multi-Cloud API][cloud-service-docs], a service
-to Anthos Multi-Cloud provides a way to manage Kubernetes clusters that run on AWS and Azure infrastructure using the Anthos Multi-Cloud API. Combined with Connect, you can manage Kubernetes clusters on Google Cloud, AWS, and Azure from the Google Cloud Console.  When you create a cluster with Anthos Multi-Cloud, Google creates the resources needed and brings up a cluster on your behalf. You can deploy workloads with the Anthos Multi-Cloud API or the gcloud and kubectl command-line tools.
+An idiomatic C++ client library for the
+[Anthos Multi-Cloud API][cloud-service-docs]. This API provides a way to manage
+Kubernetes clusters that run on AWS and Azure infrastructure. Combined with
+Connect, you can manage Kubernetes clusters on Google Cloud, AWS, and Azure
+from the Google Cloud Console.  When you create a cluster with Anthos
+Multi-Cloud, Google creates the resources needed and brings up a cluster on
+your behalf. You can deploy workloads with the Anthos Multi-Cloud API or the
+gcloud and kubectl command-line tools.
 
 While this library is **GA**, please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
@@ -44,15 +50,15 @@ which should give you a taste of the Anthos Multi-Cloud API C++ client library A
 <!-- inject-endpoint-env-vars-start -->
 
 - `GOOGLE_CLOUD_CPP_ATTACHED_CLUSTERS_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "gkemulticloud.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-gkemulticloud.googleapis.com")
   used by `MakeAttachedClustersConnection()`.
 
 - `GOOGLE_CLOUD_CPP_AWS_CLUSTERS_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "gkemulticloud.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-gkemulticloud.googleapis.com")
   used by `MakeAwsClustersConnection()`.
 
 - `GOOGLE_CLOUD_CPP_AZURE_CLUSTERS_ENDPOINT=...` overrides the
-  `EndpointOption` (which defaults to "gkemulticloud.googleapis.com")
+  `EndpointOption` (which defaults to "<location>-gkemulticloud.googleapis.com")
   used by `MakeAzureClustersConnection()`.
 
 <!-- inject-endpoint-env-vars-end -->
@@ -145,7 +151,7 @@ The library automatically retries requests that fail with transient errors, and
 uses [exponential backoff] to backoff between retries. Application developers
 can override the default policies.
 
-[cloud-service-docs]: https://cloud.google.com/gkemulticloud
+[cloud-service-docs]: https://cloud.google.com/anthos/clusters/docs/multi-cloud
 [exponential backoff]: https://en.wikipedia.org/wiki/Exponential_backoff
 [github-link]: https://github.com/googleapis/google-cloud-cpp 'GitHub Repository'
 <!-- The ugly %2E disables auto-linking in Doxygen -->

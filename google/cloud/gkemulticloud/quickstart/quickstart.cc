@@ -12,21 +12,23 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "google/cloud/gkemulticloud/ EDIT HERE .h"
-#include "google/cloud/project.h"
+#include "google/cloud/gkemulticloud/v1/attached_clusters_client.h"
 #include <iostream>
 
 int main(int argc, char* argv[]) try {
-  if (argc != 2) {
-    std::cerr << "Usage: " << argv[0] << " project-id\n";
+  if (argc != 3) {
+    std::cerr << "Usage: " << argv[0] << " project-id region-id\n";
     return 1;
   }
 
-  namespace gkemulticloud = ::google::cloud::gkemulticloud;
-  auto client = gkemulticloud::Client(gkemulticloud::MakeConnection());
+  namespace gkemulticloud = ::google::cloud::gkemulticloud_v1;
+  auto const region = std::string{argv[2]};
+  auto client = gkemulticloud::AttachedClustersClient(
+      gkemulticloud::MakeAttachedClustersConnection(region));
 
-  auto const project = google::cloud::Project(argv[1]);
-  for (auto r : client.List /*EDIT HERE*/ (project.FullName())) {
+  auto const parent =
+      std::string{"projects/"} + argv[1] + "/locations/" + region;
+  for (auto r : client.ListAttachedClusters(parent)) {
     if (!r) throw std::move(r).status();
     std::cout << r->DebugString() << "\n";
   }

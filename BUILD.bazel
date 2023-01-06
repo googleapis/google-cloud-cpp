@@ -71,6 +71,7 @@ GA_LIBRARIES = [
     "functions",
     "gameservices",
     "gkehub",
+    "gkemulticloud",
     "iap",
     "ids",
     "iot",

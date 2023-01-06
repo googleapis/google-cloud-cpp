@@ -118,6 +118,13 @@ may elicit a deprecation warning. See [#9086] for more details.
 
 ## v2.7.0 - TBD
 
+### New Libraries
+
+We are happy to announce the following GA libraries.  Unless specifically noted,
+the APIs in these libraries are stable, and are ready for production use.
+
+- [Anthos Multi-Cloud API](/google/cloud/gkemulticloud/README.md)
+
 ## v2.6.0 - 2023-01
 
 ### [BigQuery](/google/cloud/bigquery/README.md)
