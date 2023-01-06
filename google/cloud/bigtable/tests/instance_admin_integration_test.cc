@@ -433,10 +433,8 @@ TEST_F(InstanceAdminIntegrationTest, CustomWorkers) {
   CompletionQueue cq;
   auto instance_admin_client = bigtable::MakeInstanceAdminClient(
       project_id_, Options{}.set<GrpcCompletionQueueOption>(cq));
-  instance_admin_ = absl::make_unique<bigtable::InstanceAdmin>(
-      instance_admin_client,
-      *DefaultRPCRetryPolicy({std::chrono::seconds(1), std::chrono::seconds(1),
-                              std::chrono::seconds(1)}));
+  instance_admin_ =
+      absl::make_unique<bigtable::InstanceAdmin>(instance_admin_client);
 
   // CompletionQueue `cq` is not being `Run()`, so this should never finish.
   auto const instance_id = RandomInstanceId(generator_);
