@@ -180,7 +180,7 @@ class ObjectWriteStream : public std::basic_ostream<char> {
    */
   void Close();
 
-  //@{
+  ///@{
   /**
    * Access the upload results.
    *
@@ -240,7 +240,7 @@ class ObjectWriteStream : public std::basic_ostream<char> {
 
   /// The returned payload as a raw string, for debugging only.
   std::string const& payload() const { return payload_; }
-  //@}
+  ///@}
 
   /**
    * Returns the resumable upload session id for this upload.

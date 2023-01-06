@@ -406,7 +406,7 @@ class ClientOptions {
   /// @deprecated Use google::cloud::Options and CAPathOption instead.
   ChannelOptions const& channel_options() const { return channel_options_; }
 
-  //@{
+  ///@{
   /**
    * Control the maximum amount of time allowed for "stalls" during a download.
    *
@@ -431,7 +431,7 @@ class ClientOptions {
     opts_.set<TransferStallTimeoutOption>(std::move(v));
     return *this;
   }
-  //@}
+  ///@}
 
  private:
   friend Options internal::MakeOptions(ClientOptions);

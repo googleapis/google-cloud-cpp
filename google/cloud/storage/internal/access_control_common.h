@@ -42,7 +42,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
  public:
   AccessControlCommon() = default;
 
-  //@{
+  ///@{
   /**
    * @name Well-known values for the role() field..
    *
@@ -52,9 +52,9 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
    */
   static std::string ROLE_OWNER() { return "OWNER"; }
   static std::string ROLE_READER() { return "READER"; }
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /**
    * @name Well-known values for the project_team().team field..
    *
@@ -65,7 +65,7 @@ class GOOGLE_CLOUD_CPP_DEPRECATED(
   static std::string TEAM_EDITORS() { return storage::TEAM_EDITORS(); }
   static std::string TEAM_OWNERS() { return storage::TEAM_OWNERS(); }
   static std::string TEAM_VIEWERS() { return storage::TEAM_VIEWERS(); }
-  //@}
+  ///@}
 
   std::string const& bucket() const { return bucket_; }
   std::string const& domain() const { return domain_; }

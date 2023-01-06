@@ -40,7 +40,7 @@ class GenericHmacKeyRequest
 
   std::string const& project_id() const { return project_id_; }
 
-  //@{
+  ///@{
   /**
    * @name Handle request options.
    *
