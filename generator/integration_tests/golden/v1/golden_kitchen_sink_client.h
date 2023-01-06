@@ -66,7 +66,7 @@ class GoldenKitchenSinkClient {
   ~GoldenKitchenSinkClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   GoldenKitchenSinkClient(GoldenKitchenSinkClient const&) = default;
   GoldenKitchenSinkClient& operator=(GoldenKitchenSinkClient const&) = default;
   GoldenKitchenSinkClient(GoldenKitchenSinkClient&&) = default;
@@ -74,7 +74,7 @@ class GoldenKitchenSinkClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(GoldenKitchenSinkClient const& a, GoldenKitchenSinkClient const& b) {
     return a.connection_ == b.connection_;
   }
