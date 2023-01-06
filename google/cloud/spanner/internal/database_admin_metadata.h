@@ -33,10 +33,8 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
 
   ~DatabaseAdminMetadata() override = default;
 
-  //@{
-  /**
-   * @name Override the functions from `DatabaseAdminStub`.
-   */
+  ///@{
+  /// @name Override the functions from `DatabaseAdminStub`.
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
       CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::spanner::admin::database::v1::CreateDatabaseRequest const&)
@@ -129,7 +127,7 @@ class DatabaseAdminMetadata : public DatabaseAdminStub {
   future<Status> AsyncCancelOperation(
       CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::longrunning::CancelOperationRequest const&) override;
-  //@}
+  ///@}
 
  private:
   void SetMetadata(grpc::ClientContext& context,

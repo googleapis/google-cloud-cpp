@@ -38,13 +38,12 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
 
   ~DatabaseAdminLogging() override = default;
 
-  //@{
+  ///@{
   /**
    * @name Override the functions from `DatabaseAdminStub`.
    *
    * Run the logging loop (if appropriate) for the child DatabaseAdminStub.
    */
-  ///
   future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
       CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::spanner::admin::database::v1::CreateDatabaseRequest const&)
@@ -136,7 +135,7 @@ class DatabaseAdminLogging : public DatabaseAdminStub {
   future<Status> AsyncCancelOperation(
       CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::longrunning::CancelOperationRequest const&) override;
-  //@}
+  ///@}
 
  private:
   std::shared_ptr<DatabaseAdminStub> child_;

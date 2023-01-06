@@ -71,16 +71,16 @@ class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("InstanceAdminClient")
   /// Use `InstanceAdminClient(std::shared_ptr<InstanceAdminConnection>)`
   InstanceAdminClient() = delete;
 
-  //@{
-  // @name Copy and move support
+  ///@{
+  /// @name Copy and move support
   InstanceAdminClient(InstanceAdminClient const&) = default;
   InstanceAdminClient& operator=(InstanceAdminClient const&) = default;
   InstanceAdminClient(InstanceAdminClient&&) = default;
   InstanceAdminClient& operator=(InstanceAdminClient&&) = default;
-  //@}
+  ///@}
 
-  //@{
-  // @name Equality
+  ///@{
+  /// @name Equality
   friend bool operator==(InstanceAdminClient const& a,
                          InstanceAdminClient const& b) {
     return a.conn_ == b.conn_;
@@ -89,7 +89,7 @@ class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("InstanceAdminClient")
                          InstanceAdminClient const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   /**
    * Retrieve metadata information about a Cloud Spanner Instance.

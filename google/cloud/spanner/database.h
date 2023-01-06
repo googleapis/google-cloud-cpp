@@ -59,12 +59,12 @@ class Database {
            std::string database_id);
 
   /// @name Copy and move
-  //@{
+  ///@{
   Database(Database const&) = default;
   Database& operator=(Database const&) = default;
   Database(Database&&) = default;
   Database& operator=(Database&&) = default;
-  //@}
+  ///@}
 
   /// Returns the `Instance` containing this database.
   Instance const& instance() const { return instance_; }
@@ -79,10 +79,10 @@ class Database {
   std::string FullName() const;
 
   /// @name Equality operators
-  //@{
+  ///@{
   friend bool operator==(Database const& a, Database const& b);
   friend bool operator!=(Database const& a, Database const& b);
-  //@}
+  ///@}
 
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream&, Database const&);

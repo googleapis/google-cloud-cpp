@@ -73,7 +73,7 @@ class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("InstanceAdminConnection")
  public:
   virtual ~InstanceAdminConnection() = 0;
 
-  //@{
+  ///@{
   /**
    * @name Define the arguments for each member function.
    *
@@ -155,7 +155,7 @@ class GOOGLE_CLOUD_CPP_SPANNER_ADMIN_API_DEPRECATED("InstanceAdminConnection")
     std::string instance_name;
     std::vector<std::string> permissions;
   };
-  //@}
+  ///@}
 
   virtual Options options() { return Options{}; }
 
