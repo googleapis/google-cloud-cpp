@@ -41,7 +41,7 @@ class Json {
   /// A null value.
   Json() : rep_("null") {}
 
-  /// Regular value type, supporting copy, assign, move.
+  /// @name Regular value type, supporting copy, assign, move.
   ///@{
   Json(Json const&) = default;
   Json& operator=(Json const&) = default;
@@ -56,7 +56,7 @@ class Json {
    */
   explicit Json(std::string s) : rep_(std::move(s)) {}
 
-  /// Conversion to a JSON-formatted string.
+  /// @name Conversion to a JSON-formatted string.
   ///@{
   explicit operator std::string() const& { return rep_; }
   explicit operator std::string() && { return std::move(rep_); }
@@ -103,7 +103,7 @@ class JsonB {
   /// A null value.
   JsonB() : rep_("null") {}
 
-  /// Regular value type, supporting copy, assign, move.
+  /// @name Regular value type, supporting copy, assign, move.
   ///@{
   JsonB(JsonB const&) = default;
   JsonB& operator=(JsonB const&) = default;
@@ -118,7 +118,7 @@ class JsonB {
    */
   explicit JsonB(std::string s) : rep_(std::move(s)) {}
 
-  /// Conversion to a JSON-formatted string.
+  /// @name Conversion to a JSON-formatted string.
   ///@{
   explicit operator std::string() const& { return rep_; }
   explicit operator std::string() && { return std::move(rep_); }
