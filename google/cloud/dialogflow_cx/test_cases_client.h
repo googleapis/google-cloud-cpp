@@ -67,7 +67,7 @@ class TestCasesClient {
   ~TestCasesClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   TestCasesClient(TestCasesClient const&) = default;
   TestCasesClient& operator=(TestCasesClient const&) = default;
   TestCasesClient(TestCasesClient&&) = default;
@@ -75,7 +75,7 @@ class TestCasesClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(TestCasesClient const& a, TestCasesClient const& b) {
     return a.connection_ == b.connection_;
   }

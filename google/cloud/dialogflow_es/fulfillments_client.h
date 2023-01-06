@@ -65,7 +65,7 @@ class FulfillmentsClient {
   ~FulfillmentsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   FulfillmentsClient(FulfillmentsClient const&) = default;
   FulfillmentsClient& operator=(FulfillmentsClient const&) = default;
   FulfillmentsClient(FulfillmentsClient&&) = default;
@@ -73,7 +73,7 @@ class FulfillmentsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(FulfillmentsClient const& a,
                          FulfillmentsClient const& b) {
     return a.connection_ == b.connection_;

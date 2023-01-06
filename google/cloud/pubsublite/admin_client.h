@@ -68,7 +68,7 @@ class AdminServiceClient {
   ~AdminServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AdminServiceClient(AdminServiceClient const&) = default;
   AdminServiceClient& operator=(AdminServiceClient const&) = default;
   AdminServiceClient(AdminServiceClient&&) = default;
@@ -76,7 +76,7 @@ class AdminServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AdminServiceClient const& a,
                          AdminServiceClient const& b) {
     return a.connection_ == b.connection_;

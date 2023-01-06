@@ -69,7 +69,7 @@ class FoldersClient {
   ~FoldersClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   FoldersClient(FoldersClient const&) = default;
   FoldersClient& operator=(FoldersClient const&) = default;
   FoldersClient(FoldersClient&&) = default;
@@ -77,7 +77,7 @@ class FoldersClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(FoldersClient const& a, FoldersClient const& b) {
     return a.connection_ == b.connection_;
   }

@@ -72,7 +72,7 @@ class TranscoderServiceClient {
   ~TranscoderServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   TranscoderServiceClient(TranscoderServiceClient const&) = default;
   TranscoderServiceClient& operator=(TranscoderServiceClient const&) = default;
   TranscoderServiceClient(TranscoderServiceClient&&) = default;
@@ -80,7 +80,7 @@ class TranscoderServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(TranscoderServiceClient const& a,
                          TranscoderServiceClient const& b) {
     return a.connection_ == b.connection_;

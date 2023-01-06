@@ -67,7 +67,7 @@ class BigQueryReadClient {
   ~BigQueryReadClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   BigQueryReadClient(BigQueryReadClient const&) = default;
   BigQueryReadClient& operator=(BigQueryReadClient const&) = default;
   BigQueryReadClient(BigQueryReadClient&&) = default;
@@ -75,7 +75,7 @@ class BigQueryReadClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(BigQueryReadClient const& a,
                          BigQueryReadClient const& b) {
     return a.connection_ == b.connection_;

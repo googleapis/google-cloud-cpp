@@ -68,7 +68,7 @@ class EdgeContainerClient {
   ~EdgeContainerClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   EdgeContainerClient(EdgeContainerClient const&) = default;
   EdgeContainerClient& operator=(EdgeContainerClient const&) = default;
   EdgeContainerClient(EdgeContainerClient&&) = default;
@@ -76,7 +76,7 @@ class EdgeContainerClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(EdgeContainerClient const& a,
                          EdgeContainerClient const& b) {
     return a.connection_ == b.connection_;

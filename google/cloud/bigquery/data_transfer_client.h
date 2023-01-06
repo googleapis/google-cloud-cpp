@@ -66,7 +66,7 @@ class DataTransferServiceClient {
   ~DataTransferServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   DataTransferServiceClient(DataTransferServiceClient const&) = default;
   DataTransferServiceClient& operator=(DataTransferServiceClient const&) =
       default;
@@ -75,7 +75,7 @@ class DataTransferServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(DataTransferServiceClient const& a,
                          DataTransferServiceClient const& b) {
     return a.connection_ == b.connection_;

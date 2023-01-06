@@ -66,7 +66,7 @@ class InstancesClient {
   ~InstancesClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   InstancesClient(InstancesClient const&) = default;
   InstancesClient& operator=(InstancesClient const&) = default;
   InstancesClient(InstancesClient&&) = default;
@@ -74,7 +74,7 @@ class InstancesClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(InstancesClient const& a, InstancesClient const& b) {
     return a.connection_ == b.connection_;
   }

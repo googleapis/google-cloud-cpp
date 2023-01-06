@@ -67,7 +67,7 @@ class AuthorizedCertificatesClient {
   ~AuthorizedCertificatesClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AuthorizedCertificatesClient(AuthorizedCertificatesClient const&) = default;
   AuthorizedCertificatesClient& operator=(AuthorizedCertificatesClient const&) =
       default;
@@ -77,7 +77,7 @@ class AuthorizedCertificatesClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AuthorizedCertificatesClient const& a,
                          AuthorizedCertificatesClient const& b) {
     return a.connection_ == b.connection_;

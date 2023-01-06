@@ -66,7 +66,7 @@ class AnswerRecordsClient {
   ~AnswerRecordsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AnswerRecordsClient(AnswerRecordsClient const&) = default;
   AnswerRecordsClient& operator=(AnswerRecordsClient const&) = default;
   AnswerRecordsClient(AnswerRecordsClient&&) = default;
@@ -74,7 +74,7 @@ class AnswerRecordsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AnswerRecordsClient const& a,
                          AnswerRecordsClient const& b) {
     return a.connection_ == b.connection_;

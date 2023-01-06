@@ -83,7 +83,7 @@ class CloudRedisClient {
   ~CloudRedisClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CloudRedisClient(CloudRedisClient const&) = default;
   CloudRedisClient& operator=(CloudRedisClient const&) = default;
   CloudRedisClient(CloudRedisClient&&) = default;
@@ -91,7 +91,7 @@ class CloudRedisClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CloudRedisClient const& a, CloudRedisClient const& b) {
     return a.connection_ == b.connection_;
   }

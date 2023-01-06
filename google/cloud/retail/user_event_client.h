@@ -68,7 +68,7 @@ class UserEventServiceClient {
   ~UserEventServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   UserEventServiceClient(UserEventServiceClient const&) = default;
   UserEventServiceClient& operator=(UserEventServiceClient const&) = default;
   UserEventServiceClient(UserEventServiceClient&&) = default;
@@ -76,7 +76,7 @@ class UserEventServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(UserEventServiceClient const& a,
                          UserEventServiceClient const& b) {
     return a.connection_ == b.connection_;

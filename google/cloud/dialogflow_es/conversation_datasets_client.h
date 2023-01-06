@@ -70,7 +70,7 @@ class ConversationDatasetsClient {
   ~ConversationDatasetsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ConversationDatasetsClient(ConversationDatasetsClient const&) = default;
   ConversationDatasetsClient& operator=(ConversationDatasetsClient const&) =
       default;
@@ -79,7 +79,7 @@ class ConversationDatasetsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ConversationDatasetsClient const& a,
                          ConversationDatasetsClient const& b) {
     return a.connection_ == b.connection_;

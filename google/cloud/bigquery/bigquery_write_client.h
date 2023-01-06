@@ -71,7 +71,7 @@ class BigQueryWriteClient {
   ~BigQueryWriteClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   BigQueryWriteClient(BigQueryWriteClient const&) = default;
   BigQueryWriteClient& operator=(BigQueryWriteClient const&) = default;
   BigQueryWriteClient(BigQueryWriteClient&&) = default;
@@ -79,7 +79,7 @@ class BigQueryWriteClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(BigQueryWriteClient const& a,
                          BigQueryWriteClient const& b) {
     return a.connection_ == b.connection_;

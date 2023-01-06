@@ -66,7 +66,7 @@ class MetricServiceClient {
   ~MetricServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   MetricServiceClient(MetricServiceClient const&) = default;
   MetricServiceClient& operator=(MetricServiceClient const&) = default;
   MetricServiceClient(MetricServiceClient&&) = default;
@@ -74,7 +74,7 @@ class MetricServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(MetricServiceClient const& a,
                          MetricServiceClient const& b) {
     return a.connection_ == b.connection_;

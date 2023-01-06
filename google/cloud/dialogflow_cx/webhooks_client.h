@@ -65,7 +65,7 @@ class WebhooksClient {
   ~WebhooksClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   WebhooksClient(WebhooksClient const&) = default;
   WebhooksClient& operator=(WebhooksClient const&) = default;
   WebhooksClient(WebhooksClient&&) = default;
@@ -73,7 +73,7 @@ class WebhooksClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(WebhooksClient const& a, WebhooksClient const& b) {
     return a.connection_ == b.connection_;
   }

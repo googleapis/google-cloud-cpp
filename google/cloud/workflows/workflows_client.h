@@ -69,7 +69,7 @@ class WorkflowsClient {
   ~WorkflowsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   WorkflowsClient(WorkflowsClient const&) = default;
   WorkflowsClient& operator=(WorkflowsClient const&) = default;
   WorkflowsClient(WorkflowsClient&&) = default;
@@ -77,7 +77,7 @@ class WorkflowsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(WorkflowsClient const& a, WorkflowsClient const& b) {
     return a.connection_ == b.connection_;
   }

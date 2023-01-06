@@ -75,7 +75,7 @@ class AlertPolicyServiceClient {
   ~AlertPolicyServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AlertPolicyServiceClient(AlertPolicyServiceClient const&) = default;
   AlertPolicyServiceClient& operator=(AlertPolicyServiceClient const&) =
       default;
@@ -84,7 +84,7 @@ class AlertPolicyServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AlertPolicyServiceClient const& a,
                          AlertPolicyServiceClient const& b) {
     return a.connection_ == b.connection_;

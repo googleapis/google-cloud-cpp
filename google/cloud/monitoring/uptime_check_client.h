@@ -73,7 +73,7 @@ class UptimeCheckServiceClient {
   ~UptimeCheckServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   UptimeCheckServiceClient(UptimeCheckServiceClient const&) = default;
   UptimeCheckServiceClient& operator=(UptimeCheckServiceClient const&) =
       default;
@@ -82,7 +82,7 @@ class UptimeCheckServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(UptimeCheckServiceClient const& a,
                          UptimeCheckServiceClient const& b) {
     return a.connection_ == b.connection_;

@@ -69,7 +69,7 @@ class EkmServiceClient {
   ~EkmServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   EkmServiceClient(EkmServiceClient const&) = default;
   EkmServiceClient& operator=(EkmServiceClient const&) = default;
   EkmServiceClient(EkmServiceClient&&) = default;
@@ -77,7 +77,7 @@ class EkmServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(EkmServiceClient const& a, EkmServiceClient const& b) {
     return a.connection_ == b.connection_;
   }

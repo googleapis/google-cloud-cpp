@@ -65,7 +65,7 @@ class TextToSpeechClient {
   ~TextToSpeechClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   TextToSpeechClient(TextToSpeechClient const&) = default;
   TextToSpeechClient& operator=(TextToSpeechClient const&) = default;
   TextToSpeechClient(TextToSpeechClient&&) = default;
@@ -73,7 +73,7 @@ class TextToSpeechClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(TextToSpeechClient const& a,
                          TextToSpeechClient const& b) {
     return a.connection_ == b.connection_;

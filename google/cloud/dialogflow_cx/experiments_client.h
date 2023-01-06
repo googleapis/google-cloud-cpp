@@ -66,7 +66,7 @@ class ExperimentsClient {
   ~ExperimentsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ExperimentsClient(ExperimentsClient const&) = default;
   ExperimentsClient& operator=(ExperimentsClient const&) = default;
   ExperimentsClient(ExperimentsClient&&) = default;
@@ -74,7 +74,7 @@ class ExperimentsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ExperimentsClient const& a,
                          ExperimentsClient const& b) {
     return a.connection_ == b.connection_;

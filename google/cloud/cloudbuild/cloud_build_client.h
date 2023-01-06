@@ -74,7 +74,7 @@ class CloudBuildClient {
   ~CloudBuildClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CloudBuildClient(CloudBuildClient const&) = default;
   CloudBuildClient& operator=(CloudBuildClient const&) = default;
   CloudBuildClient(CloudBuildClient&&) = default;
@@ -82,7 +82,7 @@ class CloudBuildClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CloudBuildClient const& a, CloudBuildClient const& b) {
     return a.connection_ == b.connection_;
   }

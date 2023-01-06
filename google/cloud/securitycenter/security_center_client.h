@@ -68,7 +68,7 @@ class SecurityCenterClient {
   ~SecurityCenterClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   SecurityCenterClient(SecurityCenterClient const&) = default;
   SecurityCenterClient& operator=(SecurityCenterClient const&) = default;
   SecurityCenterClient(SecurityCenterClient&&) = default;
@@ -76,7 +76,7 @@ class SecurityCenterClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(SecurityCenterClient const& a,
                          SecurityCenterClient const& b) {
     return a.connection_ == b.connection_;

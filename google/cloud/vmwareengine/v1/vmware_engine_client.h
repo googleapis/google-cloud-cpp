@@ -67,7 +67,7 @@ class VmwareEngineClient {
   ~VmwareEngineClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   VmwareEngineClient(VmwareEngineClient const&) = default;
   VmwareEngineClient& operator=(VmwareEngineClient const&) = default;
   VmwareEngineClient(VmwareEngineClient&&) = default;
@@ -75,7 +75,7 @@ class VmwareEngineClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(VmwareEngineClient const& a,
                          VmwareEngineClient const& b) {
     return a.connection_ == b.connection_;

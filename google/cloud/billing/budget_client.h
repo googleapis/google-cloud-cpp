@@ -66,7 +66,7 @@ class BudgetServiceClient {
   ~BudgetServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   BudgetServiceClient(BudgetServiceClient const&) = default;
   BudgetServiceClient& operator=(BudgetServiceClient const&) = default;
   BudgetServiceClient(BudgetServiceClient&&) = default;
@@ -74,7 +74,7 @@ class BudgetServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(BudgetServiceClient const& a,
                          BudgetServiceClient const& b) {
     return a.connection_ == b.connection_;

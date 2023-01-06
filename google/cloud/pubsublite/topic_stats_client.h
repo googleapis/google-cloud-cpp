@@ -66,7 +66,7 @@ class TopicStatsServiceClient {
   ~TopicStatsServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   TopicStatsServiceClient(TopicStatsServiceClient const&) = default;
   TopicStatsServiceClient& operator=(TopicStatsServiceClient const&) = default;
   TopicStatsServiceClient(TopicStatsServiceClient&&) = default;
@@ -74,7 +74,7 @@ class TopicStatsServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(TopicStatsServiceClient const& a,
                          TopicStatsServiceClient const& b) {
     return a.connection_ == b.connection_;

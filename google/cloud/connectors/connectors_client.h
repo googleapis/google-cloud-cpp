@@ -67,7 +67,7 @@ class ConnectorsClient {
   ~ConnectorsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ConnectorsClient(ConnectorsClient const&) = default;
   ConnectorsClient& operator=(ConnectorsClient const&) = default;
   ConnectorsClient(ConnectorsClient&&) = default;
@@ -75,7 +75,7 @@ class ConnectorsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ConnectorsClient const& a, ConnectorsClient const& b) {
     return a.connection_ == b.connection_;
   }

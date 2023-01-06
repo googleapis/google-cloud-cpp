@@ -78,7 +78,7 @@ class KeyManagementServiceClient {
   ~KeyManagementServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   KeyManagementServiceClient(KeyManagementServiceClient const&) = default;
   KeyManagementServiceClient& operator=(KeyManagementServiceClient const&) =
       default;
@@ -87,7 +87,7 @@ class KeyManagementServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(KeyManagementServiceClient const& a,
                          KeyManagementServiceClient const& b) {
     return a.connection_ == b.connection_;

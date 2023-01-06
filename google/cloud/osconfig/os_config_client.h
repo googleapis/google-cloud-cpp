@@ -68,7 +68,7 @@ class OsConfigServiceClient {
   ~OsConfigServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   OsConfigServiceClient(OsConfigServiceClient const&) = default;
   OsConfigServiceClient& operator=(OsConfigServiceClient const&) = default;
   OsConfigServiceClient(OsConfigServiceClient&&) = default;
@@ -76,7 +76,7 @@ class OsConfigServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(OsConfigServiceClient const& a,
                          OsConfigServiceClient const& b) {
     return a.connection_ == b.connection_;

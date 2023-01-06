@@ -66,7 +66,7 @@ class LanguageServiceClient {
   ~LanguageServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   LanguageServiceClient(LanguageServiceClient const&) = default;
   LanguageServiceClient& operator=(LanguageServiceClient const&) = default;
   LanguageServiceClient(LanguageServiceClient&&) = default;
@@ -74,7 +74,7 @@ class LanguageServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(LanguageServiceClient const& a,
                          LanguageServiceClient const& b) {
     return a.connection_ == b.connection_;

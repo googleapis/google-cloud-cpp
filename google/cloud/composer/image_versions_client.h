@@ -65,7 +65,7 @@ class ImageVersionsClient {
   ~ImageVersionsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ImageVersionsClient(ImageVersionsClient const&) = default;
   ImageVersionsClient& operator=(ImageVersionsClient const&) = default;
   ImageVersionsClient(ImageVersionsClient&&) = default;
@@ -73,7 +73,7 @@ class ImageVersionsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ImageVersionsClient const& a,
                          ImageVersionsClient const& b) {
     return a.connection_ == b.connection_;

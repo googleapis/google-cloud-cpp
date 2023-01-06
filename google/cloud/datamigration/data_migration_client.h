@@ -68,7 +68,7 @@ class DataMigrationServiceClient {
   ~DataMigrationServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   DataMigrationServiceClient(DataMigrationServiceClient const&) = default;
   DataMigrationServiceClient& operator=(DataMigrationServiceClient const&) =
       default;
@@ -77,7 +77,7 @@ class DataMigrationServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(DataMigrationServiceClient const& a,
                          DataMigrationServiceClient const& b) {
     return a.connection_ == b.connection_;

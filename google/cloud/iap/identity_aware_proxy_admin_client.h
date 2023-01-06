@@ -66,7 +66,7 @@ class IdentityAwareProxyAdminServiceClient {
   ~IdentityAwareProxyAdminServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   IdentityAwareProxyAdminServiceClient(
       IdentityAwareProxyAdminServiceClient const&) = default;
   IdentityAwareProxyAdminServiceClient& operator=(
@@ -78,7 +78,7 @@ class IdentityAwareProxyAdminServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(IdentityAwareProxyAdminServiceClient const& a,
                          IdentityAwareProxyAdminServiceClient const& b) {
     return a.connection_ == b.connection_;

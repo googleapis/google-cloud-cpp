@@ -66,7 +66,7 @@ class WebRiskServiceClient {
   ~WebRiskServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   WebRiskServiceClient(WebRiskServiceClient const&) = default;
   WebRiskServiceClient& operator=(WebRiskServiceClient const&) = default;
   WebRiskServiceClient(WebRiskServiceClient&&) = default;
@@ -74,7 +74,7 @@ class WebRiskServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(WebRiskServiceClient const& a,
                          WebRiskServiceClient const& b) {
     return a.connection_ == b.connection_;

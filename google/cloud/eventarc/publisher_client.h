@@ -88,7 +88,7 @@ class PublisherClient {
   ~PublisherClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   PublisherClient(PublisherClient const&) = default;
   PublisherClient& operator=(PublisherClient const&) = default;
   PublisherClient(PublisherClient&&) = default;
@@ -96,7 +96,7 @@ class PublisherClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(PublisherClient const& a, PublisherClient const& b) {
     return a.connection_ == b.connection_;
   }

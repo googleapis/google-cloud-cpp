@@ -66,7 +66,7 @@ class ContentServiceClient {
   ~ContentServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ContentServiceClient(ContentServiceClient const&) = default;
   ContentServiceClient& operator=(ContentServiceClient const&) = default;
   ContentServiceClient(ContentServiceClient&&) = default;
@@ -74,7 +74,7 @@ class ContentServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ContentServiceClient const& a,
                          ContentServiceClient const& b) {
     return a.connection_ == b.connection_;

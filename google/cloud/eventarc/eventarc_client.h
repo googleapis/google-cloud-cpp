@@ -68,7 +68,7 @@ class EventarcClient {
   ~EventarcClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   EventarcClient(EventarcClient const&) = default;
   EventarcClient& operator=(EventarcClient const&) = default;
   EventarcClient(EventarcClient&&) = default;
@@ -76,7 +76,7 @@ class EventarcClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(EventarcClient const& a, EventarcClient const& b) {
     return a.connection_ == b.connection_;
   }

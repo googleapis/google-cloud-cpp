@@ -69,7 +69,7 @@ class SearchServiceClient {
   ~SearchServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   SearchServiceClient(SearchServiceClient const&) = default;
   SearchServiceClient& operator=(SearchServiceClient const&) = default;
   SearchServiceClient(SearchServiceClient&&) = default;
@@ -77,7 +77,7 @@ class SearchServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(SearchServiceClient const& a,
                          SearchServiceClient const& b) {
     return a.connection_ == b.connection_;

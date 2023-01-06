@@ -68,7 +68,7 @@ class ProductServiceClient {
   ~ProductServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ProductServiceClient(ProductServiceClient const&) = default;
   ProductServiceClient& operator=(ProductServiceClient const&) = default;
   ProductServiceClient(ProductServiceClient&&) = default;
@@ -76,7 +76,7 @@ class ProductServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ProductServiceClient const& a,
                          ProductServiceClient const& b) {
     return a.connection_ == b.connection_;

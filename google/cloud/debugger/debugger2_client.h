@@ -76,7 +76,7 @@ class Debugger2Client {
   ~Debugger2Client();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   Debugger2Client(Debugger2Client const&) = default;
   Debugger2Client& operator=(Debugger2Client const&) = default;
   Debugger2Client(Debugger2Client&&) = default;
@@ -84,7 +84,7 @@ class Debugger2Client {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(Debugger2Client const& a, Debugger2Client const& b) {
     return a.connection_ == b.connection_;
   }

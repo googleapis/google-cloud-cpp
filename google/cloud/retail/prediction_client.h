@@ -67,7 +67,7 @@ class PredictionServiceClient {
   ~PredictionServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   PredictionServiceClient(PredictionServiceClient const&) = default;
   PredictionServiceClient& operator=(PredictionServiceClient const&) = default;
   PredictionServiceClient(PredictionServiceClient&&) = default;
@@ -75,7 +75,7 @@ class PredictionServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(PredictionServiceClient const& a,
                          PredictionServiceClient const& b) {
     return a.connection_ == b.connection_;

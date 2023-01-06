@@ -71,7 +71,7 @@ class DataplexServiceClient {
   ~DataplexServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   DataplexServiceClient(DataplexServiceClient const&) = default;
   DataplexServiceClient& operator=(DataplexServiceClient const&) = default;
   DataplexServiceClient(DataplexServiceClient&&) = default;
@@ -79,7 +79,7 @@ class DataplexServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(DataplexServiceClient const& a,
                          DataplexServiceClient const& b) {
     return a.connection_ == b.connection_;

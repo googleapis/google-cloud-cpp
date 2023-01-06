@@ -71,7 +71,7 @@ class GoldenThingAdminClient {
   ~GoldenThingAdminClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   GoldenThingAdminClient(GoldenThingAdminClient const&) = default;
   GoldenThingAdminClient& operator=(GoldenThingAdminClient const&) = default;
   GoldenThingAdminClient(GoldenThingAdminClient&&) = default;
@@ -79,7 +79,7 @@ class GoldenThingAdminClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(GoldenThingAdminClient const& a, GoldenThingAdminClient const& b) {
     return a.connection_ == b.connection_;
   }

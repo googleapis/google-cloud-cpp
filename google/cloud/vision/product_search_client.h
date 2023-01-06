@@ -82,7 +82,7 @@ class ProductSearchClient {
   ~ProductSearchClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ProductSearchClient(ProductSearchClient const&) = default;
   ProductSearchClient& operator=(ProductSearchClient const&) = default;
   ProductSearchClient(ProductSearchClient&&) = default;
@@ -90,7 +90,7 @@ class ProductSearchClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ProductSearchClient const& a,
                          ProductSearchClient const& b) {
     return a.connection_ == b.connection_;

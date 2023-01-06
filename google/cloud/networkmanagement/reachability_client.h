@@ -75,7 +75,7 @@ class ReachabilityServiceClient {
   ~ReachabilityServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ReachabilityServiceClient(ReachabilityServiceClient const&) = default;
   ReachabilityServiceClient& operator=(ReachabilityServiceClient const&) =
       default;
@@ -84,7 +84,7 @@ class ReachabilityServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ReachabilityServiceClient const& a,
                          ReachabilityServiceClient const& b) {
     return a.connection_ == b.connection_;

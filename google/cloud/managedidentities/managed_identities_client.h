@@ -100,7 +100,7 @@ class ManagedIdentitiesServiceClient {
   ~ManagedIdentitiesServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ManagedIdentitiesServiceClient(ManagedIdentitiesServiceClient const&) =
       default;
   ManagedIdentitiesServiceClient& operator=(
@@ -111,7 +111,7 @@ class ManagedIdentitiesServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ManagedIdentitiesServiceClient const& a,
                          ManagedIdentitiesServiceClient const& b) {
     return a.connection_ == b.connection_;

@@ -66,7 +66,7 @@ class AgentEndpointServiceClient {
   ~AgentEndpointServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AgentEndpointServiceClient(AgentEndpointServiceClient const&) = default;
   AgentEndpointServiceClient& operator=(AgentEndpointServiceClient const&) =
       default;
@@ -75,7 +75,7 @@ class AgentEndpointServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AgentEndpointServiceClient const& a,
                          AgentEndpointServiceClient const& b) {
     return a.connection_ == b.connection_;

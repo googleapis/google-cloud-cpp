@@ -71,7 +71,7 @@ class BigtableInstanceAdminClient {
   ~BigtableInstanceAdminClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   BigtableInstanceAdminClient(BigtableInstanceAdminClient const&) = default;
   BigtableInstanceAdminClient& operator=(BigtableInstanceAdminClient const&) =
       default;
@@ -81,7 +81,7 @@ class BigtableInstanceAdminClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(BigtableInstanceAdminClient const& a,
                          BigtableInstanceAdminClient const& b) {
     return a.connection_ == b.connection_;

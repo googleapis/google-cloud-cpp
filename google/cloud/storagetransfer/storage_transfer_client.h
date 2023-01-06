@@ -69,7 +69,7 @@ class StorageTransferServiceClient {
   ~StorageTransferServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   StorageTransferServiceClient(StorageTransferServiceClient const&) = default;
   StorageTransferServiceClient& operator=(StorageTransferServiceClient const&) =
       default;
@@ -79,7 +79,7 @@ class StorageTransferServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(StorageTransferServiceClient const& a,
                          StorageTransferServiceClient const& b) {
     return a.connection_ == b.connection_;

@@ -65,7 +65,7 @@ class TenantServiceClient {
   ~TenantServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   TenantServiceClient(TenantServiceClient const&) = default;
   TenantServiceClient& operator=(TenantServiceClient const&) = default;
   TenantServiceClient(TenantServiceClient&&) = default;
@@ -73,7 +73,7 @@ class TenantServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(TenantServiceClient const& a,
                          TenantServiceClient const& b) {
     return a.connection_ == b.connection_;

@@ -69,7 +69,7 @@ class PolicyTagManagerSerializationClient {
   ~PolicyTagManagerSerializationClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   PolicyTagManagerSerializationClient(
       PolicyTagManagerSerializationClient const&) = default;
   PolicyTagManagerSerializationClient& operator=(
@@ -81,7 +81,7 @@ class PolicyTagManagerSerializationClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(PolicyTagManagerSerializationClient const& a,
                          PolicyTagManagerSerializationClient const& b) {
     return a.connection_ == b.connection_;

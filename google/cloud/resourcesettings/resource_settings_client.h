@@ -77,7 +77,7 @@ class ResourceSettingsServiceClient {
   ~ResourceSettingsServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ResourceSettingsServiceClient(ResourceSettingsServiceClient const&) = default;
   ResourceSettingsServiceClient& operator=(
       ResourceSettingsServiceClient const&) = default;
@@ -87,7 +87,7 @@ class ResourceSettingsServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ResourceSettingsServiceClient const& a,
                          ResourceSettingsServiceClient const& b) {
     return a.connection_ == b.connection_;

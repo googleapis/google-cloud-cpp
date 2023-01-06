@@ -67,7 +67,7 @@ class AssetServiceClient {
   ~AssetServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AssetServiceClient(AssetServiceClient const&) = default;
   AssetServiceClient& operator=(AssetServiceClient const&) = default;
   AssetServiceClient(AssetServiceClient&&) = default;
@@ -75,7 +75,7 @@ class AssetServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AssetServiceClient const& a,
                          AssetServiceClient const& b) {
     return a.connection_ == b.connection_;

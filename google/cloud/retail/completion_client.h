@@ -70,7 +70,7 @@ class CompletionServiceClient {
   ~CompletionServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   CompletionServiceClient(CompletionServiceClient const&) = default;
   CompletionServiceClient& operator=(CompletionServiceClient const&) = default;
   CompletionServiceClient(CompletionServiceClient&&) = default;
@@ -78,7 +78,7 @@ class CompletionServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(CompletionServiceClient const& a,
                          CompletionServiceClient const& b) {
     return a.connection_ == b.connection_;

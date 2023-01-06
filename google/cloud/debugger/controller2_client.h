@@ -84,7 +84,7 @@ class Controller2Client {
   ~Controller2Client();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   Controller2Client(Controller2Client const&) = default;
   Controller2Client& operator=(Controller2Client const&) = default;
   Controller2Client(Controller2Client&&) = default;
@@ -92,7 +92,7 @@ class Controller2Client {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(Controller2Client const& a,
                          Controller2Client const& b) {
     return a.connection_ == b.connection_;

@@ -66,7 +66,7 @@ class ValidationHelperV1Client {
   ~ValidationHelperV1Client();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ValidationHelperV1Client(ValidationHelperV1Client const&) = default;
   ValidationHelperV1Client& operator=(ValidationHelperV1Client const&) =
       default;
@@ -75,7 +75,7 @@ class ValidationHelperV1Client {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ValidationHelperV1Client const& a,
                          ValidationHelperV1Client const& b) {
     return a.connection_ == b.connection_;

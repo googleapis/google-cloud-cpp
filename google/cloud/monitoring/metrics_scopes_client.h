@@ -67,7 +67,7 @@ class MetricsScopesClient {
   ~MetricsScopesClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   MetricsScopesClient(MetricsScopesClient const&) = default;
   MetricsScopesClient& operator=(MetricsScopesClient const&) = default;
   MetricsScopesClient(MetricsScopesClient&&) = default;
@@ -75,7 +75,7 @@ class MetricsScopesClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(MetricsScopesClient const& a,
                          MetricsScopesClient const& b) {
     return a.connection_ == b.connection_;

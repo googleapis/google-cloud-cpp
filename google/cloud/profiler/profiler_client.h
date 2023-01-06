@@ -71,7 +71,7 @@ class ProfilerServiceClient {
   ~ProfilerServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ProfilerServiceClient(ProfilerServiceClient const&) = default;
   ProfilerServiceClient& operator=(ProfilerServiceClient const&) = default;
   ProfilerServiceClient(ProfilerServiceClient&&) = default;
@@ -79,7 +79,7 @@ class ProfilerServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ProfilerServiceClient const& a,
                          ProfilerServiceClient const& b) {
     return a.connection_ == b.connection_;

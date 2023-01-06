@@ -68,7 +68,7 @@ class ContactCenterInsightsClient {
   ~ContactCenterInsightsClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ContactCenterInsightsClient(ContactCenterInsightsClient const&) = default;
   ContactCenterInsightsClient& operator=(ContactCenterInsightsClient const&) =
       default;
@@ -78,7 +78,7 @@ class ContactCenterInsightsClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ContactCenterInsightsClient const& a,
                          ContactCenterInsightsClient const& b) {
     return a.connection_ == b.connection_;

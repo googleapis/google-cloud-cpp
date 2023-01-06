@@ -82,7 +82,7 @@ class AppConnectionsServiceClient {
   ~AppConnectionsServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AppConnectionsServiceClient(AppConnectionsServiceClient const&) = default;
   AppConnectionsServiceClient& operator=(AppConnectionsServiceClient const&) =
       default;
@@ -92,7 +92,7 @@ class AppConnectionsServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AppConnectionsServiceClient const& a,
                          AppConnectionsServiceClient const& b) {
     return a.connection_ == b.connection_;

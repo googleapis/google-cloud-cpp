@@ -70,7 +70,7 @@ class DocumentProcessorServiceClient {
   ~DocumentProcessorServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   DocumentProcessorServiceClient(DocumentProcessorServiceClient const&) =
       default;
   DocumentProcessorServiceClient& operator=(
@@ -81,7 +81,7 @@ class DocumentProcessorServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(DocumentProcessorServiceClient const& a,
                          DocumentProcessorServiceClient const& b) {
     return a.connection_ == b.connection_;

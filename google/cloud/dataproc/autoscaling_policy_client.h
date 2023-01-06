@@ -68,7 +68,7 @@ class AutoscalingPolicyServiceClient {
   ~AutoscalingPolicyServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   AutoscalingPolicyServiceClient(AutoscalingPolicyServiceClient const&) =
       default;
   AutoscalingPolicyServiceClient& operator=(
@@ -79,7 +79,7 @@ class AutoscalingPolicyServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(AutoscalingPolicyServiceClient const& a,
                          AutoscalingPolicyServiceClient const& b) {
     return a.connection_ == b.connection_;

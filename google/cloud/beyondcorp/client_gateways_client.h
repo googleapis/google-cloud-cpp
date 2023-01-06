@@ -78,7 +78,7 @@ class ClientGatewaysServiceClient {
   ~ClientGatewaysServiceClient();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   ClientGatewaysServiceClient(ClientGatewaysServiceClient const&) = default;
   ClientGatewaysServiceClient& operator=(ClientGatewaysServiceClient const&) =
       default;
@@ -88,7 +88,7 @@ class ClientGatewaysServiceClient {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==(ClientGatewaysServiceClient const& a,
                          ClientGatewaysServiceClient const& b) {
     return a.connection_ == b.connection_;
