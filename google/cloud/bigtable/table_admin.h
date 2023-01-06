@@ -231,7 +231,7 @@ class TableAdmin {
     return !(a == b);
   }
 
-  //@{
+  ///@{
   /// @name Convenience shorthands for the schema views.
   using TableView = ::google::bigtable::admin::v2::Table::View;
   /// Only populate 'name' and fields related to the table's encryption state.
@@ -253,7 +253,7 @@ class TableAdmin {
   /// Use the default view as defined for each function.
   static auto constexpr VIEW_UNSPECIFIED =  // NOLINT(readability-identifier-naming)
       google::bigtable::admin::v2::Table::VIEW_UNSPECIFIED;
-  //@}
+  ///@}
 
   std::string const& project() const { return project_id_; }
   std::string const& instance_id() const { return instance_id_; }
@@ -1080,7 +1080,7 @@ class TableAdmin {
                 retry_prototype_, backoff_prototype_, polling_prototype_),
             connection_->options())) {}
 
-  //@{
+  ///@{
   /// @name Helper functions to implement constructors with changed policies.
   void ChangePolicy(RPCRetryPolicy const& policy) {
     retry_prototype_ = policy.clone();
@@ -1100,7 +1100,7 @@ class TableAdmin {
     ChangePolicies(std::forward<Policies>(policies)...);
   }
   void ChangePolicies() {}
-  //@}
+  ///@}
 
   /// Compute the fully qualified instance name.
   std::string InstanceName() const;
@@ -1119,13 +1119,13 @@ class TableAdmin {
   std::string project_id_;
   std::string instance_id_;
   std::string instance_name_;
-  //@{
+  ///@{
   /// These prototypes are only used as temporary storage during construction of
   /// the class, where they are consolidated as common policies in `options_`.
   std::shared_ptr<RPCRetryPolicy> retry_prototype_;
   std::shared_ptr<RPCBackoffPolicy> backoff_prototype_;
   std::shared_ptr<PollingPolicy> polling_prototype_;
-  //}
+  ///@}
   Options options_;
 };
 

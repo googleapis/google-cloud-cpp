@@ -1046,7 +1046,7 @@ class Table {
     return idempotent_mutation_policy_->clone();
   }
 
-  //@{
+  ///@{
   /// @name Helper functions to implement constructors with changed policies.
   void ChangePolicy(RPCRetryPolicy const& policy) {
     rpc_retry_policy_prototype_ = policy.clone();
@@ -1066,7 +1066,7 @@ class Table {
     ChangePolicies(std::forward<Policies>(policies)...);
   }
   void ChangePolicies() {}
-  //@}
+  ///@}
 
   friend class MutationBatcher;
   std::shared_ptr<DataClient> client_;

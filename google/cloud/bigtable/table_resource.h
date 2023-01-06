@@ -72,10 +72,10 @@ class TableResource {
   std::string FullName() const;
 
   /// @name Equality operators
-  //@{
+  ///@{
   friend bool operator==(TableResource const& a, TableResource const& b);
   friend bool operator!=(TableResource const& a, TableResource const& b);
-  //@}
+  ///@}
 
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream&, TableResource const&);

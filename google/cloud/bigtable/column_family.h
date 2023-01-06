@@ -142,13 +142,13 @@ class GcRule {
     return std::move(gc_rule_);
   }
 
-  //@{
+  ///@{
   /// @name Use default constructors and assignments.
   GcRule(GcRule&&) = default;
   GcRule& operator=(GcRule&&) = default;
   GcRule(GcRule const&) = default;
   GcRule& operator=(GcRule const&) = default;
-  //@}
+  ///@}
 
   friend bool operator==(GcRule const& a, GcRule const& b) noexcept {
     return google::protobuf::util::MessageDifferencer::Equivalent(a.gc_rule_,
@@ -214,14 +214,14 @@ class ColumnFamilyModification {
     return std::move(mod_);
   }
 
-  //@{
+  ///@{
   /// @name Use default constructors and assignments.
   ColumnFamilyModification(ColumnFamilyModification&&) = default;
   ColumnFamilyModification& operator=(ColumnFamilyModification&&) = default;
   ColumnFamilyModification(ColumnFamilyModification const&) = default;
   ColumnFamilyModification& operator=(ColumnFamilyModification const&) =
       default;
-  //@}
+  ///@}
 
   friend bool operator==(ColumnFamilyModification const& a,
                          ColumnFamilyModification const& b) noexcept {

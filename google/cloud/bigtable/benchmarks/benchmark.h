@@ -102,7 +102,7 @@ class Benchmark {
                       std::string const& measurement,
                       BenchmarkResult& result) const;
 
-  //@{
+  ///@{
   /**
    * @name Embedded server counter accessors.
    *
@@ -117,7 +117,7 @@ class Benchmark {
   int mutate_row_count() const;
   int mutate_rows_count() const;
   int read_rows_count() const;
-  //@}
+  ///@}
 
   void DisableBackgroundThreads(CompletionQueue& cq);
 

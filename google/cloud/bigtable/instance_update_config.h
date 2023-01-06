@@ -37,7 +37,7 @@ class InstanceUpdateConfig {
     proto_.mutable_instance()->Swap(&instance);
   }
 
-  //@{
+  ///@{
   /// @name Convenient shorthands for the instance types.
   using InstanceType = ::google::bigtable::admin::v2::Instance::Type;
   // NOLINTNEXTLINE(readability-identifier-naming)
@@ -49,9 +49,9 @@ class InstanceUpdateConfig {
   // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static InstanceType DEVELOPMENT =
       google::bigtable::admin::v2::Instance::DEVELOPMENT;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name Convenient shorthands for the instance state.
   using StateType = ::google::bigtable::admin::v2::Instance::State;
   // NOLINTNEXTLINE(readability-identifier-naming)
@@ -63,7 +63,7 @@ class InstanceUpdateConfig {
   // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static StateType CREATING =
       google::bigtable::admin::v2::Instance::CREATING;
-  //@}
+  ///@}
 
   InstanceUpdateConfig& set_type(InstanceType type) {
     proto_.mutable_instance()->set_type(std::move(type));

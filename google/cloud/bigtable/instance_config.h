@@ -37,7 +37,7 @@ class InstanceConfig {
       (*proto_.mutable_clusters())[kv.first] = std::move(kv.second).as_proto();
     }
   }
-  //@{
+  ///@{
   /// @name Convenient shorthands for the instance types.
   using InstanceType = ::google::bigtable::admin::v2::Instance::Type;
   // NOLINTNEXTLINE(readability-identifier-naming)
@@ -49,7 +49,7 @@ class InstanceConfig {
   // NOLINTNEXTLINE(readability-identifier-naming)
   constexpr static InstanceType DEVELOPMENT =
       google::bigtable::admin::v2::Instance::DEVELOPMENT;
-  //@}
+  ///@}
 
   InstanceConfig& set_type(InstanceType type) {
     proto_.mutable_instance()->set_type(type);

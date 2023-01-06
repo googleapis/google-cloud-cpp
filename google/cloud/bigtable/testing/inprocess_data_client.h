@@ -53,7 +53,7 @@ class InProcessDataClient : public bigtable::DataClient {
     return google::bigtable::v2::Bigtable::NewStub(Channel());
   }
 
-  //@{
+  ///@{
   /// @name the google.bigtable.v2.Bigtable operations.
   grpc::Status MutateRow(
       grpc::ClientContext* context,
@@ -132,7 +132,7 @@ class InProcessDataClient : public bigtable::DataClient {
       ::grpc::ClientContext* context,
       ::google::bigtable::v2::MutateRowsRequest const& request,
       ::grpc::CompletionQueue* cq) override;
-  //@}
+  ///@}
 
  private:
   google::cloud::BackgroundThreadsFactory BackgroundThreadsFactory() override {

@@ -87,7 +87,7 @@ class RowRange {
     return RightOpen(std::forward<T>(prefix), std::move(end));
   }
 
-  //@{
+  ///@{
   /// @name Less common, yet sometimes useful, ranges.
   /// Return a range representing the interval [@p begin, @p end).
   template <typename T, typename U>
@@ -132,7 +132,7 @@ class RowRange {
     }
     return result;
   }
-  //@}
+  ///@}
 
   /**
    * Return true if the range is empty.

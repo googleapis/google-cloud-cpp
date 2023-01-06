@@ -48,11 +48,11 @@ namespace internal {
 template <typename Interface>
 class CommonClient {
  public:
-  //@{
+  ///@{
   /// @name Type traits.
   using StubPtr = std::shared_ptr<typename Interface::StubInterface>;
   using ChannelPtr = std::shared_ptr<grpc::Channel>;
-  //@}
+  ///@}
 
   explicit CommonClient(Options opts)
       : opts_(std::move(opts)),

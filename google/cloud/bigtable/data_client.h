@@ -119,7 +119,7 @@ class DataClient {
   friend class bigtable_internal::LegacyAsyncRowReader;
   friend class internal::LoggingDataClient;
 
-  //@{
+  ///@{
   /// @name the `google.bigtable.v2.Bigtable` wrappers.
   virtual grpc::Status MutateRow(
       grpc::ClientContext* context,
@@ -193,7 +193,7 @@ class DataClient {
   PrepareAsyncMutateRows(grpc::ClientContext* context,
                          google::bigtable::v2::MutateRowsRequest const& request,
                          grpc::CompletionQueue* cq) = 0;
-  //@}
+  ///@}
 };
 
 /// Create a new data client configured via @p options.

@@ -26,7 +26,7 @@ namespace cloud {
 namespace bigtable {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-//@{
+///@{
 /**
  * @name Define functions to manipulate `std::string`.
  *
@@ -81,7 +81,7 @@ inline void AppendCellValue(std::string& value, std::string const& fragment) {
 inline void ReserveCellValue(std::string& value, std::size_t reserve) {
   value.reserve(reserve);
 }
-//@}
+///@}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

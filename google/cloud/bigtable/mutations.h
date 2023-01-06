@@ -122,7 +122,7 @@ Mutation SetCell(std::string family, ColumnType&& column, std::int64_t value) {
  */
 Mutation SetCell(Cell cell);
 
-//@{
+///@{
 /**
  * @name Create mutations to delete a range of cells from a column.
  *
@@ -182,7 +182,7 @@ Mutation DeleteFromColumn(std::string family, ColumnType&& column,
   return m;
 }
 
-//@{
+///@{
 /**
  * @name The following functions create a mutation that deletes all the
  * cells in the given column family and column, starting from and
@@ -225,7 +225,7 @@ Mutation DeleteFromColumnStartingFrom(
   return m;
 }
 
-//@{
+///@{
 /**
  * @name The following functions create a mutation that deletes all the
  * cells in the given column family and column, Delete up to @a timestamp_end,
@@ -277,7 +277,7 @@ Mutation DeleteFromColumn(std::string family, ColumnType&& column) {
   d.set_column_qualifier(std::forward<ColumnType>(column));
   return m;
 }
-//@}
+///@}
 
 /// Create a mutation to delete all the cells in a column family.
 Mutation DeleteFromFamily(std::string family);
@@ -424,11 +424,11 @@ class FailedMutation {
     return !(a == b);
   }
 
-  //@{
+  ///@{
   /// @name accessors
   google::cloud::Status const& status() const { return status_; }
   int original_index() const { return original_index_; }
-  //@}
+  ///@}
 
   friend class BulkMutation;
 
