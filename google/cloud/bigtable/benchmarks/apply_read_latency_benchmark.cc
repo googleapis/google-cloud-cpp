@@ -88,11 +88,11 @@ google::cloud::StatusOr<LatencyBenchmarkResult> RunBenchmark(
     bigtable::benchmarks::Benchmark const& benchmark,
     std::chrono::seconds test_duration);
 
-//@{
+///@{
 /// @name Test constants.  Defined as requirements in the original bug (#189).
 /// How many times does each thread report progress.
 constexpr int kBenchmarkProgressMarks = 4;
-//@}
+///@}
 
 }  // anonymous namespace
 

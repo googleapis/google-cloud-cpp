@@ -128,11 +128,11 @@ class AsyncBenchmark {
   std::chrono::steady_clock::time_point deadline_;
 };
 
-//@{
+///@{
 /// @name Test constants.  Defined as requirements in the original bug (#189).
 /// How many times does each thread report progress.
 constexpr int kBenchmarkProgressMarks = 4;
-//@}
+///@}
 
 }  // anonymous namespace
 

@@ -64,10 +64,10 @@ class InstanceResource {
   std::string FullName() const;
 
   /// @name Equality operators
-  //@{
+  ///@{
   friend bool operator==(InstanceResource const& a, InstanceResource const& b);
   friend bool operator!=(InstanceResource const& a, InstanceResource const& b);
-  //@}
+  ///@}
 
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream&, InstanceResource const&);

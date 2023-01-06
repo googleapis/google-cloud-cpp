@@ -689,7 +689,7 @@ class InstanceAdmin {
  private:
   friend class bigtable_internal::InstanceAdminTester;
 
-  //@{
+  ///@{
   /// @name Helper functions to implement constructors with changed policies.
   void ChangePolicy(RPCRetryPolicy const& policy) {
     retry_prototype_ = policy.clone();
@@ -709,18 +709,18 @@ class InstanceAdmin {
     ChangePolicies(std::forward<Policies>(policies)...);
   }
   void ChangePolicies() {}
-  //@}
+  ///@}
 
   std::shared_ptr<bigtable_admin::BigtableInstanceAdminConnection> connection_;
   std::string project_id_;
   std::string project_name_;
-  //@{
+  ///@{
   /// These prototypes are only used as temporary storage during construction of
   /// the class, where they are consolidated as common policies in `options_`.
   std::shared_ptr<RPCRetryPolicy> retry_prototype_;
   std::shared_ptr<RPCBackoffPolicy> backoff_prototype_;
   std::shared_ptr<PollingPolicy> polling_prototype_;
-  //}
+  ///}
   Options options_;
 };
 
