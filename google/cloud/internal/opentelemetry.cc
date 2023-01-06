@@ -15,6 +15,9 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/opentelemetry_options.h"
+#include "google/cloud/options.h"
+#include <opentelemetry/trace/provider.h>
+#include <opentelemetry/trace/span_startoptions.h>
 
 namespace google {
 namespace cloud {
@@ -23,6 +26,19 @@ namespace internal {
 
 bool TracingEnabled(Options const& options) {
   return options.get<OpenTelemetryTracingOption>();
+}
+
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer(
+    Options const&) {
+  auto provider = opentelemetry::trace::Provider::GetTracerProvider();
+  return provider->GetTracer("gcloud-cpp", version_string());
+}
+
+opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
+    opentelemetry::nostd::string_view name) {
+  opentelemetry::trace::StartSpanOptions options;
+  options.kind = opentelemetry::trace::SpanKind::kClient;
+  return GetTracer(CurrentOptions())->StartSpan(name, options);
 }
 
 }  // namespace internal
