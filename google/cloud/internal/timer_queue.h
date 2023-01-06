@@ -31,24 +31,24 @@ template <typename Clock>
 class TimerQueue {
  public:
   using TimePoint = typename Clock::time_point;
-  using FutureType = StatusOr<TimePoint>;
 
   TimerQueue() = default;
   TimerQueue(TimerQueue const&) = delete;
   TimerQueue& operator=(TimerQueue const&) = delete;
 
-  future<FutureType> Schedule(TimePoint tp) {
+  future<StatusOr<TimePoint>> Schedule(TimePoint tp) {
     auto p = PromiseType();
     auto f = p.get_future();
+    bool should_notify;
     {
       std::lock_guard<std::mutex> lk(mu_);
       if (shutdown_)
-        return make_ready_future(FutureType(
+        return make_ready_future(StatusOr<TimePoint>(
             Status(StatusCode::kCancelled, "Queue already shutdown.")));
-      (void)timers_.emplace(tp, std::move(p));
-      timer_scheduled_ = true;
+      auto iter = timers_.emplace(tp, std::move(p));
+      should_notify = iter == timers_.begin();
     }
-    cv_.notify_all();
+    if (should_notify) cv_.notify_all();
     return f;
   }
 
@@ -58,20 +58,22 @@ class TimerQueue {
     cv_.notify_all();
   }
 
-  // The fn parameter is executed after the timer has been expired and is
-  // intended for testing purposes only.
-  void Service(std::function<void(void)> const& fn = {}) {
+  // Threads monitoring the queue and expiring timers should call Service.
+  void Service() {
     while (true) {
       std::unique_lock<std::mutex> lk(mu_);
-      if (NextExpiration() > Clock::now()) {
-        cv_.wait_until(lk, NextExpiration(), [this] {
-          return shutdown_ || timer_scheduled_ ||
-                 NextExpiration() <= Clock::now();
-        });
-        timer_scheduled_ = false;
-      }
+      auto const until = NextExpiration(lk);
+      auto predicate = [this, until, &lk] {
+        auto const ne = NextExpiration(lk);
+        return shutdown_ || ne < until || HasExpiredTimers(lk, Clock::now());
+      };
+      // TODO(#10512): Only wake one thread to service the next timer instead
+      // of all of them.
+      cv_.wait_until(lk, until, predicate);
       if (shutdown_) return NotifyShutdown(std::move(lk));
-      ExpireTimers(std::move(lk), Clock::now(), fn);
+      if (HasExpiredTimers(lk, Clock::now())) {
+        ExpireTimers(std::move(lk), Clock::now());
+      }
     }
   }
 
@@ -79,22 +81,19 @@ class TimerQueue {
     std::multimap<TimePoint, PromiseType> timers;
     {
       std::lock_guard<std::mutex> lk(mu_);
-      timers = std::move(timers_);
+      std::swap(timers, timers_);
     }
-    for (auto& kv : timers) {
-      kv.second.set_value(Status(StatusCode::kCancelled, "Timer cancelled."));
+    for (auto& timer : timers) {
+      timer.second.set_value(
+          Status(StatusCode::kCancelled, "Timer cancelled."));
     }
-  }
-
-  // For testing purposes.
-  std::int64_t expired_timer_counter() const {
-    return expired_timer_counter_.load();
   }
 
  private:
-  void ExpireTimers(std::unique_lock<std::mutex> lk, TimePoint tp,
-                    std::function<void(void)> const& fn = {}) {
-    if (timers_.empty() || timers_.begin()->first > tp) return;
+  bool HasExpiredTimers(std::unique_lock<std::mutex> const&, TimePoint tp) {
+    return !timers_.empty() && timers_.begin()->first < tp;
+  }
+  void ExpireTimers(std::unique_lock<std::mutex> lk, TimePoint tp) {
     auto p = std::move(timers_.begin()->second);
     timers_.erase(timers_.begin());
     auto const has_expired_timers =
@@ -105,8 +104,6 @@ class TimerQueue {
     // expiring timers.
     if (has_expired_timers) cv_.notify_one();
     p.set_value(tp);
-    if (fn) fn();
-    ++expired_timer_counter_;
   }
 
   void NotifyShutdown(std::unique_lock<std::mutex> lk) {
@@ -118,7 +115,7 @@ class TimerQueue {
     }
   }
 
-  TimePoint NextExpiration() {
+  TimePoint NextExpiration(std::unique_lock<std::mutex> const&) {
     auto constexpr kMaxSleep = std::chrono::seconds(3600);
     if (timers_.empty()) return Clock::now() + kMaxSleep;
     return timers_.begin()->first;
@@ -127,10 +124,8 @@ class TimerQueue {
   using PromiseType = promise<StatusOr<TimePoint>>;
   std::mutex mu_;
   std::condition_variable cv_;
-  std::atomic<std::int64_t> expired_timer_counter_{0};
   std::multimap<TimePoint, PromiseType> timers_;
   bool shutdown_ = false;
-  bool timer_scheduled_ = false;
 };
 
 }  // namespace internal

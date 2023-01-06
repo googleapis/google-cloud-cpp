@@ -27,7 +27,6 @@ namespace {
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using testing::Each;
-using ::testing::Eq;
 
 TEST(TimerQueueTest, ScheduleSingleRunner) {
   TimerQueue<std::chrono::system_clock> tq;
@@ -41,17 +40,16 @@ TEST(TimerQueueTest, ScheduleSingleRunner) {
 
   EXPECT_THAT(expire_time, IsOk());
   EXPECT_GE(*expire_time - now, duration);
-  EXPECT_THAT(tq.expired_timer_counter(), Eq(1));
 }
 
-TEST(TimerQueueTest, ScheduleAndCancelAll) {
+TEST(TimerQueueTest, ScheduleAndCancelAllSingleRunner) {
   TimerQueue<std::chrono::system_clock> tq;
-  std::thread t([&tq] { tq.Service(); });
   auto const duration = std::chrono::seconds(60);
   auto now = std::chrono::system_clock::now();
   auto f = tq.Schedule(now + duration);
   auto f2 = tq.Schedule(now + duration);
   tq.CancelAll();
+  std::thread t([&tq] { tq.Service(); });
   tq.Shutdown();
   t.join();
 
@@ -59,54 +57,62 @@ TEST(TimerQueueTest, ScheduleAndCancelAll) {
   EXPECT_THAT(expire_time, StatusIs(StatusCode::kCancelled));
   auto expire_time2 = f2.get();
   EXPECT_THAT(expire_time2, StatusIs(StatusCode::kCancelled));
-  EXPECT_THAT(tq.expired_timer_counter(), Eq(0));
+}
+
+TEST(TimerQueueTest, ScheduleEarlierTimerSingleRunner) {
+  TimerQueue<std::chrono::system_clock> tq;
+  std::thread t([&tq] { tq.Service(); });
+  auto const duration = std::chrono::milliseconds(50);
+  auto now = std::chrono::system_clock::now();
+  auto later = tq.Schedule(now + 2 * duration);
+  auto earlier = tq.Schedule(now + duration);
+  auto earlier_expire_time = earlier
+                                 .then([&](auto f) {
+                                   EXPECT_FALSE(later.is_ready());
+                                   return f.get();
+                                 })
+                                 .get();
+  auto later_expire_time = later.get();
+  tq.Shutdown();
+  t.join();
+
+  ASSERT_THAT(earlier_expire_time, IsOk());
+  ASSERT_THAT(later_expire_time, IsOk());
+  EXPECT_GT(*later_expire_time, *earlier_expire_time);
 }
 
 TEST(TimerQueueTest, ScheduleMultipleRunners) {
   TimerQueue<std::chrono::system_clock> tq;
-  auto constexpr kRunners = 8;
-  std::vector<std::thread> runners;
-  // When a runner expires a timer, we want to add it to this set.
-  std::mutex mu;
-  std::set<std::thread::id> expiring_runner_ids;  // GUARDED_BY mu
-  for (auto i = 0; i != kRunners; ++i) {
-    runners.emplace_back([&] {
-      tq.Service([&] {
-        std::lock_guard<std::mutex> lk(mu);
-        expiring_runner_ids.insert(std::this_thread::get_id());
-      });
+  // Schedule the timers first, so they are all ready to expire
+  auto constexpr kTimers = 100;
+  std::vector<future<std::thread::id>> futures(kTimers);
+  auto const now = std::chrono::system_clock::now();
+  std::generate(futures.begin(), futures.end(), [&, now] {
+    return tq.Schedule(now + std::chrono::seconds(1)).then([](auto) {
+      return std::this_thread::get_id();
     });
-  }
+  });
 
-  auto const duration = std::chrono::seconds(1);
-  auto now = std::chrono::system_clock::now();
-  std::vector<future<StatusOr<std::chrono::system_clock::time_point>>> futures;
-  futures.reserve(100);
-  for (int i = 0; i != 100; ++i) {
-    futures.push_back(tq.Schedule(now + duration));
-  }
-  std::vector<StatusOr<std::chrono::system_clock::time_point>> timepoints;
-  timepoints.reserve(100);
-  for (auto& f : futures) {
-    timepoints.push_back(f.get());
-  }
+  auto constexpr kRunners = 16;
+  std::vector<std::thread> runners(kRunners);
+  std::generate(runners.begin(), runners.end(),
+                [&] { return std::thread([&] { tq.Service(); }); });
+
+  std::set<std::thread::id> ids;
+  std::transform(futures.begin(), futures.end(),
+                 std::inserter(ids, ids.begin()),
+                 [&](auto& f) { return f.get(); });
+
   tq.Shutdown();
-  for (auto& t : runners) t.join();
+  for (auto& t : runners)
+    t.join();  // BTW, there is a joinable thread class in
+               // testing_util/scoped_thread.h
 
-  EXPECT_THAT(timepoints, Each(IsOk()));
-  // Verify expiring timers are not handled serially by a single runner.
-  EXPECT_GT(expiring_runner_ids.size(), 1);
-  EXPECT_THAT(tq.expired_timer_counter(), Eq(100));
+  EXPECT_GT(ids.size(), 1);
 }
 
 TEST(TimerQueueTest, ScheduleAndCancelAllMultipleRunners) {
   TimerQueue<std::chrono::system_clock> tq;
-  auto constexpr kRunners = 8;
-  std::vector<std::thread> runners;
-  for (auto i = 0; i != kRunners; ++i) {
-    runners.emplace_back([&] { tq.Service(); });
-  }
-
   auto const duration = std::chrono::seconds(1);
   auto now = std::chrono::system_clock::now();
   std::vector<future<StatusOr<std::chrono::system_clock::time_point>>> futures;
@@ -115,6 +121,11 @@ TEST(TimerQueueTest, ScheduleAndCancelAllMultipleRunners) {
     futures.push_back(tq.Schedule(now + duration));
   }
   tq.CancelAll();
+  auto constexpr kRunners = 8;
+  std::vector<std::thread> runners;
+  for (auto i = 0; i != kRunners; ++i) {
+    runners.emplace_back([&] { tq.Service(); });
+  }
   std::vector<StatusOr<std::chrono::system_clock::time_point>> timepoints;
   timepoints.reserve(100);
   for (auto& f : futures) {
@@ -124,7 +135,32 @@ TEST(TimerQueueTest, ScheduleAndCancelAllMultipleRunners) {
   for (auto& t : runners) t.join();
 
   EXPECT_THAT(timepoints, Each(StatusIs(StatusCode::kCancelled)));
-  EXPECT_THAT(tq.expired_timer_counter(), Eq(0));
+}
+
+TEST(TimerQueueTest, ScheduleEarlierTimerMultipleRunner) {
+  TimerQueue<std::chrono::system_clock> tq;
+  auto constexpr kRunners = 8;
+  std::vector<std::thread> runners;
+  for (auto i = 0; i != kRunners; ++i) {
+    runners.emplace_back([&] { tq.Service(); });
+  }
+  auto const duration = std::chrono::milliseconds(50);
+  auto now = std::chrono::system_clock::now();
+  auto later = tq.Schedule(now + 2 * duration);
+  auto earlier = tq.Schedule(now + duration);
+  auto earlier_expire_time = earlier
+                                 .then([&](auto f) {
+                                   EXPECT_FALSE(later.is_ready());
+                                   return f.get();
+                                 })
+                                 .get();
+  auto later_expire_time = later.get();
+  tq.Shutdown();
+  for (auto& t : runners) t.join();
+
+  ASSERT_THAT(earlier_expire_time, IsOk());
+  ASSERT_THAT(later_expire_time, IsOk());
+  EXPECT_GT(*later_expire_time, *earlier_expire_time);
 }
 
 }  // namespace
