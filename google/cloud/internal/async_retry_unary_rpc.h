@@ -55,12 +55,12 @@ template <typename RPCBackoffPolicy, typename RPCRetryPolicy,
           typename AsyncCallType, typename RequestType>
 class RetryAsyncUnaryRpc {
  public:
-  //@{
+  ///@{
   /// @name Convenience aliases for the RPC request and response types.
   using Request = RequestType;
   using Response =
       typename AsyncCallResponseType<AsyncCallType, RequestType>::type;
-  //@}
+  ///@}
 
   /**
    * Start the asynchronous retry loop.

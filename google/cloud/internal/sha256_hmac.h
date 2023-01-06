@@ -35,7 +35,7 @@ namespace internal {
 Sha256Type Sha256Hmac(std::string const& key, absl::Span<char const> data);
 Sha256Type Sha256Hmac(std::string const& key,
                       absl::Span<std::uint8_t const> data);
-//@}
+///@}
 
 ///@{
 /**

@@ -25,7 +25,7 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
-//@{
+///@{
 /**
  * @name Delegate exception raising to out of line functions.
  *
@@ -51,7 +51,7 @@ namespace internal {
 
 [[noreturn]] void ThrowLogicError(char const* msg);
 [[noreturn]] void ThrowLogicError(std::string const& msg);
-//@}
+///@}
 
 /// Throw an exception wrapping @p status.
 [[noreturn]] void ThrowStatus(Status status);

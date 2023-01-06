@@ -33,7 +33,7 @@ class RetryPolicy {
  public:
   virtual ~RetryPolicy() = default;
 
-  //@{
+  ///@{
   /**
    * @name Control retry loop duration.
    *
@@ -63,7 +63,7 @@ class RetryPolicy {
   virtual bool OnFailure(Status const&) = 0;
   virtual bool IsExhausted() const = 0;
   virtual bool IsPermanentFailure(Status const&) const = 0;
-  //@}
+  ///@}
 };
 
 /**
