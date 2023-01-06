@@ -37,8 +37,8 @@ add_library(
     mock_backoff_policy.h
     mock_fake_clock.cc
     mock_fake_clock.h
-    opentelemetry.cc
-    opentelemetry.h
+    opentelemetry_matchers.cc
+    opentelemetry_matchers.h
     scoped_environment.cc
     scoped_environment.h
     scoped_log.cc

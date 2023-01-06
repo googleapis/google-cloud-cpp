@@ -12,21 +12,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_OPENTELEMETRY_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_OPENTELEMETRY_H
+#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_OPENTELEMETRY_MATCHERS_H
+#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_OPENTELEMETRY_MATCHERS_H
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/exporters/memory/in_memory_span_exporter.h>
-#include <opentelemetry/sdk/instrumentationscope/instrumentation_scope.h>
-#include <opentelemetry/sdk/trace/simple_processor.h>
 #include <opentelemetry/sdk/trace/span_data.h>
-#include <opentelemetry/sdk/trace/tracer.h>
-#include <opentelemetry/sdk/trace/tracer_provider_factory.h>
-#include <opentelemetry/trace/default_span.h>
-#include <opentelemetry/trace/provider.h>
-#include <opentelemetry/version.h>
+#include <memory>
+#include <string>
 
 namespace google {
 namespace cloud {
@@ -41,13 +36,17 @@ using SpanDataPtr = std::unique_ptr<opentelemetry::sdk::trace::SpanData>;
 
 ::testing::Matcher<SpanDataPtr> SpanNamed(std::string const& name);
 
-// A test fixture that provides access to created spans.
-class OpenTelemetryTest : public ::testing::Test {
- protected:
-  OpenTelemetryTest();
-
-  std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData> span_data_;
-};
+/**
+ * Provides access to created spans.
+ *
+ * Calling this method will install an in-memory trace exporter. It returns a
+ * type that provides access to captured spans.
+ *
+ * To extract the spans, call `InMemorySpanData::GetSpans()`. Note that each
+ * call to `GetSpans()` will clear the previously collected spans.
+ */
+std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
+InstallSpanCatcher();
 
 }  // namespace testing_util
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
@@ -55,4 +54,4 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace google
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_OPENTELEMETRY_H
+#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_TESTING_UTIL_OPENTELEMETRY_MATCHERS_H
