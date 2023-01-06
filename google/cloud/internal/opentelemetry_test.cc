@@ -15,7 +15,7 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/opentelemetry_options.h"
-#include "google/cloud/testing_util/opentelemetry.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/trace/default_span.h>
 #include <opentelemetry/version.h>
@@ -26,7 +26,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
 
-using ::google::cloud::testing_util::OpenTelemetryTest;
+using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
@@ -52,18 +52,22 @@ TEST(OpenTelemetry, TracingEnabled) {
   EXPECT_TRUE(TracingEnabled(options));
 }
 
-TEST_F(OpenTelemetryTest, GetTracer) {
+TEST(OpenTelemetry, GetTracer) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto options = Options{};
   auto tracer = GetTracer(options);
 
   auto s1 = tracer->StartSpan("span");
   s1->End();
 
-  auto spans = span_data_->GetSpans();
+  auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, ElementsAre(SpanHasInstrumentationScope()));
 }
 
-TEST_F(OpenTelemetryTest, MakeSpan) {
+TEST(OpenTelemetry, MakeSpan) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto options = Options{};
   OptionsSpan current(options);
 
@@ -72,7 +76,7 @@ TEST_F(OpenTelemetryTest, MakeSpan) {
   auto s2 = MakeSpan("span2");
   s2->End();
 
-  auto spans = span_data_->GetSpans();
+  auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, Each(SpanHasInstrumentationScope()));
   EXPECT_THAT(spans, Each(SpanKindIsClient()));
   EXPECT_THAT(spans, ElementsAre(SpanNamed("span1"), SpanNamed("span2")));

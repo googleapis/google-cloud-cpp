@@ -13,8 +13,13 @@
 // limitations under the License.
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
-#include "google/cloud/testing_util/opentelemetry.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "absl/memory/memory.h"
+#include <opentelemetry/sdk/instrumentationscope/instrumentation_scope.h>
+#include <opentelemetry/sdk/trace/simple_processor.h>
+#include <opentelemetry/sdk/trace/tracer.h>
+#include <opentelemetry/sdk/trace/tracer_provider_factory.h>
+#include <opentelemetry/trace/provider.h>
 
 namespace google {
 namespace cloud {
@@ -46,11 +51,11 @@ Matcher<SpanDataPtr> SpanNamed(std::string const& name) {
   return Pointee(Property(&opentelemetry::sdk::trace::SpanData::GetName, name));
 }
 
-OpenTelemetryTest::OpenTelemetryTest() {
+std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
+InstallSpanCatcher() {
   auto exporter = absl::make_unique<
       opentelemetry::exporter::memory::InMemorySpanExporter>();
-  span_data_ = exporter->GetData();
-
+  auto span_data = exporter->GetData();
   auto processor =
       absl::make_unique<opentelemetry::sdk::trace::SimpleSpanProcessor>(
           std::move(exporter));
@@ -58,6 +63,7 @@ OpenTelemetryTest::OpenTelemetryTest() {
       opentelemetry::sdk::trace::TracerProviderFactory::Create(
           std::move(processor));
   opentelemetry::trace::Provider::SetTracerProvider(provider);
+  return span_data;
 }
 
 }  // namespace testing_util
