@@ -101,7 +101,7 @@ class $client_class_name$ {
   ~$client_class_name$();
 
   ///@{
-  // @name Copy and move support
+  /// @name Copy and move support
   $client_class_name$($client_class_name$ const&) = default;
   $client_class_name$& operator=($client_class_name$ const&) = default;
   $client_class_name$($client_class_name$&&) = default;
@@ -109,7 +109,7 @@ class $client_class_name$ {
   ///@}
 
   ///@{
-  // @name Equality
+  /// @name Equality
   friend bool operator==($client_class_name$ const& a, $client_class_name$ const& b) {
     return a.connection_ == b.connection_;
   }
