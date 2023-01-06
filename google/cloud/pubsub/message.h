@@ -77,7 +77,7 @@ using PubsubMessageDataType = std::decay<
  */
 class Message {
  public:
-  //@{
+  ///@{
   /// @name accessors
   PubsubMessageDataType const& data() const& { return proto_.data(); }
   PubsubMessageDataType&& data() && {
@@ -93,17 +93,17 @@ class Message {
     }
     return r;
   }
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name Copy and move
   Message(Message const&) = default;
   Message& operator=(Message const&) = default;
   Message(Message&&) = default;
   Message& operator=(Message&&) = default;
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /// @name Equality operators
   /// Compares two messages.
   friend bool operator==(Message const& a, Message const& b);
@@ -111,7 +111,7 @@ class Message {
   friend bool operator!=(Message const& a, Message const& b) {
     return !(a == b);
   }
-  //@}
+  ///@}
 
   /// Output in protobuf format, this is intended for debugging
   friend std::ostream& operator<<(std::ostream& os, Message const& rhs);

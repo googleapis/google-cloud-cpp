@@ -125,7 +125,7 @@ class PushConfigBuilder {
       google::pubsub::v1::PushConfig::OidcToken token) && {
     return std::move(set_authentication(std::move(token)));
   }
-  //@}
+  ///@}
 
  private:
   friend class SubscriptionBuilder;
