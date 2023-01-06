@@ -40,7 +40,13 @@ cc_library(
         "@com_google_absl//absl/debugging:failure_signal_handler",
         "@com_google_absl//absl/debugging:symbolize",
         "@com_google_googletest//:gtest_main",
-    ],
+    ] + select({
+        "//google/cloud:enable_opentelemetry_valid": [
+            "@io_opentelemetry_cpp//exporters/memory:in_memory_span_exporter",
+            "@io_opentelemetry_cpp//sdk/src/trace",
+        ],
+        "//conditions:default": [],
+    }),
 )
 
 cc_library(
