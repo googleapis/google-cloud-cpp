@@ -165,15 +165,15 @@ class StreamRange {
     reader_ = nullptr;
   }
 
-  //@{
-  // @name Move-only
+  ///@{
+  /// @name Move-only
   StreamRange(StreamRange const&) = delete;
   StreamRange& operator=(StreamRange const&) = delete;
   // NOLINTNEXTLINE(performance-noexcept-move-constructor)
   StreamRange(StreamRange&&) = default;
   // NOLINTNEXTLINE(performance-noexcept-move-constructor)
   StreamRange& operator=(StreamRange&&) = default;
-  //@}
+  ///@}
 
   iterator begin() { return iterator(this); }
   iterator end() { return iterator(); }

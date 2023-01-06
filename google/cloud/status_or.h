@@ -178,7 +178,7 @@ class StatusOr final {
   bool ok() const { return status_.ok(); }
   explicit operator bool() const { return status_.ok(); }
 
-  //@{
+  ///@{
   /**
    * @name Deference operators.
    *
@@ -195,9 +195,9 @@ class StatusOr final {
   T&& operator*() && { return *std::move(value_); }
 
   T const&& operator*() const&& { return *std::move(value_); }
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /**
    * @name Member access operators.
    *
@@ -210,9 +210,9 @@ class StatusOr final {
   T* operator->() & { return &*value_; }
 
   T const* operator->() const& { return &*value_; }
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /**
    * @name Value accessors.
    *
@@ -241,9 +241,9 @@ class StatusOr final {
     CheckHasValue();
     return std::move(**this);
   }
-  //@}
+  ///@}
 
-  //@{
+  ///@{
   /**
    * @name Status accessors.
    *
@@ -251,7 +251,7 @@ class StatusOr final {
    */
   Status const& status() const& { return status_; }
   Status&& status() && { return std::move(status_); }
-  //@}
+  ///@}
 
  private:
   static Status MakeDefaultStatus() {

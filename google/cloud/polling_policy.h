@@ -99,7 +99,6 @@ class GenericPollingPolicy : public PollingPolicy {
         retry_clone_(maybe_deref(retry_prototype_).clone()),
         backoff_clone_(maybe_deref(backoff_prototype_).clone()) {}
 
-  //@{
   std::unique_ptr<PollingPolicy> clone() const override {
     return std::unique_ptr<PollingPolicy>(
         new GenericPollingPolicy<Retry, Backoff>(retry_prototype_,
@@ -113,7 +112,6 @@ class GenericPollingPolicy : public PollingPolicy {
   std::chrono::milliseconds WaitPeriod() override {
     return backoff_clone_->OnCompletion();
   }
-  //@}
 
  private:
   template <typename T>

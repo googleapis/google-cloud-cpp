@@ -442,17 +442,16 @@ class Logger<false> {
     if (severity_ >= Severity::GCP_LS_FATAL) std::abort();
   }
 
-  //@{
+  ///@{
   /**
-   * @name Provide trivial implementations that meet the generic `Logger<bool>`
-   * interface.
+   * @name Trivial implementations that meet the generic Logger<bool> interface.
    */
   // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   bool enabled() const { return false; }
   void LogTo(LogSink&) {}
   // NOLINTNEXTLINE(readability-convert-member-functions-to-static)
   NullStream Stream() { return NullStream(); }
-  //@}
+  ///@}
 
  private:
   Severity severity_;

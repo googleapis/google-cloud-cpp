@@ -21,15 +21,12 @@
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-//@{
 /**
- * @name Control behaviour on unrecoverable errors.
+ * @defgroup terminate Control behavior on unrecoverable errors.
  *
- * The following APIs are google::cloud counterpart for
- * std::{set,get}_terminate functions. If exceptions are not enabled via
- * GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS, calling any function from throw_delegate.h
- * will result in calling the handler installed via this API. By default,
- * a call to std::abort() is used.
+ * If exceptions are not enabled via `GOOGLE_CLOUD_CPP_HAVE_EXCEPTIONS`, calling
+ * any function from throw_delegate.h will result in calling the handler
+ * installed via this API. By default, the library calls `std::abort()`.
  */
 
 /**
@@ -37,6 +34,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * It should handle the error, whose description are given in *msg* and should
  * never return.
+ *
+ * @ingroup terminate
  */
 using TerminateHandler = std::function<void(char const* msg)>;
 
@@ -47,6 +46,8 @@ using TerminateHandler = std::function<void(char const* msg)>;
  *        otherwise.
  *
  * @return Previously set handler.
+ *
+ * @ingroup terminate
  */
 TerminateHandler SetTerminateHandler(TerminateHandler f);
 
@@ -54,6 +55,8 @@ TerminateHandler SetTerminateHandler(TerminateHandler f);
  * Get the currently installed handler.
  *
  * @return The currently installed handler.
+ *
+ * @ingroup terminate
  */
 TerminateHandler GetTerminateHandler();
 
@@ -63,10 +66,10 @@ TerminateHandler GetTerminateHandler();
  * @param msg Details about the error.
  *
  * This function should never return.
+ *
+ * @ingroup terminate
  */
 [[noreturn]] void Terminate(char const* msg);
-
-//@}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

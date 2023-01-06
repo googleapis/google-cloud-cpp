@@ -43,12 +43,12 @@ class Project {
   explicit Project(std::string project_id);
 
   /// @name Copy and move
-  //@{
+  ///@{
   Project(Project const&) = default;
   Project& operator=(Project const&) = default;
   Project(Project&&) = default;
   Project& operator=(Project&&) = default;
-  //@}
+  ///@}
 
   /// Returns the Project ID
   std::string const& project_id() const { return project_id_; }
@@ -60,10 +60,10 @@ class Project {
   std::string FullName() const;
 
   /// @name Equality operators
-  //@{
+  ///@{
   friend bool operator==(Project const& a, Project const& b);
   friend bool operator!=(Project const& a, Project const& b);
-  //@}
+  ///@}
 
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream&, Project const&);

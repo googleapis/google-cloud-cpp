@@ -47,12 +47,12 @@ class KmsKeyName {
              std::string const& key_ring, std::string const& kms_key_name);
 
   /// @name Copy and move
-  //@{
+  ///@{
   KmsKeyName(KmsKeyName const&) = default;
   KmsKeyName& operator=(KmsKeyName const&) = default;
   KmsKeyName(KmsKeyName&&) = default;
   KmsKeyName& operator=(KmsKeyName&&) = default;
-  //@}
+  ///@}
 
   /**
    * Returns the fully qualified KMS Key name as a string of the form:
@@ -62,13 +62,13 @@ class KmsKeyName {
   std::string const& FullName() const { return full_name_; }
 
   /// @name Equality operators
-  //@{
+  ///@{
   friend bool operator==(KmsKeyName const& a, KmsKeyName const& b);
   friend bool operator!=(KmsKeyName const& a, KmsKeyName const& b) {
     return !(a == b);
   }
-  //@}
 
+  ///@}
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream&, KmsKeyName const&);
 
