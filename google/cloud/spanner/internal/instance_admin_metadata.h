@@ -34,11 +34,10 @@ class InstanceAdminMetadata : public InstanceAdminStub {
 
   ~InstanceAdminMetadata() override = default;
 
-  //@{
+  ///@{
   /**
    * @name Override the functions from `InstanceAdminStub`.
    */
-  ///
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       grpc::ClientContext&,
       google::spanner::admin::instance::v1::GetInstanceRequest const&) override;
@@ -95,7 +94,7 @@ class InstanceAdminMetadata : public InstanceAdminStub {
   future<Status> AsyncCancelOperation(
       CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::longrunning::CancelOperationRequest const&) override;
-  //@}
+  ///@}
 
  private:
   void SetMetadata(grpc::ClientContext& context,

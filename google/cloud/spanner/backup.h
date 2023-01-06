@@ -45,12 +45,12 @@ class Backup {
   Backup(Instance instance, std::string backup_id);
 
   /// @name Copy and move
-  //@{
+  ///@{
   Backup(Backup const&) = default;
   Backup& operator=(Backup const&) = default;
   Backup(Backup&&) = default;
   Backup& operator=(Backup&&) = default;
-  //@}
+  ///@}
 
   /// Returns the `Instance` containing this backup.
   Instance const& instance() const { return instance_; }
@@ -65,10 +65,10 @@ class Backup {
   std::string FullName() const;
 
   /// @name Equality operators
-  //@{
+  ///@{
   friend bool operator==(Backup const& a, Backup const& b);
   friend bool operator!=(Backup const& a, Backup const& b);
-  //@}
+  ///@}
 
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream&, Backup const&);
