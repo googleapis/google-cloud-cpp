@@ -124,6 +124,7 @@ filegroup(
     deps = [
         ":google_cloud_cpp_generator_golden",
         "//:common",
+        "//:mocks",
         "//google/cloud/testing_util:google_cloud_cpp_testing_grpc_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_private",
         "//google/cloud/testing_util:google_cloud_cpp_testing_rest_private",
