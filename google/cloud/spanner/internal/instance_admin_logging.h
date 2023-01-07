@@ -38,13 +38,12 @@ class InstanceAdminLogging : public InstanceAdminStub {
 
   ~InstanceAdminLogging() override = default;
 
-  //@{
+  ///@{
   /**
    * @name Override the functions from `InstanceAdminStub`.
    *
    * Run the logging loop (if appropriate) for the child InstanceAdminStub.
    */
-  ///
   StatusOr<google::spanner::admin::instance::v1::Instance> GetInstance(
       grpc::ClientContext&,
       google::spanner::admin::instance::v1::GetInstanceRequest const&) override;
@@ -101,7 +100,7 @@ class InstanceAdminLogging : public InstanceAdminStub {
   future<Status> AsyncCancelOperation(
       CompletionQueue&, std::unique_ptr<grpc::ClientContext>,
       google::longrunning::CancelOperationRequest const&) override;
-  //@}
+  ///@}
 
  private:
   std::shared_ptr<InstanceAdminStub> child_;

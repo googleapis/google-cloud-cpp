@@ -39,4 +39,4 @@ RawStringFormats:
   - 'proto'
   BasedOnStyle: Google
 
-CommentPragmas: '(@copydoc)'
+CommentPragmas: '(@copydoc|@copybrief|@see)'

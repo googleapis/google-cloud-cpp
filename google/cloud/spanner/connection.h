@@ -60,7 +60,7 @@ class Connection {
  public:
   virtual ~Connection() = default;
 
-  //@{
+  ///@{
   /**
    * @name Defines the arguments for each member function.
    *
@@ -126,7 +126,7 @@ class Connection {
   struct RollbackParams {
     Transaction transaction;
   };
-  //@}
+  ///@}
 
   /// Returns the options used by the Connection.
   virtual Options options() { return Options{}; }

@@ -57,12 +57,12 @@ class Instance {
   Instance(std::string project_id, std::string instance_id);
 
   /// @name Copy and move
-  //@{
+  ///@{
   Instance(Instance const&) = default;
   Instance& operator=(Instance const&) = default;
   Instance(Instance&&) = default;
   Instance& operator=(Instance&&) = default;
-  //@}
+  ///@}
 
   /// Returns the `Project` containing this instance.
   Project const& project() const { return project_; }
@@ -78,10 +78,10 @@ class Instance {
   std::string FullName() const;
 
   /// @name Equality operators
-  //@{
+  ///@{
   friend bool operator==(Instance const& a, Instance const& b);
   friend bool operator!=(Instance const& a, Instance const& b);
-  //@}
+  ///@}
 
   /// Output the `FullName()` format.
   friend std::ostream& operator<<(std::ostream&, Instance const&);
