@@ -489,7 +489,7 @@ class AttachedClustersClient {
   ///  Valid characters are `/[a-z][0-9]-/`. Cannot be longer than 63
   ///  characters. When generating an install manifest for importing an existing
   ///  Membership resource, the attached_cluster_id field must be the Membership
-  ///  id. Membership names are formatted as `resource name formatted as
+  ///  id. Membership names are formatted as
   ///  `projects/<project-id>/locations/<region>/memberships/<membership-id>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
