@@ -628,6 +628,9 @@ std::string FormatApiMethodSignatureParameters(
              " `<parent>/instanceConfigs/us-east1`,"},
             {" <parent>/instanceConfigs/nam3.",
              " `<parent>/instanceConfigs/nam3`."},
+            // Runaway escaping and just duplication in gkemulticloud proto
+            // file.
+            {" formatted as `resource name formatted as", " formatted as"},
         });
     absl::StrAppendFormat(&parameter_comments, "  /// @param %s %s\n",
                           FieldName(parameter_descriptor), std::move(comment));
