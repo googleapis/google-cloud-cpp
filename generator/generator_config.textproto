@@ -872,6 +872,31 @@ service {
   retryable_status_codes: ["kUnavailable"]
 }
 
+# GKE Multicloud
+service {
+  service_proto_path: "google/cloud/gkemulticloud/v1/attached_service.proto"
+  product_path: "google/cloud/gkemulticloud/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/gkemulticloud/v1/aws_service.proto"
+  product_path: "google/cloud/gkemulticloud/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
+service {
+  service_proto_path: "google/cloud/gkemulticloud/v1/azure_service.proto"
+  product_path: "google/cloud/gkemulticloud/v1"
+  initial_copyright_year: "2023"
+  retryable_status_codes: ["kUnavailable"]
+  endpoint_location_style: LOCATION_DEPENDENT
+}
+
 # IAM
 service {
   service_proto_path: "google/iam/credentials/v1/iamcredentials.proto"
