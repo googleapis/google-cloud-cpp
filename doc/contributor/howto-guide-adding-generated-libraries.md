@@ -253,6 +253,17 @@ Announce the new library in the CHANGELOG for the next release.
 ci/cloudbuild/build.sh -t checkers-pr
 ```
 
+## Add the API baseline
+
+For new GA libraries you need to create the API baseline.
+
+```
+ci/cloudbuild/build.sh -t check-api-pr
+git add ci/abi-dumps/google_cloud_cpp_${library}.expected.abi.dump.gz
+git commit -m"Add API baseline" ci/abi-dumps/google_cloud_cpp_${library}.expected.abi.dump.gz
+git restore ci/abi-dumps/
+```
+
 ## Verify everything compiles
 
 ```shell
