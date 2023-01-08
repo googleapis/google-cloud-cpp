@@ -1,6 +1,6 @@
 /*!
 
-@page storage-mocking Example: Mocking GCS C++ Client
+@page storage-mocking Writing Tests with a Mock Client
 
 ## Mocking GCS bucket read and write
 
