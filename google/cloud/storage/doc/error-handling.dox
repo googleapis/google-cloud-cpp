@@ -1,0 +1,58 @@
+/**
+
+@page storage-error Error Handling
+
+[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
+
+This library never throws exceptions to signal error. In general, the library
+returns a [`StatusOr<T>`][status-or-header]. Some functions return objects that
+already have an existing error handling mechanism. For example, `ReadObject()`
+returns a type derived from `std::istream` where the application can check the
+[state flags](https://en.cppreference.com/w/cpp/io/basic_ios/rdstate)
+to determine if there was an error. In these cases no `StatusOr` wrapper is
+used.
+
+@section storage-error-example Error Handling Example (without exceptions)
+
+Applications that do not use exceptions to signal errors should check if the
+`StatusOr<T>` contains a value before using it. If the `StatusOr<T>` does
+contain a value then the `StatusOr<T>` can be used as a smart pointer to `T`.
+That is, `operator->()` and `operator*()` work as you would expect. If the
+`StatusOr<T>` does not contain a value then the error details are available
+using the `.status()` member function (and trying to access the value produces
+undefined behavior).
+
+@code {.cpp}
+using gcs = ::google::cloud::storage;
+[](gcs::Client client) {
+  google::cloud::StatusOr<gcs::BucketMetadata> metadata =
+    client.GetBucketMetadata("my-bucket");
+
+  if (!metadata) {
+    std::cerr << "GetBucketMetadata: " << metadata.status() << "\n";
+    return;
+  }
+
+  // use `metadata` as a smart pointer to `BucketMetadata`
+  std::cout << "The metadata for bucket " << metadata->name()
+            << " is " << *metadata << "\n";
+}
+@endcode
+
+@section storage-error-example-ex Error Handling Example (with exceptions)
+
+Applications that use exceptions to signal errors can simply call `.value()` on
+the `StatusOr<T>` object. This will return a `T` if the `StatusOr<T>` object
+contains a value, and will otherwise throw an exception.
+
+@code {.cpp}
+using gcs = ::google::cloud::storage;
+[](gcs::Client client) {
+  gcs::BucketMetadata metadata = client.GetBucketMetadata(
+        "my-bucket").value();  // throws on error
+  std::cout << "The metadata for bucket " << metadata.name()
+            << " is " << metadata << "\n";
+}
+@endcode
+
+*/
