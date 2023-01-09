@@ -72,7 +72,7 @@ int main(int argc, char* argv[]) try {
 - Packaging maintainers or developers who prefer to install the library in a
   fixed directory (such as `/usr/local` or `/opt`) should consult the
   [packaging guide](/doc/packaging.md).
-- Developers that prefer using a package manager such as
+- Developers who prefer using a package manager such as
   [vcpkg](https://vcpkg.io), [Conda](https://conda.io),
   or [Conan](https://conan.io) should follow the instructions for their package
   manager.

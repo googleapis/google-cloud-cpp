@@ -74,7 +74,7 @@ class DataClient {
    *
    * @deprecated This member function is scheduled for deletion and `DataClient`
    *     will be marked as `final`. Do not extend this class. Application
-   *     developers that need to configure the gRPC Channel can pass any of the
+   *     developers who need to configure the gRPC Channel can pass any of the
    *     following options into `MakeDataClient(...)`:
    *       * `google::cloud::GrpcChannelArgumentsOption`
    *       * `google::cloud::GrpcChannelArgumentsNativeOption`
@@ -97,7 +97,7 @@ class DataClient {
    *
    * @deprecated This member function is scheduled for deletion and `DataClient`
    *     will be marked as `final`. Do not extend this class. Application
-   *     developers that need to configure the background threads can pass any
+   *     developers who need to configure the background threads can pass any
    *     of the following options into `MakeDataClient(...)`:
    *       * `google::cloud::GrpcBackgroundThreadPoolSizeOption`
    *       * `google::cloud::GrpcCompletionQueueOption`
