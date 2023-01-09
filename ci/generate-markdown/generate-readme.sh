@@ -28,7 +28,7 @@ file="README.md"
   echo '```cc'
   # Dumps the contents of quickstart.cc starting at the first #include, so we
   # skip the license header comment.
-  sed -n -e '/END .*quickstart/,$d' -e '/^#/,$p' "google/cloud/storage/quickstart/quickstart.cc"
+  sed -n -e '/END .*quickstart/,$d' -e '\:^//!:d' -e '/^#/,$p' "google/cloud/storage/quickstart/quickstart.cc"
   echo '```'
   sed -n '/<!-- inject-quickstart-end -->/,$p' "${file}"
 ) | sponge "${file}"
