@@ -14,15 +14,31 @@
 # limitations under the License.
 # ~~~
 
-# Find out the name of the subproject.
-get_filename_component(GOOGLE_CLOUD_CPP_SUBPROJECT
-                       "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
+find_package(Doxygen)
 
-if (${CMAKE_VERSION} VERSION_LESS "3.12")
-    # Old versions of CMake have really poor support for Doxygen generation.
-    message(STATUS "Doxygen generation only enabled for cmake 3.9 and higher")
-elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
-    find_package(Doxygen REQUIRED)
+function (google_cloud_cpp_doxygen_deploy_version VAR)
+    set(VERSION "${PROJECT_VERSION}")
+    if ("${GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS}")
+        # Match the version string used in publish-docs.sh
+        set(VERSION "HEAD")
+    endif ()
+    set(${VAR}
+        "${VERSION}"
+        PARENT_SCOPE)
+endfunction ()
+
+function (google_cloud_cpp_doxygen_targets_impl library)
+    if (NOT GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN OR NOT DOXYGEN_FOUND)
+        return()
+    endif ()
+    if (CMAKE_VERSION VERSION_LESS "3.12")
+        # Old versions of CMake have really poor support for Doxygen generation.
+        message(
+            STATUS "Doxygen generation only enabled for cmake 3.12 and higher")
+        return()
+    endif ()
+
+    cmake_parse_arguments(opt "RECURSIVE" "" "INPUTS;TAGFILES;DEPENDS" ${ARGN})
     set(DOXYGEN_FILE_PATTERNS "*.dox" "*.h")
     set(DOXYGEN_EXCLUDE_PATTERNS
         # We should skip internal directories to speed up the build. We do not
@@ -97,49 +113,71 @@ elseif (GOOGLE_CLOUD_CPP_GENERATE_DOXYGEN)
     set(DOXYGEN_REFERENCES_LINK_SOURCE NO)
     set(DOXYGEN_SOURCE_BROWSER YES)
     set(DOXYGEN_DISTRIBUTE_GROUP_DOC YES)
-    set(DOXYGEN_GENERATE_TAGFILE
-        "${CMAKE_CURRENT_BINARY_DIR}/${GOOGLE_CLOUD_CPP_SUBPROJECT}.tag")
+    set(DOXYGEN_GENERATE_TAGFILE "${CMAKE_CURRENT_BINARY_DIR}/${library}.tag")
     set(DOXYGEN_LAYOUT_FILE
         "${PROJECT_SOURCE_DIR}/ci/etc/doxygen/DoxygenLayout.xml")
-    set(GOOGLE_CLOUD_CPP_COMMON_TAG
-        "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag")
-    set(GOOGLE_CLOUD_CPP_DOXYGEN_VERSION "${PROJECT_VERSION}")
-    if ("${GOOGLE_CLOUD_CPP_USE_MASTER_FOR_REFDOC_LINKS}")
-        # Match the version string used in publish-docs.sh
-        set(GOOGLE_CLOUD_CPP_DOXYGEN_VERSION "HEAD")
-    endif ()
+    google_cloud_cpp_doxygen_deploy_version(VERSION)
     list(
         APPEND
         DOXYGEN_ALIASES
-        "googleapis_dev_link{2}=\"https://googleapis.dev/cpp/google-cloud-\\1/${GOOGLE_CLOUD_CPP_DOXYGEN_VERSION}/\\2\""
+        "googleapis_dev_link{2}=\"https://googleapis.dev/cpp/google-cloud-\\1/${VERSION}/\\2\""
     )
-    set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS "${CMAKE_CURRENT_SOURCE_DIR}")
-    if ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}")
-        # We cannot recurse from the google/cloud directory, because it will
-        # traverse all of the libraries. So we turn off recursion and manually
-        # provide the subdirectories to be traversed.
-        set(DOXYGEN_RECURSIVE NO)
-        list(APPEND GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS
-             "${CMAKE_CURRENT_SOURCE_DIR}/mocks"
-             "${CMAKE_CURRENT_SOURCE_DIR}/doc")
-    else ()
+    set(GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS ${_opt_INPUTS})
+    if (opt_RECURSIVE)
         set(DOXYGEN_RECURSIVE YES)
-        set(DOXYGEN_TAGFILES
-            "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/cpp/google-cloud-common/${GOOGLE_CLOUD_CPP_DOXYGEN_VERSION}/"
-        )
+    else ()
+        set(DOXYGEN_RECURSIVE NO)
     endif ()
+    set(DOXYGEN_TAGFILES ${opt_TAGFILES})
     doxygen_add_docs(
-        ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs "${GOOGLE_CLOUD_CPP_DOXYGEN_INPUTS}"
+        ${library}-docs "${opt_INPUTS}"
         WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-        COMMENT "Generate ${GOOGLE_CLOUD_CPP_SUBPROJECT} HTML documentation")
-    add_dependencies(doxygen-docs ${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs)
+        COMMENT "Generate ${library} HTML documentation")
+    add_dependencies(doxygen-docs ${library}-docs)
 
     # Extra dependencies needed by this subproject's docs target.
-    if (GOOGLE_CLOUD_CPP_DOXYGEN_DEPS)
-        add_dependencies(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs
-                         ${GOOGLE_CLOUD_CPP_DOXYGEN_DEPS})
+    if (opt_DEPENDS)
+        add_dependencies(${library}-docs ${opt_DEPENDS})
     endif ()
-    if (NOT ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}"))
-        add_dependencies(${GOOGLE_CLOUD_CPP_SUBPROJECT}-docs "cloud-docs")
-    endif ()
+endfunction ()
+
+function (google_cloud_cpp_doxygen_targets library)
+    google_cloud_cpp_doxygen_deploy_version(VERSION)
+    set(GOOGLE_CLOUD_CPP_COMMON_TAG
+        "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag")
+    cmake_parse_arguments(opt "" "" "INPUTS;TAGFILES;DEPS" ${ARGN})
+    google_cloud_cpp_doxygen_targets_impl(
+        "${library}"
+        RECURSIVE
+        INPUTS
+        "${CMAKE_CURRENT_SOURCE_DIR}"
+        DEPENDS
+        "cloud-docs"
+        ${GOOGLE_CLOUD_CPP_DOXYGEN_DEPS}
+        TAGFILES
+        "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/cpp/google-cloud-common/${VERSION}/"
+    )
+endfunction ()
+
+# TODO(#10519) - have each subproject call this directly.
+# ~~~
+# Find out the name of the subproject.
+# ~~~
+get_filename_component(GOOGLE_CLOUD_CPP_SUBPROJECT
+                       "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
+
+if ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}")
+    # We cannot recurse from the google/cloud directory, because it will
+    # traverse all of the libraries. So we turn off recursion and manually
+    # provide the subdirectories to be traversed.
+    google_cloud_cpp_doxygen_targets_impl(
+        "cloud"
+        INPUTS
+        "${CMAKE_CURRENT_SOURCE_DIR}"
+        "${CMAKE_CURRENT_SOURCE_DIR}/mocks"
+        "${CMAKE_CURRENT_SOURCE_DIR}/doc"
+        DEPENDS
+        ${GOOGLE_CLOUD_CPP_DOXYGEN_DEPS})
+else ()
+    google_cloud_cpp_doxygen_targets("${GOOGLE_CLOUD_CPP_SUBPROJECT}")
 endif ()

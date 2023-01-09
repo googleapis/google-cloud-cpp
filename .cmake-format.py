@@ -46,5 +46,13 @@ additional_commands = {
             "SOURCE_DIR": 1,
             "BINARY_DIR": 1,
         },
-    }
+    },
+    "google_cloud_cpp_doxygen_targets": {
+        "flags": ["RECURSIVE"],
+        "kwargs": {
+            "INPUTS": "+",
+            "TAGFILES": "+",
+            "DEPS": "+",
+        },
+    },
 }
