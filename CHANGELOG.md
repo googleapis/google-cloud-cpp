@@ -86,7 +86,7 @@ background threads. More details can be found in [#8800].
 On 2023-05-01 (or shortly after) we will remove `bigtable::RowReader`
 constructors which accept `DataClient` as an argument.
 
-Application developers that read rows by directly constructing a `RowReader`
+Application developers who read rows by directly constructing a `RowReader`
 object should instead construct a `Table` object and call `Table::ReadRows(...)`
 on it.
 
