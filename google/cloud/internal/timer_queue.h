@@ -27,6 +27,9 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
+/**
+ * Implement a
+ */
 class TimerQueue {
  public:
   TimerQueue() = default;
@@ -50,20 +53,15 @@ class TimerQueue {
 
  private:
   // Requires a lock to be held before calling.
-  bool HasExpiredTimer(std::unique_lock<std::mutex> const&,
-                       std::chrono::system_clock::time_point tp);
-  void ExpireTimer(std::unique_lock<std::mutex> lk,
-                   std::chrono::system_clock::time_point tp);
-  void NotifyShutdown(std::unique_lock<std::mutex> lk);
-  // Requires a lock to be held before calling.
-  std::chrono::system_clock::time_point NextExpiration(
-      std::unique_lock<std::mutex> const&);
+  void CancelAll(std::unique_lock<std::mutex> lk, char const* msg);
 
   using PromiseType = promise<StatusOr<std::chrono::system_clock::time_point>>;
   std::mutex mu_;
   std::condition_variable cv_;
+  std::condition_variable cv_follower_;
   std::multimap<std::chrono::system_clock::time_point, PromiseType> timers_;
   bool shutdown_ = false;
+  bool has_leader_ = false;
 };
 
 }  // namespace internal
