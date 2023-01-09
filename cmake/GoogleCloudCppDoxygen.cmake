@@ -159,8 +159,10 @@ function (google_cloud_cpp_doxygen_targets library)
     )
 endfunction ()
 
-# TODO(#10519) - have each subproject call this directly Find out the name of
-# the subproject.
+# TODO(#10519) - have each subproject call this directly.
+# ~~~
+# Find out the name of the subproject.
+# ~~~
 get_filename_component(GOOGLE_CLOUD_CPP_SUBPROJECT
                        "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
 
