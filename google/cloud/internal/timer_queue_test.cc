@@ -85,7 +85,7 @@ TEST(TimerQueueTest, ScheduleMultipleRunners) {
   TimerQueue tq;
 
   // Track all the observed thread ids.
-  auto constexpr kRunners = 16;
+  auto constexpr kRunners = 16U;
   std::mutex mu;
   std::condition_variable cv;
   std::set<std::thread::id> ids;
