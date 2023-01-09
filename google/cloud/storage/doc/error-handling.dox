@@ -4,7 +4,7 @@
 
 [status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
 
-This library never throws exceptions to signal error. In general, the library
+This library never throws exceptions to signal errors. In general, the library
 returns a [`StatusOr<T>`][status-or-header]. Some functions return objects that
 already have an existing error handling mechanism. For example, `ReadObject()`
 returns a type derived from `std::istream` where the application can check the

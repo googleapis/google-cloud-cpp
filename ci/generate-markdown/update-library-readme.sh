@@ -33,7 +33,7 @@ readonly LIBRARY=$1
   echo '```cc'
   # Dumps the contents of quickstart.cc starting at the first #include, so we
   # skip the license header comment.
-  sed -n -e '/END .*quickstart/,$d' -e '/^\/\/!/d' -e '/^#/,$p' "google/cloud/${LIBRARY}/quickstart/quickstart.cc"
+  sed -n -e '/END .*quickstart/,$d' -e '\:^//!:d' -e '/^#/,$p' "google/cloud/${LIBRARY}/quickstart/quickstart.cc"
   echo '```'
   echo ''
   sed -n '/<!-- inject-quickstart-end -->/,$p' "google/cloud/${LIBRARY}/README.md"
