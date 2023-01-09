@@ -120,6 +120,7 @@ add_library(
     internal/subject_token.h
     internal/throw_delegate.cc
     internal/throw_delegate.h
+    internal/timer_queue.cc
     internal/timer_queue.h
     internal/tuple.h
     internal/type_list.h

@@ -29,7 +29,7 @@ using ::google::cloud::testing_util::StatusIs;
 using testing::Each;
 
 TEST(TimerQueueTest, ScheduleSingleRunner) {
-  TimerQueue<std::chrono::system_clock> tq;
+  TimerQueue tq;
   std::thread t([&tq] { tq.Service(); });
   auto const duration = std::chrono::milliseconds(1);
   auto now = std::chrono::system_clock::now();
@@ -38,12 +38,12 @@ TEST(TimerQueueTest, ScheduleSingleRunner) {
   tq.Shutdown();
   t.join();
 
-  EXPECT_THAT(expire_time, IsOk());
+  ASSERT_THAT(expire_time, IsOk());
   EXPECT_GE(*expire_time - now, duration);
 }
 
 TEST(TimerQueueTest, ScheduleAndCancelAllSingleRunner) {
-  TimerQueue<std::chrono::system_clock> tq;
+  TimerQueue tq;
   auto const duration = std::chrono::seconds(60);
   auto now = std::chrono::system_clock::now();
   auto f = tq.Schedule(now + duration);
@@ -60,7 +60,7 @@ TEST(TimerQueueTest, ScheduleAndCancelAllSingleRunner) {
 }
 
 TEST(TimerQueueTest, ScheduleEarlierTimerSingleRunner) {
-  TimerQueue<std::chrono::system_clock> tq;
+  TimerQueue tq;
   std::thread t([&tq] { tq.Service(); });
   auto const duration = std::chrono::milliseconds(50);
   auto now = std::chrono::system_clock::now();
@@ -82,7 +82,7 @@ TEST(TimerQueueTest, ScheduleEarlierTimerSingleRunner) {
 }
 
 TEST(TimerQueueTest, ScheduleMultipleRunners) {
-  TimerQueue<std::chrono::system_clock> tq;
+  TimerQueue tq;
   // Schedule the timers first, so they are all ready to expire
   auto constexpr kTimers = 100;
   std::vector<future<std::thread::id>> futures(kTimers);
@@ -104,19 +104,16 @@ TEST(TimerQueueTest, ScheduleMultipleRunners) {
                  [&](auto& f) { return f.get(); });
 
   tq.Shutdown();
-  for (auto& t : runners)
-    t.join();  // BTW, there is a joinable thread class in
-               // testing_util/scoped_thread.h
+  for (auto& t : runners) t.join();
 
   EXPECT_GT(ids.size(), 1);
 }
 
 TEST(TimerQueueTest, ScheduleAndCancelAllMultipleRunners) {
-  TimerQueue<std::chrono::system_clock> tq;
+  TimerQueue tq;
   auto const duration = std::chrono::seconds(1);
   auto now = std::chrono::system_clock::now();
   std::vector<future<StatusOr<std::chrono::system_clock::time_point>>> futures;
-  futures.reserve(100);
   for (int i = 0; i != 100; ++i) {
     futures.push_back(tq.Schedule(now + duration));
   }
@@ -138,7 +135,7 @@ TEST(TimerQueueTest, ScheduleAndCancelAllMultipleRunners) {
 }
 
 TEST(TimerQueueTest, ScheduleEarlierTimerMultipleRunner) {
-  TimerQueue<std::chrono::system_clock> tq;
+  TimerQueue tq;
   auto constexpr kRunners = 8;
   std::vector<std::thread> runners;
   for (auto i = 0; i != kRunners; ++i) {

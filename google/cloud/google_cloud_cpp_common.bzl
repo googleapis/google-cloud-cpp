@@ -130,6 +130,7 @@ google_cloud_cpp_common_srcs = [
     "internal/strerror.cc",
     "internal/subject_token.cc",
     "internal/throw_delegate.cc",
+    "internal/timer_queue.cc",
     "internal/user_agent_prefix.cc",
     "kms_key_name.cc",
     "log.cc",
