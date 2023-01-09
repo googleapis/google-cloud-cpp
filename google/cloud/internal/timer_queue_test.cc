@@ -88,7 +88,8 @@ TEST(TimerQueueTest, ScheduleMultipleRunners) {
   std::vector<future<std::thread::id>> futures(kTimers);
   auto const now = std::chrono::system_clock::now();
   std::generate(futures.begin(), futures.end(), [&, now] {
-    return tq.Schedule(now + std::chrono::seconds(1)).then([](auto) {
+    return tq.Schedule(now).then([](auto) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(1));
       return std::this_thread::get_id();
     });
   });
