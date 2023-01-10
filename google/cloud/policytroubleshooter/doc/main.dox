@@ -38,7 +38,7 @@ The following shows the code that you'll run in the
 `google/cloud/policytroubleshooter/quickstart/` directory,
 which should give you a taste of the Policy Troubleshooter API C++ client library API.
 
-@include quickstart.cc
+@snippet quickstart.cc all
 
 ## Environment Variables
 

@@ -47,7 +47,7 @@ The following shows the code that you'll run in the
 `google/cloud/iam/quickstart/` directory, which should give you a taste of
 the Cloud IAM C++ client library API.
 
-@include quickstart.cc
+@snippet quickstart.cc all
 @endparblock
 
 ## Environment Variables

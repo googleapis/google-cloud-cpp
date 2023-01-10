@@ -618,7 +618,7 @@ The following shows the code that you'll run in the
 `google/cloud/$library$/quickstart/` directory,
 which should give you a taste of the $title$ C++ client library API.
 
-@include quickstart.cc
+@snippet quickstart.cc all
 
 ## Environment Variables
 
@@ -923,6 +923,7 @@ void GenerateQuickstartSkeleton(
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//! [all]
 #include "google/cloud/$library$/ EDIT HERE .h"
 #include "google/cloud/project.h"
 #include <iostream>
@@ -948,6 +949,7 @@ int main(int argc, char* argv[]) try {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
+//! [all]
 )""";
   google::protobuf::io::OstreamOutputStream output(&os);
   google::protobuf::io::Printer printer(&output, '$');

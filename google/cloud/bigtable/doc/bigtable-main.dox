@@ -53,7 +53,7 @@ The following shows the code that you'll run in the
 `google/cloud/bigtable/quickstart/` directory,
 which should give you a taste of the Cloud Bigtable C++ client library API.
 
-@include quickstart.cc
+@snippet quickstart.cc all
 
 ## API Notes
 

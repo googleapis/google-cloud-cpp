@@ -45,7 +45,7 @@ The following shows the code that you'll run in the
 `google/cloud/run/quickstart/` directory,
 which should give you a taste of the Cloud Run Admin API C++ client library API.
 
-@include quickstart.cc
+@snippet quickstart.cc all
 
 ## Environment Variables
 

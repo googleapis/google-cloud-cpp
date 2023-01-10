@@ -38,7 +38,7 @@ The following shows the code that you'll run in the
 `google/cloud/resourcesettings/quickstart/` directory,
 which should give you a taste of the Resource Settings API C++ client library API.
 
-@include quickstart.cc
+@snippet quickstart.cc all
 
 ## Environment Variables
 

@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//! [all]
 #include "google/cloud/servicecontrol/service_controller_client.h"
 #include "google/cloud/project.h"
 #include <google/protobuf/util/time_util.h>
@@ -50,3 +51,4 @@ int main(int argc, char* argv[]) try {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
+//! [all]

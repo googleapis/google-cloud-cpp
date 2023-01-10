@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//! [all]
 #include "google/cloud/videointelligence/video_intelligence_client.h"
 #include <google/protobuf/util/time_util.h>
 #include <iostream>
@@ -68,3 +69,4 @@ int main(int argc, char* argv[]) try {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
+//! [all]

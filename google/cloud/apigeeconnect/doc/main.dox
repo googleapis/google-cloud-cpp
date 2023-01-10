@@ -40,7 +40,7 @@ The following shows the code that you'll run in the
 `google/cloud/apigeeconnect/quickstart/` directory,
 which should give you a taste of the Apigee Connect API C++ client library API.
 
-@include quickstart.cc
+@snippet quickstart.cc all
 
 ## Environment Variables
 

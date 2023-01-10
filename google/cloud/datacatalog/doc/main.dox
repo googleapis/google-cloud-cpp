@@ -36,7 +36,7 @@ The following shows the code that you'll run in the
 `google/cloud/datacatalog/quickstart/` directory,
 which should give you a taste of the Google Cloud Data Catalog API C++ client library API.
 
-@include quickstart.cc
+@snippet quickstart.cc all
 
 ## Environment Variables
 

@@ -35,7 +35,7 @@ The following shows the code that you'll run in the
 `google/cloud/servicemanagement/quickstart/` directory,
 which should give you a taste of the Service Management API C++ client library API.
 
-@include quickstart.cc
+@snippet quickstart.cc all
 
 ## Environment Variables
 
