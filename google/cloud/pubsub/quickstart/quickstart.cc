@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-//! [START pubsub_quickstart_publisher]
+//! [START pubsub_quickstart_publisher] [all]
 #include "google/cloud/pubsub/publisher.h"
 #include <iostream>
 
@@ -41,4 +41,4 @@ int main(int argc, char* argv[]) try {
   std::cerr << "google::cloud::Status thrown: " << status << "\n";
   return 1;
 }
-//! [END pubsub_quickstart_publisher]
+//! [END pubsub_quickstart_publisher] [all]
