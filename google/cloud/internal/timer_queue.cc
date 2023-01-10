@@ -28,21 +28,29 @@ StatusOr<std::chrono::system_clock::time_point> MakeCancelled(
 
 }  // namespace
 
+std::shared_ptr<TimerQueue> TimerQueue::Create() {
+  // As usual, we cannot use std::make_shared<> because the constructor is 
+  // private.
+  return std::shared_ptr<TimerQueue>(new TimerQueue);
+}
+
 future<StatusOr<std::chrono::system_clock::time_point>> TimerQueue::Schedule(
     std::chrono::system_clock::time_point tp) {
-  auto p = PromiseType();
-  auto f = p.get_future();
-  bool should_notify = false;
-  {
-    std::lock_guard<std::mutex> lk(mu_);
-    if (shutdown_) {
-      return make_ready_future(
-          MakeCancelled("TimerQueue shutdown", GCP_ERROR_INFO()));
-    }
-    auto iter = timers_.emplace(tp, std::move(p));
-    should_notify = iter == timers_.begin();
+  auto weak = std::weak_ptr<TimerQueue>(shared_from_this());
+  std::unique_lock<std::mutex> lk(mu_);
+  if (shutdown_) {
+    return make_ready_future(
+        MakeCancelled("TimerQueue shutdown", GCP_ERROR_INFO()));
   }
-  if (should_notify) cv_.notify_all();
+  auto const key = std::make_pair(tp, ++id_generator_);
+  auto p = PromiseType([weak, key]() {
+    if (auto self = weak.lock()) self->Cancel(key);
+  });
+  auto f = p.get_future();
+  auto iter = timers_.emplace(key, std::move(p));
+  auto const should_notify = iter == timers_.begin();
+  lk.unlock();
+  if (should_notify) cv_.notify_one();
   return f;
 }
 
@@ -83,11 +91,11 @@ void TimerQueue::Service() {
     // Should a new timer appear that changes the "first" timer, we need to
     // wake up and recompute the sleep time. But note that the leader thread
     // does not need to relinquish its role to do so.
-    auto until = timers_.begin()->first;
-    auto predicate = [this, until] {
-      return shutdown_ || timers_.empty() || timers_.begin()->first != until;
+    auto key = timers_.begin()->first;
+    auto predicate = [this, key] {
+      return shutdown_ || timers_.empty() || timers_.begin()->first != key;
     };
-    if (cv_.wait_until(lk, until, std::move(predicate))) {
+    if (cv_.wait_until(lk, key.first, std::move(predicate))) {
       // Timers can be expired only if wait_util() returns due to a timeout.
       continue;
     }
@@ -104,25 +112,29 @@ void TimerQueue::Service() {
     // This may run user code (in the continuations for the future). That may
     // do all kinds of things, including calling back into this class to create
     // new timers. We cannot hold the mutex while it is running.
-    p.set_value(until);
+    p.set_value(key.first);
     lk.lock();
   }
-  CancelAll(std::move(lk), "TimerQueue shutdown");
-}
-
-void TimerQueue::CancelAll() {
-  CancelAll(std::unique_lock<std::mutex>(mu_), "TimerQueue cancel all");
-}
-
-void TimerQueue::CancelAll(std::unique_lock<std::mutex> lk, char const* msg) {
   while (!timers_.empty()) {
     auto p = std::move(timers_.begin()->second);
     timers_.erase(timers_.begin());
     lk.unlock();
     cv_.notify_one();
-    p.set_value(MakeCancelled(msg, GCP_ERROR_INFO()));
+    p.set_value(MakeCancelled("TimerQueue shutdown", GCP_ERROR_INFO()));
     lk.lock();
   }
+}
+
+void TimerQueue::Cancel(KeyType key) {
+  std::unique_lock<std::mutex> lk(mu_);
+  auto f = timers_.find(key);
+  if (f == timers_.end()) return;
+  auto p = std::move(f->second);
+  auto const should_notify = f == timers_.begin();
+  timers_.erase(f);
+  lk.unlock();
+  if (should_notify) cv_.notify_one();
+  p.set_value(CancelledError("Timer cancelled"));
 }
 
 }  // namespace internal

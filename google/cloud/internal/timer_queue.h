@@ -21,6 +21,7 @@
 #include <chrono>
 #include <condition_variable>
 #include <map>
+#include <memory>
 #include <mutex>
 
 namespace google {
@@ -62,11 +63,14 @@ namespace internal {
  * for (auto& t : svc) t.join();
  * @endcode
  */
-class TimerQueue {
+class TimerQueue : public std::enable_shared_from_this<TimerQueue> {
  public:
-  TimerQueue() = default;
+  static std::shared_ptr<TimerQueue> Create();
+
   TimerQueue(TimerQueue const&) = delete;
   TimerQueue& operator=(TimerQueue const&) = delete;
+  TimerQueue(TimerQueue&&) = delete;
+  TimerQueue& operator=(TimerQueue&&) = delete;
 
   // Adds a timer to the queue.
   future<StatusOr<std::chrono::system_clock::time_point>> Schedule(
@@ -80,18 +84,20 @@ class TimerQueue {
   // call Service. Calls to Service only return after Shutdown has been called.
   void Service();
 
-  // Cancels all timers.
-  void CancelAll();
-
  private:
-  // Requires a lock to be held before calling.
-  void CancelAll(std::unique_lock<std::mutex> lk, char const* msg);
-
   using PromiseType = promise<StatusOr<std::chrono::system_clock::time_point>>;
+  using KeyType = std::pair<std::chrono::system_clock::time_point, std::uint64_t>;
+
+  TimerQueue() = default;
+
+  // Cancels an specific timer
+  void Cancel(KeyType key);
+
   std::mutex mu_;
   std::condition_variable cv_;
   std::condition_variable cv_follower_;
-  std::multimap<std::chrono::system_clock::time_point, PromiseType> timers_;
+  std::multimap<KeyType, PromiseType> timers_;
+  std::uint64_t id_generator_ = 0;
   bool shutdown_ = false;
   bool has_leader_ = false;
 };
