@@ -33,16 +33,19 @@ class TimerQueue {
   TimerQueue(TimerQueue const&) = delete;
   TimerQueue& operator=(TimerQueue const&) = delete;
 
-  // Adds a timer to the queue.
+  // Adds a timer to the queue. If the `Shutdown` has already been called,
+  // calls to `Schedule` return immediately with a `StatusCode::kCancelled`.
   future<StatusOr<std::chrono::system_clock::time_point>> Schedule(
       std::chrono::system_clock::time_point tp);
 
-  // Signals all threads that have called Service to return. Does not modify
-  // remaining timers. If desired, CancelAll can be called.
+  // Signals all threads that have called `Service` to return. Any subsequent
+  // calls to `Schedule` are refused. Additionally, all outstanding timers are
+  // cancelled.
   void Shutdown();
 
-  // Timers added via Schedule should be managed by one or more threads that
-  // call Service. Calls to Service only return after Shutdown has been called.
+  // Timers added via `Schedule` should be managed by one or more threads that
+  // call `Service`. Calls to `Service` only return after `Shutdown` has been
+  // called.
   void Service();
 
   // Cancels all timers.

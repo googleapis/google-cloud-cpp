@@ -81,6 +81,23 @@ TEST(TimerQueueTest, ScheduleEarlierTimerSingleRunner) {
   EXPECT_GT(*later_expire_time, *earlier_expire_time);
 }
 
+TEST(TimerQueueTest, ShutdownWithPendingTimersCancelledSingleRunner) {
+  TimerQueue tq;
+  auto const duration = std::chrono::seconds(60);
+  auto now = std::chrono::system_clock::now();
+  std::thread t([&tq] { tq.Service(); });
+  auto f = tq.Schedule(now + duration);
+  auto f2 = tq.Schedule(now + duration);
+
+  tq.Shutdown();
+  t.join();
+
+  auto expire_time = f.get();
+  EXPECT_THAT(expire_time, StatusIs(StatusCode::kCancelled));
+  auto expire_time2 = f2.get();
+  EXPECT_THAT(expire_time2, StatusIs(StatusCode::kCancelled));
+}
+
 TEST(TimerQueueTest, ScheduleMultipleRunners) {
   TimerQueue tq;
   // Schedule the timers first, so they are all ready to expire
@@ -159,6 +176,27 @@ TEST(TimerQueueTest, ScheduleEarlierTimerMultipleRunner) {
   ASSERT_THAT(earlier_expire_time, IsOk());
   ASSERT_THAT(later_expire_time, IsOk());
   EXPECT_GT(*later_expire_time, *earlier_expire_time);
+}
+
+TEST(TimerQueueTest, ShutdownWithPendingTimersCancelledMultipleRunner) {
+  TimerQueue tq;
+  auto const duration = std::chrono::seconds(60);
+  auto now = std::chrono::system_clock::now();
+  auto constexpr kRunners = 8;
+  std::vector<std::thread> runners;
+  for (auto i = 0; i != kRunners; ++i) {
+    runners.emplace_back([&] { tq.Service(); });
+  }
+  auto f = tq.Schedule(now + duration);
+  auto f2 = tq.Schedule(now + duration);
+
+  tq.Shutdown();
+  for (auto& t : runners) t.join();
+
+  auto expire_time = f.get();
+  EXPECT_THAT(expire_time, StatusIs(StatusCode::kCancelled));
+  auto expire_time2 = f2.get();
+  EXPECT_THAT(expire_time2, StatusIs(StatusCode::kCancelled));
 }
 
 }  // namespace
