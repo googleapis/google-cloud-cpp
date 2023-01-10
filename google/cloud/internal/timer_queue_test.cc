@@ -85,11 +85,12 @@ TEST(TimerQueueTest, ShutdownWithPendingTimersCancelledSingleRunner) {
   TimerQueue tq;
   auto const duration = std::chrono::seconds(60);
   auto now = std::chrono::system_clock::now();
-  std::thread t([&tq] { tq.Service(); });
   auto f = tq.Schedule(now + duration);
   auto f2 = tq.Schedule(now + duration);
 
   tq.Shutdown();
+  std::thread t([&tq] { tq.Service(); });
+
   t.join();
 
   auto expire_time = f.get();
@@ -182,15 +183,15 @@ TEST(TimerQueueTest, ShutdownWithPendingTimersCancelledMultipleRunner) {
   TimerQueue tq;
   auto const duration = std::chrono::seconds(60);
   auto now = std::chrono::system_clock::now();
+  auto f = tq.Schedule(now + duration);
+  auto f2 = tq.Schedule(now + duration);
+  tq.Shutdown();
   auto constexpr kRunners = 8;
   std::vector<std::thread> runners;
   for (auto i = 0; i != kRunners; ++i) {
     runners.emplace_back([&] { tq.Service(); });
   }
-  auto f = tq.Schedule(now + duration);
-  auto f2 = tq.Schedule(now + duration);
 
-  tq.Shutdown();
   for (auto& t : runners) t.join();
 
   auto expire_time = f.get();

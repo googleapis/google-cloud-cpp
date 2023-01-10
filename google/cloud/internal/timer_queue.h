@@ -38,9 +38,8 @@ class TimerQueue {
   future<StatusOr<std::chrono::system_clock::time_point>> Schedule(
       std::chrono::system_clock::time_point tp);
 
-  // Signals all threads that have called `Service` to return. Any subsequent
-  // calls to `Schedule` are refused. Additionally, all outstanding timers are
-  // cancelled.
+  // Signals all threads that have called `Service` to return. Additionally, all
+  // outstanding timers are cancelled.
   void Shutdown();
 
   // Timers added via `Schedule` should be managed by one or more threads that
