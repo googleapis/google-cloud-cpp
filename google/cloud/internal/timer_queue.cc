@@ -13,17 +13,20 @@
 // limitations under the License.
 
 #include "google/cloud/internal/timer_queue.h"
-#include "google/cloud/future.h"
-#include "google/cloud/status_or.h"
-#include "google/cloud/version.h"
-#include <chrono>
-#include <map>
-#include <mutex>
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
+namespace {
+
+StatusOr<std::chrono::system_clock::time_point> MakeCancelled(
+    std::string msg, ErrorInfoBuilder b) {
+  return CancelledError(std::move(msg), std::move(b));
+}
+
+}  // namespace
 
 future<StatusOr<std::chrono::system_clock::time_point>> TimerQueue::Schedule(
     std::chrono::system_clock::time_point tp) {
@@ -32,9 +35,10 @@ future<StatusOr<std::chrono::system_clock::time_point>> TimerQueue::Schedule(
   bool should_notify = false;
   {
     std::lock_guard<std::mutex> lk(mu_);
-    if (shutdown_)
-      return make_ready_future(StatusOr<std::chrono::system_clock::time_point>(
-          Status(StatusCode::kCancelled, "TimerQueue already shutdown")));
+    if (shutdown_) {
+      return make_ready_future(
+          MakeCancelled("TimerQueue shutdown", GCP_ERROR_INFO()));
+    }
     auto iter = timers_.emplace(tp, std::move(p));
     should_notify = iter == timers_.begin();
   }
@@ -45,79 +49,80 @@ future<StatusOr<std::chrono::system_clock::time_point>> TimerQueue::Schedule(
 void TimerQueue::Shutdown() {
   std::unique_lock<std::mutex> const lk(mu_);
   shutdown_ = true;
-  cv_.notify_all();
+  cv_.notify_one();
+  cv_follower_.notify_all();
 }
 
-// Timers added via Schedule should be managed by one or more threads that
-// call Service. Calls to Service only return after Shutdown has been called.
+// The threads play two different roles:
+// - A single thread at a time plays the leader role.
+// - All other threads are followers and block on cv_follower_.
+//
+// Once a timer expires, the leader thread relinquishes its role and wakes up
+// one follower thread to become the new leader. Only after doing so it
+// runs the code to expire the timer.
+//
+// This is all complicated by shutdown. Basically all thread needs to wake
+// up when the TQ is shutdown and one of them will expire all the timers.
 void TimerQueue::Service() {
-  while (true) {
-    std::unique_lock<std::mutex> lk(mu_);
-    auto const until = NextExpiration(lk);
-    // TODO(#10521): Predicate condition ne < until may need to be reworked.
-    auto predicate = [this, until, &lk] {
-      auto const ne = NextExpiration(lk);
-      return shutdown_ || ne < until ||
-             HasExpiredTimer(lk, std::chrono::system_clock::now());
-    };
-    // TODO(#10512): Only wake one thread to service the next timer instead
-    // of all of them.
-    cv_.wait_until(lk, until, predicate);
-    if (shutdown_) return NotifyShutdown(std::move(lk));
-    auto now = std::chrono::system_clock::now();
-    if (HasExpiredTimer(lk, now)) {
-      ExpireTimer(std::move(lk), now);
+  // The is_leader flag allows us to restart this loop without worrying about
+  // electing new leaders.
+  auto is_leader = false;
+  std::unique_lock<std::mutex> lk(mu_);
+  while (!shutdown_) {
+    if (!is_leader && has_leader_) {
+      // The current thread becomes a follower while there is a leader.
+      cv_follower_.wait(lk, [this] { return shutdown_ || !has_leader_; });
+      continue;
     }
+    is_leader = true;
+    has_leader_ = true;
+    if (timers_.empty()) {
+      cv_.wait(lk, [this] { return shutdown_ || !timers_.empty(); });
+      continue;
+    }
+    // Should a new timer appear that changes the "first" timer, we need to
+    // wake up and recompute the sleep time. But note that the leader thread
+    // does not need to relinquish its role to do so.
+    auto until = timers_.begin()->first;
+    auto predicate = [this, until] {
+      return shutdown_ || timers_.empty() || timers_.begin()->first != until;
+    };
+    if (cv_.wait_until(lk, until, std::move(predicate))) {
+      // Timers can be expired only if wait_util() returns due to a timeout.
+      continue;
+    }
+    // If we get here we know that predicate() is false, which implies that
+    // `timers_` is not empty and the first timer's key is `until`.
+    auto p = std::move(timers_.begin()->second);
+    timers_.erase(timers_.begin());
+    // Relinquish the leader role, release the mutex and then signal a follower.
+    has_leader_ = false;
+    lk.unlock();
+    is_leader = false;
+    // Elect a new leader (if available) to continue expiring timers.
+    cv_follower_.notify_one();
+    // This may run user code (in the continuations for the future). That may
+    // do all kinds of things, including calling back into this class to create
+    // new timers. We cannot hold the mutex while it is running.
+    p.set_value(until);
+    lk.lock();
   }
+  CancelAll(std::move(lk), "TimerQueue shutdown");
 }
 
 void TimerQueue::CancelAll() {
-  std::multimap<std::chrono::system_clock::time_point, PromiseType> timers;
-  {
-    std::lock_guard<std::mutex> lk(mu_);
-    std::swap(timers, timers_);
+  CancelAll(std::unique_lock<std::mutex>(mu_), "TimerQueue cancel all");
+}
+
+void TimerQueue::CancelAll(std::unique_lock<std::mutex> lk, char const* msg) {
+  while (!timers_.empty()) {
+    auto p = std::move(timers_.begin()->second);
+    timers_.erase(timers_.begin());
+    lk.unlock();
+    cv_.notify_one();
+    p.set_value(MakeCancelled(msg, GCP_ERROR_INFO()));
+    lk.lock();
   }
-  for (auto& timer : timers) {
-    timer.second.set_value(Status(StatusCode::kCancelled, "Timer cancelled"));
-  }
-}
-
-// Requires a lock to be held before calling.
-bool TimerQueue::HasExpiredTimer(std::unique_lock<std::mutex> const&,
-                                 std::chrono::system_clock::time_point tp) {
-  return !timers_.empty() && timers_.begin()->first < tp;
-}
-
-void TimerQueue::ExpireTimer(std::unique_lock<std::mutex> lk,
-                             std::chrono::system_clock::time_point tp) {
-  auto p = std::move(timers_.begin()->second);
-  timers_.erase(timers_.begin());
-  auto const has_expired_timers = HasExpiredTimer(lk, tp);
-  lk.unlock();
-  // We do not want to expire all the timers in this thread, as this would
-  // serialize the expiration.  Instead, we pick another thread to continue
-  // expiring timers.
-  if (has_expired_timers) cv_.notify_one();
-  p.set_value(tp);
-}
-
-void TimerQueue::NotifyShutdown(std::unique_lock<std::mutex> lk) {
-  auto timers = std::move(timers_);
-  lk.unlock();
-  for (auto& timer : timers) {
-    timer.second.set_value(
-        Status(StatusCode::kCancelled, "TimerQueue shutdown"));
-  }
-}
-
-// Requires a lock to be held before calling.
-std::chrono::system_clock::time_point TimerQueue::NextExpiration(
-    std::unique_lock<std::mutex> const&) {
-  // #TODO(#10522): Determine whether or not to use a better value for kMaxSleep
-  //  or remove it entirely in favor of a call to wait on the cv.
-  auto constexpr kMaxSleep = std::chrono::seconds(3600);
-  if (timers_.empty()) return std::chrono::system_clock::now() + kMaxSleep;
-  return timers_.begin()->first;
 }
 
 }  // namespace internal
