@@ -19,6 +19,7 @@
 #include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <chrono>
+#include <condition_variable>
 #include <map>
 #include <mutex>
 
@@ -28,7 +29,38 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 
 /**
- * Implement a
+ * A timer queue supporting multiple servicing threads.
+ *
+ * @par Example
+ *
+ * First create a pool of threads to service the TimerQueue:
+ * @code
+ * TimerQueue tq;
+ * std::vector<std::thread> svc(8);
+ * std::generate(svc.begin(), svc.end(),
+ *               std::thread{[&] { return tq.Service(); }});
+ * @endcode
+ *
+ * The thread pool can be as small as one thread. You can schedule timers using
+ * the `Schedule()` function:
+ * @code
+ * using std::chrono_literals;
+ * auto const now = std::chrono::system_clock::now();
+ * tq.Schedule(now + 100ms).then([](auto f) { std::out << "timer 1\n"; });
+ * tq.Schedule(now + 200ms).then([](auto f) { std::out << "timer 2\n"; });
+ * tq.Schedule(now + 200ms).then([](auto f) { std::out << "timer 3\n"; });
+ * @code
+ *
+ * To shutdown the timer queue you need to call `Shutdown()`:
+ * @code
+ * tq.Shutdown();
+ * @endcode
+ *
+ * Don't forget to join your thread pool.  Remember that this threads will not
+ * terminate until `Shutdown()` is called:
+ * @code
+ * for (auto& t : svc) t.join();
+ * @endcode
  */
 class TimerQueue {
  public:

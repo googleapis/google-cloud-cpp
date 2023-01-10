@@ -120,6 +120,52 @@ TEST(TimerQueueTest, ScheduleMultipleRunners) {
   EXPECT_EQ(ids.size(), kRunners);
 }
 
+TEST(TimerQueueTest, ShutdownMultipleRunners) {
+  TimerQueue tq;
+
+  // Track all the observed thread ids.
+  auto constexpr kRunners = 16U;
+  std::mutex mu;
+  std::condition_variable cv;
+  std::set<std::thread::id> ids;
+  auto insert_thread_id = [&](auto f) {
+    std::unique_lock<std::mutex> lk(mu);
+    ids.insert(std::this_thread::get_id());
+    if (ids.size() == kRunners) {
+      lk.unlock();
+      cv.notify_all();
+      return f.get().status();
+    }
+    // Block after inserting each thread id, to force all threads to
+    // participate.
+    cv.wait(lk, [&] { return ids.size() >= kRunners; });
+    return f.get().status();
+  };
+
+  // Schedule the timers first, but make them so long that they should not
+  // expire before we call Shutdown(). Note that the test will be terminated by
+  // the default test timeout before this expiration, and the test fails if the
+  // timers expires successfully.
+  std::vector<future<Status>> futures(kRunners);
+  auto const now = std::chrono::system_clock::now();
+  auto const tp = now + std::chrono::hours(1);
+  std::generate(futures.begin(), futures.end(),
+                [&] { return tq.Schedule(tp).then(insert_thread_id); });
+
+  std::vector<std::thread> runners(kRunners);
+  std::generate(runners.begin(), runners.end(),
+                [&] { return std::thread([&] { tq.Service(); }); });
+
+  tq.Shutdown();
+  for (auto& t : runners) t.join();
+  std::vector<Status> status(futures.size());
+  std::transform(futures.begin(), futures.end(), status.begin(),
+                 [](auto& f) { return f.get(); });
+
+  EXPECT_EQ(ids.size(), kRunners);
+  EXPECT_THAT(status, Each(StatusIs(StatusCode::kCancelled)));
+}
+
 TEST(TimerQueueTest, ScheduleAndCancelAllMultipleRunners) {
   TimerQueue tq;
   auto const duration = std::chrono::seconds(1);
