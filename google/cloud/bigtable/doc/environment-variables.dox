@@ -1,17 +1,50 @@
 /*!
-@page bigtable-environment-variables Environment Variables Used by the Google Cloud Bigtable C++ Client.
+@page bigtable-environment-variables Environment Variable
 
-The Cloud Bigtable C++ Client library introduces a single environment variable
-that affects its behavior. If `BIGTABLE_EMULATOR_HOST` is set, it specifies the
-endpoint (typically a `host:port` string) for the [Cloud Bigtable
-emulator](https://cloud.google.com/bigtable/docs/emulator) and configures the
-library to connect to the emulator by default.
+A number of environment variables can be used to configure the behavior of
+the library.  There are also functions to configure this behavior in code. The
+environment variables are convenient when troubleshooting problems.
 
-In addition, the library inherits all the [gRPC environment
-variables](https://grpc.io/grpc/cpp/md_doc_environment_variables.html).
+@section bigtable-env-logging Logging
 
-@see the [gRPC
-documentation](https://grpc.io/grpc/cpp/md_doc_environment_variables.html) for
-    additional environment variables controlling gRPC.
+`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc`: turns on tracing for most gRPC calls.
+The library injects an additional Stub decorator that prints each gRPC
+request and response. Unless you have configured you own logging backend, you
+should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on the
+program's console.
+
+@see google::cloud::TracingComponentsOption
+
+GOOGLE_CLOUD_CPP_TRACING_OPTIONS=...`: modifies the behavior of gRPC tracing,
+including whether messages will be output on multiple lines, or whether
+string/bytes fields will be truncated.
+
+@see google::cloud::TracingOptionsOption
+
+`GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes`: turns on logging in the library. Basically
+the library always "logs" but the logging infrastructure has no backend to
+actually print anything until the application sets a backend or they set this
+environment variable.
+
+@see google::cloud::LogBackend
+@see google::cloud::LogSink
+
+@section pbigtable-env-endpoint Endpoint Overrides
+
+`BIGTABLE_EMULATOR_HOST=host:port`: tells the library to connect to the
+specified emulator rather than the default endpoint. Intended for testing only.
+
+@see google::cloud::EndpointOption
+
+@section bigtable-env-project Setting the Default Project
+
+`GOOGLE_CLOUD_PROJECT=...` is used in examples and integration tests to
+configure the GCP project. This has no effect in the library.
+
+@section bigtable-env-other Other
+
+The library inherits all the [gRPC environment variables].
+
+[gRPC environment variables]: https://grpc.io/grpc/cpp/md_doc_environment_variables.html
 
 */

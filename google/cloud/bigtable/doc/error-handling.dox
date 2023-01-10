@@ -1,0 +1,42 @@
+/*!
+@page bigtable-error-handling Error Handling
+
+[StatusOr<T>]: @ref google::cloud::StatusOr
+[RuntimeStatusError]: @ref google::cloud::RuntimeStatusError
+
+This library never throws exceptions to signal error. In general, the library
+returns a [StatusOr<T>] if an error is possible. Some
+functions return objects that are not wrapped in a `StatusOr<T>` but will
+themselves return a `StatusOr<T>` to signal an error. For example, wrappers for
+asynchronous operations return `future<StatusOr<T>>`.
+
+Applications should check if the `StatusOr<T>` contains a value before using
+it, much like how you might check that a pointer is not null before
+dereferencing it. Indeed, a `StatusOr<T>` object can be used like a
+smart-pointer to `T`, with the main difference being that when it does not hold
+a `T` it will instead hold a `Status` object with extra information about the
+error.
+
+You can check that a `StatusOr<T>` contains a value by calling the `.ok()`
+method, or by using `operator bool()` (like with other smart pointers). If
+there is no value, you can access the contained `Status` object using the
+`.status()` member. If there is a value, you may access it by dereferencing
+with `operator*()` or `operator->()`. As with all smart pointers, callers must
+first check that the `StatusOr<T>` contains a value before dereferencing and
+accessing the contained value. Alternatively, callers may instead use the
+`.value()` member function which is defined to throw a [RuntimeStatusError] if
+there is no value.
+
+@note If you're compiling with exceptions disabled, calling `.value()` on a
+    `StatusOr<T>` that does not contain a value will terminate the program
+    instead of throwing.
+
+@par Example
+@snippet read_snippets.cc read row
+
+@see @ref google::cloud::StatusOr
+@see @ref google::cloud::Status the class used to describe errors.
+@see @ref google::cloud::future for more details on the type returned
+    by asynchronous operations.
+
+*/

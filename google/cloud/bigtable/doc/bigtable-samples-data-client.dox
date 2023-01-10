@@ -1,5 +1,5 @@
 /*!
-@page bigtable-samples-data-client Example: Advanced Reading and Writing Samples
+@page bigtable-samples-data-client Advanced Reading and Writing Samples
 
 This example is for advanced reading and writing operations on bigtable data client, that illustrates how to:
 
