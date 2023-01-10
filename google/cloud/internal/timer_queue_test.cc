@@ -29,43 +29,60 @@ using ::google::cloud::testing_util::StatusIs;
 using testing::Each;
 
 TEST(TimerQueueTest, ScheduleSingleRunner) {
-  TimerQueue tq;
-  std::thread t([&tq] { tq.Service(); });
+  auto tq = TimerQueue::Create();
+  std::thread t([&tq] { tq->Service(); });
   auto const duration = std::chrono::milliseconds(1);
   auto now = std::chrono::system_clock::now();
-  auto f = tq.Schedule(now + duration);
+  auto f = tq->Schedule(now + duration);
   auto expire_time = f.get();
-  tq.Shutdown();
+  tq->Shutdown();
   t.join();
 
   ASSERT_THAT(expire_time, IsOk());
   EXPECT_GE(*expire_time - now, duration);
 }
 
-TEST(TimerQueueTest, ScheduleAndCancelAllSingleRunner) {
-  TimerQueue tq;
-  auto const duration = std::chrono::seconds(60);
-  auto now = std::chrono::system_clock::now();
-  auto f = tq.Schedule(now + duration);
-  auto f2 = tq.Schedule(now + duration);
-  tq.CancelAll();
-  std::thread t([&tq] { tq.Service(); });
-  tq.Shutdown();
-  t.join();
+/// @test Verify timers can be cancelled.
+TEST(TimerQueueTest, CancelTimers) {
+  auto tq = TimerQueue::Create();
 
-  auto expire_time = f.get();
-  EXPECT_THAT(expire_time, StatusIs(StatusCode::kCancelled));
-  auto expire_time2 = f2.get();
-  EXPECT_THAT(expire_time2, StatusIs(StatusCode::kCancelled));
+  // Track all the observed thread ids.
+  auto constexpr kRunners = 16U;
+
+  // Schedule the timers first, but make them so long that they should not
+  // expire before we get to cancel them. Note that the test will be terminated
+  // by the default test timeout before the scheduled time.
+  std::vector<future<Status>> futures(kRunners);
+  auto const now = std::chrono::system_clock::now();
+  auto const tp = now + std::chrono::hours(1);
+  std::generate(futures.begin(), futures.end(), [&] {
+    return tq->Schedule(tp).then([](auto f) { return f.get().status(); });
+  });
+
+  std::vector<std::thread> runners(kRunners);
+  std::generate(runners.begin(), runners.end(),
+                [&] { return std::thread([&] { tq->Service(); }); });
+
+  // Cancel all the timers. Leave the servicing threads running.
+  for (auto& f : futures) f.cancel();
+  // Wait for all timers and capture the status.
+  std::vector<Status> status(futures.size());
+  std::transform(futures.begin(), futures.end(), status.begin(),
+                 [](auto& f) { return f.get(); });
+  EXPECT_THAT(status, Each(StatusIs(StatusCode::kCancelled)));
+
+  // Only shutdown the timer queue once the timers are successfully cancelled.
+  tq->Shutdown();
+  for (auto& t : runners) t.join();
 }
 
 TEST(TimerQueueTest, ScheduleEarlierTimerSingleRunner) {
-  TimerQueue tq;
-  std::thread t([&tq] { tq.Service(); });
+  auto tq = TimerQueue::Create();
+  std::thread t([&tq] { tq->Service(); });
   auto const duration = std::chrono::milliseconds(50);
   auto now = std::chrono::system_clock::now();
-  auto later = tq.Schedule(now + 2 * duration);
-  auto earlier = tq.Schedule(now + duration);
+  auto later = tq->Schedule(now + 2 * duration);
+  auto earlier = tq->Schedule(now + duration);
   auto earlier_expire_time = earlier
                                  .then([&](auto f) {
                                    EXPECT_FALSE(later.is_ready());
@@ -73,7 +90,7 @@ TEST(TimerQueueTest, ScheduleEarlierTimerSingleRunner) {
                                  })
                                  .get();
   auto later_expire_time = later.get();
-  tq.Shutdown();
+  tq->Shutdown();
   t.join();
 
   ASSERT_THAT(earlier_expire_time, IsOk());
@@ -82,7 +99,7 @@ TEST(TimerQueueTest, ScheduleEarlierTimerSingleRunner) {
 }
 
 TEST(TimerQueueTest, ScheduleMultipleRunners) {
-  TimerQueue tq;
+  auto tq = TimerQueue::Create();
 
   // Track all the observed thread ids.
   auto constexpr kRunners = 16U;
@@ -106,22 +123,22 @@ TEST(TimerQueueTest, ScheduleMultipleRunners) {
   std::vector<future<void>> futures(kRunners);
   auto const now = std::chrono::system_clock::now();
   std::generate(futures.begin(), futures.end(),
-                [&, now] { return tq.Schedule(now).then(insert_thread_id); });
+                [&, now] { return tq->Schedule(now).then(insert_thread_id); });
 
   std::vector<std::thread> runners(kRunners);
   std::generate(runners.begin(), runners.end(),
-                [&] { return std::thread([&] { tq.Service(); }); });
+                [&] { return std::thread([&] { tq->Service(); }); });
 
   for (auto& f : futures) f.get();
 
-  tq.Shutdown();
+  tq->Shutdown();
   for (auto& t : runners) t.join();
 
   EXPECT_EQ(ids.size(), kRunners);
 }
 
 TEST(TimerQueueTest, ShutdownMultipleRunners) {
-  TimerQueue tq;
+  auto tq = TimerQueue::Create();
 
   // Track all the observed thread ids.
   auto constexpr kRunners = 16U;
@@ -150,13 +167,13 @@ TEST(TimerQueueTest, ShutdownMultipleRunners) {
   auto const now = std::chrono::system_clock::now();
   auto const tp = now + std::chrono::hours(1);
   std::generate(futures.begin(), futures.end(),
-                [&] { return tq.Schedule(tp).then(insert_thread_id); });
+                [&] { return tq->Schedule(tp).then(insert_thread_id); });
 
   std::vector<std::thread> runners(kRunners);
   std::generate(runners.begin(), runners.end(),
-                [&] { return std::thread([&] { tq.Service(); }); });
+                [&] { return std::thread([&] { tq->Service(); }); });
 
-  tq.Shutdown();
+  tq->Shutdown();
   for (auto& t : runners) t.join();
   std::vector<Status> status(futures.size());
   std::transform(futures.begin(), futures.end(), status.begin(),
@@ -166,42 +183,17 @@ TEST(TimerQueueTest, ShutdownMultipleRunners) {
   EXPECT_THAT(status, Each(StatusIs(StatusCode::kCancelled)));
 }
 
-TEST(TimerQueueTest, ScheduleAndCancelAllMultipleRunners) {
-  TimerQueue tq;
-  auto const duration = std::chrono::seconds(1);
-  auto now = std::chrono::system_clock::now();
-  std::vector<future<StatusOr<std::chrono::system_clock::time_point>>> futures;
-  for (int i = 0; i != 100; ++i) {
-    futures.push_back(tq.Schedule(now + duration));
-  }
-  tq.CancelAll();
-  auto constexpr kRunners = 8;
-  std::vector<std::thread> runners;
-  for (auto i = 0; i != kRunners; ++i) {
-    runners.emplace_back([&] { tq.Service(); });
-  }
-  std::vector<StatusOr<std::chrono::system_clock::time_point>> timepoints;
-  timepoints.reserve(100);
-  for (auto& f : futures) {
-    timepoints.push_back(f.get());
-  }
-  tq.Shutdown();
-  for (auto& t : runners) t.join();
-
-  EXPECT_THAT(timepoints, Each(StatusIs(StatusCode::kCancelled)));
-}
-
 TEST(TimerQueueTest, ScheduleEarlierTimerMultipleRunner) {
-  TimerQueue tq;
+  auto tq = TimerQueue::Create();
   auto constexpr kRunners = 8;
   std::vector<std::thread> runners;
   for (auto i = 0; i != kRunners; ++i) {
-    runners.emplace_back([&] { tq.Service(); });
+    runners.emplace_back([&] { tq->Service(); });
   }
   auto const duration = std::chrono::milliseconds(50);
   auto now = std::chrono::system_clock::now();
-  auto later = tq.Schedule(now + 2 * duration);
-  auto earlier = tq.Schedule(now + duration);
+  auto later = tq->Schedule(now + 2 * duration);
+  auto earlier = tq->Schedule(now + duration);
   auto earlier_expire_time = earlier
                                  .then([&](auto f) {
                                    EXPECT_FALSE(later.is_ready());
@@ -209,7 +201,7 @@ TEST(TimerQueueTest, ScheduleEarlierTimerMultipleRunner) {
                                  })
                                  .get();
   auto later_expire_time = later.get();
-  tq.Shutdown();
+  tq->Shutdown();
   for (auto& t : runners) t.join();
 
   ASSERT_THAT(earlier_expire_time, IsOk());
