@@ -43,7 +43,7 @@ if ($missing.count -ge 1) {
 function Get-Vcpkg-Features {
     param([string]$vcpkg_root, [string]$package)
 
-    & "${vcpkg_root}/vcpkg.exe" search "${package}" | 
+    & "${vcpkg_root}/vcpkg.exe" search "${package}" |
         Where-Object { $_.StartsWith("${package}[") } |
         ForEach-Object { $_.replace("${package}[", "") -replace "].*", "" } |
         Where-Object { -not (

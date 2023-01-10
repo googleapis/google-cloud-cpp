@@ -47,7 +47,7 @@ the library. Intended for testing only.
 `CLOUD_STORAGE_TESTBENCH_ENDPOINT=...`: **DEPRECATED** please use
 `CLOUD_STORAGE_EMULATOR_ENDPOINT` instead.
 
-@see google::cloud::storage::RestEndpointOption 
+@see google::cloud::storage::RestEndpointOption
 @see google::cloud::storage::IamEndpointOption
 
 @section storage-env-experimental Enabling Experimental Behaviors
