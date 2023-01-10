@@ -60,9 +60,9 @@ to the `cmake` configure step:
 
 ```shell
 cd $HOME/google-cloud-cpp
-cmake -H. -GNinja -Bcmake-out/home \
+cmake -G Ninja -S . -B build-out/home \
     -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
-cmake --build cmake-out/home
+cmake --build build-out/home
 ```
 
 The first time you run this command it can take a significant time to download
@@ -72,9 +72,9 @@ much faster:
 
 ```shell
 cd $HOME/another-google-cloud-cpp-clone
-cmake -H. -GNinja -Bcmake-out/home \
+cmake -G Ninja -S . -B build-out/home \
     -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
-cmake --build cmake-out/home
+cmake --build build-out/home
 ```
 
 ## Running the unit tests
@@ -82,14 +82,14 @@ cmake --build cmake-out/home
 Once you have built `google-cloud-cpp` you can run the unit tests using:
 
 ```shell
-env -C cmake-out/home ctest --output-on-failure -LE integration-test
+env -C build-out/home ctest --output-on-failure -LE integration-test
 ```
 
 If you also want to run the integration tests you need to setup multiple
 [environment variables](/ci/etc/integration-tests-config.sh), and then run:
 
 ```shell
-env -C cmake-out/home ctest --output-on-failure
+env -C build-out/home ctest --output-on-failure
 ```
 
 ## Other Build Options
@@ -104,12 +104,12 @@ installed, you can change the compiler using:
 
 ```shell
 CXX=clang++ CC=clang \
-    cmake -H. -GNinja -Bcmake-out/clang \
+    cmake -G Ninja -S . -B build-out/clang \
     -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
 
 # Then compile and test normally:
-cmake --build cmake-out/clang
-(cd cmake-out/clang && ctest --output-on-failure -LE integration-test)
+cmake --build build-out/clang
+(cd build-out/clang && ctest --output-on-failure -LE integration-test)
 ```
 
 `vcpkg` uses the compiler as part of its binary cache inputs, that is, changing
@@ -123,11 +123,11 @@ By default, the system is compiled with optimizations on; if you want to compile
 a debug version, use:
 
 ```shell
-cmake -H. -GNinja -Bcmake-out/manual -DCMAKE_BUILD_TYPE=Debug
+cmake -G Ninja -S . -B build-out/manual -DCMAKE_BUILD_TYPE=Debug
 
 # Then compile and test normally:
-cmake --build cmake-out/manual
-(cd cmake-out/manual && ctest --output-on-failure -LE integration-test)
+cmake --build build-out/manual
+(cd build-out/manual && ctest --output-on-failure -LE integration-test)
 ```
 
 `google-cloud-cpp` supports the standard CMake
