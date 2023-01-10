@@ -38,7 +38,7 @@ The following shows the code that you'll run in the
 `google/cloud/language/quickstart/` directory,
 which should give you a taste of the Cloud Natural Language API C++ client library API.
 
-@include quickstart.cc
+@snippet quickstart.cc all
 
 ## Environment Variables
 

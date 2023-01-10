@@ -47,7 +47,7 @@ The following shows the code that you'll run in the
 `google/cloud/bigquery/quickstart/` directory, which should give you a taste of
 the Cloud BigQuery C++ client library API.
 
-@include quickstart.cc
+@snippet quickstart.cc all
 @endparblock
 
 ## Environment Variables
