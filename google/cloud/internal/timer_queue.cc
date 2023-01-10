@@ -88,10 +88,10 @@ void TimerQueue::Service() {
       return shutdown_ || timers_.empty() || timers_.begin()->first != until;
     };
     if (cv_.wait_until(lk, until, std::move(predicate))) {
-      // Timers can be expired only if wait_util() exits due to a timeout.
+      // Timers can be expired only if wait_util() returns due to a timeout.
       continue;
     }
-    // if we get here we know that predicate() is false, which implies that
+    // If we get here we know that predicate() is false, which implies that
     // `timers_` is not empty and the first timer's key is `until`.
     auto p = std::move(timers_.begin()->second);
     timers_.erase(timers_.begin());
@@ -119,6 +119,7 @@ void TimerQueue::CancelAll(std::unique_lock<std::mutex> lk, char const* msg) {
     auto p = std::move(timers_.begin()->second);
     timers_.erase(timers_.begin());
     lk.unlock();
+    cv_.notify_one();
     p.set_value(MakeCancelled(msg, GCP_ERROR_INFO()));
     lk.lock();
   }

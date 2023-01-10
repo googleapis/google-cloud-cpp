@@ -56,7 +56,7 @@ namespace internal {
  * tq.Shutdown();
  * @endcode
  *
- * Don't forget to join your thread pool.  Remember that this threads will not
+ * Don't forget to join your thread pool.  Remember that these threads will not
  * terminate until `Shutdown()` is called:
  * @code
  * for (auto& t : svc) t.join();
