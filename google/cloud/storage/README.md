@@ -78,7 +78,8 @@ int main(int argc, char* argv[]) {
   project should consult the [quickstart guides](#quickstart) for the library
   or libraries they want to use.
 - Developers wanting to compile the library just to run some examples or
-  tests should read the current document.
+  tests should read the project's top-level
+  [README](/README.md#building-and-installing).
 - Contributors and developers to `google-cloud-cpp` should consult the guide to
   [set up a development workstation][howto-setup-dev-workstation].
 

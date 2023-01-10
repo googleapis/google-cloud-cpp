@@ -2,15 +2,33 @@
 
 @page storage-error Error Handling
 
-[status-or-header]: https://github.com/googleapis/google-cloud-cpp/blob/main/google/cloud/status_or.h
+[StatusOr<T>]: @ref google::cloud::StatusOr
+[RuntimeStatusError]: @ref google::cloud::RuntimeStatusError
 
 This library never throws exceptions to signal errors. In general, the library
-returns a [`StatusOr<T>`][status-or-header]. Some functions return objects that
+returns a [StatusOr<T>]. Some functions return objects that
 already have an existing error handling mechanism. For example, `ReadObject()`
 returns a type derived from `std::istream` where the application can check the
 [state flags](https://en.cppreference.com/w/cpp/io/basic_ios/rdstate)
 to determine if there was an error. In these cases no `StatusOr` wrapper is
 used.
+
+Applications should check if the `StatusOr<T>` contains a value before using
+it, much like how you might check that a pointer is not null before
+dereferencing it. Indeed, a `StatusOr<T>` object can be used like a
+smart-pointer to `T`, with the main difference being that when it does not hold
+a `T` it will instead hold a `Status` object with extra information about the
+error.
+
+You can check that a `StatusOr<T>` contains a value by calling the `.ok()`
+method, or by using `operator bool()` (like with other smart pointers). If
+there is no value, you can access the contained `Status` object using the
+`.status()` member. If there is a value, you may access it by dereferencing
+with `operator*()` or `operator->()`. As with all smart pointers, callers must
+first check that the `StatusOr<T>` contains a value before dereferencing and
+accessing the contained value. Alternatively, callers may instead use the
+`.value()` member function which is defined to throw a [RuntimeStatusError] if
+there is no value.
 
 @section storage-error-example Error Handling Example (without exceptions)
 
