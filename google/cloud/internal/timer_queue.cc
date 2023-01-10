@@ -49,7 +49,7 @@ future<StatusOr<std::chrono::system_clock::time_point>> TimerQueue::Schedule(
 void TimerQueue::Shutdown() {
   std::unique_lock<std::mutex> const lk(mu_);
   shutdown_ = true;
-  cv_.notify_all();
+  cv_.notify_one();
   cv_follower_.notify_all();
 }
 
