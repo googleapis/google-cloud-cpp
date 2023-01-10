@@ -60,7 +60,8 @@ to the `cmake` configure step:
 
 ```shell
 cd $HOME/google-cloud-cpp
-cmake -H. -Bcmake-out/home -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake -H. -GNinja -Bcmake-out/home \
+    -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build cmake-out/home
 ```
 
@@ -71,7 +72,8 @@ much faster:
 
 ```shell
 cd $HOME/another-google-cloud-cpp-clone
-cmake -H. -Bcmake-out/home -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake -H. -GNinja -Bcmake-out/home \
+    -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
 cmake --build cmake-out/home
 ```
 
@@ -102,7 +104,8 @@ installed, you can change the compiler using:
 
 ```shell
 CXX=clang++ CC=clang \
-    cmake -H. -Bcmake-out/home -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
+    cmake -H. -GNinja -Bcmake-out/clang \
+    -DCMAKE_TOOLCHAIN_FILE=$HOME/vcpkg/scripts/buildsystems/vcpkg.cmake
 
 # Then compile and test normally:
 cmake --build cmake-out/clang
@@ -120,7 +123,7 @@ By default, the system is compiled with optimizations on; if you want to compile
 a debug version, use:
 
 ```shell
-cmake -H. -Bcmake-out/manual -DCMAKE_BUILD_TYPE=Debug
+cmake -H. -GNinja -Bcmake-out/manual -DCMAKE_BUILD_TYPE=Debug
 
 # Then compile and test normally:
 cmake --build cmake-out/manual
