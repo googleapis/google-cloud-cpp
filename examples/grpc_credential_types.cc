@@ -100,7 +100,7 @@ google::iam::credentials::v1::GenerateAccessTokenResponse UseAccessToken(
     auto token = client.GenerateAccessToken(
         "projects/-/serviceAccounts/" + service_account, /*delegates=*/{},
         /*scope=*/{"https://www.googleapis.com/auth/cloud-platform"}, duration);
-    if (!token) throw std::runtime_error(token.status().message());
+    if (!token) throw std::move(token).status();
 
     auto const expiration =
         std::chrono::system_clock::from_time_t(token->expire_time().seconds());
@@ -119,7 +119,7 @@ google::iam::credentials::v1::GenerateAccessTokenResponse UseAccessToken(
                 credentials)));
     for (auto config : admin.ListInstanceConfigs(
              google::cloud::Project(project_id).FullName())) {
-      if (!config) throw std::runtime_error(config.status().message());
+      if (!config) throw std::move(config).status();
       std::cout << "InstanceConfig: " << config->name() << "\n";
     }
 
@@ -161,7 +161,7 @@ void UseAccessTokenUntilExpired(google::cloud::iam::IAMCredentialsClient client,
         std::cout << ": this is expected as the token is expired\n";
         return false;
       }
-      if (!config) throw std::runtime_error(config.status().message());
+      if (!config) throw std::move(config).status();
       std::cout << "success (" << config->name() << ")\n";
       return true;
     }
@@ -187,7 +187,7 @@ void UseIdTokenHttp(google::cloud::iam::IAMCredentialsClient client,
         "projects/-/serviceAccounts/" + service_account, /*delegates=*/{},
         /*audience=*/{hello_world_url},
         /*include_email=*/true);
-    if (!token) throw std::runtime_error(token.status().message());
+    if (!token) throw std::move(token).status();
 
     auto backoff = std::chrono::milliseconds(250);
     for (int i = 0; i != 3; ++i) {
@@ -212,7 +212,7 @@ void UseIdTokenGrpc(google::cloud::iam::IAMCredentialsClient client,
         "projects/-/serviceAccounts/" + service_account, /*delegates=*/{},
         /*audience=*/{url},
         /*include_email=*/true);
-    if (!token) throw std::runtime_error(token.status().message());
+    if (!token) throw std::move(token).status();
 
     auto const prefix = std::string{"https://"};
     if (!absl::StartsWith(url, prefix)) {
