@@ -54,16 +54,15 @@ void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
         client.GetBucketMetadata(bucket_name);
     if (!original) throw std::move(original).status();
 
-    StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
+    StatusOr<gcs::BucketMetadata> patched = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(true),
         gcs::IfMetagenerationMatch(original->metageneration()));
-    if (!patched_metadata) throw std::move(patched_metadata).status();
+    if (!patched) throw std::move(patched).status();
 
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_name << " is "
-              << (patched_metadata->default_event_based_hold() ? "enabled"
-                                                               : "disabled")
+              << (patched->default_event_based_hold() ? "enabled" : "disabled")
               << "\n";
   }
   // [END storage_enable_default_event_based_hold]
@@ -82,16 +81,15 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
         client.GetBucketMetadata(bucket_name);
 
     if (!original) throw std::move(original).status();
-    StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
+    StatusOr<gcs::BucketMetadata> patched = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(false),
         gcs::IfMetagenerationMatch(original->metageneration()));
-    if (!patched_metadata) throw std::move(patched_metadata).status();
+    if (!patched) throw std::move(patched).status();
 
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_name << " is "
-              << (patched_metadata->default_event_based_hold() ? "enabled"
-                                                               : "disabled")
+              << (patched->default_event_based_hold() ? "enabled" : "disabled")
               << "\n";
   }
   // [END storage_disable_default_event_based_hold]
