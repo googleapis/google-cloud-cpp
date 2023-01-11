@@ -54,7 +54,7 @@ for the query optimizer to use when compiling a SQL query.
 
 @see google::cloud::spanner::QueryOptimizerStatisticsPackageOption
 
-@section pubsub-env-other Other Environment Variables
+@section spanner-env-other Other Environment Variables
 
 `GOOGLE_CLOUD_PROJECT=...`: is used in examples and integration tests to
 configure the GCP project. This has no effect in the library.
