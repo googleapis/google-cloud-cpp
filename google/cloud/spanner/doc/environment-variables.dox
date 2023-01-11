@@ -1,0 +1,70 @@
+/*!
+
+@page spanner-env Environment Variables
+
+A number of environment variables can be used to configure the behavior of
+the library.  There are also functions to configure this behavior in code. The
+environment variables are convenient when troubleshooting problems.
+
+@section spanner-env-logging Logging
+
+`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc`: turns on tracing for most gRPC
+calls. The library injects an additional Stub decorator that prints each gRPC
+request and response.  Unless you have configured you own logging backend,
+you should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on
+the program's console.
+
+`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams`: turns on tracing for streaming
+gRPC calls, such as `Client::Read()`, `Client::ExecuteQuery()`, and
+`Client::ProfileQuery()`. This can produce a lot of output, so use with
+caution!
+
+`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams`: turns on tracing for both 
+regular RPC calls and streaming RPC calls.
+
+@see google::cloud::TracingComponentsOption
+
+`GOOGLE_CLOUD_CPP_ENABLE_CLOG=yes`: turns on logging in the library, basically
+the library always "logs" but the logging infrastructure has no backend to
+actually print anything until the application sets a backend or they set this
+environment variable.
+
+@see google::cloud::LogBackend
+@see google::cloud::LogSink
+
+@section spanner-env-endpoint Endpoint Overrides
+
+`GOOGLE_CLOUD_CPP_SPANNER_DEFAULT_ENDPOINT=...`: changes the default endpoint
+(spanner.googleapis.com) for the library. Intended for testing only.
+
+`SPANNER_EMULATOR_HOST=host:port`: tells the library to connect to the
+specified emulator rather than the default endpoint. Intended for testing only.
+
+@see google::cloud::EndpointOption
+
+@section spanner-env-defaults Default behaviors
+
+`SPANNER_OPTIMIZER_VERSION=n`: sets the default query optimizer version to use
+in `Client::ExecuteQuery()` calls.
+
+@see google::cloud::spanner::QueryOptimizerVersionOption
+
+`SPANNER_OPTIMIZER_STATISTICS_PACKAGE=...`: specifies a statistics package
+for the query optimizer to use when compiling a SQL query.
+
+@see google::cloud::spanner::QueryOptimizerStatisticsPackageOption
+
+@section pubsub-env-other Other Environment Variables
+
+`GOOGLE_CLOUD_PROJECT=...`: is used in examples and integration tests to
+configure the GCP project. This has no effect in the library.
+
+`GOOGLE_CLOUD_CPP_SPANNER_TEST_INSTANCE_ID=...` is used in examples and
+integration tests to, well, configure the spanner instance. This has no effect
+in the library.
+
+`GOOGLE_CLOUD_CPP_SPANNER_TEST_SERVICE_ACCOUNT=...`: is used in examples and
+integration tests to set the service account for testing IAM operations. This
+has no effect in the library.
+
+*/
