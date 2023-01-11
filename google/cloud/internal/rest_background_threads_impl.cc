@@ -26,9 +26,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 AutomaticallyCreatedRestBackgroundThreads::
     AutomaticallyCreatedRestBackgroundThreads(std::size_t thread_count,
-                                              std::size_t num_timer_threads)
-    : cq_(std::make_shared<RestCompletionQueueImpl>(num_timer_threads)),
-      pool_(thread_count < 2 ? 2 : thread_count) {
+                                              std::size_t)
+    : cq_(std::make_shared<RestCompletionQueueImpl>()),
+      pool_(thread_count < 1 ? 1 : thread_count) {
   std::generate_n(pool_.begin(), pool_.size(), [this] {
     promise<void> started;
     auto thread = std::thread(
