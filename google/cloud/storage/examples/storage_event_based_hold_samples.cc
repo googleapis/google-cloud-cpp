@@ -30,10 +30,7 @@ void GetDefaultEventBasedHold(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
+    if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_metadata->name() << " is "
@@ -55,21 +52,17 @@ void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
+    if (!original) throw std::move(original).status();
 
-    if (!original) throw std::runtime_error(original.status().message());
-    StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
+    StatusOr<gcs::BucketMetadata> patched = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(true),
         gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!patched_metadata) {
-      throw std::runtime_error(patched_metadata.status().message());
-    }
+    if (!patched) throw std::move(patched).status();
 
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_name << " is "
-              << (patched_metadata->default_event_based_hold() ? "enabled"
-                                                               : "disabled")
+              << (patched->default_event_based_hold() ? "enabled" : "disabled")
               << "\n";
   }
   // [END storage_enable_default_event_based_hold]
@@ -87,20 +80,16 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) throw std::runtime_error(original.status().message());
-    StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
+    if (!original) throw std::move(original).status();
+    StatusOr<gcs::BucketMetadata> patched = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(false),
         gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!patched_metadata) {
-      throw std::runtime_error(patched_metadata.status().message());
-    }
+    if (!patched) throw std::move(patched).status();
 
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_name << " is "
-              << (patched_metadata->default_event_based_hold() ? "enabled"
-                                                               : "disabled")
+              << (patched->default_event_based_hold() ? "enabled" : "disabled")
               << "\n";
   }
   // [END storage_disable_default_event_based_hold]

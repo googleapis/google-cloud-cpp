@@ -99,7 +99,7 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     stream.Close();
 
     StatusOr<gcs::ObjectMetadata> metadata = stream.metadata();
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
     std::cout << "Upload completed, the new object metadata is: " << *metadata
               << "\n";
   }

@@ -33,7 +33,7 @@ void UploadFile(google::cloud::storage::Client client,
     // client-side to verify data integrity during transmission.
     StatusOr<gcs::ObjectMetadata> metadata = client.UploadFile(
         file_name, bucket_name, object_name, gcs::IfGenerationMatch(0));
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
 
     std::cout << "Uploaded " << file_name << " to object " << metadata->name()
               << " in bucket " << metadata->bucket()
@@ -55,7 +55,7 @@ void UploadFileResumable(google::cloud::storage::Client client,
     StatusOr<gcs::ObjectMetadata> metadata = client.UploadFile(
         file_name, bucket_name, object_name, gcs::IfGenerationMatch(0),
         gcs::NewResumableUploadSession());
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
 
     std::cout << "Uploaded " << file_name << " to object " << metadata->name()
               << " in bucket " << metadata->bucket()
@@ -78,7 +78,7 @@ void ParallelUploadFile(google::cloud::storage::Client client,
 
     auto metadata = gcs::ParallelUploadFile(
         std::move(client), file_name, bucket_name, object_name, prefix, false);
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
 
     std::cout << "Uploaded " << file_name << " to object " << metadata->name()
               << " in bucket " << metadata->bucket()

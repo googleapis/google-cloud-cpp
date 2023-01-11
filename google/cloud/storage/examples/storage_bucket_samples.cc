@@ -29,9 +29,7 @@ void ListBuckets(google::cloud::storage::Client client,
     int count = 0;
     gcs::ListBucketsReader bucket_list = client.ListBuckets();
     for (auto&& bucket_metadata : bucket_list) {
-      if (!bucket_metadata) {
-        throw std::runtime_error(bucket_metadata.status().message());
-      }
+      if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
       std::cout << bucket_metadata->name() << "\n";
       ++count;
@@ -52,9 +50,7 @@ void ListBucketsForProject(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& project_id) {
     int count = 0;
     for (auto&& bucket_metadata : client.ListBucketsForProject(project_id)) {
-      if (!bucket_metadata) {
-        throw std::runtime_error(bucket_metadata.status().message());
-      }
+      if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
       std::cout << bucket_metadata->name() << "\n";
       ++count;
@@ -76,10 +72,7 @@ void CreateBucket(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.CreateBucket(bucket_name, gcs::BucketMetadata());
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
+    if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
     std::cout << "Bucket " << bucket_metadata->name() << " created."
               << "\nFull Metadata: " << *bucket_metadata << "\n";
@@ -98,10 +91,7 @@ void CreateBucketForProject(google::cloud::storage::Client client,
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.CreateBucketForProject(bucket_name, project_id,
                                       gcs::BucketMetadata{});
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
+    if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
     std::cout << "Bucket " << bucket_metadata->name() << " created for project "
               << project_id << " [" << bucket_metadata->project_number() << "]"
@@ -124,10 +114,7 @@ void CreateBucketWithStorageClassLocation(
         client.CreateBucket(bucket_name, gcs::BucketMetadata()
                                              .set_storage_class(storage_class)
                                              .set_location(location));
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
+    if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
     std::cout << "Bucket " << bucket_metadata->name() << " created."
               << "\nFull Metadata: " << *bucket_metadata << "\n";
@@ -148,7 +135,7 @@ void CreateBucketDualRegion(google::cloud::storage::Client client,
         bucket_name,
         gcs::BucketMetadata().set_custom_placement_config(
             gcs::BucketCustomPlacementConfig{{region_a, region_b}}));
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
 
     std::cout << "Bucket " << metadata->name() << " created."
               << "\nFull Metadata: " << *metadata << "\n";
@@ -166,10 +153,7 @@ void GetBucketMetadata(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
+    if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
     std::cout << "The metadata for bucket " << bucket_metadata->name() << " is "
               << *bucket_metadata << "\n";
@@ -185,8 +169,8 @@ void DeleteBucket(google::cloud::storage::Client client,
   namespace gcs = ::google::cloud::storage;
   [](gcs::Client client, std::string const& bucket_name) {
     google::cloud::Status status = client.DeleteBucket(bucket_name);
-
     if (!status.ok()) throw std::runtime_error(status.message());
+
     std::cout << "The bucket " << bucket_name << " was deleted successfully.\n";
   }
   //! [delete bucket] [END storage_delete_bucket]
@@ -201,19 +185,16 @@ void ChangeDefaultStorageClass(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& storage_class) {
     StatusOr<gcs::BucketMetadata> meta = client.GetBucketMetadata(bucket_name);
+    if (!meta) throw std::move(meta).status();
 
-    if (!meta) throw std::runtime_error(meta.status().message());
     meta->set_storage_class(storage_class);
-    StatusOr<gcs::BucketMetadata> updated_meta =
+    StatusOr<gcs::BucketMetadata> updated =
         client.UpdateBucket(bucket_name, *meta);
+    if (!updated) throw std::move(updated).status();
 
-    if (!updated_meta) {
-      throw std::runtime_error(updated_meta.status().message());
-    }
-
-    std::cout << "Updated the storage class in " << updated_meta->name()
-              << " to " << updated_meta->storage_class() << "."
-              << "\nFull metadata:" << *updated_meta << "\n";
+    std::cout << "Updated the storage class in " << updated->name() << " to "
+              << updated->storage_class() << "."
+              << "\nFull metadata:" << *updated << "\n";
   }
   //! [update bucket]
   (std::move(client), argv.at(0), argv.at(1));
@@ -228,15 +209,15 @@ void PatchBucketStorageClass(google::cloud::storage::Client client,
      std::string const& storage_class) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
+    if (!original) throw std::move(original).status();
 
-    if (!original) throw std::runtime_error(original.status().message());
     gcs::BucketMetadata desired = *original;
     desired.set_storage_class(storage_class);
 
     StatusOr<gcs::BucketMetadata> patched =
         client.PatchBucket(bucket_name, *original, desired);
+    if (!patched) throw std::move(patched).status();
 
-    if (!patched) throw std::runtime_error(patched.status().message());
     std::cout << "Storage class for bucket " << patched->name()
               << " has been patched to " << patched->storage_class() << "."
               << "\nFull metadata: " << *patched << "\n";
@@ -255,8 +236,8 @@ void PatchBucketStorageClassWithBuilder(google::cloud::storage::Client client,
     StatusOr<gcs::BucketMetadata> patched = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetStorageClass(storage_class));
+    if (!patched) throw std::move(patched).status();
 
-    if (!patched) throw std::runtime_error(patched.status().message());
     std::cout << "Storage class for bucket " << patched->name()
               << " has been patched to " << patched->storage_class() << "."
               << "\nFull metadata: " << *patched << "\n";
@@ -273,10 +254,7 @@ void GetBucketClassAndLocation(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
+    if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
     std::cout << "Bucket " << bucket_metadata->name()
               << " default storage class is "
@@ -297,16 +275,13 @@ void EnableUniformBucketLevelAccess(google::cloud::storage::Client client,
     gcs::BucketIamConfiguration configuration;
     configuration.uniform_bucket_level_access =
         gcs::UniformBucketLevelAccess{true, {}};
-    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+    StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
                          std::move(configuration)));
-
-    if (!updated_metadata) {
-      throw std::runtime_error(updated_metadata.status().message());
-    }
+    if (!updated) throw std::move(updated).status();
 
     std::cout << "Successfully enabled Uniform Bucket Level Access on bucket "
-              << updated_metadata->name() << "\n";
+              << updated->name() << "\n";
   }
   // [END storage_enable_uniform_bucket_level_access]
   //! [enable uniform bucket level access]
@@ -323,16 +298,13 @@ void DisableUniformBucketLevelAccess(google::cloud::storage::Client client,
     gcs::BucketIamConfiguration configuration;
     configuration.uniform_bucket_level_access =
         gcs::UniformBucketLevelAccess{false, {}};
-    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+    StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
                          std::move(configuration)));
-
-    if (!updated_metadata) {
-      throw std::runtime_error(updated_metadata.status().message());
-    }
+    if (!updated) throw std::move(updated).status();
 
     std::cout << "Successfully disabled Uniform Bucket Level Access on bucket "
-              << updated_metadata->name() << "\n";
+              << updated->name() << "\n";
   }
   // [END storage_disable_uniform_bucket_level_access]
   //! [disable uniform bucket level access]
@@ -348,10 +320,7 @@ void GetUniformBucketLevelAccess(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
+    if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
     if (bucket_metadata->has_iam_configuration() &&
         bucket_metadata->iam_configuration()
@@ -382,16 +351,13 @@ void SetPublicAccessPreventionEnforced(google::cloud::storage::Client client,
     gcs::BucketIamConfiguration configuration;
     configuration.public_access_prevention =
         gcs::PublicAccessPreventionEnforced();
-    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+    StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
                          std::move(configuration)));
-
-    if (!updated_metadata) {
-      throw std::runtime_error(updated_metadata.status().message());
-    }
+    if (!updated) throw std::move(updated).status();
 
     std::cout << "Public Access Prevention is set to 'enforced' for "
-              << updated_metadata->name() << "\n";
+              << updated->name() << "\n";
   }
   // [END storage_set_public_access_prevention_enforced]
   (std::move(client), argv.at(0));
@@ -410,7 +376,7 @@ void SetPublicAccessPreventionInherited(google::cloud::storage::Client client,
     auto updated = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().SetIamConfiguration(
                          std::move(configuration)));
-    if (!updated) throw std::runtime_error(updated.status().message());
+    if (!updated) throw std::move(updated).status();
 
     std::cout << "Public Access Prevention is set to 'inherited' for "
               << updated->name() << "\n";
@@ -428,9 +394,7 @@ void GetPublicAccessPrevention(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
+    if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
     if (bucket_metadata->has_iam_configuration() &&
         bucket_metadata->iam_configuration()
@@ -458,7 +422,7 @@ void CreateBucketAsyncTurbo(google::cloud::storage::Client client,
         client.CreateBucket(bucket_name, gcs::BucketMetadata()
                                              .set_rpo(gcs::RpoAsyncTurbo())
                                              .set_location("NAM4"));
-    if (!bucket) throw std::runtime_error(bucket.status().message());
+    if (!bucket) throw std::move(bucket).status();
 
     std::cout << "Created bucket " << bucket->name() << " with RPO set to "
               << bucket->rpo() << " in " << bucket->location() << ".\n";
@@ -476,7 +440,7 @@ void SetRpoAsyncTurbo(google::cloud::storage::Client client,
     auto updated = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetRpo(gcs::RpoAsyncTurbo()));
-    if (!updated) throw std::runtime_error(updated.status().message());
+    if (!updated) throw std::move(updated).status();
 
     std::cout << "RPO is set to 'ASYNC_TURBO' for " << updated->name() << "\n";
   }
@@ -493,7 +457,7 @@ void SetRpoDefault(google::cloud::storage::Client client,
     auto updated = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetRpo(gcs::RpoDefault()));
-    if (!updated) throw std::runtime_error(updated.status().message());
+    if (!updated) throw std::move(updated).status();
 
     std::cout << "RPO is set to 'default' for " << updated->name() << "\n";
   }
@@ -508,7 +472,7 @@ void GetRpo(google::cloud::storage::Client client,
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name) {
     auto metadata = client.GetBucketMetadata(bucket_name);
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
 
     std::cout << "RPO is " << metadata->rpo() << " for bucket "
               << metadata->name() << "\n";
@@ -524,18 +488,15 @@ void AddBucketLabel(google::cloud::storage::Client client,
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& label_key, std::string const& label_value) {
-    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+    StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetLabel(label_key, label_value));
-
-    if (!updated_metadata) {
-      throw std::runtime_error(updated_metadata.status().message());
-    }
+    if (!updated) throw std::move(updated).status();
 
     std::cout << "Successfully set label " << label_key << " to " << label_value
-              << " on bucket  " << updated_metadata->name() << ".";
+              << " on bucket  " << updated->name() << ".";
     std::cout << " The bucket labels are now:";
-    for (auto const& kv : updated_metadata->labels()) {
+    for (auto const& kv : updated->labels()) {
       std::cout << "\n  " << kv.first << ": " << kv.second;
     }
     std::cout << "\n";
@@ -552,10 +513,7 @@ void GetBucketLabels(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name, gcs::Fields("labels"));
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
+    if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
     if (bucket_metadata->labels().empty()) {
       std::cout << "The bucket " << bucket_name << " has no labels set.\n";
@@ -579,21 +537,18 @@ void RemoveBucketLabel(google::cloud::storage::Client client,
   using ::google::cloud::StatusOr;
   [](gcs::Client client, std::string const& bucket_name,
      std::string const& label_key) {
-    StatusOr<gcs::BucketMetadata> updated_metadata = client.PatchBucket(
+    StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().ResetLabel(label_key));
-
-    if (!updated_metadata) {
-      throw std::runtime_error(updated_metadata.status().message());
-    }
+    if (!updated) throw std::move(updated).status();
 
     std::cout << "Successfully reset label " << label_key << " on bucket  "
-              << updated_metadata->name() << ".";
-    if (updated_metadata->labels().empty()) {
+              << updated->name() << ".";
+    if (updated->labels().empty()) {
       std::cout << " The bucket now has no labels.\n";
       return;
     }
     std::cout << " The bucket labels are now:";
-    for (auto const& kv : updated_metadata->labels()) {
+    for (auto const& kv : updated->labels()) {
       std::cout << "\n  " << kv.first << ": " << kv.second;
     }
     std::cout << "\n";
