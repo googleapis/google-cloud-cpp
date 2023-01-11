@@ -29,7 +29,7 @@ StatusOr<std::chrono::system_clock::time_point> MakeCancelled(
 }  // namespace
 
 std::shared_ptr<TimerQueue> TimerQueue::Create() {
-  // As usual, we cannot use std::make_shared<> because the constructor is 
+  // As usual, we cannot use std::make_shared<> because the constructor is
   // private.
   return std::shared_ptr<TimerQueue>(new TimerQueue);
 }
