@@ -113,7 +113,7 @@ void RewriteObjectResume(google::cloud::storage::Client client,
         destination_object_name, rewrite_token,
         gcs::MaxBytesRewrittenPerCall(1024 * 1024));
 
-    auto callback = [](StatusOr<gcs::RewriteProgress>  progress) {
+    auto callback = [](StatusOr<gcs::RewriteProgress> progress) {
       if (!progress) throw std::move(progress).status();
       std::cout << "Rewrote " << progress->total_bytes_rewritten << "/"
                 << progress->object_size << "\n";

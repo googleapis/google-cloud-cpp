@@ -113,9 +113,7 @@ void PatchDefaultObjectAcl(google::cloud::storage::Client client,
      std::string const& entity, std::string const& role) {
     StatusOr<gcs::ObjectAccessControl> original_acl =
         client.GetDefaultObjectAcl(bucket_name, entity);
-    if (!original_acl) 
-      throw std::move(original_acl).status();
-    
+    if (!original_acl) throw std::move(original_acl).status();
 
     auto new_acl = *original_acl;
     new_acl.set_role(role);
