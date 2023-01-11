@@ -44,7 +44,7 @@ void CreateTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
 
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.CreateTable(instance_name, table_id, std::move(t));
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     std::cout << "Table successfully created: " << schema->DebugString()
               << "\n";
   }
@@ -68,8 +68,8 @@ void ListTables(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
 
     StreamRange<google::bigtable::admin::v2::Table> tables =
         admin.ListTables(std::move(r));
-    for (auto const& table : tables) {
-      if (!table) throw std::runtime_error(table.status().message());
+    for (auto& table : tables) {
+      if (!table) throw std::move(table).status();
       std::cout << table->name() << "\n";
     }
   }
@@ -93,7 +93,7 @@ void GetTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
 
     StatusOr<google::bigtable::admin::v2::Table> table =
         admin.GetTable(std::move(r));
-    if (!table) throw std::runtime_error(table.status().message());
+    if (!table) throw std::move(table).status();
     std::cout << table->name() << " details=\n" << table->DebugString() << "\n";
   }
   //! [get table] [END bigtable_get_table_metadata]
@@ -122,7 +122,7 @@ void CheckTableExists(
         std::cout << "Table " << table_id << " does not exist\n";
         return;
       }
-      throw std::runtime_error(table.status().message());
+      throw std::move(table).status();
     }
 
     std::cout << "Table " << table_id << " was found\n";
@@ -152,12 +152,12 @@ void GetOrCreateTable(
         table.status().code() == google::cloud::StatusCode::kNotFound) {
       // The table does not exist, try to create the table.
       table = admin.CreateTable(instance_name, table_id, {});
-      if (!table) throw std::runtime_error(table.status().message());
+      if (!table) throw std::move(table).status();
       // The schema returned by a `CreateTable()` request does not include all
       // the metadata for a table, we need to explicitly request the rest:
       table = admin.GetTable(std::move(r));
     }
-    if (!table) throw std::runtime_error(table.status().message());
+    if (!table) throw std::move(table).status();
     std::cout << "Table metadata: " << table->DebugString() << "\n";
   }
   // [END bigtable_get_or_create_table]
@@ -214,7 +214,7 @@ void ModifyTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
         admin.ModifyColumnFamilies(
             table_name, {std::move(m1), std::move(m2), std::move(m3)});
 
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   //! [modify table]
@@ -244,7 +244,7 @@ void CreateMaxAgeFamily(
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_max_age]
@@ -271,7 +271,7 @@ void CreateMaxVersionsFamily(
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_max_versions]
@@ -302,7 +302,7 @@ void CreateUnionFamily(
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_union]
@@ -334,7 +334,7 @@ void CreateIntersectionFamily(
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_intersection]
@@ -371,7 +371,7 @@ void CreateNestedFamily(
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_create_family_gc_nested]
@@ -398,7 +398,7 @@ void GetFamilyMetadata(
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.GetTable(std::move(r));
 
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     auto pos = schema->column_families().find(family_name);
     if (pos == schema->column_families().end()) {
       std::cout << "Cannot find family <" << family_name << "> in table\n";
@@ -432,7 +432,7 @@ void GetOrCreateFamily(
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.GetTable(std::move(r));
 
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     auto pos = schema->column_families().find(family_name);
     if (pos == schema->column_families().end()) {
       // Try to create the column family instead:
@@ -441,7 +441,7 @@ void GetOrCreateFamily(
       mod.mutable_create()->mutable_gc_rule()->set_max_num_versions(5);
 
       auto modified = admin.ModifyColumnFamilies(table_name, {std::move(mod)});
-      if (!modified) throw std::runtime_error(schema.status().message());
+      if (!modified) throw std::move(schema).status();
       schema = *std::move(modified);
       pos = schema->column_families().find(family_name);
     }
@@ -478,7 +478,7 @@ void DeleteColumnFamily(
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_delete_family]
@@ -504,7 +504,7 @@ void CheckFamilyExists(
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.GetTable(std::move(r));
 
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     auto pos = schema->column_families().find(family_name);
     if (pos == schema->column_families().end()) {
       std::cout << "The column family <" << family_name << "> does not exist";
@@ -534,7 +534,7 @@ void ListColumnFamilies(
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.GetTable(std::move(r));
 
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     for (auto const& kv : schema->column_families()) {
       std::string const& column_family_name = kv.first;
       google::bigtable::admin::v2::ColumnFamily const& family = kv.second;
@@ -565,7 +565,7 @@ void UpdateGcRule(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     StatusOr<google::bigtable::admin::v2::Table> schema =
         admin.ModifyColumnFamilies(table_name, {std::move(mod)});
 
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
     std::cout << "Schema modified to: " << schema->DebugString() << "\n";
   }
   // [END bigtable_update_gc_rule]
@@ -639,7 +639,7 @@ void WaitForConsistencyCheck(
     StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
         consistency_token = admin.GenerateConsistencyToken(table_name);
     if (!consistency_token) {
-      throw std::runtime_error(consistency_token.status().message());
+      throw std::move(consistency_token).status();
     }
     // Start a thread to perform the background work.
     CompletionQueue cq;
@@ -675,7 +675,7 @@ void CheckConsistency(
     std::string table_name = cbt::TableName(project_id, instance_id, table_id);
     StatusOr<google::bigtable::admin::v2::CheckConsistencyResponse> result =
         admin.CheckConsistency(table_name, consistency_token);
-    if (!result) throw std::runtime_error(result.status().message());
+    if (!result) throw std::move(result).status();
     if (result->consistent()) {
       std::cout << "Table is consistent with token " << consistency_token
                 << "\n";
@@ -701,7 +701,7 @@ void GenerateConsistencyToken(
     std::string table_name = cbt::TableName(project_id, instance_id, table_id);
     StatusOr<google::bigtable::admin::v2::GenerateConsistencyTokenResponse>
         token = admin.GenerateConsistencyToken(table_name);
-    if (!token) throw std::runtime_error(token.status().message());
+    if (!token) throw std::move(token).status();
     std::cout << "generated token is : " << token->consistency_token() << "\n";
   }
   //! [generate consistency token]
@@ -749,7 +749,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
   auto table_1 = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                    table_id_1, std::move(t));
-  if (!table_1) throw std::runtime_error(table_1.status().message());
+  if (!table_1) throw std::move(table_1).status();
 
   std::cout << "\nRunning ListTables() example" << std::endl;
   ListTables(admin, {project_id, instance_id});
@@ -828,7 +828,7 @@ void RunAll(std::vector<std::string> const& argv) {
   GenerateConsistencyToken(admin, {project_id, instance_id, table_id_1});
 
   auto token = admin.GenerateConsistencyToken(table_1->name());
-  if (!token) throw std::runtime_error(token.status().message());
+  if (!token) throw std::move(token).status();
 
   std::cout << "\nRunning CheckConsistency() example" << std::endl;
   CheckConsistency(

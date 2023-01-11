@@ -197,7 +197,7 @@ void AsyncReadRow(google::cloud::bigtable::Table table,
             [row_key](future<StatusOr<std::pair<bool, cbt::Row>>> row_future) {
               // Read a row, this returns a tuple (bool, row)
               auto tuple = row_future.get();
-              if (!tuple) throw std::runtime_error(tuple.status().message());
+              if (!tuple) throw std::move(tuple).status();
               if (!tuple->first) {
                 std::cout << "Row " << row_key << " not found\n";
                 return;
@@ -244,7 +244,7 @@ void AsyncCheckAndMutate(google::cloud::bigtable::Table table,
     branch_future
         .then([](future<StatusOr<cbt::MutationBranch>> f) {
           auto response = f.get();
-          if (!response) throw std::runtime_error(response.status().message());
+          if (!response) throw std::move(response).status();
           if (*response == cbt::MutationBranch::kPredicateMatched) {
             std::cout << "The predicate was matched\n";
           } else {
@@ -270,7 +270,7 @@ void AsyncSampleRows(google::cloud::bigtable::Table table,
     samples_future
         .then([](future<StatusOr<std::vector<cbt::RowKeySample>>> f) {
           auto samples = f.get();
-          if (!samples) throw std::runtime_error(samples.status().message());
+          if (!samples) throw std::move(samples).status();
           for (auto const& sample : *samples) {
             std::cout << "key=" << sample.row_key << " - "
                       << sample.offset_bytes << "\n";
@@ -347,7 +347,7 @@ void RunAll(std::vector<std::string> const& argv) {
   families["fam"].mutable_gc_rule()->set_max_num_versions(10);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                   table_id, std::move(t));
-  if (!schema) throw std::runtime_error(schema.status().message());
+  if (!schema) throw std::move(schema).status();
 
   using ::google::cloud::Options;
   cbt::Table table(cbt::MakeDataConnection(),

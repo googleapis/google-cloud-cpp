@@ -64,7 +64,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
   std::string const project_name = Project(project_id).FullName();
   StatusOr<google::bigtable::admin::v2::ListInstancesResponse> instances =
       instance_admin.ListInstances(project_name);
-  if (!instances) throw std::runtime_error(instances.status().message());
+  if (!instances) throw std::move(instances).status();
   if (!instances->failed_locations().empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
@@ -112,7 +112,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
                   if (!instance) {
                     std::cerr << "Could not create instance " << instance_id
                               << "\n";
-                    throw std::runtime_error(instance.status().message());
+                    throw std::move(instance).status();
                   }
                   std::cout << "Successfully created instance: "
                             << instance->DebugString() << "\n";
@@ -127,7 +127,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
   //! [list instances]
   std::cout << "\nListing Instances:\n";
   instances = instance_admin.ListInstances(project_name);
-  if (!instances) throw std::runtime_error(instances.status().message());
+  if (!instances) throw std::move(instances).status();
   if (!instances->failed_locations().empty()) {
     std::cerr
         << "The service tells us it has no information about these locations:";
@@ -145,7 +145,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
   //! [get instance]
   std::cout << "\nGet Instance:\n";
   auto instance = instance_admin.GetInstance(instance_name);
-  if (!instance) throw std::runtime_error(instance.status().message());
+  if (!instance) throw std::move(instance).status();
   std::cout << "Instance details :\n" << instance->DebugString() << "\n";
   //! [get instance]
 
@@ -153,7 +153,7 @@ void BigtableHelloInstance(std::vector<std::string> const& argv) {
   std::cout << "\nListing Clusters:\n";
   StatusOr<google::bigtable::admin::v2::ListClustersResponse> cluster_list =
       instance_admin.ListClusters(instance_name);
-  if (!cluster_list) throw std::runtime_error(cluster_list.status().message());
+  if (!cluster_list) throw std::move(cluster_list).status();
   if (!cluster_list->failed_locations().empty()) {
     std::cout << "The Cloud Bigtable service reports that the following "
                  "locations are temporarily unavailable and no information "

@@ -53,8 +53,8 @@ void AccessToken(std::vector<std::string> const& argv) {
     r.set_parent(cbt::InstanceName(project_id, instance_id));
     r.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
     auto tables = admin.ListTables(std::move(r));
-    for (auto const& table : tables) {
-      if (!table) throw std::runtime_error(table.status().message());
+    for (auto& table : tables) {
+      if (!table) throw std::move(table).status();
     }
   }
   //! [test access token]
@@ -101,8 +101,8 @@ void JWTAccessToken(std::vector<std::string> const& argv) {
     r.set_parent(cbt::InstanceName(project_id, instance_id));
     r.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
     auto tables = admin.ListTables(std::move(r));
-    for (auto const& table : tables) {
-      if (!table) throw std::runtime_error(table.status().message());
+    for (auto& table : tables) {
+      if (!table) throw std::move(table).status();
     }
   }
   //! [test jwt access token]
@@ -136,8 +136,8 @@ void GCECredentials(std::vector<std::string> const& argv) {
     r.set_parent(cbt::InstanceName(project_id, instance_id));
     r.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
     auto tables = admin.ListTables(std::move(r));
-    for (auto const& table : tables) {
-      if (!table) throw std::runtime_error(table.status().message());
+    for (auto& table : tables) {
+      if (!table) throw std::move(table).status();
     }
   }
   //! [test gce credentials]

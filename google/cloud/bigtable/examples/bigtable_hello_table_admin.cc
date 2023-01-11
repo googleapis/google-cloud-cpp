@@ -76,9 +76,8 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
   google::bigtable::admin::v2::ListTablesRequest list_req;
   list_req.set_parent(instance_name);
   list_req.set_view(google::bigtable::admin::v2::Table::NAME_ONLY);
-  auto tables = admin.ListTables(std::move(list_req));
-  for (auto const& table : tables) {
-    if (!table) throw std::runtime_error(table.status().message());
+  for (auto& table : admin.ListTables(std::move(list_req))) {
+    if (!table) throw std::move(table).status();
     std::cout << "    " << table->name() << "\n";
   }
   std::cout << "DONE\n";
@@ -91,7 +90,7 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
   get_req.set_view(google::bigtable::admin::v2::Table::FULL);
   StatusOr<google::bigtable::admin::v2::Table> table =
       admin.GetTable(std::move(get_req));
-  if (!table) throw std::runtime_error(table.status().message());
+  if (!table) throw std::move(table).status();
   std::cout << "Table name : " << table->name() << "\n";
 
   std::cout << "List table families and GC rules:\n";
@@ -114,7 +113,7 @@ void HelloWorldTableAdmin(std::vector<std::string> const& argv) {
   StatusOr<google::bigtable::admin::v2::Table> updated_schema =
       admin.ModifyColumnFamilies(table->name(), {std::move(mod)});
   if (!updated_schema) {
-    throw std::runtime_error(updated_schema.status().message());
+    throw std::move(updated_schema).status();
   }
   std::cout << "Schema modified to: " << updated_schema->DebugString() << "\n";
   //! [modify column family]
