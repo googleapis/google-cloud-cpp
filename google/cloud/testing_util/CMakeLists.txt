@@ -37,6 +37,8 @@ add_library(
     mock_backoff_policy.h
     mock_fake_clock.cc
     mock_fake_clock.h
+    opentelemetry_matchers.cc
+    opentelemetry_matchers.h
     scoped_environment.cc
     scoped_environment.h
     scoped_log.cc
@@ -54,6 +56,12 @@ target_link_libraries(
     google_cloud_cpp_testing
     PUBLIC absl::symbolize absl::failure_signal_handler
            google-cloud-cpp::common GTest::gmock)
+if (opentelemetry-cpp_FOUND)
+    target_link_libraries(
+        google_cloud_cpp_testing
+        PRIVATE opentelemetry-cpp::in_memory_span_exporter
+                opentelemetry-cpp::trace)
+endif ()
 google_cloud_cpp_add_common_options(google_cloud_cpp_testing)
 
 include(CheckCXXSymbolExists)
