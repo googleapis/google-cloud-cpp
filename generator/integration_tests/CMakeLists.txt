@@ -100,8 +100,9 @@ add_library(
     tests/mock_golden_kitchen_sink_stub.h tests/mock_golden_thing_admin_stub.h)
 target_link_libraries(
     google_cloud_cpp_generator_golden_testing
-    PUBLIC google_cloud_cpp_testing google_cloud_cpp_generator_golden
-           GTest::gmock_main GTest::gmock GTest::gtest)
+    PUBLIC google_cloud_cpp_testing google_cloud_cpp_mocks
+           google_cloud_cpp_generator_golden GTest::gmock_main GTest::gmock
+           GTest::gtest)
 
 file(
     GLOB tests_cc
