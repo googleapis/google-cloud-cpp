@@ -15,7 +15,6 @@
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "absl/memory/memory.h"
-#include <opentelemetry/sdk/instrumentationscope/instrumentation_scope.h>
 #include <opentelemetry/sdk/trace/simple_processor.h>
 #include <opentelemetry/sdk/trace/tracer.h>
 #include <opentelemetry/sdk/trace/tracer_provider_factory.h>
@@ -25,31 +24,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
-
-using ::testing::AllOf;
-using ::testing::Matcher;
-using ::testing::Pointee;
-using ::testing::Property;
-
-Matcher<SpanDataPtr> SpanHasInstrumentationScope() {
-  return Pointee(
-      Property(&opentelemetry::sdk::trace::SpanData::GetInstrumentationScope,
-               AllOf(Property(&opentelemetry::sdk::instrumentationscope::
-                                  InstrumentationScope::GetName,
-                              "gcloud-cpp"),
-                     Property(&opentelemetry::sdk::instrumentationscope::
-                                  InstrumentationScope::GetVersion,
-                              version_string()))));
-}
-
-Matcher<SpanDataPtr> SpanKindIsClient() {
-  return Pointee(Property(&opentelemetry::sdk::trace::SpanData::GetSpanKind,
-                          opentelemetry::trace::SpanKind::kClient));
-}
-
-Matcher<SpanDataPtr> SpanNamed(std::string const& name) {
-  return Pointee(Property(&opentelemetry::sdk::trace::SpanData::GetName, name));
-}
 
 std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
 InstallSpanCatcher() {

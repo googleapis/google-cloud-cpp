@@ -19,7 +19,9 @@
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
 #include <opentelemetry/exporters/memory/in_memory_span_exporter.h>
+#include <opentelemetry/sdk/instrumentationscope/instrumentation_scope.h>
 #include <opentelemetry/sdk/trace/span_data.h>
+#include <opentelemetry/trace/span.h>
 #include <memory>
 #include <string>
 
@@ -30,11 +32,56 @@ namespace testing_util {
 
 using SpanDataPtr = std::unique_ptr<opentelemetry::sdk::trace::SpanData>;
 
-::testing::Matcher<SpanDataPtr> SpanHasInstrumentationScope();
+MATCHER(SpanHasInstrumentationScope, "") {
+  auto const& scope = arg->GetInstrumentationScope();
+  auto const& name = scope.GetName();
+  auto const& version = scope.GetVersion();
 
-::testing::Matcher<SpanDataPtr> SpanKindIsClient();
+  bool match = true;
+  if (name != "gcloud-cpp") {
+    *result_listener << "instrumentation scope name: " << name << ")\n";
+    match = false;
+  }
+  if (version != version_string()) {
+    *result_listener << "instrumentation scope version: " << version << ")\n";
+    match = false;
+  }
+  return match;
+}
 
-::testing::Matcher<SpanDataPtr> SpanNamed(std::string const& name);
+MATCHER(SpanKindIsClient, "") {
+  auto to_str = [](opentelemetry::trace::SpanKind k) {
+    switch (k) {
+      case opentelemetry::trace::SpanKind::kInternal:
+        return "INTERNAL";
+      case opentelemetry::trace::SpanKind::kServer:
+        return "SERVER";
+      case opentelemetry::trace::SpanKind::kClient:
+        return "CLIENT";
+      case opentelemetry::trace::SpanKind::kProducer:
+        return "PRODUCER";
+      case opentelemetry::trace::SpanKind::kConsumer:
+      default:
+        return "UNKNOWN";
+    }
+  };
+
+  auto const& kind = arg->GetSpanKind();
+  if (kind != opentelemetry::trace::SpanKind::kClient) {
+    *result_listener << "span kind: " << to_str(kind) << ")\n";
+    return false;
+  }
+  return true;
+}
+
+MATCHER_P(SpanNamed, name, "") {
+  auto const& actual = arg->GetName();
+  if (actual != name) {
+    *result_listener << "span name: " << actual << ")\n";
+    return false;
+  }
+  return true;
+}
 
 /**
  * Provides access to created spans.
