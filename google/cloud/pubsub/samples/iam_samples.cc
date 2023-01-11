@@ -38,7 +38,7 @@ void GetTopicPolicy(std::vector<std::string> const& argv) {
     request.set_resource(topic.FullName());
 
     auto response = client.GetIamPolicy(request);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Policy for topic " << topic.FullName() << ": "
               << response->DebugString() << "\n";
   }
@@ -62,7 +62,7 @@ void SetTopicPolicy(std::vector<std::string> const& argv) {
     google::iam::v1::GetIamPolicyRequest get;
     get.set_resource(topic.FullName());
     auto policy = client.GetIamPolicy(get);
-    if (!policy) throw std::runtime_error(policy.status().message());
+    if (!policy) throw std::move(policy).status();
 
     google::iam::v1::SetIamPolicyRequest set;
     set.set_resource(topic.FullName());
@@ -77,7 +77,7 @@ void SetTopicPolicy(std::vector<std::string> const& argv) {
     b1.add_members("group:cloud-logs@google.com");
 
     auto response = client.SetIamPolicy(set);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Policy for topic " << topic.FullName() << ": "
               << response->DebugString() << "\n";
   }
@@ -100,7 +100,7 @@ void TestTopicPermissions(std::vector<std::string> const& argv) {
     request.add_permissions("pubsub.topics.update");
 
     auto response = client.TestIamPermissions(request);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Allowed permissions for topic " << topic.FullName() << ":";
     for (auto const& permission : response->permissions()) {
       std::cout << " " << permission;
@@ -124,7 +124,7 @@ void GetSubscriptionPolicy(std::vector<std::string> const& argv) {
     request.set_resource(subscription.FullName());
 
     auto response = client.GetIamPolicy(request);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Policy for subscription " << subscription.FullName() << ": "
               << response->DebugString() << "\n";
   }
@@ -148,7 +148,7 @@ void SetSubscriptionPolicy(std::vector<std::string> const& argv) {
     google::iam::v1::GetIamPolicyRequest get;
     get.set_resource(subscription.FullName());
     auto policy = client.GetIamPolicy(get);
-    if (!policy) throw std::runtime_error(policy.status().message());
+    if (!policy) throw std::move(policy).status();
 
     google::iam::v1::SetIamPolicyRequest set;
     set.set_resource(subscription.FullName());
@@ -163,7 +163,7 @@ void SetSubscriptionPolicy(std::vector<std::string> const& argv) {
     b1.add_members("group:cloud-logs@google.com");
 
     auto response = client.SetIamPolicy(set);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Policy for subscription " << subscription.FullName() << ": "
               << response->DebugString() << "\n";
   }
@@ -186,7 +186,7 @@ void TestSubscriptionPermissions(std::vector<std::string> const& argv) {
     request.add_permissions("pubsub.subscriptions.update");
 
     auto response = client.TestIamPermissions(request);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Allowed permissions for subscription "
               << subscription.FullName() << ":";
     for (auto const& permission : response->permissions()) {

@@ -126,7 +126,7 @@ void CreateTopic(google::cloud::pubsub::TopicAdminClient client,
       std::cout << "The topic already exists\n";
       return;
     }
-    if (!topic) throw std::runtime_error(topic.status().message());
+    if (!topic) throw std::move(topic).status();
 
     std::cout << "The topic was successfully created: " << topic->DebugString()
               << "\n";
@@ -144,7 +144,7 @@ void GetTopic(google::cloud::pubsub::TopicAdminClient client,
      std::string topic_id) {
     auto topic = client.GetTopic(
         pubsub::Topic(std::move(project_id), std::move(topic_id)));
-    if (!topic) throw std::runtime_error(topic.status().message());
+    if (!topic) throw std::move(topic).status();
 
     std::cout << "The topic information was successfully retrieved: "
               << topic->DebugString() << "\n";
@@ -178,8 +178,8 @@ void ListTopics(google::cloud::pubsub::TopicAdminClient client,
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::TopicAdminClient client, std::string const& project_id) {
     int count = 0;
-    for (auto const& topic : client.ListTopics(project_id)) {
-      if (!topic) throw std::runtime_error(topic.status().message());
+    for (auto& topic : client.ListTopics(project_id)) {
+      if (!topic) throw std::move(topic).status();
       std::cout << "Topic Name: " << topic->name() << "\n";
       ++count;
     }
@@ -238,8 +238,8 @@ void ListTopicSubscriptions(google::cloud::pubsub::TopicAdminClient client,
     auto const topic =
         pubsub::Topic(std::move(project_id), std::move(topic_id));
     std::cout << "Subscription list for topic " << topic << ":\n";
-    for (auto const& name : client.ListTopicSubscriptions(topic)) {
-      if (!name) throw std::runtime_error(name.status().message());
+    for (auto& name : client.ListTopicSubscriptions(topic)) {
+      if (!name) throw std::move(name).status();
       std::cout << "  " << *name << "\n";
     }
   }
@@ -256,8 +256,8 @@ void ListTopicSnapshots(google::cloud::pubsub::TopicAdminClient client,
     auto const topic =
         pubsub::Topic(std::move(project_id), std::move(topic_id));
     std::cout << "Snapshot list for topic " << topic << ":\n";
-    for (auto const& name : client.ListTopicSnapshots(topic)) {
-      if (!name) throw std::runtime_error(name.status().message());
+    for (auto& name : client.ListTopicSnapshots(topic)) {
+      if (!name) throw std::move(name).status();
       std::cout << "  " << *name << "\n";
     }
   }
@@ -278,7 +278,7 @@ void CreateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
       std::cout << "The subscription already exists\n";
       return;
     }
-    if (!sub) throw std::runtime_error(sub.status().message());
+    if (!sub) throw std::move(sub).status();
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
@@ -302,7 +302,7 @@ void CreateSubscriptionWithExactlyOnceDelivery(
       std::cout << "The subscription already exists\n";
       return;
     }
-    if (!sub) throw std::runtime_error(sub.status().message());
+    if (!sub) throw std::move(sub).status();
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
@@ -328,7 +328,7 @@ void CreateFilteredSubscription(
       std::cout << "The subscription already exists\n";
       return;
     }
-    if (!sub) throw std::runtime_error(sub.status().message());
+    if (!sub) throw std::move(sub).status();
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
@@ -355,7 +355,7 @@ void CreatePushSubscription(
       std::cout << "The subscription already exists\n";
       return;
     }
-    if (!sub) throw std::runtime_error(sub.status().message());
+    if (!sub) throw std::move(sub).status();
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
@@ -381,7 +381,7 @@ void CreateBigQuerySubscription(
       std::cout << "The subscription already exists\n";
       return;
     }
-    if (!sub) throw std::runtime_error(sub.status().message());
+    if (!sub) throw std::move(sub).status();
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
@@ -405,7 +405,7 @@ void CreateOrderingSubscription(
       std::cout << "The subscription already exists\n";
       return;
     }
-    if (!sub) throw std::runtime_error(sub.status().message());
+    if (!sub) throw std::move(sub).status();
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
@@ -435,7 +435,7 @@ void CreateDeadLetterSubscription(
       std::cout << "The subscription already exists\n";
       return;
     }
-    if (!sub) throw std::runtime_error(sub.status().message());
+    if (!sub) throw std::move(sub).status();
 
     std::cout << "The subscription was successfully created: "
               << sub->DebugString() << "\n";
@@ -535,7 +535,7 @@ void GetSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
      std::string const& subscription_id) {
     auto sub = client.GetSubscription(
         pubsub::Subscription(project_id, std::move(subscription_id)));
-    if (!sub) throw std::runtime_error(sub.status().message());
+    if (!sub) throw std::move(sub).status();
 
     std::cout << "The subscription exists and its metadata is: "
               << sub->DebugString() << "\n";
@@ -554,7 +554,7 @@ void UpdateSubscription(google::cloud::pubsub::SubscriptionAdminClient client,
         pubsub::Subscription(project_id, std::move(subscription_id)),
         pubsub::SubscriptionBuilder{}.set_ack_deadline(
             std::chrono::seconds(60)));
-    if (!s) throw std::runtime_error(s.status().message());
+    if (!s) throw std::move(s).status();
 
     std::cout << "The subscription has been updated to: " << s->DebugString()
               << "\n";
@@ -569,9 +569,8 @@ void ListSubscriptions(google::cloud::pubsub::SubscriptionAdminClient client,
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id) {
     int count = 0;
-    for (auto const& subscription : client.ListSubscriptions(project_id)) {
-      if (!subscription)
-        throw std::runtime_error(subscription.status().message());
+    for (auto& subscription : client.ListSubscriptions(project_id)) {
+      if (!subscription) throw std::move(subscription).status();
       std::cout << "Subscription Name: " << subscription->name() << "\n";
       ++count;
     }
@@ -635,7 +634,7 @@ void CreateSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
       std::cout << "The snapshot already exists\n";
       return;
     }
-    if (!snapshot.ok()) throw std::runtime_error(snapshot.status().message());
+    if (!snapshot.ok()) throw std::move(snapshot).status();
 
     std::cout << "The snapshot was successfully created: "
               << snapshot->DebugString() << "\n";
@@ -652,7 +651,7 @@ void GetSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
      std::string const& snapshot_id) {
     auto response = client.GetSnapshot(
         pubsub::Snapshot(std::move(project_id), std::move(snapshot_id)));
-    if (!response.ok()) throw std::runtime_error(response.status().message());
+    if (!response.ok()) throw std::move(response).status();
 
     std::cout << "The snapshot details are: " << response->DebugString()
               << "\n";
@@ -685,8 +684,8 @@ void ListSnapshots(google::cloud::pubsub::SubscriptionAdminClient client,
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SubscriptionAdminClient client, std::string const& project_id) {
     std::cout << "Snapshot list for project " << project_id << ":\n";
-    for (auto const& snapshot : client.ListSnapshots(project_id)) {
-      if (!snapshot) throw std::runtime_error(snapshot.status().message());
+    for (auto& snapshot : client.ListSnapshots(project_id)) {
+      if (!snapshot) throw std::move(snapshot).status();
       std::cout << "Snapshot Name: " << snapshot->name() << "\n";
     }
   }
@@ -724,7 +723,7 @@ void SeekWithSnapshot(google::cloud::pubsub::SubscriptionAdminClient client,
     auto response =
         client.Seek(pubsub::Subscription(project_id, subscription_id),
                     pubsub::Snapshot(project_id, snapshot_id));
-    if (!response.ok()) throw std::runtime_error(response.status().message());
+    if (!response.ok()) throw std::move(response).status();
 
     std::cout << "The subscription seek was successful: "
               << response->DebugString() << "\n";
@@ -743,7 +742,7 @@ void SeekWithTimestamp(google::cloud::pubsub::SubscriptionAdminClient client,
         client.Seek(pubsub::Subscription(project_id, subscription_id),
                     std::chrono::system_clock::now() -
                         std::chrono::seconds(std::stoi(seconds)));
-    if (!response.ok()) throw std::runtime_error(response.status().message());
+    if (!response.ok()) throw std::move(response).status();
 
     std::cout << "The subscription seek was successful: "
               << response->DebugString() << "\n";
@@ -760,7 +759,7 @@ void ExampleStatusOr(google::cloud::pubsub::TopicAdminClient client,
     // The actual type of `topic` is
     // google::cloud::StatusOr<google::pubsub::v1::Topic>, but
     // we expect it'll most often be declared with auto like this.
-    for (auto const& topic : client.ListTopics(project_id)) {
+    for (auto& topic : client.ListTopics(project_id)) {
       // Use `topic` like a smart pointer; check it before de-referencing
       if (!topic) {
         // `topic` doesn't contain a value, so `.status()` will contain error
@@ -805,7 +804,7 @@ void CreateAvroSchema(google::cloud::pubsub::SchemaAdminClient client,
       std::cout << "The schema already exists\n";
       return;
     }
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
 
     std::cout << "Schema successfully created: " << schema->DebugString()
               << "\n";
@@ -851,7 +850,7 @@ void GetSchema(google::cloud::pubsub::SchemaAdminClient client,
      std::string const& schema_id) {
     auto schema = client.GetSchema(pubsub::Schema(project_id, schema_id),
                                    google::pubsub::v1::FULL);
-    if (!schema) throw std::runtime_error(schema.status().message());
+    if (!schema) throw std::move(schema).status();
 
     std::cout << "The schema exists and its metadata is: "
               << schema->DebugString() << "\n";
@@ -865,9 +864,9 @@ void ListSchemas(google::cloud::pubsub::SchemaAdminClient client,
   //! [START pubsub_list_schemas] [list-schemas]
   namespace pubsub = ::google::cloud::pubsub;
   [](pubsub::SchemaAdminClient client, std::string const& project_id) {
-    for (auto const& schema :
+    for (auto& schema :
          client.ListSchemas(project_id, google::pubsub::v1::FULL)) {
-      if (!schema) throw std::runtime_error(schema.status().message());
+      if (!schema) throw std::move(schema).status();
       std::cout << "Schema: " << schema->DebugString() << "\n";
     }
   }
@@ -1049,7 +1048,7 @@ void CreateTopicWithSchema(google::cloud::pubsub::TopicAdminClient client,
       std::cout << "The topic already exists\n";
       return;
     }
-    if (!topic) throw std::runtime_error(topic.status().message());
+    if (!topic) throw std::move(topic).status();
 
     std::cout << "The topic was successfully created: " << topic->DebugString()
               << "\n";
@@ -1072,7 +1071,7 @@ void PublishAvroRecords(google::cloud::pubsub::Publisher publisher,
     std::vector<future<void>> done;
     auto handler = [](future<StatusOr<std::string>> f) {
       auto id = f.get();
-      if (!id) throw std::runtime_error(id.status().message());
+      if (!id) throw std::move(id).status();
     };
     for (auto const* data : {kNewYork, kPennsylvania}) {
       done.push_back(
@@ -1119,9 +1118,9 @@ void PublishProtobufRecords(google::cloud::pubsub::Publisher publisher,
     std::vector<future<void>> done;
     auto handler = [](future<StatusOr<std::string>> f) {
       auto id = f.get();
-      if (!id) throw std::runtime_error(id.status().message());
+      if (!id) throw std::move(id).status();
     };
-    for (auto const& data : states) {
+    for (auto& data : states) {
       google::cloud::pubsub::samples::State state;
       state.set_name(data.first);
       state.set_post_abbr(data.second);
@@ -1172,7 +1171,7 @@ void Publish(google::cloud::pubsub::Publisher publisher,
         pubsub::MessageBuilder{}.SetData("Hello World!").Build());
     auto done = message_id.then([](future<StatusOr<std::string>> f) {
       auto id = f.get();
-      if (!id) throw std::runtime_error(id.status().message());
+      if (!id) throw std::move(id).status();
       std::cout << "Hello World! published with id=" << *id << "\n";
     });
     // Block until the message is published
@@ -1201,7 +1200,7 @@ void PublishCustomAttributes(google::cloud::pubsub::Publisher publisher,
               .Build());
       done.push_back(message_id.then([i](future<StatusOr<std::string>> f) {
         auto id = f.get();
-        if (!id) throw std::runtime_error(id.status().message());
+        if (!id) throw std::move(id).status();
         std::cout << "Message " << i << " published with id=" << *id << "\n";
       }));
     }
@@ -1249,7 +1248,7 @@ void PublishOrderingKey(google::cloud::pubsub::Publisher publisher,
         {"key1", "message4"}, {"key1", "message5"},
     };
     std::vector<future<void>> done;
-    for (auto const& datum : data) {
+    for (auto& datum : data) {
       auto message_id =
           publisher.Publish(pubsub::MessageBuilder{}
                                 .SetData("Hello World! [" + datum.data + "]")
@@ -1258,7 +1257,7 @@ void PublishOrderingKey(google::cloud::pubsub::Publisher publisher,
       std::string ack_id = datum.ordering_key + "#" + datum.data;
       done.push_back(message_id.then([ack_id](future<StatusOr<std::string>> f) {
         auto id = f.get();
-        if (!id) throw std::runtime_error(id.status().message());
+        if (!id) throw std::move(id).status();
         std::cout << "Message " << ack_id << " published with id=" << *id
                   << "\n";
       }));
@@ -1286,7 +1285,7 @@ void ResumeOrderingKey(google::cloud::pubsub::Publisher publisher,
         {"key1", "message4"}, {"key1", "message5"},
     };
     std::vector<future<void>> done;
-    for (auto const& datum : data) {
+    for (auto& datum : data) {
       auto const& da = datum;  // workaround MSVC lambda capture confusion
       auto handler = [da, publisher](future<StatusOr<std::string>> f) mutable {
         auto const msg = da.ordering_key + "#" + da.data;
@@ -1406,7 +1405,7 @@ void SubscribeCustomAttributes(google::cloud::pubsub::Subscriber subscriber,
     return subscriber.Subscribe(
         [&](pubsub::Message const& m, pubsub::AckHandler h) {
           std::cout << "Received message with attributes:\n";
-          for (auto const& kv : m.attributes()) {
+          for (auto& kv : m.attributes()) {
             std::cout << "  " << kv.first << ": " << kv.second << "\n";
           }
           std::move(h).ack();
@@ -1664,7 +1663,7 @@ void PublishWithCompression(std::vector<std::string> const& argv) {
         pubsub::MessageBuilder{}.SetData("Hello World!").Build());
     auto done = message_id.then([](g::future<g::StatusOr<std::string>> f) {
       auto id = f.get();
-      if (!id) throw std::runtime_error(id.status().message());
+      if (!id) throw std::move(id).status();
       std::cout << "Hello World! published with id=" << *id << "\n";
     });
     // Block until the message is published
