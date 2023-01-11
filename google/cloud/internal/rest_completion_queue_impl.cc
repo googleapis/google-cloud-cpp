@@ -21,27 +21,18 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RestCompletionQueueImpl::RestCompletionQueueImpl()
-    : shutdown_guard_(
-          // Capturing `this` here is safe because the lifetime of copies of
-          // this member do not outlive `StartOperation`.
-          std::shared_ptr<void>(reinterpret_cast<void*>(this),
-                                [this](void*) { tq_.Shutdown(); })) {}
+    : tq_(std::make_shared<internal::TimerQueue>()) {}
 
-void RestCompletionQueueImpl::Run() { tq_.Service(); }
+void RestCompletionQueueImpl::Run() { tq_->Service(); }
 
-void RestCompletionQueueImpl::Shutdown() {
-  std::lock_guard<std::mutex> lk(mu_);
-  tq_.Shutdown();
-  shutdown_ = true;
-  shutdown_guard_.reset();
-}
+void RestCompletionQueueImpl::Shutdown() { tq_->Shutdown(); }
 
-void RestCompletionQueueImpl::CancelAll() { tq_.CancelAll(); }
+void RestCompletionQueueImpl::CancelAll() { tq_->CancelAll(); }
 
 future<StatusOr<std::chrono::system_clock::time_point>>
 RestCompletionQueueImpl::MakeDeadlineTimer(
     std::chrono::system_clock::time_point deadline) {
-  return tq_.Schedule(deadline);
+  return tq_->Schedule(deadline);
 }
 
 future<StatusOr<std::chrono::system_clock::time_point>>
@@ -63,6 +54,12 @@ void RestCompletionQueueImpl::RunAsync(
   // TODO(#xxxxx): Refactor this mechanism to a more deterministic solution.
   MakeRelativeTimer(std::chrono::milliseconds(500))
       .then([f = std::move(function)](auto) { f->exec(); });
+}
+
+void RestCompletionQueueImpl::StartOperation(
+    std::shared_ptr<internal::AsyncGrpcOperation>,
+    absl::FunctionRef<void(void*)>) {
+  GCP_LOG(FATAL) << " function not supported.\n";
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

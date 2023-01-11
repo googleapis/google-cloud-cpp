@@ -15,7 +15,6 @@
 #include "google/cloud/internal/rest_completion_queue_impl.h"
 #include "google/cloud/completion_queue.h"
 #include "google/cloud/future.h"
-#include "google/cloud/testing_util/fake_completion_queue_impl.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 #include <chrono>
@@ -29,7 +28,6 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::FakeCompletionQueueImpl;
 using ::testing::Contains;
 using ::testing::Eq;
 
@@ -84,23 +82,6 @@ TEST(RestCompletionQueueImplTest, TimerSmokeTest) {
   t.join();
 }
 
-TEST(RestCompletionQueueImplTest, MockSmokeTest) {
-  auto mock = std::make_shared<FakeCompletionQueueImpl>();
-  CompletionQueue cq(mock);
-  using ms = std::chrono::milliseconds;
-  promise<void> wait_for_sleep;
-  cq.MakeRelativeTimer(ms(20000)).then(
-      [&wait_for_sleep](
-          future<StatusOr<std::chrono::system_clock::time_point>>) {
-        wait_for_sleep.set_value();
-      });
-  mock->SimulateCompletion(/*ok=*/true);
-
-  auto f = wait_for_sleep.get_future();
-  EXPECT_EQ(std::future_status::ready, f.wait_for(ms(0)));
-  cq.Shutdown();
-}
-
 TEST(RestCompletionQueueImplTest, RunAsync) {
   auto impl = absl::make_unique<RestCompletionQueueImpl>();
   CompletionQueue cq(std::move(impl));
@@ -131,22 +112,6 @@ TEST(RestCompletionQueueImplTest, RunAsyncVoid) {
 
   cq.Shutdown();
   runner.join();
-}
-
-TEST(RestCompletionQueueImplTest, RunAsyncCompletionQueueDestroyed) {
-  auto cq_impl = std::make_shared<FakeCompletionQueueImpl>();
-
-  std::promise<void> done_promise;
-  {
-    CompletionQueue cq(cq_impl);
-    cq.RunAsync([&done_promise](CompletionQueue& cq) {
-      done_promise.set_value();
-      cq.Shutdown();
-    });
-  }
-  cq_impl->SimulateCompletion(true);
-
-  done_promise.get_future().get();
 }
 
 TEST(RestCompletionQueueImplTest, RunAsyncMoveOnly) {

@@ -68,9 +68,7 @@ class RestCompletionQueueImpl final
   /// This function is not supported by RestCompletionQueueImpl, but as the
   /// function is pure virtual, it must be overridden.
   void StartOperation(std::shared_ptr<internal::AsyncGrpcOperation>,
-                      absl::FunctionRef<void(void*)>) override {
-    GCP_LOG(FATAL) << " function not supported.\n";
-  }
+                      absl::FunctionRef<void(void*)>) override;
 
   /// The underlying gRPC completion queue, which does not exist.
   grpc::CompletionQueue* cq() override { return nullptr; }
@@ -79,10 +77,7 @@ class RestCompletionQueueImpl final
   std::int64_t run_async_counter() const { return run_async_counter_.load(); }
 
  private:
-  std::mutex mu_;
-  internal::TimerQueue tq_;
-  bool shutdown_{false};  // GUARDED_BY(mu_)
-  std::shared_ptr<void> shutdown_guard_;
+  std::shared_ptr<internal::TimerQueue> tq_;
 
   // These are metrics used in testing.
   std::atomic<std::int64_t> run_async_counter_{0};
