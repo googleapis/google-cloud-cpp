@@ -30,7 +30,7 @@ using testing::Each;
 
 TEST(TimerQueueTest, ScheduleSingleRunner) {
   auto tq = TimerQueue::Create();
-  std::thread t([&tq] { tq->Service(); });
+  std::thread t([tq] { tq->Service(); });
   auto const duration = std::chrono::milliseconds(1);
   auto now = std::chrono::system_clock::now();
   auto f = tq->Schedule(now + duration);
@@ -61,7 +61,7 @@ TEST(TimerQueueTest, CancelTimers) {
 
   std::vector<std::thread> runners(kRunners);
   std::generate(runners.begin(), runners.end(),
-                [&] { return std::thread([&] { tq->Service(); }); });
+                [&] { return std::thread([tq] { tq->Service(); }); });
 
   // Cancel all the timers. Leave the servicing threads running.
   for (auto& f : futures) f.cancel();
@@ -78,7 +78,7 @@ TEST(TimerQueueTest, CancelTimers) {
 
 TEST(TimerQueueTest, ScheduleEarlierTimerSingleRunner) {
   auto tq = TimerQueue::Create();
-  std::thread t([&tq] { tq->Service(); });
+  std::thread t([tq] { tq->Service(); });
   auto const duration = std::chrono::milliseconds(50);
   auto now = std::chrono::system_clock::now();
   auto later = tq->Schedule(now + 2 * duration);
@@ -127,7 +127,7 @@ TEST(TimerQueueTest, ScheduleMultipleRunners) {
 
   std::vector<std::thread> runners(kRunners);
   std::generate(runners.begin(), runners.end(),
-                [&] { return std::thread([&] { tq->Service(); }); });
+                [&] { return std::thread([tq] { tq->Service(); }); });
 
   for (auto& f : futures) f.get();
 
@@ -171,7 +171,7 @@ TEST(TimerQueueTest, ShutdownMultipleRunners) {
 
   std::vector<std::thread> runners(kRunners);
   std::generate(runners.begin(), runners.end(),
-                [&] { return std::thread([&] { tq->Service(); }); });
+                [&] { return std::thread([tq] { tq->Service(); }); });
 
   tq->Shutdown();
   for (auto& t : runners) t.join();

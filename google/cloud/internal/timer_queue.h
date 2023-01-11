@@ -77,7 +77,7 @@ class TimerQueue : public std::enable_shared_from_this<TimerQueue> {
       std::chrono::system_clock::time_point tp);
 
   // Signals all threads that have called Service to return. Does not modify
-  // remaining timers. If desired, CancelAll can be called.
+  // remaining timers.
   void Shutdown();
 
   // Timers added via Schedule should be managed by one or more threads that
@@ -91,7 +91,7 @@ class TimerQueue : public std::enable_shared_from_this<TimerQueue> {
 
   TimerQueue() = default;
 
-  // Cancels an specific timer
+  // Cancels a timer.
   void Cancel(KeyType key);
 
   std::mutex mu_;

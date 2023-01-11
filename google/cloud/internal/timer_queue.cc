@@ -55,8 +55,9 @@ future<StatusOr<std::chrono::system_clock::time_point>> TimerQueue::Schedule(
 }
 
 void TimerQueue::Shutdown() {
-  std::unique_lock<std::mutex> const lk(mu_);
+  std::unique_lock<std::mutex> lk(mu_);
   shutdown_ = true;
+  lk.unlock();
   cv_.notify_one();
   cv_follower_.notify_all();
 }
@@ -119,7 +120,6 @@ void TimerQueue::Service() {
     auto p = std::move(timers_.begin()->second);
     timers_.erase(timers_.begin());
     lk.unlock();
-    cv_.notify_one();
     p.set_value(MakeCancelled("TimerQueue shutdown", GCP_ERROR_INFO()));
     lk.lock();
   }
