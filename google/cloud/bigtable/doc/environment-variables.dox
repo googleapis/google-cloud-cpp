@@ -1,5 +1,5 @@
 /*!
-@page bigtable-environment-variables Environment Variable
+@page bigtable-environment-variables Environment Variables
 
 A number of environment variables can be used to configure the behavior of
 the library.  There are also functions to configure this behavior in code. The
@@ -12,6 +12,13 @@ The library injects an additional Stub decorator that prints each gRPC
 request and response. Unless you have configured you own logging backend, you
 should also set `GOOGLE_CLOUD_CPP_ENABLE_CLOG` to produce any output on the
 program's console.
+
+`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc-streams`: turns on tracing for streaming
+gRPC calls, such as `Table::ReadRows()`. Be warned that streams produce a lot of
+output.
+
+`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams`: turns on tracing for both 
+regular RPC calls and streaming RPC calls.
 
 @see google::cloud::TracingComponentsOption
 
@@ -29,7 +36,7 @@ environment variable.
 @see google::cloud::LogBackend
 @see google::cloud::LogSink
 
-@section pbigtable-env-endpoint Endpoint Overrides
+@section bigtable-env-endpoint Endpoint Overrides
 
 `BIGTABLE_EMULATOR_HOST=host:port`: tells the library to connect to the
 specified emulator rather than the default endpoint. Intended for testing only.
