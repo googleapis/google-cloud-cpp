@@ -54,7 +54,7 @@ void CreateBackup(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     future<StatusOr<google::bigtable::admin::v2::Backup>> backup_future =
         admin.CreateBackup(cluster_name, backup_id, std::move(b));
     auto backup = backup_future.get();
-    if (!backup) throw std::runtime_error(backup.status().message());
+    if (!backup) throw std::move(backup).status();
     std::cout << "Backup successfully created: " << backup->DebugString()
               << "\n";
   }
@@ -82,8 +82,8 @@ void ListBackups(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
 
     StreamRange<google::bigtable::admin::v2::Backup> backups =
         admin.ListBackups(std::move(r));
-    for (auto const& backup : backups) {
-      if (!backup) throw std::runtime_error(backup.status().message());
+    for (auto& backup : backups) {
+      if (!backup) throw std::move(backup).status();
       std::cout << backup->name() << "\n";
     }
   }
@@ -105,7 +105,7 @@ void GetBackup(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
         cbt::BackupName(project_id, instance_id, cluster_id, backup_id);
     StatusOr<google::bigtable::admin::v2::Backup> backup =
         admin.GetBackup(backup_name);
-    if (!backup) throw std::runtime_error(backup.status().message());
+    if (!backup) throw std::move(backup).status();
     std::cout << backup->name() << " details=\n"
               << backup->DebugString() << "\n";
   }
@@ -158,7 +158,7 @@ void UpdateBackup(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
 
     StatusOr<google::bigtable::admin::v2::Backup> backup =
         admin.UpdateBackup(std::move(b), std::move(mask));
-    if (!backup) throw std::runtime_error(backup.status().message());
+    if (!backup) throw std::move(backup).status();
     std::cout << backup->name() << " details=\n"
               << backup->DebugString() << "\n";
   }
@@ -189,7 +189,7 @@ void RestoreTable(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     future<StatusOr<google::bigtable::admin::v2::Table>> table_future =
         admin.RestoreTable(std::move(r));
     auto table = table_future.get();
-    if (!table) throw std::runtime_error(table.status().message());
+    if (!table) throw std::move(table).status();
     std::cout << "Table successfully restored: " << table->DebugString()
               << "\n";
   }
@@ -222,7 +222,7 @@ void RestoreTableFromInstance(
     future<StatusOr<google::bigtable::admin::v2::Table>> table_future =
         admin.RestoreTable(std::move(r));
     auto table = table_future.get();
-    if (!table) throw std::runtime_error(table.status().message());
+    if (!table) throw std::move(table).status();
     std::cout << "Table successfully restored: " << table->DebugString()
               << "\n";
   }
@@ -243,7 +243,7 @@ void GetIamPolicy(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     std::string backup_name =
         cbt::BackupName(project_id, instance_id, cluster_id, backup_id);
     StatusOr<google::iam::v1::Policy> policy = admin.GetIamPolicy(backup_name);
-    if (!policy) throw std::runtime_error(policy.status().message());
+    if (!policy) throw std::move(policy).status();
     std::cout << "The IAM Policy is:\n" << policy->DebugString() << "\n";
   }
   //! [get backup iam policy]
@@ -263,7 +263,7 @@ void SetIamPolicy(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     std::string backup_name =
         cbt::BackupName(project_id, instance_id, cluster_id, backup_id);
     StatusOr<google::iam::v1::Policy> current = admin.GetIamPolicy(backup_name);
-    if (!current) throw std::runtime_error(current.status().message());
+    if (!current) throw std::move(current).status();
     // This example adds the member to all existing bindings for that role. If
     // there are no such bindings, it adds a new one. This might not be what the
     // user wants, e.g. in case of conditional bindings.
@@ -279,7 +279,7 @@ void SetIamPolicy(google::cloud::bigtable_admin::BigtableTableAdminClient admin,
     }
     StatusOr<google::iam::v1::Policy> policy =
         admin.SetIamPolicy(backup_name, *current);
-    if (!policy) throw std::runtime_error(policy.status().message());
+    if (!policy) throw std::move(policy).status();
     std::cout << "The IAM Policy is:\n" << policy->DebugString() << "\n";
   }
   //! [set backup iam policy]
@@ -334,7 +334,7 @@ void RunAll(std::vector<std::string> const& argv) {
 
   auto table = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                  table_id, std::move(t));
-  if (!table) throw std::runtime_error(table.status().message());
+  if (!table) throw std::move(table).status();
 
   std::cout << "\nRunning CreateBackup() example" << std::endl;
   auto backup_id = google::cloud::bigtable::testing::RandomTableId(generator);

@@ -103,7 +103,7 @@ void PrepareReadSamples(google::cloud::bigtable::Table table) {
   for (auto const& f : failures) {
     std::cerr << "index[" << f.original_index() << "]=" << f.status() << "\n";
   }
-  throw std::runtime_error(failures.front().status().message());
+  throw google::cloud::Status(failures.front().status());
 }
 
 void ReadRowsWithLimit(google::cloud::bigtable::Table table,
@@ -122,8 +122,8 @@ void ReadRowsWithLimit(google::cloud::bigtable::Table table,
                                        "connected_wifi"),
         cbt::Filter::Latest(1));
     // Read and print the first rows in the range, within the row limit.
-    for (StatusOr<cbt::Row> const& row : table.ReadRows(range, limit, filter)) {
-      if (!row) throw std::runtime_error(row.status().message());
+    for (auto& row : table.ReadRows(range, limit, filter)) {
+      if (!row) throw std::move(row).status();
       if (row->cells().size() != 1) {
         std::ostringstream os;
         os << "Unexpected number of cells in " << row->row_key();
@@ -161,7 +161,7 @@ void ReadKeysSet(std::vector<std::string> argv) {
 
     cbt::Filter filter = cbt::Filter::Latest(1);
     for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
-      if (!row) throw std::runtime_error(row.status().message());
+      if (!row) throw std::move(row).status();
       std::cout << row->row_key() << ":\n";
       for (auto const& cell : row->cells()) {
         std::cout << "\t" << cell.family_name() << ":"
@@ -189,7 +189,7 @@ void ReadPrefixList(google::cloud::bigtable::Table table,
     }
 
     for (StatusOr<cbt::Row>& row : table.ReadRows(std::move(row_set), filter)) {
-      if (!row) throw std::runtime_error(row.status().message());
+      if (!row) throw std::move(row).status();
       std::cout << row->row_key() << ":\n";
       for (cbt::Cell const& cell : row->cells()) {
         std::cout << "\t" << cell.family_name() << ":"
@@ -211,7 +211,7 @@ void ReadRow(google::cloud::bigtable::Table table,
   [](google::cloud::bigtable::Table table, std::string const& row_key) {
     StatusOr<std::pair<bool, cbt::Row>> tuple =
         table.ReadRow(row_key, cbt::Filter::PassAllFilter());
-    if (!tuple) throw std::runtime_error(tuple.status().message());
+    if (!tuple) throw std::move(tuple).status();
     if (!tuple->first) {
       std::cout << "Row " << row_key << " not found\n";
       return;
@@ -230,7 +230,7 @@ void ReadRowPartial(google::cloud::bigtable::Table table,
   [](google::cloud::bigtable::Table table, std::string const& row_key) {
     StatusOr<std::pair<bool, cbt::Row>> tuple = table.ReadRow(
         row_key, cbt::Filter::ColumnName("stats_summary", "os_build"));
-    if (!tuple) throw std::runtime_error(tuple.status().message());
+    if (!tuple) throw std::move(tuple).status();
     if (!tuple->first) {
       std::cout << "Row " << row_key << " not found\n";
       return;
@@ -248,10 +248,10 @@ void ReadRows(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (StatusOr<cbt::Row> const& row : table.ReadRows(
+    for (auto& row : table.ReadRows(
              cbt::RowSet("phone#4c410523#20190501", "phone#4c410523#20190502"),
              cbt::Filter::PassAllFilter())) {
-      if (!row) throw std::runtime_error(row.status().message());
+      if (!row) throw std::move(row).status();
       PrintRow(*row);
     }
   }
@@ -266,11 +266,11 @@ void ReadRowRange(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (StatusOr<cbt::Row> const& row :
+    for (auto& row :
          table.ReadRows(cbt::RowRange::Range("phone#4c410523#20190501",
                                              "phone#4c410523#201906201"),
                         cbt::Filter::PassAllFilter())) {
-      if (!row) throw std::runtime_error(row.status().message());
+      if (!row) throw std::move(row).status();
       PrintRow(*row);
     }
   }
@@ -285,13 +285,13 @@ void ReadRowRanges(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (StatusOr<cbt::Row> const& row : table.ReadRows(
+    for (auto& row : table.ReadRows(
              cbt::RowSet({cbt::RowRange::Range("phone#4c410523#20190501",
                                                "phone#4c410523#20190601"),
                           cbt::RowRange::Range("phone#5c10102#20190501",
                                                "phone#5c10102#20190601")}),
              cbt::Filter::PassAllFilter())) {
-      if (!row) throw std::runtime_error(row.status().message());
+      if (!row) throw std::move(row).status();
       PrintRow(*row);
     }
   }
@@ -306,9 +306,9 @@ void ReadRowPrefix(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (StatusOr<cbt::Row> const& row : table.ReadRows(
-             cbt::RowRange::Prefix("phone"), cbt::Filter::PassAllFilter())) {
-      if (!row) throw std::runtime_error(row.status().message());
+    for (auto& row : table.ReadRows(cbt::RowRange::Prefix("phone"),
+                                    cbt::Filter::PassAllFilter())) {
+      if (!row) throw std::move(row).status();
       PrintRow(*row);
     }
   }
@@ -323,10 +323,9 @@ void ReadFilter(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     // Read and print the rows.
-    for (StatusOr<cbt::Row> const& row :
-         table.ReadRows(cbt::RowRange::InfiniteRange(),
-                        cbt::Filter::ValueRegex("PQ2A.*"))) {
-      if (!row) throw std::runtime_error(row.status().message());
+    for (auto& row : table.ReadRows(cbt::RowRange::InfiniteRange(),
+                                    cbt::Filter::ValueRegex("PQ2A.*"))) {
+      if (!row) throw std::move(row).status();
       PrintRow(*row);
     }
   }
@@ -368,7 +367,7 @@ void RunAll(std::vector<std::string> const& argv) {
   families["stats_summary"].mutable_gc_rule()->set_max_num_versions(10);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                   table_id, std::move(t));
-  if (!schema) throw std::runtime_error(schema.status().message());
+  if (!schema) throw std::move(schema).status();
 
   cbt::Table table(cbt::MakeDataConnection(),
                    cbt::TableResource(project_id, instance_id, table_id));

@@ -102,7 +102,7 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
   // Read a single row.
   //! [read row] [START bigtable_hw_get_with_filter]
   StatusOr<std::pair<bool, cbt::Row>> result = table.ReadRow("key-0", filter);
-  if (!result) throw std::runtime_error(result.status().message());
+  if (!result) throw std::move(result).status();
   if (!result->first) {
     std::cout << "Cannot find row 'key-0' in the table: " << table.table_name()
               << "\n";
@@ -116,9 +116,9 @@ void BigtableHelloWorld(std::vector<std::string> const& argv) {
 
   // Read all rows.
   //! [scan all] [START bigtable_hw_scan_with_filter]
-  for (StatusOr<cbt::Row> const& row : table.ReadRows(
-           cbt::RowRange::InfiniteRange(), cbt::Filter::PassAllFilter())) {
-    if (!row) throw std::runtime_error(row.status().message());
+  for (auto& row : table.ReadRows(cbt::RowRange::InfiniteRange(),
+                                  cbt::Filter::PassAllFilter())) {
+    if (!row) throw std::move(row).status();
     std::cout << row->row_key() << ":\n";
     for (cbt::Cell const& c : row->cells()) {
       std::cout << "\t" << c.family_name() << ":" << c.column_qualifier()

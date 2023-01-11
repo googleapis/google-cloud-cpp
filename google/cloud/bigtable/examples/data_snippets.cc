@@ -160,7 +160,7 @@ void CheckAndMutate(google::cloud::bigtable::Table table,
                                 {cbt::SetCell("fam", "flip-flop", "on"),
                                  cbt::SetCell("fam", "flop-flip", "off")});
 
-    if (!branch) throw std::runtime_error(branch.status().message());
+    if (!branch) throw std::move(branch).status();
     if (*branch == cbt::MutationBranch::kPredicateMatched) {
       std::cout << "The predicate was matched\n";
     } else {
@@ -188,7 +188,7 @@ void CheckAndMutateNotPresent(google::cloud::bigtable::Table table,
         row_key, std::move(predicate), {},
         {cbt::SetCell("fam", "had-test-column", "false")});
 
-    if (!branch) throw std::runtime_error(branch.status().message());
+    if (!branch) throw std::move(branch).status();
     if (*branch == cbt::MutationBranch::kPredicateMatched) {
       std::cout << "The predicate was matched\n";
     } else {
@@ -242,7 +242,7 @@ void SampleRows(google::cloud::bigtable::Table table,
   using ::google::cloud::StatusOr;
   [](cbt::Table table) {
     StatusOr<std::vector<cbt::RowKeySample>> samples = table.SampleRows();
-    if (!samples) throw std::runtime_error(samples.status().message());
+    if (!samples) throw std::move(samples).status();
     for (auto const& sample : *samples) {
       std::cout << "key=" << sample.row_key << " - " << sample.offset_bytes
                 << "\n";
@@ -309,7 +309,7 @@ void RowExists(google::cloud::bigtable::Table table,
 
     // Read a row, this returns a tuple (bool, row)
     StatusOr<std::pair<bool, cbt::Row>> status = table.ReadRow(row_key, filter);
-    if (!status) throw std::runtime_error(status.status().message());
+    if (!status) throw std::move(status).status();
 
     if (!status->first) {
       std::cout << "Row  not found\n";
@@ -493,7 +493,7 @@ void RenameColumn(google::cloud::bigtable::Table table,
     StatusOr<std::pair<bool, cbt::Row>> row =
         table.ReadRow(key, cbt::Filter::ColumnName(family, old_name));
 
-    if (!row) throw std::runtime_error(row.status().message());
+    if (!row) throw std::move(row).status();
     if (!row->first) throw std::runtime_error("Cannot find row " + key);
 
     cbt::SingleRowMutation mutation(key);
@@ -558,7 +558,7 @@ void InsertTestData(google::cloud::bigtable::Table table,
   for (auto const& f : failures) {
     std::cerr << "index[" << f.original_index() << "]=" << f.status() << "\n";
   }
-  throw std::runtime_error(failures.front().status().message());
+  throw google::cloud::Status(failures.front().status());
 }
 
 // This command just generates data suitable for other examples to run. This
@@ -661,7 +661,7 @@ void WriteIncrement(google::cloud::bigtable::Table table,
         row_key, cbt::ReadModifyWriteRule::IncrementAmount(
                      column_family, "connected_wifi", -1));
 
-    if (!row) throw std::runtime_error(row.status().message());
+    if (!row) throw std::move(row).status();
     std::cout << "Successfully updated row" << row->row_key() << "\n";
   }
   // [END bigtable_writes_increment]
@@ -688,7 +688,7 @@ void WriteConditionally(google::cloud::bigtable::Table table,
             row_key, std::move(predicate),
             {cbt::SetCell(column_family, "os_name", timestamp, "android")}, {});
 
-    if (!branch) throw std::runtime_error(branch.status().message());
+    if (!branch) throw std::move(branch).status();
     if (*branch == cbt::MutationBranch::kPredicateMatched) {
       std::cout << "Successfully updated row\n";
     } else {
@@ -728,7 +728,7 @@ void RunMutateExamples(
   families["fam"].mutable_gc_rule()->set_max_num_versions(10);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                   table_id, std::move(t));
-  if (!schema) throw std::runtime_error(schema.status().message());
+  if (!schema) throw std::move(schema).status();
 
   using ::google::cloud::Options;
   cbt::Table table(cbt::MakeDataConnection(),
@@ -759,7 +759,7 @@ void RunWriteExamples(
   families["stats_summary"].mutable_gc_rule()->set_max_num_versions(11);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                   table_id, std::move(t));
-  if (!schema) throw std::runtime_error(schema.status().message());
+  if (!schema) throw std::move(schema).status();
 
   using ::google::cloud::Options;
   cbt::Table table(cbt::MakeDataConnection(),
@@ -793,7 +793,7 @@ void RunDataExamples(
   families["fam"].mutable_gc_rule()->set_max_num_versions(10);
   auto schema = admin.CreateTable(cbt::InstanceName(project_id, instance_id),
                                   table_id, std::move(t));
-  if (!schema) throw std::runtime_error(schema.status().message());
+  if (!schema) throw std::move(schema).status();
 
   using ::google::cloud::Options;
   cbt::Table table(cbt::MakeDataConnection(),
