@@ -1,5 +1,5 @@
 /*!
-@page bigtable-hello-table-admin Example: C++ Hello World for Table Admin
+@page bigtable-hello-table-admin Getting Started with Bigtable Table Administrative Operations
 
 This example illustrates how to use the `BigtableTableAdminClient` class to:
 

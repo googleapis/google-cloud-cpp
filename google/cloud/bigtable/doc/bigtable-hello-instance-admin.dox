@@ -1,5 +1,5 @@
 /*!
-@page bigtable-hello-instance-admin Example: C++ Hello World for Instance Admin
+@page bigtable-hello-instance-admin Getting Started with Bigtable Instance Administrative Operations
 
 This example is a very simple "Instance Admin" application, which illustrates how to:
 
