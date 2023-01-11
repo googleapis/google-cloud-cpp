@@ -17,6 +17,7 @@
 set(DOXYGEN_PROJECT_NAME "Google Cloud C++ Client")
 set(DOXYGEN_PROJECT_BRIEF "C++ Client Library for Google Cloud Platform")
 set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
+set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/samples")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "testing_util" "examples")
 
 # Creates the proto headers needed by doxygen.

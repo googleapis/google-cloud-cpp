@@ -28,4 +28,8 @@ implementation details and subject to change and/or removal without notice.
 @warning The symbols in the `google::cloud::testing_util` namespace are
 implementation details and subject to change and/or removal without notice.
 
+## More information
+
+- @ref common-error-handling for more details about how the libraries report
+  run-time errors and how you can handle them.
 */

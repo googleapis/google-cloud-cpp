@@ -1,0 +1,87 @@
+/**
+@page common-error-handling Error Handling
+
+[StatusOr<T>]: @ref google::cloud::StatusOr
+[StatusOr<T>::value()]: @ref google::cloud::StatusOr::value()
+[StreamRange<S>]: @ref google::cloud::StreamRange
+[AsyncStreamingReadWriteRpc<T,U>]: @ref google::cloud::AsyncStreamingReadWriteRpc
+[future<T>]: @ref google::cloud::future
+[RuntimeStatusError]: @ref google::cloud::RuntimeStatusError
+[error_info()]: @ref google::cloud::Status::error_info()
+[input iterators]: https://en.cppreference.com/w/cpp/named_req/InputIterator
+[iostream operator<<]: @ref google::cloud::operator<<(std::ostream&,google::cloud::Status const&)
+
+## Overview
+
+In general, the `google-cloud-cpp` libraries return a [StatusOr<T>] if a
+function many fail and needs to signal an error. `StatusOr<T>` is an "outcome",
+it contains either the value returned on success, or a description of the
+error. Errors are represented by @ref google::cloud::Status, thus the name.
+If you are familiar with `std::expected` from C++23, `StatusOr<T>` plays a
+similar role, but does not attempt to be compatible with it.
+
+If you are planning to log a `Status`, consider using the [iostream operator<<].
+A `Status` contains more than just the message, in particular, its
+[error_info()] member function may return additional information that is useful
+during troubleshooting.
+
+## Values with specific error handling
+
+Some functions return a value that already has a mechanism to signal failures.
+For example, some functions return [AsyncStreamingReadWriteRpc<T,U>] (or
+technically `std::unique_ptr<AsyncStreamingReadWriteRpc<T,U>>`), and other
+functions return classes derived from `std::istream`. In such
+cases the library does not wrap the result in a `StatusOr<T>` because the
+returned type already has mechanisms to signal errors.
+
+## Futures
+
+Some functions return a "future" ([future<T>]). This objects represent a value 
+that will be obtained asynchronously. By the very nature of asynchronous
+operations, the request may fail after the function is called. Therefore, we
+have chosen to return `future<StatusOr<T>>`.  We think the alternatives are
+either incorrect (e.g. `StatusOr<future<T>>` can only handle errors detected
+before the function returns), or overly complex
+(`StatusOr<future<StatusOr<T>>>`).
+
+## Stream Ranges
+
+Similarly, some functions return [StreamRange<S>], where `S` is a `StatusOr<T>`.
+These ranges provide [input iterators] that paginate or stream results from a
+service, offering a more idiomatic API.  The value type in these iterators is
+`StatusOr<T>` because the stream may fail after it has successfully returned
+some values. For example, if the request to obtain the next page of results
+fails, or if the underlying stream is interrupted by the service.
+
+## Example: Using StatusOr<T>
+
+You can check that a `StatusOr<T>` contains a value by calling the `.ok()`
+method, or by using `operator bool()` (like with other smart pointers). If
+there is no value, you can access the contained `Status` object using the
+`.status()` member. If there is a value, you may access it by dereferencing
+with `operator*()` or `operator->()`. As with all smart pointers, callers must
+first check that the `StatusOr<T>` contains a value before dereferencing and
+accessing the contained value.
+
+@snippet samples.cc status-or-usage
+
+## Example: Using StatusOr<T> with exceptions
+
+Some applications prefer to throw exceptions on errors. In this case, consider
+using [StatusOr<T>::value()].  This function throws a [RuntimeStatusError] if
+there is no value, and returns the value otherwise.
+
+@note If you're compiling with exceptions disabled, calling `.value()` on a
+`StatusOr<T>` that does not contain a value will terminate the program
+instead of throwing.
+
+@snippet samples.cc status-or-exceptions
+
+@see @ref google::cloud::StatusOr
+@see @ref google::cloud::Status the class used to describe errors.
+@see @ref google::cloud::future for more details on the type returned
+    by asynchronous operations.
+@see https://en.cppreference.com/w/cpp/utility/expected for more information
+    about `std::expected`
+
+*/

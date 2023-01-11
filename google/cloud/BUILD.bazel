@@ -357,3 +357,12 @@ load(":google_cloud_cpp_rest_protobuf_internal_unit_tests.bzl", "google_cloud_cp
         "@com_google_googletest//:gtest_main",
     ],
 ) for test in google_cloud_cpp_rest_protobuf_internal_unit_tests]
+
+[cc_test(
+    name = sample.replace("/", "_").replace(".cc", ""),
+    srcs = [sample],
+    tags = ["integration-test"],
+    deps = [
+        "//google/cloud/testing_util:google_cloud_cpp_testing_private",
+    ],
+) for sample in glob(["samples/*.cc"])]
