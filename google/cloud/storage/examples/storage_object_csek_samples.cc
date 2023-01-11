@@ -181,9 +181,7 @@ void RotateEncryptionKey(google::cloud::storage::Client client,
             bucket_name, object_name, bucket_name, object_name,
             gcs::SourceEncryptionKey::FromBase64Key(old_key_base64),
             gcs::EncryptionKey::FromBase64Key(new_key_base64));
-    if (!object_metadata) 
-      throw std::move(object_metadata).status();
-    
+    if (!object_metadata) throw std::move(object_metadata).status();
 
     std::cout << "Rotated key on object " << object_metadata->name()
               << " in bucket " << object_metadata->bucket()
