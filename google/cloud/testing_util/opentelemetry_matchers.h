@@ -32,55 +32,30 @@ namespace testing_util {
 
 using SpanDataPtr = std::unique_ptr<opentelemetry::sdk::trace::SpanData>;
 
-MATCHER(SpanHasInstrumentationScope, "") {
+std::string ToString(opentelemetry::trace::SpanKind k);
+
+MATCHER(SpanHasInstrumentationScope,
+        "has instrumentation scope (name: gcloud-cpp | version: " +
+            version_string() + ")") {
   auto const& scope = arg->GetInstrumentationScope();
   auto const& name = scope.GetName();
   auto const& version = scope.GetVersion();
-
-  bool match = true;
-  if (name != "gcloud-cpp") {
-    *result_listener << "instrumentation scope name: " << name << ")\n";
-    match = false;
-  }
-  if (version != version_string()) {
-    *result_listener << "instrumentation scope version: " << version << ")\n";
-    match = false;
-  }
-  return match;
+  *result_listener << "has instrumentation scope (name: " << name
+                   << " | version: " << version << ")";
+  return name == "gcloud-cpp" && version == version_string();
 }
 
-MATCHER(SpanKindIsClient, "") {
-  auto to_str = [](opentelemetry::trace::SpanKind k) {
-    switch (k) {
-      case opentelemetry::trace::SpanKind::kInternal:
-        return "INTERNAL";
-      case opentelemetry::trace::SpanKind::kServer:
-        return "SERVER";
-      case opentelemetry::trace::SpanKind::kClient:
-        return "CLIENT";
-      case opentelemetry::trace::SpanKind::kProducer:
-        return "PRODUCER";
-      case opentelemetry::trace::SpanKind::kConsumer:
-      default:
-        return "UNKNOWN";
-    }
-  };
-
+MATCHER(SpanKindIsClient,
+        "has span kind: " + ToString(opentelemetry::trace::SpanKind::kClient)) {
   auto const& kind = arg->GetSpanKind();
-  if (kind != opentelemetry::trace::SpanKind::kClient) {
-    *result_listener << "span kind: " << to_str(kind) << ")\n";
-    return false;
-  }
-  return true;
+  *result_listener << "has span kind: " << ToString(kind);
+  return kind == opentelemetry::trace::SpanKind::kClient;
 }
 
-MATCHER_P(SpanNamed, name, "") {
+MATCHER_P(SpanNamed, name, "has name: " + std::string{name}) {
   auto const& actual = arg->GetName();
-  if (actual != name) {
-    *result_listener << "span name: " << actual << ")\n";
-    return false;
-  }
-  return true;
+  *result_listener << "has name: " << actual;
+  return actual == name;
 }
 
 /**
