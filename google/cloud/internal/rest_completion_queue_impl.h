@@ -33,6 +33,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
  * Implementation for CompletionQueue that does NOT use a grpc::CompletionQueue.
+ *
  * Due to the lack of a completion queue that can manage multiple, simultaneous
  * REST requests, asynchronous calls should be launched on a thread of their own
  * and RunAsync should only be called with a function to join that thread after

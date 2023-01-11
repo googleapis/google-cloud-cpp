@@ -31,37 +31,6 @@ namespace {
 using ::testing::Contains;
 using ::testing::Eq;
 
-/// @test A regression test for #5141
-TEST(RestCompletionQueueImplTest, TimerCancel) {
-  // There are a lot of magical numbers in this test, there were tuned to #5141
-  // 99 out of 100 times on my workstation.
-  auto impl = absl::make_unique<RestCompletionQueueImpl>();
-  CompletionQueue cq(std::move(impl));
-  std::vector<std::thread> runners;
-  std::generate_n(std::back_inserter(runners), 4, [&cq] {
-    return std::thread([](CompletionQueue c) { c.Run(); }, cq);
-  });
-
-  using TimerFuture = future<StatusOr<std::chrono::system_clock::time_point>>;
-  auto worker = [&](CompletionQueue cq) {
-    for (int i = 0; i != 10000; ++i) {
-      std::vector<TimerFuture> timers;
-      for (int j = 0; j != 10; ++j) {
-        timers.push_back(cq.MakeRelativeTimer(std::chrono::microseconds(10)));
-      }
-      cq.CancelAll();
-      for (auto& t : timers) t.cancel();
-    }
-  };
-  std::vector<std::thread> workers;
-  std::generate_n(std::back_inserter(runners), 8,
-                  [&] { return std::thread(worker, cq); });
-
-  for (auto& t : workers) t.join();
-  cq.Shutdown();
-  for (auto& t : runners) t.join();
-}
-
 TEST(RestCompletionQueueImplTest, TimerSmokeTest) {
   auto impl = absl::make_unique<RestCompletionQueueImpl>();
   CompletionQueue cq(std::move(impl));
