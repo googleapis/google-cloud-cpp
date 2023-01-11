@@ -34,7 +34,7 @@ void GenerateAccessToken(std::vector<std::string> const& argv) {
     google::protobuf::Duration lifetime;
     lifetime.set_seconds(std::stoi(lifetime_seconds));
     auto response = client.GenerateAccessToken(name, {}, scope, lifetime);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Access Token successfully created: "
               << response->DebugString() << "\n";
   }
@@ -58,7 +58,7 @@ void GenerateIdToken(std::vector<std::string> const& argv) {
     iam::IAMCredentialsClient client(iam::MakeIAMCredentialsConnection());
     auto response = client.GenerateIdToken(name, delegates, audience,
                                            (include_email == "true"));
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Id Token successfully created: " << response->DebugString()
               << "\n";
   }
@@ -77,7 +77,7 @@ void SignBlob(std::vector<std::string> const& argv) {
      std::vector<std::string> const& delegates) {
     iam::IAMCredentialsClient client(iam::MakeIAMCredentialsConnection());
     auto response = client.SignBlob(name, delegates, payload);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Blob successfully signed: " << response->DebugString()
               << "\n";
   }
@@ -96,7 +96,7 @@ void SignJwt(std::vector<std::string> const& argv) {
      std::vector<std::string> const& delegates) {
     iam::IAMCredentialsClient client(iam::MakeIAMCredentialsConnection());
     auto response = client.SignJwt(name, delegates, payload);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "JWT successfully signed: " << response->DebugString() << "\n";
   }
   //! [END iamcredentials_sign_jwt] [iamcredentials-sign-jwt]
