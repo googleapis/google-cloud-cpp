@@ -98,11 +98,11 @@ void ReadRows(std::vector<std::string> const& argv) {
     read_session.mutable_read_options()->set_row_restriction(row_restriction);
     auto session = client.CreateReadSession("projects/" + project_id,
                                             read_session, max_stream_count);
-    if (!session) throw std::runtime_error(session.status().message());
+    if (!session) throw std::move(session).status();
 
     std::int64_t row_count = 0;
-    for (auto const& row : client.ReadRows(session->streams(0).name(), 0)) {
-      if (!row) throw std::runtime_error(row.status().message());
+    for (auto& row : client.ReadRows(session->streams(0).name(), 0)) {
+      if (!row) throw std::move(row).status();
       row_count += row->row_count();
     }
 
@@ -131,7 +131,7 @@ void SplitReadStream(std::vector<std::string> const& argv) {
     read_session.mutable_read_options()->set_row_restriction(row_restriction);
     auto session = client.CreateReadSession("projects/" + project_id,
                                             read_session, max_stream_count);
-    if (!session) throw std::runtime_error(session.status().message());
+    if (!session) throw std::move(session).status();
 
     ::google::cloud::bigquery::storage::v1::SplitReadStreamRequest
         split_request;
@@ -140,18 +140,18 @@ void SplitReadStream(std::vector<std::string> const& argv) {
     auto split_response = client.SplitReadStream(split_request);
 
     std::int64_t row_count = 0;
-    for (auto const& row :
+    for (auto& row :
          client.ReadRows(split_response->primary_stream().name(), 0)) {
-      if (!row) throw std::runtime_error(row.status().message());
+      if (!row) throw std::move(row).status();
       row_count += row->row_count();
     }
     std::cout << "Successfully read " << row_count
               << "rows from first stream.\n";
 
     row_count = 0;
-    for (auto const& row :
+    for (auto& row :
          client.ReadRows(split_response->remainder_stream().name(), 0)) {
-      if (!row) throw std::runtime_error(row.status().message());
+      if (!row) throw std::move(row).status();
       row_count += row->row_count();
     }
     std::cout << "Successfully read " << row_count
