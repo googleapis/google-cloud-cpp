@@ -135,7 +135,6 @@ class Status {
   friend inline bool operator!=(Status const& a, Status const& b) {
     return !(a == b);
   }
-  friend std::ostream& operator<<(std::ostream& os, Status const& s);
 
  private:
   static bool Equals(Status const& a, Status const& b);
@@ -147,6 +146,14 @@ class Status {
   // A null `impl_` is an OK status. Only non-OK Statuses allocate an Impl.
   std::unique_ptr<Impl> impl_;
 };
+
+/**
+ * Stream @p s to @p os.
+ *
+ * This in intended for logging and troubleshooting. Applications should not
+ * depend on the format of this output.
+ */
+std::ostream& operator<<(std::ostream& os, Status const& s);
 
 /**
  * A runtime error that wraps a `google::cloud::Status`.
