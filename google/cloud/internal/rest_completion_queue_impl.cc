@@ -51,7 +51,7 @@ void RestCompletionQueueImpl::RunAsync(
   ++run_async_counter_;
   // Some delay is necessary to reduce the likelihood that the timer expires
   // before .then() is called.
-  // TODO(#xxxxx): Refactor this mechanism to a more deterministic solution.
+  // TODO(#10553): Refactor this mechanism to a more deterministic solution.
   MakeRelativeTimer(std::chrono::milliseconds(500))
       .then([f = std::move(function)](auto) { f->exec(); });
 }
