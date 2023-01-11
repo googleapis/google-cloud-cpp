@@ -21,13 +21,13 @@ namespace rest_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 RestCompletionQueueImpl::RestCompletionQueueImpl()
-    : tq_(std::make_shared<internal::TimerQueue>()) {}
+    : tq_(internal::TimerQueue::Create()) {}
 
 void RestCompletionQueueImpl::Run() { tq_->Service(); }
 
 void RestCompletionQueueImpl::Shutdown() { tq_->Shutdown(); }
 
-void RestCompletionQueueImpl::CancelAll() { tq_->CancelAll(); }
+void RestCompletionQueueImpl::CancelAll() {}
 
 future<StatusOr<std::chrono::system_clock::time_point>>
 RestCompletionQueueImpl::MakeDeadlineTimer(
