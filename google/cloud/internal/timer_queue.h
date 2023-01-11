@@ -86,7 +86,8 @@ class TimerQueue : public std::enable_shared_from_this<TimerQueue> {
 
  private:
   using PromiseType = promise<StatusOr<std::chrono::system_clock::time_point>>;
-  using KeyType = std::pair<std::chrono::system_clock::time_point, std::uint64_t>;
+  using KeyType =
+      std::pair<std::chrono::system_clock::time_point, std::uint64_t>;
 
   TimerQueue() = default;
 
