@@ -66,9 +66,8 @@ void ListServiceAccounts(std::vector<std::string> const& argv) {
   [](std::string const& project_id) {
     iam::IAMClient client(iam::MakeIAMConnection());
     int count = 0;
-    for (auto const& sa :
-         client.ListServiceAccounts("projects/" + project_id)) {
-      if (!sa) throw std::runtime_error(sa.status().message());
+    for (auto& sa : client.ListServiceAccounts("projects/" + project_id)) {
+      if (!sa) throw std::move(sa).status();
       std::cout << "ServiceAccount successfully retrieved: " << sa->name()
                 << "\n";
       ++count;
@@ -92,7 +91,7 @@ void GetServiceAccount(std::vector<std::string> const& argv) {
   [](std::string const& name) {
     iam::IAMClient client(iam::MakeIAMConnection());
     auto response = client.GetServiceAccount(name);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "ServiceAccount successfully retrieved: "
               << response->DebugString() << "\n";
   }
@@ -116,7 +115,7 @@ void CreateServiceAccount(std::vector<std::string> const& argv) {
     service_account.set_description(description);
     auto response = client.CreateServiceAccount("projects/" + project_id,
                                                 account_id, service_account);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "ServiceAccount successfully created: "
               << response->DebugString() << "\n";
   }
@@ -165,7 +164,7 @@ void ListServiceAccountKeys(std::vector<std::string> const& argv) {
     }
     auto response =
         client.ListServiceAccountKeys(service_account_name, key_types);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "ServiceAccountKeys successfully retrieved: "
               << response->DebugString() << "\n";
   }
@@ -185,7 +184,7 @@ void GetServiceAccountKey(std::vector<std::string> const& argv) {
     auto response = client.GetServiceAccountKey(
         key_name, google::iam::admin::v1::ServiceAccountPublicKeyType::
                       TYPE_X509_PEM_FILE);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "ServiceAccountKey successfully retrieved: "
               << response->DebugString() << "\n";
   }
@@ -207,7 +206,7 @@ std::string CreateServiceAccountKey(std::vector<std::string> const& argv) {
         google::iam::admin::v1::ServiceAccountPrivateKeyType::
             TYPE_GOOGLE_CREDENTIALS_FILE,
         google::iam::admin::v1::ServiceAccountKeyAlgorithm::KEY_ALG_RSA_2048);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "ServiceAccountKey successfully created: "
               << response->DebugString() << "\n"
               << "Please save the key in a secure location, as they cannot "
@@ -244,7 +243,7 @@ void GetIamPolicy(std::vector<std::string> const& argv) {
   [](std::string const& name) {
     iam::IAMClient client(iam::MakeIAMConnection());
     auto response = client.GetIamPolicy(name);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Policy successfully retrieved: " << response->DebugString()
               << "\n";
   }
@@ -265,7 +264,7 @@ void SetIamPolicy(std::vector<std::string> const& argv) {
           // change the policy, e.g., add/remove/edit a binding
           return policy;
         });
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Policy successfully set: " << response->DebugString() << "\n";
   }
   //! [END iam_set_policy] [iam-set-iam-policy]
@@ -282,7 +281,7 @@ void TestIamPermissions(std::vector<std::string> const& argv) {
   [](std::string const& name, std::vector<std::string> const& permissions) {
     iam::IAMClient client(iam::MakeIAMConnection());
     auto response = client.TestIamPermissions(name, permissions);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Permissions successfully tested: " << response->DebugString()
               << "\n";
   }
@@ -300,8 +299,8 @@ void QueryGrantableRoles(std::vector<std::string> const& argv) {
   [](std::string const& resource) {
     iam::IAMClient client(iam::MakeIAMConnection());
     int count = 0;
-    for (auto const& role : client.QueryGrantableRoles(resource)) {
-      if (!role) throw std::runtime_error(role.status().message());
+    for (auto& role : client.QueryGrantableRoles(resource)) {
+      if (!role) throw std::move(role).status();
       std::cout << "Role successfully retrieved: " << role->name() << "\n";
       ++count;
     }
@@ -333,7 +332,7 @@ void CreateRole(std::vector<std::string> const& argv) {
     }
     *request.mutable_role() = role;
     auto response = client.CreateRole(request);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Role successfully created: " << response->DebugString()
               << "\n";
   }
@@ -352,7 +351,7 @@ void DeleteRole(std::vector<std::string> const& argv) {
     google::iam::admin::v1::DeleteRoleRequest request;
     request.set_name(name);
     auto response = client.DeleteRole(request);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Role successfully deleted: " << response->DebugString()
               << "\n";
   }
@@ -416,7 +415,7 @@ void UpdateRole(std::vector<std::string> const& argv) {
     *request.mutable_role() = role;
     *request.mutable_update_mask() = update_mask;
     auto response = client.UpdateRole(request);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Role successfully updated: " << response->DebugString()
               << "\n";
   }
@@ -435,7 +434,7 @@ void GetRole(std::vector<std::string> const& argv) {
     google::iam::admin::v1::GetRoleRequest request;
     request.set_name(name);
     auto response = client.GetRole(request);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Role successfully retrieved: " << response->DebugString()
               << "\n";
   }
@@ -454,8 +453,8 @@ void ListRoles(std::vector<std::string> const& argv) {
     int count = 0;
     google::iam::admin::v1::ListRolesRequest request;
     request.set_parent(project);
-    for (auto const& role : client.ListRoles(request)) {
-      if (!role) throw std::runtime_error(role.status().message());
+    for (auto& role : client.ListRoles(request)) {
+      if (!role) throw std::move(role).status();
       std::cout << "Roles successfully retrieved: " << role->name() << "\n";
       ++count;
     }
@@ -479,8 +478,8 @@ void QueryTestablePermissions(std::vector<std::string> const& argv) {
     google::iam::admin::v1::QueryTestablePermissionsRequest request;
     request.set_full_resource_name(resource);
     int count = 0;
-    for (auto const& permission : client.QueryTestablePermissions(request)) {
-      if (!permission) throw std::runtime_error(permission.status().message());
+    for (auto& permission : client.QueryTestablePermissions(request)) {
+      if (!permission) throw std::move(permission).status();
       std::cout << "Permission successfully retrieved: " << permission->name()
                 << "\n";
       ++count;
@@ -512,7 +511,7 @@ void PatchServiceAccount(std::vector<std::string> const& argv) {
     *request.mutable_service_account() = service_account;
     *request.mutable_update_mask() = update_mask;
     auto response = client.PatchServiceAccount(request);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "ServiceAccount successfully updated: "
               << response->DebugString() << "\n";
   }
@@ -531,7 +530,7 @@ void UndeleteRole(std::vector<std::string> const& argv) {
     google::iam::admin::v1::UndeleteRoleRequest request;
     request.set_name(name);
     auto response = client.UndeleteRole(request);
-    if (!response) throw std::runtime_error(response.status().message());
+    if (!response) throw std::move(response).status();
     std::cout << "Role successfully undeleted: " << response->DebugString()
               << "\n";
   }
