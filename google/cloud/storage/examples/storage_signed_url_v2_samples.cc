@@ -32,7 +32,7 @@ void CreateGetSignedUrlV2(google::cloud::storage::Client client,
                             std::chrono::minutes(15)),
         gcs::SigningAccount(signing_account));
 
-    if (!signed_url) throw std::runtime_error(signed_url.status().message());
+    if (!signed_url) throw std::move(signed_url).status();
     std::cout << "The signed url is: " << *signed_url << "\n\n"
               << "You can use this URL with any user agent, for example:\n"
               << "curl '" << *signed_url << "'\n";
@@ -55,7 +55,7 @@ void CreatePutSignedUrlV2(google::cloud::storage::Client client,
         gcs::ContentType("application/octet-stream"),
         gcs::SigningAccount(signing_account));
 
-    if (!signed_url) throw std::runtime_error(signed_url.status().message());
+    if (!signed_url) throw std::move(signed_url).status();
     std::cout << "The signed url is: " << *signed_url << "\n\n"
               << "You can use this URL with any user agent, for example:\n"
               << "curl -X PUT -H 'Content-Type: application/octet-stream'"

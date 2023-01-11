@@ -31,7 +31,7 @@ void AddBucketDefaultKmsKey(google::cloud::storage::Client client,
     StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().SetEncryption(
                          gcs::BucketEncryption{key_name}));
-    if (!updated) throw std::runtime_error(updated.status().message());
+    if (!updated) throw std::move(updated).status();
 
     if (!updated->has_encryption()) {
       std::cerr << "The change to set the encryption attribute on bucket "
@@ -58,7 +58,7 @@ void GetBucketDefaultKmsKey(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> metadata =
         client.GetBucketMetadata(bucket_name);
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
 
     if (!metadata->has_encryption()) {
       std::cout << "The bucket " << metadata->name()
@@ -82,7 +82,7 @@ void RemoveBucketDefaultKmsKey(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> updated = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().ResetEncryption());
-    if (!updated) throw std::runtime_error(updated.status().message());
+    if (!updated) throw std::move(updated).status();
 
     std::cout << "Successfully removed default KMS key on bucket "
               << updated->name() << "\n";

@@ -30,10 +30,7 @@ void GetStaticWebsiteConfiguration(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
+    if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
     if (!bucket_metadata->has_website()) {
       std::cout << "Static website configuration is not set for bucket "
@@ -63,16 +60,13 @@ void SetStaticWebsiteConfiguration(google::cloud::storage::Client client,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) throw std::runtime_error(original.status().message());
+    if (!original) throw std::move(original).status();
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetWebsite(
             gcs::BucketWebsite{main_page_suffix, not_found_page}),
         gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!patched_metadata) {
-      throw std::runtime_error(patched_metadata.status().message());
-    }
+    if (!patched_metadata) throw std::move(patched_metadata).status();
 
     if (!patched_metadata->has_website()) {
       std::cout << "Static website configuration is not set for bucket "
@@ -100,14 +94,11 @@ void RemoveStaticWebsiteConfiguration(google::cloud::storage::Client client,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) throw std::runtime_error(original.status().message());
+    if (!original) throw std::move(original).status();
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().ResetWebsite(),
         gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!patched_metadata) {
-      throw std::runtime_error(patched_metadata.status().message());
-    }
+    if (!patched_metadata) throw std::move(patched_metadata).status();
 
     if (!patched_metadata->has_website()) {
       std::cout << "Static website configuration removed for bucket "

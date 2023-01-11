@@ -31,29 +31,26 @@ void SetCorsConfiguration(google::cloud::storage::Client client,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) throw std::runtime_error(original.status().message());
+    if (!original) throw std::move(original).status();
     std::vector<gcs::CorsEntry> cors_configuration;
     cors_configuration.emplace_back(
         gcs::CorsEntry{3600, {"GET"}, {origin}, {"Content-Type"}});
 
-    StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
+    StatusOr<gcs::BucketMetadata> patched = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetCors(cors_configuration),
         gcs::IfMetagenerationMatch(original->metageneration()));
+    if (!patched) throw std::move(patched).status();
 
-    if (!patched_metadata) {
-      throw std::runtime_error(patched_metadata.status().message());
-    }
-
-    if (patched_metadata->cors().empty()) {
+    if (patched->cors().empty()) {
       std::cout << "Cors configuration is not set for bucket "
-                << patched_metadata->name() << "\n";
+                << patched->name() << "\n";
       return;
     }
 
     std::cout << "Cors configuration successfully set for bucket "
-              << patched_metadata->name() << "\nNew cors configuration: ";
-    for (auto const& cors_entry : patched_metadata->cors()) {
+              << patched->name() << "\nNew cors configuration: ";
+    for (auto const& cors_entry : patched->cors()) {
       std::cout << "\n  " << cors_entry << "\n";
     }
   }
@@ -69,12 +66,12 @@ void RemoveCorsConfiguration(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
-    if (!original) throw std::runtime_error(original.status().message());
+    if (!original) throw std::move(original).status();
 
     StatusOr<gcs::BucketMetadata> patched = client.PatchBucket(
         bucket_name, gcs::BucketMetadataPatchBuilder().ResetCors(),
         gcs::IfMetagenerationMatch(original->metageneration()));
-    if (!patched) throw std::runtime_error(patched.status().message());
+    if (!patched) throw std::move(patched).status();
 
     std::cout << "Cors configuration successfully removed for bucket "
               << patched->name() << "\n";

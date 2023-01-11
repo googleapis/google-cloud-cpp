@@ -83,10 +83,7 @@ void WriteEncryptedObject(google::cloud::storage::Client client,
     StatusOr<gcs::ObjectMetadata> object_metadata = client.InsertObject(
         bucket_name, object_name, "top secret",
         gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
-
-    if (!object_metadata) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
+    if (!object_metadata) throw std::move(object_metadata).status();
 
     std::cout << "The object " << object_metadata->name()
               << " was created in bucket " << object_metadata->bucket()
@@ -134,10 +131,7 @@ void ComposeObjectFromEncryptedObjects(google::cloud::storage::Client client,
     StatusOr<gcs::ObjectMetadata> composed_object = client.ComposeObject(
         bucket_name, compose_objects, destination_object_name,
         gcs::EncryptionKey::FromBase64Key(base64_aes256_key));
-
-    if (!composed_object) {
-      throw std::runtime_error(composed_object.status().message());
-    }
+    if (!composed_object) throw std::move(composed_object).status();
 
     std::cout << "Composed new object " << composed_object->name()
               << " in bucket " << composed_object->bucket()
@@ -161,10 +155,7 @@ void CopyEncryptedObject(google::cloud::storage::Client client,
     StatusOr<gcs::ObjectMetadata> new_copy_meta = client.CopyObject(
         source_bucket_name, source_object_name, destination_bucket_name,
         destination_object_name, gcs::EncryptionKey::FromBase64Key(key_base64));
-
-    if (!new_copy_meta) {
-      throw std::runtime_error(new_copy_meta.status().message());
-    }
+    if (!new_copy_meta) throw std::move(new_copy_meta).status();
 
     std::cout << "Successfully copied " << source_object_name << " in bucket "
               << source_bucket_name << " to bucket " << new_copy_meta->bucket()
@@ -190,10 +181,9 @@ void RotateEncryptionKey(google::cloud::storage::Client client,
             bucket_name, object_name, bucket_name, object_name,
             gcs::SourceEncryptionKey::FromBase64Key(old_key_base64),
             gcs::EncryptionKey::FromBase64Key(new_key_base64));
-
-    if (!object_metadata) {
-      throw std::runtime_error(object_metadata.status().message());
-    }
+    if (!object_metadata) 
+      throw std::move(object_metadata).status();
+    
 
     std::cout << "Rotated key on object " << object_metadata->name()
               << " in bucket " << object_metadata->bucket()

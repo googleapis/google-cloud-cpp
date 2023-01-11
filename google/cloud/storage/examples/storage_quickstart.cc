@@ -37,7 +37,7 @@ void StorageQuickstart(std::string const& bucket_name) {
   google::cloud::StatusOr<gcs::BucketMetadata> metadata = client.CreateBucket(
       bucket_name, gcs::BucketMetadata().set_location("US").set_storage_class(
                        gcs::storage_class::Standard()));
-  if (!metadata) throw std::runtime_error(metadata.status().message());
+  if (!metadata) throw std::move(metadata).status();
 
   std::cout << "Created bucket " << metadata->name() << "\n";
 }

@@ -29,7 +29,7 @@ void GetObjectVersioning(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> metadata =
         client.GetBucketMetadata(bucket_name);
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
 
     if (metadata->versioning().has_value()) {
       std::cout << "Object versioning for bucket " << bucket_name << " is "
@@ -52,14 +52,14 @@ void EnableObjectVersioning(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
-    if (!original) throw std::runtime_error(original.status().message());
+    if (!original) throw std::move(original).status();
 
     StatusOr<gcs::BucketMetadata> patched = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetVersioning(
             gcs::BucketVersioning{true}),
         gcs::IfMetagenerationMatch(original->metageneration()));
-    if (!patched) throw std::runtime_error(patched.status().message());
+    if (!patched) throw std::move(patched).status();
 
     if (patched->versioning().has_value()) {
       std::cout << "Object versioning for bucket " << bucket_name << " is "
@@ -82,14 +82,14 @@ void DisableObjectVersioning(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
-    if (!original) throw std::runtime_error(original.status().message());
+    if (!original) throw std::move(original).status();
 
     StatusOr<gcs::BucketMetadata> patched = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetVersioning(
             gcs::BucketVersioning{false}),
         gcs::IfMetagenerationMatch(original->metageneration()));
-    if (!patched) throw std::runtime_error(patched.status().message());
+    if (!patched) throw std::move(patched).status();
 
     auto versioning =
         patched->versioning().value_or(gcs::BucketVersioning{false});
@@ -114,7 +114,7 @@ void CopyVersionedObject(google::cloud::storage::Client client,
         client.CopyObject(source_bucket_name, source_object_name,
                           destination_bucket_name, destination_object_name,
                           gcs::SourceGeneration{source_object_generation});
-    if (!copy) throw std::runtime_error(copy.status().message());
+    if (!copy) throw std::move(copy).status();
 
     std::cout << "Successfully copied " << source_object_name << " generation "
               << source_object_generation << " in bucket " << source_bucket_name

@@ -38,7 +38,7 @@ non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
   //! [grpc-default-client]
 
   auto object = client.InsertObject(bucket_name, "lorem.txt", kText);
-  if (!object) throw std::runtime_error(object.status().message());
+  if (!object) throw std::move(object).status();
 
   auto input = client.ReadObject(bucket_name, "lorem.txt",
                                  gcs::Generation(object->generation()));
