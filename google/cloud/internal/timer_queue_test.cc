@@ -13,9 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/internal/timer_queue.h"
+#include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
-#include <chrono>
 #include <thread>
 
 namespace google {
@@ -32,14 +32,14 @@ TEST(TimerQueueTest, ScheduleSingleRunner) {
   auto tq = TimerQueue::Create();
   std::thread t([tq] { tq->Service(); });
   auto const duration = std::chrono::milliseconds(1);
-  auto now = std::chrono::system_clock::now();
-  auto f = tq->Schedule(now + duration);
+  auto const tp = std::chrono::system_clock::now() + duration;
+  auto f = tq->Schedule(tp);
   auto expire_time = f.get();
   tq->Shutdown();
   t.join();
 
   ASSERT_THAT(expire_time, IsOk());
-  EXPECT_GE(*expire_time - now, duration);
+  EXPECT_EQ(*expire_time, tp);
 }
 
 /// @test Verify timers can be cancelled.
@@ -80,7 +80,7 @@ TEST(TimerQueueTest, ScheduleEarlierTimerSingleRunner) {
   auto tq = TimerQueue::Create();
   std::thread t([tq] { tq->Service(); });
   auto const duration = std::chrono::milliseconds(50);
-  auto now = std::chrono::system_clock::now();
+  auto const now = std::chrono::system_clock::now();
   auto later = tq->Schedule(now + 2 * duration);
   auto earlier = tq->Schedule(now + duration);
   auto earlier_expire_time = earlier
@@ -95,7 +95,8 @@ TEST(TimerQueueTest, ScheduleEarlierTimerSingleRunner) {
 
   ASSERT_THAT(earlier_expire_time, IsOk());
   ASSERT_THAT(later_expire_time, IsOk());
-  EXPECT_GT(*later_expire_time, *earlier_expire_time);
+  EXPECT_EQ(*earlier_expire_time, now + duration);
+  EXPECT_EQ(*later_expire_time, now + 2 * duration);
 }
 
 TEST(TimerQueueTest, ScheduleMultipleRunners) {
@@ -206,7 +207,8 @@ TEST(TimerQueueTest, ScheduleEarlierTimerMultipleRunner) {
 
   ASSERT_THAT(earlier_expire_time, IsOk());
   ASSERT_THAT(later_expire_time, IsOk());
-  EXPECT_GT(*later_expire_time, *earlier_expire_time);
+  EXPECT_EQ(*earlier_expire_time, now + duration);
+  EXPECT_EQ(*later_expire_time, now + 2 * duration);
 }
 
 }  // namespace

@@ -72,16 +72,33 @@ class TimerQueue : public std::enable_shared_from_this<TimerQueue> {
   TimerQueue(TimerQueue&&) = delete;
   TimerQueue& operator=(TimerQueue&&) = delete;
 
-  // Adds a timer to the queue.
+  /// Adds a timer to the queue.
   future<StatusOr<std::chrono::system_clock::time_point>> Schedule(
       std::chrono::system_clock::time_point tp);
 
-  // Signals all threads that have called Service to return. Does not modify
-  // remaining timers.
+  /**
+   * Signals all threads that have called Service() to return.
+   *
+   * Once this function returns no more timers can be scheduled successfully.
+   * All calls to `Schedule()` will return an immediately satisfied timer with
+   * a `StatusCode::kCancelled` status.
+   *
+   * While all outstanding timers are cancelled, applications should not assume
+   * any particular ordering. Timers that are close to their expiration may
+   * complete successfully even after `Shutdown()` returns.
+   */
   void Shutdown();
 
-  // Timers added via Schedule should be managed by one or more threads that
-  // call Service. Calls to Service only return after Shutdown has been called.
+  /**
+   * Blocks the current thread to service the timer queue.
+   *
+   * The thread calling `Service()` blocks until `Shutdown()` is called. While
+   * blocked in the `Service()` call, the thread is used to expire timers.
+   *
+   * Any continuations for timers that complete successfully (i.e. are satisfied
+   * with a `std::chrono::system_clock::time_point`) run in one of the threads
+   * that have called `Service()`.
+   */
   void Service();
 
  private:
