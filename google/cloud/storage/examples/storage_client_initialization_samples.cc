@@ -32,7 +32,7 @@ void PerformSomeOperations(google::cloud::storage::Client client,
 
   auto object = client.InsertObject(bucket_name, object_name, kText).value();
   for (auto&& o : client.ListObjects(bucket_name)) {
-    if (!o) throw std::runtime_error(o.status().message());
+    if (!o) throw std::move(o).status();
     if (o->name() == object_name) break;
   }
   auto status = client.DeleteObject(bucket_name, object_name,

@@ -30,10 +30,7 @@ void GetDefaultEventBasedHold(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> bucket_metadata =
         client.GetBucketMetadata(bucket_name);
-
-    if (!bucket_metadata) {
-      throw std::runtime_error(bucket_metadata.status().message());
-    }
+    if (!bucket_metadata) throw std::move(bucket_metadata).status();
 
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_metadata->name() << " is "
@@ -55,16 +52,13 @@ void EnableDefaultEventBasedHold(google::cloud::storage::Client client,
   [](gcs::Client client, std::string const& bucket_name) {
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
+    if (!original) throw std::move(original).status();
 
-    if (!original) throw std::runtime_error(original.status().message());
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(true),
         gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!patched_metadata) {
-      throw std::runtime_error(patched_metadata.status().message());
-    }
+    if (!patched_metadata) throw std::move(patched_metadata).status();
 
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_name << " is "
@@ -87,15 +81,12 @@ void DisableDefaultEventBasedHold(google::cloud::storage::Client client,
     StatusOr<gcs::BucketMetadata> original =
         client.GetBucketMetadata(bucket_name);
 
-    if (!original) throw std::runtime_error(original.status().message());
+    if (!original) throw std::move(original).status();
     StatusOr<gcs::BucketMetadata> patched_metadata = client.PatchBucket(
         bucket_name,
         gcs::BucketMetadataPatchBuilder().SetDefaultEventBasedHold(false),
         gcs::IfMetagenerationMatch(original->metageneration()));
-
-    if (!patched_metadata) {
-      throw std::runtime_error(patched_metadata.status().message());
-    }
+    if (!patched_metadata) throw std::move(patched_metadata).status();
 
     std::cout << "The default event-based hold for objects in bucket "
               << bucket_name << " is "

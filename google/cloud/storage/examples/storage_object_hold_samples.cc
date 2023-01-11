@@ -28,13 +28,13 @@ void SetObjectEventBasedHold(google::cloud::storage::Client client,
      std::string const& object_name) {
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
-    if (!original) throw std::runtime_error(original.status().message());
+    if (!original) throw std::move(original).status();
 
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetEventBasedHold(true),
         gcs::IfMetagenerationMatch(original->metageneration()));
-    if (!updated) throw std::runtime_error(updated.status().message());
+    if (!updated) throw std::move(updated).status();
 
     std::cout << "The event hold for object " << updated->name()
               << " in bucket " << updated->bucket() << " is "
@@ -53,13 +53,13 @@ void ReleaseObjectEventBasedHold(google::cloud::storage::Client client,
      std::string const& object_name) {
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
-    if (!original) throw std::runtime_error(original.status().message());
+    if (!original) throw std::move(original).status();
 
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetEventBasedHold(false),
         gcs::IfMetagenerationMatch(original->metageneration()));
-    if (!updated) throw std::runtime_error(updated.status().message());
+    if (!updated) throw std::move(updated).status();
 
     std::cout << "The event hold for object " << updated->name()
               << " in bucket " << updated->bucket() << " is "
@@ -78,13 +78,13 @@ void SetObjectTemporaryHold(google::cloud::storage::Client client,
      std::string const& object_name) {
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
-    if (!original) throw std::runtime_error(original.status().message());
+    if (!original) throw std::move(original).status();
 
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetTemporaryHold(true),
         gcs::IfMetagenerationMatch(original->metageneration()));
-    if (!updated) throw std::runtime_error(updated.status().message());
+    if (!updated) throw std::move(updated).status();
 
     std::cout << "The temporary hold for object " << updated->name()
               << " in bucket " << updated->bucket() << " is "
@@ -104,13 +104,13 @@ void ReleaseObjectTemporaryHold(google::cloud::storage::Client client,
     StatusOr<gcs::ObjectMetadata> original =
         client.GetObjectMetadata(bucket_name, object_name);
 
-    if (!original) throw std::runtime_error(original.status().message());
+    if (!original) throw std::move(original).status();
     StatusOr<gcs::ObjectMetadata> updated = client.PatchObject(
         bucket_name, object_name,
         gcs::ObjectMetadataPatchBuilder().SetTemporaryHold(false),
         gcs::IfMetagenerationMatch(original->metageneration()));
 
-    if (!updated) throw std::runtime_error(updated.status().message());
+    if (!updated) throw std::move(updated).status();
     std::cout << "The temporary hold for object " << updated->name()
               << " in bucket " << updated->bucket() << " is "
               << (updated->temporary_hold() ? "enabled" : "disabled") << "\n";

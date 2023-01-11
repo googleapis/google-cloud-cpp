@@ -39,7 +39,7 @@ void WriteObjectWithKmsKey(google::cloud::storage::Client client,
     stream.Close();
 
     StatusOr<gcs::ObjectMetadata> metadata = std::move(stream).metadata();
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
 
     std::cout << "Successfully wrote to object " << metadata->name()
               << " its size is: " << metadata->size()
@@ -61,7 +61,7 @@ void ObjectCsekToCmek(google::cloud::storage::Client client,
         bucket_name, object_name, bucket_name, object_name,
         gcs::SourceEncryptionKey::FromBase64Key(old_csek_key_base64),
         gcs::DestinationKmsKeyName(new_cmek_key_name));
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
 
     std::cout << "Changed object " << metadata->name() << " in bucket "
               << metadata->bucket()
@@ -81,7 +81,7 @@ void GetObjectKmsKey(google::cloud::storage::Client client,
      std::string const& object_name) {
     StatusOr<gcs::ObjectMetadata> metadata =
         client.GetObjectMetadata(bucket_name, object_name);
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
 
     std::cout << "KMS key on object " << metadata->name() << " in bucket "
               << metadata->bucket() << ": " << metadata->kms_key_name() << "\n";

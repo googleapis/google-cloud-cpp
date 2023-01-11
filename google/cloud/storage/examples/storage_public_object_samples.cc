@@ -33,7 +33,7 @@ void MakeObjectPublic(google::cloud::storage::Client client,
         bucket_name, object_name, gcs::ObjectMetadataPatchBuilder(),
         gcs::PredefinedAcl::PublicRead());
 
-    if (!updated) throw std::runtime_error(updated.status().message());
+    if (!updated) throw std::move(updated).status();
     std::cout << "Object updated. The full metadata after the update is: "
               << *updated << "\n";
   }

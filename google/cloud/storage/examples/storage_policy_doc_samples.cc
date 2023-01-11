@@ -44,7 +44,7 @@ void CreateSignedPolicyDocumentV2(google::cloud::storage::Client client,
                                                                      1000000),
                 }},
             gcs::SigningAccount(signing_account));
-    if (!document) throw std::runtime_error(document.status().message());
+    if (!document) throw std::move(document).status();
 
     std::cout << "The signed document is: " << *document << "\n\n"
               << "You can use this with an HTML form.\n";
@@ -77,7 +77,7 @@ void CreateSignedPolicyDocumentV4(google::cloud::storage::Client client,
                                                                      1000000),
                 }},
             gcs::SigningAccount(signing_account));
-    if (!document) throw std::runtime_error(document.status().message());
+    if (!document) throw std::move(document).status();
 
     std::cout << "The signed document is: " << *document << "\n\n"
               << "You can use this with an HTML form.\n";
@@ -101,7 +101,7 @@ void CreatePolicyDocumentFormV4(google::cloud::storage::Client client,
         },
         gcs::AddExtensionFieldOption("x-goog-meta-test", "data"),
         gcs::SigningAccount(signing_account));
-    if (!document) throw std::runtime_error(document.status().message());
+    if (!document) throw std::move(document).status();
 
     // Create the HTML form for the computed policy.
     std::ostringstream os;

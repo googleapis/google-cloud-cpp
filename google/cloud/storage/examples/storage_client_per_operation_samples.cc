@@ -42,33 +42,33 @@ void ChangeUserAgent(std::vector<std::string> const& argv) {
                             "The quick brown fox jumps over the lazy dog",
                             g::Options{}.set<g::UserAgentProductsOption>(
                                 {"example", "InsertObject"}));
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
 
     auto is = client.ReadObject(bucket_name, object_name_1,
                                 g::Options{}.set<g::UserAgentProductsOption>(
                                     {"example", "ReadObject"}));
     auto contents = std::string{std::istreambuf_iterator<char>(is.rdbuf()), {}};
-    if (is.bad()) throw std::runtime_error(is.status().message());
+    if (is.bad()) throw google::cloud::Status(is.status());
 
     auto os = client.WriteObject(bucket_name, object_name_2,
                                  g::Options{}.set<g::UserAgentProductsOption>(
                                      {"example", "WriteObject"}));
     os << contents;
     os.Close();
-    if (os.bad()) throw std::runtime_error(os.metadata().status().message());
+    if (os.bad()) throw google::cloud::Status(os.metadata().status());
 
     auto result = client.DeleteObject(
         bucket_name, object_name_1, gcs::Generation(metadata->generation()),
         g::Options{}.set<g::UserAgentProductsOption>(
             {"example", "DeleteObject"}));
-    if (!result.ok()) throw std::runtime_error(metadata.status().message());
+    if (!result.ok()) throw std::move(metadata).status();
 
     metadata = os.metadata();
     result = client.DeleteObject(bucket_name, object_name_2,
                                  gcs::Generation(metadata->generation()),
                                  g::Options{}.set<g::UserAgentProductsOption>(
                                      {"example", "DeleteObject"}));
-    if (!result.ok()) throw std::runtime_error(metadata.status().message());
+    if (!result.ok()) throw std::move(metadata).status();
   }
   //! [change-user-agent]
   (argv.at(0), argv.at(1), argv.at(2));
@@ -92,14 +92,14 @@ void ChangeRetryPolicy(std::vector<std::string> const& argv) {
         "The quick brown fox jumps over the lazy dog",
         g::Options{}.set<gcs::RetryPolicyOption>(
             gcs::LimitedTimeRetryPolicy(std::chrono::seconds(10)).clone()));
-    if (!metadata) throw std::runtime_error(metadata.status().message());
+    if (!metadata) throw std::move(metadata).status();
 
     auto is = client.ReadObject(
         bucket_name, object_name_1,
         g::Options{}.set<gcs::RetryPolicyOption>(
             gcs::LimitedTimeRetryPolicy(std::chrono::seconds(10)).clone()));
     auto contents = std::string{std::istreambuf_iterator<char>(is.rdbuf()), {}};
-    if (is.bad()) throw std::runtime_error(is.status().message());
+    if (is.bad()) throw google::cloud::Status(is.status());
 
     auto os = client.WriteObject(
         bucket_name, object_name_2,
@@ -107,20 +107,20 @@ void ChangeRetryPolicy(std::vector<std::string> const& argv) {
             gcs::LimitedTimeRetryPolicy(std::chrono::seconds(10)).clone()));
     os << contents;
     os.Close();
-    if (os.bad()) throw std::runtime_error(os.metadata().status().message());
+    if (os.bad()) throw google::cloud::Status(os.metadata().status());
 
     auto result = client.DeleteObject(
         bucket_name, object_name_1, gcs::Generation(metadata->generation()),
         g::Options{}.set<gcs::RetryPolicyOption>(
             gcs::LimitedTimeRetryPolicy(std::chrono::seconds(10)).clone()));
-    if (!result.ok()) throw std::runtime_error(metadata.status().message());
+    if (!result.ok()) throw std::move(metadata).status();
 
     metadata = os.metadata();
     result = client.DeleteObject(
         bucket_name, object_name_2, gcs::Generation(metadata->generation()),
         g::Options{}.set<gcs::RetryPolicyOption>(
             gcs::LimitedTimeRetryPolicy(std::chrono::seconds(10)).clone()));
-    if (!result.ok()) throw std::runtime_error(metadata.status().message());
+    if (!result.ok()) throw std::move(metadata).status();
   }
   //! [change-retry-policy]
   (argv.at(0), argv.at(1), argv.at(2));
