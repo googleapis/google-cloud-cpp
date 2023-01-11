@@ -46,9 +46,9 @@ MATCHER(SpanHasInstrumentationScope,
 }
 
 MATCHER(SpanKindIsClient,
-        "has span kind: " + ToString(opentelemetry::trace::SpanKind::kClient)) {
+        "has kind: " + ToString(opentelemetry::trace::SpanKind::kClient)) {
   auto const& kind = arg->GetSpanKind();
-  *result_listener << "has span kind: " << ToString(kind);
+  *result_listener << "has kind: " << ToString(kind);
   return kind == opentelemetry::trace::SpanKind::kClient;
 }
 
