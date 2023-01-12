@@ -17,10 +17,11 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 namespace {
+
+using ::testing::ElementsAre;
 
 constexpr auto kExpectedXml =
     R"xml(<InitiateMultipartUploadResult>
@@ -36,30 +37,31 @@ constexpr auto kExpectedXml =
 </InitiateMultipartUploadResult>
 )xml";
 
-TEST(XmlUtilsTest, XmlNodeTest) {
+TEST(XmlNodeTest, BuildTree) {
   XmlNode root;
   auto* mpu_result = root.AppendChild("InitiateMultipartUploadResult", "");
   mpu_result->AppendChild("Bucket", "")->AppendChild("", "travel-maps");
   mpu_result->AppendChild("Key", "")->AppendChild("", "paris.jpg");
-  mpu_result->AppendChild("UploadId", "")
-      ->AppendChild(
-          "", "VXBsb2FkIElEIGZvciBlbHZpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA");
+  auto* upload_id_tag = mpu_result->AppendChild("UploadId", "");
+  upload_id_tag->AppendChild(
+      "", "VXBsb2FkIElEIGZvciBlbHZpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA");
   EXPECT_EQ(root.ToString(2), kExpectedXml);
   auto children = root.GetChildren();
   EXPECT_EQ(children.size(), 1);
-  EXPECT_EQ(children[0], mpu_result);
+  EXPECT_THAT(children, ElementsAre(mpu_result));
   auto tags = mpu_result->GetChildren("UploadId");
   EXPECT_EQ(tags.size(), 1);
-  EXPECT_EQ(tags[0]->GetConcatenatedText(),
-            "VXBsb2FkIElEIGZvciBlbHZpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA");
+  EXPECT_THAT(tags, ElementsAre(upload_id_tag));
+}
+
+TEST(XmlNodeTest, NonTagElement) {
   // Non-tag node just returns its text_content
   XmlNode non_tag{"", "text"};
   EXPECT_EQ(non_tag.GetConcatenatedText(), "text");
 }
 
 }  // namespace
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

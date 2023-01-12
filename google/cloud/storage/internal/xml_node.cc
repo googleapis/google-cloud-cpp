@@ -20,9 +20,8 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 namespace {
 
@@ -88,7 +87,7 @@ std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
   if (!tag_name_.empty()) {
     absl::StrAppendFormat(&ret, "%s<%s>%s", indentation,
                           EscapeXmlString(tag_name_, false), separator);
-    next_indent++;
+    ++next_indent;
   } else if (!text_content_.empty()) {
     absl::StrAppend(&ret, indentation, EscapeXmlString(text_content_, true),
                     separator);
@@ -103,8 +102,7 @@ std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
   return ret;
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google

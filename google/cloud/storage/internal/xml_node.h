@@ -21,24 +21,24 @@
 
 namespace google {
 namespace cloud {
-namespace storage {
+namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-namespace internal {
 
 /**
- * Xml parse/builder library for GCS MPU upload:
- * https://cloud.google.com/storage/docs/multipart-uploads
  */
 
 /**
- * Represents an XML node in a XML tree.
+ * Represents an XML node in an XML tree.
  *
- * Normally a single node represents an XML element (tag), but we also
+ * @note This is used for implementation for GCS MPU upload:
+ * @see https://cloud.google.com/storage/docs/multipart-uploads
+ *
+ * Normally a single node represents an XML element(tag), but we also
  * treat a text portion as a node. If the tag_name_ is empty, it's considered as
  * a text node.
  *
  * For our use case, we don't need XML attributes at all.
- **/
+ */
 class XmlNode {
  public:
   XmlNode() = default;
@@ -93,9 +93,8 @@ XmlNode* XmlNode::AppendChild(Args... args) {
   return &children_.back();
 }
 
-}  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace storage
+}  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
 
