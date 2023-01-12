@@ -50,11 +50,8 @@ RestCompletionQueueImpl::MakeRelativeTimer(std::chrono::nanoseconds duration) {
 void RestCompletionQueueImpl::RunAsync(
     std::unique_ptr<internal::RunAsyncBase> function) {
   ++run_async_counter_;
-  // Some delay is necessary to reduce the likelihood that the timer expires
-  // before .then() is called.
-  // TODO(#10553): Refactor this mechanism to a more deterministic solution.
-  MakeRelativeTimer(std::chrono::milliseconds(500))
-      .then([f = std::move(function)](auto) { f->exec(); });
+  tq_->Schedule(std::chrono::system_clock::now(),
+                [f = std::move(function)](auto) { f->exec(); });
 }
 
 void RestCompletionQueueImpl::StartOperation(
