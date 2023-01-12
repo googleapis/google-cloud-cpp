@@ -16,6 +16,7 @@
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <sstream>
 #include <thread>
 
 namespace google {
@@ -26,7 +27,9 @@ namespace {
 
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
-using testing::Each;
+using ::testing::Each;
+using ::testing::ElementsAreArray;
+using ::testing::WhenSorted;
 
 TEST(TimerQueueTest, ScheduleSingleRunner) {
   auto tq = TimerQueue::Create();
@@ -76,27 +79,62 @@ TEST(TimerQueueTest, CancelTimers) {
   for (auto& t : runners) t.join();
 }
 
-TEST(TimerQueueTest, ScheduleEarlierTimerSingleRunner) {
+/// @test Verify timers are executed in order.
+TEST(TimerQueueTest, SingleRunnerOrdering) {
+  // Populate some delays with intentionally out-of-order and in-order data.
+  using duration = std::chrono::system_clock::duration;
+  std::vector<duration> const delays{
+      duration(10), duration(9),  duration(8), duration(5), duration(20),
+      duration(21), duration(22), duration(4), duration(3),
+  };
+
+  // Create the timer queue, but do not run the servicing thread until the
+  // timers are scheduled. Otherwise "later" timers may be immediately expired
+  // because clocks are hard.
   auto tq = TimerQueue::Create();
+
+  auto const start = std::chrono::system_clock::now();
+  std::vector<std::chrono::system_clock::time_point> expected(delays.size());
+  std::transform(delays.begin(), delays.end(), expected.begin(),
+                 [start](auto d) { return start + d; });
+  // We are going to store the expiration of each timer in this vector. Note
+  // that first it is used only by the timer servicing thread (`std::thread t`)
+  // below, and then by the testing thread.  Synchronization is provided by
+  // the thread join() call.
+  std::vector<std::chrono::system_clock::time_point> actual;
+  std::vector<future<Status>> timers(expected.size());
+  std::transform(expected.begin(), expected.end(), timers.begin(), [&](auto d) {
+    // As the timers expire we add their time (if successful) to `expirations`,
+    // and return the `Status`.
+    return tq->Schedule(d).then([&, d](auto f) {
+      auto e = f.get();
+      if (!e) return std::move(e).status();
+      if (*e != d) {
+        std::ostringstream os;
+        os << "mismatched expiration, expected=" << d << ", got=" << *e;
+        return Status(StatusCode::kFailedPrecondition, std::move(os).str());
+      }
+      actual.push_back(*std::move(e));
+      return Status{};
+    });
+  });
+
+  // Start expiring timers.
   std::thread t([tq] { tq->Service(); });
-  auto const duration = std::chrono::milliseconds(50);
-  auto const now = std::chrono::system_clock::now();
-  auto later = tq->Schedule(now + 2 * duration);
-  auto earlier = tq->Schedule(now + duration);
-  auto earlier_expire_time = earlier
-                                 .then([&](auto f) {
-                                   EXPECT_FALSE(later.is_ready());
-                                   return f.get();
-                                 })
-                                 .get();
-  auto later_expire_time = later.get();
+
+  // Wait for all the timers to expire.
+  std::vector<Status> status(timers.size());
+  std::transform(timers.begin(), timers.end(), status.begin(),
+                 [](auto& f) { return f.get(); });
+
   tq->Shutdown();
   t.join();
 
-  ASSERT_THAT(earlier_expire_time, IsOk());
-  ASSERT_THAT(later_expire_time, IsOk());
-  EXPECT_EQ(*earlier_expire_time, now + duration);
-  EXPECT_EQ(*later_expire_time, now + 2 * duration);
+  EXPECT_THAT(status, Each(IsOk()));
+
+  // At this point we expect the expirations to be in order and match the
+  // expiration times set in `expected`.
+  EXPECT_THAT(expected, WhenSorted(ElementsAreArray(actual)));
 }
 
 TEST(TimerQueueTest, ScheduleMultipleRunners) {
@@ -182,33 +220,6 @@ TEST(TimerQueueTest, ShutdownMultipleRunners) {
 
   EXPECT_EQ(ids.size(), kRunners);
   EXPECT_THAT(status, Each(StatusIs(StatusCode::kCancelled)));
-}
-
-TEST(TimerQueueTest, ScheduleEarlierTimerMultipleRunner) {
-  auto tq = TimerQueue::Create();
-  auto constexpr kRunners = 8;
-  std::vector<std::thread> runners;
-  for (auto i = 0; i != kRunners; ++i) {
-    runners.emplace_back([&] { tq->Service(); });
-  }
-  auto const duration = std::chrono::milliseconds(50);
-  auto now = std::chrono::system_clock::now();
-  auto later = tq->Schedule(now + 2 * duration);
-  auto earlier = tq->Schedule(now + duration);
-  auto earlier_expire_time = earlier
-                                 .then([&](auto f) {
-                                   EXPECT_FALSE(later.is_ready());
-                                   return f.get();
-                                 })
-                                 .get();
-  auto later_expire_time = later.get();
-  tq->Shutdown();
-  for (auto& t : runners) t.join();
-
-  ASSERT_THAT(earlier_expire_time, IsOk());
-  ASSERT_THAT(later_expire_time, IsOk());
-  EXPECT_EQ(*earlier_expire_time, now + duration);
-  EXPECT_EQ(*later_expire_time, now + 2 * duration);
 }
 
 }  // namespace
