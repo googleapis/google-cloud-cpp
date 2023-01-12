@@ -59,46 +59,4 @@ int main(int argc, char* argv[]) try {
 
 [cloud-service-docs]: https://cloud.google.com/web-risk
 [doxygen-link]: https://googleapis.dev/cpp/google-cloud-webrisk/latest/
-## Quickstart
-
-The [quickstart/](quickstart/README.md) directory contains a minimal environment
-to get started using this client library in a larger project. The following
-"Hello World" program is used in this quickstart, and should give you a taste of
-this library.
-
-For detailed instructions on how to build and install this library, see the
-top-level [README](/README.md#building-and-installing).
-
-<!-- inject-quickstart-start -->
-
-```cc
-#include "google/cloud/webrisk/web_risk_client.h"
-#include <iostream>
-
-int main(int argc, char* argv[]) try {
-  if (argc > 2) {
-    std::cerr << "Usage: " << argv[0]
-              << " [uri (default https://www.google.com)]\n";
-    return 1;
-  }
-
-  namespace webrisk = ::google::cloud::webrisk;
-  auto client =
-      webrisk::WebRiskServiceClient(webrisk::MakeWebRiskServiceConnection());
-
-  auto const uri = std::string{argc == 2 ? argv[1] : "https://www.google.com/"};
-  auto const threat_types = std::vector<webrisk::v1::ThreatType>{
-      webrisk::v1::MALWARE, webrisk::v1::UNWANTED_SOFTWARE};
-  auto response = client.SearchUris("https://www.google.com/", threat_types);
-  if (!response) throw std::move(response).status();
-  std::cout << response->DebugString() << "\n";
-
-  return 0;
-} catch (google::cloud::Status const& status) {
-  std::cerr << "google::cloud::Status thrown: " << status << "\n";
-  return 1;
-}
-```
-
-<!-- inject-quickstart-end -->
-
+[source-link]: https://github.com/googleapis/google-cloud-cpp/tree/main/google/cloud/webrisk
