@@ -87,23 +87,23 @@ TEST(OpenTelemetry, MakeSpan) {
   EXPECT_THAT(spans, ElementsAre(SpanNamed("span1"), SpanNamed("span2")));
 }
 
-TEST(OpenTelemetry, CaptureStatusDetailsEndsSpan) {
+TEST(OpenTelemetry, EndSpanImplEndsSpan) {
   auto span_catcher = InstallSpanCatcher();
 
-  auto s = MakeSpan("span");
+  auto span = MakeSpan("span");
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, IsEmpty());
 
-  CaptureStatusDetails(s, Status());
+  EndSpanImpl(*span, Status());
   spans = span_catcher->GetSpans();
   EXPECT_THAT(spans, ElementsAre(SpanNamed("span")));
 }
 
-TEST(OpenTelemetry, CaptureStatusDetailsSuccess) {
+TEST(OpenTelemetry, EndSpanImplSuccess) {
   auto span_catcher = InstallSpanCatcher();
 
-  auto s = MakeSpan("success");
-  CaptureStatusDetails(s, Status());
+  auto span = MakeSpan("success");
+  EndSpanImpl(*span, Status());
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
@@ -113,12 +113,12 @@ TEST(OpenTelemetry, CaptureStatusDetailsSuccess) {
           SpanAttributesAre(SpanAttribute<int>("gcloud.status_code", 0)))));
 }
 
-TEST(OpenTelemetry, CaptureStatusDetailsFail) {
+TEST(OpenTelemetry, EndSpanImplFail) {
   auto span_catcher = InstallSpanCatcher();
   auto const code = static_cast<int>(StatusCode::kAborted);
 
-  auto s = MakeSpan("fail");
-  CaptureStatusDetails(s, Status(StatusCode::kAborted, "not good"));
+  auto span = MakeSpan("fail");
+  EndSpanImpl(*span, Status(StatusCode::kAborted, "not good"));
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
@@ -128,13 +128,13 @@ TEST(OpenTelemetry, CaptureStatusDetailsFail) {
           SpanAttributesAre(SpanAttribute<int>("gcloud.status_code", code)))));
 }
 
-TEST(OpenTelemetry, CaptureStatusDetailsErrorInfo) {
+TEST(OpenTelemetry, EndSpanImplErrorInfo) {
   auto span_catcher = InstallSpanCatcher();
   auto const code = static_cast<int>(StatusCode::kAborted);
 
   auto span = MakeSpan("reason");
-  CaptureStatusDetails(span, Status(StatusCode::kAborted, "not good",
-                                    ErrorInfo("reason", {}, {})));
+  EndSpanImpl(*span, Status(StatusCode::kAborted, "not good",
+                            ErrorInfo("reason", {}, {})));
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
@@ -145,8 +145,8 @@ TEST(OpenTelemetry, CaptureStatusDetailsErrorInfo) {
               SpanAttribute<std::string>("gcloud.error.reason", "reason")))));
 
   span = MakeSpan("domain");
-  CaptureStatusDetails(span, Status(StatusCode::kAborted, "not good",
-                                    ErrorInfo({}, "domain", {})));
+  EndSpanImpl(*span, Status(StatusCode::kAborted, "not good",
+                            ErrorInfo({}, "domain", {})));
   spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
@@ -157,9 +157,8 @@ TEST(OpenTelemetry, CaptureStatusDetailsErrorInfo) {
               SpanAttribute<std::string>("gcloud.error.domain", "domain")))));
 
   span = MakeSpan("metadata");
-  CaptureStatusDetails(span,
-                       Status(StatusCode::kAborted, "not good",
-                              ErrorInfo({}, {}, {{"k1", "v1"}, {"k2", "v2"}})));
+  EndSpanImpl(*span, Status(StatusCode::kAborted, "not good",
+                            ErrorInfo({}, {}, {{"k1", "v1"}, {"k2", "v2"}})));
   spans = span_catcher->GetSpans();
   EXPECT_THAT(
       spans,
@@ -171,17 +170,17 @@ TEST(OpenTelemetry, CaptureStatusDetailsErrorInfo) {
               SpanAttribute<std::string>("gcloud.error.metadata.k2", "v2")))));
 }
 
-TEST(OpenTelemetry, CaptureReturnStatus) {
+TEST(OpenTelemetry, EndSpanStatus) {
   auto span_catcher = InstallSpanCatcher();
 
   auto v1 = Status();
   auto s1 = MakeSpan("s1");
-  auto r1 = CaptureReturn(s1, v1);
+  auto r1 = EndSpan(*s1, v1);
   EXPECT_EQ(r1, v1);
 
   auto v2 = Status(StatusCode::kAborted, "fail");
   auto s2 = MakeSpan("s2");
-  auto r2 = CaptureReturn(s2, v2);
+  auto r2 = EndSpan(*s2, v2);
   EXPECT_EQ(r2, v2);
 
   auto spans = span_catcher->GetSpans();
@@ -191,17 +190,17 @@ TEST(OpenTelemetry, CaptureReturnStatus) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError)));
 }
 
-TEST(OpenTelemetry, CaptureReturnStatusOr) {
+TEST(OpenTelemetry, EndSpanStatusOr) {
   auto span_catcher = InstallSpanCatcher();
 
   auto v1 = StatusOr<int>(5);
   auto s1 = MakeSpan("s1");
-  auto r1 = CaptureReturn(s1, v1);
+  auto r1 = EndSpan(*s1, v1);
   EXPECT_EQ(r1, v1);
 
   auto v2 = StatusOr<int>(Status(StatusCode::kAborted, "fail"));
   auto s2 = MakeSpan("s2");
-  auto r2 = CaptureReturn(s2, v2);
+  auto r2 = EndSpan(*s2, v2);
   EXPECT_EQ(r2, v2);
 
   auto spans = span_catcher->GetSpans();

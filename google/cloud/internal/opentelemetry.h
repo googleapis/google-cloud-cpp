@@ -62,7 +62,7 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
     opentelemetry::nostd::string_view name);
 
 /**
- * Extracts information from a cloud status and adds it to a span.
+ * Extracts information from a `Status` and adds it to a span.
  *
  * This method will end the span, and set its [span status], accordingly. Other
  * details, such as error information, will be set as [attributes] on the span.
@@ -74,29 +74,26 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
  * [span status]:
  * https://opentelemetry.io/docs/concepts/signals/traces/#span-status
  */
-void CaptureStatusDetails(
-    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
-    Status const& status);
+void EndSpanImpl(opentelemetry::trace::Span& span, Status const& status);
 
 /**
- * Extracts information from a status and adds it to a span.
+ * Extracts information from a `Status` and adds it to a span.
  *
- * The original value is returned, for the sake of composition.
+ * The span is ended. The original value is returned, for the sake of
+ * composition.
  */
-Status CaptureReturn(
-    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
-    Status const& status);
+Status EndSpan(opentelemetry::trace::Span& span, Status const& status);
 
 /**
  * Extracts information from a `StatusOr<>` and adds it to a span.
  *
- * The original value is returned, for the sake of composition.
+ * The span is ended. The original value is returned, for the sake of
+ * composition.
  */
 template <typename T>
-StatusOr<T> CaptureReturn(
-    opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> const& span,
-    StatusOr<T> const& value) {
-  CaptureStatusDetails(span, value.status());
+StatusOr<T> EndSpan(opentelemetry::trace::Span& span,
+                    StatusOr<T> const& value) {
+  EndSpanImpl(span, value.status());
   return value;
 }
 
