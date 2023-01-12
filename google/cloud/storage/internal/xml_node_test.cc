@@ -47,10 +47,8 @@ TEST(XmlNodeTest, BuildTree) {
       "", "VXBsb2FkIElEIGZvciBlbHZpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA");
   EXPECT_EQ(root.ToString(2), kExpectedXml);
   auto children = root.GetChildren();
-  EXPECT_EQ(children.size(), 1);
   EXPECT_THAT(children, ElementsAre(mpu_result));
   auto tags = mpu_result->GetChildren("UploadId");
-  EXPECT_EQ(tags.size(), 1);
   EXPECT_THAT(tags, ElementsAre(upload_id_tag));
 }
 
