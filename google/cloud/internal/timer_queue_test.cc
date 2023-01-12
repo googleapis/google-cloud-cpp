@@ -132,7 +132,7 @@ TEST(TimerQueueTest, SingleRunnerOrdering) {
 
   EXPECT_THAT(status, Each(IsOk()));
 
-  // At this point we expect the expirations to be in order and match the\
+  // At this point we expect the expirations to be in order and match the
   // expiration times set in `expected`.
   EXPECT_THAT(expected, WhenSorted(ElementsAreArray(actual)));
 }
