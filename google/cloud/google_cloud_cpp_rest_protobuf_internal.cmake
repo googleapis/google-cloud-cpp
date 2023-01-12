@@ -17,8 +17,6 @@
 # the library
 add_library(
     google_cloud_cpp_rest_protobuf_internal # cmake-format: sort
-    internal/rest_completion_queue_impl.cc
-    internal/rest_completion_queue_impl.h
     internal/async_rest_long_running_operation.h
     internal/async_rest_polling_loop.cc
     internal/async_rest_polling_loop.h
@@ -138,8 +136,6 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(google_cloud_cpp_rest_protobuf_internal_unit_tests
         # cmake-format: sort
-        internal/rest_completion_queue_impl_test.cc
-        internal/rest_log_wrapper_test.cc
         internal/async_rest_long_running_operation_test.cc
         internal/async_rest_polling_loop_test.cc
         internal/async_rest_retry_loop_test.cc
