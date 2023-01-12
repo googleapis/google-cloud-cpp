@@ -65,10 +65,10 @@ std::vector<std::shared_ptr<XmlNode const>> XmlNode::GetChildren() const {
 
 std::vector<std::shared_ptr<XmlNode const>> XmlNode::GetChildren(
     std::string const& tag_name) const {
-  auto ret = GetChildren();
-  auto e = std::remove_if(ret.begin(), ret.end(),
-                          [&](auto x) { return x->tag_name_ != tag_name; });
-  ret.erase(e, ret.end());
+  std::vector<std::shared_ptr<XmlNode const>> ret;
+  for (auto const& child : children_) {
+    if (child->tag_name_ == tag_name) ret.push_back(child);
+  }
   return ret;
 }
 

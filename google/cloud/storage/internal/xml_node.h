@@ -47,14 +47,7 @@ class XmlNode : public std::enable_shared_from_this<XmlNode> {
   static std::shared_ptr<XmlNode> CreateRoot() {
     return std::shared_ptr<XmlNode>{new XmlNode()};
   }
-  /// Create a tag node.
-  static std::shared_ptr<XmlNode> CreateTagNode(std::string tag_name) {
-    return std::shared_ptr<XmlNode>{new XmlNode(std::move(tag_name), "")};
-  }
-  /// Create a text node.
-  static std::shared_ptr<XmlNode> CreateTextNode(std::string text_content) {
-    return std::shared_ptr<XmlNode>{new XmlNode("", std::move(text_content))};
-  }
+
   /// Get the tag name.
   std::string GetTagName() const { return tag_name_; };
   /// Get the text content.
@@ -72,20 +65,25 @@ class XmlNode : public std::enable_shared_from_this<XmlNode> {
   /// Get the XML string representation of the node.
   std::string ToString(int indent_width = 0, int indent_level = 0) const;
 
-  /// Append a new child.
-  void AppendChild(std::shared_ptr<XmlNode> child) {
-    children_.emplace_back(std::move(child));
+  /// Append a new tag node and return the added node.
+  std::shared_ptr<XmlNode> AppendTagNode(std::string tag_name) {
+    children_.emplace_back(new XmlNode(std::move(tag_name), ""));
+    return children_.back();
+  }
+  /// Append a new text node and return the added node.
+  std::shared_ptr<XmlNode> AppendTextNode(std::string text_content) {
+    children_.emplace_back(new XmlNode("", std::move(text_content)));
+    return children_.back();
   }
 
  private:
-  std::string tag_name_;
-  std::string text_content_;
-  std::vector<std::shared_ptr<XmlNode>> children_;
-
   XmlNode() = default;
   explicit XmlNode(std::string tag_name, std::string text_content)
       : tag_name_(std::move(tag_name)),
         text_content_(std::move(text_content)){};
+  std::string tag_name_;
+  std::string text_content_;
+  std::vector<std::shared_ptr<XmlNode>> children_;
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

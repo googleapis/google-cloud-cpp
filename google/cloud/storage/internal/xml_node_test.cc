@@ -39,18 +39,14 @@ constexpr auto kExpectedXml =
 
 TEST(XmlNodeTest, BuildTree) {
   auto root = XmlNode::CreateRoot();
-  auto mpu_result = XmlNode::CreateTagNode("InitiateMultipartUploadResult");
-  root->AppendChild(mpu_result);
-  auto bucket = XmlNode::CreateTagNode("Bucket");
-  mpu_result->AppendChild(bucket);
-  bucket->AppendChild(XmlNode::CreateTextNode("travel-maps"));
-  auto key = XmlNode::CreateTagNode("Key");
-  mpu_result->AppendChild(key);
-  key->AppendChild(XmlNode::CreateTextNode("paris.jpg"));
-  auto upload_id = XmlNode::CreateTagNode("UploadId");
-  mpu_result->AppendChild(upload_id);
-  upload_id->AppendChild(XmlNode::CreateTextNode(
-      "VXBsb2FkIElEIGZvciBlbHZpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA"));
+  auto mpu_result = root->AppendTagNode("InitiateMultipartUploadResult");
+  auto bucket = mpu_result->AppendTagNode("Bucket");
+  bucket->AppendTextNode("travel-maps");
+  auto key = mpu_result->AppendTagNode("Key");
+  key->AppendTextNode("paris.jpg");
+  auto upload_id = mpu_result->AppendTagNode("UploadId");
+  upload_id->AppendTextNode(
+      "VXBsb2FkIElEIGZvciBlbHZpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA");
   EXPECT_EQ(root->ToString(2), kExpectedXml);
   auto children = root->GetChildren();
   EXPECT_THAT(children, ElementsAre(mpu_result));
@@ -61,16 +57,17 @@ TEST(XmlNodeTest, BuildTree) {
 }
 
 TEST(XmlNodeTest, Accessors) {
-  // Non-tag node just returns its text_content
-  auto non_tag = XmlNode::CreateTextNode("text");
-  EXPECT_EQ(non_tag->GetConcatenatedText(), "text");
-  EXPECT_EQ(non_tag->GetTextContent(), "text");
-  EXPECT_EQ(non_tag->GetTagName(), "");
-  auto tag = XmlNode::CreateTagNode("Tag");
-  tag->AppendChild(XmlNode::CreateTextNode("tag text"));
-  EXPECT_EQ(tag->GetTextContent(), "");
-  EXPECT_EQ(tag->GetConcatenatedText(), "tag text");
-  EXPECT_EQ(tag->GetTagName(), "Tag");
+  auto root = XmlNode::CreateRoot();
+  auto text_node = root->AppendTextNode("text");
+  EXPECT_EQ(text_node->GetConcatenatedText(), "text");
+  EXPECT_EQ(text_node->GetTextContent(), "text");
+  EXPECT_EQ(text_node->GetTagName(), "");
+
+  auto tag_node = root->AppendTagNode("Tag");
+  tag_node->AppendTextNode("tag text");
+  EXPECT_EQ(tag_node->GetTextContent(), "");
+  EXPECT_EQ(tag_node->GetConcatenatedText(), "tag text");
+  EXPECT_EQ(tag_node->GetTagName(), "Tag");
 }
 
 }  // namespace
