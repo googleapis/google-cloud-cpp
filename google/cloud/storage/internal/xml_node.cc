@@ -25,79 +25,77 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-std::string EscapeXmlString(std::string const& val, bool for_text) {
-  auto ret =
-      absl::StrReplaceAll(val, {{"&", "&amp;"}, {"<", "&lt;"}, {">", "&gt;"}});
-  if (!for_text) {
-    ret = absl::StrReplaceAll(ret, {{"\"", "&quot;"}, {"'", "&apos;"}});
-  }
-  return ret;
+std::string EscapeXmlString(std::string const& val) {
+  return absl::StrReplaceAll(val, {{"&", "&amp;"},
+                                   {"<", "&lt;"},
+                                   {">", "&gt;"},
+                                   {"\"", "&quot;"},
+                                   {"'", "&apos;"}});
+}
+
+std::string EscapeXmlText(std::string const& val) {
+  return absl::StrReplaceAll(val,
+                             {{"&", "&amp;"}, {"<", "&lt;"}, {">", "&gt;"}});
 }
 
 }  // namespace
 
 std::string XmlNode::GetConcatenatedText() const {
-  if (!text_content_.empty()) {
-    // For non-tag element, just returns the text content.
-    return text_content_;
-  }
+  // For non-tag element, just returns the text content.
+  if (!text_content_.empty()) return text_content_;
+
   std::string ret;
-  std::stack<XmlNode const*> stack;
-  stack.push(this);
+  std::stack<std::shared_ptr<XmlNode const>> stack;
+  stack.push(shared_from_this());
   while (!stack.empty()) {
-    auto const* cur = stack.top();
+    auto const cur = stack.top();
     stack.pop();
     ret += cur->text_content_;
     // put them into the stack in reverse order
     for (auto it = cur->children_.rbegin(); it != cur->children_.rend(); ++it) {
-      stack.push(&*it);
+      stack.push(*it);
     }
   }
   return ret;
 }
 
-std::vector<XmlNode const*> XmlNode::GetChildren() const {
-  std::vector<XmlNode const*> ret;
-  for (auto const& child : children_) {
-    ret.push_back(&child);
-  }
-  return ret;
+std::vector<std::shared_ptr<XmlNode const>> XmlNode::GetChildren() const {
+  return {children_.begin(), children_.end()};
 }
 
-std::vector<XmlNode const*> XmlNode::GetChildren(
+std::vector<std::shared_ptr<XmlNode const>> XmlNode::GetChildren(
     std::string const& tag_name) const {
-  std::vector<XmlNode const*> ret;
-  for (auto const& child : children_) {
-    if (child.tag_name_ == tag_name) {
-      ret.push_back(&child);
-    }
-  }
+  auto ret = GetChildren();
+  auto e = std::remove_if(ret.begin(), ret.end(),
+                          [&](auto x) { return x->tag_name_ != tag_name; });
+  ret.erase(e, ret.end());
   return ret;
 }
 
 std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
                               int indent_level) const {
-  std::string ret;
-
   std::string separator = indent_width == 0 ? "" : "\n";
   int next_indent = indent_level;
-
   std::string const indentation(indent_width * indent_level, ' ');
 
-  if (!tag_name_.empty()) {
-    absl::StrAppendFormat(&ret, "%s<%s>%s", indentation,
-                          EscapeXmlString(tag_name_, false), separator);
-    ++next_indent;
-  } else if (!text_content_.empty()) {
-    absl::StrAppend(&ret, indentation, EscapeXmlString(text_content_, true),
-                    separator);
-  }
+  auto ret = [&] {
+    if (!tag_name_.empty()) {
+      ++next_indent;
+      return absl::StrCat(indentation, "<", EscapeXmlString(tag_name_), ">",
+                          separator);
+    }
+    if (!text_content_.empty()) {
+      return absl::StrCat(indentation, EscapeXmlText(text_content_), separator);
+    }
+    return std::string{};
+  }();
+
   for (auto const& child : children_) {
-    absl::StrAppend(&ret, child.ToString(indent_width, next_indent));
+    absl::StrAppend(&ret, child->ToString(indent_width, next_indent));
   }
   if (!tag_name_.empty()) {
     absl::StrAppendFormat(&ret, "%s</%s>%s", indentation,
-                          EscapeXmlString(tag_name_, false), separator);
+                          EscapeXmlString(tag_name_), separator);
   }
   return ret;
 }

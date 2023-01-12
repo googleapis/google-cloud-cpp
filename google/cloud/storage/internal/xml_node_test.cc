@@ -39,17 +39,21 @@ constexpr auto kExpectedXml =
 
 TEST(XmlNodeTest, BuildTree) {
   XmlNode root;
-  auto* mpu_result = root.AppendChild("InitiateMultipartUploadResult", "");
-  mpu_result->AppendChild("Bucket", "")->AppendChild("", "travel-maps");
-  mpu_result->AppendChild("Key", "")->AppendChild("", "paris.jpg");
-  auto* upload_id_tag = mpu_result->AppendChild("UploadId", "");
-  upload_id_tag->AppendChild(
+  auto mpu_result = root.AppendChild("InitiateMultipartUploadResult", "");
+  auto bucket = mpu_result->AppendChild("Bucket", "");
+  bucket->AppendChild("", "travel-maps");
+  auto key = mpu_result->AppendChild("Key", "");
+  key->AppendChild("", "paris.jpg");
+  auto upload_id = mpu_result->AppendChild("UploadId", "");
+  upload_id->AppendChild(
       "", "VXBsb2FkIElEIGZvciBlbHZpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA");
   EXPECT_EQ(root.ToString(2), kExpectedXml);
   auto children = root.GetChildren();
   EXPECT_THAT(children, ElementsAre(mpu_result));
   auto tags = mpu_result->GetChildren("UploadId");
-  EXPECT_THAT(tags, ElementsAre(upload_id_tag));
+  EXPECT_THAT(tags, ElementsAre(upload_id));
+  tags = mpu_result->GetChildren();
+  EXPECT_THAT(tags, ElementsAre(bucket, key, upload_id));
 }
 
 TEST(XmlNodeTest, NonTagElement) {
