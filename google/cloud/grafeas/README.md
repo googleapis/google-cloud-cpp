@@ -1,6 +1,5 @@
 # Grafeas Proto Libraries
 
-
 This directory contains CMake targets to compile the
 [Grafeas](https://grafeas.io) protocol buffer files as a C++ library. Grafeas
 (the Greek word for "Scribe") is an open artifact metadata API to audit and
