@@ -25,7 +25,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-std::string EscapeXmlString(std::string const& val) {
+std::string EscapeXmlTag(std::string const& val) {
   return absl::StrReplaceAll(val, {{"&", "&amp;"},
                                    {"<", "&lt;"},
                                    {">", "&gt;"},
@@ -33,7 +33,7 @@ std::string EscapeXmlString(std::string const& val) {
                                    {"'", "&apos;"}});
 }
 
-std::string EscapeXmlText(std::string const& val) {
+std::string EscapeXmlContent(std::string const& val) {
   return absl::StrReplaceAll(val,
                              {{"&", "&amp;"}, {"<", "&lt;"}, {">", "&gt;"}});
 }
@@ -80,11 +80,12 @@ std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
 
   auto ret = [&] {
     if (!tag_name_.empty()) {
-      return absl::StrCat(indentation, "<", EscapeXmlString(tag_name_), ">",
+      return absl::StrCat(indentation, "<", EscapeXmlTag(tag_name_), ">",
                           separator);
     }
     if (!text_content_.empty()) {
-      return absl::StrCat(indentation, EscapeXmlText(text_content_), separator);
+      return absl::StrCat(indentation, EscapeXmlContent(text_content_),
+                          separator);
     }
     return std::string{};
   }();
@@ -93,8 +94,9 @@ std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
     absl::StrAppend(&ret, child->ToString(indent_width, next_indent));
   }
   if (!tag_name_.empty()) {
-    absl::StrAppendFormat(&ret, "%s</%s>%s", indentation,
-                          EscapeXmlString(tag_name_), separator);
+    absl::StrAppend(
+        &ret, absl::StrCat(indentation, "</", EscapeXmlTag(tag_name_), ">",
+                           separator));
   }
   return ret;
 }

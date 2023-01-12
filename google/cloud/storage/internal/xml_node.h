@@ -32,32 +32,34 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  *
  * [GCS MPU]: https://cloud.google.com/storage/docs/multipart-uploads
  *
- * Normally a single node represents an XML element(tag), but we also
- * treat a text portion as a node. If the tag_name_ is empty, it's considered as
- * a text node.
+ * Normally a single node represents an XML element(tag), but we also treat a
+ * text portion as a node. If the tag_name_ is empty, it's considered as a text
+ * node.
  *
  * This is not a general purpose XML node. It is only intended to support XML
  * trees as used in the [GCS MPU]. It does not support many XML features.
  */
 class XmlNode : public std::enable_shared_from_this<XmlNode> {
  public:
-  XmlNode() = default;
-  explicit XmlNode(std::string tag_name, std::string text_content)
-      : tag_name_(std::move(tag_name)),
-        text_content_(std::move(text_content)){};
   ~XmlNode() = default;
 
+  /// Create a root node.
+  static std::shared_ptr<XmlNode> CreateRoot() {
+    return std::shared_ptr<XmlNode>{new XmlNode()};
+  }
+  /// Create a tag node.
+  static std::shared_ptr<XmlNode> CreateTagNode(std::string tag_name) {
+    return std::shared_ptr<XmlNode>{new XmlNode(tag_name, "")};
+  }
+  /// Create a text node.
+  static std::shared_ptr<XmlNode> CreateTextNode(std::string text_content) {
+    return std::shared_ptr<XmlNode>{new XmlNode("", text_content)};
+  }
   /// Get the tag name.
   std::string GetTagName() const { return tag_name_; };
-  /// Set the tag name.
-  void SetTagName(std::string tag_name) { tag_name_ = std::move(tag_name); };
-
   /// Get the text content.
   std::string GetTextContent() const { return text_content_; };
-  /// Set the text content.
-  void SetTextContent(std::string text_content) {
-    text_content_ = std::move(text_content);
-  }
+
   /// Get the concatenated text content within the tag.
   std::string GetConcatenatedText() const;
 
@@ -70,18 +72,20 @@ class XmlNode : public std::enable_shared_from_this<XmlNode> {
   /// Get the XML string representation of the node.
   std::string ToString(int indent_width = 0, int indent_level = 0) const;
 
-  /// Append a new child and return the pointer to the added node.
-  template <typename... Args>
-  std::shared_ptr<XmlNode> AppendChild(Args... args) {
-    children_.emplace_back(
-        std::make_shared<XmlNode>(std::forward<Args>(args)...));
-    return children_.back();
+  /// Append a new child.
+  void AppendChild(std::shared_ptr<XmlNode> child) {
+    children_.emplace_back(std::move(child));
   }
 
  private:
   std::string tag_name_;
   std::string text_content_;
   std::vector<std::shared_ptr<XmlNode>> children_;
+
+  XmlNode() = default;
+  explicit XmlNode(std::string tag_name, std::string text_content)
+      : tag_name_(std::move(tag_name)),
+        text_content_(std::move(text_content)){};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
