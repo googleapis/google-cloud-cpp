@@ -81,6 +81,7 @@ class XmlNode : public std::enable_shared_from_this<XmlNode> {
   explicit XmlNode(std::string tag_name, std::string text_content)
       : tag_name_(std::move(tag_name)),
         text_content_(std::move(text_content)){};
+
   std::string tag_name_;
   std::string text_content_;
   std::vector<std::shared_ptr<XmlNode>> children_;
