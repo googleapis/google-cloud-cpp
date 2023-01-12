@@ -74,13 +74,12 @@ std::vector<std::shared_ptr<XmlNode const>> XmlNode::GetChildren(
 
 std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
                               int indent_level) const {
-  std::string separator = indent_width == 0 ? "" : "\n";
-  int next_indent = indent_level;
-  std::string const indentation(indent_width * indent_level, ' ');
+  auto const separator = std::string(indent_width == 0 ? "" : "\n");
+  auto const indentation = std::string(indent_width * indent_level, ' ');
+  auto const next_indent = tag_name_.empty() ? indent_level : indent_level + 1;
 
   auto ret = [&] {
     if (!tag_name_.empty()) {
-      ++next_indent;
       return absl::StrCat(indentation, "<", EscapeXmlString(tag_name_), ">",
                           separator);
     }
