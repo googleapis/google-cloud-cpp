@@ -15,7 +15,6 @@
 #include "google/cloud/storage/internal/xml_node.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
-#include "absl/strings/str_format.h"
 #include <stack>
 
 namespace google {
