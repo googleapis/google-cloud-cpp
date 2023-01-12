@@ -404,3 +404,7 @@ if (BUILD_TESTING)
         google_cloud_cpp_add_common_options(${target})
     endforeach ()
 endif ()
+
+if (BUILD_TESTING AND GOOGLE_CLOUD_CPP_ENABLE_CXX_EXCEPTIONS)
+    google_cloud_cpp_add_samples_relative("common" "samples/")
+endif ()
