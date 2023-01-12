@@ -42,6 +42,18 @@ std::string ToString(opentelemetry::trace::SpanKind k) {
   }
 }
 
+std::string ToString(opentelemetry::trace::StatusCode c) {
+  switch (c) {
+    case opentelemetry::trace::StatusCode::kError:
+      return "ERROR";
+    case opentelemetry::trace::StatusCode::kOk:
+      return "OK";
+    case opentelemetry::trace::StatusCode::kUnset:
+    default:
+      return "UNSET";
+  }
+}
+
 std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
 InstallSpanCatcher() {
   auto exporter = absl::make_unique<
