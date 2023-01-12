@@ -25,9 +25,6 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /**
- */
-
-/**
  * Represents an XML node in an XML tree.
  *
  * @note This is used for implementation for GCS MPU upload:
