@@ -19,7 +19,7 @@ gRPC calls, such as `Client::Read()`, `Client::ExecuteQuery()`, and
 `Client::ProfileQuery()`. This can produce a lot of output, so use with
 caution!
 
-`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams`: turns on tracing for both 
+`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams`: turns on tracing for both
 regular RPC calls and streaming RPC calls.
 
 @see google::cloud::TracingComponentsOption
