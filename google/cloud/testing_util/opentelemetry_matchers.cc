@@ -25,6 +25,23 @@ namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace testing_util {
 
+std::string ToString(opentelemetry::trace::SpanKind k) {
+  switch (k) {
+    case opentelemetry::trace::SpanKind::kInternal:
+      return "INTERNAL";
+    case opentelemetry::trace::SpanKind::kServer:
+      return "SERVER";
+    case opentelemetry::trace::SpanKind::kClient:
+      return "CLIENT";
+    case opentelemetry::trace::SpanKind::kProducer:
+      return "PRODUCER";
+    case opentelemetry::trace::SpanKind::kConsumer:
+      return "CONSUMER";
+    default:
+      return "UNKNOWN";
+  }
+}
+
 std::shared_ptr<opentelemetry::exporter::memory::InMemorySpanData>
 InstallSpanCatcher() {
   auto exporter = absl::make_unique<
