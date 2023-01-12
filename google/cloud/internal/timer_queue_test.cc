@@ -29,6 +29,9 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::Each;
 using ::testing::ElementsAreArray;
+using ::testing::Eq;
+using ::testing::IsSupersetOf;
+using ::testing::Not;
 using ::testing::WhenSorted;
 
 TEST(TimerQueueTest, ScheduleSingleRunner) {
@@ -220,6 +223,41 @@ TEST(TimerQueueTest, ShutdownMultipleRunners) {
 
   EXPECT_EQ(ids.size(), kRunners);
   EXPECT_THAT(status, Each(StatusIs(StatusCode::kCancelled)));
+}
+
+TEST(TimerQueueTest, ScheduleWithCallbacks) {
+  auto tq = TimerQueue::Create();
+
+  // Start a number of runners.
+  auto constexpr kRunners = 4;
+  std::vector<std::thread> runners(kRunners);
+  std::generate(runners.begin(), runners.end(),
+                [tq] { return std::thread([tq] { tq->Service(); }); });
+
+  // Now start a number of timers with a callback.  We expect these callbacks
+  // to run only in the runner threads.
+  auto constexpr kTimers = 16 * 100;
+  std::vector<future<std::thread::id>> timers(kTimers);
+  std::generate(timers.begin(), timers.end(), [tq]() {
+    return tq->Schedule(std::chrono::system_clock::now(),
+                        [](auto) { return std::this_thread::get_id(); });
+  });
+
+  std::set<std::thread::id> actual;
+  std::transform(timers.begin(), timers.end(),
+                 std::inserter(actual, actual.end()),
+                 [](auto& f) { return f.get(); });
+
+  std::set<std::thread::id> expected;
+  std::transform(runners.begin(), runners.end(),
+                 std::inserter(expected, expected.end()),
+                 [](auto& t) { return t.get_id(); });
+
+  tq->Shutdown();
+  for (auto& t : runners) t.join();
+
+  EXPECT_THAT(actual, Each(Not(Eq(std::this_thread::get_id()))));
+  EXPECT_THAT(expected, IsSupersetOf(actual));
 }
 
 }  // namespace

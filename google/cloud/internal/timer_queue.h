@@ -64,6 +64,9 @@ namespace internal {
  * @endcode
  */
 class TimerQueue : public std::enable_shared_from_this<TimerQueue> {
+ private:
+  using FutureType = future<StatusOr<std::chrono::system_clock::time_point>>;
+
  public:
   static std::shared_ptr<TimerQueue> Create();
 
@@ -72,9 +75,69 @@ class TimerQueue : public std::enable_shared_from_this<TimerQueue> {
   TimerQueue(TimerQueue&&) = delete;
   TimerQueue& operator=(TimerQueue&&) = delete;
 
-  /// Adds a timer to the queue.
+  /**
+   * Adds a timer to the queue.
+   *
+   * The future returned by this function is satisfied when either:
+   * - The timer expires, in which case the future is satisfied with a
+   *   successful `StatusOr`.
+   * - The timer queue is shutdown (or was shutdown), in which case the future
+   *   is satisfied with an error status.
+   */
   future<StatusOr<std::chrono::system_clock::time_point>> Schedule(
       std::chrono::system_clock::time_point tp);
+
+  /**
+   * Adds a timer to the queue and atomically attach a callback to the timer.
+   *
+   * This creates a new timer that expires at @p tp, and atomically attaches
+   * @p functor to be invoked when the timer expires. The functor must be able
+   * to consume `future<StatusOr<std::chrono::system_clock::time_point>>`.
+   *
+   * When the functor is called its future will be already satisfied. The
+   * `StatusOr<>` value in may contain an error.  This can be used to detect
+   * if the timer queue is shutdown.  For example, implementing
+   * periodic timers may be implemented as:
+   *
+   * @code {.cpp}
+   * void StartPeriodicTimer(
+   *     std::shared_ptr<TimerQueue> tq, std::chrono::milliseconds period,
+   *     std::function<void()> action) {
+   *   auto functor = [w = std::weak_ptr<TimerQueue>(tq), period, action](
+   *       future<StatusOr<std::chrono::system_clock::time_point>> f) mutable {
+   *     auto tq = w.lock();
+   *     if (!tq) return; // deleted timer queue
+   *     if (!f.get().ok()) return; // shutdown timer queue
+   *     action();
+   *     StartPeriodicTimer(std::move(tq), period, std::move(action));
+   *   };
+   *   future<void> unused = tq.Schedule(
+   *     std::chrono::system_clock::now() + period, std::move(functor));
+   * }
+   * @endcode
+   *
+   * @returns a future wrapping the result of `functor(future<StatusOr<...>>)`.
+   *     In other words, if the `functor` returns `T` this returns `future<T>`,
+   *     unless `T == future<U>` in which case the function automatically
+   *     unwraps the future and this returns `future<U>`.
+   */
+  template <typename Functor>
+  auto Schedule(std::chrono::system_clock::time_point tp, Functor&& functor)
+      -> decltype(std::declval<FutureType>().then(
+          std::forward<Functor>(functor))) {
+    auto weak = std::weak_ptr<TimerQueue>(shared_from_this());
+    std::unique_lock<std::mutex> lk(mu_);
+    if (shutdown_) {
+      lk.unlock();
+      return make_ready_future(MakeCancelled(__func__))
+          .then(std::forward<Functor>(functor));
+    }
+    auto const key = MakeKey(tp);
+    auto p = MakePromise(std::move(weak), key);
+    auto f = p.get_future().then(std::forward<Functor>(functor));
+    Insert(std::move(lk), key, std::move(p));
+    return f;
+  }
 
   /**
    * Signals all threads that have called Service() to return.
@@ -110,6 +173,23 @@ class TimerQueue : public std::enable_shared_from_this<TimerQueue> {
 
   // Cancels a timer.
   void Cancel(KeyType key);
+
+  // Creates a satisfied future indicating the queue is shutdown.
+  static StatusOr<std::chrono::system_clock::time_point> MakeCancelled(
+      char const* where);
+
+  KeyType MakeKey(std::chrono::system_clock::time_point tp) {
+    return std::make_pair(tp, ++id_generator_);
+  }
+
+  static PromiseType MakePromise(std::weak_ptr<TimerQueue> w, KeyType key) {
+    return PromiseType([weak = std::move(w), key]() {
+      if (auto self = weak.lock()) self->Cancel(key);
+    });
+  }
+
+  void Insert(std::unique_lock<std::mutex> lk, KeyType const& key,
+              PromiseType p);
 
   std::mutex mu_;
   std::condition_variable cv_;
