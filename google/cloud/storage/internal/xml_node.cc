@@ -38,6 +38,10 @@ std::string EscapeXmlString(std::string const& val, bool for_text) {
 }
 
 std::string XmlNode::GetConcatenatedText() const {
+  if (!text_content_.empty()) {
+    // For non-tag element, just returns the text content.
+    return text_content_;
+  }
   std::string ret;
   std::stack<XmlNode const*> stack;
   stack.push(this);

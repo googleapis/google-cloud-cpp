@@ -52,6 +52,9 @@ TEST(XmlUtilsTest, XmlNodeTest) {
   EXPECT_EQ(tags.size(), 1);
   EXPECT_EQ(tags[0]->GetConcatenatedText(),
             "VXBsb2FkIElEIGZvciBlbHZpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA");
+  // Non-tag node just returns its text_content
+  XmlNode non_tag{"", "text"};
+  EXPECT_EQ(non_tag.GetConcatenatedText(), "text");
 }
 
 }  // namespace
