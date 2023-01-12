@@ -1,9 +1,5 @@
 # Grafeas Proto Libraries
 
-:construction:
-
-This directory contains **experimental** libraries. Its contents are subject to
-change without notice.
 
 This directory contains CMake targets to compile the
 [Grafeas](https://grafeas.io) protocol buffer files as a C++ library. Grafeas
@@ -19,19 +15,5 @@ libraries for the GCP services.
 Please note that the Google Cloud C++ client libraries do **not** follow
 [Semantic Versioning](https://semver.org/).
 
-## Supported Platforms
-
-- Windows, macOS, Linux
-- C++14 (and higher) compilers (we test with GCC >= 7.3, Clang >= 6.0, and MSVC >= 2017)
-- Environments with or without exceptions
-- Bazel (>= 4.0) and CMake (>= 3.5) builds
-
-## Contributing changes
-
-See [`CONTRIBUTING.md`](/CONTRIBUTING.md) for details on how to
-contribute to this project, including how to build and test your changes
-as well as how to properly format your code.
-
-## Licensing
-
-Apache 2.0; see [`LICENSE`](/LICENSE) for details.
+For detailed instructions on how to build and install this library, see the
+top-level [README](/README.md#building-and-installing).
