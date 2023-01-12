@@ -16,9 +16,7 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_XML_UTILS_H
 
 #include "google/cloud/storage/version.h"
-#include "google/cloud/status_or.h"
-#include <map>
-#include <mutex>
+#include <string>
 #include <vector>
 
 namespace google {
@@ -48,33 +46,40 @@ class XmlNode {
       : tag_name_(std::move(tag_name)),
         text_content_(std::move(text_content)){};
   ~XmlNode() = default;
+
   // Non copyable
   XmlNode(XmlNode const&) = delete;
   XmlNode& operator=(XmlNode&) = delete;
+
   // Movable
   XmlNode(XmlNode&& other) = default;
   XmlNode& operator=(XmlNode&& rhs) = default;
+
   /// Get the tag name.
   std::string GetTagName() const { return tag_name_; };
+  /// Set the tag name.
+  void SetTagName(std::string tag_name) { tag_name_ = std::move(tag_name); };
+
   /// Get the text content.
   std::string GetTextContent() const { return text_content_; };
-  /// Set the tag name.
-  void SetTagName(std::string tag_name);
   /// Set the text content.
-  void SetTextContent(std::string text_content);
-  /// Get all the direct children.
-  std::vector<XmlNode const*> GetChildren() const;
-  /// Get the first child that matches the given tag name.
-  StatusOr<XmlNode const*> GetChild(std::string const& tag_name) const;
-  /// Get all the direct children that match the given tag name.
-  std::vector<XmlNode const*> GetChildren(std::string const& tag_name) const;
+  void SetTextContent(std::string text_content) {
+    text_content_ = std::move(text_content);
+  }
   /// Get the concatenated text content within the tag.
   std::string GetConcatenatedText() const;
+
+  /// Get all the direct children.
+  std::vector<XmlNode const*> GetChildren() const;
+  /// Get all the direct children that match the given tag name.
+  std::vector<XmlNode const*> GetChildren(std::string const& tag_name) const;
+
   /// Get the XML string representation of the node.
-  std::string ToString(int indent_size = 0, int indent = 0) const;
-  /// Add a new child at the back of the `children_` vector.
+  std::string ToString(int indent_width = 0, int indent_level = 0) const;
+
+  /// Append a new child and return the pointer to the added node.
   template <typename... Args>
-  XmlNode* EmplaceChild(Args... args);
+  XmlNode* AppendChild(Args... args);
 
  private:
   std::string tag_name_;
@@ -83,7 +88,7 @@ class XmlNode {
 };
 
 template <typename... Args>
-XmlNode* XmlNode::EmplaceChild(Args... args) {
+XmlNode* XmlNode::AppendChild(Args... args) {
   children_.emplace_back(std::forward<Args>(args)...);
   return &children_.back();
 }
