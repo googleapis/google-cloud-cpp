@@ -22,17 +22,32 @@
 #include <opentelemetry/sdk/instrumentationscope/instrumentation_scope.h>
 #include <opentelemetry/sdk/trace/span_data.h>
 #include <opentelemetry/trace/span.h>
+#include <opentelemetry/trace/span_metadata.h>
 #include <memory>
 #include <string>
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+namespace testing_util_internal {
+
+using SpanAttributeMap =
+    std::unordered_map<std::string,
+                       opentelemetry::sdk::common::OwnedAttributeValue>;
+MATCHER_P(SpanAttributesAreImpl, matcher,
+          ::testing::DescribeMatcher<SpanAttributeMap>(matcher)) {
+  return ::testing::ExplainMatchResult(matcher, arg->GetAttributes(),
+                                       result_listener);
+}
+
+}  // namespace testing_util_internal
 namespace testing_util {
 
 using SpanDataPtr = std::unique_ptr<opentelemetry::sdk::trace::SpanData>;
 
 std::string ToString(opentelemetry::trace::SpanKind k);
+
+std::string ToString(opentelemetry::trace::StatusCode c);
 
 MATCHER(SpanHasInstrumentationScope,
         "has instrumentation scope (name: gcloud-cpp | version: " +
@@ -56,6 +71,35 @@ MATCHER_P(SpanNamed, name, "has name: " + std::string{name}) {
   auto const& actual = arg->GetName();
   *result_listener << "has name: " << actual;
   return actual == name;
+}
+
+MATCHER_P(SpanWithStatus, status, "has status: " + ToString(status)) {
+  auto const& actual = arg->GetStatus();
+  *result_listener << "has status: " << ToString(actual);
+  return actual == status;
+}
+
+MATCHER_P2(SpanWithStatus, status, description,
+           "has (status: " + ToString(status) +
+               " | description: " + description + ")") {
+  auto const& s = arg->GetStatus();
+  auto const& d = arg->GetDescription();
+  *result_listener << "has (status: " << ToString(s) << " | description: " << d
+                   << ")";
+  return s == status && d == description;
+}
+
+template <typename... Args>
+::testing::Matcher<SpanDataPtr> SpanAttributesAre(Args const&... matchers) {
+  return testing_util_internal::SpanAttributesAreImpl(
+      ::testing::UnorderedElementsAre(matchers...));
+}
+
+template <typename T>
+::testing::Matcher<
+    std::pair<std::string, opentelemetry::sdk::common::OwnedAttributeValue>>
+SpanAttribute(std::string const& key, T value) {
+  return ::testing::Pair(key, ::testing::VariantWith<T>(value));
 }
 
 /**
