@@ -38,7 +38,8 @@ RestCompletionQueueImpl::MakeDeadlineTimer(
 future<StatusOr<std::chrono::system_clock::time_point>>
 RestCompletionQueueImpl::MakeRelativeTimer(std::chrono::nanoseconds duration) {
   using std::chrono::system_clock;
-  auto const d = std::chrono::duration_cast<system_clock::duration>(duration);
+  auto d = std::chrono::duration_cast<system_clock::duration>(duration);
+  if (d < duration) d += system_clock::duration{1};
   return MakeDeadlineTimer(system_clock::now() + d);
 }
 
