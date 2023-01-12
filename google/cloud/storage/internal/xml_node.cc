@@ -35,7 +35,7 @@ std::string EscapeXmlString(std::string const& val, bool for_text) {
   return ret;
 }
 
-}
+}  // namespace
 
 std::string XmlNode::GetConcatenatedText() const {
   if (!text_content_.empty()) {
@@ -86,9 +86,8 @@ std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
   std::string const indentation(indent_width * indent_level, ' ');
 
   if (!tag_name_.empty()) {
-    absl::StrAppendFormat(
-        &ret, "%s<%s>%s",
-        indentation,EscapeXmlString(tag_name_, false), separator);
+    absl::StrAppendFormat(&ret, "%s<%s>%s", indentation,
+                          EscapeXmlString(tag_name_, false), separator);
     next_indent++;
   } else if (!text_content_.empty()) {
     absl::StrAppend(&ret, indentation, EscapeXmlString(text_content_, true),
@@ -98,9 +97,8 @@ std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
     absl::StrAppend(&ret, child.ToString(indent_width, next_indent));
   }
   if (!tag_name_.empty()) {
-    absl::StrAppendFormat(
-        &ret, "%s</%s>%s",
-        indentation, EscapeXmlString(tag_name_, false), separator);
+    absl::StrAppendFormat(&ret, "%s</%s>%s", indentation,
+                          EscapeXmlString(tag_name_, false), separator);
   }
   return ret;
 }
