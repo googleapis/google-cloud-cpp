@@ -16,6 +16,7 @@
 #include "google/cloud/testing_util/chrono_output.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
+#include <sstream>
 #include <thread>
 
 namespace google {
@@ -96,9 +97,10 @@ TEST(TimerQueueTest, SingleRunnerOrdering) {
   std::vector<std::chrono::system_clock::time_point> expected(delays.size());
   std::transform(delays.begin(), delays.end(), expected.begin(),
                  [start](auto d) { return start + d; });
-  // We are going to store the expiration of each timer in this vector, we do
-  // not need to protect it with a mutex because only one thread operates on
-  // it at a time.
+  // We are going to store the expiration of each timer in this vector. Note
+  // that first it is used only by the timer servicing thread (`std::thread t`)
+  // below, and then by the testing thread.  Synchronization is provided by
+  // the thread join() call.
   std::vector<std::chrono::system_clock::time_point> actual;
   std::vector<future<Status>> timers(expected.size());
   std::transform(expected.begin(), expected.end(), timers.begin(), [&](auto d) {
@@ -107,9 +109,11 @@ TEST(TimerQueueTest, SingleRunnerOrdering) {
     return tq->Schedule(d).then([&, d](auto f) {
       auto e = f.get();
       if (!e) return std::move(e).status();
-      std::ostringstream os;
-      os << "mismatched " << d << " != " << *e;
-      if (*e != d) return Status(StatusCode::kUnknown, std::move(os).str());
+      if (*e != d) {
+        std::ostringstream os;
+        os << "mismatched expiration, expected=" << d << ", got=" << *e;
+        return Status(StatusCode::kFailedPrecondition, std::move(os).str());
+      }
       actual.push_back(*std::move(e));
       return Status{};
     });
@@ -122,14 +126,15 @@ TEST(TimerQueueTest, SingleRunnerOrdering) {
   std::vector<Status> status(timers.size());
   std::transform(timers.begin(), timers.end(), status.begin(),
                  [](auto& f) { return f.get(); });
-  EXPECT_THAT(status, Each(IsOk()));
-
-  // At this  We expect the expirations to be in order and match the provided
-  // times.
-  EXPECT_THAT(expected, WhenSorted(ElementsAreArray(actual)));
 
   tq->Shutdown();
   t.join();
+
+  EXPECT_THAT(status, Each(IsOk()));
+
+  // At this point we expect the expirations to be in order and match the\
+  // expiration times set in `expected`.
+  EXPECT_THAT(expected, WhenSorted(ElementsAreArray(actual)));
 }
 
 TEST(TimerQueueTest, ScheduleMultipleRunners) {
