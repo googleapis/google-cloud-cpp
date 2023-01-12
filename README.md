@@ -16,6 +16,78 @@ This repository contains idiomatic C++ client libraries for the following
 > Please check the [CHANGELOG] for important announcements and upcoming
 > changes.
 
+## Quickstart
+
+Each library (see below) contains a directory named `quickstart/` that's
+intended to help you get up and running in a matter of minutes. This
+`quickstart/` directory contains a minimal "Hello World" program demonstrating
+how to use the library, along with minimal build files for common build
+systems, such as CMake and Bazel.
+
+As an example, the following code snippet, taken from [Google Cloud
+Storage](google/cloud/storage/README.md), should give you a sense of what it's
+like to use one of these C++ libraries.
+
+<!-- inject-quickstart-start -->
+
+```cc
+#include "google/cloud/storage/client.h"
+#include <iostream>
+
+int main(int argc, char* argv[]) {
+  if (argc != 2) {
+    std::cerr << "Missing bucket name.\n";
+    std::cerr << "Usage: quickstart <bucket-name>\n";
+    return 1;
+  }
+  std::string const bucket_name = argv[1];
+
+  // Create aliases to make the code easier to read.
+  namespace gcs = ::google::cloud::storage;
+
+  // Create a client to communicate with Google Cloud Storage. This client
+  // uses the default configuration for authentication and project id.
+  auto client = gcs::Client();
+
+  auto writer = client.WriteObject(bucket_name, "quickstart.txt");
+  writer << "Hello World!";
+  writer.Close();
+  if (writer.metadata()) {
+    std::cout << "Successfully created object: " << *writer.metadata() << "\n";
+  } else {
+    std::cerr << "Error creating object: " << writer.metadata().status()
+              << "\n";
+    return 1;
+  }
+
+  auto reader = client.ReadObject(bucket_name, "quickstart.txt");
+  if (!reader) {
+    std::cerr << "Error reading object: " << reader.status() << "\n";
+    return 1;
+  }
+
+  std::string contents{std::istreambuf_iterator<char>{reader}, {}};
+  std::cout << contents << "\n";
+
+  return 0;
+}
+```
+
+<!-- inject-quickstart-end -->
+
+## GA Libraries
+
+See each library's `README.md` file for more information about:
+
+- Where to find the documentation for the library and the service.
+- How to get started using the library.
+- How to incorporate the library into your build system.
+- The library's support status if not Generally Available (GA); unless noted in
+  a library's `README.md`, these libraries are all GA and supported by Google.
+
+<details>
+<summary>Expand to see the full list of GA libraries</summary>
+
 <!-- inject-GA-libraries-start -->
 
 - [Access Approval API](google/cloud/accessapproval/README.md)
@@ -309,13 +381,7 @@ This repository contains idiomatic C++ client libraries for the following
 
 <!-- inject-GA-libraries-end -->
 
-See each library's `README.md` file for more information about:
-
-- Where to find the documentation for the library and the service.
-- How to get started using the library.
-- How to incorporate the library into your build system.
-- The library's support status if not Generally Available (GA); unless noted in
-  a library's `README.md`, these libraries are all GA and supported by Google.
+</details>
 
 ## Building and Installing
 
@@ -363,65 +429,6 @@ cmake --build cmake-out -- -j $(nproc)
 ```
 
 The binary artifacts, such as examples, will be placed in `cmake-out/`.
-
-## Quickstart
-
-Each library (linked above) contains a directory named `quickstart/` that's
-intended to help you get up and running in a matter of minutes. This
-`quickstart/` directory contains a minimal "Hello World" program demonstrating
-how to use the library, along with minimal build files for common build
-systems, such as CMake and Bazel.
-
-As an example, the following code snippet, taken from [Google Cloud
-Storage](google/cloud/storage/README.md), should give you a taste of what it's
-like to use one of these C++ libraries.
-
-<!-- inject-quickstart-start -->
-
-```cc
-#include "google/cloud/storage/client.h"
-#include <iostream>
-
-int main(int argc, char* argv[]) {
-  if (argc != 2) {
-    std::cerr << "Missing bucket name.\n";
-    std::cerr << "Usage: quickstart <bucket-name>\n";
-    return 1;
-  }
-  std::string const bucket_name = argv[1];
-
-  // Create aliases to make the code easier to read.
-  namespace gcs = ::google::cloud::storage;
-
-  // Create a client to communicate with Google Cloud Storage. This client
-  // uses the default configuration for authentication and project id.
-  auto client = gcs::Client();
-
-  auto writer = client.WriteObject(bucket_name, "quickstart.txt");
-  writer << "Hello World!";
-  writer.Close();
-  if (writer.metadata()) {
-    std::cout << "Successfully created object: " << *writer.metadata() << "\n";
-  } else {
-    std::cerr << "Error creating object: " << writer.metadata().status()
-              << "\n";
-    return 1;
-  }
-
-  auto reader = client.ReadObject(bucket_name, "quickstart.txt");
-  if (!reader) {
-    std::cerr << "Error reading object: " << reader.status() << "\n";
-    return 1;
-  }
-
-  std::string contents{std::istreambuf_iterator<char>{reader}, {}};
-  std::cout << contents << "\n";
-
-  return 0;
-}
-```
-
-<!-- inject-quickstart-end -->
 
 ## Support
 
