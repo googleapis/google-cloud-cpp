@@ -17,7 +17,7 @@ program's console.
 gRPC calls, such as `Table::ReadRows()`. Be warned that streams produce a lot of
 output.
 
-`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams`: turns on tracing for both 
+`GOOGLE_CLOUD_CPP_ENABLE_TRACING=rpc,rpc-streams`: turns on tracing for both
 regular RPC calls and streaming RPC calls.
 
 @see google::cloud::TracingComponentsOption
