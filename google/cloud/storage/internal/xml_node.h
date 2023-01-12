@@ -49,11 +49,11 @@ class XmlNode : public std::enable_shared_from_this<XmlNode> {
   }
   /// Create a tag node.
   static std::shared_ptr<XmlNode> CreateTagNode(std::string tag_name) {
-    return std::shared_ptr<XmlNode>{new XmlNode(tag_name, "")};
+    return std::shared_ptr<XmlNode>{new XmlNode(std::move(tag_name), "")};
   }
   /// Create a text node.
   static std::shared_ptr<XmlNode> CreateTextNode(std::string text_content) {
-    return std::shared_ptr<XmlNode>{new XmlNode("", text_content)};
+    return std::shared_ptr<XmlNode>{new XmlNode("", std::move(text_content))};
   }
   /// Get the tag name.
   std::string GetTagName() const { return tag_name_; };

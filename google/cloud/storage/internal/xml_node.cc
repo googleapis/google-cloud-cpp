@@ -76,7 +76,7 @@ std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
                               int indent_level) const {
   auto const separator = std::string(indent_width == 0 ? "" : "\n");
   auto const indentation = std::string(indent_width * indent_level, ' ');
-  auto const next_indent = tag_name_.empty() ? indent_level : indent_level + 1;
+  if (!tag_name_.empty()) ++indent_level;
 
   auto ret = [&] {
     if (!tag_name_.empty()) {
@@ -91,12 +91,11 @@ std::string XmlNode::ToString(int indent_width,  // NOLINT(misc-no-recursion)
   }();
 
   for (auto const& child : children_) {
-    absl::StrAppend(&ret, child->ToString(indent_width, next_indent));
+    absl::StrAppend(&ret, child->ToString(indent_width, indent_level));
   }
   if (!tag_name_.empty()) {
-    absl::StrAppend(
-        &ret, absl::StrCat(indentation, "</", EscapeXmlTag(tag_name_), ">",
-                           separator));
+    absl::StrAppend(&ret, indentation, "</", EscapeXmlTag(tag_name_), ">",
+                    separator);
   }
   return ret;
 }
