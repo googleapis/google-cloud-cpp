@@ -21,7 +21,6 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-
 TEST(XmlNodeTest, EscapeXmlTag) {
   std::vector<std::pair<std::string, std::string>> cases = {
       {"\"Google\"", "&quot;Google&quot;"},
