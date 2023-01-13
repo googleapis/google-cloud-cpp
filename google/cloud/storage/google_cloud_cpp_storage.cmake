@@ -191,10 +191,10 @@ add_library(
     internal/xml_escape.h
     internal/xml_node.cc
     internal/xml_node.h
-    internal/xml_parser_options.cc
-    internal/xml_parser_options.h
     internal/xml_parser.cc
     internal/xml_parser.h
+    internal/xml_parser_options.cc
+    internal/xml_parser_options.h
     lifecycle_rule.cc
     lifecycle_rule.h
     list_buckets_reader.cc

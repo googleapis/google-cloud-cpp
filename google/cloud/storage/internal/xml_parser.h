@@ -15,8 +15,8 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_XML_PARSER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_XML_PARSER_H
 
-#include "google/cloud/storage/internal/xml_parser_options.h"
 #include "google/cloud/storage/internal/xml_node.h"
+#include "google/cloud/storage/internal/xml_parser_options.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/make_status.h"
 #include "google/cloud/status_or.h"
@@ -38,11 +38,12 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class XmlParser {
   constexpr static auto const kXmlDeclRe = R"(^<\?xml[^>]*\?>)";
-  constexpr static auto const kXmlDoctypeRe = R"(<!DOCTYPE[^>[]*(\[[^\]]*\])?>)";
+  constexpr static auto const kXmlDoctypeRe =
+      R"(<!DOCTYPE[^>[]*(\[[^\]]*\])?>)";
   constexpr static auto const kXmlCdataRe = R"(<!\[CDATA\[[^>]*\]\]>)";
   constexpr static auto const kXmlCommentRe = R"(<!--[^>]*-->)";
- public:
 
+ public:
   /// Factory method
   static std::shared_ptr<XmlParser> Create() {
     return std::shared_ptr<XmlParser>{new XmlParser};
@@ -51,8 +52,8 @@ class XmlParser {
   /// Clean up the given XML string.
   std::string CleanUpXml(std::string const& content);
   /// Parse the given string and return an XML tree.
-  StatusOr<std::shared_ptr<XmlNode>> ParseXml(
-      std::string const& content, Options = {});
+  StatusOr<std::shared_ptr<XmlNode>> ParseXml(std::string const& content,
+                                              Options = {});
 
  private:
   XmlParser()
