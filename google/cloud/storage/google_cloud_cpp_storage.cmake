@@ -191,6 +191,8 @@ add_library(
     internal/xml_escape.h
     internal/xml_node.cc
     internal/xml_node.h
+    internal/xml_parser.cc
+    internal/xml_parser.h
     lifecycle_rule.cc
     lifecycle_rule.h
     list_buckets_reader.cc
@@ -509,6 +511,7 @@ if (BUILD_TESTING)
         internal/xml_builders_test.cc
         internal/xml_escape_test.cc
         internal/xml_node_test.cc
+        internal/xml_parser_test.cc
         lifecycle_rule_test.cc
         list_buckets_reader_test.cc
         list_hmac_keys_reader_test.cc
