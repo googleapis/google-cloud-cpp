@@ -61,6 +61,9 @@ class MockGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
   MOCK_METHOD(Status, DoNothing,
               (grpc::ClientContext&, ::google::protobuf::Empty const&),
               (override));
+  MOCK_METHOD(Status, Deprecated2,
+              (grpc::ClientContext&, ::google::protobuf::Empty const&),
+              (override));
 
   MOCK_METHOD((std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
                    ::google::test::admin::database::v1::Request,
