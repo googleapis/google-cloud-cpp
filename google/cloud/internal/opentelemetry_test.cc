@@ -28,7 +28,7 @@ namespace {
 
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanAttribute;
-using ::google::cloud::testing_util::SpanAttributesAre;
+using ::google::cloud::testing_util::SpanHasAttributes;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
@@ -110,7 +110,7 @@ TEST(OpenTelemetry, EndSpanImplSuccess) {
       spans,
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
-          SpanAttributesAre(SpanAttribute<int>("gcloud.status_code", 0)))));
+          SpanHasAttributes(SpanAttribute<int>("gcloud.status_code", 0)))));
 }
 
 TEST(OpenTelemetry, EndSpanImplFail) {
@@ -125,7 +125,7 @@ TEST(OpenTelemetry, EndSpanImplFail) {
       spans,
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
-          SpanAttributesAre(SpanAttribute<int>("gcloud.status_code", code)))));
+          SpanHasAttributes(SpanAttribute<int>("gcloud.status_code", code)))));
 }
 
 TEST(OpenTelemetry, EndSpanImplErrorInfo) {
@@ -140,7 +140,7 @@ TEST(OpenTelemetry, EndSpanImplErrorInfo) {
       spans,
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
-          SpanAttributesAre(
+          SpanHasAttributes(
               SpanAttribute<int>("gcloud.status_code", code),
               SpanAttribute<std::string>("gcloud.error.reason", "reason")))));
 
@@ -152,7 +152,7 @@ TEST(OpenTelemetry, EndSpanImplErrorInfo) {
       spans,
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
-          SpanAttributesAre(
+          SpanHasAttributes(
               SpanAttribute<int>("gcloud.status_code", code),
               SpanAttribute<std::string>("gcloud.error.domain", "domain")))));
 
@@ -164,7 +164,7 @@ TEST(OpenTelemetry, EndSpanImplErrorInfo) {
       spans,
       ElementsAre(AllOf(
           SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
-          SpanAttributesAre(
+          SpanHasAttributes(
               SpanAttribute<int>("gcloud.status_code", code),
               SpanAttribute<std::string>("gcloud.error.metadata.k1", "v1"),
               SpanAttribute<std::string>("gcloud.error.metadata.k2", "v2")))));
