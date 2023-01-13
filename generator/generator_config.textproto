@@ -186,6 +186,7 @@ service {
   product_path: "google/cloud/bigquery"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  emitted_rpcs: ["ScheduleTransferRuns"]
 }
 
 service {
@@ -200,6 +201,7 @@ service {
   product_path: "google/cloud/bigquery"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  emitted_rpcs: ["SearchAssignments", "ScheduleTransferRuns"]
 }
 
 service {
@@ -379,6 +381,7 @@ service {
   product_path: "google/cloud/container"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  emitted_rpcs: ["SetLocations"]
 }
 
 # Container Analysis
