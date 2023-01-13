@@ -17,8 +17,11 @@
 # the library
 add_library(
     google_cloud_cpp_rest_protobuf_internal # cmake-format: sort
+    internal/rest_background_threads_impl.cc
+    internal/rest_background_threads_impl.h
     internal/rest_completion_queue_impl.cc
-    internal/rest_completion_queue_impl.h internal/rest_stub_helpers.cc
+    internal/rest_completion_queue_impl.h
+    internal/rest_stub_helpers.cc
     internal/rest_stub_helpers.h)
 target_link_libraries(
     google_cloud_cpp_rest_protobuf_internal
@@ -128,8 +131,10 @@ if (BUILD_TESTING)
     # List the unit tests, then setup the targets and dependencies.
     set(google_cloud_cpp_rest_protobuf_internal_unit_tests
         # cmake-format: sort
+        internal/rest_background_threads_impl_test.cc
         internal/rest_completion_queue_impl_test.cc
-        internal/rest_log_wrapper_test.cc internal/rest_stub_helpers_test.cc)
+        internal/rest_log_wrapper_test.cc
+        internal/rest_stub_helpers_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick them up.
     export_list_to_bazel(
