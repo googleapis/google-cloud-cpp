@@ -38,7 +38,7 @@ class CommitOptions {
   CommitOptions() = default;
 
   /**
-   * Constructs from the the new, recommended way to represent options
+   * Constructs from the new, recommended way to represent options
    * of all varieties, `google::cloud::Options`.
    */
   explicit CommitOptions(Options const& opts);

@@ -62,7 +62,7 @@ def camel_case(test_name):
 
 
 def test_case_is_success(test):
-    """Determine if the the test expects a successful parse"""
+    """Determine if the test expects a successful parse"""
     if "results" not in test:
         return True
     for result in test["results"]:

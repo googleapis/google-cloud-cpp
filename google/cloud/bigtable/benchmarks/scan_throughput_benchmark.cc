@@ -37,7 +37,7 @@ starts. During this phase the benchmark will:
 - Execute the following block with different scan sizes:
   - Execute the following loop for S seconds:
     - Pick one of the 10,000,000 keys at random, with uniform probability.
-    - Scan the number rows starting the the key selected above.
+    - Scan the number rows starting the key selected above.
     - Go back and pick a new random key.
 
 The benchmark will report throughput in rows per second for each scans with 100,

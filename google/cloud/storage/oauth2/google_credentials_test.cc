@@ -109,7 +109,7 @@ TEST_F(GoogleCredentialsTest, LoadValidAuthorizedUserCredentialsViaGcloudFile) {
       ::testing::TempDir(), kAuthorizedUserCredFilename);
   SetupAuthorizedUserCredentialsFileForTest(filename);
   // Test that the authorized user credentials are loaded as the default when
-  // stored in the the well known gcloud ADC file path.
+  // stored in the well known gcloud ADC file path.
   ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
                                                  filename.c_str());
   auto creds = GoogleDefaultCredentials();
@@ -223,7 +223,7 @@ TEST_F(GoogleCredentialsTest, LoadValidServiceAccountCredentialsViaGcloudFile) {
   SetupServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded as the default when
-  // stored in the the well known gcloud ADC file path.
+  // stored in the well known gcloud ADC file path.
   ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
                                                  filename.c_str());
   auto creds = GoogleDefaultCredentials();
@@ -311,7 +311,7 @@ TEST_F(GoogleCredentialsTest,
   SetupServiceAccountCredentialsFileForTest(filename);
 
   // Test that the service account credentials are loaded as the default when
-  // stored in the the well known gcloud ADC file path.
+  // stored in the well known gcloud ADC file path.
   ScopedEnvironment gcloud_path_override_env_var(GoogleGcloudAdcFileEnvVar(),
                                                  filename.c_str());
   auto creds = CreateServiceAccountCredentialsFromDefaultPaths();

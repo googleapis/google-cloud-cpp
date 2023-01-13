@@ -243,7 +243,7 @@ Row MakeTestRow(Ts&&... ts) {
  * represents "end".
  *
  * @note The term "stream" in this name refers to the general nature
- *     of the the data source, and is not intended to suggest any similarity to
+ *     of the data source, and is not intended to suggest any similarity to
  *     C++'s I/O streams library. Syntactically, this class is an "iterator".
  *
  * [input-iterator]: https://en.cppreference.com/w/cpp/named_req/InputIterator
@@ -308,7 +308,7 @@ class RowStreamIterator {
  * to the specified `Tuple` template parameter.
  *
  * @note The term "stream" in this name refers to the general nature
- *     of the the data source, and is not intended to suggest any similarity to
+ *     of the data source, and is not intended to suggest any similarity to
  *     C++'s I/O streams library. Syntactically, this class is an "iterator".
  *
  * @tparam Tuple the std::tuple<...> to parse each `Row` into.
@@ -402,7 +402,7 @@ class TupleStreamIterator {
  * @endcode
  *
  * @note The term "stream" in this name refers to the general nature
- *     of the the data source, and is not intended to suggest any similarity to
+ *     of the data source, and is not intended to suggest any similarity to
  *     C++'s I/O streams library. Syntactically, this class is a "range"
  *     defined by two "iterator" objects of type `TupleStreamIterator<Tuple>`.
  *
