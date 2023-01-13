@@ -347,6 +347,17 @@ TEST(ProcessCommandLineArgs, ProcessArgForwardingProductPath) {
                                      "google/cloud/spanner/")));
 }
 
+TEST(ProcessCommandLineArgs, ProcessArgEmitRpc) {
+  auto result = ProcessCommandLineArgs(
+      "product_path=google/cloud/spanner/"
+      ",emit_rpc=Emitted1"
+      ",emit_rpc=Emitted2");
+  ASSERT_THAT(result, IsOk());
+  EXPECT_THAT(*result,
+              Contains(Pair("emitted_rpcs", AllOf(HasSubstr("Emitted1"),
+                                                  HasSubstr("Emitted2")))));
+}
+
 }  // namespace
 }  // namespace generator_internal
 }  // namespace cloud

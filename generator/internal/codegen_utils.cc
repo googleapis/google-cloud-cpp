@@ -165,6 +165,11 @@ void ProcessArgForwardingProductPath(
   FormatProductPath(path->second);
 }
 
+void ProcessArgEmitRpc(
+    std::vector<std::pair<std::string, std::string>>& command_line_args) {
+  ProcessRepeated("emit_rpc", "emitted_rpcs", command_line_args);
+}
+
 }  // namespace
 
 std::string CurrentCopyrightYear() {
@@ -260,6 +265,7 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgRetryGrpcStatusCode(command_line_args);
   ProcessArgAdditionalProtoFiles(command_line_args);
   ProcessArgForwardingProductPath(command_line_args);
+  ProcessArgEmitRpc(command_line_args);
   return command_line_args;
 }
 

@@ -20,15 +20,19 @@ message ServiceConfiguration {
   string service_proto_path = 1;
   string product_path = 2;
   string initial_copyright_year = 3;
+
+  // Omit the generation of the (sync) APIs for these RPCs. Include any
+  // deprecated RPCs here that we don't need for backwards compatibility.
   repeated string omitted_rpcs = 4;
+
   string service_endpoint_env_var = 5;
   string emulator_endpoint_env_var = 6;
 
-  // Generating Async APIs is typically unnecessary for RPCs that are
+  // Generating async APIs is typically unnecessary for RPCs that are
   // non-streaming, non-paginated, and not longrunning operations. If we need
-  // to generate an Async API for such an RPC, we can list it here.
+  // to generate an async API for such an RPC, we can list it here.
   //
-  // Only the Async API will be generated for RPCs listed both here and in
+  // Only the async API will be generated for RPCs listed both here and in
   // `omitted_rpcs`.
   repeated string gen_async_rpcs = 7;
 
@@ -120,6 +124,10 @@ message ServiceConfiguration {
   // For details on why we would relocate a service, see #10170, or
   // https://github.com/googleapis/google-cloud-cpp/blob/main/doc/adr/2022-11-11-multiple-versions-of-GCP-service-in-one-library.md
   string forwarding_product_path = 19;
+
+  // Force the generation of the (sync) APIs for these deprecated RPCs so
+  // as to maintain backwards compatibility with previous releases.
+  repeated string emitted_rpcs = 20;
 }
 
 message GeneratorConfiguration {
