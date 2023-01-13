@@ -84,6 +84,7 @@ storage_client_unit_tests = [
     "internal/tuple_filter_test.cc",
     "internal/unified_rest_credentials_test.cc",
     "internal/xml_node_test.cc",
+    "internal/xml_parser_test.cc",
     "lifecycle_rule_test.cc",
     "list_buckets_reader_test.cc",
     "list_hmac_keys_reader_test.cc",
