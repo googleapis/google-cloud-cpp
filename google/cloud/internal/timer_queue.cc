@@ -19,14 +19,6 @@ namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
-namespace {
-
-StatusOr<std::chrono::system_clock::time_point> MakeCancelled(
-    std::string msg, ErrorInfoBuilder b) {
-  return CancelledError(std::move(msg), std::move(b));
-}
-
-}  // namespace
 
 std::shared_ptr<TimerQueue> TimerQueue::Create() {
   // As usual, we cannot use std::make_shared<> because the constructor is
@@ -39,18 +31,13 @@ future<StatusOr<std::chrono::system_clock::time_point>> TimerQueue::Schedule(
   auto weak = std::weak_ptr<TimerQueue>(shared_from_this());
   std::unique_lock<std::mutex> lk(mu_);
   if (shutdown_) {
-    return make_ready_future(
-        MakeCancelled("TimerQueue shutdown", GCP_ERROR_INFO()));
+    lk.unlock();
+    return make_ready_future(MakeCancelled(__func__));
   }
-  auto const key = std::make_pair(tp, ++id_generator_);
-  auto p = PromiseType([weak, key]() {
-    if (auto self = weak.lock()) self->Cancel(key);
-  });
+  auto const key = MakeKey(tp);
+  auto p = MakePromise(std::move(weak), key);
   auto f = p.get_future();
-  auto iter = timers_.emplace(key, std::move(p));
-  auto const should_notify = iter == timers_.begin();
-  lk.unlock();
-  if (should_notify) cv_.notify_one();
+  Insert(std::move(lk), key, std::move(p));
   return f;
 }
 
@@ -120,7 +107,7 @@ void TimerQueue::Service() {
     auto p = std::move(timers_.begin()->second);
     timers_.erase(timers_.begin());
     lk.unlock();
-    p.set_value(MakeCancelled("TimerQueue shutdown", GCP_ERROR_INFO()));
+    p.set_value(MakeCancelled(__func__));
     lk.lock();
   }
 }
@@ -135,6 +122,21 @@ void TimerQueue::Cancel(KeyType key) {
   lk.unlock();
   if (should_notify) cv_.notify_one();
   p.set_value(CancelledError("Timer cancelled"));
+}
+
+StatusOr<std::chrono::system_clock::time_point> TimerQueue::MakeCancelled(
+    char const* where) {
+  return internal::CancelledError(
+      "TimerQueue shutdown",
+      ::google::cloud::internal::ErrorInfoBuilder(__FILE__, __LINE__, where));
+}
+
+void TimerQueue::Insert(std::unique_lock<std::mutex> lk, KeyType const& key,
+                        PromiseType p) {
+  auto const i = timers_.emplace(key, std::move(p));
+  if (i != timers_.begin()) return;
+  lk.unlock();
+  cv_.notify_one();
 }
 
 }  // namespace internal
