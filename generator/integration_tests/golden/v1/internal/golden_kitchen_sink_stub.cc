@@ -112,6 +112,19 @@ DefaultGoldenKitchenSinkStub::DoNothing(
     return google::cloud::Status();
 }
 
+Status
+DefaultGoldenKitchenSinkStub::Deprecated2(
+  grpc::ClientContext& client_context,
+  google::protobuf::Empty const& request) {
+    google::protobuf::Empty response;
+    auto status =
+        grpc_stub_->Deprecated2(&client_context, request, &response);
+    if (!status.ok()) {
+      return google::cloud::MakeStatusFromRpcError(status);
+    }
+    return google::cloud::Status();
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
 DefaultGoldenKitchenSinkStub::StreamingRead(
     std::unique_ptr<grpc::ClientContext> client_context,

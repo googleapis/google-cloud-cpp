@@ -129,6 +129,18 @@ GoldenKitchenSinkConnectionImpl::DoNothing(google::protobuf::Empty const& reques
       request, __func__);
 }
 
+Status
+GoldenKitchenSinkConnectionImpl::Deprecated2(google::protobuf::Empty const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->Deprecated2(request),
+      [this](grpc::ClientContext& context,
+          google::protobuf::Empty const& request) {
+        return stub_->Deprecated2(context, request);
+      },
+      request, __func__);
+}
+
 StreamRange<google::test::admin::database::v1::Response>
 GoldenKitchenSinkConnectionImpl::StreamingRead(google::test::admin::database::v1::Request const& request) {
   auto& stub = stub_;

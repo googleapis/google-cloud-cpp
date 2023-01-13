@@ -61,6 +61,11 @@ GoldenKitchenSinkTracingConnection::DoNothing(google::protobuf::Empty const& req
   return child_->DoNothing(request);
 }
 
+Status
+GoldenKitchenSinkTracingConnection::Deprecated2(google::protobuf::Empty const& request) {
+  return child_->Deprecated2(request);
+}
+
 StreamRange<google::test::admin::database::v1::Response>
 GoldenKitchenSinkTracingConnection::StreamingRead(google::test::admin::database::v1::Request const& request) {
   return child_->StreamingRead(request);

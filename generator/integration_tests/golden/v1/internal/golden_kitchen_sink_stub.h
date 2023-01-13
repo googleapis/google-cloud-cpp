@@ -65,6 +65,10 @@ class GoldenKitchenSinkStub {
     grpc::ClientContext& context,
     google::protobuf::Empty const& request) = 0;
 
+  virtual Status Deprecated2(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) = 0;
+
   virtual std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
   StreamingRead(
     std::unique_ptr<grpc::ClientContext> context,
@@ -138,6 +142,11 @@ class DefaultGoldenKitchenSinkStub : public GoldenKitchenSinkStub {
 
   Status
   DoNothing(
+    grpc::ClientContext& client_context,
+    google::protobuf::Empty const& request) override;
+
+  Status
+  Deprecated2(
     grpc::ClientContext& client_context,
     google::protobuf::Empty const& request) override;
 

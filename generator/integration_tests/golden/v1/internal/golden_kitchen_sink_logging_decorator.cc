@@ -111,6 +111,18 @@ GoldenKitchenSinkLogging::DoNothing(
       context, request, __func__, tracing_options_);
 }
 
+Status
+GoldenKitchenSinkLogging::Deprecated2(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::protobuf::Empty const& request) {
+        return child_->Deprecated2(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
 GoldenKitchenSinkLogging::StreamingRead(
     std::unique_ptr<grpc::ClientContext> context,

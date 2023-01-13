@@ -62,6 +62,10 @@ class GoldenKitchenSinkAuth : public GoldenKitchenSinkStub {
       grpc::ClientContext& context,
       google::protobuf::Empty const& request) override;
 
+  Status Deprecated2(
+      grpc::ClientContext& context,
+      google::protobuf::Empty const& request) override;
+
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
   StreamingRead(
       std::unique_ptr<grpc::ClientContext> context,

@@ -122,6 +122,12 @@ GoldenKitchenSinkClient::DoNothing(google::protobuf::Empty const& request, Optio
   return connection_->DoNothing(request);
 }
 
+Status
+GoldenKitchenSinkClient::Deprecated2(google::protobuf::Empty const& request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->Deprecated2(request);
+}
+
 StreamRange<google::test::admin::database::v1::Response>
 GoldenKitchenSinkClient::StreamingRead(std::string const& stream, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));

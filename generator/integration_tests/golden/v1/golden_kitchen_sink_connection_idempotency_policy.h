@@ -56,6 +56,9 @@ class GoldenKitchenSinkConnectionIdempotencyPolicy {
   DoNothing(google::protobuf::Empty const& request);
 
   virtual google::cloud::Idempotency
+  Deprecated2(google::protobuf::Empty const& request);
+
+  virtual google::cloud::Idempotency
   ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request);
 
   virtual google::cloud::Idempotency

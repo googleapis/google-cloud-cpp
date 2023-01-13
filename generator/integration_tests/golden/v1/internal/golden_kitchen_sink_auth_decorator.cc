@@ -82,6 +82,14 @@ Status GoldenKitchenSinkAuth::DoNothing(
   return child_->DoNothing(context, request);
 }
 
+Status GoldenKitchenSinkAuth::Deprecated2(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->Deprecated2(context, request);
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
 GoldenKitchenSinkAuth::StreamingRead(
    std::unique_ptr<grpc::ClientContext> context,
