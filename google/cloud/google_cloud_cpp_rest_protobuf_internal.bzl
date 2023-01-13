@@ -17,6 +17,7 @@
 """Automatically generated source lists for google_cloud_cpp_rest_protobuf_internal - DO NOT EDIT."""
 
 google_cloud_cpp_rest_protobuf_internal_hdrs = [
+    "internal/async_rest_polling_loop.h",
     "internal/async_rest_retry_loop.h",
     "internal/rest_background_threads_impl.h",
     "internal/rest_completion_queue_impl.h",
@@ -25,6 +26,7 @@ google_cloud_cpp_rest_protobuf_internal_hdrs = [
 ]
 
 google_cloud_cpp_rest_protobuf_internal_srcs = [
+    "internal/async_rest_polling_loop.cc",
     "internal/rest_background_threads_impl.cc",
     "internal/rest_completion_queue_impl.cc",
     "internal/rest_stub_helpers.cc",
