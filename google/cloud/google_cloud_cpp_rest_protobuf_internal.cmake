@@ -21,6 +21,7 @@ add_library(
     internal/rest_background_threads_impl.h
     internal/rest_completion_queue_impl.cc
     internal/rest_completion_queue_impl.h
+    internal/rest_retry_loop.h
     internal/rest_stub_helpers.cc
     internal/rest_stub_helpers.h)
 target_link_libraries(
@@ -134,6 +135,7 @@ if (BUILD_TESTING)
         internal/rest_background_threads_impl_test.cc
         internal/rest_completion_queue_impl_test.cc
         internal/rest_log_wrapper_test.cc
+        internal/rest_retry_loop_test.cc
         internal/rest_stub_helpers_test.cc)
 
     # Export the list of unit tests so the Bazel BUILD file can pick them up.
