@@ -31,7 +31,7 @@ TEST(CurlWrappers, LockingDisabledTest) {
   // The test cannot execute in this case.
   if (!SslLibraryNeedsLocking(CurlSslLibraryId())) GTEST_SKIP();
   // Install a trivial callback, this should disable the installation of the
-  // normal callbacks in the the curl wrappers.
+  // normal callbacks in the curl wrappers.
   CRYPTO_set_locking_callback(test_cb);
   CurlInitializeOnce(Options{}.set<EnableCurlSslLockingOption>(true));
   EXPECT_FALSE(SslLockingCallbacksInstalled());

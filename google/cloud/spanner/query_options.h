@@ -43,7 +43,7 @@ class QueryOptions {
   QueryOptions& operator=(QueryOptions&&) = default;
 
   /**
-   * Constructs from the the new, recommended way to represent options
+   * Constructs from the new, recommended way to represent options
    * of all varieties, `google::cloud::Options`.
    */
   explicit QueryOptions(Options const& opts);

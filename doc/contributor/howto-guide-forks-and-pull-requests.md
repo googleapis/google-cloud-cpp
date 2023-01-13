@@ -25,9 +25,9 @@ you may be used to. Note that these local changes do not affect either of the
 previous two copies.
 
 The cloned repo that you created in the previous step will have its `origin`
-set to your forked repo. You should now tell git about the the main
-`upstream` repo, which you'll use to pull commits made by others in order to
-keep your local repo and fork up to date.
+set to your forked repo. You should now tell git about the main `upstream` repo,
+which you'll use to pull commits made by others in order to keep your local repo
+and fork up to date.
 
 ```console
 git remote add upstream git@github.com:googleapis/google-cloud-cpp.git

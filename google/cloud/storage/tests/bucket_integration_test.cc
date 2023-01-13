@@ -715,7 +715,7 @@ TEST_F(BucketIntegrationTest, DefaultObjectAccessControlCRUD) {
   ASSERT_STATUS_OK(client);
 
   // Create a new bucket to run the test, with the "private"
-  // PredefinedDefaultObjectAcl, that way we can predict the the contents of the
+  // PredefinedDefaultObjectAcl, that way we can predict the contents of the
   // ACL.
   auto meta = client->CreateBucketForProject(
       bucket_name, project_id_, BucketMetadata(),

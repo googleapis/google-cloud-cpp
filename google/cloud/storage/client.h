@@ -89,7 +89,7 @@ struct ClientImplDetails;
  *
  * Note that the application may (at times) use more connections than the
  * maximum size of the pool. For example if N downloads are in progress the
- * library may need N connections, even if the the pool size is smaller.
+ * library may need N connections, even if the pool size is smaller.
  *
  * Two clients that compare equal share the same connection pool. Two clients
  * created with the default constructor or with the constructor from a

@@ -36,7 +36,7 @@ namespace oauth2 {
  * If the GOOGLE_APPLICATION_CREDENTIALS environment variable is set, the JSON
  * file it points to will be loaded and used to create a credential of the
  * specified type. Otherwise, if running on a Google-hosted environment (e.g.
- * Compute Engine), credentials for the the environment's default service
+ * Compute Engine), credentials for the environment's default service
  * account will be used.
  *
  * @see https://cloud.google.com/docs/authentication/production for details

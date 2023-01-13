@@ -191,7 +191,7 @@ TEST_F(DatabaseAdminClientTest, DatabaseBasicCRUD) {
                 updated_policy->bindings().Get(0).members().Get(0));
     }
 
-    // Perform a different update using the the OCC loop API:
+    // Perform a different update using the OCC loop API:
     updated_policy = client_.SetIamPolicy(
         database_.FullName(),
         [this, &writer_role](google::iam::v1::Policy current) {
