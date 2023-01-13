@@ -37,32 +37,6 @@ constexpr auto kExpectedXml =
 </InitiateMultipartUploadResult>
 )xml";
 
-TEST(XmlNodeTest, EscapeXmlTag) {
-  std::vector<std::pair<std::string, std::string>> cases = {
-      {"\"Google\"", "&quot;Google&quot;"},
-      {"'Google'", "&apos;Google&apos;"},
-      {"<html>", "&lt;html&gt;"},
-      {"Bread&Butter", "Bread&amp;Butter"},
-  };
-  for (auto& p : cases) {
-    auto after = EscapeXmlTag(p.first);
-    EXPECT_EQ(after, p.second);
-  }
-}
-
-TEST(XmlNodeTest, EscapeXmlContent) {
-  std::vector<std::pair<std::string, std::string>> cases = {
-      {"\"Google\"", "\"Google\""},
-      {"'Google'", "'Google'"},
-      {"<html>", "&lt;html&gt;"},
-      {"Bread&Butter", "Bread&amp;Butter"},
-  };
-  for (auto& p : cases) {
-    auto after = EscapeXmlContent(p.first);
-    EXPECT_EQ(after, p.second);
-  }
-}
-
 TEST(XmlNodeTest, BuildTree) {
   auto root = XmlNode::CreateRoot();
   auto mpu_result = root->AppendTagNode("InitiateMultipartUploadResult");

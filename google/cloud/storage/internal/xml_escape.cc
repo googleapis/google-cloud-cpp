@@ -12,34 +12,28 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_XML_BUILDERS_H
-#define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_XML_BUILDERS_H
-
 #include "google/cloud/storage/internal/xml_escape.h"
-#include "google/cloud/storage/internal/xml_node.h"
-#include "google/cloud/storage/version.h"
-#include "google/cloud/status_or.h"
-#include <map>
-#include <memory>
-#include <mutex>
-#include <string>
+#include "google/cloud/internal/absl_str_replace_quiet.h"
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A function for creating an XML request for `Completing multipart upload` API
- * described at
- * https://cloud.google.com/storage/docs/xml-api/post-object-complete.
- */
-StatusOr<std::shared_ptr<XmlNode>> BuildCompleteMultipartUploadXml(
-    std::map<unsigned int, std::string> const& parts);
+std::string EscapeXmlTag(std::string const& val) {
+  return absl::StrReplaceAll(val, {{"&", "&amp;"},
+                                   {"<", "&lt;"},
+                                   {">", "&gt;"},
+                                   {"\"", "&quot;"},
+                                   {"'", "&apos;"}});
+}
+
+std::string EscapeXmlContent(std::string const& val) {
+  return absl::StrReplaceAll(val,
+                             {{"&", "&amp;"}, {"<", "&lt;"}, {">", "&gt;"}});
+}
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
 }  // namespace cloud
 }  // namespace google
-
-#endif  // GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_XML_BUILDERS_H

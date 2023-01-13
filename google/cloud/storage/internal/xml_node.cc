@@ -13,27 +13,14 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/xml_node.h"
+#include "google/cloud/storage/internal/xml_escape.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/absl_str_replace_quiet.h"
 #include <stack>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::string EscapeXmlTag(std::string const& val) {
-  return absl::StrReplaceAll(val, {{"&", "&amp;"},
-                                   {"<", "&lt;"},
-                                   {">", "&gt;"},
-                                   {"\"", "&quot;"},
-                                   {"'", "&apos;"}});
-}
-
-std::string EscapeXmlContent(std::string const& val) {
-  return absl::StrReplaceAll(val,
-                             {{"&", "&amp;"}, {"<", "&lt;"}, {">", "&gt;"}});
-}
 
 std::string XmlNode::GetConcatenatedText() const {
   // For non-tag element, just returns the text content.

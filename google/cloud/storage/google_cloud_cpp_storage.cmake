@@ -187,6 +187,8 @@ add_library(
     internal/unified_rest_credentials.h
     internal/xml_builders.cc
     internal/xml_builders.h
+    internal/xml_escape.cc
+    internal/xml_escape.h
     internal/xml_node.cc
     internal/xml_node.h
     lifecycle_rule.cc
@@ -505,6 +507,7 @@ if (BUILD_TESTING)
         internal/tuple_filter_test.cc
         internal/unified_rest_credentials_test.cc
         internal/xml_builders_test.cc
+        internal/xml_escape_test.cc
         internal/xml_node_test.cc
         lifecycle_rule_test.cc
         list_buckets_reader_test.cc

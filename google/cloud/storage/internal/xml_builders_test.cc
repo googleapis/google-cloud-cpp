@@ -46,27 +46,24 @@ constexpr auto kExpectedCompleteMultipartUploadXml =
 </CompleteMultipartUpload>
 )xml";
 
-TEST(CompleteMultipartUploadXmlBuilderTest, Build) {
-  auto builder = CompleteMultipartUploadXmlBuilder::Create();
-  // The parts should be sorted by part_number in the final xml.
-  auto res = builder->AddPart(5, "\"aaaa18db4cc2f85cedef654fccc4a4x8\"");
-  EXPECT_TRUE(res.ok());
-  builder->AddPart(2, "old value");  // This should be replaced.
-  res = builder->AddPart(2, "\"7778aef83f66abc1fa1e8477f296d394\"");
-  EXPECT_TRUE(res.ok());
-  auto xml = builder->Build();
-  EXPECT_EQ(xml->ToString(2), kExpectedCompleteMultipartUploadXml);
+TEST(BuildCompleteMultipartUploadXmlTest, Build) {
+  std::map<unsigned int, std::string> parts{
+      {5U, "\"aaaa18db4cc2f85cedef654fccc4a4x8\""},
+      {2U, "\"7778aef83f66abc1fa1e8477f296d394\""}};
+  auto xml = BuildCompleteMultipartUploadXml(parts);
+  ASSERT_TRUE(xml);
+  EXPECT_EQ(xml.value()->ToString(2), kExpectedCompleteMultipartUploadXml);
 }
 
-TEST(CompleteMultipartUploadXmlBuilderTest, InvalidInput) {
-  auto builder = CompleteMultipartUploadXmlBuilder::Create();
-  auto res = builder->AddPart(0, "\"7778aef83f66abc1fa1e8477f296d394\"");
+TEST(BuildCompleteMultipartUploadXmlTest, InvalidInput) {
+  std::map<unsigned int, std::string> parts_zero{{0U, "zero is not allowed"}};
+  auto res = BuildCompleteMultipartUploadXml(parts_zero);
+  EXPECT_THAT(
+      res, StatusIs(StatusCode::kInvalidArgument, HasSubstr("cannot be zero")));
+  std::map<unsigned int, std::string> parts_too_big{{10001U, "it is too big"}};
+  res = BuildCompleteMultipartUploadXml(parts_too_big);
   EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
-                            HasSubstr("can not be zero")));
-  res = builder->AddPart(kMaxPartNumber + 1,
-                         "\"7778aef83f66abc1fa1e8477f296d394\"");
-  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
-                            HasSubstr("can not be more than")));
+                            HasSubstr("cannot be more than")));
 }
 
 }  // namespace

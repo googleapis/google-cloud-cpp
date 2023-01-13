@@ -21,26 +21,27 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-Status CompleteMultipartUploadXmlBuilder::AddPart(unsigned int part_number,
-                                                  std::string etag) {
-  if (part_number == 0) {
-    return internal::InvalidArgumentError("part_number can not be zero.");
-  }
-  if (part_number > kMaxPartNumber) {
-    return internal::InvalidArgumentError(
-        absl::StrCat("part_number can not be more than ", kMaxPartNumber));
-  }
-  std::lock_guard<std::mutex> lk{part_map_mu_};
-  part_map_[part_number] = std::move(etag);
-  return Status();
-}
+namespace {
 
-std::shared_ptr<XmlNode const> CompleteMultipartUploadXmlBuilder::Build() {
-  std::lock_guard<std::mutex> lk{part_map_mu_};
+auto constexpr kMaxPartNumber = 10000U;
+
+}  // namespace
+
+StatusOr<std::shared_ptr<XmlNode>> BuildCompleteMultipartUploadXml(
+    std::map<unsigned int, std::string> const& parts) {
   auto root = XmlNode::CreateRoot();
   auto target_node = root->AppendTagNode("CompleteMultipartUpload");
 
-  for (auto const& p : part_map_) {
+  for (auto const& p : parts) {
+    if (p.first == 0) {
+      return internal::InvalidArgumentError("part number cannot be zero",
+                                            GCP_ERROR_INFO());
+    }
+    if (p.first > kMaxPartNumber) {
+      return internal::InvalidArgumentError(
+          absl::StrCat("part number cannot be more than ", kMaxPartNumber),
+          GCP_ERROR_INFO());
+    }
     auto part_tag = target_node->AppendTagNode("Part");
     part_tag->AppendTagNode("PartNumber")
         ->AppendTextNode(std::to_string(p.first));
