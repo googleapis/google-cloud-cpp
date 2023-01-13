@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/xml_parser.h"
+#include "google/cloud/options.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -69,7 +70,9 @@ TEST(XmlParserTest, ParseXml) {
 
 TEST(XmlParserTest, TooLarge) {
   auto parser = XmlParser::Create();
-  auto res = parser->ParseXml(kXmlFilledWithGarbage, 10);
+  Options options;
+  options.set<XmlParserSourceMaxBytes>(10);
+  auto res = parser->ParseXml(kXmlFilledWithGarbage, options);
   EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
                             HasSubstr("exceeds the max byte")));
 }
