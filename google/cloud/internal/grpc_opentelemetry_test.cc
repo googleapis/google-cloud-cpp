@@ -58,9 +58,10 @@ TEST(OpenTelemetry, MakeSpanGrpc) {
                          SC::kNetTransport, SC::NetTransportValues::kIpTcp)))));
 }
 
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
