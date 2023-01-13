@@ -34,7 +34,7 @@ namespace testing_util_internal {
 using SpanAttributeMap =
     std::unordered_map<std::string,
                        opentelemetry::sdk::common::OwnedAttributeValue>;
-MATCHER_P(SpanAttributesAreImpl, matcher,
+MATCHER_P(SpanAttributesImpl, matcher,
           ::testing::DescribeMatcher<SpanAttributeMap>(matcher)) {
   return ::testing::ExplainMatchResult(matcher, arg->GetAttributes(),
                                        result_listener);
@@ -90,9 +90,9 @@ MATCHER_P2(SpanWithStatus, status, description,
 }
 
 template <typename... Args>
-::testing::Matcher<SpanDataPtr> SpanAttributesAre(Args const&... matchers) {
-  return testing_util_internal::SpanAttributesAreImpl(
-      ::testing::UnorderedElementsAre(matchers...));
+::testing::Matcher<SpanDataPtr> SpanHasAttributes(Args const&... matchers) {
+  return testing_util_internal::SpanAttributesImpl(
+      ::testing::IsSupersetOf({matchers...}));
 }
 
 template <typename T>
