@@ -36,7 +36,7 @@ fails, or if the underlying stream is interrupted by the service.
 
 @par Futures
 
-Some functions return a "future" ([future<T>]). These objects represent a value 
+Some functions return a "future" ([future<T>]). These objects represent a value
 that will be obtained asynchronously. By the very nature of asynchronous
 operations, the request may fail after the function is called. Therefore, we
 have chosen to return `future<StatusOr<T>>`.  We think the alternatives are
