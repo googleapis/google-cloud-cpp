@@ -25,7 +25,7 @@ constexpr size_t kDefaultMaxXmlByteSize = 1024 * 1024 * 1024;  // 1GiB
 constexpr size_t kDefaultMaxXmlNodeNum = 20000;
 constexpr size_t kDefaultMaxXmlNodeDepth = 50;
 
-} // namespace
+}  // namespace
 
 Options XmlParserDefaultOptions(Options options) {
   if (!options.has<XmlParserSourceMaxBytes>()) {
