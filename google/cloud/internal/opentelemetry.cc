@@ -41,6 +41,33 @@ opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
   return GetTracer(CurrentOptions())->StartSpan(name, options);
 }
 
+void EndSpanImpl(opentelemetry::trace::Span& span, Status const& status) {
+  if (status.ok()) {
+    span.SetStatus(opentelemetry::trace::StatusCode::kOk);
+    span.SetAttribute("gcloud.status_code", 0);
+    span.End();
+    return;
+  }
+  span.SetStatus(opentelemetry::trace::StatusCode::kError, status.message());
+  span.SetAttribute("gcloud.status_code", static_cast<int>(status.code()));
+  auto const& ei = status.error_info();
+  if (!ei.reason().empty()) {
+    span.SetAttribute("gcloud.error.reason", ei.reason());
+  }
+  if (!ei.domain().empty()) {
+    span.SetAttribute("gcloud.error.domain", ei.domain());
+  }
+  for (auto const& kv : ei.metadata()) {
+    span.SetAttribute("gcloud.error.metadata." + kv.first, kv.second);
+  }
+  span.End();
+}
+
+Status EndSpan(opentelemetry::trace::Span& span, Status const& status) {
+  EndSpanImpl(span, status);
+  return status;
+}
+
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud

@@ -17,6 +17,8 @@
 
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/options.h"
+#include "google/cloud/status.h"
+#include "google/cloud/status_or.h"
 #include "google/cloud/version.h"
 #include <opentelemetry/nostd/shared_ptr.h>
 #include <opentelemetry/nostd/string_view.h>
@@ -30,11 +32,70 @@ namespace internal {
 
 bool TracingEnabled(Options const& options);
 
+/**
+ * Returns a [tracer] to use for creating [spans].
+ *
+ * This function exists for the sake of testing. Library maintainers should call
+ * `MakeSpan(...)` directly to create a span.
+ *
+ * @see https://opentelemetry.io/docs/instrumentation/cpp/manual/#initializing-tracing
+ *
+ * [spans]:
+ * https://opentelemetry.io/docs/concepts/signals/traces/#spans-in-opentelemetry
+ * [tracer]: https://opentelemetry.io/docs/concepts/signals/traces/#tracer
+ */
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Tracer> GetTracer(
     Options const& options);
 
+/**
+ * Start a [span] using the current [tracer].
+ *
+ * The current tracer is determined by the prevailing `CurrentOptions()`.
+ *
+ * @see https://opentelemetry.io/docs/instrumentation/cpp/manual/#start-a-span
+ *
+ * [span]:
+ * https://opentelemetry.io/docs/concepts/signals/traces/#spans-in-opentelemetry
+ * [tracer]: https://opentelemetry.io/docs/concepts/signals/traces/#tracer
+ */
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpan(
     opentelemetry::nostd::string_view name);
+
+/**
+ * Extracts information from a `Status` and adds it to a span.
+ *
+ * This method will end the span, and set its [span status], accordingly. Other
+ * details, such as error information, will be set as [attributes] on the span.
+ *
+ * @see https://opentelemetry.io/docs/concepts/signals/traces/#spans-in-opentelemetry
+ *
+ * [attributes]:
+ * https://opentelemetry.io/docs/concepts/signals/traces/#attributes
+ * [span status]:
+ * https://opentelemetry.io/docs/concepts/signals/traces/#span-status
+ */
+void EndSpanImpl(opentelemetry::trace::Span& span, Status const& status);
+
+/**
+ * Extracts information from a `Status` and adds it to a span.
+ *
+ * The span is ended. The original value is returned, for the sake of
+ * composition.
+ */
+Status EndSpan(opentelemetry::trace::Span& span, Status const& status);
+
+/**
+ * Extracts information from a `StatusOr<>` and adds it to a span.
+ *
+ * The span is ended. The original value is returned, for the sake of
+ * composition.
+ */
+template <typename T>
+StatusOr<T> EndSpan(opentelemetry::trace::Span& span,
+                    StatusOr<T> const& value) {
+  EndSpanImpl(span, value.status());
+  return value;
+}
 
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

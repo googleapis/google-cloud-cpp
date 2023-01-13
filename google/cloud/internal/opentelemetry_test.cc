@@ -27,9 +27,13 @@ namespace internal {
 namespace {
 
 using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::SpanAttributesAre;
 using ::google::cloud::testing_util::SpanHasInstrumentationScope;
 using ::google::cloud::testing_util::SpanKindIsClient;
 using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanWithStatus;
+using ::testing::AllOf;
 using ::testing::Each;
 using ::testing::ElementsAre;
 using ::testing::IsEmpty;
@@ -81,6 +85,129 @@ TEST(OpenTelemetry, MakeSpan) {
   EXPECT_THAT(spans, Each(SpanHasInstrumentationScope()));
   EXPECT_THAT(spans, Each(SpanKindIsClient()));
   EXPECT_THAT(spans, ElementsAre(SpanNamed("span1"), SpanNamed("span2")));
+}
+
+TEST(OpenTelemetry, EndSpanImplEndsSpan) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto span = MakeSpan("span");
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+
+  EndSpanImpl(*span, Status());
+  spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(SpanNamed("span")));
+}
+
+TEST(OpenTelemetry, EndSpanImplSuccess) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto span = MakeSpan("success");
+  EndSpanImpl(*span, Status());
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+          SpanAttributesAre(SpanAttribute<int>("gcloud.status_code", 0)))));
+}
+
+TEST(OpenTelemetry, EndSpanImplFail) {
+  auto span_catcher = InstallSpanCatcher();
+  auto const code = static_cast<int>(StatusCode::kAborted);
+
+  auto span = MakeSpan("fail");
+  EndSpanImpl(*span, Status(StatusCode::kAborted, "not good"));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
+          SpanAttributesAre(SpanAttribute<int>("gcloud.status_code", code)))));
+}
+
+TEST(OpenTelemetry, EndSpanImplErrorInfo) {
+  auto span_catcher = InstallSpanCatcher();
+  auto const code = static_cast<int>(StatusCode::kAborted);
+
+  auto span = MakeSpan("reason");
+  EndSpanImpl(*span, Status(StatusCode::kAborted, "not good",
+                            ErrorInfo("reason", {}, {})));
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
+          SpanAttributesAre(
+              SpanAttribute<int>("gcloud.status_code", code),
+              SpanAttribute<std::string>("gcloud.error.reason", "reason")))));
+
+  span = MakeSpan("domain");
+  EndSpanImpl(*span, Status(StatusCode::kAborted, "not good",
+                            ErrorInfo({}, "domain", {})));
+  spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
+          SpanAttributesAre(
+              SpanAttribute<int>("gcloud.status_code", code),
+              SpanAttribute<std::string>("gcloud.error.domain", "domain")))));
+
+  span = MakeSpan("metadata");
+  EndSpanImpl(*span, Status(StatusCode::kAborted, "not good",
+                            ErrorInfo({}, {}, {{"k1", "v1"}, {"k2", "v2"}})));
+  spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "not good"),
+          SpanAttributesAre(
+              SpanAttribute<int>("gcloud.status_code", code),
+              SpanAttribute<std::string>("gcloud.error.metadata.k1", "v1"),
+              SpanAttribute<std::string>("gcloud.error.metadata.k2", "v2")))));
+}
+
+TEST(OpenTelemetry, EndSpanStatus) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto v1 = Status();
+  auto s1 = MakeSpan("s1");
+  auto r1 = EndSpan(*s1, v1);
+  EXPECT_EQ(r1, v1);
+
+  auto v2 = Status(StatusCode::kAborted, "fail");
+  auto s2 = MakeSpan("s2");
+  auto r2 = EndSpan(*s2, v2);
+  EXPECT_EQ(r2, v2);
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kError)));
+}
+
+TEST(OpenTelemetry, EndSpanStatusOr) {
+  auto span_catcher = InstallSpanCatcher();
+
+  auto v1 = StatusOr<int>(5);
+  auto s1 = MakeSpan("s1");
+  auto r1 = EndSpan(*s1, v1);
+  EXPECT_EQ(r1, v1);
+
+  auto v2 = StatusOr<int>(Status(StatusCode::kAborted, "fail"));
+  auto s2 = MakeSpan("s2");
+  auto r2 = EndSpan(*s2, v2);
+  EXPECT_EQ(r2, v2);
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(SpanWithStatus(opentelemetry::trace::StatusCode::kOk),
+                  SpanWithStatus(opentelemetry::trace::StatusCode::kError)));
 }
 
 }  // namespace
