@@ -80,7 +80,7 @@ class TimerQueue : public std::enable_shared_from_this<TimerQueue> {
    *
    * The future returned by this function is satisfied when either:
    * - The timer expires, in which case the future is satisfied with a
-   *   successful `StatusOr`.
+   *   successful `StatusOr`. The value in the `StatusOr` will be @p tp.
    * - The timer queue is shutdown (or was shutdown), in which case the future
    *   is satisfied with an error status.
    */
@@ -88,26 +88,35 @@ class TimerQueue : public std::enable_shared_from_this<TimerQueue> {
       std::chrono::system_clock::time_point tp);
 
   /**
-   * Adds a timer to the queue and atomically attach a callback to the timer.
+   * Adds a timer to the queue and atomically attaches a callback to the timer.
    *
    * This creates a new timer that expires at @p tp, and atomically attaches
    * @p functor to be invoked when the timer expires. The functor must be able
    * to consume `future<StatusOr<std::chrono::system_clock::time_point>>`.
    *
+   * Unless the timer queue is shutdown, the provided functor is always invoked
+   * by one of the threads blocked in `Service()`.  In contrast, something like
+   * `Schedule(tp).then(std::move(functor))` may result in the functor being
+   * invoked by the thread calling `.Schedule()`, as the future may be already
+   * satisfied when `.then()` is invoked.
+   *
    * When the functor is called its future will be already satisfied. The
    * `StatusOr<>` value in may contain an error.  This can be used to detect
-   * if the timer queue is shutdown.  For example, implementing
-   * periodic timers may be implemented as:
+   * if the timer queue is shutdown.  For example, periodic timers may be
+   * implemented as:
    *
    * @code {.cpp}
    * void StartPeriodicTimer(
    *     std::shared_ptr<TimerQueue> tq, std::chrono::milliseconds period,
    *     std::function<void()> action) {
-   *   auto functor = [w = std::weak_ptr<TimerQueue>(tq), period, action](
+   *   auto functor = [
+   *           weak = std::weak_ptr<TimerQueue>(tq),
+   *           action = std::move(action),
+   *           period](
    *       future<StatusOr<std::chrono::system_clock::time_point>> f) mutable {
-   *     auto tq = w.lock();
-   *     if (!tq) return; // deleted timer queue
-   *     if (!f.get().ok()) return; // shutdown timer queue
+   *     auto tq = weak.lock();
+   *     if (!tq) return;            // deleted timer queue
+   *     if (!f.get().ok()) return;  // shutdown timer queue
    *     action();
    *     StartPeriodicTimer(std::move(tq), period, std::move(action));
    *   };
@@ -174,7 +183,15 @@ class TimerQueue : public std::enable_shared_from_this<TimerQueue> {
   // Cancels a timer.
   void Cancel(KeyType key);
 
-  // Creates a satisfied future indicating the queue is shutdown.
+  /**
+   * Helper function to satisfy futures and promises on shutdown.
+   *
+   * Creates a value suitable to satisfy the future / promises created by this
+   * class.
+   *
+   * @param where the name of the calling function
+   * @returns  a `StatusOr<>` holding a `kCancelled` status.
+   */
   static StatusOr<std::chrono::system_clock::time_point> MakeCancelled(
       char const* where);
 
