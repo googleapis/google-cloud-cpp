@@ -58,11 +58,9 @@ class XmlParser {
  private:
   XmlParser()
       : xml_decl_re_{R"(^<\?xml[^>]*\?>)"},
-        xml_doctype_re_{R"(<!DOCTYPE[^>[]*(\[[^\]]*])?>)",
-                        std::regex_constants::multiline},
-        xml_cdata_re_{R"(<!\[CDATA\[[^>]*]]>)",
-                      std::regex_constants::multiline},
-        xml_comment_re_{R"(<!--[^>]*-->)", std::regex_constants::multiline} {};
+        xml_doctype_re_{R"(<!DOCTYPE[^>[]*(\[[^\]]*])?>)"},
+        xml_cdata_re_{R"(<!\[CDATA\[[^>]*]]>)"},
+        xml_comment_re_{R"(<!--[^>]*-->)"} {};
 
   std::regex xml_decl_re_;
   std::regex xml_doctype_re_;
