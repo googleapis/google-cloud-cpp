@@ -71,6 +71,12 @@ GoldenKitchenSinkConnection::DoNothing(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+Status
+GoldenKitchenSinkConnection::Deprecated2(
+    google::protobuf::Empty const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 StreamRange<google::test::admin::database::v1::Response> GoldenKitchenSinkConnection::StreamingRead(
     google::test::admin::database::v1::Request const&) {
   return google::cloud::internal::MakeStreamRange<

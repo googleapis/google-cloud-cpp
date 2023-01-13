@@ -83,6 +83,14 @@ GoldenKitchenSinkMetadata::DoNothing(
   return child_->DoNothing(context, request);
 }
 
+Status
+GoldenKitchenSinkMetadata::Deprecated2(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) {
+  SetMetadata(context);
+  return child_->Deprecated2(context, request);
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
 GoldenKitchenSinkMetadata::StreamingRead(
     std::unique_ptr<grpc::ClientContext> context,

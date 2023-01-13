@@ -843,6 +843,16 @@ service GoldenKitchenSink {
     option (google.api.method_signature) = "";
   }
 
+  // A deprecated RPC that will omitted.
+  rpc Deprecated1(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option deprecated = true;
+  }
+
+  // A deprecated RPC for which we force API generation.
+  rpc Deprecated2(google.protobuf.Empty) returns (google.protobuf.Empty) {
+    option deprecated = true;
+  }
+
   // Tests the generator for streaming read RPCs (aka server-side streaming)
   rpc StreamingRead(Request) returns (stream Response) {
     option (google.api.method_signature) = "stream";

@@ -399,6 +399,7 @@ void ServiceCodeGenerator::SetMethods() {
     if (l == service_vars_.end()) return {};
     return absl::StrSplit(l->second, ',');
   };
+  auto const emitted_rpcs = split_arg("emitted_rpcs");
   auto const omitted_rpcs = split_arg("omitted_rpcs");
   auto const gen_async_rpcs = split_arg("gen_async_rpcs");
 
@@ -407,12 +408,29 @@ void ServiceCodeGenerator::SetMethods() {
     auto const* method = service_descriptor_->method(i);
     auto method_name = method->name();
     auto qualified_method_name = absl::StrCat(service_name, ".", method_name);
-    if (!internal::Contains(omitted_rpcs, method_name) &&
-        !internal::Contains(omitted_rpcs, qualified_method_name)) {
-      methods_.emplace_back(*method);
+    bool omit_rpc = internal::Contains(omitted_rpcs, method_name) ||
+                    internal::Contains(omitted_rpcs, qualified_method_name);
+    if (!omit_rpc && method->options().deprecated()) {
+      // Deprecated RPCs must be listed in either omitted_rpcs or
+      // emitted_rpcs. The former is used for newly-generated services,
+      // where we never want to support the deprecated RPC, and the
+      // latter for newly-deprecated RPCs, where we want to maintain
+      // backwards compatibility.
+      if (internal::Contains(emitted_rpcs, method_name) ||
+          internal::Contains(emitted_rpcs, qualified_method_name)) {
+        // TODO(#8486): Add a @deprecated Doxygen comment and the
+        // GOOGLE_CLOUD_CPP_DEPRECATED annotation to the generated RPC.
+      } else {
+        GCP_LOG(FATAL) << "Deprecated RPC " << qualified_method_name
+                       << " must be listed in either omitted_rpcs"
+                       << " or emitted_rpcs";
+      }
     }
+    if (!omit_rpc) methods_.emplace_back(*method);
     if (internal::Contains(gen_async_rpcs, method_name) ||
         internal::Contains(gen_async_rpcs, qualified_method_name)) {
+      // We still generate the async API for omitted (and possibly
+      // deprecated) RPCs when they appear in gen_async_rpcs.
       async_methods_.emplace_back(*method);
     }
   }

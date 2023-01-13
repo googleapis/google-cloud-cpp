@@ -63,6 +63,12 @@ Status GoldenKitchenSinkRoundRobin::DoNothing(
   return Child()->DoNothing(context, request);
 }
 
+Status GoldenKitchenSinkRoundRobin::Deprecated2(
+    grpc::ClientContext& context,
+    google::protobuf::Empty const& request) {
+  return Child()->Deprecated2(context, request);
+}
+
 std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
 GoldenKitchenSinkRoundRobin::StreamingRead(
     std::unique_ptr<grpc::ClientContext> context,

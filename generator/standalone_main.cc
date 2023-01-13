@@ -228,6 +228,9 @@ int main(int argc, char** argv) {
     for (auto const& omit_rpc : service.omitted_rpcs()) {
       args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc);
     }
+    for (auto const& emit_rpc : service.emitted_rpcs()) {
+      args.emplace_back("--cpp_codegen_opt=emit_rpc=" + emit_rpc);
+    }
     if (service.backwards_compatibility_namespace_alias()) {
       args.emplace_back(
           "--cpp_codegen_opt=backwards_compatibility_namespace_alias=true");

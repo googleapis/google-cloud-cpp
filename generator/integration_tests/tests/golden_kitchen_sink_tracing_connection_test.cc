@@ -119,6 +119,17 @@ TEST(GoldenKitchenSinkTracingConnectionTest, DoNothing) {
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 }
 
+TEST(GoldenKitchenSinkTracingConnectionTest, Deprecated2) {
+  auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
+  EXPECT_CALL(*mock, Deprecated2)
+      .WillOnce(Return(internal::AbortedError("fail")));
+
+  auto under_test = GoldenKitchenSinkTracingConnection(mock);
+  google::protobuf::Empty request;
+  auto result = under_test.Deprecated2(request);
+  EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+}
+
 TEST(GoldenKitchenSinkTracingConnectionTest, StreamingRead) {
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
   EXPECT_CALL(*mock, StreamingRead)

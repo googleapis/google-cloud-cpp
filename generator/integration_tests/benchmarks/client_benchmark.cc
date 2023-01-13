@@ -99,6 +99,11 @@ class TestStub : public GoldenKitchenSinkStub {
     return Status();
   }
 
+  Status Deprecated2(grpc::ClientContext&,
+                     google::protobuf::Empty const&) override {
+    return Status();
+  }
+
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<
       google::test::admin::database::v1::Response>>
   StreamingRead(std::unique_ptr<grpc::ClientContext>,

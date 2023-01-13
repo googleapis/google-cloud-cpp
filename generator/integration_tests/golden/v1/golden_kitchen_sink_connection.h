@@ -81,6 +81,9 @@ class GoldenKitchenSinkConnection {
   virtual Status
   DoNothing(google::protobuf::Empty const& request);
 
+  virtual Status
+  Deprecated2(google::protobuf::Empty const& request);
+
   virtual StreamRange<google::test::admin::database::v1::Response>
   StreamingRead(google::test::admin::database::v1::Request const& request);
 

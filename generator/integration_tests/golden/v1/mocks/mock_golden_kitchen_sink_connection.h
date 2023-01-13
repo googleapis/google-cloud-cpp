@@ -70,6 +70,10 @@ class MockGoldenKitchenSinkConnection : public golden_v1::GoldenKitchenSinkConne
   DoNothing,
   (google::protobuf::Empty const& request), (override));
 
+  MOCK_METHOD(Status,
+  Deprecated2,
+  (google::protobuf::Empty const& request), (override));
+
   MOCK_METHOD(StreamRange<google::test::admin::database::v1::Response>,
   StreamingRead,
   (google::test::admin::database::v1::Request const& request), (override));
