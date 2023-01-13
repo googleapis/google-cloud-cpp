@@ -29,11 +29,16 @@ std::string XmlParser::CleanUpXml(std::string const& content) {
 }
 
 StatusOr<std::shared_ptr<XmlNode>> XmlParser::ParseXml(
-    std::string const& content, size_t max_xml_byte_size, size_t, size_t) {
+    std::string const& content, Options options) {
+  internal::CheckExpectedOptions<XmlParserOptionsList>(options, __func__);
+  options = XmlParserDefaultOptions(std::move(options));
+
   // Check size first
-  if (content.length() > max_xml_byte_size) {
+  if (content.length() > options.get<XmlParserSourceMaxBytes>()) {
     return internal::InvalidArgumentError(
-        absl::StrCat("XML exceeds the max byte size of ", max_xml_byte_size));
+        absl::StrCat("XML exceeds the max byte size of ",
+                     options.get<XmlParserSourceMaxBytes>()),
+        GCP_ERROR_INFO());
   }
   // Remove unnecessary bits
   auto trimmed = CleanUpXml(content);

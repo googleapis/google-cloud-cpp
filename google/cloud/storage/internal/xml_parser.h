@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_XML_PARSER_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_XML_PARSER_H
 
+#include "google/cloud/storage/internal/xml_parser_options.h"
 #include "google/cloud/storage/internal/xml_node.h"
 #include "google/cloud/storage/version.h"
 #include "google/cloud/internal/make_status.h"
@@ -26,10 +27,6 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-constexpr size_t kDefaultMaxXmlByteSize = 1024 * 1024 * 1024;  // 1GiB
-constexpr size_t kDefaultMaxXmlNodeNum = 20000;
-constexpr size_t kDefaultMaxXmlNodeDepth = 50;
-
 /**
  * An Xml parser implementation for [GCS MPU]
  *
@@ -40,27 +37,29 @@ constexpr size_t kDefaultMaxXmlNodeDepth = 50;
  * features.
  */
 class XmlParser {
+  constexpr static auto const kXmlDeclRe = R"(^<\?xml[^>]*\?>)";
+  constexpr static auto const kXmlDoctypeRe = R"(<!DOCTYPE[^>[]*(\[[^\]]*\])?>)";
+  constexpr static auto const kXmlCdataRe = R"(<!\[CDATA\[[^>]*\]\]>)";
+  constexpr static auto const kXmlCommentRe = R"(<!--[^>]*-->)";
  public:
+
   /// Factory method
   static std::shared_ptr<XmlParser> Create() {
-    return std::shared_ptr<XmlParser>{new XmlParser()};
+    return std::shared_ptr<XmlParser>{new XmlParser};
   }
 
   /// Clean up the given XML string.
   std::string CleanUpXml(std::string const& content);
   /// Parse the given string and return an XML tree.
   StatusOr<std::shared_ptr<XmlNode>> ParseXml(
-      std::string const& content,
-      size_t max_xml_byte_size = kDefaultMaxXmlByteSize,
-      size_t max_xml_node_num = kDefaultMaxXmlNodeNum,
-      size_t max_xml_node_depth = kDefaultMaxXmlNodeDepth);
+      std::string const& content, Options = {});
 
  private:
   XmlParser()
-      : xml_decl_re_{R"(^<\?xml[^>]*\?>)"},
-        xml_doctype_re_{R"(<!DOCTYPE[^>[]*(\[[^\]]*])?>)"},
-        xml_cdata_re_{R"(<!\[CDATA\[[^>]*]]>)"},
-        xml_comment_re_{R"(<!--[^>]*-->)"} {};
+      : xml_decl_re_{kXmlDeclRe},
+        xml_doctype_re_{kXmlDoctypeRe},
+        xml_cdata_re_{kXmlCdataRe},
+        xml_comment_re_{kXmlCommentRe} {}
 
   std::regex xml_decl_re_;
   std::regex xml_doctype_re_;
