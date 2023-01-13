@@ -208,6 +208,10 @@ void SetMethodSignatureMethodVars(
           input_type->FindFieldByName(parameter);
       auto field_options = parameter_descriptor->options();
       if (field_options.deprecated()) {
+        // TODO(#8486): We need to know whether we have previously generated
+        // this method signature, and, if so, continue generating it (with a
+        // @deprecated Doxygen comment and the GOOGLE_CLOUD_CPP_DEPRECATED
+        // annotation) so as to maintain backwards compatibility.
         field_deprecated = true;
         break;
       }
