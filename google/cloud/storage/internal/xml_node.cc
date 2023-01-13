@@ -22,8 +22,6 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace {
-
 std::string EscapeXmlTag(std::string const& val) {
   return absl::StrReplaceAll(val, {{"&", "&amp;"},
                                    {"<", "&lt;"},
@@ -36,8 +34,6 @@ std::string EscapeXmlContent(std::string const& val) {
   return absl::StrReplaceAll(val,
                              {{"&", "&amp;"}, {"<", "&lt;"}, {">", "&gt;"}});
 }
-
-}  // namespace
 
 std::string XmlNode::GetConcatenatedText() const {
   // For non-tag element, just returns the text content.

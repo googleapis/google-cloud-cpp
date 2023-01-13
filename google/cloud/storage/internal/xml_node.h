@@ -25,6 +25,10 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
+std::string EscapeXmlTag(std::string const& val);
+
+std::string EscapeXmlContent(std::string const& val);
+
 /**
  * Represents an XML node in an XML tree.
  *
