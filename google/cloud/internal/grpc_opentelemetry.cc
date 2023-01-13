@@ -16,6 +16,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/options.h"
+#include <grpcpp/grpcpp.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/semantic_conventions.h>
 #include <opentelemetry/trace/span_metadata.h>
@@ -32,15 +33,16 @@ namespace internal {
 opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span> MakeSpanGrpc(
     opentelemetry::nostd::string_view service,
     opentelemetry::nostd::string_view method) {
-  namespace SC = opentelemetry::trace::SemanticConventions;
+  namespace sc = opentelemetry::trace::SemanticConventions;
   opentelemetry::trace::StartSpanOptions options;
   options.kind = opentelemetry::trace::SpanKind::kClient;
   return GetTracer(internal::CurrentOptions())
       ->StartSpan(absl::StrCat(service.data(), "/", method.data()),
-                  {{SC::kRpcSystem, SC::RpcSystemValues::kGrpc},
-                   {SC::kRpcService, service},
-                   {SC::kRpcMethod, method},
-                   {SC::kNetTransport, SC::NetTransportValues::kIpTcp}},
+                  {{sc::kRpcSystem, sc::RpcSystemValues::kGrpc},
+                   {sc::kRpcService, service},
+                   {sc::kRpcMethod, method},
+                   {sc::kNetTransport, sc::NetTransportValues::kIpTcp},
+                   {"grpc.version", grpc::Version()}},
                   options);
 }
 

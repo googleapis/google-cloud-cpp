@@ -15,6 +15,7 @@
 #include "google/cloud/internal/grpc_opentelemetry.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include <gmock/gmock.h>
+#include <grpcpp/grpcpp.h>
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/semantic_conventions.h>
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
@@ -37,7 +38,7 @@ using ::testing::AllOf;
 using ::testing::ElementsAre;
 
 TEST(OpenTelemetry, MakeSpanGrpc) {
-  namespace SC = ::opentelemetry::trace::SemanticConventions;
+  namespace sc = ::opentelemetry::trace::SemanticConventions;
   auto span_catcher = InstallSpanCatcher();
 
   auto span = MakeSpanGrpc("google.cloud.foo.v1.Foo", "GetBar");
@@ -45,17 +46,19 @@ TEST(OpenTelemetry, MakeSpanGrpc) {
 
   auto spans = span_catcher->GetSpans();
   EXPECT_THAT(
-      spans, ElementsAre(AllOf(
-                 SpanHasInstrumentationScope(), SpanKindIsClient(),
-                 SpanNamed("google.cloud.foo.v1.Foo/GetBar"),
-                 SpanHasAttributes(
-                     SpanAttribute<std::string>(SC::kRpcSystem,
-                                                SC::RpcSystemValues::kGrpc),
-                     SpanAttribute<std::string>(SC::kRpcService,
-                                                "google.cloud.foo.v1.Foo"),
-                     SpanAttribute<std::string>(SC::kRpcMethod, "GetBar"),
-                     SpanAttribute<std::string>(
-                         SC::kNetTransport, SC::NetTransportValues::kIpTcp)))));
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("google.cloud.foo.v1.Foo/GetBar"),
+          SpanHasAttributes(
+              SpanAttribute<std::string>(sc::kRpcSystem,
+                                         sc::RpcSystemValues::kGrpc),
+              SpanAttribute<std::string>(sc::kRpcService,
+                                         "google.cloud.foo.v1.Foo"),
+              SpanAttribute<std::string>(sc::kRpcMethod, "GetBar"),
+              SpanAttribute<std::string>(sc::kNetTransport,
+                                         sc::NetTransportValues::kIpTcp),
+              SpanAttribute<std::string>("grpc.version", grpc::Version())))));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
