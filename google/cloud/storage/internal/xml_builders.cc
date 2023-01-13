@@ -42,8 +42,8 @@ std::shared_ptr<XmlNode const> CompleteMultipartUploadXmlBuilder::Build() {
 
   for (auto const& p : part_map_) {
     auto part_tag = target_node->AppendTagNode("Part");
-    part_tag->AppendTagNode("PartNumber")->AppendTextNode(
-        std::to_string(p.first));
+    part_tag->AppendTagNode("PartNumber")
+        ->AppendTextNode(std::to_string(p.first));
     part_tag->AppendTagNode("ETag")->AppendTextNode(
         EscapeXmlContent(std::move(p.second)));
   }

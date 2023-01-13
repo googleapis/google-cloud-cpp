@@ -42,7 +42,7 @@ constexpr unsigned int kMaxPartNumber = 10000;
 class CompleteMultipartUploadXmlBuilder {
  public:
   static std::shared_ptr<CompleteMultipartUploadXmlBuilder> Create() {
-    return std::shared_ptr<CompleteMultipartUploadXmlBuilder> {
+    return std::shared_ptr<CompleteMultipartUploadXmlBuilder>{
         new CompleteMultipartUploadXmlBuilder()};
   }
 

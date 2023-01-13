@@ -51,7 +51,7 @@ TEST(CompleteMultipartUploadXmlBuilderTest, Build) {
   // The parts should be sorted by part_number in the final xml.
   auto res = builder->AddPart(5, "\"aaaa18db4cc2f85cedef654fccc4a4x8\"");
   EXPECT_TRUE(res.ok());
-  builder->AddPart(2, "old value"); // This should be replaced.
+  builder->AddPart(2, "old value");  // This should be replaced.
   res = builder->AddPart(2, "\"7778aef83f66abc1fa1e8477f296d394\"");
   EXPECT_TRUE(res.ok());
   auto xml = builder->Build();
