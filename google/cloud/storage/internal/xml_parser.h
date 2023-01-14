@@ -37,12 +37,6 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * features.
  */
 class XmlParser {
-  constexpr static auto const kXmlDeclRe = R"(^<\?xml[^>]*\?>)";
-  constexpr static auto const kXmlDoctypeRe =
-      R"(<!DOCTYPE[^>[]*(\[[^\]]*\])?>)";
-  constexpr static auto const kXmlCdataRe = R"(<!\[CDATA\[[^>]*\]\]>)";
-  constexpr static auto const kXmlCommentRe = R"(<!--[^>]*-->)";
-
  public:
   /// Factory method
   static std::shared_ptr<XmlParser> Create() {
@@ -57,10 +51,10 @@ class XmlParser {
 
  private:
   XmlParser()
-      : xml_decl_re_{kXmlDeclRe},
-        xml_doctype_re_{kXmlDoctypeRe},
-        xml_cdata_re_{kXmlCdataRe},
-        xml_comment_re_{kXmlCommentRe} {}
+      : xml_decl_re_{R"(^<\?xml[^>]*\?>)"},
+        xml_doctype_re_{R"(<!DOCTYPE[^>[]*(\[[^\]]*\])?>)"},
+        xml_cdata_re_{R"(<!\[CDATA\[[^>]*\]\]>)"},
+        xml_comment_re_{R"(<!--[^>]*-->)"} {}
 
   std::regex xml_decl_re_;
   std::regex xml_doctype_re_;
