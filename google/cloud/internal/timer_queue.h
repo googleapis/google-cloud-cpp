@@ -149,6 +149,21 @@ class TimerQueue : public std::enable_shared_from_this<TimerQueue> {
   }
 
   /**
+   * Schedule an immediately expired timer and atomically run @p functor on it.
+   *
+   * See the `Schedule(std::chrono::system_clock::time_point,Functor)` for
+   * details.
+   */
+  template <typename Functor>
+  auto Schedule(Functor&& functor)
+      -> decltype(std::declval<TimerQueue>().Schedule(
+          std::chrono::system_clock::time_point{},
+          std::forward<Functor>(functor))) {
+    return Schedule(std::chrono::system_clock::time_point::min(),
+                    std::forward<Functor>(functor));
+  }
+
+  /**
    * Signals all threads that have called Service() to return.
    *
    * Once this function returns no more timers can be scheduled successfully.

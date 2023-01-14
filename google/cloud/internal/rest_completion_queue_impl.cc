@@ -50,8 +50,7 @@ RestCompletionQueueImpl::MakeRelativeTimer(std::chrono::nanoseconds duration) {
 void RestCompletionQueueImpl::RunAsync(
     std::unique_ptr<internal::RunAsyncBase> function) {
   ++run_async_counter_;
-  tq_->Schedule(std::chrono::system_clock::now(),
-                [f = std::move(function)](auto) { f->exec(); });
+  tq_->Schedule([f = std::move(function)](auto) { f->exec(); });
 }
 
 void RestCompletionQueueImpl::StartOperation(

@@ -260,6 +260,40 @@ TEST(TimerQueueTest, ScheduleWithCallbacks) {
   EXPECT_THAT(expected, IsSupersetOf(actual));
 }
 
+TEST(TimerQueueTest, ScheduleImmediatelyWithCallbacks) {
+  auto tq = TimerQueue::Create();
+
+  // Start a number of runners.
+  auto constexpr kRunners = 4;
+  std::vector<std::thread> runners(kRunners);
+  std::generate(runners.begin(), runners.end(),
+                [tq] { return std::thread([tq] { tq->Service(); }); });
+
+  // Now start a number of timers with a callback.  We expect these callbacks
+  // to run only in the runner threads.
+  auto constexpr kTimers = 16 * 100;
+  std::vector<future<std::thread::id>> timers(kTimers);
+  std::generate(timers.begin(), timers.end(), [tq]() {
+    return tq->Schedule([](auto) { return std::this_thread::get_id(); });
+  });
+
+  std::set<std::thread::id> actual;
+  std::transform(timers.begin(), timers.end(),
+                 std::inserter(actual, actual.end()),
+                 [](auto& f) { return f.get(); });
+
+  std::set<std::thread::id> expected;
+  std::transform(runners.begin(), runners.end(),
+                 std::inserter(expected, expected.end()),
+                 [](auto& t) { return t.get_id(); });
+
+  tq->Shutdown();
+  for (auto& t : runners) t.join();
+
+  EXPECT_THAT(actual, Each(Not(Eq(std::this_thread::get_id()))));
+  EXPECT_THAT(expected, IsSupersetOf(actual));
+}
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
