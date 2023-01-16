@@ -31,6 +31,8 @@
 @com_google_googleapis//google/monitoring/v3:query_service.proto
 @com_google_googleapis//google/monitoring/v3:service.proto
 @com_google_googleapis//google/monitoring/v3:service_service.proto
+@com_google_googleapis//google/monitoring/v3:snooze.proto
+@com_google_googleapis//google/monitoring/v3:snooze_service.proto
 @com_google_googleapis//google/monitoring/v3:span_context.proto
 @com_google_googleapis//google/monitoring/v3:uptime.proto
 @com_google_googleapis//google/monitoring/v3:uptime_service.proto
