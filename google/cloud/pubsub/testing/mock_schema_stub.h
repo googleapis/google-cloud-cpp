@@ -43,6 +43,23 @@ class MockSchemaStub : public pubsub_internal::SchemaServiceStub {
               (grpc::ClientContext&,
                google::pubsub::v1::ListSchemasRequest const&),
               (override));
+  MOCK_METHOD(StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>,
+              ListSchemaRevisions,
+              (grpc::ClientContext & context,
+               google::pubsub::v1::ListSchemaRevisionsRequest const& request),
+              (override));
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, CommitSchema,
+              (grpc::ClientContext & context,
+               google::pubsub::v1::CommitSchemaRequest const& request),
+              (override));
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, RollbackSchema,
+              (grpc::ClientContext & context,
+               google::pubsub::v1::RollbackSchemaRequest const& request),
+              (override));
+  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, DeleteSchemaRevision,
+              (grpc::ClientContext & context,
+               google::pubsub::v1::DeleteSchemaRevisionRequest const& request),
+              (override));
   MOCK_METHOD(Status, DeleteSchema,
               (grpc::ClientContext&,
                google::pubsub::v1::DeleteSchemaRequest const&),

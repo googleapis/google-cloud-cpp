@@ -68,6 +68,51 @@ SchemaServiceLogging::ListSchemas(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
+SchemaServiceLogging::ListSchemaRevisions(
+    grpc::ClientContext& context,
+    google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
+        return child_->ListSchemaRevisions(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::CommitSchema(
+    grpc::ClientContext& context,
+    google::pubsub::v1::CommitSchemaRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::CommitSchemaRequest const& request) {
+        return child_->CommitSchema(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::RollbackSchema(
+    grpc::ClientContext& context,
+    google::pubsub::v1::RollbackSchemaRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::RollbackSchemaRequest const& request) {
+        return child_->RollbackSchema(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::pubsub::v1::Schema> SchemaServiceLogging::DeleteSchemaRevision(
+    grpc::ClientContext& context,
+    google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
+        return child_->DeleteSchemaRevision(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 Status SchemaServiceLogging::DeleteSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSchemaRequest const& request) {

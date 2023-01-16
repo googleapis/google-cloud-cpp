@@ -98,12 +98,12 @@ class IntentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   /// [google.cloud.dialogflow.v2.ListIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L913}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L941}
   /// [google.cloud.dialogflow.v2.Intent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   StreamRange<google::cloud::dialogflow::v2::Intent> ListIntents(
       std::string const& parent, Options opts = {});
@@ -129,12 +129,12 @@ class IntentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   /// [google.cloud.dialogflow.v2.ListIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L913}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L941}
   /// [google.cloud.dialogflow.v2.Intent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   StreamRange<google::cloud::dialogflow::v2::Intent> ListIntents(
       std::string const& parent, std::string const& language_code,
@@ -144,16 +144,16 @@ class IntentsClient {
   /// Returns the list of all intents in the specified agent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListIntentsRequest,google/cloud/dialogflow/v2/intent.proto#L913}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ListIntentsRequest,google/cloud/dialogflow/v2/intent.proto#L941}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   /// [google.cloud.dialogflow.v2.ListIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L913}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L941}
   /// [google.cloud.dialogflow.v2.Intent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   StreamRange<google::cloud::dialogflow::v2::Intent> ListIntents(
       google::cloud::dialogflow::v2::ListIntentsRequest request,
@@ -167,12 +167,12 @@ class IntentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   /// [google.cloud.dialogflow.v2.GetIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L961}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L991}
   /// [google.cloud.dialogflow.v2.Intent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   StatusOr<google::cloud::dialogflow::v2::Intent> GetIntent(
       std::string const& name, Options opts = {});
@@ -191,12 +191,12 @@ class IntentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   /// [google.cloud.dialogflow.v2.GetIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L961}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L991}
   /// [google.cloud.dialogflow.v2.Intent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   StatusOr<google::cloud::dialogflow::v2::Intent> GetIntent(
       std::string const& name, std::string const& language_code,
@@ -206,16 +206,16 @@ class IntentsClient {
   /// Retrieves the specified intent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetIntentRequest,google/cloud/dialogflow/v2/intent.proto#L961}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetIntentRequest,google/cloud/dialogflow/v2/intent.proto#L991}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   /// [google.cloud.dialogflow.v2.GetIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L961}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L991}
   /// [google.cloud.dialogflow.v2.Intent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   StatusOr<google::cloud::dialogflow::v2::Intent> GetIntent(
       google::cloud::dialogflow::v2::GetIntentRequest const& request,
@@ -234,12 +234,12 @@ class IntentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   /// [google.cloud.dialogflow.v2.CreateIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L983}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1014}
   /// [google.cloud.dialogflow.v2.Intent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   StatusOr<google::cloud::dialogflow::v2::Intent> CreateIntent(
       std::string const& parent,
@@ -264,12 +264,12 @@ class IntentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   /// [google.cloud.dialogflow.v2.CreateIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L983}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1014}
   /// [google.cloud.dialogflow.v2.Intent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   StatusOr<google::cloud::dialogflow::v2::Intent> CreateIntent(
       std::string const& parent,
@@ -284,16 +284,16 @@ class IntentsClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateIntentRequest,google/cloud/dialogflow/v2/intent.proto#L983}
+  /// @googleapis_link{google::cloud::dialogflow::v2::CreateIntentRequest,google/cloud/dialogflow/v2/intent.proto#L1014}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   /// [google.cloud.dialogflow.v2.CreateIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L983}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1014}
   /// [google.cloud.dialogflow.v2.Intent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   StatusOr<google::cloud::dialogflow::v2::Intent> CreateIntent(
       google::cloud::dialogflow::v2::CreateIntentRequest const& request,
@@ -316,12 +316,12 @@ class IntentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   /// [google.cloud.dialogflow.v2.UpdateIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1008}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1040}
   /// [google.cloud.dialogflow.v2.Intent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   StatusOr<google::cloud::dialogflow::v2::Intent> UpdateIntent(
       google::cloud::dialogflow::v2::Intent const& intent,
@@ -346,12 +346,12 @@ class IntentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   /// [google.cloud.dialogflow.v2.UpdateIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1008}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1040}
   /// [google.cloud.dialogflow.v2.Intent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   StatusOr<google::cloud::dialogflow::v2::Intent> UpdateIntent(
       google::cloud::dialogflow::v2::Intent const& intent,
@@ -366,16 +366,16 @@ class IntentsClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateIntentRequest,google/cloud/dialogflow/v2/intent.proto#L1008}
+  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateIntentRequest,google/cloud/dialogflow/v2/intent.proto#L1040}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Intent,google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   /// [google.cloud.dialogflow.v2.UpdateIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1008}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1040}
   /// [google.cloud.dialogflow.v2.Intent]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L195}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L198}
   ///
   StatusOr<google::cloud::dialogflow::v2::Intent> UpdateIntent(
       google::cloud::dialogflow::v2::UpdateIntentRequest const& request,
@@ -396,7 +396,7 @@ class IntentsClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1027}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1061}
   ///
   Status DeleteIntent(std::string const& name, Options opts = {});
 
@@ -408,12 +408,12 @@ class IntentsClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteIntentRequest,google/cloud/dialogflow/v2/intent.proto#L1027}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteIntentRequest,google/cloud/dialogflow/v2/intent.proto#L1061}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1027}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1061}
   ///
   Status DeleteIntent(
       google::cloud::dialogflow::v2::DeleteIntentRequest const& request,
@@ -445,12 +445,12 @@ class IntentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateIntentsResponse,google/cloud/dialogflow/v2/intent.proto#L1075}
+  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateIntentsResponse,google/cloud/dialogflow/v2/intent.proto#L1111}
   ///
   /// [google.cloud.dialogflow.v2.BatchUpdateIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1039}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1073}
   /// [google.cloud.dialogflow.v2.BatchUpdateIntentsResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1075}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1111}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
   BatchUpdateIntents(std::string const& parent,
@@ -479,12 +479,12 @@ class IntentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateIntentsResponse,google/cloud/dialogflow/v2/intent.proto#L1075}
+  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateIntentsResponse,google/cloud/dialogflow/v2/intent.proto#L1111}
   ///
   /// [google.cloud.dialogflow.v2.BatchUpdateIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1039}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1073}
   /// [google.cloud.dialogflow.v2.BatchUpdateIntentsResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1075}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1111}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
   BatchUpdateIntents(
@@ -509,16 +509,16 @@ class IntentsClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateIntentsRequest,google/cloud/dialogflow/v2/intent.proto#L1039}
+  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateIntentsRequest,google/cloud/dialogflow/v2/intent.proto#L1073}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateIntentsResponse,google/cloud/dialogflow/v2/intent.proto#L1075}
+  /// @googleapis_link{google::cloud::dialogflow::v2::BatchUpdateIntentsResponse,google/cloud/dialogflow/v2/intent.proto#L1111}
   ///
   /// [google.cloud.dialogflow.v2.BatchUpdateIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1039}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1073}
   /// [google.cloud.dialogflow.v2.BatchUpdateIntentsResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1075}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1111}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateIntentsResponse>>
   BatchUpdateIntents(
@@ -553,7 +553,7 @@ class IntentsClient {
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchDeleteIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1081}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1118}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -579,14 +579,14 @@ class IntentsClient {
   /// documentation](https://cloud.google.com/dialogflow/es/docs/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::BatchDeleteIntentsRequest,google/cloud/dialogflow/v2/intent.proto#L1081}
+  /// @googleapis_link{google::cloud::dialogflow::v2::BatchDeleteIntentsRequest,google/cloud/dialogflow/v2/intent.proto#L1118}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.v2.BatchDeleteIntentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1081}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/intent.proto#L1118}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///

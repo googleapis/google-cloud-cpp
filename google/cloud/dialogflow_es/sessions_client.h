@@ -127,12 +127,12 @@ class SessionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L170}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L172}
   ///
   /// [google.cloud.dialogflow.v2.DetectIntentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L112}
   /// [google.cloud.dialogflow.v2.DetectIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L172}
   ///
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
       std::string const& session,
@@ -161,12 +161,12 @@ class SessionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L170}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L172}
   ///
   /// [google.cloud.dialogflow.v2.DetectIntentRequest]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L112}
   /// [google.cloud.dialogflow.v2.DetectIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L172}
   ///
   StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse> DetectIntent(
       google::cloud::dialogflow::v2::DetectIntentRequest const& request,
@@ -191,14 +191,14 @@ class SessionsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return A bidirectional streaming interface with request (write) type:
-  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentRequest,google/cloud/dialogflow/v2/session.proto#L412}
+  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentRequest,google/cloud/dialogflow/v2/session.proto#L418}
   /// and response (read) type:
-  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L492}
+  /// @googleapis_link{google::cloud::dialogflow::v2::StreamingDetectIntentResponse,google/cloud/dialogflow/v2/session.proto#L502}
   ///
   /// [google.cloud.dialogflow.v2.StreamingDetectIntentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L412}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L418}
   /// [google.cloud.dialogflow.v2.StreamingDetectIntentResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L492}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/session.proto#L502}
   ///
   std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
       google::cloud::dialogflow::v2::StreamingDetectIntentRequest,

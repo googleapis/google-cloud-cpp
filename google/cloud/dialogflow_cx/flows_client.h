@@ -97,12 +97,12 @@ class FlowsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L316}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L322}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> CreateFlow(
       std::string const& parent,
@@ -116,16 +116,16 @@ class FlowsClient {
   /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L316}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L322}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L316}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L322}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> CreateFlow(
       google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request,
@@ -141,7 +141,7 @@ class FlowsClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L345}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L352}
   ///
   Status DeleteFlow(std::string const& name, Options opts = {});
 
@@ -149,12 +149,12 @@ class FlowsClient {
   /// Deletes a specified flow.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L345}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L352}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L345}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L352}
   ///
   Status DeleteFlow(
       google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request,
@@ -169,12 +169,12 @@ class FlowsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListFlowsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L370}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L376}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Flow> ListFlows(
       std::string const& parent, Options opts = {});
@@ -183,16 +183,16 @@ class FlowsClient {
   /// Returns the list of all flows in the specified agent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListFlowsRequest,google/cloud/dialogflow/cx/v3/flow.proto#L370}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListFlowsRequest,google/cloud/dialogflow/cx/v3/flow.proto#L376}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListFlowsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L370}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L376}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Flow> ListFlows(
       google::cloud::dialogflow::cx::v3::ListFlowsRequest request,
@@ -207,12 +207,12 @@ class FlowsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L415}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L423}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
       std::string const& name, Options opts = {});
@@ -221,16 +221,16 @@ class FlowsClient {
   /// Retrieves the specified flow.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L415}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L423}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L415}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L423}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> GetFlow(
       google::cloud::dialogflow::cx::v3::GetFlowRequest const& request,
@@ -250,12 +250,12 @@ class FlowsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L443}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L450}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
       google::cloud::dialogflow::cx::v3::Flow const& flow,
@@ -269,16 +269,16 @@ class FlowsClient {
   /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L443}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L450}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Flow,google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L443}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L450}
   /// [google.cloud.dialogflow.cx.v3.Flow]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L247}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L250}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Flow> UpdateFlow(
       google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request,
@@ -310,7 +310,7 @@ class FlowsClient {
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.cx.v3.TrainFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L467}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L475}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -335,14 +335,14 @@ class FlowsClient {
   /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TrainFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L467}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TrainFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L475}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::protobuf::Struct,google/protobuf/struct.proto#L51}
   ///
   /// [google.cloud.dialogflow.cx.v3.TrainFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L467}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L475}
   /// [google.protobuf.Struct]:
   /// @googleapis_reference_link{google/protobuf/struct.proto#L51}
   ///
@@ -356,16 +356,16 @@ class FlowsClient {
   /// validation results.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ValidateFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L480}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ValidateFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L487}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FlowValidationResult,google/cloud/dialogflow/cx/v3/flow.proto#L512}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FlowValidationResult,google/cloud/dialogflow/cx/v3/flow.proto#L519}
   ///
   /// [google.cloud.dialogflow.cx.v3.ValidateFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L480}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L487}
   /// [google.cloud.dialogflow.cx.v3.FlowValidationResult]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L512}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L519}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
   ValidateFlow(
@@ -382,12 +382,12 @@ class FlowsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FlowValidationResult,google/cloud/dialogflow/cx/v3/flow.proto#L512}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FlowValidationResult,google/cloud/dialogflow/cx/v3/flow.proto#L519}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetFlowValidationResultRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L496}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L502}
   /// [google.cloud.dialogflow.cx.v3.FlowValidationResult]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L512}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L519}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
   GetFlowValidationResult(std::string const& name, Options opts = {});
@@ -397,16 +397,16 @@ class FlowsClient {
   /// when ValidateFlow is called.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest,google/cloud/dialogflow/cx/v3/flow.proto#L496}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest,google/cloud/dialogflow/cx/v3/flow.proto#L502}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FlowValidationResult,google/cloud/dialogflow/cx/v3/flow.proto#L512}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::FlowValidationResult,google/cloud/dialogflow/cx/v3/flow.proto#L519}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetFlowValidationResultRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L496}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L502}
   /// [google.cloud.dialogflow.cx.v3.FlowValidationResult]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L512}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L519}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
   GetFlowValidationResult(
@@ -431,16 +431,16 @@ class FlowsClient {
   /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ImportFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L531}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ImportFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L539}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ImportFlowResponse,google/cloud/dialogflow/cx/v3/flow.proto#L579}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ImportFlowResponse,google/cloud/dialogflow/cx/v3/flow.proto#L588}
   ///
   /// [google.cloud.dialogflow.cx.v3.ImportFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L531}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L539}
   /// [google.cloud.dialogflow.cx.v3.ImportFlowResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L579}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L588}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>
   ImportFlow(
@@ -463,16 +463,16 @@ class FlowsClient {
   /// references will also be exported.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ExportFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L589}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ExportFlowRequest,google/cloud/dialogflow/cx/v3/flow.proto#L599}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ExportFlowResponse,google/cloud/dialogflow/cx/v3/flow.proto#L617}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ExportFlowResponse,google/cloud/dialogflow/cx/v3/flow.proto#L626}
   ///
   /// [google.cloud.dialogflow.cx.v3.ExportFlowRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L589}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L599}
   /// [google.cloud.dialogflow.cx.v3.ExportFlowResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L617}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/flow.proto#L626}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportFlowResponse>>
   ExportFlow(

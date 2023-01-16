@@ -302,6 +302,18 @@ VmMigrationTracingConnection::DeleteTargetProject(
   return child_->DeleteTargetProject(request);
 }
 
+StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationTracingConnection::ListReplicationCycles(
+    google::cloud::vmmigration::v1::ListReplicationCyclesRequest request) {
+  return child_->ListReplicationCycles(request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationTracingConnection::GetReplicationCycle(
+    google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
+  return child_->GetReplicationCycle(request);
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

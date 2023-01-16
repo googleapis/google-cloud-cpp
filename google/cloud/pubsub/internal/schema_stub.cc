@@ -63,6 +63,54 @@ DefaultSchemaServiceStub::ListSchemas(
   return response;
 }
 
+StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
+DefaultSchemaServiceStub::ListSchemaRevisions(
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
+  google::pubsub::v1::ListSchemaRevisionsResponse response;
+  auto status =
+      grpc_stub_->ListSchemaRevisions(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::CommitSchema(
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::CommitSchemaRequest const& request) {
+  google::pubsub::v1::Schema response;
+  auto status = grpc_stub_->CommitSchema(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::pubsub::v1::Schema> DefaultSchemaServiceStub::RollbackSchema(
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::RollbackSchemaRequest const& request) {
+  google::pubsub::v1::Schema response;
+  auto status = grpc_stub_->RollbackSchema(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::pubsub::v1::Schema>
+DefaultSchemaServiceStub::DeleteSchemaRevision(
+    grpc::ClientContext& client_context,
+    google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
+  google::pubsub::v1::Schema response;
+  auto status =
+      grpc_stub_->DeleteSchemaRevision(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 Status DefaultSchemaServiceStub::DeleteSchema(
     grpc::ClientContext& client_context,
     google::pubsub::v1::DeleteSchemaRequest const& request) {

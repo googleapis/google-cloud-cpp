@@ -74,6 +74,15 @@ ConversationsMetadata::ListMessages(
   return child_->ListMessages(context, request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+ConversationsMetadata::SuggestConversationSummary(
+    grpc::ClientContext& context,
+    google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+        request) {
+  SetMetadata(context, "conversation=" + request.conversation());
+  return child_->SuggestConversationSummary(context, request);
+}
+
 void ConversationsMetadata::SetMetadata(grpc::ClientContext& context,
                                         std::string const& request_params) {
   context.AddMetadata("x-goog-request-params", request_params);

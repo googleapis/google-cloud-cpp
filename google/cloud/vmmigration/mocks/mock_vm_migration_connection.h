@@ -303,6 +303,18 @@ class MockVmMigrationConnection : public vmmigration::VmMigrationConnection {
       (google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
            request),
       (override));
+
+  MOCK_METHOD(
+      StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>,
+      ListReplicationCycles,
+      (google::cloud::vmmigration::v1::ListReplicationCyclesRequest request),
+      (override));
+
+  MOCK_METHOD(StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>,
+              GetReplicationCycle,
+              (google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
+                   request),
+              (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

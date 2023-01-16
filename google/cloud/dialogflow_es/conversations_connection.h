@@ -83,6 +83,12 @@ class ConversationsConnection {
 
   virtual StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
       google::cloud::dialogflow::v2::ListMessagesRequest request);
+
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+  SuggestConversationSummary(
+      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+          request);
 };
 
 /**

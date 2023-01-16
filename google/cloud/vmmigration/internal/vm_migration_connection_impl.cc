@@ -1239,6 +1239,54 @@ VmMigrationConnectionImpl::DeleteTargetProject(
       __func__);
 }
 
+StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationConnectionImpl::ListReplicationCycles(
+    google::cloud::vmmigration::v1::ListReplicationCyclesRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry = std::shared_ptr<vmmigration::VmMigrationRetryPolicy const>(
+      retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->ListReplicationCycles(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::vmmigration::v1::
+                       ListReplicationCyclesRequest const& request) {
+              return stub->ListReplicationCycles(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::vmmigration::v1::ListReplicationCyclesResponse r) {
+        std::vector<google::cloud::vmmigration::v1::ReplicationCycle> result(
+            r.replication_cycles().size());
+        auto& messages = *r.mutable_replication_cycles();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationConnectionImpl::GetReplicationCycle(
+    google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->GetReplicationCycle(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
+                 request) {
+        return stub_->GetReplicationCycle(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration_internal
 }  // namespace cloud

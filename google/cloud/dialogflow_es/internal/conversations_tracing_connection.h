@@ -58,6 +58,11 @@ class ConversationsTracingConnection
   StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
       google::cloud::dialogflow::v2::ListMessagesRequest request) override;
 
+  StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+  SuggestConversationSummary(
+      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+          request) override;
+
  private:
   std::shared_ptr<dialogflow_es::ConversationsConnection> child_;
 };

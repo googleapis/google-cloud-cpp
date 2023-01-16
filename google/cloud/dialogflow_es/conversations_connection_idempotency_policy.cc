@@ -60,6 +60,12 @@ Idempotency ConversationsConnectionIdempotencyPolicy::ListMessages(
   return Idempotency::kIdempotent;
 }
 
+Idempotency
+ConversationsConnectionIdempotencyPolicy::SuggestConversationSummary(
+    google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&) {
+  return Idempotency::kNonIdempotent;
+}
+
 std::unique_ptr<ConversationsConnectionIdempotencyPolicy>
 MakeDefaultConversationsConnectionIdempotencyPolicy() {
   return absl::make_unique<ConversationsConnectionIdempotencyPolicy>();

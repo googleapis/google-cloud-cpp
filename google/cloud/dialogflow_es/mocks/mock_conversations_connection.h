@@ -71,6 +71,14 @@ class MockConversationsConnection
   MOCK_METHOD(StreamRange<google::cloud::dialogflow::v2::Message>, ListMessages,
               (google::cloud::dialogflow::v2::ListMessagesRequest request),
               (override));
+
+  MOCK_METHOD(
+      StatusOr<
+          google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>,
+      SuggestConversationSummary,
+      (google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+           request),
+      (override));
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

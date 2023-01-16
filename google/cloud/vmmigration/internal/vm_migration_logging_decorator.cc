@@ -671,6 +671,33 @@ VmMigrationLogging::AsyncDeleteTargetProject(
       cq, std::move(context), request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
+VmMigrationLogging::ListReplicationCycles(
+    grpc::ClientContext& context,
+    google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
+                 request) {
+        return child_->ListReplicationCycles(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationLogging::GetReplicationCycle(
+    grpc::ClientContext& context,
+    google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
+                 request) {
+        return child_->GetReplicationCycle(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

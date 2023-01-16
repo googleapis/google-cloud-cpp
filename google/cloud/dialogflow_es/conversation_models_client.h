@@ -105,12 +105,12 @@ class ConversationModelsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L201}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L217}
   ///
   /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L420}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L462}
   /// [google.cloud.dialogflow.v2.ConversationModel]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L201}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
   CreateConversationModel(
@@ -132,16 +132,16 @@ class ConversationModelsClient {
   /// [ConversationModel][google.cloud.dialogflow.v2.ConversationModel]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L420}
+  /// @googleapis_link{google::cloud::dialogflow::v2::CreateConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L462}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L201}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L217}
   ///
   /// [google.cloud.dialogflow.v2.CreateConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L420}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L462}
   /// [google.cloud.dialogflow.v2.ConversationModel]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L201}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModel>>
   CreateConversationModel(
@@ -157,12 +157,12 @@ class ConversationModelsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L201}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L217}
   ///
   /// [google.cloud.dialogflow.v2.GetConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L431}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L474}
   /// [google.cloud.dialogflow.v2.ConversationModel]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L201}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
   ///
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
   GetConversationModel(std::string const& name, Options opts = {});
@@ -171,16 +171,16 @@ class ConversationModelsClient {
   /// Gets conversation model.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L431}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L474}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L201}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L217}
   ///
   /// [google.cloud.dialogflow.v2.GetConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L431}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L474}
   /// [google.cloud.dialogflow.v2.ConversationModel]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L201}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
   ///
   StatusOr<google::cloud::dialogflow::v2::ConversationModel>
   GetConversationModel(
@@ -195,12 +195,12 @@ class ConversationModelsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L201}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L217}
   ///
   /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L439}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L482}
   /// [google.cloud.dialogflow.v2.ConversationModel]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L201}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
   ///
   StreamRange<google::cloud::dialogflow::v2::ConversationModel>
   ListConversationModels(std::string const& parent, Options opts = {});
@@ -209,16 +209,16 @@ class ConversationModelsClient {
   /// Lists conversation models.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListConversationModelsRequest,google/cloud/dialogflow/v2/conversation_model.proto#L439}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ListConversationModelsRequest,google/cloud/dialogflow/v2/conversation_model.proto#L482}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L201}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModel,google/cloud/dialogflow/v2/conversation_model.proto#L217}
   ///
   /// [google.cloud.dialogflow.v2.ListConversationModelsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L439}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L482}
   /// [google.cloud.dialogflow.v2.ConversationModel]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L201}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L217}
   ///
   StreamRange<google::cloud::dialogflow::v2::ConversationModel>
   ListConversationModels(
@@ -242,12 +242,12 @@ class ConversationModelsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata,google/cloud/dialogflow/v2/conversation_model.proto#L602}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata,google/cloud/dialogflow/v2/conversation_model.proto#L654}
   ///
   /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L465}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L508}
   /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L602}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L654}
   ///
   future<StatusOr<
       google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
@@ -266,16 +266,16 @@ class ConversationModelsClient {
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L465}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L508}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata,google/cloud/dialogflow/v2/conversation_model.proto#L602}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata,google/cloud/dialogflow/v2/conversation_model.proto#L654}
   ///
   /// [google.cloud.dialogflow.v2.DeleteConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L465}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L508}
   /// [google.cloud.dialogflow.v2.DeleteConversationModelOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L602}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L654}
   ///
   future<StatusOr<
       google::cloud::dialogflow::v2::DeleteConversationModelOperationMetadata>>
@@ -300,16 +300,16 @@ class ConversationModelsClient {
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeployConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L473}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeployConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L516}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata,google/cloud/dialogflow/v2/conversation_model.proto#L580}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata,google/cloud/dialogflow/v2/conversation_model.proto#L628}
   ///
   /// [google.cloud.dialogflow.v2.DeployConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L473}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L516}
   /// [google.cloud.dialogflow.v2.DeployConversationModelOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L580}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L628}
   ///
   future<StatusOr<
       google::cloud::dialogflow::v2::DeployConversationModelOperationMetadata>>
@@ -335,16 +335,16 @@ class ConversationModelsClient {
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UndeployConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L481}
+  /// @googleapis_link{google::cloud::dialogflow::v2::UndeployConversationModelRequest,google/cloud/dialogflow/v2/conversation_model.proto#L524}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata,google/cloud/dialogflow/v2/conversation_model.proto#L591}
+  /// @googleapis_link{google::cloud::dialogflow::v2::UndeployConversationModelOperationMetadata,google/cloud/dialogflow/v2/conversation_model.proto#L641}
   ///
   /// [google.cloud.dialogflow.v2.UndeployConversationModelRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L481}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L524}
   /// [google.cloud.dialogflow.v2.UndeployConversationModelOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L591}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L641}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::
                       UndeployConversationModelOperationMetadata>>
@@ -363,12 +363,12 @@ class ConversationModelsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L289}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L306}
   ///
   /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L489}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L532}
   /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L289}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L306}
   ///
   StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
   GetConversationModelEvaluation(std::string const& name, Options opts = {});
@@ -377,16 +377,16 @@ class ConversationModelsClient {
   /// Gets an evaluation of conversation model.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest,google/cloud/dialogflow/v2/conversation_model.proto#L489}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest,google/cloud/dialogflow/v2/conversation_model.proto#L532}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L289}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L306}
   ///
   /// [google.cloud.dialogflow.v2.GetConversationModelEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L489}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L532}
   /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L289}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L306}
   ///
   StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
   GetConversationModelEvaluation(
@@ -402,12 +402,12 @@ class ConversationModelsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L289}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L306}
   ///
   /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L498}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L541}
   /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L289}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L306}
   ///
   StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>
   ListConversationModelEvaluations(std::string const& parent,
@@ -417,16 +417,16 @@ class ConversationModelsClient {
   /// Lists evaluations of a conversation model.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest,google/cloud/dialogflow/v2/conversation_model.proto#L498}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ListConversationModelEvaluationsRequest,google/cloud/dialogflow/v2/conversation_model.proto#L541}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L289}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L306}
   ///
   /// [google.cloud.dialogflow.v2.ListConversationModelEvaluationsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L498}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L541}
   /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L289}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L306}
   ///
   StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>
   ListConversationModelEvaluations(
@@ -445,12 +445,12 @@ class ConversationModelsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L289}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L306}
   ///
   /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L524}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L567}
   /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L289}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L306}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
   CreateConversationModelEvaluation(
@@ -463,16 +463,16 @@ class ConversationModelsClient {
   /// Creates evaluation of a conversation model.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest,google/cloud/dialogflow/v2/conversation_model.proto#L524}
+  /// @googleapis_link{google::cloud::dialogflow::v2::CreateConversationModelEvaluationRequest,google/cloud/dialogflow/v2/conversation_model.proto#L567}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L289}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationModelEvaluation,google/cloud/dialogflow/v2/conversation_model.proto#L306}
   ///
   /// [google.cloud.dialogflow.v2.CreateConversationModelEvaluationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L524}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L567}
   /// [google.cloud.dialogflow.v2.ConversationModelEvaluation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L289}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_model.proto#L306}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>>
   CreateConversationModelEvaluation(

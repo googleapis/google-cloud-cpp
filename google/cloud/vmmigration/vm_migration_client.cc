@@ -773,6 +773,39 @@ VmMigrationClient::DeleteTargetProject(
   return connection_->DeleteTargetProject(request);
 }
 
+StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationClient::ListReplicationCycles(std::string const& parent,
+                                         Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::ListReplicationCyclesRequest request;
+  request.set_parent(parent);
+  return connection_->ListReplicationCycles(request);
+}
+
+StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationClient::ListReplicationCycles(
+    google::cloud::vmmigration::v1::ListReplicationCyclesRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->ListReplicationCycles(std::move(request));
+}
+
+StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationClient::GetReplicationCycle(std::string const& name, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::vmmigration::v1::GetReplicationCycleRequest request;
+  request.set_name(name);
+  return connection_->GetReplicationCycle(request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationClient::GetReplicationCycle(
+    google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->GetReplicationCycle(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace vmmigration
 }  // namespace cloud

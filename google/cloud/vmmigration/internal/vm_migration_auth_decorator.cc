@@ -710,6 +710,25 @@ VmMigrationAuth::AsyncDeleteTargetProject(
       });
 }
 
+StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
+VmMigrationAuth::ListReplicationCycles(
+    grpc::ClientContext& context,
+    google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListReplicationCycles(context, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationAuth::GetReplicationCycle(
+    grpc::ClientContext& context,
+    google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->GetReplicationCycle(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

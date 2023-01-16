@@ -107,12 +107,12 @@ class SessionEntityTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListSessionEntityTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L163}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L173}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>
   ListSessionEntityTypes(std::string const& parent, Options opts = {});
@@ -121,16 +121,16 @@ class SessionEntityTypesClient {
   /// Returns the list of all session entity types in the specified session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L163}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListSessionEntityTypesRequest,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L173}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListSessionEntityTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L163}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L173}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::SessionEntityType>
   ListSessionEntityTypes(
@@ -157,12 +157,12 @@ class SessionEntityTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L197}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L209}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   GetSessionEntityType(std::string const& name, Options opts = {});
@@ -171,16 +171,16 @@ class SessionEntityTypesClient {
   /// Retrieves the specified session entity type.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L197}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L209}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L197}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L209}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   GetSessionEntityType(
@@ -208,12 +208,12 @@ class SessionEntityTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L214}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L227}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   CreateSessionEntityType(
@@ -226,16 +226,16 @@ class SessionEntityTypesClient {
   /// Creates a session entity type.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L214}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L227}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L214}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L227}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   CreateSessionEntityType(
@@ -264,12 +264,12 @@ class SessionEntityTypesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L233}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L248}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   UpdateSessionEntityType(
@@ -281,16 +281,16 @@ class SessionEntityTypesClient {
   /// Updates the specified session entity type.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L233}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L248}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SessionEntityType,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L233}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L248}
   /// [google.cloud.dialogflow.cx.v3.SessionEntityType]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L116}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L122}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
   UpdateSessionEntityType(
@@ -319,7 +319,7 @@ class SessionEntityTypesClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L248}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L265}
   ///
   Status DeleteSessionEntityType(std::string const& name, Options opts = {});
 
@@ -327,12 +327,12 @@ class SessionEntityTypesClient {
   /// Deletes the specified session entity type.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L248}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest,google/cloud/dialogflow/cx/v3/session_entity_type.proto#L265}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteSessionEntityTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L248}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/session_entity_type.proto#L265}
   ///
   Status DeleteSessionEntityType(
       google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&

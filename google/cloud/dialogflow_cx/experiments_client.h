@@ -90,19 +90,21 @@ class ExperimentsClient {
   /// [Environment][google.cloud.dialogflow.cx.v3.Environment].
   ///
   /// @param parent  Required. The
-  /// [Environment][google.cloud.dialogflow.cx.v3.Environment] to list all
-  /// environments for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/environments/<Environment ID>`.
+  /// [Environment][google.cloud.dialogflow.cx.v3.Environment] to
+  ///  list all environments for. Format:
+  ///  @code
+  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent
+  ///  ID>/environments/<Environment ID>
+  ///  @endcode
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListExperimentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L396}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L405}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Experiment> ListExperiments(
       std::string const& parent, Options opts = {});
@@ -112,16 +114,16 @@ class ExperimentsClient {
   /// [Environment][google.cloud.dialogflow.cx.v3.Environment].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListExperimentsRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L396}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListExperimentsRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L405}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListExperimentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L396}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L405}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Experiment> ListExperiments(
       google::cloud::dialogflow::cx::v3::ListExperimentsRequest request,
@@ -132,18 +134,18 @@ class ExperimentsClient {
   /// [Experiment][google.cloud.dialogflow.cx.v3.Experiment].
   ///
   /// @param name  Required. The name of the
-  /// [Environment][google.cloud.dialogflow.cx.v3.Environment].
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+  ///  [Environment][google.cloud.dialogflow.cx.v3.Environment]. Format:
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent
   ///  ID>/environments/<Environment ID>/experiments/<Experiment ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L429}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L441}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> GetExperiment(
       std::string const& name, Options opts = {});
@@ -153,16 +155,16 @@ class ExperimentsClient {
   /// [Experiment][google.cloud.dialogflow.cx.v3.Experiment].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetExperimentRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L429}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetExperimentRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L441}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L429}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L441}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> GetExperiment(
       google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request,
@@ -173,19 +175,20 @@ class ExperimentsClient {
   /// specified [Environment][google.cloud.dialogflow.cx.v3.Environment].
   ///
   /// @param parent  Required. The [Agent][google.cloud.dialogflow.cx.v3.Agent]
-  /// to create an [Environment][google.cloud.dialogflow.cx.v3.Environment] for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+  /// to create an
+  ///  [Environment][google.cloud.dialogflow.cx.v3.Environment] for. Format:
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent
   ///  ID>/environments/<Environment ID>`.
   /// @param experiment  Required. The experiment to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L442}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L456}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> CreateExperiment(
       std::string const& parent,
@@ -197,16 +200,16 @@ class ExperimentsClient {
   /// specified [Environment][google.cloud.dialogflow.cx.v3.Environment].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateExperimentRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L442}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateExperimentRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L456}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L442}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L456}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> CreateExperiment(
       google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request,
@@ -222,12 +225,12 @@ class ExperimentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L458}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L474}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> UpdateExperiment(
       google::cloud::dialogflow::cx::v3::Experiment const& experiment,
@@ -238,16 +241,16 @@ class ExperimentsClient {
   /// [Experiment][google.cloud.dialogflow.cx.v3.Experiment].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateExperimentRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L458}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateExperimentRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L474}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L458}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L474}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> UpdateExperiment(
       google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request,
@@ -258,14 +261,14 @@ class ExperimentsClient {
   /// [Experiment][google.cloud.dialogflow.cx.v3.Experiment].
   ///
   /// @param name  Required. The name of the
-  /// [Environment][google.cloud.dialogflow.cx.v3.Environment] to delete.
+  ///  [Environment][google.cloud.dialogflow.cx.v3.Environment] to delete.
   ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
   ///  ID>/environments/<Environment ID>/experiments/<Experiment ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L467}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L485}
   ///
   Status DeleteExperiment(std::string const& name, Options opts = {});
 
@@ -274,12 +277,12 @@ class ExperimentsClient {
   /// [Experiment][google.cloud.dialogflow.cx.v3.Experiment].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteExperimentRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L467}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteExperimentRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L485}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L467}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L485}
   ///
   Status DeleteExperiment(
       google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request,
@@ -296,12 +299,12 @@ class ExperimentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   /// [google.cloud.dialogflow.cx.v3.StartExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L480}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L500}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StartExperiment(
       std::string const& name, Options opts = {});
@@ -312,16 +315,16 @@ class ExperimentsClient {
   /// changes the state of experiment from PENDING to RUNNING.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::StartExperimentRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L480}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::StartExperimentRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L500}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   /// [google.cloud.dialogflow.cx.v3.StartExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L480}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L500}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StartExperiment(
       google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request,
@@ -338,12 +341,12 @@ class ExperimentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   /// [google.cloud.dialogflow.cx.v3.StopExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L493}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L514}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StopExperiment(
       std::string const& name, Options opts = {});
@@ -354,16 +357,16 @@ class ExperimentsClient {
   /// changes the state of experiment from RUNNING to DONE.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::StopExperimentRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L493}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::StopExperimentRequest,google/cloud/dialogflow/cx/v3/experiment.proto#L514}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Experiment,google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   /// [google.cloud.dialogflow.cx.v3.StopExperimentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L493}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L514}
   /// [google.cloud.dialogflow.cx.v3.Experiment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L108}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/experiment.proto#L116}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Experiment> StopExperiment(
       google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request,

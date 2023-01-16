@@ -652,6 +652,33 @@ DefaultVmMigrationStub::AsyncDeleteTargetProject(
       request, std::move(context));
 }
 
+StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
+DefaultVmMigrationStub::ListReplicationCycles(
+    grpc::ClientContext& client_context,
+    google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
+        request) {
+  google::cloud::vmmigration::v1::ListReplicationCyclesResponse response;
+  auto status =
+      grpc_stub_->ListReplicationCycles(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+DefaultVmMigrationStub::GetReplicationCycle(
+    grpc::ClientContext& client_context,
+    google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
+  google::cloud::vmmigration::v1::ReplicationCycle response;
+  auto status =
+      grpc_stub_->GetReplicationCycle(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultVmMigrationStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

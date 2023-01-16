@@ -129,6 +129,25 @@ class AssetServiceStub {
       google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
           request) = 0;
 
+  virtual StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
+  AnalyzeOrgPolicies(
+      grpc::ClientContext& context,
+      google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
+  AnalyzeOrgPolicyGovernedContainers(
+      grpc::ClientContext& context,
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
+          request) = 0;
+
+  virtual StatusOr<
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
+  AnalyzeOrgPolicyGovernedAssets(
+      grpc::ClientContext& context,
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -243,6 +262,23 @@ class DefaultAssetServiceStub : public AssetServiceStub {
   BatchGetEffectiveIamPolicies(
       grpc::ClientContext& client_context,
       google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
+  AnalyzeOrgPolicies(grpc::ClientContext& client_context,
+                     google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const&
+                         request) override;
+
+  StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
+  AnalyzeOrgPolicyGovernedContainers(
+      grpc::ClientContext& client_context,
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
+          request) override;
+
+  StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
+  AnalyzeOrgPolicyGovernedAssets(
+      grpc::ClientContext& client_context,
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
           request) override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

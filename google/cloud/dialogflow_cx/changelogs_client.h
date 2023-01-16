@@ -91,12 +91,12 @@ class ChangelogsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Changelog,google/cloud/dialogflow/cx/v3/changelog.proto#L125}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Changelog,google/cloud/dialogflow/cx/v3/changelog.proto#L128}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListChangelogsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L59}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L60}
   /// [google.cloud.dialogflow.cx.v3.Changelog]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L125}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L128}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Changelog> ListChangelogs(
       std::string const& parent, Options opts = {});
@@ -105,16 +105,16 @@ class ChangelogsClient {
   /// Returns the list of Changelogs.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListChangelogsRequest,google/cloud/dialogflow/cx/v3/changelog.proto#L59}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListChangelogsRequest,google/cloud/dialogflow/cx/v3/changelog.proto#L60}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Changelog,google/cloud/dialogflow/cx/v3/changelog.proto#L125}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Changelog,google/cloud/dialogflow/cx/v3/changelog.proto#L128}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListChangelogsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L59}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L60}
   /// [google.cloud.dialogflow.cx.v3.Changelog]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L125}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L128}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Changelog> ListChangelogs(
       google::cloud::dialogflow::cx::v3::ListChangelogsRequest request,
@@ -129,12 +129,12 @@ class ChangelogsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Changelog,google/cloud/dialogflow/cx/v3/changelog.proto#L125}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Changelog,google/cloud/dialogflow/cx/v3/changelog.proto#L128}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetChangelogRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L112}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L115}
   /// [google.cloud.dialogflow.cx.v3.Changelog]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L125}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L128}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Changelog> GetChangelog(
       std::string const& name, Options opts = {});
@@ -143,16 +143,16 @@ class ChangelogsClient {
   /// Retrieves the specified Changelog.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetChangelogRequest,google/cloud/dialogflow/cx/v3/changelog.proto#L112}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetChangelogRequest,google/cloud/dialogflow/cx/v3/changelog.proto#L115}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Changelog,google/cloud/dialogflow/cx/v3/changelog.proto#L125}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Changelog,google/cloud/dialogflow/cx/v3/changelog.proto#L128}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetChangelogRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L112}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L115}
   /// [google.cloud.dialogflow.cx.v3.Changelog]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L125}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/changelog.proto#L128}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Changelog> GetChangelog(
       google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request,

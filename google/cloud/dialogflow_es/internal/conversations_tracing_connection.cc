@@ -61,6 +61,13 @@ ConversationsTracingConnection::ListMessages(
   return child_->ListMessages(request);
 }
 
+StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+ConversationsTracingConnection::SuggestConversationSummary(
+    google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+        request) {
+  return child_->SuggestConversationSummary(request);
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

@@ -136,6 +136,23 @@ class AssetServiceConnection {
   BatchGetEffectiveIamPolicies(
       google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
           request);
+
+  virtual StreamRange<
+      google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
+  AnalyzeOrgPolicies(
+      google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request);
+
+  virtual StreamRange<
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::
+          GovernedContainer>
+  AnalyzeOrgPolicyGovernedContainers(
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest
+          request);
+
+  virtual StreamRange<google::cloud::asset::v1::
+                          AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>
+  AnalyzeOrgPolicyGovernedAssets(
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request);
 };
 
 /**

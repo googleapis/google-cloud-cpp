@@ -409,6 +409,121 @@ AssetServiceConnectionImpl::BatchGetEffectiveIamPolicies(
       request, __func__);
 }
 
+StreamRange<
+    google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
+AssetServiceConnectionImpl::AnalyzeOrgPolicies(
+    google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency = idempotency_policy()->AnalyzeOrgPolicies(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const&
+                       request) {
+              return stub->AnalyzeOrgPolicies(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::asset::v1::AnalyzeOrgPoliciesResponse r) {
+        std::vector<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::
+                        OrgPolicyResult>
+            result(r.org_policy_results().size());
+        auto& messages = *r.mutable_org_policy_results();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::cloud::asset::v1::
+                AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
+AssetServiceConnectionImpl::AnalyzeOrgPolicyGovernedContainers(
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest
+        request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency =
+      idempotency_policy()->AnalyzeOrgPolicyGovernedContainers(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<StreamRange<
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::
+          GovernedContainer>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency,
+       function_name](google::cloud::asset::v1::
+                          AnalyzeOrgPolicyGovernedContainersRequest const& r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](
+                grpc::ClientContext& context,
+                google::cloud::asset::v1::
+                    AnalyzeOrgPolicyGovernedContainersRequest const& request) {
+              return stub->AnalyzeOrgPolicyGovernedContainers(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse
+             r) {
+        std::vector<
+            google::cloud::asset::v1::
+                AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
+            result(r.governed_containers().size());
+        auto& messages = *r.mutable_governed_containers();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
+StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
+                GovernedAsset>
+AssetServiceConnectionImpl::AnalyzeOrgPolicyGovernedAssets(
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request) {
+  request.clear_page_token();
+  auto& stub = stub_;
+  auto retry =
+      std::shared_ptr<asset::AssetServiceRetryPolicy const>(retry_policy());
+  auto backoff = std::shared_ptr<BackoffPolicy const>(backoff_policy());
+  auto idempotency =
+      idempotency_policy()->AnalyzeOrgPolicyGovernedAssets(request);
+  char const* function_name = __func__;
+  return google::cloud::internal::MakePaginationRange<
+      StreamRange<google::cloud::asset::v1::
+                      AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>>(
+      std::move(request),
+      [stub, retry, backoff, idempotency, function_name](
+          google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
+              r) {
+        return google::cloud::internal::RetryLoop(
+            retry->clone(), backoff->clone(), idempotency,
+            [stub](grpc::ClientContext& context,
+                   google::cloud::asset::v1::
+                       AnalyzeOrgPolicyGovernedAssetsRequest const& request) {
+              return stub->AnalyzeOrgPolicyGovernedAssets(context, request);
+            },
+            r, function_name);
+      },
+      [](google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse r) {
+        std::vector<google::cloud::asset::v1::
+                        AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>
+            result(r.governed_assets().size());
+        auto& messages = *r.mutable_governed_assets();
+        std::move(messages.begin(), messages.end(), result.begin());
+        return result;
+      });
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset_internal
 }  // namespace cloud

@@ -294,6 +294,72 @@ AssetServiceClient::BatchGetEffectiveIamPolicies(
   return connection_->BatchGetEffectiveIamPolicies(request);
 }
 
+StreamRange<
+    google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
+AssetServiceClient::AnalyzeOrgPolicies(std::string const& scope,
+                                       std::string const& constraint,
+                                       std::string const& filter,
+                                       Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request;
+  request.set_scope(scope);
+  request.set_constraint(constraint);
+  request.set_filter(filter);
+  return connection_->AnalyzeOrgPolicies(request);
+}
+
+StreamRange<
+    google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
+AssetServiceClient::AnalyzeOrgPolicies(
+    google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AnalyzeOrgPolicies(std::move(request));
+}
+
+StreamRange<google::cloud::asset::v1::
+                AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
+AssetServiceClient::AnalyzeOrgPolicyGovernedContainers(
+    std::string const& scope, std::string const& constraint,
+    std::string const& filter, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest request;
+  request.set_scope(scope);
+  request.set_constraint(constraint);
+  request.set_filter(filter);
+  return connection_->AnalyzeOrgPolicyGovernedContainers(request);
+}
+
+StreamRange<google::cloud::asset::v1::
+                AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
+AssetServiceClient::AnalyzeOrgPolicyGovernedContainers(
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AnalyzeOrgPolicyGovernedContainers(std::move(request));
+}
+
+StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
+                GovernedAsset>
+AssetServiceClient::AnalyzeOrgPolicyGovernedAssets(
+    std::string const& scope, std::string const& constraint,
+    std::string const& filter, Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request;
+  request.set_scope(scope);
+  request.set_constraint(constraint);
+  request.set_filter(filter);
+  return connection_->AnalyzeOrgPolicyGovernedAssets(request);
+}
+
+StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
+                GovernedAsset>
+AssetServiceClient::AnalyzeOrgPolicyGovernedAssets(
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->AnalyzeOrgPolicyGovernedAssets(std::move(request));
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace asset
 }  // namespace cloud

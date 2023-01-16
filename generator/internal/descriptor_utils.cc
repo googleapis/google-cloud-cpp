@@ -501,6 +501,33 @@ std::string FormatClassCommentsFromServiceComments(
   return absl::StrReplaceAll(doxygen_formatted_comments, {{"///  ", "/// "}});
 }
 
+auto constexpr kDialogflowCXEnvironmentIdProto1 = R"""(
+ list all environments for. Format: `projects/<Project
+ ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment
+ ID>`.
+)""";
+
+auto constexpr kDialogflowCXEnvironmentIdCpp1 = R"""(
+ list all environments for. Format:
+
+ @code
+ projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>
+ @endcode
+)""";
+
+auto constexpr kDialogflowCXEnvironmentIdProto2 = R"""(
+ Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+ ID>/environments/<Environment ID>`.
+)""";
+
+auto constexpr kDialogflowCXEnvironmentIdCpp2 = R"""(
+ Format:
+
+ @code
+ projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>
+ @endcode
+)""";
+
 auto constexpr kDialogflowCXSessionIdProto = R"""(
  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
  ID>/sessions/<Session ID>` or `projects/<Project ID>/locations/<Location
@@ -518,6 +545,20 @@ auto constexpr kDialogflowCXSessionIdCpp = R"""(
 
  @code
  projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment ID>/sessions/<Session ID>
+ @endcode
+)""";
+
+auto constexpr kDialogflowCXTransitionRouteGroupIdProto = R"""(
+ to delete. Format: `projects/<Project ID>/locations/<Location
+ ID>/agents/<Agent ID>/flows/<Flow ID>/transitionRouteGroups/<Transition
+ Route Group ID>`.
+)""";
+
+auto constexpr kDialogflowCXTransitionRouteGroupIdCpp = R"""(
+ to delete. Format:
+
+ @code
+ projects/<Project ID>/locations/<Location ID>/agents/<Agent ID>/flows/<Flow ID>/transitionRouteGroups/<Transition Route Group ID>
  @endcode
 )""";
 
@@ -614,7 +655,11 @@ std::string FormatApiMethodSignatureParameters(
     parameter_descriptor->GetSourceLocation(&loc);
     auto comment = absl::StrReplaceAll(
         loc.leading_comments,
-        {{kDialogflowCXSessionIdProto, kDialogflowCXSessionIdCpp},
+        {{kDialogflowCXEnvironmentIdProto1, kDialogflowCXEnvironmentIdCpp1},
+         {kDialogflowCXEnvironmentIdProto2, kDialogflowCXEnvironmentIdCpp2},
+         {kDialogflowCXSessionIdProto, kDialogflowCXSessionIdCpp},
+         {kDialogflowCXTransitionRouteGroupIdProto,
+          kDialogflowCXTransitionRouteGroupIdCpp},
          {kDialogflowCXEntityTypeIdProto, kDialogflowCXEntityTypeIdCpp},
          {kDialogflowESSessionIdProto, kDialogflowESSessionIdCpp},
          {kDialogflowESContextIdProto, kDialogflowESContextIdCpp},

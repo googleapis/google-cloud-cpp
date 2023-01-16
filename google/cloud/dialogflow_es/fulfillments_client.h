@@ -95,7 +95,7 @@ class FulfillmentsClient {
   /// @googleapis_link{google::cloud::dialogflow::v2::Fulfillment,google/cloud/dialogflow/v2/fulfillment.proto#L75}
   ///
   /// [google.cloud.dialogflow.v2.GetFulfillmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L158}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L161}
   /// [google.cloud.dialogflow.v2.Fulfillment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
   ///
@@ -106,14 +106,14 @@ class FulfillmentsClient {
   /// Retrieves the fulfillment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetFulfillmentRequest,google/cloud/dialogflow/v2/fulfillment.proto#L158}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetFulfillmentRequest,google/cloud/dialogflow/v2/fulfillment.proto#L161}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Fulfillment,google/cloud/dialogflow/v2/fulfillment.proto#L75}
   ///
   /// [google.cloud.dialogflow.v2.GetFulfillmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L158}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L161}
   /// [google.cloud.dialogflow.v2.Fulfillment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
   ///
@@ -134,7 +134,7 @@ class FulfillmentsClient {
   /// @googleapis_link{google::cloud::dialogflow::v2::Fulfillment,google/cloud/dialogflow/v2/fulfillment.proto#L75}
   ///
   /// [google.cloud.dialogflow.v2.UpdateFulfillmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L174}
   /// [google.cloud.dialogflow.v2.Fulfillment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
   ///
@@ -146,14 +146,14 @@ class FulfillmentsClient {
   /// Updates the fulfillment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateFulfillmentRequest,google/cloud/dialogflow/v2/fulfillment.proto#L170}
+  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateFulfillmentRequest,google/cloud/dialogflow/v2/fulfillment.proto#L174}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Fulfillment,google/cloud/dialogflow/v2/fulfillment.proto#L75}
   ///
   /// [google.cloud.dialogflow.v2.UpdateFulfillmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L174}
   /// [google.cloud.dialogflow.v2.Fulfillment]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/fulfillment.proto#L75}
   ///

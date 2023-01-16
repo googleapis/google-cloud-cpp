@@ -227,6 +227,35 @@ AssetServiceAuth::BatchGetEffectiveIamPolicies(
   return child_->BatchGetEffectiveIamPolicies(context, request);
 }
 
+StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
+AssetServiceAuth::AnalyzeOrgPolicies(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AnalyzeOrgPolicies(context, request);
+}
+
+StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
+AssetServiceAuth::AnalyzeOrgPolicyGovernedContainers(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AnalyzeOrgPolicyGovernedContainers(context, request);
+}
+
+StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
+AssetServiceAuth::AnalyzeOrgPolicyGovernedAssets(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
+        request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->AnalyzeOrgPolicyGovernedAssets(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceAuth::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,
