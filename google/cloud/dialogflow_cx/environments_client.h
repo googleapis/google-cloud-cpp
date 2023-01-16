@@ -330,8 +330,11 @@ class EnvironmentsClient {
   ///
   /// @param name  Required. Resource name of the environment to look up the
   /// history for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/environments/<Environment ID>`.
+  ///  Format:
+  ///  @code
+  ///  projects/<Project ID>/locations/<Location ID>/agents/<Agent
+  ///  ID>/environments/<Environment ID>
+  ///  @endcode
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
