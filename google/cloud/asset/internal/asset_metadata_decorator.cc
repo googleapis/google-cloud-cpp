@@ -196,6 +196,32 @@ AssetServiceMetadata::BatchGetEffectiveIamPolicies(
   return child_->BatchGetEffectiveIamPolicies(context, request);
 }
 
+StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
+AssetServiceMetadata::AnalyzeOrgPolicies(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
+  SetMetadata(context, "scope=" + request.scope());
+  return child_->AnalyzeOrgPolicies(context, request);
+}
+
+StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
+AssetServiceMetadata::AnalyzeOrgPolicyGovernedContainers(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
+        request) {
+  SetMetadata(context, "scope=" + request.scope());
+  return child_->AnalyzeOrgPolicyGovernedContainers(context, request);
+}
+
+StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
+AssetServiceMetadata::AnalyzeOrgPolicyGovernedAssets(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
+        request) {
+  SetMetadata(context, "scope=" + request.scope());
+  return child_->AnalyzeOrgPolicyGovernedAssets(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

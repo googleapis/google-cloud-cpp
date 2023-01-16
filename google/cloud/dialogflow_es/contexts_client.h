@@ -94,12 +94,12 @@ class ContextsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L171}
   ///
   /// [google.cloud.dialogflow.v2.ListContextsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L224}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L227}
   /// [google.cloud.dialogflow.v2.Context]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
   ///
   StreamRange<google::cloud::dialogflow::v2::Context> ListContexts(
       std::string const& parent, Options opts = {});
@@ -108,16 +108,16 @@ class ContextsClient {
   /// Returns the list of all contexts in the specified session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListContextsRequest,google/cloud/dialogflow/v2/context.proto#L224}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ListContextsRequest,google/cloud/dialogflow/v2/context.proto#L227}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L171}
   ///
   /// [google.cloud.dialogflow.v2.ListContextsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L224}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L227}
   /// [google.cloud.dialogflow.v2.Context]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
   ///
   StreamRange<google::cloud::dialogflow::v2::Context> ListContexts(
       google::cloud::dialogflow::v2::ListContextsRequest request,
@@ -140,12 +140,12 @@ class ContextsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L171}
   ///
   /// [google.cloud.dialogflow.v2.GetContextRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L258}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L263}
   /// [google.cloud.dialogflow.v2.Context]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
   ///
   StatusOr<google::cloud::dialogflow::v2::Context> GetContext(
       std::string const& name, Options opts = {});
@@ -154,16 +154,16 @@ class ContextsClient {
   /// Retrieves the specified context.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetContextRequest,google/cloud/dialogflow/v2/context.proto#L258}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetContextRequest,google/cloud/dialogflow/v2/context.proto#L263}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L171}
   ///
   /// [google.cloud.dialogflow.v2.GetContextRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L258}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L263}
   /// [google.cloud.dialogflow.v2.Context]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
   ///
   StatusOr<google::cloud::dialogflow::v2::Context> GetContext(
       google::cloud::dialogflow::v2::GetContextRequest const& request,
@@ -184,12 +184,12 @@ class ContextsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L171}
   ///
   /// [google.cloud.dialogflow.v2.CreateContextRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L274}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L280}
   /// [google.cloud.dialogflow.v2.Context]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
   ///
   StatusOr<google::cloud::dialogflow::v2::Context> CreateContext(
       std::string const& parent,
@@ -201,16 +201,16 @@ class ContextsClient {
   /// If the specified context already exists, overrides the context.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateContextRequest,google/cloud/dialogflow/v2/context.proto#L274}
+  /// @googleapis_link{google::cloud::dialogflow::v2::CreateContextRequest,google/cloud/dialogflow/v2/context.proto#L280}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L171}
   ///
   /// [google.cloud.dialogflow.v2.CreateContextRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L274}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L280}
   /// [google.cloud.dialogflow.v2.Context]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
   ///
   StatusOr<google::cloud::dialogflow::v2::Context> CreateContext(
       google::cloud::dialogflow::v2::CreateContextRequest const& request,
@@ -225,12 +225,12 @@ class ContextsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L171}
   ///
   /// [google.cloud.dialogflow.v2.UpdateContextRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L293}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L300}
   /// [google.cloud.dialogflow.v2.Context]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
   ///
   StatusOr<google::cloud::dialogflow::v2::Context> UpdateContext(
       google::cloud::dialogflow::v2::Context const& context,
@@ -240,16 +240,16 @@ class ContextsClient {
   /// Updates the specified context.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateContextRequest,google/cloud/dialogflow/v2/context.proto#L293}
+  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateContextRequest,google/cloud/dialogflow/v2/context.proto#L300}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Context,google/cloud/dialogflow/v2/context.proto#L171}
   ///
   /// [google.cloud.dialogflow.v2.UpdateContextRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L293}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L300}
   /// [google.cloud.dialogflow.v2.Context]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L170}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L171}
   ///
   StatusOr<google::cloud::dialogflow::v2::Context> UpdateContext(
       google::cloud::dialogflow::v2::UpdateContextRequest const& request,
@@ -273,7 +273,7 @@ class ContextsClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteContextRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L302}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L311}
   ///
   Status DeleteContext(std::string const& name, Options opts = {});
 
@@ -281,12 +281,12 @@ class ContextsClient {
   /// Deletes the specified context.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteContextRequest,google/cloud/dialogflow/v2/context.proto#L302}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteContextRequest,google/cloud/dialogflow/v2/context.proto#L311}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteContextRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L302}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L311}
   ///
   Status DeleteContext(
       google::cloud::dialogflow::v2::DeleteContextRequest const& request,
@@ -311,7 +311,7 @@ class ContextsClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteAllContextsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L318}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L328}
   ///
   Status DeleteAllContexts(std::string const& parent, Options opts = {});
 
@@ -319,12 +319,12 @@ class ContextsClient {
   /// Deletes all active contexts in the specified session.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteAllContextsRequest,google/cloud/dialogflow/v2/context.proto#L318}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteAllContextsRequest,google/cloud/dialogflow/v2/context.proto#L328}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteAllContextsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L318}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/context.proto#L328}
   ///
   Status DeleteAllContexts(
       google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request,

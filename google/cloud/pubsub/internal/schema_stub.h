@@ -45,6 +45,23 @@ class SchemaServiceStub {
       grpc::ClientContext& context,
       google::pubsub::v1::ListSchemasRequest const& request) = 0;
 
+  virtual StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
+  ListSchemaRevisions(
+      grpc::ClientContext& context,
+      google::pubsub::v1::ListSchemaRevisionsRequest const& request) = 0;
+
+  virtual StatusOr<google::pubsub::v1::Schema> CommitSchema(
+      grpc::ClientContext& context,
+      google::pubsub::v1::CommitSchemaRequest const& request) = 0;
+
+  virtual StatusOr<google::pubsub::v1::Schema> RollbackSchema(
+      grpc::ClientContext& context,
+      google::pubsub::v1::RollbackSchemaRequest const& request) = 0;
+
+  virtual StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
+      grpc::ClientContext& context,
+      google::pubsub::v1::DeleteSchemaRevisionRequest const& request) = 0;
+
   virtual Status DeleteSchema(
       grpc::ClientContext& context,
       google::pubsub::v1::DeleteSchemaRequest const& request) = 0;
@@ -76,6 +93,22 @@ class DefaultSchemaServiceStub : public SchemaServiceStub {
   StatusOr<google::pubsub::v1::ListSchemasResponse> ListSchemas(
       grpc::ClientContext& client_context,
       google::pubsub::v1::ListSchemasRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse> ListSchemaRevisions(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::ListSchemaRevisionsRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::Schema> CommitSchema(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::CommitSchemaRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::Schema> RollbackSchema(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::RollbackSchemaRequest const& request) override;
+
+  StatusOr<google::pubsub::v1::Schema> DeleteSchemaRevision(
+      grpc::ClientContext& client_context,
+      google::pubsub::v1::DeleteSchemaRevisionRequest const& request) override;
 
   Status DeleteSchema(
       grpc::ClientContext& client_context,

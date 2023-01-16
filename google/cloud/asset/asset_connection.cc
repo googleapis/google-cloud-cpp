@@ -161,6 +161,35 @@ AssetServiceConnection::BatchGetEffectiveIamPolicies(
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 
+StreamRange<
+    google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
+AssetServiceConnection::AnalyzeOrgPolicies(
+    google::cloud::asset::v1::
+        AnalyzeOrgPoliciesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>>();
+}
+
+StreamRange<google::cloud::asset::v1::
+                AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
+AssetServiceConnection::AnalyzeOrgPolicyGovernedContainers(
+    google::cloud::asset::v1::
+        AnalyzeOrgPolicyGovernedContainersRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<StreamRange<
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse::
+          GovernedContainer>>();
+}
+
+StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
+                GovernedAsset>
+AssetServiceConnection::AnalyzeOrgPolicyGovernedAssets(
+    google::cloud::asset::v1::
+        AnalyzeOrgPolicyGovernedAssetsRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::asset::v1::
+                      AnalyzeOrgPolicyGovernedAssetsResponse::GovernedAsset>>();
+}
+
 std::shared_ptr<AssetServiceConnection> MakeAssetServiceConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

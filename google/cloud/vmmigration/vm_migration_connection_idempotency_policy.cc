@@ -256,6 +256,16 @@ Idempotency VmMigrationConnectionIdempotencyPolicy::DeleteTargetProject(
   return Idempotency::kNonIdempotent;
 }
 
+Idempotency VmMigrationConnectionIdempotencyPolicy::ListReplicationCycles(
+    google::cloud::vmmigration::v1::ListReplicationCyclesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency VmMigrationConnectionIdempotencyPolicy::GetReplicationCycle(
+    google::cloud::vmmigration::v1::GetReplicationCycleRequest const&) {
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<VmMigrationConnectionIdempotencyPolicy>
 MakeDefaultVmMigrationConnectionIdempotencyPolicy() {
   return absl::make_unique<VmMigrationConnectionIdempotencyPolicy>();

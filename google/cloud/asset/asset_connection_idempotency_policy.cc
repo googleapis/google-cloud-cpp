@@ -137,6 +137,25 @@ AssetServiceConnectionIdempotencyPolicy::BatchGetEffectiveIamPolicies(
   return Idempotency::kIdempotent;
 }
 
+Idempotency AssetServiceConnectionIdempotencyPolicy::AnalyzeOrgPolicies(
+    google::cloud::asset::v1::AnalyzeOrgPoliciesRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+AssetServiceConnectionIdempotencyPolicy::AnalyzeOrgPolicyGovernedContainers(
+    google::cloud::asset::v1::
+        AnalyzeOrgPolicyGovernedContainersRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
+Idempotency
+AssetServiceConnectionIdempotencyPolicy::AnalyzeOrgPolicyGovernedAssets(
+    google::cloud::asset::v1::
+        AnalyzeOrgPolicyGovernedAssetsRequest) {  // NOLINT
+  return Idempotency::kIdempotent;
+}
+
 std::unique_ptr<AssetServiceConnectionIdempotencyPolicy>
 MakeDefaultAssetServiceConnectionIdempotencyPolicy() {
   return absl::make_unique<AssetServiceConnectionIdempotencyPolicy>();

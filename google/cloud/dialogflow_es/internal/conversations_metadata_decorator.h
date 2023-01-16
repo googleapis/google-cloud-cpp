@@ -60,6 +60,12 @@ class ConversationsMetadata : public ConversationsStub {
       google::cloud::dialogflow::v2::ListMessagesRequest const& request)
       override;
 
+  StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+  SuggestConversationSummary(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+          request) override;
+
  private:
   void SetMetadata(grpc::ClientContext& context,
                    std::string const& request_params);

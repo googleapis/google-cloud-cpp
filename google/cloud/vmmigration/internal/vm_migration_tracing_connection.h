@@ -227,6 +227,16 @@ class VmMigrationTracingConnection : public vmmigration::VmMigrationConnection {
       google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request)
       override;
 
+  StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
+  ListReplicationCycles(
+      google::cloud::vmmigration::v1::ListReplicationCyclesRequest request)
+      override;
+
+  StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+  GetReplicationCycle(
+      google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request)
+      override;
+
  private:
   std::shared_ptr<vmmigration::VmMigrationConnection> child_;
 };

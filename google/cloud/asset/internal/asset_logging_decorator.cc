@@ -282,6 +282,48 @@ AssetServiceLogging::BatchGetEffectiveIamPolicies(
       context, request, __func__, tracing_options_);
 }
 
+StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
+AssetServiceLogging::AnalyzeOrgPolicies(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
+        return child_->AnalyzeOrgPolicies(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
+AssetServiceLogging::AnalyzeOrgPolicyGovernedContainers(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](grpc::ClientContext& context,
+             google::cloud::asset::v1::
+                 AnalyzeOrgPolicyGovernedContainersRequest const& request) {
+        return child_->AnalyzeOrgPolicyGovernedContainers(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
+StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
+AssetServiceLogging::AnalyzeOrgPolicyGovernedAssets(
+    grpc::ClientContext& context,
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
+        request) {
+  return google::cloud::internal::LogWrapper(
+      [this](
+          grpc::ClientContext& context,
+          google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
+              request) {
+        return child_->AnalyzeOrgPolicyGovernedAssets(context, request);
+      },
+      context, request, __func__, tracing_options_);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 AssetServiceLogging::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

@@ -53,6 +53,10 @@ class ConversationsConnectionIdempotencyPolicy {
 
   virtual google::cloud::Idempotency ListMessages(
       google::cloud::dialogflow::v2::ListMessagesRequest request);
+
+  virtual google::cloud::Idempotency SuggestConversationSummary(
+      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+          request);
 };
 
 std::unique_ptr<ConversationsConnectionIdempotencyPolicy>

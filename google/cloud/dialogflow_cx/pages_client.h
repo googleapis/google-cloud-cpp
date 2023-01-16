@@ -94,7 +94,7 @@ class PagesClient {
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Page,google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListPagesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L379}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L405}
   /// [google.cloud.dialogflow.cx.v3.Page]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
@@ -105,14 +105,14 @@ class PagesClient {
   /// Returns the list of all pages in the specified flow.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListPagesRequest,google/cloud/dialogflow/cx/v3/page.proto#L379}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListPagesRequest,google/cloud/dialogflow/cx/v3/page.proto#L405}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Page,google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListPagesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L379}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L405}
   /// [google.cloud.dialogflow.cx.v3.Page]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
@@ -132,7 +132,7 @@ class PagesClient {
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Page,google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetPageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L433}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L461}
   /// [google.cloud.dialogflow.cx.v3.Page]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
@@ -143,14 +143,14 @@ class PagesClient {
   /// Retrieves the specified page.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetPageRequest,google/cloud/dialogflow/cx/v3/page.proto#L433}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetPageRequest,google/cloud/dialogflow/cx/v3/page.proto#L461}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Page,google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetPageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L433}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L461}
   /// [google.cloud.dialogflow.cx.v3.Page]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
@@ -175,7 +175,7 @@ class PagesClient {
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Page,google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreatePageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L469}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L496}
   /// [google.cloud.dialogflow.cx.v3.Page]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
@@ -191,14 +191,14 @@ class PagesClient {
   /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreatePageRequest,google/cloud/dialogflow/cx/v3/page.proto#L469}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreatePageRequest,google/cloud/dialogflow/cx/v3/page.proto#L496}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Page,google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreatePageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L469}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L496}
   /// [google.cloud.dialogflow.cx.v3.Page]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
@@ -223,7 +223,7 @@ class PagesClient {
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Page,google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L507}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L535}
   /// [google.cloud.dialogflow.cx.v3.Page]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
@@ -239,14 +239,14 @@ class PagesClient {
   /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdatePageRequest,google/cloud/dialogflow/cx/v3/page.proto#L507}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdatePageRequest,google/cloud/dialogflow/cx/v3/page.proto#L535}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::cx::v3::Page,google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdatePageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L507}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L535}
   /// [google.cloud.dialogflow.cx.v3.Page]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L115}
   ///
@@ -268,7 +268,7 @@ class PagesClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeletePageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L539}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L568}
   ///
   Status DeletePage(std::string const& name, Options opts = {});
 
@@ -280,12 +280,12 @@ class PagesClient {
   /// documentation](https://cloud.google.com/dialogflow/cx/docs/concept/training).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeletePageRequest,google/cloud/dialogflow/cx/v3/page.proto#L539}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeletePageRequest,google/cloud/dialogflow/cx/v3/page.proto#L568}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeletePageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L539}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/page.proto#L568}
   ///
   Status DeletePage(
       google::cloud::dialogflow::cx::v3::DeletePageRequest const& request,

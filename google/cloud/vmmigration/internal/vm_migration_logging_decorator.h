@@ -292,6 +292,18 @@ class VmMigrationLogging : public VmMigrationStub {
       google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request)
       override;
 
+  StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
+  ListReplicationCycles(
+      grpc::ClientContext& context,
+      google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+  GetReplicationCycle(
+      grpc::ClientContext& context,
+      google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request)
+      override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

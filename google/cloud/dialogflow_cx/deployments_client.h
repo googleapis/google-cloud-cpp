@@ -90,19 +90,19 @@ class DeploymentsClient {
   /// [Environment][google.cloud.dialogflow.cx.v3.Environment].
   ///
   /// @param parent  Required. The
-  /// [Environment][google.cloud.dialogflow.cx.v3.Environment] to list all
-  /// environments for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
-  ///  ID>/environments/<Environment ID>`.
+  /// [Environment][google.cloud.dialogflow.cx.v3.Environment] to
+  ///  list all environments for. Format: `projects/<Project
+  ///  ID>/locations/<Location ID>/agents/<Agent ID>/environments/<Environment
+  ///  ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Deployment,google/cloud/dialogflow/cx/v3/deployment.proto#L62}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Deployment,google/cloud/dialogflow/cx/v3/deployment.proto#L65}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListDeploymentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L126}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L131}
   /// [google.cloud.dialogflow.cx.v3.Deployment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L62}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Deployment> ListDeployments(
       std::string const& parent, Options opts = {});
@@ -112,16 +112,16 @@ class DeploymentsClient {
   /// [Environment][google.cloud.dialogflow.cx.v3.Environment].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListDeploymentsRequest,google/cloud/dialogflow/cx/v3/deployment.proto#L126}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListDeploymentsRequest,google/cloud/dialogflow/cx/v3/deployment.proto#L131}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Deployment,google/cloud/dialogflow/cx/v3/deployment.proto#L62}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Deployment,google/cloud/dialogflow/cx/v3/deployment.proto#L65}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListDeploymentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L126}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L131}
   /// [google.cloud.dialogflow.cx.v3.Deployment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L62}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::Deployment> ListDeployments(
       google::cloud::dialogflow::cx::v3::ListDeploymentsRequest request,
@@ -132,18 +132,18 @@ class DeploymentsClient {
   /// [Deployment][google.cloud.dialogflow.cx.v3.Deployment].
   ///
   /// @param name  Required. The name of the
-  /// [Deployment][google.cloud.dialogflow.cx.v3.Deployment].
-  ///  Format: `projects/<Project ID>/locations/<Location ID>/agents/<Agent
+  ///  [Deployment][google.cloud.dialogflow.cx.v3.Deployment]. Format:
+  ///  `projects/<Project ID>/locations/<Location ID>/agents/<Agent
   ///  ID>/environments/<Environment ID>/deployments/<Deployment ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Deployment,google/cloud/dialogflow/cx/v3/deployment.proto#L62}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Deployment,google/cloud/dialogflow/cx/v3/deployment.proto#L65}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L159}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L167}
   /// [google.cloud.dialogflow.cx.v3.Deployment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L62}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(
       std::string const& name, Options opts = {});
@@ -153,16 +153,16 @@ class DeploymentsClient {
   /// [Deployment][google.cloud.dialogflow.cx.v3.Deployment].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetDeploymentRequest,google/cloud/dialogflow/cx/v3/deployment.proto#L159}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetDeploymentRequest,google/cloud/dialogflow/cx/v3/deployment.proto#L167}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Deployment,google/cloud/dialogflow/cx/v3/deployment.proto#L62}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::Deployment,google/cloud/dialogflow/cx/v3/deployment.proto#L65}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetDeploymentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L159}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L167}
   /// [google.cloud.dialogflow.cx.v3.Deployment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L62}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/deployment.proto#L65}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::Deployment> GetDeployment(
       google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request,

@@ -116,6 +116,24 @@ ConversationsClient::ListMessages(
   return connection_->ListMessages(std::move(request));
 }
 
+StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+ConversationsClient::SuggestConversationSummary(std::string const& conversation,
+                                                Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::cloud::dialogflow::v2::SuggestConversationSummaryRequest request;
+  request.set_conversation(conversation);
+  return connection_->SuggestConversationSummary(request);
+}
+
+StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+ConversationsClient::SuggestConversationSummary(
+    google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+        request,
+    Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  return connection_->SuggestConversationSummary(request);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es
 }  // namespace cloud

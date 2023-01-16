@@ -59,6 +59,13 @@ class ConversationsStub {
   ListMessages(
       grpc::ClientContext& context,
       google::cloud::dialogflow::v2::ListMessagesRequest const& request) = 0;
+
+  virtual StatusOr<
+      google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+  SuggestConversationSummary(
+      grpc::ClientContext& context,
+      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+          request) = 0;
 };
 
 class DefaultConversationsStub : public ConversationsStub {
@@ -94,6 +101,12 @@ class DefaultConversationsStub : public ConversationsStub {
       grpc::ClientContext& client_context,
       google::cloud::dialogflow::v2::ListMessagesRequest const& request)
       override;
+
+  StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+  SuggestConversationSummary(
+      grpc::ClientContext& client_context,
+      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+          request) override;
 
  private:
   std::unique_ptr<google::cloud::dialogflow::v2::Conversations::StubInterface>

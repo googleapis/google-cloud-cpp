@@ -135,6 +135,23 @@ class AssetServiceAuth : public AssetServiceStub {
       google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
           request) override;
 
+  StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
+  AnalyzeOrgPolicies(grpc::ClientContext& context,
+                     google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const&
+                         request) override;
+
+  StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
+  AnalyzeOrgPolicyGovernedContainers(
+      grpc::ClientContext& context,
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
+          request) override;
+
+  StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
+  AnalyzeOrgPolicyGovernedAssets(
+      grpc::ClientContext& context,
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
+          request) override;
+
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,

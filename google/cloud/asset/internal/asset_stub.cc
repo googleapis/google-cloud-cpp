@@ -282,6 +282,47 @@ DefaultAssetServiceStub::BatchGetEffectiveIamPolicies(
   return response;
 }
 
+StatusOr<google::cloud::asset::v1::AnalyzeOrgPoliciesResponse>
+DefaultAssetServiceStub::AnalyzeOrgPolicies(
+    grpc::ClientContext& client_context,
+    google::cloud::asset::v1::AnalyzeOrgPoliciesRequest const& request) {
+  google::cloud::asset::v1::AnalyzeOrgPoliciesResponse response;
+  auto status =
+      grpc_stub_->AnalyzeOrgPolicies(&client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse>
+DefaultAssetServiceStub::AnalyzeOrgPolicyGovernedContainers(
+    grpc::ClientContext& client_context,
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest const&
+        request) {
+  google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersResponse response;
+  auto status = grpc_stub_->AnalyzeOrgPolicyGovernedContainers(
+      &client_context, request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
+StatusOr<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse>
+DefaultAssetServiceStub::AnalyzeOrgPolicyGovernedAssets(
+    grpc::ClientContext& client_context,
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest const&
+        request) {
+  google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse response;
+  auto status = grpc_stub_->AnalyzeOrgPolicyGovernedAssets(&client_context,
+                                                           request, &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 future<StatusOr<google::longrunning::Operation>>
 DefaultAssetServiceStub::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

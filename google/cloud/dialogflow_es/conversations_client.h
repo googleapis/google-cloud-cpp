@@ -115,12 +115,12 @@ class ConversationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   /// [google.cloud.dialogflow.v2.CreateConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L209}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L238}
   /// [google.cloud.dialogflow.v2.Conversation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   StatusOr<google::cloud::dialogflow::v2::Conversation> CreateConversation(
       std::string const& parent,
@@ -151,16 +151,16 @@ class ConversationsClient {
   /// is triggered, conversation will transfer to Assist Stage.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateConversationRequest,google/cloud/dialogflow/v2/conversation.proto#L209}
+  /// @googleapis_link{google::cloud::dialogflow::v2::CreateConversationRequest,google/cloud/dialogflow/v2/conversation.proto#L238}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   /// [google.cloud.dialogflow.v2.CreateConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L209}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L238}
   /// [google.cloud.dialogflow.v2.Conversation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   StatusOr<google::cloud::dialogflow::v2::Conversation> CreateConversation(
       google::cloud::dialogflow::v2::CreateConversationRequest const& request,
@@ -174,12 +174,12 @@ class ConversationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   /// [google.cloud.dialogflow.v2.ListConversationsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L236}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L266}
   /// [google.cloud.dialogflow.v2.Conversation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   StreamRange<google::cloud::dialogflow::v2::Conversation> ListConversations(
       std::string const& parent, Options opts = {});
@@ -188,16 +188,16 @@ class ConversationsClient {
   /// Returns the list of all conversations in the specified project.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListConversationsRequest,google/cloud/dialogflow/v2/conversation.proto#L236}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ListConversationsRequest,google/cloud/dialogflow/v2/conversation.proto#L266}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   /// [google.cloud.dialogflow.v2.ListConversationsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L236}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L266}
   /// [google.cloud.dialogflow.v2.Conversation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   StreamRange<google::cloud::dialogflow::v2::Conversation> ListConversations(
       google::cloud::dialogflow::v2::ListConversationsRequest request,
@@ -212,12 +212,12 @@ class ConversationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   /// [google.cloud.dialogflow.v2.GetConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L285}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L317}
   /// [google.cloud.dialogflow.v2.Conversation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   StatusOr<google::cloud::dialogflow::v2::Conversation> GetConversation(
       std::string const& name, Options opts = {});
@@ -226,16 +226,16 @@ class ConversationsClient {
   /// Retrieves the specific conversation.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetConversationRequest,google/cloud/dialogflow/v2/conversation.proto#L285}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetConversationRequest,google/cloud/dialogflow/v2/conversation.proto#L317}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   /// [google.cloud.dialogflow.v2.GetConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L285}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L317}
   /// [google.cloud.dialogflow.v2.Conversation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   StatusOr<google::cloud::dialogflow::v2::Conversation> GetConversation(
       google::cloud::dialogflow::v2::GetConversationRequest const& request,
@@ -251,12 +251,12 @@ class ConversationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   /// [google.cloud.dialogflow.v2.CompleteConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L298}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L331}
   /// [google.cloud.dialogflow.v2.Conversation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   StatusOr<google::cloud::dialogflow::v2::Conversation> CompleteConversation(
       std::string const& name, Options opts = {});
@@ -266,16 +266,16 @@ class ConversationsClient {
   /// from the database after 30 days.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CompleteConversationRequest,google/cloud/dialogflow/v2/conversation.proto#L298}
+  /// @googleapis_link{google::cloud::dialogflow::v2::CompleteConversationRequest,google/cloud/dialogflow/v2/conversation.proto#L331}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Conversation,google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   /// [google.cloud.dialogflow.v2.CompleteConversationRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L298}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L331}
   /// [google.cloud.dialogflow.v2.Conversation]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L127}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L148}
   ///
   StatusOr<google::cloud::dialogflow::v2::Conversation> CompleteConversation(
       google::cloud::dialogflow::v2::CompleteConversationRequest const& request,
@@ -295,12 +295,12 @@ class ConversationsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Message,google/cloud/dialogflow/v2/participant.proto#L261}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Message,google/cloud/dialogflow/v2/participant.proto#L273}
   ///
   /// [google.cloud.dialogflow.v2.ListMessagesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L311}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L345}
   /// [google.cloud.dialogflow.v2.Message]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L261}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L273}
   ///
   StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
       std::string const& parent, Options opts = {});
@@ -313,19 +313,64 @@ class ConversationsClient {
   /// [first item's create_time of previous request]` and empty page_token.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListMessagesRequest,google/cloud/dialogflow/v2/conversation.proto#L311}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ListMessagesRequest,google/cloud/dialogflow/v2/conversation.proto#L345}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Message,google/cloud/dialogflow/v2/participant.proto#L261}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Message,google/cloud/dialogflow/v2/participant.proto#L273}
   ///
   /// [google.cloud.dialogflow.v2.ListMessagesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L311}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L345}
   /// [google.cloud.dialogflow.v2.Message]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L261}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/participant.proto#L273}
   ///
   StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
       google::cloud::dialogflow::v2::ListMessagesRequest request,
+      Options opts = {});
+
+  ///
+  /// Suggests summary for a conversation based on specific historical messages.
+  /// The range of the messages to be used for summary can be specified in the
+  /// request.
+  ///
+  /// @param conversation  Required. The conversation to fetch suggestion for.
+  ///  Format: `projects/<Project ID>/locations/<Location
+  ///  ID>/conversations/<Conversation ID>`.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestConversationSummaryResponse,google/cloud/dialogflow/v2/conversation.proto#L425}
+  ///
+  /// [google.cloud.dialogflow.v2.SuggestConversationSummaryRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L396}
+  /// [google.cloud.dialogflow.v2.SuggestConversationSummaryResponse]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L425}
+  ///
+  StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+  SuggestConversationSummary(std::string const& conversation,
+                             Options opts = {});
+
+  ///
+  /// Suggests summary for a conversation based on specific historical messages.
+  /// The range of the messages to be used for summary can be specified in the
+  /// request.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestConversationSummaryRequest,google/cloud/dialogflow/v2/conversation.proto#L396}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::dialogflow::v2::SuggestConversationSummaryResponse,google/cloud/dialogflow/v2/conversation.proto#L425}
+  ///
+  /// [google.cloud.dialogflow.v2.SuggestConversationSummaryRequest]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L396}
+  /// [google.cloud.dialogflow.v2.SuggestConversationSummaryResponse]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation.proto#L425}
+  ///
+  StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+  SuggestConversationSummary(
+      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+          request,
       Options opts = {});
 
  private:

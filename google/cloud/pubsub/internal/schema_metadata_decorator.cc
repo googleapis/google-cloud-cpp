@@ -56,6 +56,36 @@ SchemaServiceMetadata::ListSchemas(
   return child_->ListSchemas(context, request);
 }
 
+StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
+SchemaServiceMetadata::ListSchemaRevisions(
+    grpc::ClientContext& context,
+    google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->ListSchemaRevisions(context, request);
+}
+
+StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::CommitSchema(
+    grpc::ClientContext& context,
+    google::pubsub::v1::CommitSchemaRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->CommitSchema(context, request);
+}
+
+StatusOr<google::pubsub::v1::Schema> SchemaServiceMetadata::RollbackSchema(
+    grpc::ClientContext& context,
+    google::pubsub::v1::RollbackSchemaRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->RollbackSchema(context, request);
+}
+
+StatusOr<google::pubsub::v1::Schema>
+SchemaServiceMetadata::DeleteSchemaRevision(
+    grpc::ClientContext& context,
+    google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->DeleteSchemaRevision(context, request);
+}
+
 Status SchemaServiceMetadata::DeleteSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSchemaRequest const& request) {

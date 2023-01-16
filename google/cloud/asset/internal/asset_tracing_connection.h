@@ -112,6 +112,23 @@ class AssetServiceTracingConnection : public asset::AssetServiceConnection {
       google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
           request) override;
 
+  StreamRange<
+      google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
+  AnalyzeOrgPolicies(
+      google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request) override;
+
+  StreamRange<google::cloud::asset::v1::
+                  AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
+  AnalyzeOrgPolicyGovernedContainers(
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest
+          request) override;
+
+  StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
+                  GovernedAsset>
+  AnalyzeOrgPolicyGovernedAssets(
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request)
+      override;
+
  private:
   std::shared_ptr<asset::AssetServiceConnection> child_;
 };

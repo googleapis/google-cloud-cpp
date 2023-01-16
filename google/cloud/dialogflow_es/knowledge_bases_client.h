@@ -93,12 +93,12 @@ class KnowledgeBasesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   /// [google.cloud.dialogflow.v2.ListKnowledgeBasesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L152}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L156}
   /// [google.cloud.dialogflow.v2.KnowledgeBase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   StreamRange<google::cloud::dialogflow::v2::KnowledgeBase> ListKnowledgeBases(
       std::string const& parent, Options opts = {});
@@ -107,16 +107,16 @@ class KnowledgeBasesClient {
   /// Returns the list of all knowledge bases of the specified agent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListKnowledgeBasesRequest,google/cloud/dialogflow/v2/knowledge_base.proto#L152}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ListKnowledgeBasesRequest,google/cloud/dialogflow/v2/knowledge_base.proto#L156}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   /// [google.cloud.dialogflow.v2.ListKnowledgeBasesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L152}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L156}
   /// [google.cloud.dialogflow.v2.KnowledgeBase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   StreamRange<google::cloud::dialogflow::v2::KnowledgeBase> ListKnowledgeBases(
       google::cloud::dialogflow::v2::ListKnowledgeBasesRequest request,
@@ -131,12 +131,12 @@ class KnowledgeBasesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   /// [google.cloud.dialogflow.v2.GetKnowledgeBaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L209}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L215}
   /// [google.cloud.dialogflow.v2.KnowledgeBase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> GetKnowledgeBase(
       std::string const& name, Options opts = {});
@@ -145,16 +145,16 @@ class KnowledgeBasesClient {
   /// Retrieves the specified knowledge base.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetKnowledgeBaseRequest,google/cloud/dialogflow/v2/knowledge_base.proto#L209}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetKnowledgeBaseRequest,google/cloud/dialogflow/v2/knowledge_base.proto#L215}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   /// [google.cloud.dialogflow.v2.GetKnowledgeBaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L209}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L215}
   /// [google.cloud.dialogflow.v2.KnowledgeBase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> GetKnowledgeBase(
       google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request,
@@ -169,12 +169,12 @@ class KnowledgeBasesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   /// [google.cloud.dialogflow.v2.CreateKnowledgeBaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L222}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L229}
   /// [google.cloud.dialogflow.v2.KnowledgeBase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> CreateKnowledgeBase(
       std::string const& parent,
@@ -185,16 +185,16 @@ class KnowledgeBasesClient {
   /// Creates a knowledge base.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest,google/cloud/dialogflow/v2/knowledge_base.proto#L222}
+  /// @googleapis_link{google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest,google/cloud/dialogflow/v2/knowledge_base.proto#L229}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   /// [google.cloud.dialogflow.v2.CreateKnowledgeBaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L222}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L229}
   /// [google.cloud.dialogflow.v2.KnowledgeBase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> CreateKnowledgeBase(
       google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request,
@@ -210,7 +210,7 @@ class KnowledgeBasesClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteKnowledgeBaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L237}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L245}
   ///
   Status DeleteKnowledgeBase(std::string const& name, Options opts = {});
 
@@ -218,12 +218,12 @@ class KnowledgeBasesClient {
   /// Deletes the specified knowledge base.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest,google/cloud/dialogflow/v2/knowledge_base.proto#L237}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest,google/cloud/dialogflow/v2/knowledge_base.proto#L245}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteKnowledgeBaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L237}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L245}
   ///
   Status DeleteKnowledgeBase(
       google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request,
@@ -239,12 +239,12 @@ class KnowledgeBasesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   /// [google.cloud.dialogflow.v2.UpdateKnowledgeBaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L254}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L263}
   /// [google.cloud.dialogflow.v2.KnowledgeBase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> UpdateKnowledgeBase(
       google::cloud::dialogflow::v2::KnowledgeBase const& knowledge_base,
@@ -254,16 +254,16 @@ class KnowledgeBasesClient {
   /// Updates the specified knowledge base.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest,google/cloud/dialogflow/v2/knowledge_base.proto#L254}
+  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest,google/cloud/dialogflow/v2/knowledge_base.proto#L263}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_link{google::cloud::dialogflow::v2::KnowledgeBase,google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   /// [google.cloud.dialogflow.v2.UpdateKnowledgeBaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L254}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L263}
   /// [google.cloud.dialogflow.v2.KnowledgeBase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L128}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/knowledge_base.proto#L131}
   ///
   StatusOr<google::cloud::dialogflow::v2::KnowledgeBase> UpdateKnowledgeBase(
       google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request,

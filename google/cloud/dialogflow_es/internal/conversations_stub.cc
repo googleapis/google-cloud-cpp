@@ -93,6 +93,20 @@ DefaultConversationsStub::ListMessages(
   return response;
 }
 
+StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+DefaultConversationsStub::SuggestConversationSummary(
+    grpc::ClientContext& client_context,
+    google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+        request) {
+  google::cloud::dialogflow::v2::SuggestConversationSummaryResponse response;
+  auto status = grpc_stub_->SuggestConversationSummary(&client_context, request,
+                                                       &response);
+  if (!status.ok()) {
+    return google::cloud::MakeStatusFromRpcError(status);
+  }
+  return response;
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud

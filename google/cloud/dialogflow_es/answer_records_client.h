@@ -96,12 +96,12 @@ class AnswerRecordsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::AnswerRecord,google/cloud/dialogflow/v2/answer_record.proto#L94}
+  /// @googleapis_link{google::cloud::dialogflow::v2::AnswerRecord,google/cloud/dialogflow/v2/answer_record.proto#L98}
   ///
   /// [google.cloud.dialogflow.v2.ListAnswerRecordsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L119}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L125}
   /// [google.cloud.dialogflow.v2.AnswerRecord]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L94}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L98}
   ///
   StreamRange<google::cloud::dialogflow::v2::AnswerRecord> ListAnswerRecords(
       std::string const& parent, Options opts = {});
@@ -111,16 +111,16 @@ class AnswerRecordsClient {
   /// chronological order.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListAnswerRecordsRequest,google/cloud/dialogflow/v2/answer_record.proto#L119}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ListAnswerRecordsRequest,google/cloud/dialogflow/v2/answer_record.proto#L125}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::AnswerRecord,google/cloud/dialogflow/v2/answer_record.proto#L94}
+  /// @googleapis_link{google::cloud::dialogflow::v2::AnswerRecord,google/cloud/dialogflow/v2/answer_record.proto#L98}
   ///
   /// [google.cloud.dialogflow.v2.ListAnswerRecordsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L119}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L125}
   /// [google.cloud.dialogflow.v2.AnswerRecord]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L94}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L98}
   ///
   StreamRange<google::cloud::dialogflow::v2::AnswerRecord> ListAnswerRecords(
       google::cloud::dialogflow::v2::ListAnswerRecordsRequest request,
@@ -135,12 +135,12 @@ class AnswerRecordsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::AnswerRecord,google/cloud/dialogflow/v2/answer_record.proto#L94}
+  /// @googleapis_link{google::cloud::dialogflow::v2::AnswerRecord,google/cloud/dialogflow/v2/answer_record.proto#L98}
   ///
   /// [google.cloud.dialogflow.v2.UpdateAnswerRecordRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L168}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L173}
   /// [google.cloud.dialogflow.v2.AnswerRecord]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L94}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L98}
   ///
   StatusOr<google::cloud::dialogflow::v2::AnswerRecord> UpdateAnswerRecord(
       google::cloud::dialogflow::v2::AnswerRecord const& answer_record,
@@ -150,16 +150,16 @@ class AnswerRecordsClient {
   /// Updates the specified answer record.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateAnswerRecordRequest,google/cloud/dialogflow/v2/answer_record.proto#L168}
+  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateAnswerRecordRequest,google/cloud/dialogflow/v2/answer_record.proto#L173}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::AnswerRecord,google/cloud/dialogflow/v2/answer_record.proto#L94}
+  /// @googleapis_link{google::cloud::dialogflow::v2::AnswerRecord,google/cloud/dialogflow/v2/answer_record.proto#L98}
   ///
   /// [google.cloud.dialogflow.v2.UpdateAnswerRecordRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L168}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L173}
   /// [google.cloud.dialogflow.v2.AnswerRecord]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L94}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/answer_record.proto#L98}
   ///
   StatusOr<google::cloud::dialogflow::v2::AnswerRecord> UpdateAnswerRecord(
       google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request,

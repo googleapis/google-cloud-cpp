@@ -99,6 +99,16 @@ class AssetServiceConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency BatchGetEffectiveIamPolicies(
       google::cloud::asset::v1::BatchGetEffectiveIamPoliciesRequest const&
           request);
+
+  virtual google::cloud::Idempotency AnalyzeOrgPolicies(
+      google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request);
+
+  virtual google::cloud::Idempotency AnalyzeOrgPolicyGovernedContainers(
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest
+          request);
+
+  virtual google::cloud::Idempotency AnalyzeOrgPolicyGovernedAssets(
+      google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request);
 };
 
 std::unique_ptr<AssetServiceConnectionIdempotencyPolicy>

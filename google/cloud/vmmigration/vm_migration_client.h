@@ -94,12 +94,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   /// [google.cloud.vmmigration.v1.ListSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1257}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1512}
   /// [google.cloud.vmmigration.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   StreamRange<google::cloud::vmmigration::v1::Source> ListSources(
       std::string const& parent, Options opts = {});
@@ -108,16 +108,16 @@ class VmMigrationClient {
   /// Lists Sources in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::ListSourcesRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1257}
+  /// @googleapis_link{google::cloud::vmmigration::v1::ListSourcesRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1512}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   /// [google.cloud.vmmigration.v1.ListSourcesRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1257}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1512}
   /// [google.cloud.vmmigration.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   StreamRange<google::cloud::vmmigration::v1::Source> ListSources(
       google::cloud::vmmigration::v1::ListSourcesRequest request,
@@ -130,12 +130,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   /// [google.cloud.vmmigration.v1.GetSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1300}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1555}
   /// [google.cloud.vmmigration.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   StatusOr<google::cloud::vmmigration::v1::Source> GetSource(
       std::string const& name, Options opts = {});
@@ -144,16 +144,16 @@ class VmMigrationClient {
   /// Gets details of a single Source.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::GetSourceRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1300}
+  /// @googleapis_link{google::cloud::vmmigration::v1::GetSourceRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1555}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   /// [google.cloud.vmmigration.v1.GetSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1300}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1555}
   /// [google.cloud.vmmigration.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   StatusOr<google::cloud::vmmigration::v1::Source> GetSource(
       google::cloud::vmmigration::v1::GetSourceRequest const& request,
@@ -168,12 +168,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   /// [google.cloud.vmmigration.v1.CreateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1311}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1566}
   /// [google.cloud.vmmigration.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::Source>> CreateSource(
       std::string const& parent,
@@ -184,16 +184,16 @@ class VmMigrationClient {
   /// Creates a new Source in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::CreateSourceRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1311}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CreateSourceRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1566}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   /// [google.cloud.vmmigration.v1.CreateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1311}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1566}
   /// [google.cloud.vmmigration.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::Source>> CreateSource(
       google::cloud::vmmigration::v1::CreateSourceRequest const& request,
@@ -212,12 +212,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   /// [google.cloud.vmmigration.v1.UpdateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1343}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1598}
   /// [google.cloud.vmmigration.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
       google::cloud::vmmigration::v1::Source const& source,
@@ -227,16 +227,16 @@ class VmMigrationClient {
   /// Updates the parameters of a single Source.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::UpdateSourceRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1343}
+  /// @googleapis_link{google::cloud::vmmigration::v1::UpdateSourceRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1598}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Source,google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   /// [google.cloud.vmmigration.v1.UpdateSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1343}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1598}
   /// [google.cloud.vmmigration.v1.Source]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1058}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1237}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::Source>> UpdateSource(
       google::cloud::vmmigration::v1::UpdateSourceRequest const& request,
@@ -249,12 +249,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   /// [google.cloud.vmmigration.v1.DeleteSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1371}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1626}
   /// [google.cloud.vmmigration.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteSource(std::string const& name, Options opts = {});
@@ -263,16 +263,16 @@ class VmMigrationClient {
   /// Deletes a single Source.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::DeleteSourceRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1371}
+  /// @googleapis_link{google::cloud::vmmigration::v1::DeleteSourceRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1626}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   /// [google.cloud.vmmigration.v1.DeleteSourceRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1371}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1626}
   /// [google.cloud.vmmigration.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteSource(
@@ -290,12 +290,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::FetchInventoryResponse,google/cloud/vmmigration/v1/vmmigration.proto#L1489}
+  /// @googleapis_link{google::cloud::vmmigration::v1::FetchInventoryResponse,google/cloud/vmmigration/v1/vmmigration.proto#L1877}
   ///
   /// [google.cloud.vmmigration.v1.FetchInventoryRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1398}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1653}
   /// [google.cloud.vmmigration.v1.FetchInventoryResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1489}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1877}
   ///
   StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
   FetchInventory(std::string const& source, Options opts = {});
@@ -308,16 +308,16 @@ class VmMigrationClient {
   /// opposed to listing the MigratingVms resources in the vmmigration service.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::FetchInventoryRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1398}
+  /// @googleapis_link{google::cloud::vmmigration::v1::FetchInventoryRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1653}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::FetchInventoryResponse,google/cloud/vmmigration/v1/vmmigration.proto#L1489}
+  /// @googleapis_link{google::cloud::vmmigration::v1::FetchInventoryResponse,google/cloud/vmmigration/v1/vmmigration.proto#L1877}
   ///
   /// [google.cloud.vmmigration.v1.FetchInventoryRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1398}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1653}
   /// [google.cloud.vmmigration.v1.FetchInventoryResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1489}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1877}
   ///
   StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
   FetchInventory(
@@ -331,12 +331,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::UtilizationReport,google/cloud/vmmigration/v1/vmmigration.proto#L1503}
+  /// @googleapis_link{google::cloud::vmmigration::v1::UtilizationReport,google/cloud/vmmigration/v1/vmmigration.proto#L1894}
   ///
   /// [google.cloud.vmmigration.v1.ListUtilizationReportsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1625}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2016}
   /// [google.cloud.vmmigration.v1.UtilizationReport]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1503}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1894}
   ///
   StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
   ListUtilizationReports(std::string const& parent, Options opts = {});
@@ -345,16 +345,16 @@ class VmMigrationClient {
   /// Lists Utilization Reports of the given Source.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::ListUtilizationReportsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1625}
+  /// @googleapis_link{google::cloud::vmmigration::v1::ListUtilizationReportsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2016}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::UtilizationReport,google/cloud/vmmigration/v1/vmmigration.proto#L1503}
+  /// @googleapis_link{google::cloud::vmmigration::v1::UtilizationReport,google/cloud/vmmigration/v1/vmmigration.proto#L1894}
   ///
   /// [google.cloud.vmmigration.v1.ListUtilizationReportsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1625}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2016}
   /// [google.cloud.vmmigration.v1.UtilizationReport]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1503}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1894}
   ///
   StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
   ListUtilizationReports(
@@ -368,12 +368,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::UtilizationReport,google/cloud/vmmigration/v1/vmmigration.proto#L1503}
+  /// @googleapis_link{google::cloud::vmmigration::v1::UtilizationReport,google/cloud/vmmigration/v1/vmmigration.proto#L1894}
   ///
   /// [google.cloud.vmmigration.v1.GetUtilizationReportRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1673}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2064}
   /// [google.cloud.vmmigration.v1.UtilizationReport]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1503}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1894}
   ///
   StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
   GetUtilizationReport(std::string const& name, Options opts = {});
@@ -382,16 +382,16 @@ class VmMigrationClient {
   /// Gets a single Utilization Report.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::GetUtilizationReportRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1673}
+  /// @googleapis_link{google::cloud::vmmigration::v1::GetUtilizationReportRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2064}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::UtilizationReport,google/cloud/vmmigration/v1/vmmigration.proto#L1503}
+  /// @googleapis_link{google::cloud::vmmigration::v1::UtilizationReport,google/cloud/vmmigration/v1/vmmigration.proto#L1894}
   ///
   /// [google.cloud.vmmigration.v1.GetUtilizationReportRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1673}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2064}
   /// [google.cloud.vmmigration.v1.UtilizationReport]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1503}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1894}
   ///
   StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
   GetUtilizationReport(
@@ -413,12 +413,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::UtilizationReport,google/cloud/vmmigration/v1/vmmigration.proto#L1503}
+  /// @googleapis_link{google::cloud::vmmigration::v1::UtilizationReport,google/cloud/vmmigration/v1/vmmigration.proto#L1894}
   ///
   /// [google.cloud.vmmigration.v1.CreateUtilizationReportRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1688}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2079}
   /// [google.cloud.vmmigration.v1.UtilizationReport]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1503}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1894}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
   CreateUtilizationReport(
@@ -431,16 +431,16 @@ class VmMigrationClient {
   /// Creates a new UtilizationReport.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::CreateUtilizationReportRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1688}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CreateUtilizationReportRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2079}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::UtilizationReport,google/cloud/vmmigration/v1/vmmigration.proto#L1503}
+  /// @googleapis_link{google::cloud::vmmigration::v1::UtilizationReport,google/cloud/vmmigration/v1/vmmigration.proto#L1894}
   ///
   /// [google.cloud.vmmigration.v1.CreateUtilizationReportRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1688}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2079}
   /// [google.cloud.vmmigration.v1.UtilizationReport]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1503}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1894}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
   CreateUtilizationReport(
@@ -455,12 +455,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   /// [google.cloud.vmmigration.v1.DeleteUtilizationReportRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1726}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2117}
   /// [google.cloud.vmmigration.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteUtilizationReport(std::string const& name, Options opts = {});
@@ -469,16 +469,16 @@ class VmMigrationClient {
   /// Deletes a single Utilization Report.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::DeleteUtilizationReportRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1726}
+  /// @googleapis_link{google::cloud::vmmigration::v1::DeleteUtilizationReportRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2117}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   /// [google.cloud.vmmigration.v1.DeleteUtilizationReportRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1726}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2117}
   /// [google.cloud.vmmigration.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteUtilizationReport(
@@ -494,12 +494,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1107}
+  /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
   /// [google.cloud.vmmigration.v1.ListDatacenterConnectorsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1868}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2259}
   /// [google.cloud.vmmigration.v1.DatacenterConnector]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1107}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
   StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
   ListDatacenterConnectors(std::string const& parent, Options opts = {});
@@ -508,16 +508,16 @@ class VmMigrationClient {
   /// Lists DatacenterConnectors in a given Source.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1868}
+  /// @googleapis_link{google::cloud::vmmigration::v1::ListDatacenterConnectorsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2259}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1107}
+  /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
   /// [google.cloud.vmmigration.v1.ListDatacenterConnectorsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1868}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2259}
   /// [google.cloud.vmmigration.v1.DatacenterConnector]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1107}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
   StreamRange<google::cloud::vmmigration::v1::DatacenterConnector>
   ListDatacenterConnectors(
@@ -531,12 +531,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1107}
+  /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
   /// [google.cloud.vmmigration.v1.GetDatacenterConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1766}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2157}
   /// [google.cloud.vmmigration.v1.DatacenterConnector]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1107}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
   StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
   GetDatacenterConnector(std::string const& name, Options opts = {});
@@ -545,16 +545,16 @@ class VmMigrationClient {
   /// Gets details of a single DatacenterConnector.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::GetDatacenterConnectorRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1766}
+  /// @googleapis_link{google::cloud::vmmigration::v1::GetDatacenterConnectorRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2157}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1107}
+  /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
   /// [google.cloud.vmmigration.v1.GetDatacenterConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1766}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2157}
   /// [google.cloud.vmmigration.v1.DatacenterConnector]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1107}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
   StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
   GetDatacenterConnector(
@@ -575,12 +575,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1107}
+  /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
   /// [google.cloud.vmmigration.v1.CreateDatacenterConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1777}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2168}
   /// [google.cloud.vmmigration.v1.DatacenterConnector]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1107}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
   CreateDatacenterConnector(
@@ -593,16 +593,16 @@ class VmMigrationClient {
   /// Creates a new DatacenterConnector in a given Source.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1777}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CreateDatacenterConnectorRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2168}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1107}
+  /// @googleapis_link{google::cloud::vmmigration::v1::DatacenterConnector,google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
   /// [google.cloud.vmmigration.v1.CreateDatacenterConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1777}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2168}
   /// [google.cloud.vmmigration.v1.DatacenterConnector]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1107}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1362}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
   CreateDatacenterConnector(
@@ -617,12 +617,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   /// [google.cloud.vmmigration.v1.DeleteDatacenterConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1813}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2204}
   /// [google.cloud.vmmigration.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteDatacenterConnector(std::string const& name, Options opts = {});
@@ -631,16 +631,16 @@ class VmMigrationClient {
   /// Deletes a single DatacenterConnector.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1813}
+  /// @googleapis_link{google::cloud::vmmigration::v1::DeleteDatacenterConnectorRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2204}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   /// [google.cloud.vmmigration.v1.DeleteDatacenterConnectorRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1813}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2204}
   /// [google.cloud.vmmigration.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteDatacenterConnector(
@@ -653,16 +653,16 @@ class VmMigrationClient {
   /// updateable version.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::UpgradeApplianceRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1839}
+  /// @googleapis_link{google::cloud::vmmigration::v1::UpgradeApplianceRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2230}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::UpgradeApplianceResponse,google/cloud/vmmigration/v1/vmmigration.proto#L1865}
+  /// @googleapis_link{google::cloud::vmmigration::v1::UpgradeApplianceResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2256}
   ///
   /// [google.cloud.vmmigration.v1.UpgradeApplianceRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1839}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2230}
   /// [google.cloud.vmmigration.v1.UpgradeApplianceResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1865}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2256}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::UpgradeApplianceResponse>>
   UpgradeAppliance(
@@ -678,12 +678,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   /// [google.cloud.vmmigration.v1.CreateMigratingVmRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2153}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2544}
   /// [google.cloud.vmmigration.v1.MigratingVm]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
   CreateMigratingVm(
@@ -695,16 +695,16 @@ class VmMigrationClient {
   /// Creates a new MigratingVm in a given Source.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::CreateMigratingVmRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2153}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CreateMigratingVmRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2544}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   /// [google.cloud.vmmigration.v1.CreateMigratingVmRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2153}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2544}
   /// [google.cloud.vmmigration.v1.MigratingVm]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
   CreateMigratingVm(
@@ -719,12 +719,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   /// [google.cloud.vmmigration.v1.ListMigratingVmsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2185}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2576}
   /// [google.cloud.vmmigration.v1.MigratingVm]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   StreamRange<google::cloud::vmmigration::v1::MigratingVm> ListMigratingVms(
       std::string const& parent, Options opts = {});
@@ -733,16 +733,16 @@ class VmMigrationClient {
   /// Lists MigratingVms in a given Source.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::ListMigratingVmsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2185}
+  /// @googleapis_link{google::cloud::vmmigration::v1::ListMigratingVmsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2576}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   /// [google.cloud.vmmigration.v1.ListMigratingVmsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2185}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2576}
   /// [google.cloud.vmmigration.v1.MigratingVm]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   StreamRange<google::cloud::vmmigration::v1::MigratingVm> ListMigratingVms(
       google::cloud::vmmigration::v1::ListMigratingVmsRequest request,
@@ -755,12 +755,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   /// [google.cloud.vmmigration.v1.GetMigratingVmRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2232}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2623}
   /// [google.cloud.vmmigration.v1.MigratingVm]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   StatusOr<google::cloud::vmmigration::v1::MigratingVm> GetMigratingVm(
       std::string const& name, Options opts = {});
@@ -769,16 +769,16 @@ class VmMigrationClient {
   /// Gets details of a single MigratingVm.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::GetMigratingVmRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2232}
+  /// @googleapis_link{google::cloud::vmmigration::v1::GetMigratingVmRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2623}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   /// [google.cloud.vmmigration.v1.GetMigratingVmRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2232}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2623}
   /// [google.cloud.vmmigration.v1.MigratingVm]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   StatusOr<google::cloud::vmmigration::v1::MigratingVm> GetMigratingVm(
       google::cloud::vmmigration::v1::GetMigratingVmRequest const& request,
@@ -797,12 +797,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   /// [google.cloud.vmmigration.v1.UpdateMigratingVmRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2246}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2637}
   /// [google.cloud.vmmigration.v1.MigratingVm]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
   UpdateMigratingVm(
@@ -813,16 +813,16 @@ class VmMigrationClient {
   /// Updates the parameters of a single MigratingVm.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::UpdateMigratingVmRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2246}
+  /// @googleapis_link{google::cloud::vmmigration::v1::UpdateMigratingVmRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2637}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_link{google::cloud::vmmigration::v1::MigratingVm,google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   /// [google.cloud.vmmigration.v1.UpdateMigratingVmRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2246}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2637}
   /// [google.cloud.vmmigration.v1.MigratingVm]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L672}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L780}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
   UpdateMigratingVm(
@@ -836,12 +836,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   /// [google.cloud.vmmigration.v1.DeleteMigratingVmRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2274}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2665}
   /// [google.cloud.vmmigration.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteMigratingVm(std::string const& name, Options opts = {});
@@ -850,16 +850,16 @@ class VmMigrationClient {
   /// Deletes a single MigratingVm.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::DeleteMigratingVmRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2274}
+  /// @googleapis_link{google::cloud::vmmigration::v1::DeleteMigratingVmRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2665}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   /// [google.cloud.vmmigration.v1.DeleteMigratingVmRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2274}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2665}
   /// [google.cloud.vmmigration.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteMigratingVm(
@@ -875,12 +875,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::StartMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2296}
+  /// @googleapis_link{google::cloud::vmmigration::v1::StartMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2687}
   ///
   /// [google.cloud.vmmigration.v1.StartMigrationRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2285}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2676}
   /// [google.cloud.vmmigration.v1.StartMigrationResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2296}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2687}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
   StartMigration(std::string const& migrating_vm, Options opts = {});
@@ -891,16 +891,16 @@ class VmMigrationClient {
   /// policy.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::StartMigrationRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2285}
+  /// @googleapis_link{google::cloud::vmmigration::v1::StartMigrationRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2676}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::StartMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2296}
+  /// @googleapis_link{google::cloud::vmmigration::v1::StartMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2687}
   ///
   /// [google.cloud.vmmigration.v1.StartMigrationRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2285}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2676}
   /// [google.cloud.vmmigration.v1.StartMigrationResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2296}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2687}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::StartMigrationResponse>>
   StartMigration(
@@ -914,16 +914,16 @@ class VmMigrationClient {
   /// and start the process of uploading data and creating snapshots.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::ResumeMigrationRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2313}
+  /// @googleapis_link{google::cloud::vmmigration::v1::ResumeMigrationRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2704}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::ResumeMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2324}
+  /// @googleapis_link{google::cloud::vmmigration::v1::ResumeMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2715}
   ///
   /// [google.cloud.vmmigration.v1.ResumeMigrationRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2313}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2704}
   /// [google.cloud.vmmigration.v1.ResumeMigrationResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2324}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2715}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::ResumeMigrationResponse>>
   ResumeMigration(
@@ -936,16 +936,16 @@ class VmMigrationClient {
   /// not be triggered while the VM is paused.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::PauseMigrationRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2299}
+  /// @googleapis_link{google::cloud::vmmigration::v1::PauseMigrationRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2690}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::PauseMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2310}
+  /// @googleapis_link{google::cloud::vmmigration::v1::PauseMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2701}
   ///
   /// [google.cloud.vmmigration.v1.PauseMigrationRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2299}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2690}
   /// [google.cloud.vmmigration.v1.PauseMigrationResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2310}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2701}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::PauseMigrationResponse>>
   PauseMigration(
@@ -960,12 +960,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::FinalizeMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2338}
+  /// @googleapis_link{google::cloud::vmmigration::v1::FinalizeMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2729}
   ///
   /// [google.cloud.vmmigration.v1.FinalizeMigrationRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2327}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2718}
   /// [google.cloud.vmmigration.v1.FinalizeMigrationResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2338}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2729}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
   FinalizeMigration(std::string const& migrating_vm, Options opts = {});
@@ -975,16 +975,16 @@ class VmMigrationClient {
   /// longer being used. Only applicable after cutover is done.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::FinalizeMigrationRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2327}
+  /// @googleapis_link{google::cloud::vmmigration::v1::FinalizeMigrationRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2718}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::FinalizeMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2338}
+  /// @googleapis_link{google::cloud::vmmigration::v1::FinalizeMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2729}
   ///
   /// [google.cloud.vmmigration.v1.FinalizeMigrationRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2327}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2718}
   /// [google.cloud.vmmigration.v1.FinalizeMigrationResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2338}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2729}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::FinalizeMigrationResponse>>
   FinalizeMigration(
@@ -1000,12 +1000,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L816}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
   /// [google.cloud.vmmigration.v1.CreateCloneJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L957}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1136}
   /// [google.cloud.vmmigration.v1.CloneJob]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L816}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
       std::string const& parent,
@@ -1016,16 +1016,16 @@ class VmMigrationClient {
   /// Initiates a Clone of a specific migrating VM.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::CreateCloneJobRequest,google/cloud/vmmigration/v1/vmmigration.proto#L957}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CreateCloneJobRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L816}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
   /// [google.cloud.vmmigration.v1.CreateCloneJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L957}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1136}
   /// [google.cloud.vmmigration.v1.CloneJob]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L816}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::CloneJob>> CreateCloneJob(
       google::cloud::vmmigration::v1::CreateCloneJobRequest const& request,
@@ -1038,12 +1038,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CancelCloneJobResponse,google/cloud/vmmigration/v1/vmmigration.proto#L1000}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CancelCloneJobResponse,google/cloud/vmmigration/v1/vmmigration.proto#L1179}
   ///
   /// [google.cloud.vmmigration.v1.CancelCloneJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L989}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1168}
   /// [google.cloud.vmmigration.v1.CancelCloneJobResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1000}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1179}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
   CancelCloneJob(std::string const& name, Options opts = {});
@@ -1052,16 +1052,16 @@ class VmMigrationClient {
   /// Initiates the cancellation of a running clone job.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::CancelCloneJobRequest,google/cloud/vmmigration/v1/vmmigration.proto#L989}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CancelCloneJobRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1168}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CancelCloneJobResponse,google/cloud/vmmigration/v1/vmmigration.proto#L1000}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CancelCloneJobResponse,google/cloud/vmmigration/v1/vmmigration.proto#L1179}
   ///
   /// [google.cloud.vmmigration.v1.CancelCloneJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L989}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1168}
   /// [google.cloud.vmmigration.v1.CancelCloneJobResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1000}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1179}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::CancelCloneJobResponse>>
   CancelCloneJob(
@@ -1076,12 +1076,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L816}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
   /// [google.cloud.vmmigration.v1.ListCloneJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1003}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1182}
   /// [google.cloud.vmmigration.v1.CloneJob]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L816}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
   StreamRange<google::cloud::vmmigration::v1::CloneJob> ListCloneJobs(
       std::string const& parent, Options opts = {});
@@ -1090,16 +1090,16 @@ class VmMigrationClient {
   /// Lists CloneJobs of a given migrating VM.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::ListCloneJobsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1003}
+  /// @googleapis_link{google::cloud::vmmigration::v1::ListCloneJobsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1182}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L816}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
   /// [google.cloud.vmmigration.v1.ListCloneJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1003}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1182}
   /// [google.cloud.vmmigration.v1.CloneJob]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L816}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
   StreamRange<google::cloud::vmmigration::v1::CloneJob> ListCloneJobs(
       google::cloud::vmmigration::v1::ListCloneJobsRequest request,
@@ -1112,12 +1112,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L816}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
   /// [google.cloud.vmmigration.v1.GetCloneJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1046}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1225}
   /// [google.cloud.vmmigration.v1.CloneJob]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L816}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
   StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
       std::string const& name, Options opts = {});
@@ -1126,16 +1126,16 @@ class VmMigrationClient {
   /// Gets details of a single CloneJob.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::GetCloneJobRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1046}
+  /// @googleapis_link{google::cloud::vmmigration::v1::GetCloneJobRequest,google/cloud/vmmigration/v1/vmmigration.proto#L1225}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L816}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CloneJob,google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
   /// [google.cloud.vmmigration.v1.GetCloneJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1046}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1225}
   /// [google.cloud.vmmigration.v1.CloneJob]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L816}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L931}
   ///
   StatusOr<google::cloud::vmmigration::v1::CloneJob> GetCloneJob(
       google::cloud::vmmigration::v1::GetCloneJobRequest const& request,
@@ -1152,12 +1152,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L884}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   /// [google.cloud.vmmigration.v1.CreateCutoverJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2713}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3104}
   /// [google.cloud.vmmigration.v1.CutoverJob]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L884}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>> CreateCutoverJob(
       std::string const& parent,
@@ -1170,16 +1170,16 @@ class VmMigrationClient {
   /// and the job is initiated.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::CreateCutoverJobRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2713}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CreateCutoverJobRequest,google/cloud/vmmigration/v1/vmmigration.proto#L3104}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L884}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   /// [google.cloud.vmmigration.v1.CreateCutoverJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2713}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3104}
   /// [google.cloud.vmmigration.v1.CutoverJob]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L884}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>> CreateCutoverJob(
       google::cloud::vmmigration::v1::CreateCutoverJobRequest const& request,
@@ -1192,12 +1192,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CancelCutoverJobResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2756}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CancelCutoverJobResponse,google/cloud/vmmigration/v1/vmmigration.proto#L3147}
   ///
   /// [google.cloud.vmmigration.v1.CancelCutoverJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2745}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3136}
   /// [google.cloud.vmmigration.v1.CancelCutoverJobResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2756}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3147}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
   CancelCutoverJob(std::string const& name, Options opts = {});
@@ -1206,16 +1206,16 @@ class VmMigrationClient {
   /// Initiates the cancellation of a running cutover job.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::CancelCutoverJobRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2745}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CancelCutoverJobRequest,google/cloud/vmmigration/v1/vmmigration.proto#L3136}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CancelCutoverJobResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2756}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CancelCutoverJobResponse,google/cloud/vmmigration/v1/vmmigration.proto#L3147}
   ///
   /// [google.cloud.vmmigration.v1.CancelCutoverJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2745}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3136}
   /// [google.cloud.vmmigration.v1.CancelCutoverJobResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2756}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3147}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::CancelCutoverJobResponse>>
   CancelCutoverJob(
@@ -1230,12 +1230,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L884}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   /// [google.cloud.vmmigration.v1.ListCutoverJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2759}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3150}
   /// [google.cloud.vmmigration.v1.CutoverJob]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L884}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   StreamRange<google::cloud::vmmigration::v1::CutoverJob> ListCutoverJobs(
       std::string const& parent, Options opts = {});
@@ -1244,16 +1244,16 @@ class VmMigrationClient {
   /// Lists CutoverJobs of a given migrating VM.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::ListCutoverJobsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2759}
+  /// @googleapis_link{google::cloud::vmmigration::v1::ListCutoverJobsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L3150}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L884}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   /// [google.cloud.vmmigration.v1.ListCutoverJobsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2759}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3150}
   /// [google.cloud.vmmigration.v1.CutoverJob]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L884}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   StreamRange<google::cloud::vmmigration::v1::CutoverJob> ListCutoverJobs(
       google::cloud::vmmigration::v1::ListCutoverJobsRequest request,
@@ -1266,12 +1266,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L884}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   /// [google.cloud.vmmigration.v1.GetCutoverJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2803}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3194}
   /// [google.cloud.vmmigration.v1.CutoverJob]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L884}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
       std::string const& name, Options opts = {});
@@ -1280,16 +1280,16 @@ class VmMigrationClient {
   /// Gets details of a single CutoverJob.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::GetCutoverJobRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2803}
+  /// @googleapis_link{google::cloud::vmmigration::v1::GetCutoverJobRequest,google/cloud/vmmigration/v1/vmmigration.proto#L3194}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L884}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CutoverJob,google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   /// [google.cloud.vmmigration.v1.GetCutoverJobRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2803}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3194}
   /// [google.cloud.vmmigration.v1.CutoverJob]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L884}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L1031}
   ///
   StatusOr<google::cloud::vmmigration::v1::CutoverJob> GetCutoverJob(
       google::cloud::vmmigration::v1::GetCutoverJobRequest const& request,
@@ -1302,12 +1302,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   /// [google.cloud.vmmigration.v1.ListGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2535}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2926}
   /// [google.cloud.vmmigration.v1.Group]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   StreamRange<google::cloud::vmmigration::v1::Group> ListGroups(
       std::string const& parent, Options opts = {});
@@ -1316,16 +1316,16 @@ class VmMigrationClient {
   /// Lists Groups in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::ListGroupsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2535}
+  /// @googleapis_link{google::cloud::vmmigration::v1::ListGroupsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2926}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   /// [google.cloud.vmmigration.v1.ListGroupsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2535}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2926}
   /// [google.cloud.vmmigration.v1.Group]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   StreamRange<google::cloud::vmmigration::v1::Group> ListGroups(
       google::cloud::vmmigration::v1::ListGroupsRequest request,
@@ -1338,12 +1338,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   /// [google.cloud.vmmigration.v1.GetGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2578}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2969}
   /// [google.cloud.vmmigration.v1.Group]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   StatusOr<google::cloud::vmmigration::v1::Group> GetGroup(
       std::string const& name, Options opts = {});
@@ -1352,16 +1352,16 @@ class VmMigrationClient {
   /// Gets details of a single Group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::GetGroupRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2578}
+  /// @googleapis_link{google::cloud::vmmigration::v1::GetGroupRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2969}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   /// [google.cloud.vmmigration.v1.GetGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2578}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2969}
   /// [google.cloud.vmmigration.v1.Group]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   StatusOr<google::cloud::vmmigration::v1::Group> GetGroup(
       google::cloud::vmmigration::v1::GetGroupRequest const& request,
@@ -1376,12 +1376,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   /// [google.cloud.vmmigration.v1.CreateGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2589}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2980}
   /// [google.cloud.vmmigration.v1.Group]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::Group>> CreateGroup(
       std::string const& parent,
@@ -1392,16 +1392,16 @@ class VmMigrationClient {
   /// Creates a new Group in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::CreateGroupRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2589}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CreateGroupRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2980}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   /// [google.cloud.vmmigration.v1.CreateGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2589}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2980}
   /// [google.cloud.vmmigration.v1.Group]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::Group>> CreateGroup(
       google::cloud::vmmigration::v1::CreateGroupRequest const& request,
@@ -1420,12 +1420,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   /// [google.cloud.vmmigration.v1.UpdateGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2621}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3012}
   /// [google.cloud.vmmigration.v1.Group]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
       google::cloud::vmmigration::v1::Group const& group,
@@ -1435,16 +1435,16 @@ class VmMigrationClient {
   /// Updates the parameters of a single Group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::UpdateGroupRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2621}
+  /// @googleapis_link{google::cloud::vmmigration::v1::UpdateGroupRequest,google/cloud/vmmigration/v1/vmmigration.proto#L3012}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_link{google::cloud::vmmigration::v1::Group,google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   /// [google.cloud.vmmigration.v1.UpdateGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2621}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3012}
   /// [google.cloud.vmmigration.v1.Group]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2510}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2901}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::Group>> UpdateGroup(
       google::cloud::vmmigration::v1::UpdateGroupRequest const& request,
@@ -1457,12 +1457,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   /// [google.cloud.vmmigration.v1.DeleteGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2649}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3040}
   /// [google.cloud.vmmigration.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteGroup(std::string const& name, Options opts = {});
@@ -1471,16 +1471,16 @@ class VmMigrationClient {
   /// Deletes a single Group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::DeleteGroupRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2649}
+  /// @googleapis_link{google::cloud::vmmigration::v1::DeleteGroupRequest,google/cloud/vmmigration/v1/vmmigration.proto#L3040}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   /// [google.cloud.vmmigration.v1.DeleteGroupRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2649}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3040}
   /// [google.cloud.vmmigration.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteGroup(google::cloud::vmmigration::v1::DeleteGroupRequest const& request,
@@ -1493,12 +1493,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::AddGroupMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2691}
+  /// @googleapis_link{google::cloud::vmmigration::v1::AddGroupMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L3082}
   ///
   /// [google.cloud.vmmigration.v1.AddGroupMigrationRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2675}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3066}
   /// [google.cloud.vmmigration.v1.AddGroupMigrationResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2691}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3082}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
   AddGroupMigration(std::string const& group, Options opts = {});
@@ -1507,16 +1507,16 @@ class VmMigrationClient {
   /// Adds a MigratingVm to a Group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::AddGroupMigrationRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2675}
+  /// @googleapis_link{google::cloud::vmmigration::v1::AddGroupMigrationRequest,google/cloud/vmmigration/v1/vmmigration.proto#L3066}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::AddGroupMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2691}
+  /// @googleapis_link{google::cloud::vmmigration::v1::AddGroupMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L3082}
   ///
   /// [google.cloud.vmmigration.v1.AddGroupMigrationRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2675}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3066}
   /// [google.cloud.vmmigration.v1.AddGroupMigrationResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2691}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3082}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::AddGroupMigrationResponse>>
   AddGroupMigration(
@@ -1530,12 +1530,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::RemoveGroupMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2710}
+  /// @googleapis_link{google::cloud::vmmigration::v1::RemoveGroupMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L3101}
   ///
   /// [google.cloud.vmmigration.v1.RemoveGroupMigrationRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2694}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3085}
   /// [google.cloud.vmmigration.v1.RemoveGroupMigrationResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2710}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3101}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
   RemoveGroupMigration(std::string const& group, Options opts = {});
@@ -1544,16 +1544,16 @@ class VmMigrationClient {
   /// Removes a MigratingVm from a Group.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::RemoveGroupMigrationRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2694}
+  /// @googleapis_link{google::cloud::vmmigration::v1::RemoveGroupMigrationRequest,google/cloud/vmmigration/v1/vmmigration.proto#L3085}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::RemoveGroupMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L2710}
+  /// @googleapis_link{google::cloud::vmmigration::v1::RemoveGroupMigrationResponse,google/cloud/vmmigration/v1/vmmigration.proto#L3101}
   ///
   /// [google.cloud.vmmigration.v1.RemoveGroupMigrationRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2694}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3085}
   /// [google.cloud.vmmigration.v1.RemoveGroupMigrationResponse]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2710}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3101}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::RemoveGroupMigrationResponse>>
   RemoveGroupMigration(
@@ -1572,12 +1572,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   /// [google.cloud.vmmigration.v1.ListTargetProjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2379}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2770}
   /// [google.cloud.vmmigration.v1.TargetProject]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   StreamRange<google::cloud::vmmigration::v1::TargetProject> ListTargetProjects(
       std::string const& parent, Options opts = {});
@@ -1589,16 +1589,16 @@ class VmMigrationClient {
   /// for location is `global`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::ListTargetProjectsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2379}
+  /// @googleapis_link{google::cloud::vmmigration::v1::ListTargetProjectsRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2770}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   /// [google.cloud.vmmigration.v1.ListTargetProjectsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2379}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2770}
   /// [google.cloud.vmmigration.v1.TargetProject]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   StreamRange<google::cloud::vmmigration::v1::TargetProject> ListTargetProjects(
       google::cloud::vmmigration::v1::ListTargetProjectsRequest request,
@@ -1614,12 +1614,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   /// [google.cloud.vmmigration.v1.GetTargetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2368}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2759}
   /// [google.cloud.vmmigration.v1.TargetProject]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   StatusOr<google::cloud::vmmigration::v1::TargetProject> GetTargetProject(
       std::string const& name, Options opts = {});
@@ -1631,16 +1631,16 @@ class VmMigrationClient {
   /// for location is `global`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::GetTargetProjectRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2368}
+  /// @googleapis_link{google::cloud::vmmigration::v1::GetTargetProjectRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2759}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   /// [google.cloud.vmmigration.v1.GetTargetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2368}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2759}
   /// [google.cloud.vmmigration.v1.TargetProject]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   StatusOr<google::cloud::vmmigration::v1::TargetProject> GetTargetProject(
       google::cloud::vmmigration::v1::GetTargetProjectRequest const& request,
@@ -1658,12 +1658,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   /// [google.cloud.vmmigration.v1.CreateTargetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2423}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
   /// [google.cloud.vmmigration.v1.TargetProject]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
   CreateTargetProject(
@@ -1678,16 +1678,16 @@ class VmMigrationClient {
   /// for location is `global`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::CreateTargetProjectRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2423}
+  /// @googleapis_link{google::cloud::vmmigration::v1::CreateTargetProjectRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   /// [google.cloud.vmmigration.v1.CreateTargetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2423}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
   /// [google.cloud.vmmigration.v1.TargetProject]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
   CreateTargetProject(
@@ -1710,12 +1710,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   /// [google.cloud.vmmigration.v1.UpdateTargetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2455}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2846}
   /// [google.cloud.vmmigration.v1.TargetProject]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
   UpdateTargetProject(
@@ -1729,16 +1729,16 @@ class VmMigrationClient {
   /// for location is `global`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::UpdateTargetProjectRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2455}
+  /// @googleapis_link{google::cloud::vmmigration::v1::UpdateTargetProjectRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2846}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_link{google::cloud::vmmigration::v1::TargetProject,google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   /// [google.cloud.vmmigration.v1.UpdateTargetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2455}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2846}
   /// [google.cloud.vmmigration.v1.TargetProject]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2342}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2733}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
   UpdateTargetProject(
@@ -1755,12 +1755,12 @@ class VmMigrationClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   /// [google.cloud.vmmigration.v1.DeleteTargetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2483}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2874}
   /// [google.cloud.vmmigration.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteTargetProject(std::string const& name, Options opts = {});
@@ -1772,20 +1772,95 @@ class VmMigrationClient {
   /// for location is `global`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmmigration::v1::DeleteTargetProjectRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2483}
+  /// @googleapis_link{google::cloud::vmmigration::v1::DeleteTargetProjectRequest,google/cloud/vmmigration/v1/vmmigration.proto#L2874}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_link{google::cloud::vmmigration::v1::OperationMetadata,google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   /// [google.cloud.vmmigration.v1.DeleteTargetProjectRequest]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2483}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2874}
   /// [google.cloud.vmmigration.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L2814}
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3205}
   ///
   future<StatusOr<google::cloud::vmmigration::v1::OperationMetadata>>
   DeleteTargetProject(
       google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request,
+      Options opts = {});
+
+  ///
+  /// Lists ReplicationCycles in a given MigratingVM.
+  ///
+  /// @param parent  Required. The parent, which owns this collection of
+  /// ReplicationCycles.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::vmmigration::v1::ReplicationCycle,google/cloud/vmmigration/v1/vmmigration.proto#L673}
+  ///
+  /// [google.cloud.vmmigration.v1.ListReplicationCyclesRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3316}
+  /// [google.cloud.vmmigration.v1.ReplicationCycle]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L673}
+  ///
+  StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
+  ListReplicationCycles(std::string const& parent, Options opts = {});
+
+  ///
+  /// Lists ReplicationCycles in a given MigratingVM.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::vmmigration::v1::ListReplicationCyclesRequest,google/cloud/vmmigration/v1/vmmigration.proto#L3316}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::vmmigration::v1::ReplicationCycle,google/cloud/vmmigration/v1/vmmigration.proto#L673}
+  ///
+  /// [google.cloud.vmmigration.v1.ListReplicationCyclesRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3316}
+  /// [google.cloud.vmmigration.v1.ReplicationCycle]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L673}
+  ///
+  StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
+  ListReplicationCycles(
+      google::cloud::vmmigration::v1::ListReplicationCyclesRequest request,
+      Options opts = {});
+
+  ///
+  /// Gets details of a single ReplicationCycle.
+  ///
+  /// @param name  Required. The name of the ReplicationCycle.
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::vmmigration::v1::ReplicationCycle,google/cloud/vmmigration/v1/vmmigration.proto#L673}
+  ///
+  /// [google.cloud.vmmigration.v1.GetReplicationCycleRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3360}
+  /// [google.cloud.vmmigration.v1.ReplicationCycle]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L673}
+  ///
+  StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+  GetReplicationCycle(std::string const& name, Options opts = {});
+
+  ///
+  /// Gets details of a single ReplicationCycle.
+  ///
+  /// @param request
+  /// @googleapis_link{google::cloud::vmmigration::v1::GetReplicationCycleRequest,google/cloud/vmmigration/v1/vmmigration.proto#L3360}
+  /// @param opts Optional. Override the class-level options, such as retry and
+  ///     backoff policies.
+  /// @return
+  /// @googleapis_link{google::cloud::vmmigration::v1::ReplicationCycle,google/cloud/vmmigration/v1/vmmigration.proto#L673}
+  ///
+  /// [google.cloud.vmmigration.v1.GetReplicationCycleRequest]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L3360}
+  /// [google.cloud.vmmigration.v1.ReplicationCycle]:
+  /// @googleapis_reference_link{google/cloud/vmmigration/v1/vmmigration.proto#L673}
+  ///
+  StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+  GetReplicationCycle(
+      google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request,
       Options opts = {});
 
  private:

@@ -93,16 +93,16 @@ class VmwareEngineClient {
   /// queried for
   ///  clusters. Resource names are schemeless URIs that follow the conventions
   ///  in https://cloud.google.com/apis/design/resource_names. For example:
-  ///  `projects/my-project/locations/us-west1-a`
+  ///  `projects/my-project/locations/us-central1-a`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.ListPrivateCloudsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L586}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L622}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   StreamRange<google::cloud::vmwareengine::v1::PrivateCloud> ListPrivateClouds(
       std::string const& parent, Options opts = {});
@@ -111,16 +111,16 @@ class VmwareEngineClient {
   /// Lists `PrivateCloud` resources in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::ListPrivateCloudsRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L586}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::ListPrivateCloudsRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L622}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.ListPrivateCloudsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L586}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L622}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   StreamRange<google::cloud::vmwareengine::v1::PrivateCloud> ListPrivateClouds(
       google::cloud::vmwareengine::v1::ListPrivateCloudsRequest request,
@@ -133,16 +133,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a/privateClouds/my-cloud`
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.GetPrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L663}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L701}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   StatusOr<google::cloud::vmwareengine::v1::PrivateCloud> GetPrivateCloud(
       std::string const& name, Options opts = {});
@@ -151,16 +151,16 @@ class VmwareEngineClient {
   /// Retrieves a `PrivateCloud` resource by its resource name.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::GetPrivateCloudRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L663}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::GetPrivateCloudRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L701}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.GetPrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L663}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L701}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   StatusOr<google::cloud::vmwareengine::v1::PrivateCloud> GetPrivateCloud(
       google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request,
@@ -180,7 +180,7 @@ class VmwareEngineClient {
   ///  private cloud in. Resource names are schemeless URIs that follow the
   ///  conventions in https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a`
+  ///  `projects/my-project/locations/us-central1-a`
   /// @param private_cloud  Required. The initial description of the new private
   /// cloud.
   /// @param private_cloud_id  Required. The user-provided identifier of the
@@ -197,12 +197,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.CreatePrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L678}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L717}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   CreatePrivateCloud(
@@ -220,16 +220,16 @@ class VmwareEngineClient {
   /// for that private cloud.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::CreatePrivateCloudRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L678}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::CreatePrivateCloudRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L717}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.CreatePrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L678}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L717}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   CreatePrivateCloud(
@@ -256,12 +256,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.UpdatePrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L717}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L757}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UpdatePrivateCloud(
@@ -279,16 +279,16 @@ class VmwareEngineClient {
   /// processing fully completes.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L717}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::UpdatePrivateCloudRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L757}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.UpdatePrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L717}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L757}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UpdatePrivateCloud(
@@ -316,16 +316,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a/privateClouds/my-cloud`
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.DeletePrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L734}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L776}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   DeletePrivateCloud(std::string const& name, Options opts = {});
@@ -348,16 +348,16 @@ class VmwareEngineClient {
   /// when it is completely purged.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::DeletePrivateCloudRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L734}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::DeletePrivateCloudRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L776}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.DeletePrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L734}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L776}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   DeletePrivateCloud(
@@ -375,16 +375,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a/privateClouds/my-cloud`
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.UndeletePrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L769}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L813}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UndeletePrivateCloud(std::string const& name, Options opts = {});
@@ -396,16 +396,16 @@ class VmwareEngineClient {
   /// the time when deletion can no longer be reversed.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L769}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::UndeletePrivateCloudRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L813}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.UndeletePrivateCloudRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L769}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L813}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   UndeletePrivateCloud(
@@ -421,16 +421,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a/privateClouds/my-cloud`
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   /// [google.cloud.vmwareengine.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L847}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L895}
   /// [google.cloud.vmwareengine.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   StreamRange<google::cloud::vmwareengine::v1::Cluster> ListClusters(
       std::string const& parent, Options opts = {});
@@ -439,16 +439,16 @@ class VmwareEngineClient {
   /// Lists `Cluster` resources in a given private cloud.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::ListClustersRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L847}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::ListClustersRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L895}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   /// [google.cloud.vmwareengine.v1.ListClustersRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L847}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L895}
   /// [google.cloud.vmwareengine.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   StreamRange<google::cloud::vmwareengine::v1::Cluster> ListClusters(
       google::cloud::vmwareengine::v1::ListClustersRequest request,
@@ -461,16 +461,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a/privateClouds/my-cloud/clusters/my-cluster`
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/clusters/my-cluster`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   /// [google.cloud.vmwareengine.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L912}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L962}
   /// [google.cloud.vmwareengine.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   StatusOr<google::cloud::vmwareengine::v1::Cluster> GetCluster(
       std::string const& name, Options opts = {});
@@ -479,16 +479,16 @@ class VmwareEngineClient {
   /// Retrieves a `Cluster` resource by its resource name.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::GetClusterRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L912}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::GetClusterRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L962}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   /// [google.cloud.vmwareengine.v1.GetClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L912}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L962}
   /// [google.cloud.vmwareengine.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   StatusOr<google::cloud::vmwareengine::v1::Cluster> GetCluster(
       google::cloud::vmwareengine::v1::GetClusterRequest const& request,
@@ -505,7 +505,7 @@ class VmwareEngineClient {
   ///  in. Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a/privateClouds/my-cloud`
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
   /// @param cluster  Required. The initial description of the new cluster.
   /// @param cluster_id  Required. The user-provided identifier of the new
   /// `Cluster`.
@@ -521,12 +521,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   /// [google.cloud.vmwareengine.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L927}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L978}
   /// [google.cloud.vmwareengine.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> CreateCluster(
       std::string const& parent,
@@ -540,16 +540,16 @@ class VmwareEngineClient {
   /// quota](https://cloud.google.com/vmware-engine/quotas).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::CreateClusterRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L927}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::CreateClusterRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L978}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   /// [google.cloud.vmwareengine.v1.CreateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L927}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L978}
   /// [google.cloud.vmwareengine.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> CreateCluster(
       google::cloud::vmwareengine::v1::CreateClusterRequest const& request,
@@ -575,12 +575,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L966}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1018}
   /// [google.cloud.vmwareengine.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
       google::cloud::vmwareengine::v1::Cluster const& cluster,
@@ -597,16 +597,16 @@ class VmwareEngineClient {
   /// processing fully completes.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::UpdateClusterRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L966}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::UpdateClusterRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1018}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Cluster,google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   /// [google.cloud.vmwareengine.v1.UpdateClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L966}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1018}
   /// [google.cloud.vmwareengine.v1.Cluster]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L788}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L832}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::Cluster>> UpdateCluster(
       google::cloud::vmwareengine::v1::UpdateClusterRequest const& request,
@@ -622,16 +622,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a/privateClouds/my-cloud/clusters/my-cluster`
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud/clusters/my-cluster`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::OperationMetadata,google/cloud/vmwareengine/v1/vmwareengine.proto#L1092}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::OperationMetadata,google/cloud/vmwareengine/v1/vmwareengine.proto#L1149}
   ///
   /// [google.cloud.vmwareengine.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L987}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1041}
   /// [google.cloud.vmwareengine.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1092}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1149}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteCluster(std::string const& name, Options opts = {});
@@ -643,16 +643,16 @@ class VmwareEngineClient {
   /// method.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::DeleteClusterRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L987}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::DeleteClusterRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1041}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::OperationMetadata,google/cloud/vmwareengine/v1/vmwareengine.proto#L1092}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::OperationMetadata,google/cloud/vmwareengine/v1/vmwareengine.proto#L1149}
   ///
   /// [google.cloud.vmwareengine.v1.DeleteClusterRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L987}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1041}
   /// [google.cloud.vmwareengine.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1092}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1149}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteCluster(
@@ -668,16 +668,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a/privateClouds/my-cloud`
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Subnet,google/cloud/vmwareengine/v1/vmwareengine.proto#L1007}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Subnet,google/cloud/vmwareengine/v1/vmwareengine.proto#L1061}
   ///
   /// [google.cloud.vmwareengine.v1.ListSubnetsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1053}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1109}
   /// [google.cloud.vmwareengine.v1.Subnet]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1007}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1061}
   ///
   StreamRange<google::cloud::vmwareengine::v1::Subnet> ListSubnets(
       std::string const& parent, Options opts = {});
@@ -686,16 +686,16 @@ class VmwareEngineClient {
   /// Lists subnets in a given private cloud.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::ListSubnetsRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1053}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::ListSubnetsRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1109}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Subnet,google/cloud/vmwareengine/v1/vmwareengine.proto#L1007}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Subnet,google/cloud/vmwareengine/v1/vmwareengine.proto#L1061}
   ///
   /// [google.cloud.vmwareengine.v1.ListSubnetsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1053}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1109}
   /// [google.cloud.vmwareengine.v1.Subnet]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1007}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1061}
   ///
   StreamRange<google::cloud::vmwareengine::v1::Subnet> ListSubnets(
       google::cloud::vmwareengine::v1::ListSubnetsRequest request,
@@ -709,16 +709,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a`
+  ///  `projects/my-project/locations/us-central1-a`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::NodeType,google/cloud/vmwareengine/v1/vmwareengine.proto#L1120}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::NodeType,google/cloud/vmwareengine/v1/vmwareengine.proto#L1180}
   ///
   /// [google.cloud.vmwareengine.v1.ListNodeTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1158}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1220}
   /// [google.cloud.vmwareengine.v1.NodeType]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1120}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1180}
   ///
   StreamRange<google::cloud::vmwareengine::v1::NodeType> ListNodeTypes(
       std::string const& parent, Options opts = {});
@@ -727,16 +727,16 @@ class VmwareEngineClient {
   /// Lists node types
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::ListNodeTypesRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1158}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::ListNodeTypesRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1220}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::NodeType,google/cloud/vmwareengine/v1/vmwareengine.proto#L1120}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::NodeType,google/cloud/vmwareengine/v1/vmwareengine.proto#L1180}
   ///
   /// [google.cloud.vmwareengine.v1.ListNodeTypesRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1158}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1220}
   /// [google.cloud.vmwareengine.v1.NodeType]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1120}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1180}
   ///
   StreamRange<google::cloud::vmwareengine::v1::NodeType> ListNodeTypes(
       google::cloud::vmwareengine::v1::ListNodeTypesRequest request,
@@ -749,16 +749,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-proj/locations/us-west1-a/nodeTypes/standard-72`
+  ///  `projects/my-proj/locations/us-central1-a/nodeTypes/standard-72`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::NodeType,google/cloud/vmwareengine/v1/vmwareengine.proto#L1120}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::NodeType,google/cloud/vmwareengine/v1/vmwareengine.proto#L1180}
   ///
   /// [google.cloud.vmwareengine.v1.GetNodeTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1227}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1291}
   /// [google.cloud.vmwareengine.v1.NodeType]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1120}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1180}
   ///
   StatusOr<google::cloud::vmwareengine::v1::NodeType> GetNodeType(
       std::string const& name, Options opts = {});
@@ -767,16 +767,16 @@ class VmwareEngineClient {
   /// Gets details of a single `NodeType`.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::GetNodeTypeRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1227}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::GetNodeTypeRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1291}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::NodeType,google/cloud/vmwareengine/v1/vmwareengine.proto#L1120}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::NodeType,google/cloud/vmwareengine/v1/vmwareengine.proto#L1180}
   ///
   /// [google.cloud.vmwareengine.v1.GetNodeTypeRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1227}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1291}
   /// [google.cloud.vmwareengine.v1.NodeType]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1120}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1180}
   ///
   StatusOr<google::cloud::vmwareengine::v1::NodeType> GetNodeType(
       google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request,
@@ -790,16 +790,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a/privateClouds/my-cloud`
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Credentials,google/cloud/vmwareengine/v1/vmwareengine.proto#L1242}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Credentials,google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
   ///
   /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1251}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1316}
   /// [google.cloud.vmwareengine.v1.Credentials]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1242}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
   ///
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowNsxCredentials(
       std::string const& private_cloud, Options opts = {});
@@ -808,16 +808,16 @@ class VmwareEngineClient {
   /// Gets details of credentials for NSX appliance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1251}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1316}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Credentials,google/cloud/vmwareengine/v1/vmwareengine.proto#L1242}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Credentials,google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
   ///
   /// [google.cloud.vmwareengine.v1.ShowNsxCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1251}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1316}
   /// [google.cloud.vmwareengine.v1.Credentials]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1242}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
   ///
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowNsxCredentials(
       google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request,
@@ -831,16 +831,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a/privateClouds/my-cloud`
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Credentials,google/cloud/vmwareengine/v1/vmwareengine.proto#L1242}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Credentials,google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
   ///
   /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1267}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1333}
   /// [google.cloud.vmwareengine.v1.Credentials]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1242}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
   ///
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowVcenterCredentials(
       std::string const& private_cloud, Options opts = {});
@@ -849,16 +849,16 @@ class VmwareEngineClient {
   /// Gets details of credentials for Vcenter appliance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1267}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1333}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::Credentials,google/cloud/vmwareengine/v1/vmwareengine.proto#L1242}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::Credentials,google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
   ///
   /// [google.cloud.vmwareengine.v1.ShowVcenterCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1267}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1333}
   /// [google.cloud.vmwareengine.v1.Credentials]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1242}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1306}
   ///
   StatusOr<google::cloud::vmwareengine::v1::Credentials> ShowVcenterCredentials(
       google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const&
@@ -873,16 +873,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a/privateClouds/my-cloud`
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.ResetNsxCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1283}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1350}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetNsxCredentials(std::string const& private_cloud, Options opts = {});
@@ -891,16 +891,16 @@ class VmwareEngineClient {
   /// Resets credentials of the NSX appliance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1283}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::ResetNsxCredentialsRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1350}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.ResetNsxCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1283}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1350}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetNsxCredentials(
@@ -916,16 +916,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1-a/privateClouds/my-cloud`
+  ///  `projects/my-project/locations/us-central1-a/privateClouds/my-cloud`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.ResetVcenterCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1315}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1383}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetVcenterCredentials(std::string const& private_cloud, Options opts = {});
@@ -934,16 +934,16 @@ class VmwareEngineClient {
   /// Resets credentials of the Vcenter appliance.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1315}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::ResetVcenterCredentialsRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1383}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::PrivateCloud,google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   /// [google.cloud.vmwareengine.v1.ResetVcenterCredentialsRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1315}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1383}
   /// [google.cloud.vmwareengine.v1.PrivateCloud]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L485}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L514}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
   ResetVcenterCredentials(
@@ -977,12 +977,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1365}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
   /// [google.cloud.vmwareengine.v1.CreateHcxActivationKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1452}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1527}
   /// [google.cloud.vmwareengine.v1.HcxActivationKey]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1365}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
   CreateHcxActivationKey(
@@ -995,16 +995,16 @@ class VmwareEngineClient {
   /// Creates a new HCX activation key in a given private cloud.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1452}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::CreateHcxActivationKeyRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1527}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1365}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
   /// [google.cloud.vmwareengine.v1.CreateHcxActivationKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1452}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1527}
   /// [google.cloud.vmwareengine.v1.HcxActivationKey]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1365}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>>
   CreateHcxActivationKey(
@@ -1024,12 +1024,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1365}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
   /// [google.cloud.vmwareengine.v1.ListHcxActivationKeysRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1407}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1481}
   /// [google.cloud.vmwareengine.v1.HcxActivationKey]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1365}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
   StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
   ListHcxActivationKeys(std::string const& parent, Options opts = {});
@@ -1038,16 +1038,16 @@ class VmwareEngineClient {
   /// Lists `HcxActivationKey` resources in a given private cloud.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1407}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::ListHcxActivationKeysRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1481}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1365}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
   /// [google.cloud.vmwareengine.v1.ListHcxActivationKeysRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1407}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1481}
   /// [google.cloud.vmwareengine.v1.HcxActivationKey]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1365}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
   StreamRange<google::cloud::vmwareengine::v1::HcxActivationKey>
   ListHcxActivationKeys(
@@ -1062,16 +1062,16 @@ class VmwareEngineClient {
   ///  Resource names are schemeless URIs that follow the conventions in
   ///  https://cloud.google.com/apis/design/resource_names.
   ///  For example:
-  ///  `projects/my-project/locations/us-west1/privateClouds/my-cloud/hcxActivationKeys/my-key`
+  ///  `projects/my-project/locations/us-central1/privateClouds/my-cloud/hcxActivationKeys/my-key`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1365}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
   /// [google.cloud.vmwareengine.v1.GetHcxActivationKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1511}
   /// [google.cloud.vmwareengine.v1.HcxActivationKey]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1365}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
   StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
   GetHcxActivationKey(std::string const& name, Options opts = {});
@@ -1080,16 +1080,16 @@ class VmwareEngineClient {
   /// Retrieves a `HcxActivationKey` resource by its resource name.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1511}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1365}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::HcxActivationKey,google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
   /// [google.cloud.vmwareengine.v1.GetHcxActivationKeyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1511}
   /// [google.cloud.vmwareengine.v1.HcxActivationKey]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1365}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1437}
   ///
   StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
   GetHcxActivationKey(
@@ -1109,12 +1109,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   /// [google.cloud.vmwareengine.v1.GetNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1753}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1834}
   /// [google.cloud.vmwareengine.v1.NetworkPolicy]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy> GetNetworkPolicy(
       std::string const& name, Options opts = {});
@@ -1123,16 +1123,16 @@ class VmwareEngineClient {
   /// Retrieves a `NetworkPolicy` resource by its resource name.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::GetNetworkPolicyRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1753}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::GetNetworkPolicyRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1834}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   /// [google.cloud.vmwareengine.v1.GetNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1753}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1834}
   /// [google.cloud.vmwareengine.v1.NetworkPolicy]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy> GetNetworkPolicy(
       google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request,
@@ -1149,12 +1149,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   /// [google.cloud.vmwareengine.v1.ListNetworkPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1677}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1756}
   /// [google.cloud.vmwareengine.v1.NetworkPolicy]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>
   ListNetworkPolicies(std::string const& parent, Options opts = {});
@@ -1163,16 +1163,16 @@ class VmwareEngineClient {
   /// Lists `NetworkPolicy` resources in a specified project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1677}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::ListNetworkPoliciesRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1756}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   /// [google.cloud.vmwareengine.v1.ListNetworkPoliciesRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1677}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1756}
   /// [google.cloud.vmwareengine.v1.NetworkPolicy]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>
   ListNetworkPolicies(
@@ -1207,12 +1207,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   /// [google.cloud.vmwareengine.v1.CreateNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1797}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1881}
   /// [google.cloud.vmwareengine.v1.NetworkPolicy]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
   CreateNetworkPolicy(
@@ -1226,16 +1226,16 @@ class VmwareEngineClient {
   /// another network policy already exists in the same scope.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1797}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::CreateNetworkPolicyRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1881}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   /// [google.cloud.vmwareengine.v1.CreateNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1797}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1881}
   /// [google.cloud.vmwareengine.v1.NetworkPolicy]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
   CreateNetworkPolicy(
@@ -1267,12 +1267,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   /// [google.cloud.vmwareengine.v1.UpdateNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1768}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1850}
   /// [google.cloud.vmwareengine.v1.NetworkPolicy]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
   UpdateNetworkPolicy(
@@ -1294,16 +1294,16 @@ class VmwareEngineClient {
   /// processing fully completes.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1768}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::UpdateNetworkPolicyRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1850}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::NetworkPolicy,google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   /// [google.cloud.vmwareengine.v1.UpdateNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1768}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1850}
   /// [google.cloud.vmwareengine.v1.NetworkPolicy]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1586}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1662}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>>
   UpdateNetworkPolicy(
@@ -1324,12 +1324,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::OperationMetadata,google/cloud/vmwareengine/v1/vmwareengine.proto#L1092}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::OperationMetadata,google/cloud/vmwareengine/v1/vmwareengine.proto#L1149}
   ///
   /// [google.cloud.vmwareengine.v1.DeleteNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1846}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1931}
   /// [google.cloud.vmwareengine.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1092}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1149}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteNetworkPolicy(std::string const& name, Options opts = {});
@@ -1340,16 +1340,16 @@ class VmwareEngineClient {
   /// external IP or internet access service.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1846}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::DeleteNetworkPolicyRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1931}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::OperationMetadata,google/cloud/vmwareengine/v1/vmwareengine.proto#L1092}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::OperationMetadata,google/cloud/vmwareengine/v1/vmwareengine.proto#L1149}
   ///
   /// [google.cloud.vmwareengine.v1.DeleteNetworkPolicyRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1846}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1931}
   /// [google.cloud.vmwareengine.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1092}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1149}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteNetworkPolicy(
@@ -1378,7 +1378,7 @@ class VmwareEngineClient {
   ///  * For networks of type LEGACY, adheres to the format:
   ///  `{region-id}-default`. Replace `{region-id}` with the region where you
   ///  want to create the VMware Engine network. For example,
-  ///  "us-west1-default".
+  ///  "us-central1-default".
   ///  * Only contains 1-63 alphanumeric characters and hyphens
   ///  * Begins with an alphabetical character
   ///  * Ends with a non-hyphen character
@@ -1388,12 +1388,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   /// [google.cloud.vmwareengine.v1.CreateVmwareEngineNetworkRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1989}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2078}
   /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
   CreateVmwareEngineNetwork(
@@ -1406,16 +1406,16 @@ class VmwareEngineClient {
   /// Creates a new VMware Engine network that can be used by a private cloud.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L1989}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::CreateVmwareEngineNetworkRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L2078}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   /// [google.cloud.vmwareengine.v1.CreateVmwareEngineNetworkRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1989}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2078}
   /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
   CreateVmwareEngineNetwork(
@@ -1439,12 +1439,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   /// [google.cloud.vmwareengine.v1.UpdateVmwareEngineNetworkRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2041}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2132}
   /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
   UpdateVmwareEngineNetwork(
@@ -1458,16 +1458,16 @@ class VmwareEngineClient {
   /// applied.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L2041}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::UpdateVmwareEngineNetworkRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L2132}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   /// [google.cloud.vmwareengine.v1.UpdateVmwareEngineNetworkRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2041}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2132}
   /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>>
   UpdateVmwareEngineNetwork(
@@ -1490,12 +1490,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::OperationMetadata,google/cloud/vmwareengine/v1/vmwareengine.proto#L1092}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::OperationMetadata,google/cloud/vmwareengine/v1/vmwareengine.proto#L1149}
   ///
   /// [google.cloud.vmwareengine.v1.DeleteVmwareEngineNetworkRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2071}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2165}
   /// [google.cloud.vmwareengine.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1092}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1149}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteVmwareEngineNetwork(std::string const& name, Options opts = {});
@@ -1507,16 +1507,16 @@ class VmwareEngineClient {
   /// refer to the same VMware Engine network.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L2071}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::DeleteVmwareEngineNetworkRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L2165}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::OperationMetadata,google/cloud/vmwareengine/v1/vmwareengine.proto#L1092}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::OperationMetadata,google/cloud/vmwareengine/v1/vmwareengine.proto#L1149}
   ///
   /// [google.cloud.vmwareengine.v1.DeleteVmwareEngineNetworkRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2071}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2165}
   /// [google.cloud.vmwareengine.v1.OperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1092}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1149}
   ///
   future<StatusOr<google::cloud::vmwareengine::v1::OperationMetadata>>
   DeleteVmwareEngineNetwork(
@@ -1539,12 +1539,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   /// [google.cloud.vmwareengine.v1.GetVmwareEngineNetworkRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2108}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2203}
   /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
   GetVmwareEngineNetwork(std::string const& name, Options opts = {});
@@ -1556,16 +1556,16 @@ class VmwareEngineClient {
   /// (for example, `CREATING`, `ACTIVE`, `DELETING`).
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L2108}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L2203}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   /// [google.cloud.vmwareengine.v1.GetVmwareEngineNetworkRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2108}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2203}
   /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
   GetVmwareEngineNetwork(
@@ -1583,12 +1583,12 @@ class VmwareEngineClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   /// [google.cloud.vmwareengine.v1.ListVmwareEngineNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2123}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2219}
   /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
   ListVmwareEngineNetworks(std::string const& parent, Options opts = {});
@@ -1597,16 +1597,16 @@ class VmwareEngineClient {
   /// Lists `VmwareEngineNetwork` resources in a given project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L2123}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::ListVmwareEngineNetworksRequest,google/cloud/vmwareengine/v1/vmwareengine.proto#L2219}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_link{google::cloud::vmwareengine::v1::VmwareEngineNetwork,google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   /// [google.cloud.vmwareengine.v1.ListVmwareEngineNetworksRequest]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2123}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L2219}
   /// [google.cloud.vmwareengine.v1.VmwareEngineNetwork]:
-  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1878}
+  /// @googleapis_reference_link{google/cloud/vmwareengine/v1/vmwareengine.proto#L1963}
   ///
   StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
   ListVmwareEngineNetworks(

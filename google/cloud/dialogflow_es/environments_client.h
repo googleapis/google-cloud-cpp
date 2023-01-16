@@ -94,12 +94,12 @@ class EnvironmentsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L139}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L142}
   ///
   /// [google.cloud.dialogflow.v2.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L230}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L238}
   /// [google.cloud.dialogflow.v2.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L139}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
   ///
   StreamRange<google::cloud::dialogflow::v2::Environment> ListEnvironments(
       std::string const& parent, Options opts = {});
@@ -108,16 +108,16 @@ class EnvironmentsClient {
   /// Returns the list of all non-default environments of the specified agent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListEnvironmentsRequest,google/cloud/dialogflow/v2/environment.proto#L230}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ListEnvironmentsRequest,google/cloud/dialogflow/v2/environment.proto#L238}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L139}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L142}
   ///
   /// [google.cloud.dialogflow.v2.ListEnvironmentsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L230}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L238}
   /// [google.cloud.dialogflow.v2.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L139}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
   ///
   StreamRange<google::cloud::dialogflow::v2::Environment> ListEnvironments(
       google::cloud::dialogflow::v2::ListEnvironmentsRequest request,
@@ -127,16 +127,16 @@ class EnvironmentsClient {
   /// Retrieves the specified agent environment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetEnvironmentRequest,google/cloud/dialogflow/v2/environment.proto#L263}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetEnvironmentRequest,google/cloud/dialogflow/v2/environment.proto#L273}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L139}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L142}
   ///
   /// [google.cloud.dialogflow.v2.GetEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L263}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L273}
   /// [google.cloud.dialogflow.v2.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L139}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
   ///
   StatusOr<google::cloud::dialogflow::v2::Environment> GetEnvironment(
       google::cloud::dialogflow::v2::GetEnvironmentRequest const& request,
@@ -146,16 +146,16 @@ class EnvironmentsClient {
   /// Creates an agent environment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateEnvironmentRequest,google/cloud/dialogflow/v2/environment.proto#L281}
+  /// @googleapis_link{google::cloud::dialogflow::v2::CreateEnvironmentRequest,google/cloud/dialogflow/v2/environment.proto#L292}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L139}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L142}
   ///
   /// [google.cloud.dialogflow.v2.CreateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L281}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L292}
   /// [google.cloud.dialogflow.v2.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L139}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
   ///
   StatusOr<google::cloud::dialogflow::v2::Environment> CreateEnvironment(
       google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request,
@@ -176,16 +176,16 @@ class EnvironmentsClient {
   /// to a version before calling this method.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateEnvironmentRequest,google/cloud/dialogflow/v2/environment.proto#L302}
+  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateEnvironmentRequest,google/cloud/dialogflow/v2/environment.proto#L314}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L139}
+  /// @googleapis_link{google::cloud::dialogflow::v2::Environment,google/cloud/dialogflow/v2/environment.proto#L142}
   ///
   /// [google.cloud.dialogflow.v2.UpdateEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L302}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L314}
   /// [google.cloud.dialogflow.v2.Environment]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L139}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L142}
   ///
   StatusOr<google::cloud::dialogflow::v2::Environment> UpdateEnvironment(
       google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request,
@@ -195,12 +195,12 @@ class EnvironmentsClient {
   /// Deletes the specified agent environment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteEnvironmentRequest,google/cloud/dialogflow/v2/environment.proto#L317}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteEnvironmentRequest,google/cloud/dialogflow/v2/environment.proto#L332}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteEnvironmentRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L317}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L332}
   ///
   Status DeleteEnvironment(
       google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request,
@@ -210,16 +210,16 @@ class EnvironmentsClient {
   /// Gets the history of the specified environment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest,google/cloud/dialogflow/v2/environment.proto#L335}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetEnvironmentHistoryRequest,google/cloud/dialogflow/v2/environment.proto#L351}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::EnvironmentHistory::Entry,google/cloud/dialogflow/v2/environment.proto#L362}
+  /// @googleapis_link{google::cloud::dialogflow::v2::EnvironmentHistory::Entry,google/cloud/dialogflow/v2/environment.proto#L379}
   ///
   /// [google.cloud.dialogflow.v2.GetEnvironmentHistoryRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L335}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L351}
   /// [google.cloud.dialogflow.v2.EnvironmentHistory.Entry]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L362}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/environment.proto#L379}
   ///
   StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>
   GetEnvironmentHistory(

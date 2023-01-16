@@ -146,6 +146,21 @@ ConversationsConnectionImpl::ListMessages(
       });
 }
 
+StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+ConversationsConnectionImpl::SuggestConversationSummary(
+    google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+        request) {
+  return google::cloud::internal::RetryLoop(
+      retry_policy(), backoff_policy(),
+      idempotency_policy()->SuggestConversationSummary(request),
+      [this](grpc::ClientContext& context,
+             google::cloud::dialogflow::v2::
+                 SuggestConversationSummaryRequest const& request) {
+        return stub_->SuggestConversationSummary(context, request);
+      },
+      request, __func__);
+}
+
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace dialogflow_es_internal
 }  // namespace cloud

@@ -293,6 +293,19 @@ class VmMigrationStub {
       google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
           request) = 0;
 
+  virtual StatusOr<
+      google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
+  ListReplicationCycles(
+      grpc::ClientContext& context,
+      google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
+          request) = 0;
+
+  virtual StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+  GetReplicationCycle(
+      grpc::ClientContext& context,
+      google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
+          request) = 0;
+
   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
@@ -565,6 +578,18 @@ class DefaultVmMigrationStub : public VmMigrationStub {
       google::cloud::CompletionQueue& cq,
       std::unique_ptr<grpc::ClientContext> context,
       google::cloud::vmmigration::v1::DeleteTargetProjectRequest const& request)
+      override;
+
+  StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
+  ListReplicationCycles(
+      grpc::ClientContext& client_context,
+      google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
+          request) override;
+
+  StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+  GetReplicationCycle(
+      grpc::ClientContext& client_context,
+      google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request)
       override;
 
   future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(

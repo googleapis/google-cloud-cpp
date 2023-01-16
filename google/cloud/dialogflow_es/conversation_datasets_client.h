@@ -109,12 +109,12 @@ class ConversationDatasetsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L159}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
   /// [google.cloud.dialogflow.v2.CreateConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L191}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L204}
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L159}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
   CreateConversationDataset(
@@ -136,16 +136,16 @@ class ConversationDatasetsClient {
   /// [ConversationDataset][google.cloud.dialogflow.v2.ConversationDataset]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateConversationDatasetRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L191}
+  /// @googleapis_link{google::cloud::dialogflow::v2::CreateConversationDatasetRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L204}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L159}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
   /// [google.cloud.dialogflow.v2.CreateConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L191}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L204}
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L159}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::ConversationDataset>>
   CreateConversationDataset(
@@ -162,12 +162,12 @@ class ConversationDatasetsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L159}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
   /// [google.cloud.dialogflow.v2.GetConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L202}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L216}
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L159}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
   StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
   GetConversationDataset(std::string const& name, Options opts = {});
@@ -176,16 +176,16 @@ class ConversationDatasetsClient {
   /// Retrieves the specified conversation dataset.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetConversationDatasetRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L202}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetConversationDatasetRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L216}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L159}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
   /// [google.cloud.dialogflow.v2.GetConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L202}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L216}
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L159}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
   StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
   GetConversationDataset(
@@ -198,17 +198,17 @@ class ConversationDatasetsClient {
   /// project and location.
   ///
   /// @param parent  Required. The project and location name to list all
-  /// conversation datasets for.
-  ///  Format: `projects/<Project ID>/locations/<Location ID>`
+  /// conversation datasets
+  ///  for. Format: `projects/<Project ID>/locations/<Location ID>`
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L159}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
   /// [google.cloud.dialogflow.v2.ListConversationDatasetsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L216}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L230}
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L159}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
   StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
   ListConversationDatasets(std::string const& parent, Options opts = {});
@@ -218,16 +218,16 @@ class ConversationDatasetsClient {
   /// project and location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListConversationDatasetsRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L216}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ListConversationDatasetsRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L230}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L159}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ConversationDataset,google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
   /// [google.cloud.dialogflow.v2.ListConversationDatasetsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L216}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L230}
   /// [google.cloud.dialogflow.v2.ConversationDataset]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L159}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L169}
   ///
   StreamRange<google::cloud::dialogflow::v2::ConversationDataset>
   ListConversationDatasets(
@@ -252,12 +252,12 @@ class ConversationDatasetsClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata,google/cloud/dialogflow/v2/conversation_dataset.proto#L318}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata,google/cloud/dialogflow/v2/conversation_dataset.proto#L336}
   ///
   /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L247}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L261}
   /// [google.cloud.dialogflow.v2.DeleteConversationDatasetOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L318}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L336}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::
                       DeleteConversationDatasetOperationMetadata>>
@@ -276,16 +276,16 @@ class ConversationDatasetsClient {
   ///   message](https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#empty)
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L247}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L261}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata,google/cloud/dialogflow/v2/conversation_dataset.proto#L318}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteConversationDatasetOperationMetadata,google/cloud/dialogflow/v2/conversation_dataset.proto#L336}
   ///
   /// [google.cloud.dialogflow.v2.DeleteConversationDatasetRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L247}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L261}
   /// [google.cloud.dialogflow.v2.DeleteConversationDatasetOperationMetadata]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L318}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L336}
   ///
   future<StatusOr<google::cloud::dialogflow::v2::
                       DeleteConversationDatasetOperationMetadata>>
@@ -309,16 +309,16 @@ class ConversationDatasetsClient {
   /// [ImportConversationDataOperationResponse][google.cloud.dialogflow.v2.ImportConversationDataOperationResponse]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ImportConversationDataRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L260}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ImportConversationDataRequest,google/cloud/dialogflow/v2/conversation_dataset.proto#L275}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::v2::ImportConversationDataOperationResponse,google/cloud/dialogflow/v2/conversation_dataset.proto#L295}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ImportConversationDataOperationResponse,google/cloud/dialogflow/v2/conversation_dataset.proto#L313}
   ///
   /// [google.cloud.dialogflow.v2.ImportConversationDataRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L260}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L275}
   /// [google.cloud.dialogflow.v2.ImportConversationDataOperationResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L295}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/conversation_dataset.proto#L313}
   ///
   future<StatusOr<
       google::cloud::dialogflow::v2::ImportConversationDataOperationResponse>>

@@ -67,6 +67,11 @@ class ConversationsConnectionImpl
   StreamRange<google::cloud::dialogflow::v2::Message> ListMessages(
       google::cloud::dialogflow::v2::ListMessagesRequest request) override;
 
+  StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+  SuggestConversationSummary(
+      google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
+          request) override;
+
  private:
   std::unique_ptr<dialogflow_es::ConversationsRetryPolicy> retry_policy() {
     auto const& options = internal::CurrentOptions();

@@ -368,6 +368,20 @@ VmMigrationConnection::DeleteTargetProject(
       Status(StatusCode::kUnimplemented, "not implemented"));
 }
 
+StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationConnection::ListReplicationCycles(
+    google::cloud::vmmigration::v1::
+        ListReplicationCyclesRequest) {  // NOLINT(performance-unnecessary-value-param)
+  return google::cloud::internal::MakeUnimplementedPaginationRange<
+      StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>>();
+}
+
+StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationConnection::GetReplicationCycle(
+    google::cloud::vmmigration::v1::GetReplicationCycleRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<VmMigrationConnection> MakeVmMigrationConnection(
     Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

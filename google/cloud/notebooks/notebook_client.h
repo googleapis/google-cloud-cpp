@@ -958,12 +958,12 @@ class NotebookServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L278}
+  /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L279}
   ///
   /// [google.cloud.notebooks.v1.ListExecutionsRequest]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L916}
   /// [google.cloud.notebooks.v1.Execution]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L278}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L279}
   ///
   StreamRange<google::cloud::notebooks::v1::Execution> ListExecutions(
       std::string const& parent, Options opts = {});
@@ -976,12 +976,12 @@ class NotebookServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L278}
+  /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L279}
   ///
   /// [google.cloud.notebooks.v1.ListExecutionsRequest]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L916}
   /// [google.cloud.notebooks.v1.Execution]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L278}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L279}
   ///
   StreamRange<google::cloud::notebooks::v1::Execution> ListExecutions(
       google::cloud::notebooks::v1::ListExecutionsRequest request,
@@ -995,12 +995,12 @@ class NotebookServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L278}
+  /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L279}
   ///
   /// [google.cloud.notebooks.v1.GetExecutionRequest]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L959}
   /// [google.cloud.notebooks.v1.Execution]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L278}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L279}
   ///
   StatusOr<google::cloud::notebooks::v1::Execution> GetExecution(
       std::string const& name, Options opts = {});
@@ -1013,12 +1013,12 @@ class NotebookServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L278}
+  /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L279}
   ///
   /// [google.cloud.notebooks.v1.GetExecutionRequest]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L959}
   /// [google.cloud.notebooks.v1.Execution]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L278}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L279}
   ///
   StatusOr<google::cloud::notebooks::v1::Execution> GetExecution(
       google::cloud::notebooks::v1::GetExecutionRequest const& request,
@@ -1072,12 +1072,12 @@ class NotebookServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L278}
+  /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L279}
   ///
   /// [google.cloud.notebooks.v1.CreateExecutionRequest]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L983}
   /// [google.cloud.notebooks.v1.Execution]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L278}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L279}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Execution>> CreateExecution(
       std::string const& parent,
@@ -1092,12 +1092,12 @@ class NotebookServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L278}
+  /// @googleapis_link{google::cloud::notebooks::v1::Execution,google/cloud/notebooks/v1/execution.proto#L279}
   ///
   /// [google.cloud.notebooks.v1.CreateExecutionRequest]:
   /// @googleapis_reference_link{google/cloud/notebooks/v1/service.proto#L983}
   /// [google.cloud.notebooks.v1.Execution]:
-  /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L278}
+  /// @googleapis_reference_link{google/cloud/notebooks/v1/execution.proto#L279}
   ///
   future<StatusOr<google::cloud::notebooks::v1::Execution>> CreateExecution(
       google::cloud::notebooks::v1::CreateExecutionRequest const& request,

@@ -248,6 +248,15 @@ class VmMigrationConnection {
   DeleteTargetProject(
       google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
           request);
+
+  virtual StreamRange<google::cloud::vmmigration::v1::ReplicationCycle>
+  ListReplicationCycles(
+      google::cloud::vmmigration::v1::ListReplicationCyclesRequest request);
+
+  virtual StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+  GetReplicationCycle(
+      google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
+          request);
 };
 
 /**

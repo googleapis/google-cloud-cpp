@@ -423,6 +423,23 @@ VmMigrationMetadata::AsyncDeleteTargetProject(
   return child_->AsyncDeleteTargetProject(cq, std::move(context), request);
 }
 
+StatusOr<google::cloud::vmmigration::v1::ListReplicationCyclesResponse>
+VmMigrationMetadata::ListReplicationCycles(
+    grpc::ClientContext& context,
+    google::cloud::vmmigration::v1::ListReplicationCyclesRequest const&
+        request) {
+  SetMetadata(context, "parent=" + request.parent());
+  return child_->ListReplicationCycles(context, request);
+}
+
+StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
+VmMigrationMetadata::GetReplicationCycle(
+    grpc::ClientContext& context,
+    google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
+  SetMetadata(context, "name=" + request.name());
+  return child_->GetReplicationCycle(context, request);
+}
+
 future<StatusOr<google::longrunning::Operation>>
 VmMigrationMetadata::AsyncGetOperation(
     google::cloud::CompletionQueue& cq,

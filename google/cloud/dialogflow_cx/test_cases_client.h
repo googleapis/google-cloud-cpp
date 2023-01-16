@@ -93,12 +93,12 @@ class TestCasesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListTestCasesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L547}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L569}
   /// [google.cloud.dialogflow.cx.v3.TestCase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::TestCase> ListTestCases(
       std::string const& parent, Options opts = {});
@@ -107,16 +107,16 @@ class TestCasesClient {
   /// Fetches a list of test cases for a given agent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListTestCasesRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L547}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListTestCasesRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L569}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListTestCasesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L547}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L569}
   /// [google.cloud.dialogflow.cx.v3.TestCase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::TestCase> ListTestCases(
       google::cloud::dialogflow::cx::v3::ListTestCasesRequest request,
@@ -132,7 +132,7 @@ class TestCasesClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.BatchDeleteTestCasesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L595}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L619}
   ///
   Status BatchDeleteTestCases(std::string const& parent, Options opts = {});
 
@@ -140,12 +140,12 @@ class TestCasesClient {
   /// Batch deletes test cases.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L595}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L619}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.BatchDeleteTestCasesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L595}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L619}
   ///
   Status BatchDeleteTestCases(
       google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
@@ -161,12 +161,12 @@ class TestCasesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetTestCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L642}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L671}
   /// [google.cloud.dialogflow.cx.v3.TestCase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> GetTestCase(
       std::string const& name, Options opts = {});
@@ -175,16 +175,16 @@ class TestCasesClient {
   /// Gets a test case.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetTestCaseRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L642}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetTestCaseRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L671}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetTestCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L642}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L671}
   /// [google.cloud.dialogflow.cx.v3.TestCase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> GetTestCase(
       google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request,
@@ -200,12 +200,12 @@ class TestCasesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateTestCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L616}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L641}
   /// [google.cloud.dialogflow.cx.v3.TestCase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> CreateTestCase(
       std::string const& parent,
@@ -216,16 +216,16 @@ class TestCasesClient {
   /// Creates a test case for the given agent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateTestCaseRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L616}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateTestCaseRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L641}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateTestCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L616}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L641}
   /// [google.cloud.dialogflow.cx.v3.TestCase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> CreateTestCase(
       google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request,
@@ -244,12 +244,12 @@ class TestCasesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L631}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   /// [google.cloud.dialogflow.cx.v3.TestCase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
       google::cloud::dialogflow::cx::v3::TestCase const& test_case,
@@ -259,16 +259,16 @@ class TestCasesClient {
   /// Updates the specified test case.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L631}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCase,google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateTestCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L631}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L657}
   /// [google.cloud.dialogflow.cx.v3.TestCase]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L200}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L214}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TestCase> UpdateTestCase(
       google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request,
@@ -287,16 +287,16 @@ class TestCasesClient {
   /// [RunTestCaseResponse][google.cloud.dialogflow.cx.v3.RunTestCaseResponse]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::RunTestCaseRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L655}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::RunTestCaseRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L685}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::RunTestCaseResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L677}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::RunTestCaseResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L708}
   ///
   /// [google.cloud.dialogflow.cx.v3.RunTestCaseRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L655}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L685}
   /// [google.cloud.dialogflow.cx.v3.RunTestCaseResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L677}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L708}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
   RunTestCase(
@@ -316,16 +316,16 @@ class TestCasesClient {
   /// [BatchRunTestCasesResponse][google.cloud.dialogflow.cx.v3.BatchRunTestCasesResponse]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L689}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::BatchRunTestCasesRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L720}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L720}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L752}
   ///
   /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L689}
-  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesResponse]:
   /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L720}
+  /// [google.cloud.dialogflow.cx.v3.BatchRunTestCasesResponse]:
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L752}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::BatchRunTestCasesResponse>>
   BatchRunTestCases(
@@ -337,16 +337,16 @@ class TestCasesClient {
   /// Calculates the test coverage for an agent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CalculateCoverageRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L496}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CalculateCoverageRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L516}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CalculateCoverageResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L526}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CalculateCoverageResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L547}
   ///
   /// [google.cloud.dialogflow.cx.v3.CalculateCoverageRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L496}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L516}
   /// [google.cloud.dialogflow.cx.v3.CalculateCoverageResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L526}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L547}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
   CalculateCoverage(
@@ -369,16 +369,16 @@ class TestCasesClient {
   /// [ImportTestCasesResponse][google.cloud.dialogflow.cx.v3.ImportTestCasesResponse]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ImportTestCasesRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L749}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ImportTestCasesRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L784}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ImportTestCasesResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L778}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ImportTestCasesResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L814}
   ///
   /// [google.cloud.dialogflow.cx.v3.ImportTestCasesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L749}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L784}
   /// [google.cloud.dialogflow.cx.v3.ImportTestCasesResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L778}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L814}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
   ImportTestCases(
@@ -399,16 +399,16 @@ class TestCasesClient {
   /// [ExportTestCasesResponse][google.cloud.dialogflow.cx.v3.ExportTestCasesResponse]
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ExportTestCasesRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L804}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ExportTestCasesRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L842}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ExportTestCasesResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L859}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ExportTestCasesResponse,google/cloud/dialogflow/cx/v3/test_case.proto#L898}
   ///
   /// [google.cloud.dialogflow.cx.v3.ExportTestCasesRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L804}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L842}
   /// [google.cloud.dialogflow.cx.v3.ExportTestCasesResponse]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L859}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L898}
   ///
   future<StatusOr<google::cloud::dialogflow::cx::v3::ExportTestCasesResponse>>
   ExportTestCases(
@@ -425,12 +425,12 @@ class TestCasesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCaseResult,google/cloud/dialogflow/cx/v3/test_case.proto#L240}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCaseResult,google/cloud/dialogflow/cx/v3/test_case.proto#L256}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListTestCaseResultsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L880}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L918}
   /// [google.cloud.dialogflow.cx.v3.TestCaseResult]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L240}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L256}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
   ListTestCaseResults(std::string const& parent, Options opts = {});
@@ -439,16 +439,16 @@ class TestCasesClient {
   /// Fetches a list of results for a given test case.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L880}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListTestCaseResultsRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L918}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCaseResult,google/cloud/dialogflow/cx/v3/test_case.proto#L240}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCaseResult,google/cloud/dialogflow/cx/v3/test_case.proto#L256}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListTestCaseResultsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L880}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L918}
   /// [google.cloud.dialogflow.cx.v3.TestCaseResult]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L240}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L256}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::TestCaseResult>
   ListTestCaseResults(
@@ -464,12 +464,12 @@ class TestCasesClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCaseResult,google/cloud/dialogflow/cx/v3/test_case.proto#L240}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCaseResult,google/cloud/dialogflow/cx/v3/test_case.proto#L256}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetTestCaseResultRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L937}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L977}
   /// [google.cloud.dialogflow.cx.v3.TestCaseResult]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L240}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L256}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult> GetTestCaseResult(
       std::string const& name, Options opts = {});
@@ -478,16 +478,16 @@ class TestCasesClient {
   /// Gets a test case result.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L937}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest,google/cloud/dialogflow/cx/v3/test_case.proto#L977}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCaseResult,google/cloud/dialogflow/cx/v3/test_case.proto#L240}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::TestCaseResult,google/cloud/dialogflow/cx/v3/test_case.proto#L256}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetTestCaseResultRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L937}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L977}
   /// [google.cloud.dialogflow.cx.v3.TestCaseResult]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L240}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/test_case.proto#L256}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult> GetTestCaseResult(
       google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&

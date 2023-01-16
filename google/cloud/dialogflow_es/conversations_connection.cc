@@ -69,6 +69,12 @@ ConversationsConnection::ListMessages(
       StreamRange<google::cloud::dialogflow::v2::Message>>();
 }
 
+StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
+ConversationsConnection::SuggestConversationSummary(
+    google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&) {
+  return Status(StatusCode::kUnimplemented, "not implemented");
+}
+
 std::shared_ptr<ConversationsConnection> MakeConversationsConnection(
     std::string const& location, Options options) {
   internal::CheckExpectedOptions<CommonOptionList, GrpcOptionList,

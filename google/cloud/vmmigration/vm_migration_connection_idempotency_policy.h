@@ -178,6 +178,13 @@ class VmMigrationConnectionIdempotencyPolicy {
   virtual google::cloud::Idempotency DeleteTargetProject(
       google::cloud::vmmigration::v1::DeleteTargetProjectRequest const&
           request);
+
+  virtual google::cloud::Idempotency ListReplicationCycles(
+      google::cloud::vmmigration::v1::ListReplicationCyclesRequest request);
+
+  virtual google::cloud::Idempotency GetReplicationCycle(
+      google::cloud::vmmigration::v1::GetReplicationCycleRequest const&
+          request);
 };
 
 std::unique_ptr<VmMigrationConnectionIdempotencyPolicy>

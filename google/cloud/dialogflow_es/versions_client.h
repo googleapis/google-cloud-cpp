@@ -95,7 +95,7 @@ class VersionsClient {
   /// @googleapis_link{google::cloud::dialogflow::v2::Version,google/cloud/dialogflow/v2/version.proto#L126}
   ///
   /// [google.cloud.dialogflow.v2.ListVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L173}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L175}
   /// [google.cloud.dialogflow.v2.Version]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L126}
   ///
@@ -106,14 +106,14 @@ class VersionsClient {
   /// Returns the list of all versions of the specified agent.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::ListVersionsRequest,google/cloud/dialogflow/v2/version.proto#L173}
+  /// @googleapis_link{google::cloud::dialogflow::v2::ListVersionsRequest,google/cloud/dialogflow/v2/version.proto#L175}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Version,google/cloud/dialogflow/v2/version.proto#L126}
   ///
   /// [google.cloud.dialogflow.v2.ListVersionsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L173}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L175}
   /// [google.cloud.dialogflow.v2.Version]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L126}
   ///
@@ -135,7 +135,7 @@ class VersionsClient {
   /// @googleapis_link{google::cloud::dialogflow::v2::Version,google/cloud/dialogflow/v2/version.proto#L126}
   ///
   /// [google.cloud.dialogflow.v2.GetVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L206}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L210}
   /// [google.cloud.dialogflow.v2.Version]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L126}
   ///
@@ -146,14 +146,14 @@ class VersionsClient {
   /// Retrieves the specified agent version.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::GetVersionRequest,google/cloud/dialogflow/v2/version.proto#L206}
+  /// @googleapis_link{google::cloud::dialogflow::v2::GetVersionRequest,google/cloud/dialogflow/v2/version.proto#L210}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Version,google/cloud/dialogflow/v2/version.proto#L126}
   ///
   /// [google.cloud.dialogflow.v2.GetVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L206}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L210}
   /// [google.cloud.dialogflow.v2.Version]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L126}
   ///
@@ -177,7 +177,7 @@ class VersionsClient {
   /// @googleapis_link{google::cloud::dialogflow::v2::Version,google/cloud/dialogflow/v2/version.proto#L126}
   ///
   /// [google.cloud.dialogflow.v2.CreateVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L222}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L227}
   /// [google.cloud.dialogflow.v2.Version]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L126}
   ///
@@ -191,14 +191,14 @@ class VersionsClient {
   /// The new version points to the agent instance in the "default" environment.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::CreateVersionRequest,google/cloud/dialogflow/v2/version.proto#L222}
+  /// @googleapis_link{google::cloud::dialogflow::v2::CreateVersionRequest,google/cloud/dialogflow/v2/version.proto#L227}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Version,google/cloud/dialogflow/v2/version.proto#L126}
   ///
   /// [google.cloud.dialogflow.v2.CreateVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L222}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L227}
   /// [google.cloud.dialogflow.v2.Version]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L126}
   ///
@@ -226,7 +226,7 @@ class VersionsClient {
   /// @googleapis_link{google::cloud::dialogflow::v2::Version,google/cloud/dialogflow/v2/version.proto#L126}
   ///
   /// [google.cloud.dialogflow.v2.UpdateVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L240}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L246}
   /// [google.cloud.dialogflow.v2.Version]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L126}
   ///
@@ -242,14 +242,14 @@ class VersionsClient {
   /// properties of the version resource.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateVersionRequest,google/cloud/dialogflow/v2/version.proto#L240}
+  /// @googleapis_link{google::cloud::dialogflow::v2::UpdateVersionRequest,google/cloud/dialogflow/v2/version.proto#L246}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
   /// @googleapis_link{google::cloud::dialogflow::v2::Version,google/cloud/dialogflow/v2/version.proto#L126}
   ///
   /// [google.cloud.dialogflow.v2.UpdateVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L240}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L246}
   /// [google.cloud.dialogflow.v2.Version]:
   /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L126}
   ///
@@ -269,7 +269,7 @@ class VersionsClient {
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L254}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L262}
   ///
   Status DeleteVersion(std::string const& name, Options opts = {});
 
@@ -277,12 +277,12 @@ class VersionsClient {
   /// Delete the specified agent version.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteVersionRequest,google/cloud/dialogflow/v2/version.proto#L254}
+  /// @googleapis_link{google::cloud::dialogflow::v2::DeleteVersionRequest,google/cloud/dialogflow/v2/version.proto#L262}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.v2.DeleteVersionRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L254}
+  /// @googleapis_reference_link{google/cloud/dialogflow/v2/version.proto#L262}
   ///
   Status DeleteVersion(
       google::cloud::dialogflow::v2::DeleteVersionRequest const& request,

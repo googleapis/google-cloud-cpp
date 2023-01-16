@@ -55,6 +55,39 @@ SchemaServiceAuth::ListSchemas(
   return child_->ListSchemas(context, request);
 }
 
+StatusOr<google::pubsub::v1::ListSchemaRevisionsResponse>
+SchemaServiceAuth::ListSchemaRevisions(
+    grpc::ClientContext& context,
+    google::pubsub::v1::ListSchemaRevisionsRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->ListSchemaRevisions(context, request);
+}
+
+StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::CommitSchema(
+    grpc::ClientContext& context,
+    google::pubsub::v1::CommitSchemaRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->CommitSchema(context, request);
+}
+
+StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::RollbackSchema(
+    grpc::ClientContext& context,
+    google::pubsub::v1::RollbackSchemaRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->RollbackSchema(context, request);
+}
+
+StatusOr<google::pubsub::v1::Schema> SchemaServiceAuth::DeleteSchemaRevision(
+    grpc::ClientContext& context,
+    google::pubsub::v1::DeleteSchemaRevisionRequest const& request) {
+  auto status = auth_->ConfigureContext(context);
+  if (!status.ok()) return status;
+  return child_->DeleteSchemaRevision(context, request);
+}
+
 Status SchemaServiceAuth::DeleteSchema(
     grpc::ClientContext& context,
     google::pubsub::v1::DeleteSchemaRequest const& request) {

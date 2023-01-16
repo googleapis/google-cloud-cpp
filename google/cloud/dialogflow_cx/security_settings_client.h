@@ -91,18 +91,18 @@ class SecuritySettingsServiceClient {
   /// Create security settings in the specified location.
   ///
   /// @param parent  Required. The location to create an
-  /// [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings] for.
+  ///  [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings] for.
   ///  Format: `projects/<Project ID>/locations/<Location ID>`.
   /// @param security_settings  Required. The security settings to create.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L150}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L162}
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   CreateSecuritySettings(
@@ -115,16 +115,16 @@ class SecuritySettingsServiceClient {
   /// Create security settings in the specified location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L150}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L162}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   /// [google.cloud.dialogflow.cx.v3.CreateSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L150}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L162}
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   CreateSecuritySettings(
@@ -143,12 +143,12 @@ class SecuritySettingsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L97}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L106}
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   GetSecuritySettings(std::string const& name, Options opts = {});
@@ -159,16 +159,16 @@ class SecuritySettingsServiceClient {
   /// returned settings may be stale by up to 1 minute.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L97}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L106}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   /// [google.cloud.dialogflow.cx.v3.GetSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L97}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L106}
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   GetSecuritySettings(
@@ -184,17 +184,17 @@ class SecuritySettingsServiceClient {
   /// contains values for each of the
   ///  fields to update.
   /// @param update_mask  Required. The mask to control which fields get
-  /// updated. If the mask is not present,
-  ///  all fields will be updated.
+  /// updated. If the mask is not
+  ///  present, all fields will be updated.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L110}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   UpdateSecuritySettings(
@@ -207,16 +207,16 @@ class SecuritySettingsServiceClient {
   /// [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L110}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   /// [google.cloud.dialogflow.cx.v3.UpdateSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L110}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L120}
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
   UpdateSecuritySettings(
@@ -232,12 +232,12 @@ class SecuritySettingsServiceClient {
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L121}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L133}
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
   ListSecuritySettings(std::string const& parent, Options opts = {});
@@ -246,16 +246,16 @@ class SecuritySettingsServiceClient {
   /// Returns the list of all security settings in the specified location.
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L121}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::ListSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L133}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   /// @return
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::SecuritySettings,google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   /// [google.cloud.dialogflow.cx.v3.ListSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L121}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L133}
   /// [google.cloud.dialogflow.cx.v3.SecuritySettings]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L180}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L195}
   ///
   StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
   ListSecuritySettings(
@@ -267,15 +267,14 @@ class SecuritySettingsServiceClient {
   /// [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings].
   ///
   /// @param name  Required. The name of the
-  /// [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings] to
-  /// delete.
-  ///  Format: `projects/<Project ID>/locations/<Location
+  ///  [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings] to
+  ///  delete. Format: `projects/<Project ID>/locations/<Location
   ///  ID>/securitySettings/<Security Settings ID>`.
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L165}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L179}
   ///
   Status DeleteSecuritySettings(std::string const& name, Options opts = {});
 
@@ -284,12 +283,12 @@ class SecuritySettingsServiceClient {
   /// [SecuritySettings][google.cloud.dialogflow.cx.v3.SecuritySettings].
   ///
   /// @param request
-  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L165}
+  /// @googleapis_link{google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest,google/cloud/dialogflow/cx/v3/security_settings.proto#L179}
   /// @param opts Optional. Override the class-level options, such as retry and
   ///     backoff policies.
   ///
   /// [google.cloud.dialogflow.cx.v3.DeleteSecuritySettingsRequest]:
-  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L165}
+  /// @googleapis_reference_link{google/cloud/dialogflow/cx/v3/security_settings.proto#L179}
   ///
   Status DeleteSecuritySettings(
       google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&

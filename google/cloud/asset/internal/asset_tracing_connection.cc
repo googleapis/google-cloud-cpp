@@ -150,6 +150,28 @@ AssetServiceTracingConnection::BatchGetEffectiveIamPolicies(
   return child_->BatchGetEffectiveIamPolicies(request);
 }
 
+StreamRange<
+    google::cloud::asset::v1::AnalyzeOrgPoliciesResponse::OrgPolicyResult>
+AssetServiceTracingConnection::AnalyzeOrgPolicies(
+    google::cloud::asset::v1::AnalyzeOrgPoliciesRequest request) {
+  return child_->AnalyzeOrgPolicies(request);
+}
+
+StreamRange<google::cloud::asset::v1::
+                AnalyzeOrgPolicyGovernedContainersResponse::GovernedContainer>
+AssetServiceTracingConnection::AnalyzeOrgPolicyGovernedContainers(
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedContainersRequest
+        request) {
+  return child_->AnalyzeOrgPolicyGovernedContainers(request);
+}
+
+StreamRange<google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsResponse::
+                GovernedAsset>
+AssetServiceTracingConnection::AnalyzeOrgPolicyGovernedAssets(
+    google::cloud::asset::v1::AnalyzeOrgPolicyGovernedAssetsRequest request) {
+  return child_->AnalyzeOrgPolicyGovernedAssets(request);
+}
+
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
