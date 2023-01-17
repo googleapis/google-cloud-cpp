@@ -204,6 +204,82 @@ TEST(LogWrapper, FutureStatusWithContextAndCQ) {
                                         HasSubstr(" >> future_status="))));
 }
 
+struct TestContext {};
+/// @test the overload for functions returning FutureStatusOr and using
+/// CompletionQueue as input
+TEST(LogWrapper, FutureStatusOrValueWithTestContextAndCQ) {
+  auto mock = [](google::cloud::CompletionQueue&, TestContext&,
+                 google::spanner::v1::Mutation m) {
+    return make_ready_future(make_status_or(std::move(m)));
+  };
+
+  testing_util::ScopedLog log;
+  CompletionQueue cq;
+  TestContext context;
+  LogWrapper(mock, cq, context, MakeMutation(), "in-test", {});
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> response="))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> future_status="))));
+}
+
+/// @test the overload for functions returning FutureStatusOr and using
+/// CompletionQueue as input
+TEST(LogWrapper, FutureStatusOrErrorWithTestContextAndCQ) {
+  auto mock = [](google::cloud::CompletionQueue&, TestContext&,
+                 google::spanner::v1::Mutation const&) {
+    return make_ready_future(StatusOr<google::spanner::v1::Mutation>(
+        Status(StatusCode::kPermissionDenied, "uh-oh")));
+  };
+
+  testing_util::ScopedLog log;
+  CompletionQueue cq;
+  TestContext context;
+  LogWrapper(mock, cq, context, MakeMutation(), "in-test", {});
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" >> status="))));
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr("uh-oh"))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> future_status="))));
+}
+
+/// @test the overload for functions returning FutureStatus and using
+/// CompletionQueue as input
+TEST(LogWrapper, FutureStatusWithTestContextAndCQ) {
+  auto const status = Status(StatusCode::kPermissionDenied, "uh-oh");
+  auto mock = [&](google::cloud::CompletionQueue&, TestContext&,
+                  google::spanner::v1::Mutation const&) {
+    return make_ready_future(status);
+  };
+
+  testing_util::ScopedLog log;
+  CompletionQueue cq;
+  TestContext context;
+  LogWrapper(mock, cq, context, MakeMutation(), "in-test", {});
+
+  std::ostringstream os;
+  os << status;
+  auto status_as_string = std::move(os).str();
+
+  auto const log_lines = log.ExtractLines();
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("), HasSubstr(" << "))));
+  EXPECT_THAT(log_lines,
+              Contains(AllOf(HasSubstr("in-test("),
+                             HasSubstr(" >> response=" + status_as_string))));
+  EXPECT_THAT(log_lines, Contains(AllOf(HasSubstr("in-test("),
+                                        HasSubstr(" >> future_status="))));
+}
+
 /// @test the overload for functions returning Status
 TEST(LogWrapper, StatusValue) {
   auto mock = [](grpc::ClientContext*, btproto::MutateRowRequest const&,
