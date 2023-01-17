@@ -13,12 +13,32 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/xml_parser.h"
+#include "google/cloud/storage/internal/xml_parser_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+StatusOr<std::shared_ptr<XmlNode>> XmlParser::Parse(std::string const& content,
+                                                    Options options) {
+  internal::CheckExpectedOptions<XmlParserOptionsList>(options, __func__);
+  options = XmlParserDefaultOptions(std::move(options));
+
+  // Check size first
+  if (content.length() > options.get<XmlParserMaxSourceSize>()) {
+    return internal::InvalidArgumentError(
+        absl::StrCat("XML exceeds the max byte size of ",
+                     options.get<XmlParserMaxSourceSize>()),
+        GCP_ERROR_INFO());
+  }
+  // Remove unnecessary bits
+  auto trimmed = CleanUpXml(content);
+  // And to be continued...
+  return internal::UnimplementedError("not implemented");
+}
 
 std::string XmlParser::CleanUpXml(std::string const& content) {
   auto ret = std::regex_replace(content, xml_decl_re_, "");
@@ -26,24 +46,6 @@ std::string XmlParser::CleanUpXml(std::string const& content) {
   ret = std::regex_replace(ret, xml_cdata_re_, "");
   ret = std::regex_replace(ret, xml_comment_re_, "");
   return ret;
-}
-
-StatusOr<std::shared_ptr<XmlNode>> XmlParser::ParseXml(
-    std::string const& content, Options options) {
-  internal::CheckExpectedOptions<XmlParserOptionsList>(options, __func__);
-  options = XmlParserDefaultOptions(std::move(options));
-
-  // Check size first
-  if (content.length() > options.get<XmlParserSourceMaxBytes>()) {
-    return internal::InvalidArgumentError(
-        absl::StrCat("XML exceeds the max byte size of ",
-                     options.get<XmlParserSourceMaxBytes>()),
-        GCP_ERROR_INFO());
-  }
-  // Remove unnecessary bits
-  auto trimmed = CleanUpXml(content);
-  // And to be continued...
-  return internal::UnimplementedError("not implemented");
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
