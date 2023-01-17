@@ -52,7 +52,6 @@ function (google_cloud_cpp_enable_cleanup)
     # list.
     foreach (library IN LISTS GOOGLE_CLOUD_CPP_LEGACY_FEATURES)
         string(TOUPPER "GOOGLE_CLOUD_CPP_ENABLE_${library}" feature_flag)
-        message("feature_flag=${feature_flag} IS ${${feature_flag}}")
         if ("${library}" IN_LIST GOOGLE_CLOUD_CPP_ENABLE
             AND NOT "${${feature_flag}}")
             message(
