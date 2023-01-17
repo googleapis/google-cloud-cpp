@@ -16,6 +16,12 @@
 
 include(CMakeDependentOption)
 
+# The default list of libraries to build. These can be overridden by the user by
+# passing a comma-separated list, i.e
+# `-DGOOGLE_CLOUD_CPP_ENABLE=spanner,storage`.
+set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
+    "bigtable;bigquery;iam;logging;pubsub;spanner;storage")
+
 # Handle the dependencies between features. That is, if feature "X" is enabled
 # also enable feature "Y" because "X" depends on "Y".
 function (google_cloud_cpp_enable_deps)
@@ -42,18 +48,17 @@ endfunction ()
 # Cleanup the "GOOGLE_CLOUD_CPP_ENABLE" variable. Remove duplicates, and set
 # backwards compatibility flags.
 function (google_cloud_cpp_enable_cleanup)
-    # Remove any library that's been disabled from the list.
-    foreach (library ${GOOGLE_CLOUD_CPP_ENABLE})
-        if ("${library}" STREQUAL "experimental-storage-grpc")
-            set(feature_flag "GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC")
-        else ()
-            string(TOUPPER "GOOGLE_CLOUD_CPP_ENABLE_${library}" feature_flag)
-        endif ()
-        if (NOT ${feature_flag} AND ${feature_flag} IN_LIST
-                                    GOOGLE_CLOUD_CPP_LEGACY_FEATURES)
+    # Remove any library that's been disabled from the GOOGLE_CLOUD_CPP_ENABLE
+    # list.
+    foreach (library IN LISTS GOOGLE_CLOUD_CPP_LEGACY_FEATURES)
+        string(TOUPPER "GOOGLE_CLOUD_CPP_ENABLE_${library}" feature_flag)
+        if ("${library}" IN_LIST GOOGLE_CLOUD_CPP_ENABLE
+            AND NOT "${${feature_flag}}")
             message(
                 WARNING "Using ${feature_flag} is discouraged. Please use the"
-                        " unified GOOGLE_CLOUD_CPP_ENABLE list instead.")
+                        " unified GOOGLE_CLOUD_CPP_ENABLE list instead."
+                        " The ${library} feature will not be built as"
+                        " ${feature_flag} is turned off.")
             list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE ${library})
         endif ()
     endforeach ()
@@ -137,11 +142,6 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_IAM)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_LOGGING)
 mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
 
-# The default list of libraries to build. These can be overridden by the user by
-# passing a comma-separated list, i.e
-# `-DGOOGLE_CLOUD_CPP_ENABLE=spanner,storage`.
-set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
-    "bigtable;bigquery;iam;logging;pubsub;spanner;storage")
 set(GOOGLE_CLOUD_CPP_ENABLE
     ${GOOGLE_CLOUD_CPP_LEGACY_FEATURES}
     CACHE STRING "The list of libraries to build.")
