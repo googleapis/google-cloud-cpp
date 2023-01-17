@@ -242,7 +242,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetTopicPolicy() sample" << std::endl;
   try {
     SetTopicPolicy({project_id, topic_id});
-  } catch (std::runtime_error const&) {
+  } catch (google::cloud::Status const&) {
     // Ignore errors in this test because SetIamPolicy is flaky without an OCC
     // loop, and we do not want to complicate the example with an OCC loop.
   }
@@ -256,7 +256,7 @@ void AutoRun(std::vector<std::string> const& argv) {
   std::cout << "\nRunning SetSubscriptionPolicy() sample" << std::endl;
   try {
     SetSubscriptionPolicy({project_id, subscription_id});
-  } catch (std::runtime_error const&) {
+  } catch (google::cloud::Status const&) {
     // Ignore errors in this test because SetIamPolicy is flaky without an OCC
     // loop, and we do not want to complicate the example with an OCC loop.
   }
