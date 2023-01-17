@@ -40,9 +40,6 @@ function (google_cloud_cpp_enable_deps)
     if (experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE storage)
     endif ()
-    if (NOT "${GOOGLE_CLOUD_CPP_ENABLE}" STREQUAL "storage")
-
-    endif ()
     set(GOOGLE_CLOUD_CPP_ENABLE
         "${GOOGLE_CLOUD_CPP_ENABLE}"
         PARENT_SCOPE)
@@ -73,7 +70,8 @@ function (google_cloud_cpp_enable_cleanup)
     endif ()
 
     set(GOOGLE_CLOUD_CPP_ENABLE_REST OFF)
-    if (storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    if ((storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE) OR (generator IN_LIST
+                                                      GOOGLE_CLOUD_CPP_ENABLE))
         set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
     endif ()
 
