@@ -65,7 +65,7 @@ Status GoldenKitchenSinkRoundRobin::DoNothing(
 
 Status GoldenKitchenSinkRoundRobin::Deprecated2(
     grpc::ClientContext& context,
-    google::protobuf::Empty const& request) {
+    google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return Child()->Deprecated2(context, request);
 }
 

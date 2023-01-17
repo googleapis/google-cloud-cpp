@@ -84,7 +84,7 @@ Status GoldenKitchenSinkAuth::DoNothing(
 
 Status GoldenKitchenSinkAuth::Deprecated2(
     grpc::ClientContext& context,
-    google::protobuf::Empty const& request) {
+    google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   auto status = auth_->ConfigureContext(context);
   if (!status.ok()) return status;
   return child_->Deprecated2(context, request);

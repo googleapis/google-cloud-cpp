@@ -59,7 +59,7 @@ class GoldenKitchenSinkTracingConnection
   DoNothing(google::protobuf::Empty const& request) override;
 
   Status
-  Deprecated2(google::protobuf::Empty const& request) override;
+  Deprecated2(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
 
   StreamRange<google::test::admin::database::v1::Response>
   StreamingRead(google::test::admin::database::v1::Request const& request) override;
