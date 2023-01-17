@@ -111,7 +111,6 @@ function (google_cloud_cpp_enable_features)
     endforeach ()
 endfunction ()
 
-
 # These per-feature flags are here just for backwards compatibility. We no
 # longer recommend their usage. Build scripts should just use
 # GOOGLE_CLOUD_CPP_ENABLE
