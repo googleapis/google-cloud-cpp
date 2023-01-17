@@ -46,7 +46,7 @@ struct TestRetryablePolicy {
 auto constexpr kNumRetries = 3;
 
 std::unique_ptr<RetryPolicy> TestRetryPolicy() {
-  return LimitedErrorCountRetryPolicy<TestRetryablePolicy>(3).clone();
+  return LimitedErrorCountRetryPolicy<TestRetryablePolicy>(kNumRetries).clone();
 }
 
 std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
