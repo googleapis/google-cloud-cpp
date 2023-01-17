@@ -12,19 +12,25 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include <gmock/gmock.h>
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <opentelemetry/trace/default_span.h>
 #include <opentelemetry/version.h>
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 namespace google {
 namespace cloud {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace internal {
 namespace {
+
+using ms = std::chrono::milliseconds;
+using ::testing::MockFunction;
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 using ::google::cloud::testing_util::InstallSpanCatcher;
 using ::google::cloud::testing_util::SpanAttribute;
@@ -210,9 +216,53 @@ TEST(OpenTelemetry, EndSpanStatusOr) {
                   SpanWithStatus(opentelemetry::trace::StatusCode::kError)));
 }
 
+TEST(OpenTelemetry, MakeTracedSleeperEnabled) {
+  auto span_catcher = InstallSpanCatcher();
+
+  MockFunction<void(ms)> mock_sleeper;
+  EXPECT_CALL(mock_sleeper, Call(ms(42)));
+
+  OptionsSpan span(Options{}.set<OpenTelemetryTracingOption>(true));
+  auto sleeper = mock_sleeper.AsStdFunction();
+  auto result = MakeTracedSleeper(sleeper);
+  result(ms(42));
+
+  // Verify that a span was made.
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, ElementsAre(SpanNamed("Backoff")));
+}
+
+TEST(OpenTelemetry, MakeTracedSleeperDisabled) {
+  auto span_catcher = InstallSpanCatcher();
+
+  MockFunction<void(ms)> mock_sleeper;
+  EXPECT_CALL(mock_sleeper, Call(ms(42)));
+
+  OptionsSpan span(Options{}.set<OpenTelemetryTracingOption>(false));
+  auto sleeper = mock_sleeper.AsStdFunction();
+  auto result = MakeTracedSleeper(sleeper);
+  result(ms(42));
+
+  // Verify that no spans were made.
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+}
+
+#else
+
+TEST(NoOpenTelemetry, MakeTracedSleeper) {
+  MockFunction<void(ms)> mock_sleeper;
+  EXPECT_CALL(mock_sleeper, Call(ms(42)));
+
+  auto sleeper = mock_sleeper.AsStdFunction();
+  auto result = MakeTracedSleeper(sleeper);
+  result(ms(42));
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
 }  // namespace
 }  // namespace internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace cloud
 }  // namespace google
-#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

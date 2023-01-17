@@ -17,6 +17,7 @@
 
 #include "google/cloud/backoff_policy.h"
 #include "google/cloud/internal/invoke_result.h"
+#include "google/cloud/internal/opentelemetry.h"
 #include "google/cloud/internal/rest_request.h"
 #include "google/cloud/internal/retry_loop_helpers.h"
 #include "google/cloud/internal/retry_policy.h"
@@ -108,10 +109,12 @@ auto RestRetryLoop(std::unique_ptr<internal::RetryPolicy> retry_policy,
                    Request const& request, char const* location)
     -> google::cloud::internal::invoke_result_t<Functor, RestContext&,
                                                 Request const&> {
-  return RestRetryLoopImpl(
-      std::move(retry_policy), std::move(backoff_policy), idempotency,
-      std::forward<Functor>(functor), request, location,
-      [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); });
+  std::function<void(std::chrono::milliseconds)> sleeper =
+      [](std::chrono::milliseconds p) { std::this_thread::sleep_for(p); };
+  sleeper = internal::MakeTracedSleeper(std::move(sleeper));
+  return RestRetryLoopImpl(std::move(retry_policy), std::move(backoff_policy),
+                           idempotency, std::forward<Functor>(functor), request,
+                           location, std::move(sleeper));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

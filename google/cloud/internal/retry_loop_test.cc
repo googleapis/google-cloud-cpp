@@ -13,8 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/internal/retry_loop.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
@@ -40,8 +43,10 @@ struct TestRetryablePolicy {
   }
 };
 
+auto constexpr kNumRetries = 3;
+
 std::unique_ptr<RetryPolicy> TestRetryPolicy() {
-  return LimitedErrorCountRetryPolicy<TestRetryablePolicy>(5).clone();
+  return LimitedErrorCountRetryPolicy<TestRetryablePolicy>(3).clone();
 }
 
 std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
@@ -206,6 +211,43 @@ TEST(RetryLoopTest, ConfigureContext) {
       },
       0, "error message");
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+TEST(RetryLoopTest, TracingEnabled) {
+  using ::google::cloud::testing_util::SpanNamed;
+  using ::testing::AllOf;
+  using ::testing::Each;
+  using ::testing::SizeIs;
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  OptionsSpan span(Options{}.set<OpenTelemetryTracingOption>(true));
+
+  StatusOr<int> actual = RetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      [](grpc::ClientContext&, int) {
+        return StatusOr<int>(UnavailableError("try again"));
+      },
+      0, "error message");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, AllOf(SizeIs(kNumRetries), Each(SpanNamed("Backoff"))));
+}
+
+TEST(RetryLoopTest, TracingDisabled) {
+  using ::testing::IsEmpty;
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  OptionsSpan span(Options{}.set<OpenTelemetryTracingOption>(false));
+
+  StatusOr<int> actual = RetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      [](grpc::ClientContext&, int) { return StatusOr<int>(0); }, 0,
+      "error message");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 }  // namespace internal
