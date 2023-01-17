@@ -37,8 +37,11 @@ function (google_cloud_cpp_enable_deps)
     if (pubsublite IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE pubsub)
     endif ()
-    if (experimental-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+    if (experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(APPEND GOOGLE_CLOUD_CPP_ENABLE storage)
+    endif ()
+    if (NOT "${GOOGLE_CLOUD_CPP_ENABLE}" STREQUAL "storage")
+
     endif ()
     set(GOOGLE_CLOUD_CPP_ENABLE
         "${GOOGLE_CLOUD_CPP_ENABLE}"
@@ -48,8 +51,7 @@ endfunction ()
 # Cleanup the "GOOGLE_CLOUD_CPP_ENABLE" variable. Remove duplicates, and set
 # backwards compatibility flags.
 function (google_cloud_cpp_enable_cleanup)
-    # Remove any library that's been disabled from the GOOGLE_CLOUD_CPP_ENABLE
-    # list.
+    # Remove any library that's been disabled from the list.
     foreach (library IN LISTS GOOGLE_CLOUD_CPP_LEGACY_FEATURES)
         string(TOUPPER "GOOGLE_CLOUD_CPP_ENABLE_${library}" feature_flag)
         if ("${library}" IN_LIST GOOGLE_CLOUD_CPP_ENABLE
@@ -62,9 +64,27 @@ function (google_cloud_cpp_enable_cleanup)
             list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE ${library})
         endif ()
     endforeach ()
+
     list(REMOVE_DUPLICATES GOOGLE_CLOUD_CPP_ENABLE)
+
+    set(GOOGLE_CLOUD_CPP_ENABLE_GRPC ON)
+    if ("${GOOGLE_CLOUD_CPP_ENABLE}" STREQUAL "storage")
+        set(GOOGLE_CLOUD_CPP_ENABLE_GRPC OFF)
+    endif ()
+
+    set(GOOGLE_CLOUD_CPP_ENABLE_REST OFF)
+    if (storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        set(GOOGLE_CLOUD_CPP_ENABLE_REST ON)
+    endif ()
+
     set(GOOGLE_CLOUD_CPP_ENABLE
         "${GOOGLE_CLOUD_CPP_ENABLE}"
+        PARENT_SCOPE)
+    set(GOOGLE_CLOUD_CPP_ENABLE_GRPC
+        "${GOOGLE_CLOUD_CPP_ENABLE_GRPC}"
+        PARENT_SCOPE)
+    set(GOOGLE_CLOUD_CPP_ENABLE_REST
+        "${GOOGLE_CLOUD_CPP_ENABLE_REST}"
         PARENT_SCOPE)
 endfunction ()
 
@@ -116,102 +136,84 @@ function (google_cloud_cpp_enable_features)
     endforeach ()
 endfunction ()
 
-# These per-feature flags are here just for backwards compatibility. We no
-# longer recommend their usage. Build scripts should just use
-# GOOGLE_CLOUD_CPP_ENABLE
-option(GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE "Enable building the Bigtable library."
-       ON)
-option(GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY "Enable building the Bigquery library."
-       ON)
-option(GOOGLE_CLOUD_CPP_ENABLE_SPANNER "Enable building the Spanner library."
-       ON)
-option(GOOGLE_CLOUD_CPP_ENABLE_STORAGE "Enable building the Storage library."
-       ON)
-option(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB "Enable building the Pub/Sub library." ON)
-option(GOOGLE_CLOUD_CPP_ENABLE_IAM "Enable building the IAM library." ON)
-option(GOOGLE_CLOUD_CPP_ENABLE_LOGGING "Enable building the Logging library."
-       ON)
-option(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR "Enable building the generator." OFF)
-# Since these are not the recommended practice, mark them as advanced.
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_SPANNER)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_IAM)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_LOGGING)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
+function (google_cloud_cpp_define_legacy_feature_options)
+    # These per-feature flags are here just for backwards compatibility. We no
+    # longer recommend their usage. Build scripts should just use
+    # GOOGLE_CLOUD_CPP_ENABLE
+    option(
+        GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE
+        "Enable building the Bigtable library. Deprecated, prefer GOOGLE_CLOUD_CPP_ENABLE."
+        ON)
+    option(
+        GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY
+        "Enable building the Bigquery library. Deprecated, prefer GOOGLE_CLOUD_CPP_ENABLE."
+        ON)
+    option(
+        GOOGLE_CLOUD_CPP_ENABLE_SPANNER
+        "Enable building the Spanner library. Deprecated, prefer GOOGLE_CLOUD_CPP_ENABLE."
+        ON)
+    option(
+        GOOGLE_CLOUD_CPP_ENABLE_STORAGE
+        "Enable building the Storage library. Deprecated, prefer GOOGLE_CLOUD_CPP_ENABLE."
+        ON)
+    option(
+        GOOGLE_CLOUD_CPP_ENABLE_PUBSUB
+        "Enable building the Pub/Sub library. Deprecated, prefer GOOGLE_CLOUD_CPP_ENABLE."
+        ON)
+    option(
+        GOOGLE_CLOUD_CPP_ENABLE_IAM
+        "Enable building the IAM library. Deprecated, prefer GOOGLE_CLOUD_CPP_ENABLE."
+        ON)
+    option(
+        GOOGLE_CLOUD_CPP_ENABLE_LOGGING
+        "Enable building the Logging library. Deprecated, prefer GOOGLE_CLOUD_CPP_ENABLE."
+        ON)
+    option(
+        GOOGLE_CLOUD_CPP_ENABLE_GENERATOR
+        "Enable building the generator. Deprecated, prefer GOOGLE_CLOUD_CPP_ENABLE."
+        OFF)
+    # Since these are not the recommended practice, mark them as advanced.
+    mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_BIGTABLE)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_BIGQUERY)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_SPANNER)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_PUBSUB)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_IAM)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_LOGGING)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
 
-set(GOOGLE_CLOUD_CPP_ENABLE
-    ${GOOGLE_CLOUD_CPP_LEGACY_FEATURES}
-    CACHE STRING "The list of libraries to build.")
-string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")
+    set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT OFF)
+    if (experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT ON)
+    endif ()
+    option(
+        GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
+        "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL).  Deprecated, prefer GOOGLE_CLOUD_CPP_ENABLE."
+        "${GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT}")
+    mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
 
-set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT OFF)
-if (experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-    set(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT ON)
-endif ()
-option(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC
-       "Enable compilation for the GCS gRPC plugin (EXPERIMENTAL)"
-       "${GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC_DEFAULT}")
-mark_as_advanced(GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC)
+    option(
+        GOOGLE_CLOUD_CPP_ENABLE_GRPC
+        "Enable building the gRPC utilities library. This is now unused, the grpc_utils library is only enabled if GOOGLE_CLOUD_CPP_ENABLE contains any feature that requires it."
+        OFF)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC)
 
-# We no longer build the generator by default, but if it was explicitly
-# requested, we add it to the list of enabled libraries.
-if (GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
-    list(APPEND GOOGLE_CLOUD_CPP_ENABLE "generator")
-endif ()
+    # The only case where REST support is not needed is when not compiling
+    # services with REST interfaces.
+    option(
+        GOOGLE_CLOUD_CPP_ENABLE_REST
+        "Enable building the REST transport library. This is now unused, the rest_internal library is only enabled if GOOGLE_CLOUD_CPP_ENABLE contains any feature that requires it."
+        OFF)
+    mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_REST)
+endfunction ()
 
-google_cloud_cpp_enable_deps()
-google_cloud_cpp_enable_cleanup()
-
-if (GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC AND NOT
-                                             GOOGLE_CLOUD_CPP_ENABLE_STORAGE)
-    message(
-        FATAL_ERROR
-            "The experimental GCS+gRPC plugin is enabled, but the base storage"
-            " library is disabled. This is not a valid configuration, please"
-            " review the options provided to CMake. Pay particular attention to"
-            " GOOGLE_CLOUD_CPP_ENABLE, GOOGLE_CLOUD_CPP_ENABLE_STORAGE, and"
-            " GOOGLE_CLOUD_CPP_STORAGE_ENABLE_GRPC.")
-endif ()
-
-# The only case where gRPC support is not needed is when compiling *only* the
-# storage library.
-set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION ON)
-if ("${GOOGLE_CLOUD_CPP_ENABLE}" STREQUAL "storage")
-    set(GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION OFF)
-endif ()
-
-cmake_dependent_option(
-    GOOGLE_CLOUD_CPP_ENABLE_GRPC "Enable building the gRPC utilities library."
-    ON "GOOGLE_CLOUD_CPP_ENABLE_GRPC_EXPRESSION" OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_GRPC)
-
-# The only case where REST support is not needed is when not compiling services
-# with REST interfaces.
-set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION ON)
-if (NOT storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE
-    AND NOT experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE
-    AND NOT generator IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-    set(GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION OFF)
-endif ()
-cmake_dependent_option(
-    GOOGLE_CLOUD_CPP_ENABLE_REST "Enable building the REST transport library."
-    ON "GOOGLE_CLOUD_CPP_ENABLE_REST_EXPRESSION" OFF)
-mark_as_advanced(GOOGLE_CLOUD_CPP_ENABLE_REST)
-
-# Detect incompatible flags and let the customer know what to do.
-if (storage IN_LIST GOOGLE_CLOUD_CPP_ENABLE AND NOT
-                                                GOOGLE_CLOUD_CPP_ENABLE_REST)
-    message(
-        FATAL_ERROR
-            "If storage is enabled (e.g. -DGOOGLE_CLOUD_CPP_ENABLE=storage),"
-            " the REST library cannot be disabled,"
-            " i.e., you cannot set -DGOOGLE_CLOUD_CPP_ENABLE_REST=OFF."
-            " If you do want to use the storage library,"
-            " then do not use -DGOOGLE_CLOUD_CPP_ENABLE_REST=OFF."
-            " If you do not want to use the storage library,"
-            " then provide a -DGOOGLE_CLOUD_CPP_ENABLE=... list and do not"
-            " include storage in that list.")
-endif ()
+function (google_cloud_cpp_apply_legacy_feature_options)
+    # We no longer build the generator by default, but if it was explicitly
+    # requested, we add it to the list of enabled libraries.
+    if (GOOGLE_CLOUD_CPP_ENABLE_GENERATOR)
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE "generator")
+    endif ()
+    set(GOOGLE_CLOUD_CPP_ENABLE
+        "${GOOGLE_CLOUD_CPP_ENABLE}"
+        PARENT_SCOPE)
+endfunction ()
