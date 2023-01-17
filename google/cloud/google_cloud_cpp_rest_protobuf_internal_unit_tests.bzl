@@ -17,6 +17,7 @@
 """Automatically generated unit tests list - DO NOT EDIT."""
 
 google_cloud_cpp_rest_protobuf_internal_unit_tests = [
+    "internal/async_rest_long_running_operation_test.cc",
     "internal/async_rest_polling_loop_test.cc",
     "internal/async_rest_retry_loop_test.cc",
     "internal/rest_background_threads_impl_test.cc",
