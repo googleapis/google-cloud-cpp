@@ -156,6 +156,20 @@ mark_as_advanced(GOOGLE_CLOUD_CPP_OVERRIDE_GOOGLEAPIS_URL_HASH)
 
 include(GoogleCloudCppFeatures)
 
+# Controls the list of features compiled by `google-cloud-cpp`.
+set(GOOGLE_CLOUD_CPP_ENABLE
+    ${GOOGLE_CLOUD_CPP_LEGACY_FEATURES}
+    CACHE STRING "The list of libraries to build.")
+string(REPLACE "," ";" GOOGLE_CLOUD_CPP_ENABLE "${GOOGLE_CLOUD_CPP_ENABLE}")
+
+# We use some functions to enable the features configured in 
+# `GOOGLE_CLOUD_CPP_ENABLE`. Using functions makes it easier to keep the code
+# structured, and documents what some of these things are doing.
+google_cloud_cpp_define_legacy_feature_options()
+google_cloud_cpp_apply_legacy_feature_options()
+google_cloud_cpp_enable_deps()
+google_cloud_cpp_enable_cleanup()
+
 # Building this target results in all protobufs being compiled.
 add_custom_target(google-cloud-cpp-protos)
 
