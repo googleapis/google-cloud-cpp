@@ -16,15 +16,18 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_XML_ESCAPE_H
 
 #include "google/cloud/storage/version.h"
+#include "absl/strings/string_view.h"
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string EscapeXmlTag(std::string const& val);
+/// Escapes a string for using it as a tag name in XML.
+std::string EscapeXmlTag(absl::string_view const& val);
 
-std::string EscapeXmlContent(std::string const& val);
+/// Escapes a string for using it as a text in XML.
+std::string EscapeXmlContent(absl::string_view const& val);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal

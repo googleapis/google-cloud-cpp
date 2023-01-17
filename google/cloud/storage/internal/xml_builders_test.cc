@@ -22,9 +22,6 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
-using ::google::cloud::testing_util::StatusIs;
-using ::testing::HasSubstr;
-
 constexpr auto kExpectedCompleteMultipartUploadXml =
     R"xml(<CompleteMultipartUpload>
   <Part>
@@ -50,20 +47,9 @@ TEST(BuildCompleteMultipartUploadXmlTest, Build) {
   std::map<unsigned int, std::string> parts{
       {5U, "\"aaaa18db4cc2f85cedef654fccc4a4x8\""},
       {2U, "\"7778aef83f66abc1fa1e8477f296d394\""}};
-  auto xml = BuildCompleteMultipartUploadXml(parts);
+  auto xml = CompleteMultipartUpload(parts);
   ASSERT_TRUE(xml);
-  EXPECT_EQ(xml.value()->ToString(2), kExpectedCompleteMultipartUploadXml);
-}
-
-TEST(BuildCompleteMultipartUploadXmlTest, InvalidInput) {
-  std::map<unsigned int, std::string> parts_zero{{0U, "zero is not allowed"}};
-  auto res = BuildCompleteMultipartUploadXml(parts_zero);
-  EXPECT_THAT(
-      res, StatusIs(StatusCode::kInvalidArgument, HasSubstr("cannot be zero")));
-  std::map<unsigned int, std::string> parts_too_big{{10001U, "it is too big"}};
-  res = BuildCompleteMultipartUploadXml(parts_too_big);
-  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
-                            HasSubstr("cannot be more than")));
+  EXPECT_EQ(xml->ToString(2), kExpectedCompleteMultipartUploadXml);
 }
 
 }  // namespace

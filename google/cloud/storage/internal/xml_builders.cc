@@ -13,40 +13,22 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/xml_builders.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
-#include "google/cloud/internal/make_status.h"
+#include "google/cloud/storage/internal/xml_escape.h"
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-namespace {
-
-auto constexpr kMaxPartNumber = 10000U;
-
-}  // namespace
-
-StatusOr<std::shared_ptr<XmlNode>> BuildCompleteMultipartUploadXml(
+std::shared_ptr<XmlNode> CompleteMultipartUpload(
     std::map<unsigned int, std::string> const& parts) {
   auto root = XmlNode::CreateRoot();
   auto target_node = root->AppendTagNode("CompleteMultipartUpload");
-
   for (auto const& p : parts) {
-    if (p.first == 0) {
-      return internal::InvalidArgumentError("part number cannot be zero",
-                                            GCP_ERROR_INFO());
-    }
-    if (p.first > kMaxPartNumber) {
-      return internal::InvalidArgumentError(
-          absl::StrCat("part number cannot be more than ", kMaxPartNumber),
-          GCP_ERROR_INFO());
-    }
     auto part_tag = target_node->AppendTagNode("Part");
     part_tag->AppendTagNode("PartNumber")
         ->AppendTextNode(std::to_string(p.first));
-    part_tag->AppendTagNode("ETag")->AppendTextNode(
-        EscapeXmlContent(std::move(p.second)));
+    part_tag->AppendTagNode("ETag")->AppendTextNode(EscapeXmlContent(p.second));
   }
   return root;
 }
