@@ -269,7 +269,9 @@ Status)"""
 StatusOr<$response_type$>)""",
                       R"""(
 $tracing_connection_class_name$::$method_name$($request_type$ const& request) {
-  return child_->$method_name$(request);
+  auto span = internal::MakeSpan("$product_namespace$::$connection_class_name$::$method_name$");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->$method_name$(request));
 }
 )""");
 }
