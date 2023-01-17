@@ -601,8 +601,8 @@ void AutoRun(std::vector<std::string> const& argv) {
     auto sample_service_account_key_name =
         CreateServiceAccountKey({service_account_name});
 
-    // Service Account Key may not be usable for up to 60s after creation.
-    // Plus up to 7 minutes for propagation through all the systems.
+    // Service Account Key may not be usable for up 7 minutes for propagation
+    // through all the systems.
     for (auto backoff : {65, 60, 60, 60, 60, 60, 60, 0}) {
       try {
         GetServiceAccountKey({sample_service_account_key_name});
