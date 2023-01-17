@@ -125,7 +125,7 @@ TEST(GoldenKitchenSinkTracingConnectionTest, Deprecated2) {
       .WillOnce(Return(internal::AbortedError("fail")));
 
   auto under_test = GoldenKitchenSinkTracingConnection(mock);
-  google::protobuf::Empty request;
+  google::test::admin::database::v1::GenerateAccessTokenRequest request;
   auto result = under_test.Deprecated2(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
 }

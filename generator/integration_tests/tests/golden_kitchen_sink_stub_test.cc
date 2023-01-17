@@ -229,40 +229,52 @@ class MockGrpcGoldenKitchenSinkStub : public ::google::test::admin::database::
        ::google::protobuf::Empty const& request, ::grpc::CompletionQueue* cq),
       (override));
 
-  MOCK_METHOD(::grpc::Status, Deprecated1,
-              (::grpc::ClientContext * context,
-               ::google::protobuf::Empty const& request,
-               ::google::protobuf::Empty* response),
-              (override));
+  MOCK_METHOD(
+      ::grpc::Status, Deprecated1,
+      (::grpc::ClientContext * context,
+       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
+           request,
+       ::google::protobuf::Empty* response),
+      (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
       AsyncDeprecated1Raw,
       (::grpc::ClientContext * context,
-       ::google::protobuf::Empty const& request, ::grpc::CompletionQueue* cq),
+       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
+           request,
+       ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
       PrepareAsyncDeprecated1Raw,
       (::grpc::ClientContext * context,
-       ::google::protobuf::Empty const& request, ::grpc::CompletionQueue* cq),
+       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
+           request,
+       ::grpc::CompletionQueue* cq),
       (override));
 
-  MOCK_METHOD(::grpc::Status, Deprecated2,
-              (::grpc::ClientContext * context,
-               ::google::protobuf::Empty const& request,
-               ::google::protobuf::Empty* response),
-              (override));
+  MOCK_METHOD(
+      ::grpc::Status, Deprecated2,
+      (::grpc::ClientContext * context,
+       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
+           request,
+       ::google::protobuf::Empty* response),
+      (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
       AsyncDeprecated2Raw,
       (::grpc::ClientContext * context,
-       ::google::protobuf::Empty const& request, ::grpc::CompletionQueue* cq),
+       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
+           request,
+       ::grpc::CompletionQueue* cq),
       (override));
   MOCK_METHOD(
       ::grpc::ClientAsyncResponseReaderInterface<::google::protobuf::Empty>*,
       PrepareAsyncDeprecated2Raw,
       (::grpc::ClientContext * context,
-       ::google::protobuf::Empty const& request, ::grpc::CompletionQueue* cq),
+       ::google::test::admin::database::v1::GenerateAccessTokenRequest const&
+           request,
+       ::grpc::CompletionQueue* cq),
       (override));
 
   using StreamingReadWriteInterface =
