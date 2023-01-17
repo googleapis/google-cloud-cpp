@@ -76,7 +76,7 @@ using AsyncRestCancelLongRunningOperation = std::function<future<Status>(
  * this context. First assume there is a `*Stub` class as follows:
  *
  * @code
- * class BarStub {
+ * class BarRestStub {
  *  public:
  *   virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
  *     google::cloud::CompletionQueue& cq,
@@ -92,7 +92,7 @@ using AsyncRestCancelLongRunningOperation = std::function<future<Status>(
  * As part of implementing a long-running operation one would do something like:
  *
  * @code
- * class BarConnectionImpl : public BarConnection {
+ * class BarRestConnectionImpl : public BarConnection {
  *  public:
  *   // Using C++14 for exposition purposes. The implementation supports C++11.
  *   future<StatusOr<FooResponse>> Foo(FooRequest const& request) override {
@@ -105,10 +105,10 @@ using AsyncRestCancelLongRunningOperation = std::function<future<Status>(
  *       return AsyncPollingLoop(
  *           std::move(cq), *std::move(op),
  *           [stub](auto cq, auto context, auto const& r) {
- *             return stub->AsyncGetOperation(cq, std::move(context), r);
+ *             return stub->AsyncGetOperation(cq, context, r);
  *           },
  *           [stub](auto cq, auto context, auto const& r) {
- *             return stub->AsyncCancelOperation(cq, std::move(context), r);
+ *             return stub->AsyncCancelOperation(cq, context, r);
  *           },
  *           polling_policy_->clone(), loc);
  *        });
@@ -129,8 +129,8 @@ future<StatusOr<google::longrunning::Operation>> AsyncRestPollingLoop(
     AsyncRestCancelLongRunningOperation cancel,
     std::unique_ptr<PollingPolicy> polling_policy, std::string location);
 
-}  // namespace rest_internal
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
+}  // namespace rest_internal
 }  // namespace cloud
 }  // namespace google
 
