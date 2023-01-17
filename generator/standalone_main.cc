@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/log.h"
 #include "google/cloud/status_or.h"
@@ -20,6 +21,7 @@
 #include "absl/strings/match.h"
 #include "generator/generator.h"
 #include "generator/generator_config.pb.h"
+#include "generator/internal/codegen_utils.h"
 #include "generator/internal/scaffold_generator.h"
 #include <google/protobuf/compiler/command_line_interface.h>
 #include <google/protobuf/text_format.h>
@@ -51,6 +53,7 @@ namespace {
 using google::cloud::generator_internal::GenerateScaffold;
 using google::cloud::generator_internal::LibraryName;
 using google::cloud::generator_internal::LibraryPath;
+using google::cloud::generator_internal::SafeReplaceAll;
 
 google::cloud::StatusOr<google::cloud::cpp::generator::GeneratorConfiguration>
 GetConfig(std::string const& filepath) {
@@ -226,10 +229,12 @@ int main(int argc, char** argv) {
       args.emplace_back("--cpp_codegen_opt=omit_service=" + omit_service);
     }
     for (auto const& omit_rpc : service.omitted_rpcs()) {
-      args.emplace_back("--cpp_codegen_opt=omit_rpc=" + omit_rpc);
+      args.emplace_back(absl::StrCat("--cpp_codegen_opt=omit_rpc=",
+                                     SafeReplaceAll(omit_rpc, ",", "@")));
     }
     for (auto const& emit_rpc : service.emitted_rpcs()) {
-      args.emplace_back("--cpp_codegen_opt=emit_rpc=" + emit_rpc);
+      args.emplace_back(absl::StrCat("--cpp_codegen_opt=emit_rpc=",
+                                     SafeReplaceAll(emit_rpc, ",", "@")));
     }
     if (service.backwards_compatibility_namespace_alias()) {
       args.emplace_back(

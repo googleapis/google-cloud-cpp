@@ -13,9 +13,11 @@
 // limitations under the License.
 
 #include "generator/internal/descriptor_utils.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/log.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "absl/strings/str_split.h"
+#include "generator/internal/codegen_utils.h"
 #include "generator/testing/printer_mocks.h"
 #include <google/protobuf/compiler/importer.h>
 #include <google/protobuf/descriptor.pb.h>
@@ -545,6 +547,11 @@ char const* const kServiceProto =
     "  }\n"
     "}\n";
 
+char const* const kMethod6Deprecated1 =  // name,not_used_anymore
+    "Method6(std::string const&, std::string const&)";
+char const* const kMethod6Deprecated2 =  // not_used_anymore,labels
+    "Method6(std::string const&, std::map<std::string, std::string> const&)";
+
 struct MethodVarsTestValues {
   MethodVarsTestValues(std::string m, std::string k, std::string v)
       : method(std::move(m)),
@@ -646,18 +653,30 @@ TEST_F(CreateMethodVarsTest, FormatMethodCommentsMethodSignature) {
 TEST_F(CreateMethodVarsTest, SkipMethodsWithDeprecatedFields) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
+  service_vars_ = CreateServiceVars(
+      *service_file_descriptor->service(0),
+      {std::make_pair(
+          "omitted_rpcs",
+          absl::StrCat(SafeReplaceAll(kMethod6Deprecated1, ",", "@"), ",",
+                       SafeReplaceAll(kMethod6Deprecated2, ",", "@")))});
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_vars = vars_.find("google.protobuf.Service.Method6");
   ASSERT_NE(method_vars, vars_.end());
   EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature0", _))));
   EXPECT_THAT(method_vars->second, Contains(Pair("method_signature1", _)));
   EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature2", _))));
-  EXPECT_THAT(method_vars->second, Contains(Pair("method_signature3", _)));
+  EXPECT_THAT(method_vars->second, Not(Contains(Pair("method_signature3", _))));
 }
 
 TEST_F(CreateMethodVarsTest, SkipMethodOverloadsWithDuplicateSignatures) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
+  service_vars_ = CreateServiceVars(
+      *service_file_descriptor->service(0),
+      {std::make_pair(
+          "omitted_rpcs",
+          absl::StrCat(SafeReplaceAll(kMethod6Deprecated1, ",", "@"), ",",
+                       SafeReplaceAll(kMethod6Deprecated2, ",", "@")))});
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_vars = vars_.find("google.protobuf.Service.Method10");
   ASSERT_NE(method_vars, vars_.end());
@@ -720,6 +739,12 @@ TEST_F(CreateMethodVarsTest, ParseHttpExtensionSimpleInfo) {
 TEST_P(CreateMethodVarsTest, KeySetCorrectly) {
   FileDescriptor const* service_file_descriptor =
       pool_.FindFileByName("google/foo/v1/service.proto");
+  service_vars_ = CreateServiceVars(
+      *service_file_descriptor->service(0),
+      {std::make_pair(
+          "omitted_rpcs",
+          absl::StrCat(SafeReplaceAll(kMethod6Deprecated1, ",", "@"), ",",
+                       SafeReplaceAll(kMethod6Deprecated2, ",", "@")))});
   vars_ = CreateMethodVars(*service_file_descriptor->service(0), service_vars_);
   auto method_iter = vars_.find(GetParam().method);
   ASSERT_TRUE(method_iter != vars_.end());
