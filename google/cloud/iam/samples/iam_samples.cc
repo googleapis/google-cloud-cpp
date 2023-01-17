@@ -589,7 +589,7 @@ void AutoRun(std::vector<std::string> const& argv) {
                      project_id, ".iam.gserviceaccount.com");
     try {
       PatchServiceAccount({sample_service_account_name, "New Name"});
-    } catch (std::runtime_error const&) {
+    } catch (google::cloud::Status const&) {
       // Service Account may not be usable for up to 60s after creation.
       std::this_thread::sleep_for(std::chrono::seconds(61));
       PatchServiceAccount({sample_service_account_name, "New Name"});
@@ -601,13 +601,13 @@ void AutoRun(std::vector<std::string> const& argv) {
     auto sample_service_account_key_name =
         CreateServiceAccountKey({service_account_name});
 
-    // Service Account Key may not be usable for up to 60s after creation.
-    // Plus some unknown amount of time for propagation.
-    for (auto backoff : {65, 30, 30, 30, 30, 0}) {
+    // Service Account Key may not be usable for up 7 minutes for propagation
+    // through all the systems.
+    for (auto backoff : {65, 60, 60, 60, 60, 60, 60, 0}) {
       try {
         GetServiceAccountKey({sample_service_account_key_name});
         break;
-      } catch (std::runtime_error const&) {
+      } catch (google::cloud::Status const&) {
         if (backoff == 0) throw;  // retries exhausted
         std::this_thread::sleep_for(std::chrono::seconds(backoff));
       }
@@ -621,7 +621,7 @@ void AutoRun(std::vector<std::string> const& argv) {
     CreateRole({project_id, role_id, "iam.serviceAccounts.list"});
     try {
       GetRole({role_name});
-    } catch (std::runtime_error const&) {
+    } catch (google::cloud::Status const&) {
       // Custom Role may not be usable for up to 60s after creation.
       std::this_thread::sleep_for(std::chrono::seconds(61));
       GetRole({role_name});
