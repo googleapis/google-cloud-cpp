@@ -48,12 +48,13 @@ class WrapRetryPolicy : public google::cloud::pubsub::SchemaServiceRetryPolicy {
 
 }  // namespace
 
-std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
+std::shared_ptr<SchemaServiceConnection> MakeSchemaAdminConnection(
     std::initializer_list<internal::NonConstructible>) {
   return MakeSchemaServiceConnection(Options{});
 }
 
-std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(Options opts) {
+std::shared_ptr<SchemaServiceConnection> MakeSchemaAdminConnection(
+    Options opts) {
   if (opts.has<RetryPolicyOption>()) {
     opts.set<SchemaServiceRetryPolicyOption>(absl::make_unique<WrapRetryPolicy>(
         opts.get<RetryPolicyOption>()->clone()));
@@ -61,14 +62,14 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(Options opts) {
   return MakeSchemaServiceConnection(std::move(opts));
 }
 
-std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
+std::shared_ptr<SchemaServiceConnection> MakeSchemaAdminConnection(
     pubsub::ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy,
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy) {
   auto opts = internal::MakeOptions(options);
   if (retry_policy) opts.set<RetryPolicyOption>(retry_policy->clone());
   if (backoff_policy) opts.set<BackoffPolicyOption>(backoff_policy->clone());
-  return MakeSchemaAdminConnection(std::move(opts));
+  return MakeSchemaServiceConnection(std::move(opts));
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

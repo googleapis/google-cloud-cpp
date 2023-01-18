@@ -244,7 +244,7 @@ void SchemaAdminClientSetEndpoint(std::vector<std::string> const& argv) {
   namespace pubsub = ::google::cloud::pubsub;
   using ::google::cloud::Options;
   []() {
-    return pubsub::SchemaAdminClient(pubsub::MakeSchemaAdminConnection(
+    return pubsub::SchemaAdminClient(pubsub::MakeSchemaServiceConnection(
         Options{}.set<google::cloud::EndpointOption>(
             "private.googleapis.com")));
   }
@@ -264,7 +264,7 @@ void SchemaAdminClientServiceAccountKey(std::vector<std::string> const& argv) {
     auto is = std::ifstream(keyfile);
     is.exceptions(std::ios::badbit);
     auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
-    return pubsub::SchemaAdminClient(pubsub::MakeSchemaAdminConnection(
+    return pubsub::SchemaAdminClient(pubsub::MakeSchemaServiceConnection(
         Options{}.set<google::cloud::UnifiedCredentialsOption>(
             google::cloud::MakeServiceAccountCredentials(contents))));
   }

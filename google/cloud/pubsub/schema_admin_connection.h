@@ -43,24 +43,13 @@ using ListSchemasRange =
     google::cloud::internal::PaginationRange<google::pubsub::v1::Schema>;
 
 /**
- * A connection to Cloud Pub/Sub for schema-related administrative operations.
+ * Backwards compatibility alias.
  *
- * This interface defines pure-virtual functions for each of the user-facing
- * overload sets in `SchemaAdminClient`. That is, all of `SchemaAdminClient`'s
- * overloads will forward to the one pure-virtual function declared in this
- * interface. This allows users to inject custom behavior (e.g., with a Google
- * Mock object) in a `SchemaAdminClient` object for use in their own tests.
- *
- * To create a concrete instance that connects you to the real Cloud Pub/Sub
- * service, see `MakeSchemaAdminConnection()`.
- *
- * @par The *Params nested classes
- * Applications may define classes derived from `SchemaAdminConnection`, for
- * example, because they want to mock the class. To avoid breaking all such
- * derived classes when we change the number or type of the arguments to the
- * member functions we define lightweight structures to pass the arguments.
+ * The `SchemaAdminConnection` class has been replaced to take advantage of
+ * the C++ code generator. The API is identical, just the name is different.
  */
-using SchemaAdminConnection = SchemaServiceConnection;
+using SchemaAdminConnection GOOGLE_CLOUD_CPP_DEPRECATED(
+    "use `SchemaServiceConnection` instead") = SchemaServiceConnection;
 
 /**
  * Creates a new `SchemaAdminConnection` object to work with
@@ -72,8 +61,8 @@ using SchemaAdminConnection = SchemaServiceConnection;
  *
  * @deprecated Please use `MakeSchemaAdminConnection()` instead.
  */
-GOOGLE_CLOUD_CPP_DEPRECATED("use `MakeSchemaAdminConnection()` instead")
-std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
+GOOGLE_CLOUD_CPP_DEPRECATED("use `MakeSchemaServiceConnection()` instead")
+std::shared_ptr<SchemaServiceConnection> MakeSchemaAdminConnection(
     std::initializer_list<internal::NonConstructible>);
 
 /**
@@ -101,7 +90,8 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
  *       - `google::cloud::GrpcOptionList`
  *       - `google::cloud::pubsub::PolicyOptionList`
  */
-std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
+GOOGLE_CLOUD_CPP_DEPRECATED("use `MakeSchemaServiceConnection()` instead")
+std::shared_ptr<SchemaServiceConnection> MakeSchemaAdminConnection(
     Options opts = {});
 
 /**
@@ -133,9 +123,8 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
  * @deprecated Please use the `MakeSchemaAdminConnection` function that accepts
  *     `google::cloud::Options` instead.
  */
-GOOGLE_CLOUD_CPP_DEPRECATED(
-    "use the overload consuming google::cloud::Options instead")
-std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
+GOOGLE_CLOUD_CPP_DEPRECATED("use `MakeSchemaServiceConnection()` instead")
+std::shared_ptr<SchemaServiceConnection> MakeSchemaAdminConnection(
     pubsub::ConnectionOptions const& options,
     std::unique_ptr<pubsub::RetryPolicy const> retry_policy = {},
     std::unique_ptr<pubsub::BackoffPolicy const> backoff_policy = {});

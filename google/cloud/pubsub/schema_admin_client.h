@@ -61,8 +61,8 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  */
 class SchemaAdminClient {
  public:
-  explicit SchemaAdminClient(std::shared_ptr<SchemaAdminConnection> connection,
-                             Options opts = {});
+  explicit SchemaAdminClient(
+      std::shared_ptr<SchemaServiceConnection> connection, Options opts = {});
 
   /**
    * The default constructor is deleted.
@@ -261,7 +261,7 @@ class SchemaAdminClient {
       Options opts = {});
 
  private:
-  std::shared_ptr<SchemaAdminConnection> connection_;
+  std::shared_ptr<SchemaServiceConnection> connection_;
   Options options_;
 };
 

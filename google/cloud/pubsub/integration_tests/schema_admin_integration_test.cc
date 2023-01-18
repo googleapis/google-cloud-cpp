@@ -14,6 +14,7 @@
 
 #include "google/cloud/pubsub/schema.h"
 #include "google/cloud/pubsub/schema_admin_client.h"
+#include "google/cloud/pubsub/schema_options.h"
 #include "google/cloud/pubsub/testing/random_names.h"
 #include "google/cloud/pubsub/testing/test_retry_policies.h"
 #include "google/cloud/credentials.h"
@@ -45,7 +46,10 @@ bool UsingEmulator() {
 }
 
 SchemaAdminClient MakeTestSchemaAdminClient() {
-  return SchemaAdminClient(MakeSchemaAdminConnection(MakeTestOptions()));
+  return SchemaAdminClient(MakeSchemaServiceConnection(
+      MakeTestOptions().set<pubsub::SchemaServiceRetryPolicyOption>(
+          std::make_shared<pubsub::SchemaServiceLimitedErrorCountRetryPolicy>(
+              3))));
 }
 
 using SchemaAdminIntegrationTest =
@@ -56,7 +60,7 @@ TEST_F(SchemaAdminIntegrationTest, SchemaCRUD) {
       google::cloud::internal::GetEnv("GOOGLE_CLOUD_PROJECT").value_or("");
   ASSERT_FALSE(project_id.empty());
 
-  auto schema_admin = SchemaAdminClient(MakeSchemaAdminConnection());
+  auto schema_admin = SchemaAdminClient(MakeSchemaServiceConnection());
 
   auto constexpr kTestAvroSchema = R"js({
      "type": "record",
@@ -112,7 +116,7 @@ TEST_F(SchemaAdminIntegrationTest, UnifiedCredentials) {
                   .set<internal::UseInsecureChannelOption>(true);
   }
   auto client =
-      SchemaAdminClient(MakeSchemaAdminConnection(std::move(options)));
+      SchemaAdminClient(MakeSchemaServiceConnection(std::move(options)));
   for (auto&& r : client.ListSchemas(project_id)) {
     EXPECT_THAT(r, IsOk());
   }
@@ -169,8 +173,8 @@ TEST_F(SchemaAdminIntegrationTest, ValidateMessage) {
 
 /// @test Verify the backwards compatibility `v1` namespace still exists.
 TEST_F(SchemaAdminIntegrationTest, BackwardsCompatibility) {
-  auto connection =
-      ::google::cloud::pubsub::v1::MakeSchemaAdminConnection(MakeTestOptions());
+  auto connection = ::google::cloud::pubsub::v1::MakeSchemaServiceConnection(
+      MakeTestOptions());
   EXPECT_THAT(connection, NotNull());
   ASSERT_NO_FATAL_FAILURE(SchemaAdminClient(std::move(connection)));
 }

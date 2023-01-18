@@ -21,7 +21,7 @@ namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 SchemaAdminClient::SchemaAdminClient(
-    std::shared_ptr<SchemaAdminConnection> connection, Options opts)
+    std::shared_ptr<SchemaServiceConnection> connection, Options opts)
     : connection_(std::move(connection)),
       options_(
           internal::MergeOptions(std::move(opts), connection_->options())) {}

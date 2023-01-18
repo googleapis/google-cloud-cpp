@@ -1922,7 +1922,7 @@ void AutoRunAvro(
     google::cloud::pubsub::TopicAdminClient& topic_admin_client,
     google::cloud::pubsub::SubscriptionAdminClient& subscription_admin_client) {
   auto schema_admin = google::cloud::pubsub::SchemaAdminClient(
-      google::cloud::pubsub::MakeSchemaAdminConnection());
+      google::cloud::pubsub::MakeSchemaServiceConnection());
   auto avro_schema_id = RandomSchemaId(generator);
   std::cout << "\nRunning CreateAvroSchema() sample" << std::endl;
   CreateAvroSchema(schema_admin, {project_id, avro_schema_id});
@@ -1981,7 +1981,7 @@ void AutoRunProtobuf(
     google::cloud::pubsub::TopicAdminClient& topic_admin_client,
     google::cloud::pubsub::SubscriptionAdminClient& subscription_admin_client) {
   auto schema_admin = google::cloud::pubsub::SchemaAdminClient(
-      google::cloud::pubsub::MakeSchemaAdminConnection());
+      google::cloud::pubsub::MakeSchemaServiceConnection());
 
   std::cout << "\nRunning ValidateProtobufSchema() sample" << std::endl;
   ValidateProtobufSchema(schema_admin, {project_id});
