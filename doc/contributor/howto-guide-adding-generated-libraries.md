@@ -173,9 +173,9 @@ knows about one such subdirectory. You may need to manually update the
 ## Update the root files
 
 Manually edit `google/GoogleCloudCppFeatures.cmake` to include the new target.
-If you are generating a GA library, add it to `GOOGLE_CLOUD_CPP_GA_FEATURES`.
+If you are generating a GA library, add it to `GOOGLE_CLOUD_CPP_GA_LIBRARIES`.
 Otherwise, if you are generating an experimental library, add it to
-`GOOGLE_CLOUD_CPP_EXPERIMENTAL_FEATURES` and note in a comment when the library
+`GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES` and note in a comment when the library
 was generated.
 
 ## Update the quickstart
