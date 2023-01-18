@@ -46,7 +46,6 @@ pubsub_client_unit_tests = [
     "publisher_options_test.cc",
     "publisher_test.cc",
     "schema_admin_client_test.cc",
-    "schema_admin_connection_test.cc",
     "schema_test.cc",
     "snapshot_builder_test.cc",
     "snapshot_test.cc",

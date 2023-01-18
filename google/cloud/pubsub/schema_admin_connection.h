@@ -17,13 +17,11 @@
 
 #include "google/cloud/pubsub/backoff_policy.h"
 #include "google/cloud/pubsub/connection_options.h"
-#include "google/cloud/pubsub/internal/schema_stub.h"
 #include "google/cloud/pubsub/retry_policy.h"
+#include "google/cloud/pubsub/schema_connection.h"
 #include "google/cloud/pubsub/version.h"
 #include "google/cloud/internal/non_constructible.h"
 #include "google/cloud/internal/pagination_range.h"
-#include "google/cloud/status_or.h"
-#include <google/pubsub/v1/schema.pb.h>
 #include <initializer_list>
 #include <memory>
 
@@ -62,37 +60,7 @@ using ListSchemasRange =
  * derived classes when we change the number or type of the arguments to the
  * member functions we define lightweight structures to pass the arguments.
  */
-class SchemaAdminConnection {
- public:
-  virtual ~SchemaAdminConnection() = 0;
-
-  /// Defines the interface for `SchemaAdminClient::CreateSchema()`
-  virtual StatusOr<google::pubsub::v1::Schema> CreateSchema(
-      google::pubsub::v1::CreateSchemaRequest const&) = 0;
-
-  /// Defines the interface for `SchemaAdminClient::GetSchema()`
-  virtual StatusOr<google::pubsub::v1::Schema> GetSchema(
-      google::pubsub::v1::GetSchemaRequest const&) = 0;
-
-  /// Defines the interface for `SchemaAdminClient::ListSchemas()`
-  virtual ListSchemasRange ListSchemas(
-      google::pubsub::v1::ListSchemasRequest const&) = 0;
-
-  /// Defines the interface for `SchemaAdminClient::DeleteSchema()`
-  virtual Status DeleteSchema(
-      google::pubsub::v1::DeleteSchemaRequest const&) = 0;
-
-  /// Defines the interface for `SchemaAdminClient::ValidateSchema()`
-  virtual StatusOr<google::pubsub::v1::ValidateSchemaResponse> ValidateSchema(
-      google::pubsub::v1::ValidateSchemaRequest const&) = 0;
-
-  /// Defines the interface for `SchemaAdminClient::ValidateMessage()`
-  virtual StatusOr<google::pubsub::v1::ValidateMessageResponse> ValidateMessage(
-      google::pubsub::v1::ValidateMessageRequest const&) = 0;
-
-  /// Return the options used to create the connection.
-  virtual Options options() const { return Options{}; }
-};
+using SchemaAdminConnection = SchemaServiceConnection;
 
 /**
  * Creates a new `SchemaAdminConnection` object to work with
@@ -174,15 +142,6 @@ std::shared_ptr<SchemaAdminConnection> MakeSchemaAdminConnection(
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
-
-namespace pubsub_internal {
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
-
-std::shared_ptr<pubsub::SchemaAdminConnection> MakeTestSchemaAdminConnection(
-    Options const& opts, std::shared_ptr<SchemaServiceStub> stub);
-
-GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
-}  // namespace pubsub_internal
 }  // namespace cloud
 }  // namespace google
 

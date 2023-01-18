@@ -15,6 +15,7 @@
 #ifndef GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_MOCKS_MOCK_SCHEMA_ADMIN_CONNECTION_H
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_PUBSUB_MOCKS_MOCK_SCHEMA_ADMIN_CONNECTION_H
 
+#include "google/cloud/pubsub/mocks/mock_schema_connection.h"
 #include "google/cloud/pubsub/schema_admin_connection.h"
 #include <gmock/gmock.h>
 
@@ -23,34 +24,7 @@ namespace cloud {
 namespace pubsub {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-/**
- * A googlemock-based mock for
- * [pubsub::SchemaAdminConnection][mocked-link]
- *
- * [mocked-link]: @ref google::cloud::pubsub::SchemaAdminConnection
- */
-class MockSchemaAdminConnection : public pubsub::SchemaAdminConnection {
- public:
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, CreateSchema,
-              (google::pubsub::v1::CreateSchemaRequest const&), (override));
-
-  MOCK_METHOD(StatusOr<google::pubsub::v1::Schema>, GetSchema,
-              (google::pubsub::v1::GetSchemaRequest const&), (override));
-
-  MOCK_METHOD(ListSchemasRange, ListSchemas,
-              (google::pubsub::v1::ListSchemasRequest const&), (override));
-
-  MOCK_METHOD(Status, DeleteSchema,
-              (google::pubsub::v1::DeleteSchemaRequest const&), (override));
-
-  MOCK_METHOD(StatusOr<google::pubsub::v1::ValidateSchemaResponse>,
-              ValidateSchema,
-              (google::pubsub::v1::ValidateSchemaRequest const&), (override));
-
-  MOCK_METHOD(StatusOr<google::pubsub::v1::ValidateMessageResponse>,
-              ValidateMessage,
-              (google::pubsub::v1::ValidateMessageRequest const&), (override));
-};
+using MockSchemaAdminConnection = pubsub_mocks::MockSchemaServiceConnection;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace pubsub
