@@ -14,7 +14,6 @@
 
 #include "google/cloud/storage/internal/xml_parser.h"
 #include "google/cloud/storage/internal/xml_parser_options.h"
-#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
 
 namespace google {
@@ -28,24 +27,17 @@ StatusOr<std::shared_ptr<XmlNode>> XmlParser::Parse(std::string const& content,
   options = XmlParserDefaultOptions(std::move(options));
 
   // Check size first
-  if (content.length() > options.get<XmlParserMaxSourceSize>()) {
+  if (content.size() > options.get<XmlParserMaxSourceSize>()) {
     return internal::InvalidArgumentError(
-        absl::StrCat("XML exceeds the max byte size of ",
+        absl::StrCat("The source size ", content.size(),
+                     " exceeds the max size of ",
                      options.get<XmlParserMaxSourceSize>()),
         GCP_ERROR_INFO());
   }
   // Remove unnecessary bits
-  auto trimmed = CleanUpXml(content);
+  auto trimmed = std::regex_replace(content, unneeded_re_, "");
   // And to be continued...
   return internal::UnimplementedError("not implemented");
-}
-
-std::string XmlParser::CleanUpXml(std::string const& content) {
-  auto ret = std::regex_replace(content, xml_decl_re_, "");
-  ret = std::regex_replace(ret, xml_doctype_re_, "");
-  ret = std::regex_replace(ret, xml_cdata_re_, "");
-  ret = std::regex_replace(ret, xml_comment_re_, "");
-  return ret;
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

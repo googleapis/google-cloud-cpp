@@ -17,6 +17,7 @@
 
 #include "google/cloud/storage/internal/xml_node.h"
 #include "google/cloud/storage/version.h"
+#include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/options.h"
 #include "google/cloud/status_or.h"
 #include <regex>
@@ -35,12 +36,13 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
  * parse XML responses from the [GCS MPU]. It does not support many XML
  * features.
  *
- * As a defence to DOS type attacks, the parser has several limits.The following
- * default values for the limits are large enough for parse XML responses from
- * the API:
- *   XmlParserMaxSourceSize>: 1GiB
- *   XmlParserMaxNodeCount: 20000
- *   XmlParserMaxNodeDepth: 50
+ * As a defence to DOS type attacks, the parser has several limits. The default
+ * values of these limits are large enough for API responses from [GCS MPU], but
+ * in case you need to configure these limits, use the following options:
+ * `XmlParserMaxSourceSize`, `XmlParserMaxNodeCount`, and
+ * `XmlParserMaxNodeDepth`. See
+ * `google::cloud::storage::internal::xml_parser_options.h` for the default
+ * values of these limits.
  */
 class XmlParser {
  public:
@@ -56,13 +58,16 @@ class XmlParser {
  private:
   XmlParser() = default;
 
-  /// Clean up the given XML string.
-  std::string CleanUpXml(std::string const& content);
-
-  std::regex xml_decl_re_{R"(^<\?xml[^>]*\?>)"};
-  std::regex xml_doctype_re_{R"(<!DOCTYPE[^>[]*(\[[^\]]*\])?>)"};
-  std::regex xml_cdata_re_{R"(<!\[CDATA\[[^>]*\]\]>)"};
-  std::regex xml_comment_re_{R"(<!--[^>]*-->)"};
+  std::regex unneeded_re_{
+      absl::StrCat("(",
+                   R"(^<\?xml[^>]*\?>)",  // XML declaration
+                   "|",
+                   R"(<!DOCTYPE[^>[]*(\[[^\]]*\])?>)",  // DTD(DOCTYPE)
+                   "|",
+                   R"(<!\[CDATA\[[^>]*\]\]>)",  // CDATA
+                   "|",
+                   R"(<!--[^>]*-->)",  // XML comments
+                   ")")};
 };
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

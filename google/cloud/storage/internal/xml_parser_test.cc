@@ -59,7 +59,7 @@ TEST(XmlParserTest, TooLarge) {
   options.set<XmlParserMaxSourceSize>(10);
   auto res = parser->Parse(kXmlFilledWithGarbage, options);
   EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
-                            HasSubstr("exceeds the max byte")));
+                            HasSubstr("exceeds the max size")));
 }
 
 }  // namespace
