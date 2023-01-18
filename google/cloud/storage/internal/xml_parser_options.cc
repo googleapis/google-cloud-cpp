@@ -22,9 +22,9 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 namespace {
 
-constexpr size_t kDefaultMaxSourceSize = 1024 * 1024 * 1024;  // 1GiB
-constexpr size_t kDefaultMaxXmlNodeCount = 20000;
-constexpr size_t kDefaultMaxXmlNodeDepth = 50;
+constexpr std::size_t kDefaultMaxSourceSize = 1024 * 1024 * 1024;  // 1GiB
+constexpr std::size_t kDefaultMaxXmlNodeCount = 20000;
+constexpr std::size_t kDefaultMaxXmlNodeDepth = 50;
 
 }  // namespace
 
