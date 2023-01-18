@@ -23,18 +23,18 @@ include(CreateBazelConfig)
 set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
     "bigtable;bigquery;iam;logging;pubsub;spanner;storage")
 
-set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_FEATURES
+set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
     # cmake-format: sorted
     # Introduced circa 2022-08-17
     "apikeys"
     # This is WIP, it needs a number of hand-crafted APIs.
     "pubsublite")
 
-set(GOOGLE_CLOUD_CPP_TRANSITION_FEATURES # cmake-format: sorted
+set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sorted
     # Promoted to GA circa 2022-10-12
     "batch")
 
-set(GOOGLE_CLOUD_CPP_GA_FEATURES
+set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     # cmake-format: sorted
     "accessapproval"
     "accesscontextmanager"
@@ -127,8 +127,8 @@ set(GOOGLE_CLOUD_CPP_GA_FEATURES
     "workflows")
 
 export_list_to_bazel(
-    "libraries.bzl" YEAR 2023 GOOGLE_CLOUD_CPP_EXPERIMENTAL_FEATURES
-    GOOGLE_CLOUD_CPP_TRANSITION_FEATURES GOOGLE_CLOUD_CPP_GA_FEATURES)
+    "libraries.bzl" YEAR 2023 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
+    GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES GOOGLE_CLOUD_CPP_GA_LIBRARIES)
 
 # Handle the dependencies between features. That is, if feature "X" is enabled
 # also enable feature "Y" because "X" depends on "Y".

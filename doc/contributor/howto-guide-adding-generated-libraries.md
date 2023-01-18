@@ -172,11 +172,11 @@ knows about one such subdirectory. You may need to manually update the
 
 ## Update the root files
 
-Manually edit the `google/GoogleCloudCppFeatures.cmake` file to include the new
-target. If you are generating a GA library, add it to
-`GOOGLE_CLOUD_CPP_GA_FEATURES`. Otherwise, if you are generating an experimental
-library, add it to `GOOGLE_CLOUD_CPP_EXPERIMENTAL_FEATURES` and note in a
-comment when the library was generated.
+Manually edit `google/GoogleCloudCppFeatures.cmake` to include the new target.
+If you are generating a GA library, add it to `GOOGLE_CLOUD_CPP_GA_FEATURES`.
+Otherwise, if you are generating an experimental library, add it to
+`GOOGLE_CLOUD_CPP_EXPERIMENTAL_FEATURES` and note in a comment when the library
+was generated.
 
 ## Update the quickstart
 
@@ -263,7 +263,7 @@ index c4ce00489..1858b48dc 100755
 
 ```shell
 git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
-   "google/cloud/${library}" cmake CHANGELOG.md ci README.md
+   "google/cloud/${library}" CHANGELOG.md ci cmake README.md
 ```
 
 [#10237]: https://github.com/googleapis/google-cloud-cpp/issues/10237
