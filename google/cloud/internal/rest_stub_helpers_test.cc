@@ -60,7 +60,6 @@ TEST(RestStubHelpers, RestResponseToProtoErrorInfo) {
   EXPECT_THAT(status, StatusIs(StatusCode::kInternal));
   EXPECT_THAT(status.error_info().reason(),
               Eq("Failure creating proto Message from Json"));
-  EXPECT_THAT(status.error_info().domain(), Eq("google-cloud-cpp"));
   EXPECT_THAT(
       status.error_info().metadata(),
       Contains(std::make_pair(std::string("message_type"),
