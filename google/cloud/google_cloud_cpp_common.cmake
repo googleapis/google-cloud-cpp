@@ -55,6 +55,7 @@ add_library(
     internal/base64_transforms.h
     internal/big_endian.h
     internal/build_info.h
+    internal/call_context.h
     internal/compiler_info.cc
     internal/compiler_info.h
     internal/compute_engine_util.cc
@@ -94,6 +95,8 @@ add_library(
     internal/non_constructible.h
     internal/opentelemetry.cc
     internal/opentelemetry.h
+    internal/opentelemetry_aliases.cc
+    internal/opentelemetry_aliases.h
     internal/opentelemetry_options.h
     internal/pagination_range.h
     internal/parse_rfc3339.cc
@@ -322,6 +325,7 @@ if (BUILD_TESTING)
         internal/backoff_policy_test.cc
         internal/base64_transforms_test.cc
         internal/big_endian_test.cc
+        internal/call_context_test.cc
         internal/compiler_info_test.cc
         internal/compute_engine_util_test.cc
         internal/credentials_impl_test.cc
@@ -335,6 +339,7 @@ if (BUILD_TESTING)
         internal/invoke_result_test.cc
         internal/log_impl_test.cc
         internal/make_status_test.cc
+        internal/opentelemetry_aliases_test.cc
         internal/opentelemetry_test.cc
         internal/pagination_range_test.cc
         internal/parse_rfc3339_test.cc
