@@ -25,7 +25,7 @@ GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 /**
  * Use with `google::cloud::Options` to configure the XML parser.
  *
- * The maximum size of the source string in bytes.
+ * The maximum size of the source string, the default value is 1GiB.
  */
 struct XmlParserMaxSourceSize {
   using Type = std::size_t;
@@ -34,7 +34,7 @@ struct XmlParserMaxSourceSize {
 /**
  * Use with `google::cloud::Options` to configure the XML parser.
  *
- * The maximum number of Nodes in the XML tree.
+ * The maximum number of Nodes in the XML tree, the default value is 20000.
  */
 struct XmlParserMaxNodeCount {
   using Type = std::size_t;
@@ -43,7 +43,7 @@ struct XmlParserMaxNodeCount {
 /**
  * Use with `google::cloud::Options` to configure the XML parser.
  *
- * The maximum depth of the XML tree.
+ * The maximum depth of the XML tree, the default value is 50.
  */
 struct XmlParserMaxNodeDepth {
   using Type = std::size_t;
