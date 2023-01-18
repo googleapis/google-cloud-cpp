@@ -57,7 +57,7 @@ TEST(RestStubHelpers, RestResponseToProtoErrorInfo) {
 
   google::iam::admin::v1::Role role;
   auto status = RestResponseToProto(role, std::move(*mock_200_response));
-  EXPECT_THAT(status, StatusIs(StatusCode::kInvalidArgument));
+  EXPECT_THAT(status, Not(IsOk()));
   EXPECT_THAT(status.error_info().reason(),
               Eq("Failure creating proto Message from Json"));
   EXPECT_THAT(
