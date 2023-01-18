@@ -94,7 +94,8 @@ struct LongrunningEndpointOption {
 /// The complete list of options accepted by `CurlRestClient`
 using RestInternalOptionList = ::google::cloud::OptionList<
     TransferStallTimeoutOption, TransferStallMinimumRateOption,
-    DownloadStallTimeoutOption, DownloadStallMinimumRateOption>;
+    DownloadStallTimeoutOption, DownloadStallMinimumRateOption,
+    LongrunningEndpointOption>;
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace rest_internal
