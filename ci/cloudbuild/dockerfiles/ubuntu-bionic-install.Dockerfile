@@ -178,6 +178,7 @@ WORKDIR /var/tmp/build/
 RUN curl -sSL https://github.com/open-telemetry/opentelemetry-cpp/archive/v1.8.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \
+        -DCMAKE_CXX_STANDARD=14 \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_POSITION_INDEPENDENT_CODE=TRUE \
         -DBUILD_SHARED_LIBS=ON \
