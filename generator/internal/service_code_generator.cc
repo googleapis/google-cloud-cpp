@@ -397,7 +397,9 @@ void ServiceCodeGenerator::SetMethods() {
   auto split_arg = [this](std::string const& arg) -> std::set<std::string> {
     auto l = service_vars_.find(arg);
     if (l == service_vars_.end()) return {};
-    return absl::StrSplit(l->second, ',');
+    std::vector<std::string> s = absl::StrSplit(l->second, ',');
+    for (auto& a : s) a = SafeReplaceAll(a, "@", ",");
+    return {s.begin(), s.end()};
   };
   auto const emitted_rpcs = split_arg("emitted_rpcs");
   auto const omitted_rpcs = split_arg("omitted_rpcs");
@@ -408,27 +410,26 @@ void ServiceCodeGenerator::SetMethods() {
     auto const* method = service_descriptor_->method(i);
     auto method_name = method->name();
     auto qualified_method_name = absl::StrCat(service_name, ".", method_name);
-    bool omit_rpc = internal::Contains(omitted_rpcs, method_name) ||
-                    internal::Contains(omitted_rpcs, qualified_method_name);
+    auto any_match = [&](std::string const& v) {
+      return v == method_name || v == qualified_method_name;
+    };
+    bool omit_rpc = internal::ContainsIf(omitted_rpcs, any_match);
     if (!omit_rpc && method->options().deprecated()) {
       // Deprecated RPCs must be listed in either omitted_rpcs or
       // emitted_rpcs. The former is used for newly-generated services,
       // where we never want to support the deprecated RPC, and the
       // latter for newly-deprecated RPCs, where we want to maintain
       // backwards compatibility.
-      if (internal::Contains(emitted_rpcs, method_name) ||
-          internal::Contains(emitted_rpcs, qualified_method_name)) {
-        // TODO(#8486): Add a @deprecated Doxygen comment and the
-        // GOOGLE_CLOUD_CPP_DEPRECATED annotation to the generated RPC.
-      } else {
+      if (!internal::ContainsIf(emitted_rpcs, any_match)) {
         GCP_LOG(FATAL) << "Deprecated RPC " << qualified_method_name
                        << " must be listed in either omitted_rpcs"
                        << " or emitted_rpcs";
       }
+      // TODO(#8486): Add a @deprecated Doxygen comment and the
+      // GOOGLE_CLOUD_CPP_DEPRECATED annotation to the generated RPC.
     }
     if (!omit_rpc) methods_.emplace_back(*method);
-    if (internal::Contains(gen_async_rpcs, method_name) ||
-        internal::Contains(gen_async_rpcs, qualified_method_name)) {
+    if (internal::ContainsIf(gen_async_rpcs, any_match)) {
       // We still generate the async API for omitted (and possibly
       // deprecated) RPCs when they appear in gen_async_rpcs.
       async_methods_.emplace_back(*method);

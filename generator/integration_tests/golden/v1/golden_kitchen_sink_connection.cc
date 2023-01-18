@@ -73,7 +73,7 @@ GoldenKitchenSinkConnection::DoNothing(
 
 Status
 GoldenKitchenSinkConnection::Deprecated2(
-    google::protobuf::Empty const&) {
+    google::test::admin::database::v1::GenerateAccessTokenRequest const&) {
   return Status(StatusCode::kUnimplemented, "not implemented");
 }
 

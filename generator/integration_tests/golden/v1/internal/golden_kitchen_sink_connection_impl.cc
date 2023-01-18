@@ -130,12 +130,12 @@ GoldenKitchenSinkConnectionImpl::DoNothing(google::protobuf::Empty const& reques
 }
 
 Status
-GoldenKitchenSinkConnectionImpl::Deprecated2(google::protobuf::Empty const& request) {
+GoldenKitchenSinkConnectionImpl::Deprecated2(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return google::cloud::internal::RetryLoop(
       retry_policy(), backoff_policy(),
       idempotency_policy()->Deprecated2(request),
       [this](grpc::ClientContext& context,
-          google::protobuf::Empty const& request) {
+          google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
         return stub_->Deprecated2(context, request);
       },
       request, __func__);

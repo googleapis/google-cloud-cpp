@@ -62,7 +62,7 @@ GoldenKitchenSinkTracingConnection::DoNothing(google::protobuf::Empty const& req
 }
 
 Status
-GoldenKitchenSinkTracingConnection::Deprecated2(google::protobuf::Empty const& request) {
+GoldenKitchenSinkTracingConnection::Deprecated2(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return child_->Deprecated2(request);
 }
 

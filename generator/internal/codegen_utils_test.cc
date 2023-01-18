@@ -27,6 +27,7 @@ using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::StatusIs;
 using ::testing::AllOf;
 using ::testing::Contains;
+using ::testing::ContainsRegex;
 using ::testing::ElementsAre;
 using ::testing::HasSubstr;
 using ::testing::Pair;
@@ -356,6 +357,15 @@ TEST(ProcessCommandLineArgs, ProcessArgEmitRpc) {
   EXPECT_THAT(*result,
               Contains(Pair("emitted_rpcs", AllOf(HasSubstr("Emitted1"),
                                                   HasSubstr("Emitted2")))));
+}
+
+TEST(SafeReplaceAll, Success) {
+  EXPECT_EQ("one@two", SafeReplaceAll("one,two", ",", "@"));
+}
+
+TEST(SafeReplaceAll, Death) {
+  EXPECT_DEATH_IF_SUPPORTED(SafeReplaceAll("one@two", ",", "@"),
+                            ContainsRegex(R"(found "@" in "one@two")"));
 }
 
 }  // namespace

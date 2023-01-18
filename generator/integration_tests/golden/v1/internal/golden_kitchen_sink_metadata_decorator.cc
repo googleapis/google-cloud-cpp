@@ -86,7 +86,7 @@ GoldenKitchenSinkMetadata::DoNothing(
 Status
 GoldenKitchenSinkMetadata::Deprecated2(
     grpc::ClientContext& context,
-    google::protobuf::Empty const& request) {
+    google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   SetMetadata(context);
   return child_->Deprecated2(context, request);
 }

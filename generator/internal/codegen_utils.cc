@@ -16,6 +16,8 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
+#include "google/cloud/log.h"
+#include "absl/strings/match.h"
 #include "absl/strings/str_split.h"
 #include "absl/time/clock.h"
 #include "absl/time/time.h"
@@ -267,6 +269,15 @@ ProcessCommandLineArgs(std::string const& parameters) {
   ProcessArgForwardingProductPath(command_line_args);
   ProcessArgEmitRpc(command_line_args);
   return command_line_args;
+}
+
+std::string SafeReplaceAll(absl::string_view s, absl::string_view from,
+                           absl::string_view to) {
+  if (absl::StrContains(s, to)) {
+    GCP_LOG(FATAL) << "SafeReplaceAll() found \"" << to << "\" in \"" << s
+                   << "\"";
+  }
+  return absl::StrReplaceAll(s, {{from, to}});
 }
 
 std::string CopyrightLicenseFileHeader() {

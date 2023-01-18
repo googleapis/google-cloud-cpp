@@ -115,7 +115,7 @@ DefaultGoldenKitchenSinkStub::DoNothing(
 Status
 DefaultGoldenKitchenSinkStub::Deprecated2(
   grpc::ClientContext& client_context,
-  google::protobuf::Empty const& request) {
+  google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
     google::protobuf::Empty response;
     auto status =
         grpc_stub_->Deprecated2(&client_context, request, &response);

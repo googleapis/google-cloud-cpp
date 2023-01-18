@@ -100,6 +100,18 @@ StatusOr<std::vector<std::pair<std::string, std::string>>>
 ProcessCommandLineArgs(std::string const& parameters);
 
 /**
+ * Change all occurrences of @p from to @p to within @p s.
+ *
+ * The "safe" part means it is a fatal error for @p s to already contain
+ * @p to. This makes it possible to reliably reverse the mapping.
+ *
+ * The primary use case is to replace/restore commas in the values used by
+ * ProcessCommandLineArgs(), where comma is a metacharacter (see above).
+ */
+std::string SafeReplaceAll(absl::string_view s, absl::string_view from,
+                           absl::string_view to);
+
+/**
  * Standard legal boilerplate file header.
  */
 std::string CopyrightLicenseFileHeader();

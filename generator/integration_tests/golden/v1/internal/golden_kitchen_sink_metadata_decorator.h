@@ -60,7 +60,7 @@ class GoldenKitchenSinkMetadata : public GoldenKitchenSinkStub {
 
   Status Deprecated2(
       grpc::ClientContext& context,
-      google::protobuf::Empty const& request) override;
+      google::test::admin::database::v1::GenerateAccessTokenRequest const& request) override;
 
   std::unique_ptr<google::cloud::internal::StreamingReadRpc<google::test::admin::database::v1::Response>>
   StreamingRead(

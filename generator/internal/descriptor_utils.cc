@@ -16,6 +16,7 @@
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/absl_str_join_quiet.h"
 #include "google/cloud/internal/absl_str_replace_quiet.h"
+#include "google/cloud/internal/algorithm.h"
 #include "google/cloud/log.h"
 #include "absl/strings/str_split.h"
 #include "absl/strings/strip.h"
@@ -55,6 +56,7 @@
 #include <regex>
 #include <set>
 #include <string>
+#include <vector>
 
 using ::google::protobuf::FieldDescriptor;
 using ::google::protobuf::compiler::cpp::FieldName;
@@ -189,8 +191,12 @@ void SetLongrunningOperationMethodVars(
 }
 
 void SetMethodSignatureMethodVars(
+    google::protobuf::ServiceDescriptor const& service,
     google::protobuf::MethodDescriptor const& method,
-    VarsDictionary& method_vars) {
+    std::set<std::string> const& emitted_rpcs,
+    std::set<std::string> const& omitted_rpcs, VarsDictionary& method_vars) {
+  auto method_name = method.name();
+  auto qualified_method_name = absl::StrCat(service.name(), ".", method_name);
   auto method_signature_extension =
       method.options().GetRepeatedExtension(google::api::method_signature);
   std::set<std::string> method_signature_uids;
@@ -207,14 +213,7 @@ void SetMethodSignatureMethodVars(
       google::protobuf::FieldDescriptor const* parameter_descriptor =
           input_type->FindFieldByName(parameter);
       auto field_options = parameter_descriptor->options();
-      if (field_options.deprecated()) {
-        // TODO(#8486): We need to know whether we have previously generated
-        // this method signature, and, if so, continue generating it (with a
-        // @deprecated Doxygen comment and the GOOGLE_CLOUD_CPP_DEPRECATED
-        // annotation) so as to maintain backwards compatibility.
-        field_deprecated = true;
-        break;
-      }
+      if (field_options.deprecated()) field_deprecated = true;
       auto const parameter_name = FieldName(parameter_descriptor);
       std::string cpp_type;
       if (parameter_descriptor->is_map()) {
@@ -250,16 +249,40 @@ void SetMethodSignatureMethodVars(
             "  request.set_%s(%s);\n", parameter_name, parameter_name);
       }
       method_signature += absl::StrFormat("%s %s, ", cpp_type, parameter_name);
-      method_signature_uid += absl::StrFormat("%s,", cpp_type);
+      method_signature_uid += absl::StrFormat("%s, ", cpp_type);
     }
     // If method signatures conflict (because the parameters are of identical
-    // types), we should generate the first signature in the conflict set and
-    // drop the rest.
+    // types), we should generate an overload for the first signature in the
+    // conflict set, and drop the rest. This "first match wins" strategy means
+    // it is imperative that signatures are always seen in the same order.
     //
     // See: https://google.aip.dev/client-libraries/4232#method-signatures_1
     auto p = method_signature_uids.insert(method_signature_uid);
     if (!p.second) continue;
-    if (field_deprecated) continue;
+    if (field_deprecated) {
+      // RPCs with deprecated fields must be listed in either omitted_rpcs
+      // or emitted_rpcs. The former is used for newly-generated services,
+      // where we never want to support the deprecated field, and the
+      // latter for newly-deprecated fields, where we want to maintain
+      // backwards compatibility.
+      auto signature = absl::StrCat(
+          method_name, "(",
+          method_signature_uid.substr(0, method_signature_uid.length() - 2),
+          ")");
+      auto qualified_signature = absl::StrCat(service.name(), ".", signature);
+      auto any_match = [&](std::string const& v) {
+        return v == method_name || v == qualified_method_name ||
+               v == signature || v == qualified_signature;
+      };
+      if (internal::ContainsIf(omitted_rpcs, any_match)) continue;
+      if (!internal::ContainsIf(emitted_rpcs, any_match)) {
+        GCP_LOG(FATAL) << "Deprecated RPC " << qualified_signature
+                       << " must be listed in either omitted_rpcs"
+                       << " or emitted_rpcs";
+      }
+      // TODO(#8486): Add a @deprecated Doxygen comment and the
+      // GOOGLE_CLOUD_CPP_DEPRECATED annotation to the generated RPC.
+    }
     std::string key = "method_signature" + std::to_string(i);
     method_vars[key] = method_signature;
     std::string key2 = "method_request_setters" + std::to_string(i);
@@ -1101,7 +1124,17 @@ VarsDictionary CreateServiceVars(
 }
 
 std::map<std::string, VarsDictionary> CreateMethodVars(
-    google::protobuf::ServiceDescriptor const& service, VarsDictionary const&) {
+    google::protobuf::ServiceDescriptor const& service,
+    VarsDictionary const& vars) {
+  auto split_arg = [&vars](std::string const& arg) -> std::set<std::string> {
+    auto l = vars.find(arg);
+    if (l == vars.end()) return {};
+    std::vector<std::string> s = absl::StrSplit(l->second, ',');
+    for (auto& a : s) a = SafeReplaceAll(a, "@", ",");
+    return {s.begin(), s.end()};
+  };
+  auto const emitted_rpcs = split_arg("emitted_rpcs");
+  auto const omitted_rpcs = split_arg("omitted_rpcs");
   std::map<std::string, VarsDictionary> service_methods_vars;
   for (int i = 0; i < service.method_count(); i++) {
     auto const& method = *service.method(i);
@@ -1134,7 +1167,8 @@ std::map<std::string, VarsDictionary> CreateMethodVars(
         method_vars["method_paginated_return_doxygen_link"] = "std::string";
       }
     }
-    SetMethodSignatureMethodVars(method, method_vars);
+    SetMethodSignatureMethodVars(service, method, emitted_rpcs, omitted_rpcs,
+                                 method_vars);
     auto parsed_http_info = ParseHttpExtension(method);
     SetHttpResourceRoutingMethodVars(parsed_http_info, method, method_vars);
     SetHttpGetQueryParameters(parsed_http_info, method, method_vars);

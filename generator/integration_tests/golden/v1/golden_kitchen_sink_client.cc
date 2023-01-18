@@ -123,7 +123,14 @@ GoldenKitchenSinkClient::DoNothing(google::protobuf::Empty const& request, Optio
 }
 
 Status
-GoldenKitchenSinkClient::Deprecated2(google::protobuf::Empty const& request, Options opts) {
+GoldenKitchenSinkClient::Deprecated2(Options opts) {
+  internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
+  google::test::admin::database::v1::GenerateAccessTokenRequest request;
+  return connection_->Deprecated2(request);
+}
+
+Status
+GoldenKitchenSinkClient::Deprecated2(google::test::admin::database::v1::GenerateAccessTokenRequest const& request, Options opts) {
   internal::OptionsSpan span(internal::MergeOptions(std::move(opts), options_));
   return connection_->Deprecated2(request);
 }

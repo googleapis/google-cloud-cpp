@@ -99,8 +99,10 @@ class TestStub : public GoldenKitchenSinkStub {
     return Status();
   }
 
-  Status Deprecated2(grpc::ClientContext&,
-                     google::protobuf::Empty const&) override {
+  Status Deprecated2(
+      grpc::ClientContext&,
+      google::test::admin::database::v1::GenerateAccessTokenRequest const&)
+      override {
     return Status();
   }
 

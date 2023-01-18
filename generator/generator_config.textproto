@@ -259,7 +259,13 @@ service {
   service_proto_path: "google/bigtable/admin/v2/bigtable_table_admin.proto"
   product_path: "google/cloud/bigtable/admin"
   initial_copyright_year: "2021"
-  omitted_rpcs: ["CreateTableFromSnapshot", "SnapshotTable", "GetSnapshot", "ListSnapshots", "DeleteSnapshot"]
+  omitted_rpcs: [
+    "CreateTableFromSnapshot",
+    "SnapshotTable",
+    "GetSnapshot",
+    "ListSnapshots",
+    "DeleteSnapshot"
+  ]
   emulator_endpoint_env_var: "BIGTABLE_EMULATOR_HOST"
   gen_async_rpcs: ["CheckConsistency"]
   retryable_status_codes: ["kUnavailable", "kAborted"]
@@ -382,6 +388,31 @@ service {
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
   emitted_rpcs: ["SetLocations"]
+  omitted_rpcs: [
+    "CreateCluster(std::string const&, std::string const&, google::container::v1::Cluster const&)",
+    "UpdateCluster(std::string const&, std::string const&, std::string const&, google::container::v1::ClusterUpdate const&)",
+    "GetCluster(std::string const&, std::string const&, std::string const&)",
+    "ListClusters(std::string const&, std::string const&)",
+    "SetLoggingService(std::string const&, std::string const&, std::string const&, std::string const&)",
+    "SetMonitoringService(std::string const&, std::string const&, std::string const&, std::string const&)",
+    "SetAddonsConfig(std::string const&, std::string const&, std::string const&, google::container::v1::AddonsConfig const&)",
+    "SetLocations(std::string const&, std::string const&, std::string const&, std::vector<std::string> const&)",
+    "UpdateMaster(std::string const&, std::string const&, std::string const&, std::string const&)",
+    "DeleteCluster(std::string const&, std::string const&, std::string const&)",
+    "ListOperations(std::string const&, std::string const&)",
+    "GetOperation(std::string const&, std::string const&, std::string const&)",
+    "CancelOperation(std::string const&, std::string const&, std::string const&)",
+    "GetServerConfig(std::string const&, std::string const&)",
+    "ListNodePools(std::string const&, std::string const&, std::string const&)",
+    "GetNodePool(std::string const&, std::string const&, std::string const&, std::string const&)",
+    "CreateNodePool(std::string const&, std::string const&, std::string const&, google::container::v1::NodePool const&)",
+    "DeleteNodePool(std::string const&, std::string const&, std::string const&, std::string const&)",
+    "RollbackNodePoolUpgrade(std::string const&, std::string const&, std::string const&, std::string const&)",
+    "SetLegacyAbac(std::string const&, std::string const&, std::string const&, bool)",
+    "StartIPRotation(std::string const&, std::string const&, std::string const&)",
+    "CompleteIPRotation(std::string const&, std::string const&, std::string const&)",
+    "SetNetworkPolicy(std::string const&, std::string const&, std::string const&, google::container::v1::NetworkPolicy const&)"
+  ]
 }
 
 # Container Analysis
@@ -916,6 +947,10 @@ service {
   omitted_rpcs: ["SignBlob", "SignJwt", "UpdateServiceAccount"]
   backwards_compatibility_namespace_alias: true
   retryable_status_codes: ["kUnavailable"]
+  omitted_rpcs: [
+    "SignBlob(std::string const&, std::string const&)",
+    "SignJwt(std::string const&, std::string const&)"
+  ]
 }
 
 service {
@@ -1162,8 +1197,9 @@ service {
   generate_round_robin_decorator: true
   omitted_rpcs: [
     "Acknowledge",
-    "ModifyAckDeadline"
-  ],
+    "ModifyAckDeadline",
+    "Pull(std::string const&, bool, std::int32_t)"
+  ]
   gen_async_rpcs: [
     "StreamingPull",
     "Acknowledge",
@@ -1388,6 +1424,9 @@ service {
   product_path: "google/cloud/servicemanagement"
   initial_copyright_year: "2022"
   retryable_status_codes: ["kUnavailable"]
+  omitted_rpcs: [
+    "ListServices(std::string const&, std::string const&)"
+  ]
 }
 
 # Service Usage

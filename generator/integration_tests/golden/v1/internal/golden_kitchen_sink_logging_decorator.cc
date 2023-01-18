@@ -114,10 +114,10 @@ GoldenKitchenSinkLogging::DoNothing(
 Status
 GoldenKitchenSinkLogging::Deprecated2(
     grpc::ClientContext& context,
-    google::protobuf::Empty const& request) {
+    google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
   return google::cloud::internal::LogWrapper(
       [this](grpc::ClientContext& context,
-             google::protobuf::Empty const& request) {
+             google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
         return child_->Deprecated2(context, request);
       },
       context, request, __func__, tracing_options_);

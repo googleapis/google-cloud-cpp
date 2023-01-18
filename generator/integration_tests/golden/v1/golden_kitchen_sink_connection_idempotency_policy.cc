@@ -58,7 +58,7 @@ Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::DoNothing(google::prot
   return Idempotency::kNonIdempotent;
 }
 
-Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::Deprecated2(google::protobuf::Empty const&) {
+Idempotency GoldenKitchenSinkConnectionIdempotencyPolicy::Deprecated2(google::test::admin::database::v1::GenerateAccessTokenRequest const&) {
   return Idempotency::kNonIdempotent;
 }
 

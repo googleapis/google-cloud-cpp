@@ -844,13 +844,17 @@ service GoldenKitchenSink {
   }
 
   // A deprecated RPC that will omitted.
-  rpc Deprecated1(google.protobuf.Empty) returns (google.protobuf.Empty) {
+  rpc Deprecated1(GenerateAccessTokenRequest) returns (google.protobuf.Empty) {
     option deprecated = true;
+    option (google.api.method_signature) = "";
+    option (google.api.method_signature) = "not_used_anymore";
   }
 
   // A deprecated RPC for which we force API generation.
-  rpc Deprecated2(google.protobuf.Empty) returns (google.protobuf.Empty) {
+  rpc Deprecated2(GenerateAccessTokenRequest) returns (google.protobuf.Empty) {
     option deprecated = true;
+    option (google.api.method_signature) = "";
+    option (google.api.method_signature) = "not_used_anymore";
   }
 
   // Tests the generator for streaming read RPCs (aka server-side streaming)
