@@ -13,8 +13,11 @@
 // limitations under the License.
 
 #include "google/cloud/internal/rest_retry_loop.h"
+#include "google/cloud/internal/make_status.h"
+#include "google/cloud/internal/opentelemetry_options.h"
 #include "google/cloud/options.h"
 #include "google/cloud/testing_util/mock_backoff_policy.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "google/cloud/version.h"
 #include <gmock/gmock.h>
@@ -41,8 +44,12 @@ struct TestRetryablePolicy {
   }
 };
 
+auto constexpr kNumRetries = 3;
+
 std::unique_ptr<internal::RetryPolicy> TestRetryPolicy() {
-  return internal::LimitedErrorCountRetryPolicy<TestRetryablePolicy>(5).clone();
+  return internal::LimitedErrorCountRetryPolicy<TestRetryablePolicy>(
+             kNumRetries)
+      .clone();
 }
 
 std::unique_ptr<BackoffPolicy> TestBackoffPolicy() {
@@ -191,6 +198,44 @@ TEST(RestRetryLoopTest, TooManyTransientFailuresIdempotent) {
   EXPECT_THAT(actual.status().message(), HasSubstr("the answer to everything"));
   EXPECT_THAT(actual.status().message(), HasSubstr("Retry policy exhausted"));
 }
+
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+
+TEST(RestRetryLoopTest, TracingEnabled) {
+  using ::google::cloud::testing_util::SpanNamed;
+  using ::testing::AllOf;
+  using ::testing::Each;
+  using ::testing::SizeIs;
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  internal::OptionsSpan span(
+      Options{}.set<internal::OpenTelemetryTracingOption>(true));
+
+  StatusOr<int> actual = RestRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      [](RestContext&, int) {
+        return StatusOr<int>(internal::UnavailableError("try again"));
+      },
+      0, "error message");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, AllOf(SizeIs(kNumRetries), Each(SpanNamed("Backoff"))));
+}
+
+TEST(RestRetryLoopTest, TracingDisabled) {
+  using ::testing::IsEmpty;
+  auto span_catcher = testing_util::InstallSpanCatcher();
+  internal::OptionsSpan span(
+      Options{}.set<internal::OpenTelemetryTracingOption>(false));
+
+  StatusOr<int> actual = RestRetryLoop(
+      TestRetryPolicy(), TestBackoffPolicy(), Idempotency::kIdempotent,
+      [](RestContext&, int) { return StatusOr<int>(0); }, 0, "error message");
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(spans, IsEmpty());
+}
+
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
