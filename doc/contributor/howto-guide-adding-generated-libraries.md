@@ -172,48 +172,11 @@ knows about one such subdirectory. You may need to manually update the
 
 ## Update the root files
 
-Manually edit the top level `BUILD.bazel` to include the new target.
-
-<details>
-<summary>Expand for an example</summary>
-
-If you are generating a GA library, add it to `GA_LIBRARIES`.
-
-```diff
-diff --git a/BUILD.bazel b/BUILD.bazel
-index 2c08e2a73..3a61351d2 100644
---- a/BUILD.bazel
-+++ b/BUILD.bazel
-@@ -52,6 +52,7 @@ GA_LIBRARIES = [
-     "automl",
-     "billing",
-     "binaryauthorization",
-+    "bms",
-     "channel",
-     "cloudbuild",
-     "composer",
-```
-
-Otherwise, if you are generating an experimental library, add it to
-`EXPERIMENTAL_LIBRARIES` and take note of when the library was generated.
-
-```diff
-diff --git a/BUILD.bazel b/BUILD.bazel
-index e43d85b64..1c35cf61d 100644
---- a/BUILD.bazel
-+++ b/BUILD.bazel
-@@ -21,6 +21,8 @@ exports_files([
- ])
-
- EXPERIMENTAL_LIBRARIES = [
-+    # Introduced in 2022-05
-+    "bms",
-     # Introduced in 2022-04
-     "dataplex",
-     "dialogflow_cx",
-```
-
-</details>
+Manually edit the `google/GoogleCloudCppFeatures.cmake` file to include the new
+target. If you are generating a GA library, add it to
+`GOOGLE_CLOUD_CPP_GA_FEATURES`. Otherwise, if you are generating an experimental
+library, add it to `GOOGLE_CLOUD_CPP_EXPERIMENTAL_FEATURES` and note in a
+comment when the library was generated.
 
 ## Update the quickstart
 
@@ -300,7 +263,7 @@ index c4ce00489..1858b48dc 100755
 
 ```shell
 git commit -m"Manually update READMEs, quickstart, and top-level stuff" \
-   "google/cloud/${library}" BUILD.bazel CHANGELOG.md ci README.md
+   "google/cloud/${library}" cmake CHANGELOG.md ci README.md
 ```
 
 [#10237]: https://github.com/googleapis/google-cloud-cpp/issues/10237
