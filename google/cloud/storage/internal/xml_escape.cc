@@ -20,16 +20,16 @@ namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
-std::string EscapeXmlTag(absl::string_view const& val) {
-  return absl::StrReplaceAll(val, {{"&", "&amp;"},
+std::string EscapeXmlTag(absl::string_view tag) {
+  return absl::StrReplaceAll(tag, {{"&", "&amp;"},
                                    {"<", "&lt;"},
                                    {">", "&gt;"},
                                    {"\"", "&quot;"},
                                    {"'", "&apos;"}});
 }
 
-std::string EscapeXmlContent(absl::string_view const& val) {
-  return absl::StrReplaceAll(val,
+std::string EscapeXmlContent(absl::string_view content) {
+  return absl::StrReplaceAll(content,
                              {{"&", "&amp;"}, {"<", "&lt;"}, {">", "&gt;"}});
 }
 

@@ -24,10 +24,10 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 
 /// Escapes a string for using it as a tag name in XML.
-std::string EscapeXmlTag(absl::string_view const& val);
+std::string EscapeXmlTag(absl::string_view tag);
 
 /// Escapes a string for using it as a text in XML.
-std::string EscapeXmlContent(absl::string_view const& val);
+std::string EscapeXmlContent(absl::string_view content);
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
