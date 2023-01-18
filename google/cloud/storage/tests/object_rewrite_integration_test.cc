@@ -371,9 +371,11 @@ TEST_F(ObjectRewriteIntegrationTest, RewriteLarge) {
   StatusOr<ObjectMetadata> rewritten_meta =
       writer.ResultWithProgressCallback([](StatusOr<RewriteProgress> const& p) {
         ASSERT_STATUS_OK(p);
-        EXPECT_TRUE((p->total_bytes_rewritten < p->object_size) xor p->done)
-            << "p.done=" << p->done << ", p.object_size=" << p->object_size
-            << ", p.total_bytes_rewritten=" << p->total_bytes_rewritten;
+        if (!p->done) {
+          EXPECT_LT(p->total_bytes_rewritten, p->object_size);
+        } else {
+          EXPECT_GE(p->total_bytes_rewritten, p->object_size);
+        }
       });
   ASSERT_STATUS_OK(rewritten_meta);
   ScheduleForDelete(*rewritten_meta);
