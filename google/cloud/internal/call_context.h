@@ -44,6 +44,16 @@ class ScopedCallContext {
       : options_(std::move(call_context.options)),
         span_(std::move(call_context.span)) {}
 
+  // `ScopedCallContext` should not be copied/moved.
+  ScopedCallContext(ScopedCallContext const&) = delete;
+  ScopedCallContext(ScopedCallContext&&) = delete;
+  ScopedCallContext& operator=(ScopedCallContext const&) = delete;
+  ScopedCallContext& operator=(ScopedCallContext&&) = delete;
+
+  // `ScopedCallContext` should only be used for block-scoped objects.
+  static void* operator new(std::size_t) = delete;
+  static void* operator new[](std::size_t) = delete;
+
  private:
   using ScopedOptions = OptionsSpan;
   ScopedOptions options_;
