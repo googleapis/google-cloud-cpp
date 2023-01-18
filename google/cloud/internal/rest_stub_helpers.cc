@@ -30,8 +30,13 @@ Status RestResponseToProto(google::protobuf::Message& destination,
   auto json_to_proto_status =
       google::protobuf::util::JsonStringToMessage(*json_response, &destination);
   if (!json_to_proto_status.ok()) {
-    return Status{
-        StatusCode::kInternal, std::string{json_to_proto_status.message()}, {}};
+    ErrorInfo err_info("Failure creating proto Message from Json",
+                       "google-cloud-cpp",
+                       {{"message_type", destination.GetTypeName()},
+                        {"json_string", *json_response}});
+    return Status{StatusCode::kInternal,
+                  std::string{json_to_proto_status.message()},
+                  std::move(err_info)};
   }
   return {};
 }

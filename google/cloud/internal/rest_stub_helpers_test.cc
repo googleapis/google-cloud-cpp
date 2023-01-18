@@ -38,6 +38,38 @@ using ::testing::Contains;
 using ::testing::Eq;
 using ::testing::Pair;
 
+auto constexpr kMalformedJsonRolePayload = R"(
+  {
+    "name":5,
+    "title":"role_title",
+    "description":"role_description"
+  }
+)";
+
+TEST(RestStubHelpers, RestResponseToProtoErrorInfo) {
+  auto mock_200_response = absl::make_unique<MockRestResponse>();
+  EXPECT_CALL(*mock_200_response, StatusCode()).WillOnce([]() {
+    return HttpStatusCode::kOk;
+  });
+  EXPECT_CALL(std::move(*mock_200_response), ExtractPayload).WillOnce([&] {
+    return MakeMockHttpPayloadSuccess(std::string(kMalformedJsonRolePayload));
+  });
+
+  google::iam::admin::v1::Role role;
+  auto status = RestResponseToProto(role, std::move(*mock_200_response));
+  EXPECT_THAT(status, StatusIs(StatusCode::kInternal));
+  EXPECT_THAT(status.error_info().reason(),
+              Eq("Failure creating proto Message from Json"));
+  EXPECT_THAT(status.error_info().domain(), Eq("google-cloud-cpp"));
+  EXPECT_THAT(
+      status.error_info().metadata(),
+      Contains(std::make_pair(std::string("message_type"),
+                              std::string("google.iam.admin.v1.Role"))));
+  EXPECT_THAT(status.error_info().metadata(),
+              Contains(std::make_pair(std::string("json_string"),
+                                      std::string(kMalformedJsonRolePayload))));
+}
+
 auto constexpr kJsonErrorPayload = R"(
     {
       "error": {
