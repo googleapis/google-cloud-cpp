@@ -1212,10 +1212,9 @@ service {
   service_proto_path: "google/pubsub/v1/schema.proto"
   product_path: "google/cloud/pubsub"
   initial_copyright_year: "2022"
-  retryable_status_codes: []
+  retryable_status_codes: ["kUnavailable"]
+  emulator_endpoint_env_var: "PUBSUB_EMULATOR_HOST"
   omit_client: true
-  omit_connection: true
-  omit_stub_factory: true
 }
 
 # Pub/Sub Lite
