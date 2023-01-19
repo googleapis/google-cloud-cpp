@@ -14,13 +14,49 @@
 
 #include "google/cloud/storage/internal/xml_node.h"
 #include "google/cloud/storage/internal/xml_escape.h"
+#include "google/cloud/storage/internal/xml_parser_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
+#include "google/cloud/internal/make_status.h"
+#include <iterator>
+#include <regex>
 #include <stack>
 
 namespace google {
 namespace cloud {
 namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
+
+StatusOr<std::shared_ptr<XmlNode>> XmlNode::Parse(absl::string_view content,
+                                                  Options options) {
+  internal::CheckExpectedOptions<XmlParserOptionsList>(options, __func__);
+  options = XmlParserDefaultOptions(std::move(options));
+
+  // Check size first
+  if (content.size() > options.get<XmlParserMaxSourceSize>()) {
+    return internal::InvalidArgumentError(
+        absl::StrCat("The source size ", content.size(),
+                     " exceeds the max size of ",
+                     options.get<XmlParserMaxSourceSize>()),
+        GCP_ERROR_INFO());
+  }
+
+  static auto* unnecessary_re = new std::regex{
+      absl::StrCat("(",
+                   R"(<!DOCTYPE[^>[]*(\[[^\]]*\])?>)",  // DTD(DOCTYPE)
+                   "|",
+                   R"(<!\[CDATA\[[\s\S]*?\]\]>)",  // CDATA
+                   "|",
+                   R"(<!--[\s\S]*?-->)",  // XML comments
+                   ")"),
+      std::regex::icase | std::regex::nosubs | std::regex::optimize};
+
+  std::string trimmed;
+  // Remove unnecessary bits
+  std::regex_replace(std::back_inserter(trimmed), content.begin(),
+                     content.end(), *unnecessary_re, "");
+  // And to be continued...
+  return internal::UnimplementedError("not implemented");
+}
 
 std::string XmlNode::GetConcatenatedText() const {
   // For non-tag element, just returns the text content.

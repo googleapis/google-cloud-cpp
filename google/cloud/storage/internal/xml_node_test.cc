@@ -13,6 +13,9 @@
 // limitations under the License.
 
 #include "google/cloud/storage/internal/xml_node.h"
+#include "google/cloud/storage/internal/xml_parser_options.h"
+#include "google/cloud/options.h"
+#include "google/cloud/testing_util/status_matchers.h"
 #include <gmock/gmock.h>
 
 namespace google {
@@ -21,7 +24,29 @@ namespace storage_internal {
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_BEGIN
 namespace {
 
+using ::google::cloud::testing_util::StatusIs;
 using ::testing::ElementsAre;
+using ::testing::HasSubstr;
+
+constexpr auto kXmlFilledWithGarbage =
+    R"xml(<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE lolz [
+    <!ENTITY lol "lol">
+    <!ENTITY lol2 "&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;&lol;">
+    ]>
+<!-- this is a comment -->
+<InitiateMultipartUploadResult xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+  <!--
+  this is a multiline comment
+  -->
+  <Bucket>travel-maps</Bucket>
+  <![CDATA[
+    This is CDATA text.
+  ]]>
+  <Key><b>p</b>ari<b>s</b>.jpg</Key>
+  <UploadId>VXBsb2FkIElEIGZvciBlbHZpbmcncyBteS1tb3ZpZS5tMnRzIHVwbG9hZA</UploadId>
+</InitiateMultipartUploadResult>
+)xml";
 
 constexpr auto kExpectedXml =
     R"xml(<InitiateMultipartUploadResult>
@@ -68,6 +93,19 @@ TEST(XmlNodeTest, Accessors) {
   EXPECT_EQ(tag_node->GetTextContent(), "");
   EXPECT_EQ(tag_node->GetConcatenatedText(), "tag text");
   EXPECT_EQ(tag_node->GetTagName(), "Tag");
+}
+
+TEST(XmlNodeText, Parse) {
+  auto res = XmlNode::Parse(kXmlFilledWithGarbage);
+  EXPECT_THAT(res, StatusIs(StatusCode::kUnimplemented));
+}
+
+TEST(XmlParserTest, ParseTooLargeContent) {
+  Options options;
+  options.set<XmlParserMaxSourceSize>(10);
+  auto res = XmlNode::Parse(kXmlFilledWithGarbage, options);
+  EXPECT_THAT(res, StatusIs(StatusCode::kInvalidArgument,
+                            HasSubstr("exceeds the max size")));
 }
 
 }  // namespace
