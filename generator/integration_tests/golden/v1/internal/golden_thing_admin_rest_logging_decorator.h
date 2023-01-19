@@ -20,6 +20,7 @@
 #define GOOGLE_CLOUD_CPP_GENERATOR_INTEGRATION_TESTS_GOLDEN_V1_INTERNAL_GOLDEN_THING_ADMIN_REST_LOGGING_DECORATOR_H
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_stub.h"
+#include "google/cloud/future.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/tracing_options.h"
 #include "google/cloud/version.h"
@@ -45,7 +46,8 @@ class GoldenThingAdminRestLogging : public GoldenThingAdminRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListDatabasesRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateDatabase(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateDatabase(
+      google::cloud::CompletionQueue& cq,
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::CreateDatabaseRequest const& request) override;
 
@@ -53,7 +55,8 @@ class GoldenThingAdminRestLogging : public GoldenThingAdminRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::GetDatabaseRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> UpdateDatabaseDdl(
+  future<StatusOr<google::longrunning::Operation>> AsyncUpdateDatabaseDdl(
+      google::cloud::CompletionQueue& cq,
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) override;
 
@@ -77,7 +80,8 @@ class GoldenThingAdminRestLogging : public GoldenThingAdminRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       google::iam::v1::TestIamPermissionsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> CreateBackup(
+  future<StatusOr<google::longrunning::Operation>> AsyncCreateBackup(
+      google::cloud::CompletionQueue& cq,
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::CreateBackupRequest const& request) override;
 
@@ -97,7 +101,8 @@ class GoldenThingAdminRestLogging : public GoldenThingAdminRestStub {
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListBackupsRequest const& request) override;
 
-  StatusOr<google::longrunning::Operation> RestoreDatabase(
+  future<StatusOr<google::longrunning::Operation>> AsyncRestoreDatabase(
+      google::cloud::CompletionQueue& cq,
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) override;
 
@@ -108,6 +113,26 @@ class GoldenThingAdminRestLogging : public GoldenThingAdminRestStub {
   StatusOr<google::test::admin::database::v1::ListBackupOperationsResponse> ListBackupOperations(
       google::cloud::rest_internal::RestContext& rest_context,
       google::test::admin::database::v1::ListBackupOperationsRequest const& request) override;
+
+  future<StatusOr<google::test::admin::database::v1::Database>> AsyncGetDatabase(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::test::admin::database::v1::GetDatabaseRequest const& request) override;
+
+  future<Status> AsyncDropDatabase(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::test::admin::database::v1::DropDatabaseRequest const& request) override;
+
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::longrunning::CancelOperationRequest const& request) override;
 
  private:
   std::shared_ptr<GoldenThingAdminRestStub> child_;
