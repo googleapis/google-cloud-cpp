@@ -83,8 +83,8 @@ StatusOr<internal::AccessToken> ParseComputeEngineRefreshResponse(
   auto payload = rest_internal::ReadAll(std::move(response).ExtractPayload());
   if (!payload.ok()) return payload.status();
   auto access_token = nlohmann::json::parse(*payload, nullptr, false);
-  if (access_token.is_discarded() || access_token.count("access_token") == 0 or
-      access_token.count("expires_in") == 0 or
+  if (access_token.is_discarded() || access_token.count("access_token") == 0 ||
+      access_token.count("expires_in") == 0 ||
       access_token.count("token_type") == 0) {
     auto error_payload =
         *payload +

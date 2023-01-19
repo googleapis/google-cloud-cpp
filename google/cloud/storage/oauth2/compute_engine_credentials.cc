@@ -36,8 +36,8 @@ ParseComputeEngineRefreshResponse(
   // Response should have the attributes "access_token", "expires_in", and
   // "token_type".
   auto access_token = nlohmann::json::parse(response.payload, nullptr, false);
-  if (!access_token.is_object() || access_token.count("access_token") == 0 or
-      access_token.count("expires_in") == 0 or
+  if (!access_token.is_object() || access_token.count("access_token") == 0 ||
+      access_token.count("expires_in") == 0 ||
       access_token.count("token_type") == 0) {
     auto payload =
         response.payload +
