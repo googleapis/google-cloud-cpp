@@ -104,7 +104,7 @@ function (create_bazel_config TARGET)
 endfunction ()
 
 # Export a list to a .bzl file, mostly used to export names of unit tests.
-function (export_list_to_bazel filename VAR)
+function (export_list_to_bazel filename)
     cmake_parse_arguments(_EXPORT_LIST_TO_BAZEL_OPT "" "YEAR" "" ${ARGN})
     if ("${_EXPORT_LIST_TO_BAZEL_OPT_YEAR}" STREQUAL "")
         set(_EXPORT_LIST_TO_BAZEL_OPT_YEAR "2018")
@@ -115,13 +115,14 @@ function (export_list_to_bazel filename VAR)
         APPEND "${filename}"
         [=[
 """Automatically generated unit tests list - DO NOT EDIT."""
-
 ]=])
-    file(APPEND "${filename}" "${VAR} = [\n")
-    foreach (item ${${VAR}})
-        file(APPEND "${filename}" "    \"${item}\",\n")
+    foreach (VAR ${_EXPORT_LIST_TO_BAZEL_OPT_UNPARSED_ARGUMENTS})
+        file(APPEND "${filename}" "\n${VAR} = [\n")
+        foreach (item ${${VAR}})
+            file(APPEND "${filename}" "    \"${item}\",\n")
+        endforeach ()
+        file(APPEND "${filename}" "]\n")
     endforeach ()
-    file(APPEND "${filename}" "]\n")
 endfunction ()
 
 # Export a number of variables to a .bzl file, mostly used to export version

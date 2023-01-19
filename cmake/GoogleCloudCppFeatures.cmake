@@ -15,6 +15,7 @@
 # ~~~
 
 include(CMakeDependentOption)
+include(CreateBazelConfig)
 
 # The default list of libraries to build. These can be overridden by the user by
 # passing a comma-separated list, i.e
@@ -22,23 +23,133 @@ include(CMakeDependentOption)
 set(GOOGLE_CLOUD_CPP_LEGACY_FEATURES
     "bigtable;bigquery;iam;logging;pubsub;spanner;storage")
 
+set(GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
+    # cmake-format: sorted
+    # Introduced circa 2022-08-17
+    "apikeys"
+    # This is WIP, it needs a number of hand-crafted APIs.
+    "pubsublite")
+
+set(GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES # cmake-format: sorted
+    # Promoted to GA circa 2022-10-12
+    "batch")
+
+set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
+    # cmake-format: sorted
+    "accessapproval"
+    "accesscontextmanager"
+    "apigateway"
+    "apigeeconnect"
+    "appengine"
+    "artifactregistry"
+    "asset"
+    "assuredworkloads"
+    "automl"
+    "baremetalsolution"
+    "beyondcorp"
+    "billing"
+    "binaryauthorization"
+    "certificatemanager"
+    "channel"
+    "cloudbuild"
+    "composer"
+    "connectors"
+    "contactcenterinsights"
+    "container"
+    "containeranalysis"
+    "datacatalog"
+    "datamigration"
+    "dataplex"
+    "dataproc"
+    "datastream"
+    "debugger"
+    "deploy"
+    "dialogflow_cx"
+    "dialogflow_es"
+    "dlp"
+    "documentai"
+    "edgecontainer"
+    "eventarc"
+    "filestore"
+    "functions"
+    "gameservices"
+    "gkehub"
+    "gkemulticloud"
+    "iap"
+    "ids"
+    "iot"
+    "kms"
+    "language"
+    "logging"
+    "managedidentities"
+    "memcache"
+    "monitoring"
+    "networkconnectivity"
+    "networkmanagement"
+    "notebooks"
+    "optimization"
+    "orgpolicy"
+    "osconfig"
+    "oslogin"
+    "policytroubleshooter"
+    "privateca"
+    "profiler"
+    "recommender"
+    "redis"
+    "resourcemanager"
+    "resourcesettings"
+    "retail"
+    "run"
+    "scheduler"
+    "secretmanager"
+    "securitycenter"
+    "servicecontrol"
+    "servicedirectory"
+    "servicemanagement"
+    "serviceusage"
+    "shell"
+    "speech"
+    "storagetransfer"
+    "talent"
+    "tasks"
+    "texttospeech"
+    "tpu"
+    "trace"
+    "translate"
+    "video"
+    "videointelligence"
+    "vision"
+    "vmmigration"
+    "vmwareengine"
+    "vpcaccess"
+    "webrisk"
+    "websecurityscanner"
+    "workflows")
+
+export_list_to_bazel(
+    "libraries.bzl" YEAR 2023 GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES
+    GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES GOOGLE_CLOUD_CPP_GA_LIBRARIES)
+
 # Handle the dependencies between features. That is, if feature "X" is enabled
 # also enable feature "Y" because "X" depends on "Y".
 function (google_cloud_cpp_enable_deps)
     if (asset IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(APPEND GOOGLE_CLOUD_CPP_ENABLE accesscontextmanager osconfig)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 accesscontextmanager osconfig)
     endif ()
     if (binaryauthorization IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(APPEND GOOGLE_CLOUD_CPP_ENABLE grafeas)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 grafeas)
     endif ()
     if (containeranalysis IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(APPEND GOOGLE_CLOUD_CPP_ENABLE grafeas)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 grafeas)
     endif ()
     if (pubsublite IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(APPEND GOOGLE_CLOUD_CPP_ENABLE pubsub)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 pubsub)
+    endif ()
+    if (pubsub IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 iam)
     endif ()
     if (experimental-storage-grpc IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
-        list(APPEND GOOGLE_CLOUD_CPP_ENABLE storage)
+        list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 storage)
     endif ()
     set(GOOGLE_CLOUD_CPP_ENABLE
         "${GOOGLE_CLOUD_CPP_ENABLE}"
