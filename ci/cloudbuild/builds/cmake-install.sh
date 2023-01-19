@@ -36,7 +36,7 @@ cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE="__ga_libraries__,__experimental_libraries__"
+  -DGOOGLE_CLOUD_CPP_ENABLE="__ga_libraries__,__experimental_libraries__,experimental-storage-grpc"
 cmake --build cmake-out
 cmake --install cmake-out --component google_cloud_cpp_development
 
