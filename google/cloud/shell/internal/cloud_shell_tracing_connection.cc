@@ -34,7 +34,10 @@ CloudShellServiceTracingConnection::CloudShellServiceTracingConnection(
 StatusOr<google::cloud::shell::v1::Environment>
 CloudShellServiceTracingConnection::GetEnvironment(
     google::cloud::shell::v1::GetEnvironmentRequest const& request) {
-  return child_->GetEnvironment(request);
+  auto span =
+      internal::MakeSpan("shell::CloudShellServiceConnection::GetEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEnvironment(request));
 }
 
 future<StatusOr<google::cloud::shell::v1::StartEnvironmentResponse>>

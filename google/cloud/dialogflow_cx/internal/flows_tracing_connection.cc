@@ -34,12 +34,16 @@ FlowsTracingConnection::FlowsTracingConnection(
 StatusOr<google::cloud::dialogflow::cx::v3::Flow>
 FlowsTracingConnection::CreateFlow(
     google::cloud::dialogflow::cx::v3::CreateFlowRequest const& request) {
-  return child_->CreateFlow(request);
+  auto span = internal::MakeSpan("dialogflow_cx::FlowsConnection::CreateFlow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateFlow(request));
 }
 
 Status FlowsTracingConnection::DeleteFlow(
     google::cloud::dialogflow::cx::v3::DeleteFlowRequest const& request) {
-  return child_->DeleteFlow(request);
+  auto span = internal::MakeSpan("dialogflow_cx::FlowsConnection::DeleteFlow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteFlow(request));
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::Flow>
@@ -51,13 +55,17 @@ FlowsTracingConnection::ListFlows(
 StatusOr<google::cloud::dialogflow::cx::v3::Flow>
 FlowsTracingConnection::GetFlow(
     google::cloud::dialogflow::cx::v3::GetFlowRequest const& request) {
-  return child_->GetFlow(request);
+  auto span = internal::MakeSpan("dialogflow_cx::FlowsConnection::GetFlow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFlow(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Flow>
 FlowsTracingConnection::UpdateFlow(
     google::cloud::dialogflow::cx::v3::UpdateFlowRequest const& request) {
-  return child_->UpdateFlow(request);
+  auto span = internal::MakeSpan("dialogflow_cx::FlowsConnection::UpdateFlow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateFlow(request));
 }
 
 future<StatusOr<google::protobuf::Struct>> FlowsTracingConnection::TrainFlow(
@@ -68,14 +76,20 @@ future<StatusOr<google::protobuf::Struct>> FlowsTracingConnection::TrainFlow(
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsTracingConnection::ValidateFlow(
     google::cloud::dialogflow::cx::v3::ValidateFlowRequest const& request) {
-  return child_->ValidateFlow(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::FlowsConnection::ValidateFlow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ValidateFlow(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FlowValidationResult>
 FlowsTracingConnection::GetFlowValidationResult(
     google::cloud::dialogflow::cx::v3::GetFlowValidationResultRequest const&
         request) {
-  return child_->GetFlowValidationResult(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::FlowsConnection::GetFlowValidationResult");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFlowValidationResult(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportFlowResponse>>

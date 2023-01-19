@@ -34,7 +34,10 @@ EventServiceTracingConnection::EventServiceTracingConnection(
 StatusOr<google::cloud::talent::v4::ClientEvent>
 EventServiceTracingConnection::CreateClientEvent(
     google::cloud::talent::v4::CreateClientEventRequest const& request) {
-  return child_->CreateClientEvent(request);
+  auto span =
+      internal::MakeSpan("talent::EventServiceConnection::CreateClientEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateClientEvent(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

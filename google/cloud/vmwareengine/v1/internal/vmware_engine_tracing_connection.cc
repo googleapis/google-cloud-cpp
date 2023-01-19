@@ -40,7 +40,10 @@ VmwareEngineTracingConnection::ListPrivateClouds(
 StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>
 VmwareEngineTracingConnection::GetPrivateCloud(
     google::cloud::vmwareengine::v1::GetPrivateCloudRequest const& request) {
-  return child_->GetPrivateCloud(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetPrivateCloud");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPrivateCloud(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -77,7 +80,10 @@ VmwareEngineTracingConnection::ListClusters(
 StatusOr<google::cloud::vmwareengine::v1::Cluster>
 VmwareEngineTracingConnection::GetCluster(
     google::cloud::vmwareengine::v1::GetClusterRequest const& request) {
-  return child_->GetCluster(request);
+  auto span =
+      internal::MakeSpan("vmwareengine_v1::VmwareEngineConnection::GetCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCluster(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::Cluster>>
@@ -113,20 +119,29 @@ VmwareEngineTracingConnection::ListNodeTypes(
 StatusOr<google::cloud::vmwareengine::v1::NodeType>
 VmwareEngineTracingConnection::GetNodeType(
     google::cloud::vmwareengine::v1::GetNodeTypeRequest const& request) {
-  return child_->GetNodeType(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetNodeType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetNodeType(request));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
 VmwareEngineTracingConnection::ShowNsxCredentials(
     google::cloud::vmwareengine::v1::ShowNsxCredentialsRequest const& request) {
-  return child_->ShowNsxCredentials(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ShowNsxCredentials");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ShowNsxCredentials(request));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::Credentials>
 VmwareEngineTracingConnection::ShowVcenterCredentials(
     google::cloud::vmwareengine::v1::ShowVcenterCredentialsRequest const&
         request) {
-  return child_->ShowVcenterCredentials(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::ShowVcenterCredentials");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ShowVcenterCredentials(request));
 }
 
 future<StatusOr<google::cloud::vmwareengine::v1::PrivateCloud>>
@@ -160,13 +175,19 @@ StatusOr<google::cloud::vmwareengine::v1::HcxActivationKey>
 VmwareEngineTracingConnection::GetHcxActivationKey(
     google::cloud::vmwareengine::v1::GetHcxActivationKeyRequest const&
         request) {
-  return child_->GetHcxActivationKey(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetHcxActivationKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetHcxActivationKey(request));
 }
 
 StatusOr<google::cloud::vmwareengine::v1::NetworkPolicy>
 VmwareEngineTracingConnection::GetNetworkPolicy(
     google::cloud::vmwareengine::v1::GetNetworkPolicyRequest const& request) {
-  return child_->GetNetworkPolicy(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetNetworkPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetNetworkPolicy(request));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::NetworkPolicy>
@@ -221,7 +242,10 @@ StatusOr<google::cloud::vmwareengine::v1::VmwareEngineNetwork>
 VmwareEngineTracingConnection::GetVmwareEngineNetwork(
     google::cloud::vmwareengine::v1::GetVmwareEngineNetworkRequest const&
         request) {
-  return child_->GetVmwareEngineNetwork(request);
+  auto span = internal::MakeSpan(
+      "vmwareengine_v1::VmwareEngineConnection::GetVmwareEngineNetwork");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetVmwareEngineNetwork(request));
 }
 
 StreamRange<google::cloud::vmwareengine::v1::VmwareEngineNetwork>

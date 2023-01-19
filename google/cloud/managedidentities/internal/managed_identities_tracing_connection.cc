@@ -44,7 +44,11 @@ StatusOr<google::cloud::managedidentities::v1::ResetAdminPasswordResponse>
 ManagedIdentitiesServiceTracingConnection::ResetAdminPassword(
     google::cloud::managedidentities::v1::ResetAdminPasswordRequest const&
         request) {
-  return child_->ResetAdminPassword(request);
+  auto span = internal::MakeSpan(
+      "managedidentities::ManagedIdentitiesServiceConnection::"
+      "ResetAdminPassword");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ResetAdminPassword(request));
 }
 
 StreamRange<google::cloud::managedidentities::v1::Domain>
@@ -56,7 +60,10 @@ ManagedIdentitiesServiceTracingConnection::ListDomains(
 StatusOr<google::cloud::managedidentities::v1::Domain>
 ManagedIdentitiesServiceTracingConnection::GetDomain(
     google::cloud::managedidentities::v1::GetDomainRequest const& request) {
-  return child_->GetDomain(request);
+  auto span = internal::MakeSpan(
+      "managedidentities::ManagedIdentitiesServiceConnection::GetDomain");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDomain(request));
 }
 
 future<StatusOr<google::cloud::managedidentities::v1::Domain>>

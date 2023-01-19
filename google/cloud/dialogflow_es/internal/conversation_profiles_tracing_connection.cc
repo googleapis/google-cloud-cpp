@@ -41,27 +41,42 @@ StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesTracingConnection::GetConversationProfile(
     google::cloud::dialogflow::v2::GetConversationProfileRequest const&
         request) {
-  return child_->GetConversationProfile(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::GetConversationProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConversationProfile(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesTracingConnection::CreateConversationProfile(
     google::cloud::dialogflow::v2::CreateConversationProfileRequest const&
         request) {
-  return child_->CreateConversationProfile(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "CreateConversationProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateConversationProfile(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::ConversationProfile>
 ConversationProfilesTracingConnection::UpdateConversationProfile(
     google::cloud::dialogflow::v2::UpdateConversationProfileRequest const&
         request) {
-  return child_->UpdateConversationProfile(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "UpdateConversationProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateConversationProfile(request));
 }
 
 Status ConversationProfilesTracingConnection::DeleteConversationProfile(
     google::cloud::dialogflow::v2::DeleteConversationProfileRequest const&
         request) {
-  return child_->DeleteConversationProfile(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationProfilesConnection::"
+      "DeleteConversationProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteConversationProfile(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::ConversationProfile>>

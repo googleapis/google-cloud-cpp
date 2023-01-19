@@ -36,21 +36,32 @@ StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceTracingConnection::CreateSecuritySettings(
     google::cloud::dialogflow::cx::v3::CreateSecuritySettingsRequest const&
         request) {
-  return child_->CreateSecuritySettings(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::SecuritySettingsServiceConnection::"
+      "CreateSecuritySettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateSecuritySettings(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceTracingConnection::GetSecuritySettings(
     google::cloud::dialogflow::cx::v3::GetSecuritySettingsRequest const&
         request) {
-  return child_->GetSecuritySettings(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::SecuritySettingsServiceConnection::GetSecuritySettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSecuritySettings(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SecuritySettings>
 SecuritySettingsServiceTracingConnection::UpdateSecuritySettings(
     google::cloud::dialogflow::cx::v3::UpdateSecuritySettingsRequest const&
         request) {
-  return child_->UpdateSecuritySettings(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::SecuritySettingsServiceConnection::"
+      "UpdateSecuritySettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateSecuritySettings(request));
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::SecuritySettings>
@@ -62,7 +73,11 @@ SecuritySettingsServiceTracingConnection::ListSecuritySettings(
 Status SecuritySettingsServiceTracingConnection::DeleteSecuritySettings(
     google::cloud::dialogflow::cx::v3::DeleteSecuritySettingsRequest const&
         request) {
-  return child_->DeleteSecuritySettings(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::SecuritySettingsServiceConnection::"
+      "DeleteSecuritySettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteSecuritySettings(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -40,19 +40,27 @@ EkmServiceTracingConnection::ListEkmConnections(
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceTracingConnection::GetEkmConnection(
     google::cloud::kms::v1::GetEkmConnectionRequest const& request) {
-  return child_->GetEkmConnection(request);
+  auto span = internal::MakeSpan("kms::EkmServiceConnection::GetEkmConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEkmConnection(request));
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceTracingConnection::CreateEkmConnection(
     google::cloud::kms::v1::CreateEkmConnectionRequest const& request) {
-  return child_->CreateEkmConnection(request);
+  auto span =
+      internal::MakeSpan("kms::EkmServiceConnection::CreateEkmConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateEkmConnection(request));
 }
 
 StatusOr<google::cloud::kms::v1::EkmConnection>
 EkmServiceTracingConnection::UpdateEkmConnection(
     google::cloud::kms::v1::UpdateEkmConnectionRequest const& request) {
-  return child_->UpdateEkmConnection(request);
+  auto span =
+      internal::MakeSpan("kms::EkmServiceConnection::UpdateEkmConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateEkmConnection(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

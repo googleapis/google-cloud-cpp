@@ -42,7 +42,11 @@ GameServerClustersServiceTracingConnection::ListGameServerClusters(
 StatusOr<google::cloud::gaming::v1::GameServerCluster>
 GameServerClustersServiceTracingConnection::GetGameServerCluster(
     google::cloud::gaming::v1::GetGameServerClusterRequest const& request) {
-  return child_->GetGameServerCluster(request);
+  auto span = internal::MakeSpan(
+      "gameservices::GameServerClustersServiceConnection::"
+      "GetGameServerCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGameServerCluster(request));
 }
 
 future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
@@ -55,7 +59,12 @@ StatusOr<google::cloud::gaming::v1::PreviewCreateGameServerClusterResponse>
 GameServerClustersServiceTracingConnection::PreviewCreateGameServerCluster(
     google::cloud::gaming::v1::PreviewCreateGameServerClusterRequest const&
         request) {
-  return child_->PreviewCreateGameServerCluster(request);
+  auto span = internal::MakeSpan(
+      "gameservices::GameServerClustersServiceConnection::"
+      "PreviewCreateGameServerCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->PreviewCreateGameServerCluster(request));
 }
 
 future<StatusOr<google::cloud::gaming::v1::OperationMetadata>>
@@ -68,7 +77,12 @@ StatusOr<google::cloud::gaming::v1::PreviewDeleteGameServerClusterResponse>
 GameServerClustersServiceTracingConnection::PreviewDeleteGameServerCluster(
     google::cloud::gaming::v1::PreviewDeleteGameServerClusterRequest const&
         request) {
-  return child_->PreviewDeleteGameServerCluster(request);
+  auto span = internal::MakeSpan(
+      "gameservices::GameServerClustersServiceConnection::"
+      "PreviewDeleteGameServerCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->PreviewDeleteGameServerCluster(request));
 }
 
 future<StatusOr<google::cloud::gaming::v1::GameServerCluster>>
@@ -81,7 +95,12 @@ StatusOr<google::cloud::gaming::v1::PreviewUpdateGameServerClusterResponse>
 GameServerClustersServiceTracingConnection::PreviewUpdateGameServerCluster(
     google::cloud::gaming::v1::PreviewUpdateGameServerClusterRequest const&
         request) {
-  return child_->PreviewUpdateGameServerCluster(request);
+  auto span = internal::MakeSpan(
+      "gameservices::GameServerClustersServiceConnection::"
+      "PreviewUpdateGameServerCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->PreviewUpdateGameServerCluster(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

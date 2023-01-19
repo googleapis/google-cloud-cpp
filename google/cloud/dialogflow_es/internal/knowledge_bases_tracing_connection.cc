@@ -40,24 +40,36 @@ KnowledgeBasesTracingConnection::ListKnowledgeBases(
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesTracingConnection::GetKnowledgeBase(
     google::cloud::dialogflow::v2::GetKnowledgeBaseRequest const& request) {
-  return child_->GetKnowledgeBase(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::GetKnowledgeBase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetKnowledgeBase(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesTracingConnection::CreateKnowledgeBase(
     google::cloud::dialogflow::v2::CreateKnowledgeBaseRequest const& request) {
-  return child_->CreateKnowledgeBase(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::CreateKnowledgeBase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateKnowledgeBase(request));
 }
 
 Status KnowledgeBasesTracingConnection::DeleteKnowledgeBase(
     google::cloud::dialogflow::v2::DeleteKnowledgeBaseRequest const& request) {
-  return child_->DeleteKnowledgeBase(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::DeleteKnowledgeBase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteKnowledgeBase(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::KnowledgeBase>
 KnowledgeBasesTracingConnection::UpdateKnowledgeBase(
     google::cloud::dialogflow::v2::UpdateKnowledgeBaseRequest const& request) {
-  return child_->UpdateKnowledgeBase(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::KnowledgeBasesConnection::UpdateKnowledgeBase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateKnowledgeBase(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

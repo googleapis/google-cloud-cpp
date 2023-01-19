@@ -33,7 +33,9 @@ JobServiceTracingConnection::JobServiceTracingConnection(
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceTracingConnection::CreateJob(
     google::cloud::talent::v4::CreateJobRequest const& request) {
-  return child_->CreateJob(request);
+  auto span = internal::MakeSpan("talent::JobServiceConnection::CreateJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateJob(request));
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchCreateJobsResponse>>
@@ -44,12 +46,16 @@ JobServiceTracingConnection::BatchCreateJobs(
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceTracingConnection::GetJob(
     google::cloud::talent::v4::GetJobRequest const& request) {
-  return child_->GetJob(request);
+  auto span = internal::MakeSpan("talent::JobServiceConnection::GetJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetJob(request));
 }
 
 StatusOr<google::cloud::talent::v4::Job> JobServiceTracingConnection::UpdateJob(
     google::cloud::talent::v4::UpdateJobRequest const& request) {
-  return child_->UpdateJob(request);
+  auto span = internal::MakeSpan("talent::JobServiceConnection::UpdateJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateJob(request));
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchUpdateJobsResponse>>
@@ -60,7 +66,9 @@ JobServiceTracingConnection::BatchUpdateJobs(
 
 Status JobServiceTracingConnection::DeleteJob(
     google::cloud::talent::v4::DeleteJobRequest const& request) {
-  return child_->DeleteJob(request);
+  auto span = internal::MakeSpan("talent::JobServiceConnection::DeleteJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteJob(request));
 }
 
 future<StatusOr<google::cloud::talent::v4::BatchDeleteJobsResponse>>
@@ -78,13 +86,18 @@ JobServiceTracingConnection::ListJobs(
 StatusOr<google::cloud::talent::v4::SearchJobsResponse>
 JobServiceTracingConnection::SearchJobs(
     google::cloud::talent::v4::SearchJobsRequest const& request) {
-  return child_->SearchJobs(request);
+  auto span = internal::MakeSpan("talent::JobServiceConnection::SearchJobs");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SearchJobs(request));
 }
 
 StatusOr<google::cloud::talent::v4::SearchJobsResponse>
 JobServiceTracingConnection::SearchJobsForAlert(
     google::cloud::talent::v4::SearchJobsRequest const& request) {
-  return child_->SearchJobsForAlert(request);
+  auto span =
+      internal::MakeSpan("talent::JobServiceConnection::SearchJobsForAlert");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SearchJobsForAlert(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

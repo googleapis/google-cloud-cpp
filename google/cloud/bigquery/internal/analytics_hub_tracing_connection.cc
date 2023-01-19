@@ -49,27 +49,39 @@ StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 AnalyticsHubServiceTracingConnection::GetDataExchange(
     google::cloud::bigquery::analyticshub::v1::GetDataExchangeRequest const&
         request) {
-  return child_->GetDataExchange(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::GetDataExchange");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDataExchange(request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 AnalyticsHubServiceTracingConnection::CreateDataExchange(
     google::cloud::bigquery::analyticshub::v1::CreateDataExchangeRequest const&
         request) {
-  return child_->CreateDataExchange(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::CreateDataExchange");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateDataExchange(request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::DataExchange>
 AnalyticsHubServiceTracingConnection::UpdateDataExchange(
     google::cloud::bigquery::analyticshub::v1::UpdateDataExchangeRequest const&
         request) {
-  return child_->UpdateDataExchange(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::UpdateDataExchange");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateDataExchange(request));
 }
 
 Status AnalyticsHubServiceTracingConnection::DeleteDataExchange(
     google::cloud::bigquery::analyticshub::v1::DeleteDataExchangeRequest const&
         request) {
-  return child_->DeleteDataExchange(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::DeleteDataExchange");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteDataExchange(request));
 }
 
 StreamRange<google::cloud::bigquery::analyticshub::v1::Listing>
@@ -82,52 +94,76 @@ StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
 AnalyticsHubServiceTracingConnection::GetListing(
     google::cloud::bigquery::analyticshub::v1::GetListingRequest const&
         request) {
-  return child_->GetListing(request);
+  auto span =
+      internal::MakeSpan("bigquery::AnalyticsHubServiceConnection::GetListing");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetListing(request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
 AnalyticsHubServiceTracingConnection::CreateListing(
     google::cloud::bigquery::analyticshub::v1::CreateListingRequest const&
         request) {
-  return child_->CreateListing(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::CreateListing");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateListing(request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::Listing>
 AnalyticsHubServiceTracingConnection::UpdateListing(
     google::cloud::bigquery::analyticshub::v1::UpdateListingRequest const&
         request) {
-  return child_->UpdateListing(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::UpdateListing");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateListing(request));
 }
 
 Status AnalyticsHubServiceTracingConnection::DeleteListing(
     google::cloud::bigquery::analyticshub::v1::DeleteListingRequest const&
         request) {
-  return child_->DeleteListing(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::DeleteListing");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteListing(request));
 }
 
 StatusOr<google::cloud::bigquery::analyticshub::v1::SubscribeListingResponse>
 AnalyticsHubServiceTracingConnection::SubscribeListing(
     google::cloud::bigquery::analyticshub::v1::SubscribeListingRequest const&
         request) {
-  return child_->SubscribeListing(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::SubscribeListing");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SubscribeListing(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 AnalyticsHubServiceTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 AnalyticsHubServiceTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 AnalyticsHubServiceTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "bigquery::AnalyticsHubServiceConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

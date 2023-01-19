@@ -34,7 +34,10 @@ CloudBillingTracingConnection::CloudBillingTracingConnection(
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingTracingConnection::GetBillingAccount(
     google::cloud::billing::v1::GetBillingAccountRequest const& request) {
-  return child_->GetBillingAccount(request);
+  auto span =
+      internal::MakeSpan("billing::CloudBillingConnection::GetBillingAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBillingAccount(request));
 }
 
 StreamRange<google::cloud::billing::v1::BillingAccount>
@@ -46,13 +49,19 @@ CloudBillingTracingConnection::ListBillingAccounts(
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingTracingConnection::UpdateBillingAccount(
     google::cloud::billing::v1::UpdateBillingAccountRequest const& request) {
-  return child_->UpdateBillingAccount(request);
+  auto span = internal::MakeSpan(
+      "billing::CloudBillingConnection::UpdateBillingAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateBillingAccount(request));
 }
 
 StatusOr<google::cloud::billing::v1::BillingAccount>
 CloudBillingTracingConnection::CreateBillingAccount(
     google::cloud::billing::v1::CreateBillingAccountRequest const& request) {
-  return child_->CreateBillingAccount(request);
+  auto span = internal::MakeSpan(
+      "billing::CloudBillingConnection::CreateBillingAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateBillingAccount(request));
 }
 
 StreamRange<google::cloud::billing::v1::ProjectBillingInfo>
@@ -64,30 +73,45 @@ CloudBillingTracingConnection::ListProjectBillingInfo(
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
 CloudBillingTracingConnection::GetProjectBillingInfo(
     google::cloud::billing::v1::GetProjectBillingInfoRequest const& request) {
-  return child_->GetProjectBillingInfo(request);
+  auto span = internal::MakeSpan(
+      "billing::CloudBillingConnection::GetProjectBillingInfo");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetProjectBillingInfo(request));
 }
 
 StatusOr<google::cloud::billing::v1::ProjectBillingInfo>
 CloudBillingTracingConnection::UpdateProjectBillingInfo(
     google::cloud::billing::v1::UpdateProjectBillingInfoRequest const&
         request) {
-  return child_->UpdateProjectBillingInfo(request);
+  auto span = internal::MakeSpan(
+      "billing::CloudBillingConnection::UpdateProjectBillingInfo");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateProjectBillingInfo(request));
 }
 
 StatusOr<google::iam::v1::Policy> CloudBillingTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span =
+      internal::MakeSpan("billing::CloudBillingConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy> CloudBillingTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span =
+      internal::MakeSpan("billing::CloudBillingConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudBillingTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span =
+      internal::MakeSpan("billing::CloudBillingConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

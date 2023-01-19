@@ -34,19 +34,28 @@ TopicStatsServiceTracingConnection::TopicStatsServiceTracingConnection(
 StatusOr<google::cloud::pubsublite::v1::ComputeMessageStatsResponse>
 TopicStatsServiceTracingConnection::ComputeMessageStats(
     google::cloud::pubsublite::v1::ComputeMessageStatsRequest const& request) {
-  return child_->ComputeMessageStats(request);
+  auto span = internal::MakeSpan(
+      "pubsublite::TopicStatsServiceConnection::ComputeMessageStats");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ComputeMessageStats(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeHeadCursorResponse>
 TopicStatsServiceTracingConnection::ComputeHeadCursor(
     google::cloud::pubsublite::v1::ComputeHeadCursorRequest const& request) {
-  return child_->ComputeHeadCursor(request);
+  auto span = internal::MakeSpan(
+      "pubsublite::TopicStatsServiceConnection::ComputeHeadCursor");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ComputeHeadCursor(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::ComputeTimeCursorResponse>
 TopicStatsServiceTracingConnection::ComputeTimeCursor(
     google::cloud::pubsublite::v1::ComputeTimeCursorRequest const& request) {
-  return child_->ComputeTimeCursor(request);
+  auto span = internal::MakeSpan(
+      "pubsublite::TopicStatsServiceConnection::ComputeTimeCursor");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ComputeTimeCursor(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

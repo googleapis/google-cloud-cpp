@@ -34,7 +34,10 @@ FoldersTracingConnection::FoldersTracingConnection(
 StatusOr<google::cloud::resourcemanager::v3::Folder>
 FoldersTracingConnection::GetFolder(
     google::cloud::resourcemanager::v3::GetFolderRequest const& request) {
-  return child_->GetFolder(request);
+  auto span =
+      internal::MakeSpan("resourcemanager::FoldersConnection::GetFolder");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFolder(request));
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Folder>
@@ -81,18 +84,27 @@ FoldersTracingConnection::UndeleteFolder(
 
 StatusOr<google::iam::v1::Policy> FoldersTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span =
+      internal::MakeSpan("resourcemanager::FoldersConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy> FoldersTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span =
+      internal::MakeSpan("resourcemanager::FoldersConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 FoldersTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "resourcemanager::FoldersConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

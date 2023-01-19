@@ -39,7 +39,9 @@ VersionsTracingConnection::ListVersions(
 
 StatusOr<google::appengine::v1::Version> VersionsTracingConnection::GetVersion(
     google::appengine::v1::GetVersionRequest const& request) {
-  return child_->GetVersion(request);
+  auto span = internal::MakeSpan("appengine::VersionsConnection::GetVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetVersion(request));
 }
 
 future<StatusOr<google::appengine::v1::Version>>

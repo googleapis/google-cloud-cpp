@@ -34,13 +34,19 @@ ServiceControllerTracingConnection::ServiceControllerTracingConnection(
 StatusOr<google::api::servicecontrol::v1::CheckResponse>
 ServiceControllerTracingConnection::Check(
     google::api::servicecontrol::v1::CheckRequest const& request) {
-  return child_->Check(request);
+  auto span =
+      internal::MakeSpan("servicecontrol::ServiceControllerConnection::Check");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Check(request));
 }
 
 StatusOr<google::api::servicecontrol::v1::ReportResponse>
 ServiceControllerTracingConnection::Report(
     google::api::servicecontrol::v1::ReportRequest const& request) {
-  return child_->Report(request);
+  auto span =
+      internal::MakeSpan("servicecontrol::ServiceControllerConnection::Report");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Report(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

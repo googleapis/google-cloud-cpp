@@ -36,19 +36,28 @@ PolicyTagManagerSerializationTracingConnection::
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerSerializationTracingConnection::ReplaceTaxonomy(
     google::cloud::datacatalog::v1::ReplaceTaxonomyRequest const& request) {
-  return child_->ReplaceTaxonomy(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerSerializationConnection::ReplaceTaxonomy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ReplaceTaxonomy(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::ImportTaxonomiesResponse>
 PolicyTagManagerSerializationTracingConnection::ImportTaxonomies(
     google::cloud::datacatalog::v1::ImportTaxonomiesRequest const& request) {
-  return child_->ImportTaxonomies(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerSerializationConnection::ImportTaxonomies");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ImportTaxonomies(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::ExportTaxonomiesResponse>
 PolicyTagManagerSerializationTracingConnection::ExportTaxonomies(
     google::cloud::datacatalog::v1::ExportTaxonomiesRequest const& request) {
-  return child_->ExportTaxonomies(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerSerializationConnection::ExportTaxonomies");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ExportTaxonomies(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

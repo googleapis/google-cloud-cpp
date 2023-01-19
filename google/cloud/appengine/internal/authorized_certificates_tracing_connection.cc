@@ -41,24 +41,39 @@ AuthorizedCertificatesTracingConnection::ListAuthorizedCertificates(
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesTracingConnection::GetAuthorizedCertificate(
     google::appengine::v1::GetAuthorizedCertificateRequest const& request) {
-  return child_->GetAuthorizedCertificate(request);
+  auto span = internal::MakeSpan(
+      "appengine::AuthorizedCertificatesConnection::GetAuthorizedCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAuthorizedCertificate(request));
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesTracingConnection::CreateAuthorizedCertificate(
     google::appengine::v1::CreateAuthorizedCertificateRequest const& request) {
-  return child_->CreateAuthorizedCertificate(request);
+  auto span = internal::MakeSpan(
+      "appengine::AuthorizedCertificatesConnection::"
+      "CreateAuthorizedCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateAuthorizedCertificate(request));
 }
 
 StatusOr<google::appengine::v1::AuthorizedCertificate>
 AuthorizedCertificatesTracingConnection::UpdateAuthorizedCertificate(
     google::appengine::v1::UpdateAuthorizedCertificateRequest const& request) {
-  return child_->UpdateAuthorizedCertificate(request);
+  auto span = internal::MakeSpan(
+      "appengine::AuthorizedCertificatesConnection::"
+      "UpdateAuthorizedCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateAuthorizedCertificate(request));
 }
 
 Status AuthorizedCertificatesTracingConnection::DeleteAuthorizedCertificate(
     google::appengine::v1::DeleteAuthorizedCertificateRequest const& request) {
-  return child_->DeleteAuthorizedCertificate(request);
+  auto span = internal::MakeSpan(
+      "appengine::AuthorizedCertificatesConnection::"
+      "DeleteAuthorizedCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAuthorizedCertificate(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -34,18 +34,27 @@ PolicyTagManagerTracingConnection::PolicyTagManagerTracingConnection(
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerTracingConnection::CreateTaxonomy(
     google::cloud::datacatalog::v1::CreateTaxonomyRequest const& request) {
-  return child_->CreateTaxonomy(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::CreateTaxonomy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTaxonomy(request));
 }
 
 Status PolicyTagManagerTracingConnection::DeleteTaxonomy(
     google::cloud::datacatalog::v1::DeleteTaxonomyRequest const& request) {
-  return child_->DeleteTaxonomy(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::DeleteTaxonomy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTaxonomy(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerTracingConnection::UpdateTaxonomy(
     google::cloud::datacatalog::v1::UpdateTaxonomyRequest const& request) {
-  return child_->UpdateTaxonomy(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::UpdateTaxonomy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateTaxonomy(request));
 }
 
 StreamRange<google::cloud::datacatalog::v1::Taxonomy>
@@ -57,24 +66,36 @@ PolicyTagManagerTracingConnection::ListTaxonomies(
 StatusOr<google::cloud::datacatalog::v1::Taxonomy>
 PolicyTagManagerTracingConnection::GetTaxonomy(
     google::cloud::datacatalog::v1::GetTaxonomyRequest const& request) {
-  return child_->GetTaxonomy(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::GetTaxonomy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTaxonomy(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerTracingConnection::CreatePolicyTag(
     google::cloud::datacatalog::v1::CreatePolicyTagRequest const& request) {
-  return child_->CreatePolicyTag(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::CreatePolicyTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreatePolicyTag(request));
 }
 
 Status PolicyTagManagerTracingConnection::DeletePolicyTag(
     google::cloud::datacatalog::v1::DeletePolicyTagRequest const& request) {
-  return child_->DeletePolicyTag(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::DeletePolicyTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeletePolicyTag(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerTracingConnection::UpdatePolicyTag(
     google::cloud::datacatalog::v1::UpdatePolicyTagRequest const& request) {
-  return child_->UpdatePolicyTag(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::UpdatePolicyTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdatePolicyTag(request));
 }
 
 StreamRange<google::cloud::datacatalog::v1::PolicyTag>
@@ -86,25 +107,37 @@ PolicyTagManagerTracingConnection::ListPolicyTags(
 StatusOr<google::cloud::datacatalog::v1::PolicyTag>
 PolicyTagManagerTracingConnection::GetPolicyTag(
     google::cloud::datacatalog::v1::GetPolicyTagRequest const& request) {
-  return child_->GetPolicyTag(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::GetPolicyTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPolicyTag(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 PolicyTagManagerTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 PolicyTagManagerTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 PolicyTagManagerTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::PolicyTagManagerConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

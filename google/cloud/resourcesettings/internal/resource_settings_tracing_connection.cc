@@ -42,13 +42,19 @@ ResourceSettingsServiceTracingConnection::ListSettings(
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceTracingConnection::GetSetting(
     google::cloud::resourcesettings::v1::GetSettingRequest const& request) {
-  return child_->GetSetting(request);
+  auto span = internal::MakeSpan(
+      "resourcesettings::ResourceSettingsServiceConnection::GetSetting");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSetting(request));
 }
 
 StatusOr<google::cloud::resourcesettings::v1::Setting>
 ResourceSettingsServiceTracingConnection::UpdateSetting(
     google::cloud::resourcesettings::v1::UpdateSettingRequest const& request) {
-  return child_->UpdateSetting(request);
+  auto span = internal::MakeSpan(
+      "resourcesettings::ResourceSettingsServiceConnection::UpdateSetting");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateSetting(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

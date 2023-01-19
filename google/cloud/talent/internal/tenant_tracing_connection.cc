@@ -34,24 +34,35 @@ TenantServiceTracingConnection::TenantServiceTracingConnection(
 StatusOr<google::cloud::talent::v4::Tenant>
 TenantServiceTracingConnection::CreateTenant(
     google::cloud::talent::v4::CreateTenantRequest const& request) {
-  return child_->CreateTenant(request);
+  auto span =
+      internal::MakeSpan("talent::TenantServiceConnection::CreateTenant");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTenant(request));
 }
 
 StatusOr<google::cloud::talent::v4::Tenant>
 TenantServiceTracingConnection::GetTenant(
     google::cloud::talent::v4::GetTenantRequest const& request) {
-  return child_->GetTenant(request);
+  auto span = internal::MakeSpan("talent::TenantServiceConnection::GetTenant");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTenant(request));
 }
 
 StatusOr<google::cloud::talent::v4::Tenant>
 TenantServiceTracingConnection::UpdateTenant(
     google::cloud::talent::v4::UpdateTenantRequest const& request) {
-  return child_->UpdateTenant(request);
+  auto span =
+      internal::MakeSpan("talent::TenantServiceConnection::UpdateTenant");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateTenant(request));
 }
 
 Status TenantServiceTracingConnection::DeleteTenant(
     google::cloud::talent::v4::DeleteTenantRequest const& request) {
-  return child_->DeleteTenant(request);
+  auto span =
+      internal::MakeSpan("talent::TenantServiceConnection::DeleteTenant");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTenant(request));
 }
 
 StreamRange<google::cloud::talent::v4::Tenant>

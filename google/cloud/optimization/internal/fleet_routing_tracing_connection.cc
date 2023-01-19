@@ -34,7 +34,10 @@ FleetRoutingTracingConnection::FleetRoutingTracingConnection(
 StatusOr<google::cloud::optimization::v1::OptimizeToursResponse>
 FleetRoutingTracingConnection::OptimizeTours(
     google::cloud::optimization::v1::OptimizeToursRequest const& request) {
-  return child_->OptimizeTours(request);
+  auto span =
+      internal::MakeSpan("optimization::FleetRoutingConnection::OptimizeTours");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->OptimizeTours(request));
 }
 
 future<StatusOr<google::cloud::optimization::v1::BatchOptimizeToursResponse>>

@@ -40,7 +40,10 @@ CloudMemcacheTracingConnection::ListInstances(
 StatusOr<google::cloud::memcache::v1::Instance>
 CloudMemcacheTracingConnection::GetInstance(
     google::cloud::memcache::v1::GetInstanceRequest const& request) {
-  return child_->GetInstance(request);
+  auto span =
+      internal::MakeSpan("memcache::CloudMemcacheConnection::GetInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 future<StatusOr<google::cloud::memcache::v1::Instance>>

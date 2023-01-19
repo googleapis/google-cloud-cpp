@@ -40,24 +40,36 @@ EnvironmentsTracingConnection::ListEnvironments(
 StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsTracingConnection::GetEnvironment(
     google::cloud::dialogflow::v2::GetEnvironmentRequest const& request) {
-  return child_->GetEnvironment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::GetEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEnvironment(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsTracingConnection::CreateEnvironment(
     google::cloud::dialogflow::v2::CreateEnvironmentRequest const& request) {
-  return child_->CreateEnvironment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::CreateEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateEnvironment(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Environment>
 EnvironmentsTracingConnection::UpdateEnvironment(
     google::cloud::dialogflow::v2::UpdateEnvironmentRequest const& request) {
-  return child_->UpdateEnvironment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::UpdateEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateEnvironment(request));
 }
 
 Status EnvironmentsTracingConnection::DeleteEnvironment(
     google::cloud::dialogflow::v2::DeleteEnvironmentRequest const& request) {
-  return child_->DeleteEnvironment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EnvironmentsConnection::DeleteEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteEnvironment(request));
 }
 
 StreamRange<google::cloud::dialogflow::v2::EnvironmentHistory::Entry>

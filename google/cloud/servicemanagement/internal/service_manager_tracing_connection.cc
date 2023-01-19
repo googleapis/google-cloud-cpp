@@ -40,7 +40,10 @@ ServiceManagerTracingConnection::ListServices(
 StatusOr<google::api::servicemanagement::v1::ManagedService>
 ServiceManagerTracingConnection::GetService(
     google::api::servicemanagement::v1::GetServiceRequest const& request) {
-  return child_->GetService(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement::ServiceManagerConnection::GetService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetService(request));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::ManagedService>>
@@ -71,14 +74,20 @@ StatusOr<google::api::Service>
 ServiceManagerTracingConnection::GetServiceConfig(
     google::api::servicemanagement::v1::GetServiceConfigRequest const&
         request) {
-  return child_->GetServiceConfig(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement::ServiceManagerConnection::GetServiceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetServiceConfig(request));
 }
 
 StatusOr<google::api::Service>
 ServiceManagerTracingConnection::CreateServiceConfig(
     google::api::servicemanagement::v1::CreateServiceConfigRequest const&
         request) {
-  return child_->CreateServiceConfig(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement::ServiceManagerConnection::CreateServiceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateServiceConfig(request));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::SubmitConfigSourceResponse>>
@@ -98,7 +107,10 @@ StatusOr<google::api::servicemanagement::v1::Rollout>
 ServiceManagerTracingConnection::GetServiceRollout(
     google::api::servicemanagement::v1::GetServiceRolloutRequest const&
         request) {
-  return child_->GetServiceRollout(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement::ServiceManagerConnection::GetServiceRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetServiceRollout(request));
 }
 
 future<StatusOr<google::api::servicemanagement::v1::Rollout>>
@@ -112,7 +124,10 @@ StatusOr<google::api::servicemanagement::v1::GenerateConfigReportResponse>
 ServiceManagerTracingConnection::GenerateConfigReport(
     google::api::servicemanagement::v1::GenerateConfigReportRequest const&
         request) {
-  return child_->GenerateConfigReport(request);
+  auto span = internal::MakeSpan(
+      "servicemanagement::ServiceManagerConnection::GenerateConfigReport");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateConfigReport(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

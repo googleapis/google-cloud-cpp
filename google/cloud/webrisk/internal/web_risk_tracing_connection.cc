@@ -34,25 +34,37 @@ WebRiskServiceTracingConnection::WebRiskServiceTracingConnection(
 StatusOr<google::cloud::webrisk::v1::ComputeThreatListDiffResponse>
 WebRiskServiceTracingConnection::ComputeThreatListDiff(
     google::cloud::webrisk::v1::ComputeThreatListDiffRequest const& request) {
-  return child_->ComputeThreatListDiff(request);
+  auto span = internal::MakeSpan(
+      "webrisk::WebRiskServiceConnection::ComputeThreatListDiff");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ComputeThreatListDiff(request));
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchUrisResponse>
 WebRiskServiceTracingConnection::SearchUris(
     google::cloud::webrisk::v1::SearchUrisRequest const& request) {
-  return child_->SearchUris(request);
+  auto span =
+      internal::MakeSpan("webrisk::WebRiskServiceConnection::SearchUris");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SearchUris(request));
 }
 
 StatusOr<google::cloud::webrisk::v1::SearchHashesResponse>
 WebRiskServiceTracingConnection::SearchHashes(
     google::cloud::webrisk::v1::SearchHashesRequest const& request) {
-  return child_->SearchHashes(request);
+  auto span =
+      internal::MakeSpan("webrisk::WebRiskServiceConnection::SearchHashes");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SearchHashes(request));
 }
 
 StatusOr<google::cloud::webrisk::v1::Submission>
 WebRiskServiceTracingConnection::CreateSubmission(
     google::cloud::webrisk::v1::CreateSubmissionRequest const& request) {
-  return child_->CreateSubmission(request);
+  auto span =
+      internal::MakeSpan("webrisk::WebRiskServiceConnection::CreateSubmission");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateSubmission(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -40,24 +40,36 @@ WebhooksTracingConnection::ListWebhooks(
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksTracingConnection::GetWebhook(
     google::cloud::dialogflow::cx::v3::GetWebhookRequest const& request) {
-  return child_->GetWebhook(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::WebhooksConnection::GetWebhook");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetWebhook(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksTracingConnection::CreateWebhook(
     google::cloud::dialogflow::cx::v3::CreateWebhookRequest const& request) {
-  return child_->CreateWebhook(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::WebhooksConnection::CreateWebhook");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateWebhook(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Webhook>
 WebhooksTracingConnection::UpdateWebhook(
     google::cloud::dialogflow::cx::v3::UpdateWebhookRequest const& request) {
-  return child_->UpdateWebhook(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::WebhooksConnection::UpdateWebhook");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateWebhook(request));
 }
 
 Status WebhooksTracingConnection::DeleteWebhook(
     google::cloud::dialogflow::cx::v3::DeleteWebhookRequest const& request) {
-  return child_->DeleteWebhook(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::WebhooksConnection::DeleteWebhook");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteWebhook(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

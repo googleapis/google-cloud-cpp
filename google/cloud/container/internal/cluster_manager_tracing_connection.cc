@@ -34,191 +34,287 @@ ClusterManagerTracingConnection::ClusterManagerTracingConnection(
 StatusOr<google::container::v1::ListClustersResponse>
 ClusterManagerTracingConnection::ListClusters(
     google::container::v1::ListClustersRequest const& request) {
-  return child_->ListClusters(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::ListClusters");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListClusters(request));
 }
 
 StatusOr<google::container::v1::Cluster>
 ClusterManagerTracingConnection::GetCluster(
     google::container::v1::GetClusterRequest const& request) {
-  return child_->GetCluster(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::GetCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCluster(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::CreateCluster(
     google::container::v1::CreateClusterRequest const& request) {
-  return child_->CreateCluster(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::CreateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateCluster(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::UpdateCluster(
     google::container::v1::UpdateClusterRequest const& request) {
-  return child_->UpdateCluster(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::UpdateCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateCluster(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::UpdateNodePool(
     google::container::v1::UpdateNodePoolRequest const& request) {
-  return child_->UpdateNodePool(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::UpdateNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateNodePool(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::SetNodePoolAutoscaling(
     google::container::v1::SetNodePoolAutoscalingRequest const& request) {
-  return child_->SetNodePoolAutoscaling(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::SetNodePoolAutoscaling");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetNodePoolAutoscaling(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::SetLoggingService(
     google::container::v1::SetLoggingServiceRequest const& request) {
-  return child_->SetLoggingService(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::SetLoggingService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetLoggingService(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::SetMonitoringService(
     google::container::v1::SetMonitoringServiceRequest const& request) {
-  return child_->SetMonitoringService(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::SetMonitoringService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetMonitoringService(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::SetAddonsConfig(
     google::container::v1::SetAddonsConfigRequest const& request) {
-  return child_->SetAddonsConfig(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::SetAddonsConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetAddonsConfig(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::SetLocations(
     google::container::v1::SetLocationsRequest const& request) {
-  return child_->SetLocations(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::SetLocations");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetLocations(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::UpdateMaster(
     google::container::v1::UpdateMasterRequest const& request) {
-  return child_->UpdateMaster(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::UpdateMaster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateMaster(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::SetMasterAuth(
     google::container::v1::SetMasterAuthRequest const& request) {
-  return child_->SetMasterAuth(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::SetMasterAuth");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetMasterAuth(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::DeleteCluster(
     google::container::v1::DeleteClusterRequest const& request) {
-  return child_->DeleteCluster(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::DeleteCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteCluster(request));
 }
 
 StatusOr<google::container::v1::ListOperationsResponse>
 ClusterManagerTracingConnection::ListOperations(
     google::container::v1::ListOperationsRequest const& request) {
-  return child_->ListOperations(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::ListOperations");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListOperations(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::GetOperation(
     google::container::v1::GetOperationRequest const& request) {
-  return child_->GetOperation(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::GetOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOperation(request));
 }
 
 Status ClusterManagerTracingConnection::CancelOperation(
     google::container::v1::CancelOperationRequest const& request) {
-  return child_->CancelOperation(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::CancelOperation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelOperation(request));
 }
 
 StatusOr<google::container::v1::ServerConfig>
 ClusterManagerTracingConnection::GetServerConfig(
     google::container::v1::GetServerConfigRequest const& request) {
-  return child_->GetServerConfig(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::GetServerConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetServerConfig(request));
 }
 
 StatusOr<google::container::v1::GetJSONWebKeysResponse>
 ClusterManagerTracingConnection::GetJSONWebKeys(
     google::container::v1::GetJSONWebKeysRequest const& request) {
-  return child_->GetJSONWebKeys(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::GetJSONWebKeys");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetJSONWebKeys(request));
 }
 
 StatusOr<google::container::v1::ListNodePoolsResponse>
 ClusterManagerTracingConnection::ListNodePools(
     google::container::v1::ListNodePoolsRequest const& request) {
-  return child_->ListNodePools(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::ListNodePools");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListNodePools(request));
 }
 
 StatusOr<google::container::v1::NodePool>
 ClusterManagerTracingConnection::GetNodePool(
     google::container::v1::GetNodePoolRequest const& request) {
-  return child_->GetNodePool(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::GetNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetNodePool(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::CreateNodePool(
     google::container::v1::CreateNodePoolRequest const& request) {
-  return child_->CreateNodePool(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::CreateNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateNodePool(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::DeleteNodePool(
     google::container::v1::DeleteNodePoolRequest const& request) {
-  return child_->DeleteNodePool(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::DeleteNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteNodePool(request));
 }
 
 Status ClusterManagerTracingConnection::CompleteNodePoolUpgrade(
     google::container::v1::CompleteNodePoolUpgradeRequest const& request) {
-  return child_->CompleteNodePoolUpgrade(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::CompleteNodePoolUpgrade");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CompleteNodePoolUpgrade(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::RollbackNodePoolUpgrade(
     google::container::v1::RollbackNodePoolUpgradeRequest const& request) {
-  return child_->RollbackNodePoolUpgrade(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::RollbackNodePoolUpgrade");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RollbackNodePoolUpgrade(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::SetNodePoolManagement(
     google::container::v1::SetNodePoolManagementRequest const& request) {
-  return child_->SetNodePoolManagement(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::SetNodePoolManagement");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetNodePoolManagement(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::SetLabels(
     google::container::v1::SetLabelsRequest const& request) {
-  return child_->SetLabels(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::SetLabels");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetLabels(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::SetLegacyAbac(
     google::container::v1::SetLegacyAbacRequest const& request) {
-  return child_->SetLegacyAbac(request);
+  auto span =
+      internal::MakeSpan("container::ClusterManagerConnection::SetLegacyAbac");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetLegacyAbac(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::StartIPRotation(
     google::container::v1::StartIPRotationRequest const& request) {
-  return child_->StartIPRotation(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::StartIPRotation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->StartIPRotation(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::CompleteIPRotation(
     google::container::v1::CompleteIPRotationRequest const& request) {
-  return child_->CompleteIPRotation(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::CompleteIPRotation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CompleteIPRotation(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::SetNodePoolSize(
     google::container::v1::SetNodePoolSizeRequest const& request) {
-  return child_->SetNodePoolSize(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::SetNodePoolSize");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetNodePoolSize(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::SetNetworkPolicy(
     google::container::v1::SetNetworkPolicyRequest const& request) {
-  return child_->SetNetworkPolicy(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::SetNetworkPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetNetworkPolicy(request));
 }
 
 StatusOr<google::container::v1::Operation>
 ClusterManagerTracingConnection::SetMaintenancePolicy(
     google::container::v1::SetMaintenancePolicyRequest const& request) {
-  return child_->SetMaintenancePolicy(request);
+  auto span = internal::MakeSpan(
+      "container::ClusterManagerConnection::SetMaintenancePolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetMaintenancePolicy(request));
 }
 
 StreamRange<google::container::v1::UsableSubnetwork>

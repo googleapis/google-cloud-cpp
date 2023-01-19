@@ -34,7 +34,9 @@ EventarcTracingConnection::EventarcTracingConnection(
 StatusOr<google::cloud::eventarc::v1::Trigger>
 EventarcTracingConnection::GetTrigger(
     google::cloud::eventarc::v1::GetTriggerRequest const& request) {
-  return child_->GetTrigger(request);
+  auto span = internal::MakeSpan("eventarc::EventarcConnection::GetTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTrigger(request));
 }
 
 StreamRange<google::cloud::eventarc::v1::Trigger>
@@ -64,7 +66,9 @@ EventarcTracingConnection::DeleteTrigger(
 StatusOr<google::cloud::eventarc::v1::Channel>
 EventarcTracingConnection::GetChannel(
     google::cloud::eventarc::v1::GetChannelRequest const& request) {
-  return child_->GetChannel(request);
+  auto span = internal::MakeSpan("eventarc::EventarcConnection::GetChannel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetChannel(request));
 }
 
 StreamRange<google::cloud::eventarc::v1::Channel>
@@ -94,7 +98,9 @@ EventarcTracingConnection::DeleteChannel(
 StatusOr<google::cloud::eventarc::v1::Provider>
 EventarcTracingConnection::GetProvider(
     google::cloud::eventarc::v1::GetProviderRequest const& request) {
-  return child_->GetProvider(request);
+  auto span = internal::MakeSpan("eventarc::EventarcConnection::GetProvider");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetProvider(request));
 }
 
 StreamRange<google::cloud::eventarc::v1::Provider>
@@ -106,7 +112,10 @@ EventarcTracingConnection::ListProviders(
 StatusOr<google::cloud::eventarc::v1::ChannelConnection>
 EventarcTracingConnection::GetChannelConnection(
     google::cloud::eventarc::v1::GetChannelConnectionRequest const& request) {
-  return child_->GetChannelConnection(request);
+  auto span =
+      internal::MakeSpan("eventarc::EventarcConnection::GetChannelConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetChannelConnection(request));
 }
 
 StreamRange<google::cloud::eventarc::v1::ChannelConnection>
@@ -132,14 +141,20 @@ EventarcTracingConnection::DeleteChannelConnection(
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
 EventarcTracingConnection::GetGoogleChannelConfig(
     google::cloud::eventarc::v1::GetGoogleChannelConfigRequest const& request) {
-  return child_->GetGoogleChannelConfig(request);
+  auto span = internal::MakeSpan(
+      "eventarc::EventarcConnection::GetGoogleChannelConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGoogleChannelConfig(request));
 }
 
 StatusOr<google::cloud::eventarc::v1::GoogleChannelConfig>
 EventarcTracingConnection::UpdateGoogleChannelConfig(
     google::cloud::eventarc::v1::UpdateGoogleChannelConfigRequest const&
         request) {
-  return child_->UpdateGoogleChannelConfig(request);
+  auto span = internal::MakeSpan(
+      "eventarc::EventarcConnection::UpdateGoogleChannelConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateGoogleChannelConfig(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -34,7 +34,9 @@ RevisionsTracingConnection::RevisionsTracingConnection(
 StatusOr<google::cloud::run::v2::Revision>
 RevisionsTracingConnection::GetRevision(
     google::cloud::run::v2::GetRevisionRequest const& request) {
-  return child_->GetRevision(request);
+  auto span = internal::MakeSpan("run::RevisionsConnection::GetRevision");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRevision(request));
 }
 
 StreamRange<google::cloud::run::v2::Revision>

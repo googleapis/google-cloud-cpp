@@ -40,7 +40,10 @@ BatchControllerTracingConnection::CreateBatch(
 StatusOr<google::cloud::dataproc::v1::Batch>
 BatchControllerTracingConnection::GetBatch(
     google::cloud::dataproc::v1::GetBatchRequest const& request) {
-  return child_->GetBatch(request);
+  auto span =
+      internal::MakeSpan("dataproc::BatchControllerConnection::GetBatch");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBatch(request));
 }
 
 StreamRange<google::cloud::dataproc::v1::Batch>
@@ -51,7 +54,10 @@ BatchControllerTracingConnection::ListBatches(
 
 Status BatchControllerTracingConnection::DeleteBatch(
     google::cloud::dataproc::v1::DeleteBatchRequest const& request) {
-  return child_->DeleteBatch(request);
+  auto span =
+      internal::MakeSpan("dataproc::BatchControllerConnection::DeleteBatch");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteBatch(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -35,13 +35,19 @@ WorkflowTemplateServiceTracingConnection::
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceTracingConnection::CreateWorkflowTemplate(
     google::cloud::dataproc::v1::CreateWorkflowTemplateRequest const& request) {
-  return child_->CreateWorkflowTemplate(request);
+  auto span = internal::MakeSpan(
+      "dataproc::WorkflowTemplateServiceConnection::CreateWorkflowTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateWorkflowTemplate(request));
 }
 
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceTracingConnection::GetWorkflowTemplate(
     google::cloud::dataproc::v1::GetWorkflowTemplateRequest const& request) {
-  return child_->GetWorkflowTemplate(request);
+  auto span = internal::MakeSpan(
+      "dataproc::WorkflowTemplateServiceConnection::GetWorkflowTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetWorkflowTemplate(request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::WorkflowMetadata>>
@@ -61,7 +67,10 @@ WorkflowTemplateServiceTracingConnection::InstantiateInlineWorkflowTemplate(
 StatusOr<google::cloud::dataproc::v1::WorkflowTemplate>
 WorkflowTemplateServiceTracingConnection::UpdateWorkflowTemplate(
     google::cloud::dataproc::v1::UpdateWorkflowTemplateRequest const& request) {
-  return child_->UpdateWorkflowTemplate(request);
+  auto span = internal::MakeSpan(
+      "dataproc::WorkflowTemplateServiceConnection::UpdateWorkflowTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateWorkflowTemplate(request));
 }
 
 StreamRange<google::cloud::dataproc::v1::WorkflowTemplate>
@@ -72,7 +81,10 @@ WorkflowTemplateServiceTracingConnection::ListWorkflowTemplates(
 
 Status WorkflowTemplateServiceTracingConnection::DeleteWorkflowTemplate(
     google::cloud::dataproc::v1::DeleteWorkflowTemplateRequest const& request) {
-  return child_->DeleteWorkflowTemplate(request);
+  auto span = internal::MakeSpan(
+      "dataproc::WorkflowTemplateServiceConnection::DeleteWorkflowTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteWorkflowTemplate(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

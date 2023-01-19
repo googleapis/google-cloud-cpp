@@ -43,7 +43,9 @@ GoldenThingAdminTracingConnection::CreateDatabase(google::test::admin::database:
 
 StatusOr<google::test::admin::database::v1::Database>
 GoldenThingAdminTracingConnection::GetDatabase(google::test::admin::database::v1::GetDatabaseRequest const& request) {
-  return child_->GetDatabase(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::GetDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDatabase(request));
 }
 
 future<StatusOr<google::test::admin::database::v1::UpdateDatabaseDdlMetadata>>
@@ -53,27 +55,37 @@ GoldenThingAdminTracingConnection::UpdateDatabaseDdl(google::test::admin::databa
 
 Status
 GoldenThingAdminTracingConnection::DropDatabase(google::test::admin::database::v1::DropDatabaseRequest const& request) {
-  return child_->DropDatabase(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::DropDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DropDatabase(request));
 }
 
 StatusOr<google::test::admin::database::v1::GetDatabaseDdlResponse>
 GoldenThingAdminTracingConnection::GetDatabaseDdl(google::test::admin::database::v1::GetDatabaseDdlRequest const& request) {
-  return child_->GetDatabaseDdl(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::GetDatabaseDdl");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDatabaseDdl(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 GoldenThingAdminTracingConnection::SetIamPolicy(google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 GoldenThingAdminTracingConnection::GetIamPolicy(google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 GoldenThingAdminTracingConnection::TestIamPermissions(google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 future<StatusOr<google::test::admin::database::v1::Backup>>
@@ -83,17 +95,23 @@ GoldenThingAdminTracingConnection::CreateBackup(google::test::admin::database::v
 
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminTracingConnection::GetBackup(google::test::admin::database::v1::GetBackupRequest const& request) {
-  return child_->GetBackup(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::GetBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBackup(request));
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
 GoldenThingAdminTracingConnection::UpdateBackup(google::test::admin::database::v1::UpdateBackupRequest const& request) {
-  return child_->UpdateBackup(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::UpdateBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateBackup(request));
 }
 
 Status
 GoldenThingAdminTracingConnection::DeleteBackup(google::test::admin::database::v1::DeleteBackupRequest const& request) {
-  return child_->DeleteBackup(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenThingAdminConnection::DeleteBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteBackup(request));
 }
 
 StreamRange<google::test::admin::database::v1::Backup>

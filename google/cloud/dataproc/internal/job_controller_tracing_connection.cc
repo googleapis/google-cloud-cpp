@@ -34,7 +34,10 @@ JobControllerTracingConnection::JobControllerTracingConnection(
 StatusOr<google::cloud::dataproc::v1::Job>
 JobControllerTracingConnection::SubmitJob(
     google::cloud::dataproc::v1::SubmitJobRequest const& request) {
-  return child_->SubmitJob(request);
+  auto span =
+      internal::MakeSpan("dataproc::JobControllerConnection::SubmitJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SubmitJob(request));
 }
 
 future<StatusOr<google::cloud::dataproc::v1::Job>>
@@ -46,7 +49,9 @@ JobControllerTracingConnection::SubmitJobAsOperation(
 StatusOr<google::cloud::dataproc::v1::Job>
 JobControllerTracingConnection::GetJob(
     google::cloud::dataproc::v1::GetJobRequest const& request) {
-  return child_->GetJob(request);
+  auto span = internal::MakeSpan("dataproc::JobControllerConnection::GetJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetJob(request));
 }
 
 StreamRange<google::cloud::dataproc::v1::Job>
@@ -58,18 +63,27 @@ JobControllerTracingConnection::ListJobs(
 StatusOr<google::cloud::dataproc::v1::Job>
 JobControllerTracingConnection::UpdateJob(
     google::cloud::dataproc::v1::UpdateJobRequest const& request) {
-  return child_->UpdateJob(request);
+  auto span =
+      internal::MakeSpan("dataproc::JobControllerConnection::UpdateJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateJob(request));
 }
 
 StatusOr<google::cloud::dataproc::v1::Job>
 JobControllerTracingConnection::CancelJob(
     google::cloud::dataproc::v1::CancelJobRequest const& request) {
-  return child_->CancelJob(request);
+  auto span =
+      internal::MakeSpan("dataproc::JobControllerConnection::CancelJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelJob(request));
 }
 
 Status JobControllerTracingConnection::DeleteJob(
     google::cloud::dataproc::v1::DeleteJobRequest const& request) {
-  return child_->DeleteJob(request);
+  auto span =
+      internal::MakeSpan("dataproc::JobControllerConnection::DeleteJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteJob(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

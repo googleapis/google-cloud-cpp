@@ -34,32 +34,47 @@ Debugger2TracingConnection::Debugger2TracingConnection(
 StatusOr<google::devtools::clouddebugger::v2::SetBreakpointResponse>
 Debugger2TracingConnection::SetBreakpoint(
     google::devtools::clouddebugger::v2::SetBreakpointRequest const& request) {
-  return child_->SetBreakpoint(request);
+  auto span =
+      internal::MakeSpan("debugger::Debugger2Connection::SetBreakpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetBreakpoint(request));
 }
 
 StatusOr<google::devtools::clouddebugger::v2::GetBreakpointResponse>
 Debugger2TracingConnection::GetBreakpoint(
     google::devtools::clouddebugger::v2::GetBreakpointRequest const& request) {
-  return child_->GetBreakpoint(request);
+  auto span =
+      internal::MakeSpan("debugger::Debugger2Connection::GetBreakpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBreakpoint(request));
 }
 
 Status Debugger2TracingConnection::DeleteBreakpoint(
     google::devtools::clouddebugger::v2::DeleteBreakpointRequest const&
         request) {
-  return child_->DeleteBreakpoint(request);
+  auto span =
+      internal::MakeSpan("debugger::Debugger2Connection::DeleteBreakpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteBreakpoint(request));
 }
 
 StatusOr<google::devtools::clouddebugger::v2::ListBreakpointsResponse>
 Debugger2TracingConnection::ListBreakpoints(
     google::devtools::clouddebugger::v2::ListBreakpointsRequest const&
         request) {
-  return child_->ListBreakpoints(request);
+  auto span =
+      internal::MakeSpan("debugger::Debugger2Connection::ListBreakpoints");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListBreakpoints(request));
 }
 
 StatusOr<google::devtools::clouddebugger::v2::ListDebuggeesResponse>
 Debugger2TracingConnection::ListDebuggees(
     google::devtools::clouddebugger::v2::ListDebuggeesRequest const& request) {
-  return child_->ListDebuggees(request);
+  auto span =
+      internal::MakeSpan("debugger::Debugger2Connection::ListDebuggees");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListDebuggees(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

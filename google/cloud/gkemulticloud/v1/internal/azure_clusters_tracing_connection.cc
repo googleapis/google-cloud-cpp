@@ -40,7 +40,10 @@ AzureClustersTracingConnection::CreateAzureClient(
 StatusOr<google::cloud::gkemulticloud::v1::AzureClient>
 AzureClustersTracingConnection::GetAzureClient(
     google::cloud::gkemulticloud::v1::GetAzureClientRequest const& request) {
-  return child_->GetAzureClient(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::GetAzureClient");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAzureClient(request));
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AzureClient>
@@ -72,7 +75,10 @@ AzureClustersTracingConnection::UpdateAzureCluster(
 StatusOr<google::cloud::gkemulticloud::v1::AzureCluster>
 AzureClustersTracingConnection::GetAzureCluster(
     google::cloud::gkemulticloud::v1::GetAzureClusterRequest const& request) {
-  return child_->GetAzureCluster(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::GetAzureCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAzureCluster(request));
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AzureCluster>
@@ -92,7 +98,10 @@ StatusOr<google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenResponse>
 AzureClustersTracingConnection::GenerateAzureAccessToken(
     google::cloud::gkemulticloud::v1::GenerateAzureAccessTokenRequest const&
         request) {
-  return child_->GenerateAzureAccessToken(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::GenerateAzureAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateAzureAccessToken(request));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>>
@@ -112,7 +121,10 @@ AzureClustersTracingConnection::UpdateAzureNodePool(
 StatusOr<google::cloud::gkemulticloud::v1::AzureNodePool>
 AzureClustersTracingConnection::GetAzureNodePool(
     google::cloud::gkemulticloud::v1::GetAzureNodePoolRequest const& request) {
-  return child_->GetAzureNodePool(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::GetAzureNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAzureNodePool(request));
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AzureNodePool>
@@ -132,7 +144,10 @@ StatusOr<google::cloud::gkemulticloud::v1::AzureServerConfig>
 AzureClustersTracingConnection::GetAzureServerConfig(
     google::cloud::gkemulticloud::v1::GetAzureServerConfigRequest const&
         request) {
-  return child_->GetAzureServerConfig(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AzureClustersConnection::GetAzureServerConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAzureServerConfig(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

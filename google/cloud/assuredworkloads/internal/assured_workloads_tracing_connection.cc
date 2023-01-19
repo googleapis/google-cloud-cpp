@@ -42,25 +42,38 @@ AssuredWorkloadsServiceTracingConnection::CreateWorkload(
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceTracingConnection::UpdateWorkload(
     google::cloud::assuredworkloads::v1::UpdateWorkloadRequest const& request) {
-  return child_->UpdateWorkload(request);
+  auto span = internal::MakeSpan(
+      "assuredworkloads::AssuredWorkloadsServiceConnection::UpdateWorkload");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateWorkload(request));
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::RestrictAllowedResourcesResponse>
 AssuredWorkloadsServiceTracingConnection::RestrictAllowedResources(
     google::cloud::assuredworkloads::v1::RestrictAllowedResourcesRequest const&
         request) {
-  return child_->RestrictAllowedResources(request);
+  auto span = internal::MakeSpan(
+      "assuredworkloads::AssuredWorkloadsServiceConnection::"
+      "RestrictAllowedResources");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RestrictAllowedResources(request));
 }
 
 Status AssuredWorkloadsServiceTracingConnection::DeleteWorkload(
     google::cloud::assuredworkloads::v1::DeleteWorkloadRequest const& request) {
-  return child_->DeleteWorkload(request);
+  auto span = internal::MakeSpan(
+      "assuredworkloads::AssuredWorkloadsServiceConnection::DeleteWorkload");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteWorkload(request));
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::Workload>
 AssuredWorkloadsServiceTracingConnection::GetWorkload(
     google::cloud::assuredworkloads::v1::GetWorkloadRequest const& request) {
-  return child_->GetWorkload(request);
+  auto span = internal::MakeSpan(
+      "assuredworkloads::AssuredWorkloadsServiceConnection::GetWorkload");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetWorkload(request));
 }
 
 StreamRange<google::cloud::assuredworkloads::v1::Workload>
@@ -78,14 +91,21 @@ AssuredWorkloadsServiceTracingConnection::ListViolations(
 StatusOr<google::cloud::assuredworkloads::v1::Violation>
 AssuredWorkloadsServiceTracingConnection::GetViolation(
     google::cloud::assuredworkloads::v1::GetViolationRequest const& request) {
-  return child_->GetViolation(request);
+  auto span = internal::MakeSpan(
+      "assuredworkloads::AssuredWorkloadsServiceConnection::GetViolation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetViolation(request));
 }
 
 StatusOr<google::cloud::assuredworkloads::v1::AcknowledgeViolationResponse>
 AssuredWorkloadsServiceTracingConnection::AcknowledgeViolation(
     google::cloud::assuredworkloads::v1::AcknowledgeViolationRequest const&
         request) {
-  return child_->AcknowledgeViolation(request);
+  auto span = internal::MakeSpan(
+      "assuredworkloads::AssuredWorkloadsServiceConnection::"
+      "AcknowledgeViolation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AcknowledgeViolation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

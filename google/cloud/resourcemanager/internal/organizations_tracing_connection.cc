@@ -34,7 +34,10 @@ OrganizationsTracingConnection::OrganizationsTracingConnection(
 StatusOr<google::cloud::resourcemanager::v3::Organization>
 OrganizationsTracingConnection::GetOrganization(
     google::cloud::resourcemanager::v3::GetOrganizationRequest const& request) {
-  return child_->GetOrganization(request);
+  auto span = internal::MakeSpan(
+      "resourcemanager::OrganizationsConnection::GetOrganization");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOrganization(request));
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Organization>
@@ -45,18 +48,27 @@ OrganizationsTracingConnection::SearchOrganizations(
 
 StatusOr<google::iam::v1::Policy> OrganizationsTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "resourcemanager::OrganizationsConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy> OrganizationsTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "resourcemanager::OrganizationsConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 OrganizationsTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "resourcemanager::OrganizationsConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -43,7 +43,10 @@ StatusOr<google::cloud::orchestration::airflow::service::v1::Environment>
 EnvironmentsTracingConnection::GetEnvironment(
     google::cloud::orchestration::airflow::service::v1::
         GetEnvironmentRequest const& request) {
-  return child_->GetEnvironment(request);
+  auto span =
+      internal::MakeSpan("composer::EnvironmentsConnection::GetEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEnvironment(request));
 }
 
 StreamRange<google::cloud::orchestration::airflow::service::v1::Environment>

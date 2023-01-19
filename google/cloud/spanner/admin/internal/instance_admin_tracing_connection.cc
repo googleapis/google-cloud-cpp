@@ -41,7 +41,10 @@ StatusOr<google::spanner::admin::instance::v1::InstanceConfig>
 InstanceAdminTracingConnection::GetInstanceConfig(
     google::spanner::admin::instance::v1::GetInstanceConfigRequest const&
         request) {
-  return child_->GetInstanceConfig(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::GetInstanceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInstanceConfig(request));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::InstanceConfig>>
@@ -61,7 +64,10 @@ InstanceAdminTracingConnection::UpdateInstanceConfig(
 Status InstanceAdminTracingConnection::DeleteInstanceConfig(
     google::spanner::admin::instance::v1::DeleteInstanceConfigRequest const&
         request) {
-  return child_->DeleteInstanceConfig(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::DeleteInstanceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteInstanceConfig(request));
 }
 
 StreamRange<google::longrunning::Operation>
@@ -80,7 +86,10 @@ InstanceAdminTracingConnection::ListInstances(
 StatusOr<google::spanner::admin::instance::v1::Instance>
 InstanceAdminTracingConnection::GetInstance(
     google::spanner::admin::instance::v1::GetInstanceRequest const& request) {
-  return child_->GetInstance(request);
+  auto span =
+      internal::MakeSpan("spanner_admin::InstanceAdminConnection::GetInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 future<StatusOr<google::spanner::admin::instance::v1::Instance>>
@@ -100,23 +109,35 @@ InstanceAdminTracingConnection::UpdateInstance(
 Status InstanceAdminTracingConnection::DeleteInstance(
     google::spanner::admin::instance::v1::DeleteInstanceRequest const&
         request) {
-  return child_->DeleteInstance(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::DeleteInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteInstance(request));
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy> InstanceAdminTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 InstanceAdminTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::InstanceAdminConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

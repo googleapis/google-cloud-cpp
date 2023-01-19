@@ -35,13 +35,19 @@ ServiceMonitoringServiceTracingConnection::
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceTracingConnection::CreateService(
     google::monitoring::v3::CreateServiceRequest const& request) {
-  return child_->CreateService(request);
+  auto span = internal::MakeSpan(
+      "monitoring::ServiceMonitoringServiceConnection::CreateService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateService(request));
 }
 
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceTracingConnection::GetService(
     google::monitoring::v3::GetServiceRequest const& request) {
-  return child_->GetService(request);
+  auto span = internal::MakeSpan(
+      "monitoring::ServiceMonitoringServiceConnection::GetService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetService(request));
 }
 
 StreamRange<google::monitoring::v3::Service>
@@ -53,24 +59,38 @@ ServiceMonitoringServiceTracingConnection::ListServices(
 StatusOr<google::monitoring::v3::Service>
 ServiceMonitoringServiceTracingConnection::UpdateService(
     google::monitoring::v3::UpdateServiceRequest const& request) {
-  return child_->UpdateService(request);
+  auto span = internal::MakeSpan(
+      "monitoring::ServiceMonitoringServiceConnection::UpdateService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateService(request));
 }
 
 Status ServiceMonitoringServiceTracingConnection::DeleteService(
     google::monitoring::v3::DeleteServiceRequest const& request) {
-  return child_->DeleteService(request);
+  auto span = internal::MakeSpan(
+      "monitoring::ServiceMonitoringServiceConnection::DeleteService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteService(request));
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceTracingConnection::CreateServiceLevelObjective(
     google::monitoring::v3::CreateServiceLevelObjectiveRequest const& request) {
-  return child_->CreateServiceLevelObjective(request);
+  auto span = internal::MakeSpan(
+      "monitoring::ServiceMonitoringServiceConnection::"
+      "CreateServiceLevelObjective");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateServiceLevelObjective(request));
 }
 
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceTracingConnection::GetServiceLevelObjective(
     google::monitoring::v3::GetServiceLevelObjectiveRequest const& request) {
-  return child_->GetServiceLevelObjective(request);
+  auto span = internal::MakeSpan(
+      "monitoring::ServiceMonitoringServiceConnection::"
+      "GetServiceLevelObjective");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetServiceLevelObjective(request));
 }
 
 StreamRange<google::monitoring::v3::ServiceLevelObjective>
@@ -82,12 +102,20 @@ ServiceMonitoringServiceTracingConnection::ListServiceLevelObjectives(
 StatusOr<google::monitoring::v3::ServiceLevelObjective>
 ServiceMonitoringServiceTracingConnection::UpdateServiceLevelObjective(
     google::monitoring::v3::UpdateServiceLevelObjectiveRequest const& request) {
-  return child_->UpdateServiceLevelObjective(request);
+  auto span = internal::MakeSpan(
+      "monitoring::ServiceMonitoringServiceConnection::"
+      "UpdateServiceLevelObjective");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateServiceLevelObjective(request));
 }
 
 Status ServiceMonitoringServiceTracingConnection::DeleteServiceLevelObjective(
     google::monitoring::v3::DeleteServiceLevelObjectiveRequest const& request) {
-  return child_->DeleteServiceLevelObjective(request);
+  auto span = internal::MakeSpan(
+      "monitoring::ServiceMonitoringServiceConnection::"
+      "DeleteServiceLevelObjective");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteServiceLevelObjective(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

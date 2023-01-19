@@ -43,7 +43,10 @@ StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>
 ClientGatewaysServiceTracingConnection::GetClientGateway(
     google::cloud::beyondcorp::clientgateways::v1::
         GetClientGatewayRequest const& request) {
-  return child_->GetClientGateway(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp::ClientGatewaysServiceConnection::GetClientGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetClientGateway(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::clientgateways::v1::ClientGateway>>

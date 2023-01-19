@@ -40,7 +40,9 @@ InstancesTracingConnection::ListInstances(
 StatusOr<google::appengine::v1::Instance>
 InstancesTracingConnection::GetInstance(
     google::appengine::v1::GetInstanceRequest const& request) {
-  return child_->GetInstance(request);
+  auto span = internal::MakeSpan("appengine::InstancesConnection::GetInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 future<StatusOr<google::appengine::v1::OperationMetadataV1>>

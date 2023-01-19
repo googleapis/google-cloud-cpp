@@ -33,7 +33,10 @@ GrafeasTracingConnection::GrafeasTracingConnection(
 
 StatusOr<grafeas::v1::Occurrence> GrafeasTracingConnection::GetOccurrence(
     grafeas::v1::GetOccurrenceRequest const& request) {
-  return child_->GetOccurrence(request);
+  auto span =
+      internal::MakeSpan("containeranalysis::GrafeasConnection::GetOccurrence");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOccurrence(request));
 }
 
 StreamRange<grafeas::v1::Occurrence> GrafeasTracingConnection::ListOccurrences(
@@ -43,33 +46,51 @@ StreamRange<grafeas::v1::Occurrence> GrafeasTracingConnection::ListOccurrences(
 
 Status GrafeasTracingConnection::DeleteOccurrence(
     grafeas::v1::DeleteOccurrenceRequest const& request) {
-  return child_->DeleteOccurrence(request);
+  auto span = internal::MakeSpan(
+      "containeranalysis::GrafeasConnection::DeleteOccurrence");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteOccurrence(request));
 }
 
 StatusOr<grafeas::v1::Occurrence> GrafeasTracingConnection::CreateOccurrence(
     grafeas::v1::CreateOccurrenceRequest const& request) {
-  return child_->CreateOccurrence(request);
+  auto span = internal::MakeSpan(
+      "containeranalysis::GrafeasConnection::CreateOccurrence");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateOccurrence(request));
 }
 
 StatusOr<grafeas::v1::BatchCreateOccurrencesResponse>
 GrafeasTracingConnection::BatchCreateOccurrences(
     grafeas::v1::BatchCreateOccurrencesRequest const& request) {
-  return child_->BatchCreateOccurrences(request);
+  auto span = internal::MakeSpan(
+      "containeranalysis::GrafeasConnection::BatchCreateOccurrences");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->BatchCreateOccurrences(request));
 }
 
 StatusOr<grafeas::v1::Occurrence> GrafeasTracingConnection::UpdateOccurrence(
     grafeas::v1::UpdateOccurrenceRequest const& request) {
-  return child_->UpdateOccurrence(request);
+  auto span = internal::MakeSpan(
+      "containeranalysis::GrafeasConnection::UpdateOccurrence");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateOccurrence(request));
 }
 
 StatusOr<grafeas::v1::Note> GrafeasTracingConnection::GetOccurrenceNote(
     grafeas::v1::GetOccurrenceNoteRequest const& request) {
-  return child_->GetOccurrenceNote(request);
+  auto span = internal::MakeSpan(
+      "containeranalysis::GrafeasConnection::GetOccurrenceNote");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOccurrenceNote(request));
 }
 
 StatusOr<grafeas::v1::Note> GrafeasTracingConnection::GetNote(
     grafeas::v1::GetNoteRequest const& request) {
-  return child_->GetNote(request);
+  auto span =
+      internal::MakeSpan("containeranalysis::GrafeasConnection::GetNote");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetNote(request));
 }
 
 StreamRange<grafeas::v1::Note> GrafeasTracingConnection::ListNotes(
@@ -79,23 +100,35 @@ StreamRange<grafeas::v1::Note> GrafeasTracingConnection::ListNotes(
 
 Status GrafeasTracingConnection::DeleteNote(
     grafeas::v1::DeleteNoteRequest const& request) {
-  return child_->DeleteNote(request);
+  auto span =
+      internal::MakeSpan("containeranalysis::GrafeasConnection::DeleteNote");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteNote(request));
 }
 
 StatusOr<grafeas::v1::Note> GrafeasTracingConnection::CreateNote(
     grafeas::v1::CreateNoteRequest const& request) {
-  return child_->CreateNote(request);
+  auto span =
+      internal::MakeSpan("containeranalysis::GrafeasConnection::CreateNote");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateNote(request));
 }
 
 StatusOr<grafeas::v1::BatchCreateNotesResponse>
 GrafeasTracingConnection::BatchCreateNotes(
     grafeas::v1::BatchCreateNotesRequest const& request) {
-  return child_->BatchCreateNotes(request);
+  auto span = internal::MakeSpan(
+      "containeranalysis::GrafeasConnection::BatchCreateNotes");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->BatchCreateNotes(request));
 }
 
 StatusOr<grafeas::v1::Note> GrafeasTracingConnection::UpdateNote(
     grafeas::v1::UpdateNoteRequest const& request) {
-  return child_->UpdateNote(request);
+  auto span =
+      internal::MakeSpan("containeranalysis::GrafeasConnection::UpdateNote");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateNote(request));
 }
 
 StreamRange<grafeas::v1::Occurrence>

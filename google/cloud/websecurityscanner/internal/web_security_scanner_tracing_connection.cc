@@ -35,20 +35,29 @@ StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerTracingConnection::CreateScanConfig(
     google::cloud::websecurityscanner::v1::CreateScanConfigRequest const&
         request) {
-  return child_->CreateScanConfig(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::CreateScanConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateScanConfig(request));
 }
 
 Status WebSecurityScannerTracingConnection::DeleteScanConfig(
     google::cloud::websecurityscanner::v1::DeleteScanConfigRequest const&
         request) {
-  return child_->DeleteScanConfig(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::DeleteScanConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteScanConfig(request));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerTracingConnection::GetScanConfig(
     google::cloud::websecurityscanner::v1::GetScanConfigRequest const&
         request) {
-  return child_->GetScanConfig(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::GetScanConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetScanConfig(request));
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::ScanConfig>
@@ -61,19 +70,28 @@ StatusOr<google::cloud::websecurityscanner::v1::ScanConfig>
 WebSecurityScannerTracingConnection::UpdateScanConfig(
     google::cloud::websecurityscanner::v1::UpdateScanConfigRequest const&
         request) {
-  return child_->UpdateScanConfig(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::UpdateScanConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateScanConfig(request));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerTracingConnection::StartScanRun(
     google::cloud::websecurityscanner::v1::StartScanRunRequest const& request) {
-  return child_->StartScanRun(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::StartScanRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->StartScanRun(request));
 }
 
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerTracingConnection::GetScanRun(
     google::cloud::websecurityscanner::v1::GetScanRunRequest const& request) {
-  return child_->GetScanRun(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::GetScanRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetScanRun(request));
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::ScanRun>
@@ -85,7 +103,10 @@ WebSecurityScannerTracingConnection::ListScanRuns(
 StatusOr<google::cloud::websecurityscanner::v1::ScanRun>
 WebSecurityScannerTracingConnection::StopScanRun(
     google::cloud::websecurityscanner::v1::StopScanRunRequest const& request) {
-  return child_->StopScanRun(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::StopScanRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->StopScanRun(request));
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::CrawledUrl>
@@ -97,7 +118,10 @@ WebSecurityScannerTracingConnection::ListCrawledUrls(
 StatusOr<google::cloud::websecurityscanner::v1::Finding>
 WebSecurityScannerTracingConnection::GetFinding(
     google::cloud::websecurityscanner::v1::GetFindingRequest const& request) {
-  return child_->GetFinding(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::GetFinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFinding(request));
 }
 
 StreamRange<google::cloud::websecurityscanner::v1::Finding>
@@ -110,7 +134,10 @@ StatusOr<google::cloud::websecurityscanner::v1::ListFindingTypeStatsResponse>
 WebSecurityScannerTracingConnection::ListFindingTypeStats(
     google::cloud::websecurityscanner::v1::ListFindingTypeStatsRequest const&
         request) {
-  return child_->ListFindingTypeStats(request);
+  auto span = internal::MakeSpan(
+      "websecurityscanner::WebSecurityScannerConnection::ListFindingTypeStats");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListFindingTypeStats(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

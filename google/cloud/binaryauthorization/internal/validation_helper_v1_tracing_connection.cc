@@ -36,7 +36,12 @@ StatusOr<google::cloud::binaryauthorization::v1::
 ValidationHelperV1TracingConnection::ValidateAttestationOccurrence(
     google::cloud::binaryauthorization::v1::
         ValidateAttestationOccurrenceRequest const& request) {
-  return child_->ValidateAttestationOccurrence(request);
+  auto span = internal::MakeSpan(
+      "binaryauthorization::ValidationHelperV1Connection::"
+      "ValidateAttestationOccurrence");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->ValidateAttestationOccurrence(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

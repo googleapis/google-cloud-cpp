@@ -42,7 +42,10 @@ StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>
 ReachabilityServiceTracingConnection::GetConnectivityTest(
     google::cloud::networkmanagement::v1::GetConnectivityTestRequest const&
         request) {
-  return child_->GetConnectivityTest(request);
+  auto span = internal::MakeSpan(
+      "networkmanagement::ReachabilityServiceConnection::GetConnectivityTest");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConnectivityTest(request));
 }
 
 future<StatusOr<google::cloud::networkmanagement::v1::ConnectivityTest>>

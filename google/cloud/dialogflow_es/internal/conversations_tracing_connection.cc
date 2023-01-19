@@ -34,7 +34,10 @@ ConversationsTracingConnection::ConversationsTracingConnection(
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsTracingConnection::CreateConversation(
     google::cloud::dialogflow::v2::CreateConversationRequest const& request) {
-  return child_->CreateConversation(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationsConnection::CreateConversation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateConversation(request));
 }
 
 StreamRange<google::cloud::dialogflow::v2::Conversation>
@@ -46,13 +49,19 @@ ConversationsTracingConnection::ListConversations(
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsTracingConnection::GetConversation(
     google::cloud::dialogflow::v2::GetConversationRequest const& request) {
-  return child_->GetConversation(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationsConnection::GetConversation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConversation(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Conversation>
 ConversationsTracingConnection::CompleteConversation(
     google::cloud::dialogflow::v2::CompleteConversationRequest const& request) {
-  return child_->CompleteConversation(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationsConnection::CompleteConversation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CompleteConversation(request));
 }
 
 StreamRange<google::cloud::dialogflow::v2::Message>
@@ -65,7 +74,10 @@ StatusOr<google::cloud::dialogflow::v2::SuggestConversationSummaryResponse>
 ConversationsTracingConnection::SuggestConversationSummary(
     google::cloud::dialogflow::v2::SuggestConversationSummaryRequest const&
         request) {
-  return child_->SuggestConversationSummary(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationsConnection::SuggestConversationSummary");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SuggestConversationSummary(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

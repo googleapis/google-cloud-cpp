@@ -40,7 +40,10 @@ DataMigrationServiceTracingConnection::ListMigrationJobs(
 StatusOr<google::cloud::clouddms::v1::MigrationJob>
 DataMigrationServiceTracingConnection::GetMigrationJob(
     google::cloud::clouddms::v1::GetMigrationJobRequest const& request) {
-  return child_->GetMigrationJob(request);
+  auto span = internal::MakeSpan(
+      "datamigration::DataMigrationServiceConnection::GetMigrationJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMigrationJob(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::MigrationJob>>
@@ -100,7 +103,10 @@ DataMigrationServiceTracingConnection::RestartMigrationJob(
 StatusOr<google::cloud::clouddms::v1::SshScript>
 DataMigrationServiceTracingConnection::GenerateSshScript(
     google::cloud::clouddms::v1::GenerateSshScriptRequest const& request) {
-  return child_->GenerateSshScript(request);
+  auto span = internal::MakeSpan(
+      "datamigration::DataMigrationServiceConnection::GenerateSshScript");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateSshScript(request));
 }
 
 StreamRange<google::cloud::clouddms::v1::ConnectionProfile>
@@ -112,7 +118,10 @@ DataMigrationServiceTracingConnection::ListConnectionProfiles(
 StatusOr<google::cloud::clouddms::v1::ConnectionProfile>
 DataMigrationServiceTracingConnection::GetConnectionProfile(
     google::cloud::clouddms::v1::GetConnectionProfileRequest const& request) {
-  return child_->GetConnectionProfile(request);
+  auto span = internal::MakeSpan(
+      "datamigration::DataMigrationServiceConnection::GetConnectionProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConnectionProfile(request));
 }
 
 future<StatusOr<google::cloud::clouddms::v1::ConnectionProfile>>

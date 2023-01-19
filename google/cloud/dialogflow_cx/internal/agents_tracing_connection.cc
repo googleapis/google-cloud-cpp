@@ -40,24 +40,35 @@ AgentsTracingConnection::ListAgents(
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 AgentsTracingConnection::GetAgent(
     google::cloud::dialogflow::cx::v3::GetAgentRequest const& request) {
-  return child_->GetAgent(request);
+  auto span = internal::MakeSpan("dialogflow_cx::AgentsConnection::GetAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAgent(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 AgentsTracingConnection::CreateAgent(
     google::cloud::dialogflow::cx::v3::CreateAgentRequest const& request) {
-  return child_->CreateAgent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::AgentsConnection::CreateAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateAgent(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Agent>
 AgentsTracingConnection::UpdateAgent(
     google::cloud::dialogflow::cx::v3::UpdateAgentRequest const& request) {
-  return child_->UpdateAgent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::AgentsConnection::UpdateAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateAgent(request));
 }
 
 Status AgentsTracingConnection::DeleteAgent(
     google::cloud::dialogflow::cx::v3::DeleteAgentRequest const& request) {
-  return child_->DeleteAgent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::AgentsConnection::DeleteAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAgent(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ExportAgentResponse>>
@@ -75,14 +86,20 @@ AgentsTracingConnection::RestoreAgent(
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 AgentsTracingConnection::ValidateAgent(
     google::cloud::dialogflow::cx::v3::ValidateAgentRequest const& request) {
-  return child_->ValidateAgent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::AgentsConnection::ValidateAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ValidateAgent(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::AgentValidationResult>
 AgentsTracingConnection::GetAgentValidationResult(
     google::cloud::dialogflow::cx::v3::GetAgentValidationResultRequest const&
         request) {
-  return child_->GetAgentValidationResult(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::AgentsConnection::GetAgentValidationResult");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAgentValidationResult(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

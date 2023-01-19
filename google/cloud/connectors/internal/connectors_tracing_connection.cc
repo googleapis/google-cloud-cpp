@@ -40,7 +40,10 @@ ConnectorsTracingConnection::ListConnections(
 StatusOr<google::cloud::connectors::v1::Connection>
 ConnectorsTracingConnection::GetConnection(
     google::cloud::connectors::v1::GetConnectionRequest const& request) {
-  return child_->GetConnection(request);
+  auto span =
+      internal::MakeSpan("connectors::ConnectorsConnection::GetConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConnection(request));
 }
 
 future<StatusOr<google::cloud::connectors::v1::Connection>>
@@ -70,7 +73,10 @@ ConnectorsTracingConnection::ListProviders(
 StatusOr<google::cloud::connectors::v1::Provider>
 ConnectorsTracingConnection::GetProvider(
     google::cloud::connectors::v1::GetProviderRequest const& request) {
-  return child_->GetProvider(request);
+  auto span =
+      internal::MakeSpan("connectors::ConnectorsConnection::GetProvider");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetProvider(request));
 }
 
 StreamRange<google::cloud::connectors::v1::Connector>
@@ -82,7 +88,10 @@ ConnectorsTracingConnection::ListConnectors(
 StatusOr<google::cloud::connectors::v1::Connector>
 ConnectorsTracingConnection::GetConnector(
     google::cloud::connectors::v1::GetConnectorRequest const& request) {
-  return child_->GetConnector(request);
+  auto span =
+      internal::MakeSpan("connectors::ConnectorsConnection::GetConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConnector(request));
 }
 
 StreamRange<google::cloud::connectors::v1::ConnectorVersion>
@@ -94,14 +103,20 @@ ConnectorsTracingConnection::ListConnectorVersions(
 StatusOr<google::cloud::connectors::v1::ConnectorVersion>
 ConnectorsTracingConnection::GetConnectorVersion(
     google::cloud::connectors::v1::GetConnectorVersionRequest const& request) {
-  return child_->GetConnectorVersion(request);
+  auto span = internal::MakeSpan(
+      "connectors::ConnectorsConnection::GetConnectorVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConnectorVersion(request));
 }
 
 StatusOr<google::cloud::connectors::v1::ConnectionSchemaMetadata>
 ConnectorsTracingConnection::GetConnectionSchemaMetadata(
     google::cloud::connectors::v1::GetConnectionSchemaMetadataRequest const&
         request) {
-  return child_->GetConnectionSchemaMetadata(request);
+  auto span = internal::MakeSpan(
+      "connectors::ConnectorsConnection::GetConnectionSchemaMetadata");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConnectionSchemaMetadata(request));
 }
 
 StreamRange<google::cloud::connectors::v1::RuntimeEntitySchema>
@@ -119,7 +134,10 @@ ConnectorsTracingConnection::ListRuntimeActionSchemas(
 StatusOr<google::cloud::connectors::v1::RuntimeConfig>
 ConnectorsTracingConnection::GetRuntimeConfig(
     google::cloud::connectors::v1::GetRuntimeConfigRequest const& request) {
-  return child_->GetRuntimeConfig(request);
+  auto span =
+      internal::MakeSpan("connectors::ConnectorsConnection::GetRuntimeConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRuntimeConfig(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -40,24 +40,36 @@ UptimeCheckServiceTracingConnection::ListUptimeCheckConfigs(
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceTracingConnection::GetUptimeCheckConfig(
     google::monitoring::v3::GetUptimeCheckConfigRequest const& request) {
-  return child_->GetUptimeCheckConfig(request);
+  auto span = internal::MakeSpan(
+      "monitoring::UptimeCheckServiceConnection::GetUptimeCheckConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetUptimeCheckConfig(request));
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceTracingConnection::CreateUptimeCheckConfig(
     google::monitoring::v3::CreateUptimeCheckConfigRequest const& request) {
-  return child_->CreateUptimeCheckConfig(request);
+  auto span = internal::MakeSpan(
+      "monitoring::UptimeCheckServiceConnection::CreateUptimeCheckConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateUptimeCheckConfig(request));
 }
 
 StatusOr<google::monitoring::v3::UptimeCheckConfig>
 UptimeCheckServiceTracingConnection::UpdateUptimeCheckConfig(
     google::monitoring::v3::UpdateUptimeCheckConfigRequest const& request) {
-  return child_->UpdateUptimeCheckConfig(request);
+  auto span = internal::MakeSpan(
+      "monitoring::UptimeCheckServiceConnection::UpdateUptimeCheckConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateUptimeCheckConfig(request));
 }
 
 Status UptimeCheckServiceTracingConnection::DeleteUptimeCheckConfig(
     google::monitoring::v3::DeleteUptimeCheckConfigRequest const& request) {
-  return child_->DeleteUptimeCheckConfig(request);
+  auto span = internal::MakeSpan(
+      "monitoring::UptimeCheckServiceConnection::DeleteUptimeCheckConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteUptimeCheckConfig(request));
 }
 
 StreamRange<google::monitoring::v3::UptimeCheckIp>

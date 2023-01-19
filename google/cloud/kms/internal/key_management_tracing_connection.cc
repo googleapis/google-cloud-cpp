@@ -58,134 +58,201 @@ KeyManagementServiceTracingConnection::ListImportJobs(
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceTracingConnection::GetKeyRing(
     google::cloud::kms::v1::GetKeyRingRequest const& request) {
-  return child_->GetKeyRing(request);
+  auto span =
+      internal::MakeSpan("kms::KeyManagementServiceConnection::GetKeyRing");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetKeyRing(request));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceTracingConnection::GetCryptoKey(
     google::cloud::kms::v1::GetCryptoKeyRequest const& request) {
-  return child_->GetCryptoKey(request);
+  auto span =
+      internal::MakeSpan("kms::KeyManagementServiceConnection::GetCryptoKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCryptoKey(request));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceTracingConnection::GetCryptoKeyVersion(
     google::cloud::kms::v1::GetCryptoKeyVersionRequest const& request) {
-  return child_->GetCryptoKeyVersion(request);
+  auto span = internal::MakeSpan(
+      "kms::KeyManagementServiceConnection::GetCryptoKeyVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCryptoKeyVersion(request));
 }
 
 StatusOr<google::cloud::kms::v1::PublicKey>
 KeyManagementServiceTracingConnection::GetPublicKey(
     google::cloud::kms::v1::GetPublicKeyRequest const& request) {
-  return child_->GetPublicKey(request);
+  auto span =
+      internal::MakeSpan("kms::KeyManagementServiceConnection::GetPublicKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPublicKey(request));
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceTracingConnection::GetImportJob(
     google::cloud::kms::v1::GetImportJobRequest const& request) {
-  return child_->GetImportJob(request);
+  auto span =
+      internal::MakeSpan("kms::KeyManagementServiceConnection::GetImportJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetImportJob(request));
 }
 
 StatusOr<google::cloud::kms::v1::KeyRing>
 KeyManagementServiceTracingConnection::CreateKeyRing(
     google::cloud::kms::v1::CreateKeyRingRequest const& request) {
-  return child_->CreateKeyRing(request);
+  auto span =
+      internal::MakeSpan("kms::KeyManagementServiceConnection::CreateKeyRing");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateKeyRing(request));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceTracingConnection::CreateCryptoKey(
     google::cloud::kms::v1::CreateCryptoKeyRequest const& request) {
-  return child_->CreateCryptoKey(request);
+  auto span = internal::MakeSpan(
+      "kms::KeyManagementServiceConnection::CreateCryptoKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateCryptoKey(request));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceTracingConnection::CreateCryptoKeyVersion(
     google::cloud::kms::v1::CreateCryptoKeyVersionRequest const& request) {
-  return child_->CreateCryptoKeyVersion(request);
+  auto span = internal::MakeSpan(
+      "kms::KeyManagementServiceConnection::CreateCryptoKeyVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateCryptoKeyVersion(request));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceTracingConnection::ImportCryptoKeyVersion(
     google::cloud::kms::v1::ImportCryptoKeyVersionRequest const& request) {
-  return child_->ImportCryptoKeyVersion(request);
+  auto span = internal::MakeSpan(
+      "kms::KeyManagementServiceConnection::ImportCryptoKeyVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ImportCryptoKeyVersion(request));
 }
 
 StatusOr<google::cloud::kms::v1::ImportJob>
 KeyManagementServiceTracingConnection::CreateImportJob(
     google::cloud::kms::v1::CreateImportJobRequest const& request) {
-  return child_->CreateImportJob(request);
+  auto span = internal::MakeSpan(
+      "kms::KeyManagementServiceConnection::CreateImportJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateImportJob(request));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceTracingConnection::UpdateCryptoKey(
     google::cloud::kms::v1::UpdateCryptoKeyRequest const& request) {
-  return child_->UpdateCryptoKey(request);
+  auto span = internal::MakeSpan(
+      "kms::KeyManagementServiceConnection::UpdateCryptoKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateCryptoKey(request));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceTracingConnection::UpdateCryptoKeyVersion(
     google::cloud::kms::v1::UpdateCryptoKeyVersionRequest const& request) {
-  return child_->UpdateCryptoKeyVersion(request);
+  auto span = internal::MakeSpan(
+      "kms::KeyManagementServiceConnection::UpdateCryptoKeyVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateCryptoKeyVersion(request));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKey>
 KeyManagementServiceTracingConnection::UpdateCryptoKeyPrimaryVersion(
     google::cloud::kms::v1::UpdateCryptoKeyPrimaryVersionRequest const&
         request) {
-  return child_->UpdateCryptoKeyPrimaryVersion(request);
+  auto span = internal::MakeSpan(
+      "kms::KeyManagementServiceConnection::UpdateCryptoKeyPrimaryVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateCryptoKeyPrimaryVersion(request));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceTracingConnection::DestroyCryptoKeyVersion(
     google::cloud::kms::v1::DestroyCryptoKeyVersionRequest const& request) {
-  return child_->DestroyCryptoKeyVersion(request);
+  auto span = internal::MakeSpan(
+      "kms::KeyManagementServiceConnection::DestroyCryptoKeyVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DestroyCryptoKeyVersion(request));
 }
 
 StatusOr<google::cloud::kms::v1::CryptoKeyVersion>
 KeyManagementServiceTracingConnection::RestoreCryptoKeyVersion(
     google::cloud::kms::v1::RestoreCryptoKeyVersionRequest const& request) {
-  return child_->RestoreCryptoKeyVersion(request);
+  auto span = internal::MakeSpan(
+      "kms::KeyManagementServiceConnection::RestoreCryptoKeyVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RestoreCryptoKeyVersion(request));
 }
 
 StatusOr<google::cloud::kms::v1::EncryptResponse>
 KeyManagementServiceTracingConnection::Encrypt(
     google::cloud::kms::v1::EncryptRequest const& request) {
-  return child_->Encrypt(request);
+  auto span =
+      internal::MakeSpan("kms::KeyManagementServiceConnection::Encrypt");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Encrypt(request));
 }
 
 StatusOr<google::cloud::kms::v1::DecryptResponse>
 KeyManagementServiceTracingConnection::Decrypt(
     google::cloud::kms::v1::DecryptRequest const& request) {
-  return child_->Decrypt(request);
+  auto span =
+      internal::MakeSpan("kms::KeyManagementServiceConnection::Decrypt");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Decrypt(request));
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricSignResponse>
 KeyManagementServiceTracingConnection::AsymmetricSign(
     google::cloud::kms::v1::AsymmetricSignRequest const& request) {
-  return child_->AsymmetricSign(request);
+  auto span =
+      internal::MakeSpan("kms::KeyManagementServiceConnection::AsymmetricSign");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AsymmetricSign(request));
 }
 
 StatusOr<google::cloud::kms::v1::AsymmetricDecryptResponse>
 KeyManagementServiceTracingConnection::AsymmetricDecrypt(
     google::cloud::kms::v1::AsymmetricDecryptRequest const& request) {
-  return child_->AsymmetricDecrypt(request);
+  auto span = internal::MakeSpan(
+      "kms::KeyManagementServiceConnection::AsymmetricDecrypt");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AsymmetricDecrypt(request));
 }
 
 StatusOr<google::cloud::kms::v1::MacSignResponse>
 KeyManagementServiceTracingConnection::MacSign(
     google::cloud::kms::v1::MacSignRequest const& request) {
-  return child_->MacSign(request);
+  auto span =
+      internal::MakeSpan("kms::KeyManagementServiceConnection::MacSign");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->MacSign(request));
 }
 
 StatusOr<google::cloud::kms::v1::MacVerifyResponse>
 KeyManagementServiceTracingConnection::MacVerify(
     google::cloud::kms::v1::MacVerifyRequest const& request) {
-  return child_->MacVerify(request);
+  auto span =
+      internal::MakeSpan("kms::KeyManagementServiceConnection::MacVerify");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->MacVerify(request));
 }
 
 StatusOr<google::cloud::kms::v1::GenerateRandomBytesResponse>
 KeyManagementServiceTracingConnection::GenerateRandomBytes(
     google::cloud::kms::v1::GenerateRandomBytesRequest const& request) {
-  return child_->GenerateRandomBytes(request);
+  auto span = internal::MakeSpan(
+      "kms::KeyManagementServiceConnection::GenerateRandomBytes");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateRandomBytes(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -40,7 +40,10 @@ AnswerRecordsTracingConnection::ListAnswerRecords(
 StatusOr<google::cloud::dialogflow::v2::AnswerRecord>
 AnswerRecordsTracingConnection::UpdateAnswerRecord(
     google::cloud::dialogflow::v2::UpdateAnswerRecordRequest const& request) {
-  return child_->UpdateAnswerRecord(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::AnswerRecordsConnection::UpdateAnswerRecord");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateAnswerRecord(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

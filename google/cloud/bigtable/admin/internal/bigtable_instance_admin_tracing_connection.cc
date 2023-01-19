@@ -40,19 +40,28 @@ BigtableInstanceAdminTracingConnection::CreateInstance(
 StatusOr<google::bigtable::admin::v2::Instance>
 BigtableInstanceAdminTracingConnection::GetInstance(
     google::bigtable::admin::v2::GetInstanceRequest const& request) {
-  return child_->GetInstance(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::GetInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 StatusOr<google::bigtable::admin::v2::ListInstancesResponse>
 BigtableInstanceAdminTracingConnection::ListInstances(
     google::bigtable::admin::v2::ListInstancesRequest const& request) {
-  return child_->ListInstances(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::ListInstances");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListInstances(request));
 }
 
 StatusOr<google::bigtable::admin::v2::Instance>
 BigtableInstanceAdminTracingConnection::UpdateInstance(
     google::bigtable::admin::v2::Instance const& request) {
-  return child_->UpdateInstance(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::UpdateInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateInstance(request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Instance>>
@@ -63,7 +72,10 @@ BigtableInstanceAdminTracingConnection::PartialUpdateInstance(
 
 Status BigtableInstanceAdminTracingConnection::DeleteInstance(
     google::bigtable::admin::v2::DeleteInstanceRequest const& request) {
-  return child_->DeleteInstance(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::DeleteInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteInstance(request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
@@ -75,13 +87,19 @@ BigtableInstanceAdminTracingConnection::CreateCluster(
 StatusOr<google::bigtable::admin::v2::Cluster>
 BigtableInstanceAdminTracingConnection::GetCluster(
     google::bigtable::admin::v2::GetClusterRequest const& request) {
-  return child_->GetCluster(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::GetCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCluster(request));
 }
 
 StatusOr<google::bigtable::admin::v2::ListClustersResponse>
 BigtableInstanceAdminTracingConnection::ListClusters(
     google::bigtable::admin::v2::ListClustersRequest const& request) {
-  return child_->ListClusters(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::ListClusters");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListClusters(request));
 }
 
 future<StatusOr<google::bigtable::admin::v2::Cluster>>
@@ -98,19 +116,28 @@ BigtableInstanceAdminTracingConnection::PartialUpdateCluster(
 
 Status BigtableInstanceAdminTracingConnection::DeleteCluster(
     google::bigtable::admin::v2::DeleteClusterRequest const& request) {
-  return child_->DeleteCluster(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::DeleteCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteCluster(request));
 }
 
 StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminTracingConnection::CreateAppProfile(
     google::bigtable::admin::v2::CreateAppProfileRequest const& request) {
-  return child_->CreateAppProfile(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::CreateAppProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateAppProfile(request));
 }
 
 StatusOr<google::bigtable::admin::v2::AppProfile>
 BigtableInstanceAdminTracingConnection::GetAppProfile(
     google::bigtable::admin::v2::GetAppProfileRequest const& request) {
-  return child_->GetAppProfile(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::GetAppProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAppProfile(request));
 }
 
 StreamRange<google::bigtable::admin::v2::AppProfile>
@@ -127,25 +154,37 @@ BigtableInstanceAdminTracingConnection::UpdateAppProfile(
 
 Status BigtableInstanceAdminTracingConnection::DeleteAppProfile(
     google::bigtable::admin::v2::DeleteAppProfileRequest const& request) {
-  return child_->DeleteAppProfile(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::DeleteAppProfile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAppProfile(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 BigtableInstanceAdminTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 BigtableInstanceAdminTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 BigtableInstanceAdminTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "bigtable_admin::BigtableInstanceAdminConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::bigtable::admin::v2::HotTablet>

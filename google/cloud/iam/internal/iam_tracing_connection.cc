@@ -40,95 +40,130 @@ IAMTracingConnection::ListServiceAccounts(
 StatusOr<google::iam::admin::v1::ServiceAccount>
 IAMTracingConnection::GetServiceAccount(
     google::iam::admin::v1::GetServiceAccountRequest const& request) {
-  return child_->GetServiceAccount(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::GetServiceAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetServiceAccount(request));
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
 IAMTracingConnection::CreateServiceAccount(
     google::iam::admin::v1::CreateServiceAccountRequest const& request) {
-  return child_->CreateServiceAccount(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::CreateServiceAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateServiceAccount(request));
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccount>
 IAMTracingConnection::PatchServiceAccount(
     google::iam::admin::v1::PatchServiceAccountRequest const& request) {
-  return child_->PatchServiceAccount(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::PatchServiceAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->PatchServiceAccount(request));
 }
 
 Status IAMTracingConnection::DeleteServiceAccount(
     google::iam::admin::v1::DeleteServiceAccountRequest const& request) {
-  return child_->DeleteServiceAccount(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::DeleteServiceAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteServiceAccount(request));
 }
 
 StatusOr<google::iam::admin::v1::UndeleteServiceAccountResponse>
 IAMTracingConnection::UndeleteServiceAccount(
     google::iam::admin::v1::UndeleteServiceAccountRequest const& request) {
-  return child_->UndeleteServiceAccount(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::UndeleteServiceAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UndeleteServiceAccount(request));
 }
 
 Status IAMTracingConnection::EnableServiceAccount(
     google::iam::admin::v1::EnableServiceAccountRequest const& request) {
-  return child_->EnableServiceAccount(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::EnableServiceAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->EnableServiceAccount(request));
 }
 
 Status IAMTracingConnection::DisableServiceAccount(
     google::iam::admin::v1::DisableServiceAccountRequest const& request) {
-  return child_->DisableServiceAccount(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::DisableServiceAccount");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DisableServiceAccount(request));
 }
 
 StatusOr<google::iam::admin::v1::ListServiceAccountKeysResponse>
 IAMTracingConnection::ListServiceAccountKeys(
     google::iam::admin::v1::ListServiceAccountKeysRequest const& request) {
-  return child_->ListServiceAccountKeys(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::ListServiceAccountKeys");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListServiceAccountKeys(request));
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMTracingConnection::GetServiceAccountKey(
     google::iam::admin::v1::GetServiceAccountKeyRequest const& request) {
-  return child_->GetServiceAccountKey(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::GetServiceAccountKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetServiceAccountKey(request));
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMTracingConnection::CreateServiceAccountKey(
     google::iam::admin::v1::CreateServiceAccountKeyRequest const& request) {
-  return child_->CreateServiceAccountKey(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::CreateServiceAccountKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateServiceAccountKey(request));
 }
 
 StatusOr<google::iam::admin::v1::ServiceAccountKey>
 IAMTracingConnection::UploadServiceAccountKey(
     google::iam::admin::v1::UploadServiceAccountKeyRequest const& request) {
-  return child_->UploadServiceAccountKey(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::UploadServiceAccountKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UploadServiceAccountKey(request));
 }
 
 Status IAMTracingConnection::DeleteServiceAccountKey(
     google::iam::admin::v1::DeleteServiceAccountKeyRequest const& request) {
-  return child_->DeleteServiceAccountKey(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::DeleteServiceAccountKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteServiceAccountKey(request));
 }
 
 Status IAMTracingConnection::DisableServiceAccountKey(
     google::iam::admin::v1::DisableServiceAccountKeyRequest const& request) {
-  return child_->DisableServiceAccountKey(request);
+  auto span =
+      internal::MakeSpan("iam::IAMConnection::DisableServiceAccountKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DisableServiceAccountKey(request));
 }
 
 Status IAMTracingConnection::EnableServiceAccountKey(
     google::iam::admin::v1::EnableServiceAccountKeyRequest const& request) {
-  return child_->EnableServiceAccountKey(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::EnableServiceAccountKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->EnableServiceAccountKey(request));
 }
 
 StatusOr<google::iam::v1::Policy> IAMTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy> IAMTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IAMTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StreamRange<google::iam::admin::v1::Role>
@@ -144,27 +179,37 @@ StreamRange<google::iam::admin::v1::Role> IAMTracingConnection::ListRoles(
 
 StatusOr<google::iam::admin::v1::Role> IAMTracingConnection::GetRole(
     google::iam::admin::v1::GetRoleRequest const& request) {
-  return child_->GetRole(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::GetRole");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRole(request));
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMTracingConnection::CreateRole(
     google::iam::admin::v1::CreateRoleRequest const& request) {
-  return child_->CreateRole(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::CreateRole");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateRole(request));
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMTracingConnection::UpdateRole(
     google::iam::admin::v1::UpdateRoleRequest const& request) {
-  return child_->UpdateRole(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::UpdateRole");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateRole(request));
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMTracingConnection::DeleteRole(
     google::iam::admin::v1::DeleteRoleRequest const& request) {
-  return child_->DeleteRole(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::DeleteRole");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteRole(request));
 }
 
 StatusOr<google::iam::admin::v1::Role> IAMTracingConnection::UndeleteRole(
     google::iam::admin::v1::UndeleteRoleRequest const& request) {
-  return child_->UndeleteRole(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::UndeleteRole");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UndeleteRole(request));
 }
 
 StreamRange<google::iam::admin::v1::Permission>
@@ -176,13 +221,17 @@ IAMTracingConnection::QueryTestablePermissions(
 StatusOr<google::iam::admin::v1::QueryAuditableServicesResponse>
 IAMTracingConnection::QueryAuditableServices(
     google::iam::admin::v1::QueryAuditableServicesRequest const& request) {
-  return child_->QueryAuditableServices(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::QueryAuditableServices");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->QueryAuditableServices(request));
 }
 
 StatusOr<google::iam::admin::v1::LintPolicyResponse>
 IAMTracingConnection::LintPolicy(
     google::iam::admin::v1::LintPolicyRequest const& request) {
-  return child_->LintPolicy(request);
+  auto span = internal::MakeSpan("iam::IAMConnection::LintPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->LintPolicy(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

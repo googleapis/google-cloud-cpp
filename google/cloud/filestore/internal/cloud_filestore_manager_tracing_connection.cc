@@ -40,7 +40,10 @@ CloudFilestoreManagerTracingConnection::ListInstances(
 StatusOr<google::cloud::filestore::v1::Instance>
 CloudFilestoreManagerTracingConnection::GetInstance(
     google::cloud::filestore::v1::GetInstanceRequest const& request) {
-  return child_->GetInstance(request);
+  auto span = internal::MakeSpan(
+      "filestore::CloudFilestoreManagerConnection::GetInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Instance>>
@@ -76,7 +79,10 @@ CloudFilestoreManagerTracingConnection::ListBackups(
 StatusOr<google::cloud::filestore::v1::Backup>
 CloudFilestoreManagerTracingConnection::GetBackup(
     google::cloud::filestore::v1::GetBackupRequest const& request) {
-  return child_->GetBackup(request);
+  auto span = internal::MakeSpan(
+      "filestore::CloudFilestoreManagerConnection::GetBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBackup(request));
 }
 
 future<StatusOr<google::cloud::filestore::v1::Backup>>

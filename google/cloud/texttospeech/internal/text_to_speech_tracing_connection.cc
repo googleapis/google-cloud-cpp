@@ -34,13 +34,19 @@ TextToSpeechTracingConnection::TextToSpeechTracingConnection(
 StatusOr<google::cloud::texttospeech::v1::ListVoicesResponse>
 TextToSpeechTracingConnection::ListVoices(
     google::cloud::texttospeech::v1::ListVoicesRequest const& request) {
-  return child_->ListVoices(request);
+  auto span =
+      internal::MakeSpan("texttospeech::TextToSpeechConnection::ListVoices");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListVoices(request));
 }
 
 StatusOr<google::cloud::texttospeech::v1::SynthesizeSpeechResponse>
 TextToSpeechTracingConnection::SynthesizeSpeech(
     google::cloud::texttospeech::v1::SynthesizeSpeechRequest const& request) {
-  return child_->SynthesizeSpeech(request);
+  auto span = internal::MakeSpan(
+      "texttospeech::TextToSpeechConnection::SynthesizeSpeech");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SynthesizeSpeech(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -35,7 +35,10 @@ StatusOr<google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyResponse>
 IamCheckerTracingConnection::TroubleshootIamPolicy(
     google::cloud::policytroubleshooter::v1::TroubleshootIamPolicyRequest const&
         request) {
-  return child_->TroubleshootIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "policytroubleshooter::IamCheckerConnection::TroubleshootIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TroubleshootIamPolicy(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

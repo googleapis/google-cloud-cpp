@@ -36,14 +36,20 @@ StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceTracingConnection::CreateCertificate(
     google::cloud::security::privateca::v1::CreateCertificateRequest const&
         request) {
-  return child_->CreateCertificate(request);
+  auto span = internal::MakeSpan(
+      "privateca::CertificateAuthorityServiceConnection::CreateCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateCertificate(request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceTracingConnection::GetCertificate(
     google::cloud::security::privateca::v1::GetCertificateRequest const&
         request) {
-  return child_->GetCertificate(request);
+  auto span = internal::MakeSpan(
+      "privateca::CertificateAuthorityServiceConnection::GetCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCertificate(request));
 }
 
 StreamRange<google::cloud::security::privateca::v1::Certificate>
@@ -56,14 +62,20 @@ StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceTracingConnection::RevokeCertificate(
     google::cloud::security::privateca::v1::RevokeCertificateRequest const&
         request) {
-  return child_->RevokeCertificate(request);
+  auto span = internal::MakeSpan(
+      "privateca::CertificateAuthorityServiceConnection::RevokeCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RevokeCertificate(request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::Certificate>
 CertificateAuthorityServiceTracingConnection::UpdateCertificate(
     google::cloud::security::privateca::v1::UpdateCertificateRequest const&
         request) {
-  return child_->UpdateCertificate(request);
+  auto span = internal::MakeSpan(
+      "privateca::CertificateAuthorityServiceConnection::UpdateCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateCertificate(request));
 }
 
 future<StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>>
@@ -99,14 +111,23 @@ StatusOr<google::cloud::security::privateca::v1::
 CertificateAuthorityServiceTracingConnection::FetchCertificateAuthorityCsr(
     google::cloud::security::privateca::v1::
         FetchCertificateAuthorityCsrRequest const& request) {
-  return child_->FetchCertificateAuthorityCsr(request);
+  auto span = internal::MakeSpan(
+      "privateca::CertificateAuthorityServiceConnection::"
+      "FetchCertificateAuthorityCsr");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->FetchCertificateAuthorityCsr(request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateAuthority>
 CertificateAuthorityServiceTracingConnection::GetCertificateAuthority(
     google::cloud::security::privateca::v1::
         GetCertificateAuthorityRequest const& request) {
-  return child_->GetCertificateAuthority(request);
+  auto span = internal::MakeSpan(
+      "privateca::CertificateAuthorityServiceConnection::"
+      "GetCertificateAuthority");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCertificateAuthority(request));
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateAuthority>
@@ -154,7 +175,10 @@ CertificateAuthorityServiceTracingConnection::UpdateCaPool(
 StatusOr<google::cloud::security::privateca::v1::CaPool>
 CertificateAuthorityServiceTracingConnection::GetCaPool(
     google::cloud::security::privateca::v1::GetCaPoolRequest const& request) {
-  return child_->GetCaPool(request);
+  auto span = internal::MakeSpan(
+      "privateca::CertificateAuthorityServiceConnection::GetCaPool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCaPool(request));
 }
 
 StreamRange<google::cloud::security::privateca::v1::CaPool>
@@ -174,14 +198,22 @@ StatusOr<google::cloud::security::privateca::v1::FetchCaCertsResponse>
 CertificateAuthorityServiceTracingConnection::FetchCaCerts(
     google::cloud::security::privateca::v1::FetchCaCertsRequest const&
         request) {
-  return child_->FetchCaCerts(request);
+  auto span = internal::MakeSpan(
+      "privateca::CertificateAuthorityServiceConnection::FetchCaCerts");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FetchCaCerts(request));
 }
 
 StatusOr<google::cloud::security::privateca::v1::CertificateRevocationList>
 CertificateAuthorityServiceTracingConnection::GetCertificateRevocationList(
     google::cloud::security::privateca::v1::
         GetCertificateRevocationListRequest const& request) {
-  return child_->GetCertificateRevocationList(request);
+  auto span = internal::MakeSpan(
+      "privateca::CertificateAuthorityServiceConnection::"
+      "GetCertificateRevocationList");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetCertificateRevocationList(request));
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateRevocationList>
@@ -217,7 +249,11 @@ StatusOr<google::cloud::security::privateca::v1::CertificateTemplate>
 CertificateAuthorityServiceTracingConnection::GetCertificateTemplate(
     google::cloud::security::privateca::v1::GetCertificateTemplateRequest const&
         request) {
-  return child_->GetCertificateTemplate(request);
+  auto span = internal::MakeSpan(
+      "privateca::CertificateAuthorityServiceConnection::"
+      "GetCertificateTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCertificateTemplate(request));
 }
 
 StreamRange<google::cloud::security::privateca::v1::CertificateTemplate>

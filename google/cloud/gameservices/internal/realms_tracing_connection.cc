@@ -40,7 +40,10 @@ RealmsServiceTracingConnection::ListRealms(
 StatusOr<google::cloud::gaming::v1::Realm>
 RealmsServiceTracingConnection::GetRealm(
     google::cloud::gaming::v1::GetRealmRequest const& request) {
-  return child_->GetRealm(request);
+  auto span =
+      internal::MakeSpan("gameservices::RealmsServiceConnection::GetRealm");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRealm(request));
 }
 
 future<StatusOr<google::cloud::gaming::v1::Realm>>
@@ -64,7 +67,10 @@ RealmsServiceTracingConnection::UpdateRealm(
 StatusOr<google::cloud::gaming::v1::PreviewRealmUpdateResponse>
 RealmsServiceTracingConnection::PreviewRealmUpdate(
     google::cloud::gaming::v1::PreviewRealmUpdateRequest const& request) {
-  return child_->PreviewRealmUpdate(request);
+  auto span = internal::MakeSpan(
+      "gameservices::RealmsServiceConnection::PreviewRealmUpdate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->PreviewRealmUpdate(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

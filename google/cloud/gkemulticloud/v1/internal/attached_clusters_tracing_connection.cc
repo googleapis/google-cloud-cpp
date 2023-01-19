@@ -56,7 +56,10 @@ StatusOr<google::cloud::gkemulticloud::v1::AttachedCluster>
 AttachedClustersTracingConnection::GetAttachedCluster(
     google::cloud::gkemulticloud::v1::GetAttachedClusterRequest const&
         request) {
-  return child_->GetAttachedCluster(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::GetAttachedCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAttachedCluster(request));
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AttachedCluster>
@@ -76,7 +79,10 @@ StatusOr<google::cloud::gkemulticloud::v1::AttachedServerConfig>
 AttachedClustersTracingConnection::GetAttachedServerConfig(
     google::cloud::gkemulticloud::v1::GetAttachedServerConfigRequest const&
         request) {
-  return child_->GetAttachedServerConfig(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::GetAttachedServerConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAttachedServerConfig(request));
 }
 
 StatusOr<google::cloud::gkemulticloud::v1::
@@ -84,7 +90,12 @@ StatusOr<google::cloud::gkemulticloud::v1::
 AttachedClustersTracingConnection::GenerateAttachedClusterInstallManifest(
     google::cloud::gkemulticloud::v1::
         GenerateAttachedClusterInstallManifestRequest const& request) {
-  return child_->GenerateAttachedClusterInstallManifest(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AttachedClustersConnection::"
+      "GenerateAttachedClusterInstallManifest");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->GenerateAttachedClusterInstallManifest(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -34,7 +34,10 @@ PredictionServiceTracingConnection::PredictionServiceTracingConnection(
 StatusOr<google::cloud::automl::v1::PredictResponse>
 PredictionServiceTracingConnection::Predict(
     google::cloud::automl::v1::PredictRequest const& request) {
-  return child_->Predict(request);
+  auto span =
+      internal::MakeSpan("automl::PredictionServiceConnection::Predict");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Predict(request));
 }
 
 future<StatusOr<google::cloud::automl::v1::BatchPredictResult>>

@@ -15,10 +15,14 @@
 #include "generator/integration_tests/golden/v1/internal/golden_kitchen_sink_tracing_connection.h"
 #include "google/cloud/mocks/mock_stream_range.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/v1/mocks/mock_golden_kitchen_sink_connection.h"
 #include "generator/integration_tests/test.pb.h"
 #include <gmock/gmock.h>
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <opentelemetry/trace/provider.h>
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <memory>
 
 namespace google {
@@ -30,11 +34,22 @@ namespace {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 using ::google::cloud::golden_v1_mocks::MockGoldenKitchenSinkConnection;
+using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::SpanHasAttributes;
+using ::google::cloud::testing_util::SpanHasInstrumentationScope;
+using ::google::cloud::testing_util::SpanKindIsClient;
+using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::test::admin::database::v1::Request;
 using ::google::test::admin::database::v1::Response;
+using ::testing::AllOf;
 using ::testing::ByMove;
+using ::testing::ElementsAre;
 using ::testing::Return;
+
+auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
 
 TEST(GoldenKitchenSinkTracingConnectionTest, Options) {
   struct TestOption {
@@ -50,36 +65,82 @@ TEST(GoldenKitchenSinkTracingConnectionTest, Options) {
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, GenerateAccessToken) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, GenerateAccessToken)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, GenerateAccessToken).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenKitchenSinkTracingConnection(mock);
   google::test::admin::database::v1::GenerateAccessTokenRequest request;
   auto result = under_test.GenerateAccessToken(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed(
+              "golden_v1::GoldenKitchenSinkConnection::GenerateAccessToken"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, GenerateIdToken) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, GenerateIdToken)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, GenerateIdToken).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenKitchenSinkTracingConnection(mock);
   google::test::admin::database::v1::GenerateIdTokenRequest request;
   auto result = under_test.GenerateIdToken(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenKitchenSinkConnection::GenerateIdToken"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, WriteLogEntries) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, WriteLogEntries)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, WriteLogEntries).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenKitchenSinkTracingConnection(mock);
   google::test::admin::database::v1::WriteLogEntriesRequest request;
   auto result = under_test.WriteLogEntries(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenKitchenSinkConnection::WriteLogEntries"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, ListLogs) {
@@ -98,36 +159,82 @@ TEST(GoldenKitchenSinkTracingConnectionTest, ListLogs) {
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, ListServiceAccountKeys) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, ListServiceAccountKeys)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, ListServiceAccountKeys).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenKitchenSinkTracingConnection(mock);
   google::test::admin::database::v1::ListServiceAccountKeysRequest request;
   auto result = under_test.ListServiceAccountKeys(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed(
+              "golden_v1::GoldenKitchenSinkConnection::ListServiceAccountKeys"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, DoNothing) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, DoNothing)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, DoNothing).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenKitchenSinkTracingConnection(mock);
   google::protobuf::Empty request;
   auto result = under_test.DoNothing(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenKitchenSinkConnection::DoNothing"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, Deprecated2) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, Deprecated2)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, Deprecated2).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenKitchenSinkTracingConnection(mock);
   google::test::admin::database::v1::GenerateAccessTokenRequest request;
   auto result = under_test.Deprecated2(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenKitchenSinkConnection::Deprecated2"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, StreamingRead) {
@@ -162,25 +269,55 @@ TEST(GoldenKitchenSinkTracingConnectionTest, AsyncStreamingReadWrite) {
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, ExplicitRouting1) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, ExplicitRouting1)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, ExplicitRouting1).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenKitchenSinkTracingConnection(mock);
   google::test::admin::database::v1::ExplicitRoutingRequest request;
   auto result = under_test.ExplicitRouting1(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenKitchenSinkConnection::ExplicitRouting1"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenKitchenSinkTracingConnectionTest, ExplicitRouting2) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenKitchenSinkConnection>();
-  EXPECT_CALL(*mock, ExplicitRouting2)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, ExplicitRouting2).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenKitchenSinkTracingConnection(mock);
   google::test::admin::database::v1::ExplicitRoutingRequest request;
   auto result = under_test.ExplicitRouting2(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenKitchenSinkConnection::ExplicitRouting2"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

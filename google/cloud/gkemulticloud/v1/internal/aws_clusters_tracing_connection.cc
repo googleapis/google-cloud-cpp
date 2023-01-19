@@ -46,7 +46,10 @@ AwsClustersTracingConnection::UpdateAwsCluster(
 StatusOr<google::cloud::gkemulticloud::v1::AwsCluster>
 AwsClustersTracingConnection::GetAwsCluster(
     google::cloud::gkemulticloud::v1::GetAwsClusterRequest const& request) {
-  return child_->GetAwsCluster(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::GetAwsCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAwsCluster(request));
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AwsCluster>
@@ -65,7 +68,10 @@ StatusOr<google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenResponse>
 AwsClustersTracingConnection::GenerateAwsAccessToken(
     google::cloud::gkemulticloud::v1::GenerateAwsAccessTokenRequest const&
         request) {
-  return child_->GenerateAwsAccessToken(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::GenerateAwsAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateAwsAccessToken(request));
 }
 
 future<StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>>
@@ -83,7 +89,10 @@ AwsClustersTracingConnection::UpdateAwsNodePool(
 StatusOr<google::cloud::gkemulticloud::v1::AwsNodePool>
 AwsClustersTracingConnection::GetAwsNodePool(
     google::cloud::gkemulticloud::v1::GetAwsNodePoolRequest const& request) {
-  return child_->GetAwsNodePool(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::GetAwsNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAwsNodePool(request));
 }
 
 StreamRange<google::cloud::gkemulticloud::v1::AwsNodePool>
@@ -102,7 +111,10 @@ StatusOr<google::cloud::gkemulticloud::v1::AwsServerConfig>
 AwsClustersTracingConnection::GetAwsServerConfig(
     google::cloud::gkemulticloud::v1::GetAwsServerConfigRequest const&
         request) {
-  return child_->GetAwsServerConfig(request);
+  auto span = internal::MakeSpan(
+      "gkemulticloud_v1::AwsClustersConnection::GetAwsServerConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAwsServerConfig(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

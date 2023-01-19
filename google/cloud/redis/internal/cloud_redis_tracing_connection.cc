@@ -40,13 +40,18 @@ CloudRedisTracingConnection::ListInstances(
 StatusOr<google::cloud::redis::v1::Instance>
 CloudRedisTracingConnection::GetInstance(
     google::cloud::redis::v1::GetInstanceRequest const& request) {
-  return child_->GetInstance(request);
+  auto span = internal::MakeSpan("redis::CloudRedisConnection::GetInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 StatusOr<google::cloud::redis::v1::InstanceAuthString>
 CloudRedisTracingConnection::GetInstanceAuthString(
     google::cloud::redis::v1::GetInstanceAuthStringRequest const& request) {
-  return child_->GetInstanceAuthString(request);
+  auto span =
+      internal::MakeSpan("redis::CloudRedisConnection::GetInstanceAuthString");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInstanceAuthString(request));
 }
 
 future<StatusOr<google::cloud::redis::v1::Instance>>

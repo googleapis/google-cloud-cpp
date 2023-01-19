@@ -40,24 +40,36 @@ EntityTypesTracingConnection::ListEntityTypes(
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesTracingConnection::GetEntityType(
     google::cloud::dialogflow::cx::v3::GetEntityTypeRequest const& request) {
-  return child_->GetEntityType(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::EntityTypesConnection::GetEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEntityType(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesTracingConnection::CreateEntityType(
     google::cloud::dialogflow::cx::v3::CreateEntityTypeRequest const& request) {
-  return child_->CreateEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EntityTypesConnection::CreateEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateEntityType(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::EntityType>
 EntityTypesTracingConnection::UpdateEntityType(
     google::cloud::dialogflow::cx::v3::UpdateEntityTypeRequest const& request) {
-  return child_->UpdateEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EntityTypesConnection::UpdateEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateEntityType(request));
 }
 
 Status EntityTypesTracingConnection::DeleteEntityType(
     google::cloud::dialogflow::cx::v3::DeleteEntityTypeRequest const& request) {
-  return child_->DeleteEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EntityTypesConnection::DeleteEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteEntityType(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

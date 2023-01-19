@@ -34,7 +34,10 @@ CompletionServiceTracingConnection::CompletionServiceTracingConnection(
 StatusOr<google::cloud::retail::v2::CompleteQueryResponse>
 CompletionServiceTracingConnection::CompleteQuery(
     google::cloud::retail::v2::CompleteQueryRequest const& request) {
-  return child_->CompleteQuery(request);
+  auto span =
+      internal::MakeSpan("retail::CompletionServiceConnection::CompleteQuery");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CompleteQuery(request));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportCompletionDataResponse>>

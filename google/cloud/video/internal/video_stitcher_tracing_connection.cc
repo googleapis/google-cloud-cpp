@@ -34,7 +34,10 @@ VideoStitcherServiceTracingConnection::VideoStitcherServiceTracingConnection(
 StatusOr<google::cloud::video::stitcher::v1::CdnKey>
 VideoStitcherServiceTracingConnection::CreateCdnKey(
     google::cloud::video::stitcher::v1::CreateCdnKeyRequest const& request) {
-  return child_->CreateCdnKey(request);
+  auto span =
+      internal::MakeSpan("video::VideoStitcherServiceConnection::CreateCdnKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateCdnKey(request));
 }
 
 StreamRange<google::cloud::video::stitcher::v1::CdnKey>
@@ -46,31 +49,46 @@ VideoStitcherServiceTracingConnection::ListCdnKeys(
 StatusOr<google::cloud::video::stitcher::v1::CdnKey>
 VideoStitcherServiceTracingConnection::GetCdnKey(
     google::cloud::video::stitcher::v1::GetCdnKeyRequest const& request) {
-  return child_->GetCdnKey(request);
+  auto span =
+      internal::MakeSpan("video::VideoStitcherServiceConnection::GetCdnKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCdnKey(request));
 }
 
 Status VideoStitcherServiceTracingConnection::DeleteCdnKey(
     google::cloud::video::stitcher::v1::DeleteCdnKeyRequest const& request) {
-  return child_->DeleteCdnKey(request);
+  auto span =
+      internal::MakeSpan("video::VideoStitcherServiceConnection::DeleteCdnKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteCdnKey(request));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::CdnKey>
 VideoStitcherServiceTracingConnection::UpdateCdnKey(
     google::cloud::video::stitcher::v1::UpdateCdnKeyRequest const& request) {
-  return child_->UpdateCdnKey(request);
+  auto span =
+      internal::MakeSpan("video::VideoStitcherServiceConnection::UpdateCdnKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateCdnKey(request));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
 VideoStitcherServiceTracingConnection::CreateVodSession(
     google::cloud::video::stitcher::v1::CreateVodSessionRequest const&
         request) {
-  return child_->CreateVodSession(request);
+  auto span = internal::MakeSpan(
+      "video::VideoStitcherServiceConnection::CreateVodSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateVodSession(request));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::VodSession>
 VideoStitcherServiceTracingConnection::GetVodSession(
     google::cloud::video::stitcher::v1::GetVodSessionRequest const& request) {
-  return child_->GetVodSession(request);
+  auto span = internal::MakeSpan(
+      "video::VideoStitcherServiceConnection::GetVodSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetVodSession(request));
 }
 
 StreamRange<google::cloud::video::stitcher::v1::VodStitchDetail>
@@ -83,7 +101,10 @@ StatusOr<google::cloud::video::stitcher::v1::VodStitchDetail>
 VideoStitcherServiceTracingConnection::GetVodStitchDetail(
     google::cloud::video::stitcher::v1::GetVodStitchDetailRequest const&
         request) {
-  return child_->GetVodStitchDetail(request);
+  auto span = internal::MakeSpan(
+      "video::VideoStitcherServiceConnection::GetVodStitchDetail");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetVodStitchDetail(request));
 }
 
 StreamRange<google::cloud::video::stitcher::v1::VodAdTagDetail>
@@ -96,7 +117,10 @@ StatusOr<google::cloud::video::stitcher::v1::VodAdTagDetail>
 VideoStitcherServiceTracingConnection::GetVodAdTagDetail(
     google::cloud::video::stitcher::v1::GetVodAdTagDetailRequest const&
         request) {
-  return child_->GetVodAdTagDetail(request);
+  auto span = internal::MakeSpan(
+      "video::VideoStitcherServiceConnection::GetVodAdTagDetail");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetVodAdTagDetail(request));
 }
 
 StreamRange<google::cloud::video::stitcher::v1::LiveAdTagDetail>
@@ -109,13 +133,19 @@ StatusOr<google::cloud::video::stitcher::v1::LiveAdTagDetail>
 VideoStitcherServiceTracingConnection::GetLiveAdTagDetail(
     google::cloud::video::stitcher::v1::GetLiveAdTagDetailRequest const&
         request) {
-  return child_->GetLiveAdTagDetail(request);
+  auto span = internal::MakeSpan(
+      "video::VideoStitcherServiceConnection::GetLiveAdTagDetail");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLiveAdTagDetail(request));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::Slate>
 VideoStitcherServiceTracingConnection::CreateSlate(
     google::cloud::video::stitcher::v1::CreateSlateRequest const& request) {
-  return child_->CreateSlate(request);
+  auto span =
+      internal::MakeSpan("video::VideoStitcherServiceConnection::CreateSlate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateSlate(request));
 }
 
 StreamRange<google::cloud::video::stitcher::v1::Slate>
@@ -127,31 +157,46 @@ VideoStitcherServiceTracingConnection::ListSlates(
 StatusOr<google::cloud::video::stitcher::v1::Slate>
 VideoStitcherServiceTracingConnection::GetSlate(
     google::cloud::video::stitcher::v1::GetSlateRequest const& request) {
-  return child_->GetSlate(request);
+  auto span =
+      internal::MakeSpan("video::VideoStitcherServiceConnection::GetSlate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSlate(request));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::Slate>
 VideoStitcherServiceTracingConnection::UpdateSlate(
     google::cloud::video::stitcher::v1::UpdateSlateRequest const& request) {
-  return child_->UpdateSlate(request);
+  auto span =
+      internal::MakeSpan("video::VideoStitcherServiceConnection::UpdateSlate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateSlate(request));
 }
 
 Status VideoStitcherServiceTracingConnection::DeleteSlate(
     google::cloud::video::stitcher::v1::DeleteSlateRequest const& request) {
-  return child_->DeleteSlate(request);
+  auto span =
+      internal::MakeSpan("video::VideoStitcherServiceConnection::DeleteSlate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteSlate(request));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
 VideoStitcherServiceTracingConnection::CreateLiveSession(
     google::cloud::video::stitcher::v1::CreateLiveSessionRequest const&
         request) {
-  return child_->CreateLiveSession(request);
+  auto span = internal::MakeSpan(
+      "video::VideoStitcherServiceConnection::CreateLiveSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateLiveSession(request));
 }
 
 StatusOr<google::cloud::video::stitcher::v1::LiveSession>
 VideoStitcherServiceTracingConnection::GetLiveSession(
     google::cloud::video::stitcher::v1::GetLiveSessionRequest const& request) {
-  return child_->GetLiveSession(request);
+  auto span = internal::MakeSpan(
+      "video::VideoStitcherServiceConnection::GetLiveSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLiveSession(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

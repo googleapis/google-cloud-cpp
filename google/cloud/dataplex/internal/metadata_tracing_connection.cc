@@ -34,24 +34,36 @@ MetadataServiceTracingConnection::MetadataServiceTracingConnection(
 StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceTracingConnection::CreateEntity(
     google::cloud::dataplex::v1::CreateEntityRequest const& request) {
-  return child_->CreateEntity(request);
+  auto span =
+      internal::MakeSpan("dataplex::MetadataServiceConnection::CreateEntity");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateEntity(request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceTracingConnection::UpdateEntity(
     google::cloud::dataplex::v1::UpdateEntityRequest const& request) {
-  return child_->UpdateEntity(request);
+  auto span =
+      internal::MakeSpan("dataplex::MetadataServiceConnection::UpdateEntity");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateEntity(request));
 }
 
 Status MetadataServiceTracingConnection::DeleteEntity(
     google::cloud::dataplex::v1::DeleteEntityRequest const& request) {
-  return child_->DeleteEntity(request);
+  auto span =
+      internal::MakeSpan("dataplex::MetadataServiceConnection::DeleteEntity");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteEntity(request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Entity>
 MetadataServiceTracingConnection::GetEntity(
     google::cloud::dataplex::v1::GetEntityRequest const& request) {
-  return child_->GetEntity(request);
+  auto span =
+      internal::MakeSpan("dataplex::MetadataServiceConnection::GetEntity");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEntity(request));
 }
 
 StreamRange<google::cloud::dataplex::v1::Entity>
@@ -63,18 +75,27 @@ MetadataServiceTracingConnection::ListEntities(
 StatusOr<google::cloud::dataplex::v1::Partition>
 MetadataServiceTracingConnection::CreatePartition(
     google::cloud::dataplex::v1::CreatePartitionRequest const& request) {
-  return child_->CreatePartition(request);
+  auto span = internal::MakeSpan(
+      "dataplex::MetadataServiceConnection::CreatePartition");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreatePartition(request));
 }
 
 Status MetadataServiceTracingConnection::DeletePartition(
     google::cloud::dataplex::v1::DeletePartitionRequest const& request) {
-  return child_->DeletePartition(request);
+  auto span = internal::MakeSpan(
+      "dataplex::MetadataServiceConnection::DeletePartition");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeletePartition(request));
 }
 
 StatusOr<google::cloud::dataplex::v1::Partition>
 MetadataServiceTracingConnection::GetPartition(
     google::cloud::dataplex::v1::GetPartitionRequest const& request) {
-  return child_->GetPartition(request);
+  auto span =
+      internal::MakeSpan("dataplex::MetadataServiceConnection::GetPartition");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPartition(request));
 }
 
 StreamRange<google::cloud::dataplex::v1::Partition>
