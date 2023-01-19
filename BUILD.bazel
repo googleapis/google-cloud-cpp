@@ -78,13 +78,6 @@ GA_LIBRARIES = GOOGLE_CLOUD_CPP_GA_LIBRARIES
 ) for library in GA_LIBRARIES + TRANSITION_LIBRARIES]
 
 cc_library(
-    name = "bigquery",
-    deps = [
-        "//google/cloud/bigquery:google_cloud_cpp_bigquery",
-    ],
-)
-
-cc_library(
     name = "bigquery-mocks",
     testonly = True,
     deprecation = "please use //:bigquery_mocks instead.",
@@ -95,79 +88,12 @@ cc_library(
 )
 
 cc_library(
-    name = "bigquery_mocks",
-    testonly = True,
-    deps = [
-        "//google/cloud/bigquery:google_cloud_cpp_bigquery_mocks",
-    ],
-)
-
-cc_library(
-    name = "bigtable",
-    deps = [
-        "//google/cloud/bigtable:google_cloud_cpp_bigtable",
-    ],
-)
-
-cc_library(
-    name = "iam",
-    deps = [
-        "//google/cloud/iam:google_cloud_cpp_iam",
-    ],
-)
-
-cc_library(
     name = "iam-mocks",
     testonly = True,
     deprecation = "please use //:iam_mocks instead.",
     tags = ["manual"],
     deps = [
         "//google/cloud/iam:google_cloud_cpp_iam_mocks",
-    ],
-)
-
-cc_library(
-    name = "iam_mocks",
-    testonly = True,
-    deps = [
-        "//google/cloud/iam:google_cloud_cpp_iam_mocks",
-    ],
-)
-
-cc_library(
-    name = "pubsub",
-    deps = [
-        "//google/cloud/pubsub:google_cloud_cpp_pubsub",
-    ],
-)
-
-cc_library(
-    name = "pubsub_mocks",
-    testonly = True,
-    deps = [
-        "//google/cloud/pubsub:google_cloud_cpp_pubsub_mocks",
-    ],
-)
-
-cc_library(
-    name = "spanner",
-    deps = [
-        "//google/cloud/spanner:google_cloud_cpp_spanner",
-    ],
-)
-
-cc_library(
-    name = "spanner_mocks",
-    testonly = True,
-    deps = [
-        "//google/cloud/spanner:google_cloud_cpp_spanner_mocks",
-    ],
-)
-
-cc_library(
-    name = "storage",
-    deps = [
-        "//google/cloud/storage:google_cloud_cpp_storage",
     ],
 )
 
