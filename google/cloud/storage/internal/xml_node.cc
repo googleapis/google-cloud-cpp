@@ -17,6 +17,7 @@
 #include "google/cloud/storage/internal/xml_parser_options.h"
 #include "google/cloud/internal/absl_str_cat_quiet.h"
 #include "google/cloud/internal/make_status.h"
+#include <iterator>
 #include <regex>
 #include <stack>
 
@@ -41,14 +42,13 @@ StatusOr<std::shared_ptr<XmlNode>> XmlNode::Parse(absl::string_view content,
 
   static auto* unnecessary_re = new std::regex{
       absl::StrCat("(",
-                   R"(^<\?xml[^>]*\?>)",  // XML declaration
-                   "|",
                    R"(<!DOCTYPE[^>[]*(\[[^\]]*\])?>)",  // DTD(DOCTYPE)
                    "|",
-                   R"(<!\[CDATA\[[^>]*\]\]>)",  // CDATA
+                   R"(<!\[CDATA\[[\s\S]*?\]\]>)",  // CDATA
                    "|",
-                   R"(<!--[^>]*-->)",  // XML comments
-                   ")")};
+                   R"(<!--[\s\S]*?-->)",  // XML comments
+                   ")"),
+      std::regex::icase | std::regex::nosubs | std::regex::optimize};
 
   std::string trimmed;
   // Remove unnecessary bits
