@@ -173,6 +173,11 @@ google_cloud_cpp_add_pkgconfig(
     " google_cloud_cpp_iam_protos"
     " google_cloud_cpp_longrunning_operations_protos"
     " google_cloud_cpp_rpc_status_protos"
+    " absl_function_ref"
+    " absl_strings"
+    " absl_time"
+    " absl_time_zone"
+    " absl_variant"
     " openssl")
 
 # Create and install the CMake configuration files.

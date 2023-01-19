@@ -234,7 +234,11 @@ google_cloud_cpp_add_pkgconfig(
     "Common Components used by the Google Cloud C++ Client Libraries."
     "absl_memory"
     " absl_optional"
+    " absl_span"
+    " absl_strings"
     " absl_time"
+    " absl_time_zone"
+    " absl_variant"
     " openssl")
 
 # Create and install the CMake configuration files.
