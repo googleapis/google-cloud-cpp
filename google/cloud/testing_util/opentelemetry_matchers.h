@@ -42,6 +42,12 @@ MATCHER_P(SpanAttributesImpl, matcher,
                                        result_listener);
 }
 
+MATCHER_P(EventAttributesImpl, matcher,
+          ::testing::DescribeMatcher<SpanAttributeMap>(matcher)) {
+  return ::testing::ExplainMatchResult(matcher, arg.GetAttributes(),
+                                       result_listener);
+}
+
 }  // namespace testing_util_internal
 namespace testing_util {
 
@@ -113,6 +119,31 @@ template <typename T>
     std::pair<std::string, opentelemetry::sdk::common::OwnedAttributeValue>>
 SpanAttribute(std::string const& key, ::testing::Matcher<T const&> matcher) {
   return ::testing::Pair(key, ::testing::VariantWith<T>(matcher));
+}
+
+MATCHER_P(EventNamed, name, "has name: " + std::string{name}) {
+  auto const& actual = arg.GetName();
+  *result_listener << "has name: " << actual;
+  return actual == name;
+}
+
+template <typename... Args>
+::testing::Matcher<opentelemetry::sdk::trace::SpanDataEvent>
+SpanEventAttributesAre(Args const&... matchers) {
+  return testing_util_internal::EventAttributesImpl(
+      ::testing::UnorderedElementsAre(matchers...));
+}
+
+MATCHER_P(SpanEventsAreImpl, matcher,
+          ::testing::DescribeMatcher<
+              std::vector<opentelemetry::sdk::trace::SpanDataEvent>>(matcher)) {
+  return ::testing::ExplainMatchResult(matcher, arg->GetEvents(),
+                                       result_listener);
+}
+
+template <typename... Args>
+::testing::Matcher<SpanDataPtr> SpanEventsAre(Args const&... matchers) {
+  return SpanEventsAreImpl(::testing::ElementsAre(matchers...));
 }
 
 /**

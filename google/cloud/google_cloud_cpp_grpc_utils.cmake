@@ -90,6 +90,7 @@ add_library(
     internal/streaming_read_rpc.cc
     internal/streaming_read_rpc.h
     internal/streaming_read_rpc_logging.h
+    internal/streaming_read_rpc_tracing.h
     internal/streaming_write_rpc.h
     internal/streaming_write_rpc_impl.cc
     internal/streaming_write_rpc_impl.h
@@ -262,6 +263,7 @@ if (BUILD_TESTING)
         internal/routing_matcher_test.cc
         internal/streaming_read_rpc_logging_test.cc
         internal/streaming_read_rpc_test.cc
+        internal/streaming_read_rpc_tracing_test.cc
         internal/streaming_write_rpc_logging_test.cc
         internal/streaming_write_rpc_test.cc
         internal/time_utils_test.cc
