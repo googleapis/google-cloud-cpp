@@ -34,7 +34,10 @@ QuotaControllerTracingConnection::QuotaControllerTracingConnection(
 StatusOr<google::api::servicecontrol::v1::AllocateQuotaResponse>
 QuotaControllerTracingConnection::AllocateQuota(
     google::api::servicecontrol::v1::AllocateQuotaRequest const& request) {
-  return child_->AllocateQuota(request);
+  auto span = internal::MakeSpan(
+      "servicecontrol::QuotaControllerConnection::AllocateQuota");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AllocateQuota(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

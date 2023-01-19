@@ -34,19 +34,28 @@ AdminServiceTracingConnection::AdminServiceTracingConnection(
 StatusOr<google::cloud::pubsublite::v1::Topic>
 AdminServiceTracingConnection::CreateTopic(
     google::cloud::pubsublite::v1::CreateTopicRequest const& request) {
-  return child_->CreateTopic(request);
+  auto span =
+      internal::MakeSpan("pubsublite::AdminServiceConnection::CreateTopic");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTopic(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Topic>
 AdminServiceTracingConnection::GetTopic(
     google::cloud::pubsublite::v1::GetTopicRequest const& request) {
-  return child_->GetTopic(request);
+  auto span =
+      internal::MakeSpan("pubsublite::AdminServiceConnection::GetTopic");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTopic(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::TopicPartitions>
 AdminServiceTracingConnection::GetTopicPartitions(
     google::cloud::pubsublite::v1::GetTopicPartitionsRequest const& request) {
-  return child_->GetTopicPartitions(request);
+  auto span = internal::MakeSpan(
+      "pubsublite::AdminServiceConnection::GetTopicPartitions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTopicPartitions(request));
 }
 
 StreamRange<google::cloud::pubsublite::v1::Topic>
@@ -58,12 +67,18 @@ AdminServiceTracingConnection::ListTopics(
 StatusOr<google::cloud::pubsublite::v1::Topic>
 AdminServiceTracingConnection::UpdateTopic(
     google::cloud::pubsublite::v1::UpdateTopicRequest const& request) {
-  return child_->UpdateTopic(request);
+  auto span =
+      internal::MakeSpan("pubsublite::AdminServiceConnection::UpdateTopic");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateTopic(request));
 }
 
 Status AdminServiceTracingConnection::DeleteTopic(
     google::cloud::pubsublite::v1::DeleteTopicRequest const& request) {
-  return child_->DeleteTopic(request);
+  auto span =
+      internal::MakeSpan("pubsublite::AdminServiceConnection::DeleteTopic");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTopic(request));
 }
 
 StreamRange<std::string> AdminServiceTracingConnection::ListTopicSubscriptions(
@@ -74,13 +89,19 @@ StreamRange<std::string> AdminServiceTracingConnection::ListTopicSubscriptions(
 StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceTracingConnection::CreateSubscription(
     google::cloud::pubsublite::v1::CreateSubscriptionRequest const& request) {
-  return child_->CreateSubscription(request);
+  auto span = internal::MakeSpan(
+      "pubsublite::AdminServiceConnection::CreateSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateSubscription(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceTracingConnection::GetSubscription(
     google::cloud::pubsublite::v1::GetSubscriptionRequest const& request) {
-  return child_->GetSubscription(request);
+  auto span =
+      internal::MakeSpan("pubsublite::AdminServiceConnection::GetSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSubscription(request));
 }
 
 StreamRange<google::cloud::pubsublite::v1::Subscription>
@@ -92,12 +113,18 @@ AdminServiceTracingConnection::ListSubscriptions(
 StatusOr<google::cloud::pubsublite::v1::Subscription>
 AdminServiceTracingConnection::UpdateSubscription(
     google::cloud::pubsublite::v1::UpdateSubscriptionRequest const& request) {
-  return child_->UpdateSubscription(request);
+  auto span = internal::MakeSpan(
+      "pubsublite::AdminServiceConnection::UpdateSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateSubscription(request));
 }
 
 Status AdminServiceTracingConnection::DeleteSubscription(
     google::cloud::pubsublite::v1::DeleteSubscriptionRequest const& request) {
-  return child_->DeleteSubscription(request);
+  auto span = internal::MakeSpan(
+      "pubsublite::AdminServiceConnection::DeleteSubscription");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteSubscription(request));
 }
 
 future<StatusOr<google::cloud::pubsublite::v1::SeekSubscriptionResponse>>
@@ -109,13 +136,19 @@ AdminServiceTracingConnection::SeekSubscription(
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceTracingConnection::CreateReservation(
     google::cloud::pubsublite::v1::CreateReservationRequest const& request) {
-  return child_->CreateReservation(request);
+  auto span = internal::MakeSpan(
+      "pubsublite::AdminServiceConnection::CreateReservation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateReservation(request));
 }
 
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceTracingConnection::GetReservation(
     google::cloud::pubsublite::v1::GetReservationRequest const& request) {
-  return child_->GetReservation(request);
+  auto span =
+      internal::MakeSpan("pubsublite::AdminServiceConnection::GetReservation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetReservation(request));
 }
 
 StreamRange<google::cloud::pubsublite::v1::Reservation>
@@ -127,12 +160,18 @@ AdminServiceTracingConnection::ListReservations(
 StatusOr<google::cloud::pubsublite::v1::Reservation>
 AdminServiceTracingConnection::UpdateReservation(
     google::cloud::pubsublite::v1::UpdateReservationRequest const& request) {
-  return child_->UpdateReservation(request);
+  auto span = internal::MakeSpan(
+      "pubsublite::AdminServiceConnection::UpdateReservation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateReservation(request));
 }
 
 Status AdminServiceTracingConnection::DeleteReservation(
     google::cloud::pubsublite::v1::DeleteReservationRequest const& request) {
-  return child_->DeleteReservation(request);
+  auto span = internal::MakeSpan(
+      "pubsublite::AdminServiceConnection::DeleteReservation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteReservation(request));
 }
 
 StreamRange<std::string> AdminServiceTracingConnection::ListReservationTopics(

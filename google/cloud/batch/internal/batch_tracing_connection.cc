@@ -34,12 +34,16 @@ BatchServiceTracingConnection::BatchServiceTracingConnection(
 StatusOr<google::cloud::batch::v1::Job>
 BatchServiceTracingConnection::CreateJob(
     google::cloud::batch::v1::CreateJobRequest const& request) {
-  return child_->CreateJob(request);
+  auto span = internal::MakeSpan("batch::BatchServiceConnection::CreateJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateJob(request));
 }
 
 StatusOr<google::cloud::batch::v1::Job> BatchServiceTracingConnection::GetJob(
     google::cloud::batch::v1::GetJobRequest const& request) {
-  return child_->GetJob(request);
+  auto span = internal::MakeSpan("batch::BatchServiceConnection::GetJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetJob(request));
 }
 
 future<StatusOr<google::cloud::batch::v1::OperationMetadata>>
@@ -56,7 +60,9 @@ BatchServiceTracingConnection::ListJobs(
 
 StatusOr<google::cloud::batch::v1::Task> BatchServiceTracingConnection::GetTask(
     google::cloud::batch::v1::GetTaskRequest const& request) {
-  return child_->GetTask(request);
+  auto span = internal::MakeSpan("batch::BatchServiceConnection::GetTask");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTask(request));
 }
 
 StreamRange<google::cloud::batch::v1::Task>

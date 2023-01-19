@@ -34,13 +34,19 @@ ProductServiceTracingConnection::ProductServiceTracingConnection(
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceTracingConnection::CreateProduct(
     google::cloud::retail::v2::CreateProductRequest const& request) {
-  return child_->CreateProduct(request);
+  auto span =
+      internal::MakeSpan("retail::ProductServiceConnection::CreateProduct");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateProduct(request));
 }
 
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceTracingConnection::GetProduct(
     google::cloud::retail::v2::GetProductRequest const& request) {
-  return child_->GetProduct(request);
+  auto span =
+      internal::MakeSpan("retail::ProductServiceConnection::GetProduct");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetProduct(request));
 }
 
 StreamRange<google::cloud::retail::v2::Product>
@@ -52,12 +58,18 @@ ProductServiceTracingConnection::ListProducts(
 StatusOr<google::cloud::retail::v2::Product>
 ProductServiceTracingConnection::UpdateProduct(
     google::cloud::retail::v2::UpdateProductRequest const& request) {
-  return child_->UpdateProduct(request);
+  auto span =
+      internal::MakeSpan("retail::ProductServiceConnection::UpdateProduct");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateProduct(request));
 }
 
 Status ProductServiceTracingConnection::DeleteProduct(
     google::cloud::retail::v2::DeleteProductRequest const& request) {
-  return child_->DeleteProduct(request);
+  auto span =
+      internal::MakeSpan("retail::ProductServiceConnection::DeleteProduct");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteProduct(request));
 }
 
 future<StatusOr<google::cloud::retail::v2::ImportProductsResponse>>

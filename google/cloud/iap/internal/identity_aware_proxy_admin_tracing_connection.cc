@@ -35,31 +35,46 @@ IdentityAwareProxyAdminServiceTracingConnection::
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyAdminServiceConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 IdentityAwareProxyAdminServiceTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyAdminServiceConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 IdentityAwareProxyAdminServiceTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyAdminServiceConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceTracingConnection::GetIapSettings(
     google::cloud::iap::v1::GetIapSettingsRequest const& request) {
-  return child_->GetIapSettings(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyAdminServiceConnection::GetIapSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIapSettings(request));
 }
 
 StatusOr<google::cloud::iap::v1::IapSettings>
 IdentityAwareProxyAdminServiceTracingConnection::UpdateIapSettings(
     google::cloud::iap::v1::UpdateIapSettingsRequest const& request) {
-  return child_->UpdateIapSettings(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyAdminServiceConnection::UpdateIapSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateIapSettings(request));
 }
 
 StreamRange<google::cloud::iap::v1::TunnelDestGroup>
@@ -71,24 +86,36 @@ IdentityAwareProxyAdminServiceTracingConnection::ListTunnelDestGroups(
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceTracingConnection::CreateTunnelDestGroup(
     google::cloud::iap::v1::CreateTunnelDestGroupRequest const& request) {
-  return child_->CreateTunnelDestGroup(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyAdminServiceConnection::CreateTunnelDestGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTunnelDestGroup(request));
 }
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceTracingConnection::GetTunnelDestGroup(
     google::cloud::iap::v1::GetTunnelDestGroupRequest const& request) {
-  return child_->GetTunnelDestGroup(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyAdminServiceConnection::GetTunnelDestGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTunnelDestGroup(request));
 }
 
 Status IdentityAwareProxyAdminServiceTracingConnection::DeleteTunnelDestGroup(
     google::cloud::iap::v1::DeleteTunnelDestGroupRequest const& request) {
-  return child_->DeleteTunnelDestGroup(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyAdminServiceConnection::DeleteTunnelDestGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTunnelDestGroup(request));
 }
 
 StatusOr<google::cloud::iap::v1::TunnelDestGroup>
 IdentityAwareProxyAdminServiceTracingConnection::UpdateTunnelDestGroup(
     google::cloud::iap::v1::UpdateTunnelDestGroupRequest const& request) {
-  return child_->UpdateTunnelDestGroup(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyAdminServiceConnection::UpdateTunnelDestGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateTunnelDestGroup(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -34,13 +34,19 @@ ImageAnnotatorTracingConnection::ImageAnnotatorTracingConnection(
 StatusOr<google::cloud::vision::v1::BatchAnnotateImagesResponse>
 ImageAnnotatorTracingConnection::BatchAnnotateImages(
     google::cloud::vision::v1::BatchAnnotateImagesRequest const& request) {
-  return child_->BatchAnnotateImages(request);
+  auto span = internal::MakeSpan(
+      "vision::ImageAnnotatorConnection::BatchAnnotateImages");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->BatchAnnotateImages(request));
 }
 
 StatusOr<google::cloud::vision::v1::BatchAnnotateFilesResponse>
 ImageAnnotatorTracingConnection::BatchAnnotateFiles(
     google::cloud::vision::v1::BatchAnnotateFilesRequest const& request) {
-  return child_->BatchAnnotateFiles(request);
+  auto span = internal::MakeSpan(
+      "vision::ImageAnnotatorConnection::BatchAnnotateFiles");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->BatchAnnotateFiles(request));
 }
 
 future<StatusOr<google::cloud::vision::v1::AsyncBatchAnnotateImagesResponse>>

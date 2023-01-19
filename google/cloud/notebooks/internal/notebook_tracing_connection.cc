@@ -40,7 +40,10 @@ NotebookServiceTracingConnection::ListInstances(
 StatusOr<google::cloud::notebooks::v1::Instance>
 NotebookServiceTracingConnection::GetInstance(
     google::cloud::notebooks::v1::GetInstanceRequest const& request) {
-  return child_->GetInstance(request);
+  auto span =
+      internal::MakeSpan("notebooks::NotebookServiceConnection::GetInstance");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInstance(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -92,7 +95,10 @@ StatusOr<google::cloud::notebooks::v1::UpdateInstanceMetadataItemsResponse>
 NotebookServiceTracingConnection::UpdateInstanceMetadataItems(
     google::cloud::notebooks::v1::UpdateInstanceMetadataItemsRequest const&
         request) {
-  return child_->UpdateInstanceMetadataItems(request);
+  auto span = internal::MakeSpan(
+      "notebooks::NotebookServiceConnection::UpdateInstanceMetadataItems");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateInstanceMetadataItems(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
@@ -128,13 +134,19 @@ NotebookServiceTracingConnection::ReportInstanceInfo(
 StatusOr<google::cloud::notebooks::v1::IsInstanceUpgradeableResponse>
 NotebookServiceTracingConnection::IsInstanceUpgradeable(
     google::cloud::notebooks::v1::IsInstanceUpgradeableRequest const& request) {
-  return child_->IsInstanceUpgradeable(request);
+  auto span = internal::MakeSpan(
+      "notebooks::NotebookServiceConnection::IsInstanceUpgradeable");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->IsInstanceUpgradeable(request));
 }
 
 StatusOr<google::cloud::notebooks::v1::GetInstanceHealthResponse>
 NotebookServiceTracingConnection::GetInstanceHealth(
     google::cloud::notebooks::v1::GetInstanceHealthRequest const& request) {
-  return child_->GetInstanceHealth(request);
+  auto span = internal::MakeSpan(
+      "notebooks::NotebookServiceConnection::GetInstanceHealth");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInstanceHealth(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Instance>>
@@ -171,7 +183,10 @@ NotebookServiceTracingConnection::ListEnvironments(
 StatusOr<google::cloud::notebooks::v1::Environment>
 NotebookServiceTracingConnection::GetEnvironment(
     google::cloud::notebooks::v1::GetEnvironmentRequest const& request) {
-  return child_->GetEnvironment(request);
+  auto span = internal::MakeSpan(
+      "notebooks::NotebookServiceConnection::GetEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEnvironment(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Environment>>
@@ -195,7 +210,10 @@ NotebookServiceTracingConnection::ListSchedules(
 StatusOr<google::cloud::notebooks::v1::Schedule>
 NotebookServiceTracingConnection::GetSchedule(
     google::cloud::notebooks::v1::GetScheduleRequest const& request) {
-  return child_->GetSchedule(request);
+  auto span =
+      internal::MakeSpan("notebooks::NotebookServiceConnection::GetSchedule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSchedule(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>
@@ -225,7 +243,10 @@ NotebookServiceTracingConnection::ListExecutions(
 StatusOr<google::cloud::notebooks::v1::Execution>
 NotebookServiceTracingConnection::GetExecution(
     google::cloud::notebooks::v1::GetExecutionRequest const& request) {
-  return child_->GetExecution(request);
+  auto span =
+      internal::MakeSpan("notebooks::NotebookServiceConnection::GetExecution");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetExecution(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::OperationMetadata>>

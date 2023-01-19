@@ -40,60 +40,90 @@ CatalogServiceTracingConnection::ListCatalogs(
 StatusOr<google::cloud::retail::v2::Catalog>
 CatalogServiceTracingConnection::UpdateCatalog(
     google::cloud::retail::v2::UpdateCatalogRequest const& request) {
-  return child_->UpdateCatalog(request);
+  auto span =
+      internal::MakeSpan("retail::CatalogServiceConnection::UpdateCatalog");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateCatalog(request));
 }
 
 Status CatalogServiceTracingConnection::SetDefaultBranch(
     google::cloud::retail::v2::SetDefaultBranchRequest const& request) {
-  return child_->SetDefaultBranch(request);
+  auto span =
+      internal::MakeSpan("retail::CatalogServiceConnection::SetDefaultBranch");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetDefaultBranch(request));
 }
 
 StatusOr<google::cloud::retail::v2::GetDefaultBranchResponse>
 CatalogServiceTracingConnection::GetDefaultBranch(
     google::cloud::retail::v2::GetDefaultBranchRequest const& request) {
-  return child_->GetDefaultBranch(request);
+  auto span =
+      internal::MakeSpan("retail::CatalogServiceConnection::GetDefaultBranch");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDefaultBranch(request));
 }
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
 CatalogServiceTracingConnection::GetCompletionConfig(
     google::cloud::retail::v2::GetCompletionConfigRequest const& request) {
-  return child_->GetCompletionConfig(request);
+  auto span = internal::MakeSpan(
+      "retail::CatalogServiceConnection::GetCompletionConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCompletionConfig(request));
 }
 
 StatusOr<google::cloud::retail::v2::CompletionConfig>
 CatalogServiceTracingConnection::UpdateCompletionConfig(
     google::cloud::retail::v2::UpdateCompletionConfigRequest const& request) {
-  return child_->UpdateCompletionConfig(request);
+  auto span = internal::MakeSpan(
+      "retail::CatalogServiceConnection::UpdateCompletionConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateCompletionConfig(request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceTracingConnection::GetAttributesConfig(
     google::cloud::retail::v2::GetAttributesConfigRequest const& request) {
-  return child_->GetAttributesConfig(request);
+  auto span = internal::MakeSpan(
+      "retail::CatalogServiceConnection::GetAttributesConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAttributesConfig(request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceTracingConnection::UpdateAttributesConfig(
     google::cloud::retail::v2::UpdateAttributesConfigRequest const& request) {
-  return child_->UpdateAttributesConfig(request);
+  auto span = internal::MakeSpan(
+      "retail::CatalogServiceConnection::UpdateAttributesConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateAttributesConfig(request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceTracingConnection::AddCatalogAttribute(
     google::cloud::retail::v2::AddCatalogAttributeRequest const& request) {
-  return child_->AddCatalogAttribute(request);
+  auto span = internal::MakeSpan(
+      "retail::CatalogServiceConnection::AddCatalogAttribute");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AddCatalogAttribute(request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceTracingConnection::RemoveCatalogAttribute(
     google::cloud::retail::v2::RemoveCatalogAttributeRequest const& request) {
-  return child_->RemoveCatalogAttribute(request);
+  auto span = internal::MakeSpan(
+      "retail::CatalogServiceConnection::RemoveCatalogAttribute");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RemoveCatalogAttribute(request));
 }
 
 StatusOr<google::cloud::retail::v2::AttributesConfig>
 CatalogServiceTracingConnection::ReplaceCatalogAttribute(
     google::cloud::retail::v2::ReplaceCatalogAttributeRequest const& request) {
-  return child_->ReplaceCatalogAttribute(request);
+  auto span = internal::MakeSpan(
+      "retail::CatalogServiceConnection::ReplaceCatalogAttribute");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ReplaceCatalogAttribute(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

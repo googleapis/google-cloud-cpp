@@ -46,7 +46,9 @@ SpeechTracingConnection::ListRecognizers(
 StatusOr<google::cloud::speech::v2::Recognizer>
 SpeechTracingConnection::GetRecognizer(
     google::cloud::speech::v2::GetRecognizerRequest const& request) {
-  return child_->GetRecognizer(request);
+  auto span = internal::MakeSpan("speech_v2::SpeechConnection::GetRecognizer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRecognizer(request));
 }
 
 future<StatusOr<google::cloud::speech::v2::Recognizer>>
@@ -70,7 +72,9 @@ SpeechTracingConnection::UndeleteRecognizer(
 StatusOr<google::cloud::speech::v2::RecognizeResponse>
 SpeechTracingConnection::Recognize(
     google::cloud::speech::v2::RecognizeRequest const& request) {
-  return child_->Recognize(request);
+  auto span = internal::MakeSpan("speech_v2::SpeechConnection::Recognize");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Recognize(request));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -88,13 +92,17 @@ SpeechTracingConnection::BatchRecognize(
 
 StatusOr<google::cloud::speech::v2::Config> SpeechTracingConnection::GetConfig(
     google::cloud::speech::v2::GetConfigRequest const& request) {
-  return child_->GetConfig(request);
+  auto span = internal::MakeSpan("speech_v2::SpeechConnection::GetConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConfig(request));
 }
 
 StatusOr<google::cloud::speech::v2::Config>
 SpeechTracingConnection::UpdateConfig(
     google::cloud::speech::v2::UpdateConfigRequest const& request) {
-  return child_->UpdateConfig(request);
+  auto span = internal::MakeSpan("speech_v2::SpeechConnection::UpdateConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateConfig(request));
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
@@ -112,7 +120,9 @@ SpeechTracingConnection::ListCustomClasses(
 StatusOr<google::cloud::speech::v2::CustomClass>
 SpeechTracingConnection::GetCustomClass(
     google::cloud::speech::v2::GetCustomClassRequest const& request) {
-  return child_->GetCustomClass(request);
+  auto span = internal::MakeSpan("speech_v2::SpeechConnection::GetCustomClass");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCustomClass(request));
 }
 
 future<StatusOr<google::cloud::speech::v2::CustomClass>>
@@ -148,7 +158,9 @@ SpeechTracingConnection::ListPhraseSets(
 StatusOr<google::cloud::speech::v2::PhraseSet>
 SpeechTracingConnection::GetPhraseSet(
     google::cloud::speech::v2::GetPhraseSetRequest const& request) {
-  return child_->GetPhraseSet(request);
+  auto span = internal::MakeSpan("speech_v2::SpeechConnection::GetPhraseSet");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPhraseSet(request));
 }
 
 future<StatusOr<google::cloud::speech::v2::PhraseSet>>

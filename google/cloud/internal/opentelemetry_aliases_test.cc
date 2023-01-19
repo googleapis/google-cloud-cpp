@@ -45,7 +45,7 @@ TEST(CurrentSpan, WithOpenTelemetry) {
 
 TEST(CurrentSpan, WithoutOpenTelemetry) {
   auto span = CurrentSpan();
-  auto scope = ScopedSpan(span);
+  auto scope = ScopedSpan{span};
   EXPECT_EQ(span, nullptr);
   EXPECT_EQ(scope, nullptr);
 }

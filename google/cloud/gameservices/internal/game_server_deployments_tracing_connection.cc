@@ -42,7 +42,11 @@ GameServerDeploymentsServiceTracingConnection::ListGameServerDeployments(
 StatusOr<google::cloud::gaming::v1::GameServerDeployment>
 GameServerDeploymentsServiceTracingConnection::GetGameServerDeployment(
     google::cloud::gaming::v1::GetGameServerDeploymentRequest const& request) {
-  return child_->GetGameServerDeployment(request);
+  auto span = internal::MakeSpan(
+      "gameservices::GameServerDeploymentsServiceConnection::"
+      "GetGameServerDeployment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGameServerDeployment(request));
 }
 
 future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
@@ -70,7 +74,12 @@ StatusOr<google::cloud::gaming::v1::GameServerDeploymentRollout>
 GameServerDeploymentsServiceTracingConnection::GetGameServerDeploymentRollout(
     google::cloud::gaming::v1::GetGameServerDeploymentRolloutRequest const&
         request) {
-  return child_->GetGameServerDeploymentRollout(request);
+  auto span = internal::MakeSpan(
+      "gameservices::GameServerDeploymentsServiceConnection::"
+      "GetGameServerDeploymentRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetGameServerDeploymentRollout(request));
 }
 
 future<StatusOr<google::cloud::gaming::v1::GameServerDeployment>>
@@ -86,13 +95,22 @@ GameServerDeploymentsServiceTracingConnection::
     PreviewGameServerDeploymentRollout(
         google::cloud::gaming::v1::
             PreviewGameServerDeploymentRolloutRequest const& request) {
-  return child_->PreviewGameServerDeploymentRollout(request);
+  auto span = internal::MakeSpan(
+      "gameservices::GameServerDeploymentsServiceConnection::"
+      "PreviewGameServerDeploymentRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->PreviewGameServerDeploymentRollout(request));
 }
 
 StatusOr<google::cloud::gaming::v1::FetchDeploymentStateResponse>
 GameServerDeploymentsServiceTracingConnection::FetchDeploymentState(
     google::cloud::gaming::v1::FetchDeploymentStateRequest const& request) {
-  return child_->FetchDeploymentState(request);
+  auto span = internal::MakeSpan(
+      "gameservices::GameServerDeploymentsServiceConnection::"
+      "FetchDeploymentState");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FetchDeploymentState(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

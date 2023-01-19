@@ -41,7 +41,10 @@ StatusOr<google::devtools::artifactregistry::v1::DockerImage>
 ArtifactRegistryTracingConnection::GetDockerImage(
     google::devtools::artifactregistry::v1::GetDockerImageRequest const&
         request) {
-  return child_->GetDockerImage(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::GetDockerImage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDockerImage(request));
 }
 
 future<StatusOr<
@@ -70,7 +73,10 @@ StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryTracingConnection::GetRepository(
     google::devtools::artifactregistry::v1::GetRepositoryRequest const&
         request) {
-  return child_->GetRepository(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::GetRepository");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRepository(request));
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::Repository>>
@@ -84,7 +90,10 @@ StatusOr<google::devtools::artifactregistry::v1::Repository>
 ArtifactRegistryTracingConnection::UpdateRepository(
     google::devtools::artifactregistry::v1::UpdateRepositoryRequest const&
         request) {
-  return child_->UpdateRepository(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::UpdateRepository");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateRepository(request));
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -103,7 +112,10 @@ ArtifactRegistryTracingConnection::ListPackages(
 StatusOr<google::devtools::artifactregistry::v1::Package>
 ArtifactRegistryTracingConnection::GetPackage(
     google::devtools::artifactregistry::v1::GetPackageRequest const& request) {
-  return child_->GetPackage(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::GetPackage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPackage(request));
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -122,7 +134,10 @@ ArtifactRegistryTracingConnection::ListVersions(
 StatusOr<google::devtools::artifactregistry::v1::Version>
 ArtifactRegistryTracingConnection::GetVersion(
     google::devtools::artifactregistry::v1::GetVersionRequest const& request) {
-  return child_->GetVersion(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::GetVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetVersion(request));
 }
 
 future<StatusOr<google::devtools::artifactregistry::v1::OperationMetadata>>
@@ -141,7 +156,10 @@ ArtifactRegistryTracingConnection::ListFiles(
 StatusOr<google::devtools::artifactregistry::v1::File>
 ArtifactRegistryTracingConnection::GetFile(
     google::devtools::artifactregistry::v1::GetFileRequest const& request) {
-  return child_->GetFile(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::GetFile");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFile(request));
 }
 
 StreamRange<google::devtools::artifactregistry::v1::Tag>
@@ -153,56 +171,83 @@ ArtifactRegistryTracingConnection::ListTags(
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryTracingConnection::GetTag(
     google::devtools::artifactregistry::v1::GetTagRequest const& request) {
-  return child_->GetTag(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::GetTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTag(request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryTracingConnection::CreateTag(
     google::devtools::artifactregistry::v1::CreateTagRequest const& request) {
-  return child_->CreateTag(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::CreateTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTag(request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::Tag>
 ArtifactRegistryTracingConnection::UpdateTag(
     google::devtools::artifactregistry::v1::UpdateTagRequest const& request) {
-  return child_->UpdateTag(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::UpdateTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateTag(request));
 }
 
 Status ArtifactRegistryTracingConnection::DeleteTag(
     google::devtools::artifactregistry::v1::DeleteTagRequest const& request) {
-  return child_->DeleteTag(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::DeleteTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTag(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 ArtifactRegistryTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 ArtifactRegistryTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ArtifactRegistryTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
 ArtifactRegistryTracingConnection::GetProjectSettings(
     google::devtools::artifactregistry::v1::GetProjectSettingsRequest const&
         request) {
-  return child_->GetProjectSettings(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::GetProjectSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetProjectSettings(request));
 }
 
 StatusOr<google::devtools::artifactregistry::v1::ProjectSettings>
 ArtifactRegistryTracingConnection::UpdateProjectSettings(
     google::devtools::artifactregistry::v1::UpdateProjectSettingsRequest const&
         request) {
-  return child_->UpdateProjectSettings(request);
+  auto span = internal::MakeSpan(
+      "artifactregistry::ArtifactRegistryConnection::UpdateProjectSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateProjectSettings(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

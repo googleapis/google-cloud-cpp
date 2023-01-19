@@ -40,7 +40,10 @@ EdgeContainerTracingConnection::ListClusters(
 StatusOr<google::cloud::edgecontainer::v1::Cluster>
 EdgeContainerTracingConnection::GetCluster(
     google::cloud::edgecontainer::v1::GetClusterRequest const& request) {
-  return child_->GetCluster(request);
+  auto span =
+      internal::MakeSpan("edgecontainer::EdgeContainerConnection::GetCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCluster(request));
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::Cluster>>
@@ -65,7 +68,10 @@ StatusOr<google::cloud::edgecontainer::v1::GenerateAccessTokenResponse>
 EdgeContainerTracingConnection::GenerateAccessToken(
     google::cloud::edgecontainer::v1::GenerateAccessTokenRequest const&
         request) {
-  return child_->GenerateAccessToken(request);
+  auto span = internal::MakeSpan(
+      "edgecontainer::EdgeContainerConnection::GenerateAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateAccessToken(request));
 }
 
 StreamRange<google::cloud::edgecontainer::v1::NodePool>
@@ -77,7 +83,10 @@ EdgeContainerTracingConnection::ListNodePools(
 StatusOr<google::cloud::edgecontainer::v1::NodePool>
 EdgeContainerTracingConnection::GetNodePool(
     google::cloud::edgecontainer::v1::GetNodePoolRequest const& request) {
-  return child_->GetNodePool(request);
+  auto span =
+      internal::MakeSpan("edgecontainer::EdgeContainerConnection::GetNodePool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetNodePool(request));
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::NodePool>>
@@ -107,7 +116,10 @@ EdgeContainerTracingConnection::ListMachines(
 StatusOr<google::cloud::edgecontainer::v1::Machine>
 EdgeContainerTracingConnection::GetMachine(
     google::cloud::edgecontainer::v1::GetMachineRequest const& request) {
-  return child_->GetMachine(request);
+  auto span =
+      internal::MakeSpan("edgecontainer::EdgeContainerConnection::GetMachine");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMachine(request));
 }
 
 StreamRange<google::cloud::edgecontainer::v1::VpnConnection>
@@ -119,7 +131,10 @@ EdgeContainerTracingConnection::ListVpnConnections(
 StatusOr<google::cloud::edgecontainer::v1::VpnConnection>
 EdgeContainerTracingConnection::GetVpnConnection(
     google::cloud::edgecontainer::v1::GetVpnConnectionRequest const& request) {
-  return child_->GetVpnConnection(request);
+  auto span = internal::MakeSpan(
+      "edgecontainer::EdgeContainerConnection::GetVpnConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetVpnConnection(request));
 }
 
 future<StatusOr<google::cloud::edgecontainer::v1::VpnConnection>>

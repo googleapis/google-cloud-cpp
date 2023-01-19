@@ -38,7 +38,9 @@ StreamRange<google::cloud::tpu::v1::Node> TpuTracingConnection::ListNodes(
 
 StatusOr<google::cloud::tpu::v1::Node> TpuTracingConnection::GetNode(
     google::cloud::tpu::v1::GetNodeRequest const& request) {
-  return child_->GetNode(request);
+  auto span = internal::MakeSpan("tpu::TpuConnection::GetNode");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetNode(request));
 }
 
 future<StatusOr<google::cloud::tpu::v1::Node>> TpuTracingConnection::CreateNode(
@@ -76,7 +78,9 @@ TpuTracingConnection::ListTensorFlowVersions(
 StatusOr<google::cloud::tpu::v1::TensorFlowVersion>
 TpuTracingConnection::GetTensorFlowVersion(
     google::cloud::tpu::v1::GetTensorFlowVersionRequest const& request) {
-  return child_->GetTensorFlowVersion(request);
+  auto span = internal::MakeSpan("tpu::TpuConnection::GetTensorFlowVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTensorFlowVersion(request));
 }
 
 StreamRange<google::cloud::tpu::v1::AcceleratorType>
@@ -88,7 +92,9 @@ TpuTracingConnection::ListAcceleratorTypes(
 StatusOr<google::cloud::tpu::v1::AcceleratorType>
 TpuTracingConnection::GetAcceleratorType(
     google::cloud::tpu::v1::GetAcceleratorTypeRequest const& request) {
-  return child_->GetAcceleratorType(request);
+  auto span = internal::MakeSpan("tpu::TpuConnection::GetAcceleratorType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAcceleratorType(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

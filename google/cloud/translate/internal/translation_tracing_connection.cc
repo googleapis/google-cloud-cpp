@@ -34,26 +34,38 @@ TranslationServiceTracingConnection::TranslationServiceTracingConnection(
 StatusOr<google::cloud::translation::v3::TranslateTextResponse>
 TranslationServiceTracingConnection::TranslateText(
     google::cloud::translation::v3::TranslateTextRequest const& request) {
-  return child_->TranslateText(request);
+  auto span = internal::MakeSpan(
+      "translate::TranslationServiceConnection::TranslateText");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TranslateText(request));
 }
 
 StatusOr<google::cloud::translation::v3::DetectLanguageResponse>
 TranslationServiceTracingConnection::DetectLanguage(
     google::cloud::translation::v3::DetectLanguageRequest const& request) {
-  return child_->DetectLanguage(request);
+  auto span = internal::MakeSpan(
+      "translate::TranslationServiceConnection::DetectLanguage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DetectLanguage(request));
 }
 
 StatusOr<google::cloud::translation::v3::SupportedLanguages>
 TranslationServiceTracingConnection::GetSupportedLanguages(
     google::cloud::translation::v3::GetSupportedLanguagesRequest const&
         request) {
-  return child_->GetSupportedLanguages(request);
+  auto span = internal::MakeSpan(
+      "translate::TranslationServiceConnection::GetSupportedLanguages");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSupportedLanguages(request));
 }
 
 StatusOr<google::cloud::translation::v3::TranslateDocumentResponse>
 TranslationServiceTracingConnection::TranslateDocument(
     google::cloud::translation::v3::TranslateDocumentRequest const& request) {
-  return child_->TranslateDocument(request);
+  auto span = internal::MakeSpan(
+      "translate::TranslationServiceConnection::TranslateDocument");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TranslateDocument(request));
 }
 
 future<StatusOr<google::cloud::translation::v3::BatchTranslateResponse>>
@@ -84,7 +96,10 @@ TranslationServiceTracingConnection::ListGlossaries(
 StatusOr<google::cloud::translation::v3::Glossary>
 TranslationServiceTracingConnection::GetGlossary(
     google::cloud::translation::v3::GetGlossaryRequest const& request) {
-  return child_->GetGlossary(request);
+  auto span = internal::MakeSpan(
+      "translate::TranslationServiceConnection::GetGlossary");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGlossary(request));
 }
 
 future<StatusOr<google::cloud::translation::v3::DeleteGlossaryResponse>>

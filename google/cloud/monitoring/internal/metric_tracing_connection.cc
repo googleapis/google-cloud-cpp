@@ -41,7 +41,11 @@ StatusOr<google::api::MonitoredResourceDescriptor>
 MetricServiceTracingConnection::GetMonitoredResourceDescriptor(
     google::monitoring::v3::GetMonitoredResourceDescriptorRequest const&
         request) {
-  return child_->GetMonitoredResourceDescriptor(request);
+  auto span = internal::MakeSpan(
+      "monitoring::MetricServiceConnection::GetMonitoredResourceDescriptor");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetMonitoredResourceDescriptor(request));
 }
 
 StreamRange<google::api::MetricDescriptor>
@@ -53,18 +57,27 @@ MetricServiceTracingConnection::ListMetricDescriptors(
 StatusOr<google::api::MetricDescriptor>
 MetricServiceTracingConnection::GetMetricDescriptor(
     google::monitoring::v3::GetMetricDescriptorRequest const& request) {
-  return child_->GetMetricDescriptor(request);
+  auto span = internal::MakeSpan(
+      "monitoring::MetricServiceConnection::GetMetricDescriptor");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMetricDescriptor(request));
 }
 
 StatusOr<google::api::MetricDescriptor>
 MetricServiceTracingConnection::CreateMetricDescriptor(
     google::monitoring::v3::CreateMetricDescriptorRequest const& request) {
-  return child_->CreateMetricDescriptor(request);
+  auto span = internal::MakeSpan(
+      "monitoring::MetricServiceConnection::CreateMetricDescriptor");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateMetricDescriptor(request));
 }
 
 Status MetricServiceTracingConnection::DeleteMetricDescriptor(
     google::monitoring::v3::DeleteMetricDescriptorRequest const& request) {
-  return child_->DeleteMetricDescriptor(request);
+  auto span = internal::MakeSpan(
+      "monitoring::MetricServiceConnection::DeleteMetricDescriptor");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteMetricDescriptor(request));
 }
 
 StreamRange<google::monitoring::v3::TimeSeries>
@@ -75,12 +88,18 @@ MetricServiceTracingConnection::ListTimeSeries(
 
 Status MetricServiceTracingConnection::CreateTimeSeries(
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  return child_->CreateTimeSeries(request);
+  auto span = internal::MakeSpan(
+      "monitoring::MetricServiceConnection::CreateTimeSeries");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTimeSeries(request));
 }
 
 Status MetricServiceTracingConnection::CreateServiceTimeSeries(
     google::monitoring::v3::CreateTimeSeriesRequest const& request) {
-  return child_->CreateServiceTimeSeries(request);
+  auto span = internal::MakeSpan(
+      "monitoring::MetricServiceConnection::CreateServiceTimeSeries");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateServiceTimeSeries(request));
 }
 
 future<Status> MetricServiceTracingConnection::AsyncCreateTimeSeries(

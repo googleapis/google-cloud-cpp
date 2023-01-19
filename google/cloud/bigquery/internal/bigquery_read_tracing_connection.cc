@@ -35,7 +35,10 @@ StatusOr<google::cloud::bigquery::storage::v1::ReadSession>
 BigQueryReadTracingConnection::CreateReadSession(
     google::cloud::bigquery::storage::v1::CreateReadSessionRequest const&
         request) {
-  return child_->CreateReadSession(request);
+  auto span =
+      internal::MakeSpan("bigquery::BigQueryReadConnection::CreateReadSession");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateReadSession(request));
 }
 
 StreamRange<google::cloud::bigquery::storage::v1::ReadRowsResponse>
@@ -47,7 +50,10 @@ StatusOr<google::cloud::bigquery::storage::v1::SplitReadStreamResponse>
 BigQueryReadTracingConnection::SplitReadStream(
     google::cloud::bigquery::storage::v1::SplitReadStreamRequest const&
         request) {
-  return child_->SplitReadStream(request);
+  auto span =
+      internal::MakeSpan("bigquery::BigQueryReadConnection::SplitReadStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SplitReadStream(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

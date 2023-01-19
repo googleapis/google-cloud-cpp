@@ -35,34 +35,49 @@ StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceTracingConnection::CreateDataPolicy(
     google::cloud::bigquery::datapolicies::v1::CreateDataPolicyRequest const&
         request) {
-  return child_->CreateDataPolicy(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataPolicyServiceConnection::CreateDataPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateDataPolicy(request));
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceTracingConnection::UpdateDataPolicy(
     google::cloud::bigquery::datapolicies::v1::UpdateDataPolicyRequest const&
         request) {
-  return child_->UpdateDataPolicy(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataPolicyServiceConnection::UpdateDataPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateDataPolicy(request));
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceTracingConnection::RenameDataPolicy(
     google::cloud::bigquery::datapolicies::v1::RenameDataPolicyRequest const&
         request) {
-  return child_->RenameDataPolicy(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataPolicyServiceConnection::RenameDataPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RenameDataPolicy(request));
 }
 
 Status DataPolicyServiceTracingConnection::DeleteDataPolicy(
     google::cloud::bigquery::datapolicies::v1::DeleteDataPolicyRequest const&
         request) {
-  return child_->DeleteDataPolicy(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataPolicyServiceConnection::DeleteDataPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteDataPolicy(request));
 }
 
 StatusOr<google::cloud::bigquery::datapolicies::v1::DataPolicy>
 DataPolicyServiceTracingConnection::GetDataPolicy(
     google::cloud::bigquery::datapolicies::v1::GetDataPolicyRequest const&
         request) {
-  return child_->GetDataPolicy(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataPolicyServiceConnection::GetDataPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDataPolicy(request));
 }
 
 StreamRange<google::cloud::bigquery::datapolicies::v1::DataPolicy>
@@ -75,19 +90,28 @@ DataPolicyServiceTracingConnection::ListDataPolicies(
 StatusOr<google::iam::v1::Policy>
 DataPolicyServiceTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span =
+      internal::MakeSpan("bigquery::DataPolicyServiceConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 DataPolicyServiceTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span =
+      internal::MakeSpan("bigquery::DataPolicyServiceConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataPolicyServiceTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataPolicyServiceConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -34,19 +34,27 @@ BudgetServiceTracingConnection::BudgetServiceTracingConnection(
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceTracingConnection::CreateBudget(
     google::cloud::billing::budgets::v1::CreateBudgetRequest const& request) {
-  return child_->CreateBudget(request);
+  auto span =
+      internal::MakeSpan("billing::BudgetServiceConnection::CreateBudget");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateBudget(request));
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceTracingConnection::UpdateBudget(
     google::cloud::billing::budgets::v1::UpdateBudgetRequest const& request) {
-  return child_->UpdateBudget(request);
+  auto span =
+      internal::MakeSpan("billing::BudgetServiceConnection::UpdateBudget");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateBudget(request));
 }
 
 StatusOr<google::cloud::billing::budgets::v1::Budget>
 BudgetServiceTracingConnection::GetBudget(
     google::cloud::billing::budgets::v1::GetBudgetRequest const& request) {
-  return child_->GetBudget(request);
+  auto span = internal::MakeSpan("billing::BudgetServiceConnection::GetBudget");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBudget(request));
 }
 
 StreamRange<google::cloud::billing::budgets::v1::Budget>
@@ -57,7 +65,10 @@ BudgetServiceTracingConnection::ListBudgets(
 
 Status BudgetServiceTracingConnection::DeleteBudget(
     google::cloud::billing::budgets::v1::DeleteBudgetRequest const& request) {
-  return child_->DeleteBudget(request);
+  auto span =
+      internal::MakeSpan("billing::BudgetServiceConnection::DeleteBudget");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteBudget(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

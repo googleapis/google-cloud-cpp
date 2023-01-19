@@ -34,19 +34,28 @@ ContainerAnalysisTracingConnection::ContainerAnalysisTracingConnection(
 StatusOr<google::iam::v1::Policy>
 ContainerAnalysisTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "containeranalysis::ContainerAnalysisConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 ContainerAnalysisTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "containeranalysis::ContainerAnalysisConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ContainerAnalysisTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "containeranalysis::ContainerAnalysisConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StatusOr<
@@ -54,7 +63,12 @@ StatusOr<
 ContainerAnalysisTracingConnection::GetVulnerabilityOccurrencesSummary(
     google::devtools::containeranalysis::v1::
         GetVulnerabilityOccurrencesSummaryRequest const& request) {
-  return child_->GetVulnerabilityOccurrencesSummary(request);
+  auto span = internal::MakeSpan(
+      "containeranalysis::ContainerAnalysisConnection::"
+      "GetVulnerabilityOccurrencesSummary");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetVulnerabilityOccurrencesSummary(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

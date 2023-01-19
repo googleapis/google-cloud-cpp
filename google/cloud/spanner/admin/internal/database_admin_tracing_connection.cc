@@ -47,7 +47,10 @@ DatabaseAdminTracingConnection::CreateDatabase(
 StatusOr<google::spanner::admin::database::v1::Database>
 DatabaseAdminTracingConnection::GetDatabase(
     google::spanner::admin::database::v1::GetDatabaseRequest const& request) {
-  return child_->GetDatabase(request);
+  auto span =
+      internal::MakeSpan("spanner_admin::DatabaseAdminConnection::GetDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDatabase(request));
 }
 
 future<
@@ -60,30 +63,45 @@ DatabaseAdminTracingConnection::UpdateDatabaseDdl(
 
 Status DatabaseAdminTracingConnection::DropDatabase(
     google::spanner::admin::database::v1::DropDatabaseRequest const& request) {
-  return child_->DropDatabase(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::DropDatabase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DropDatabase(request));
 }
 
 StatusOr<google::spanner::admin::database::v1::GetDatabaseDdlResponse>
 DatabaseAdminTracingConnection::GetDatabaseDdl(
     google::spanner::admin::database::v1::GetDatabaseDdlRequest const&
         request) {
-  return child_->GetDatabaseDdl(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::GetDatabaseDdl");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDatabaseDdl(request));
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy> DatabaseAdminTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DatabaseAdminTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 future<StatusOr<google::spanner::admin::database::v1::Backup>>
@@ -101,18 +119,27 @@ DatabaseAdminTracingConnection::CopyBackup(
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminTracingConnection::GetBackup(
     google::spanner::admin::database::v1::GetBackupRequest const& request) {
-  return child_->GetBackup(request);
+  auto span =
+      internal::MakeSpan("spanner_admin::DatabaseAdminConnection::GetBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBackup(request));
 }
 
 StatusOr<google::spanner::admin::database::v1::Backup>
 DatabaseAdminTracingConnection::UpdateBackup(
     google::spanner::admin::database::v1::UpdateBackupRequest const& request) {
-  return child_->UpdateBackup(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::UpdateBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateBackup(request));
 }
 
 Status DatabaseAdminTracingConnection::DeleteBackup(
     google::spanner::admin::database::v1::DeleteBackupRequest const& request) {
-  return child_->DeleteBackup(request);
+  auto span = internal::MakeSpan(
+      "spanner_admin::DatabaseAdminConnection::DeleteBackup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteBackup(request));
 }
 
 StreamRange<google::spanner::admin::database::v1::Backup>

@@ -34,7 +34,9 @@ CompletionTracingConnection::CompletionTracingConnection(
 StatusOr<google::cloud::talent::v4::CompleteQueryResponse>
 CompletionTracingConnection::CompleteQuery(
     google::cloud::talent::v4::CompleteQueryRequest const& request) {
-  return child_->CompleteQuery(request);
+  auto span = internal::MakeSpan("talent::CompletionConnection::CompleteQuery");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CompleteQuery(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

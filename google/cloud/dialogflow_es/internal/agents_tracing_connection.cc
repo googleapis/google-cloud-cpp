@@ -34,18 +34,25 @@ AgentsTracingConnection::AgentsTracingConnection(
 StatusOr<google::cloud::dialogflow::v2::Agent>
 AgentsTracingConnection::GetAgent(
     google::cloud::dialogflow::v2::GetAgentRequest const& request) {
-  return child_->GetAgent(request);
+  auto span = internal::MakeSpan("dialogflow_es::AgentsConnection::GetAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAgent(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Agent>
 AgentsTracingConnection::SetAgent(
     google::cloud::dialogflow::v2::SetAgentRequest const& request) {
-  return child_->SetAgent(request);
+  auto span = internal::MakeSpan("dialogflow_es::AgentsConnection::SetAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetAgent(request));
 }
 
 Status AgentsTracingConnection::DeleteAgent(
     google::cloud::dialogflow::v2::DeleteAgentRequest const& request) {
-  return child_->DeleteAgent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::AgentsConnection::DeleteAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAgent(request));
 }
 
 StreamRange<google::cloud::dialogflow::v2::Agent>
@@ -79,7 +86,10 @@ AgentsTracingConnection::RestoreAgent(
 StatusOr<google::cloud::dialogflow::v2::ValidationResult>
 AgentsTracingConnection::GetValidationResult(
     google::cloud::dialogflow::v2::GetValidationResultRequest const& request) {
-  return child_->GetValidationResult(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::AgentsConnection::GetValidationResult");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetValidationResult(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

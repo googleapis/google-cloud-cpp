@@ -41,7 +41,10 @@ ManagedNotebookServiceTracingConnection::ListRuntimes(
 StatusOr<google::cloud::notebooks::v1::Runtime>
 ManagedNotebookServiceTracingConnection::GetRuntime(
     google::cloud::notebooks::v1::GetRuntimeRequest const& request) {
-  return child_->GetRuntime(request);
+  auto span = internal::MakeSpan(
+      "notebooks::ManagedNotebookServiceConnection::GetRuntime");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRuntime(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>
@@ -102,7 +105,11 @@ StatusOr<google::cloud::notebooks::v1::RefreshRuntimeTokenInternalResponse>
 ManagedNotebookServiceTracingConnection::RefreshRuntimeTokenInternal(
     google::cloud::notebooks::v1::RefreshRuntimeTokenInternalRequest const&
         request) {
-  return child_->RefreshRuntimeTokenInternal(request);
+  auto span = internal::MakeSpan(
+      "notebooks::ManagedNotebookServiceConnection::"
+      "RefreshRuntimeTokenInternal");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RefreshRuntimeTokenInternal(request));
 }
 
 future<StatusOr<google::cloud::notebooks::v1::Runtime>>

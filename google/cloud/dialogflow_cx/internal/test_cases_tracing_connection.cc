@@ -40,25 +40,37 @@ TestCasesTracingConnection::ListTestCases(
 Status TestCasesTracingConnection::BatchDeleteTestCases(
     google::cloud::dialogflow::cx::v3::BatchDeleteTestCasesRequest const&
         request) {
-  return child_->BatchDeleteTestCases(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TestCasesConnection::BatchDeleteTestCases");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->BatchDeleteTestCases(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesTracingConnection::GetTestCase(
     google::cloud::dialogflow::cx::v3::GetTestCaseRequest const& request) {
-  return child_->GetTestCase(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::TestCasesConnection::GetTestCase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTestCase(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesTracingConnection::CreateTestCase(
     google::cloud::dialogflow::cx::v3::CreateTestCaseRequest const& request) {
-  return child_->CreateTestCase(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::TestCasesConnection::CreateTestCase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTestCase(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TestCase>
 TestCasesTracingConnection::UpdateTestCase(
     google::cloud::dialogflow::cx::v3::UpdateTestCaseRequest const& request) {
-  return child_->UpdateTestCase(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::TestCasesConnection::UpdateTestCase");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateTestCase(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::RunTestCaseResponse>>
@@ -78,7 +90,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::CalculateCoverageResponse>
 TestCasesTracingConnection::CalculateCoverage(
     google::cloud::dialogflow::cx::v3::CalculateCoverageRequest const&
         request) {
-  return child_->CalculateCoverage(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TestCasesConnection::CalculateCoverage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CalculateCoverage(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::ImportTestCasesResponse>>
@@ -103,7 +118,10 @@ StatusOr<google::cloud::dialogflow::cx::v3::TestCaseResult>
 TestCasesTracingConnection::GetTestCaseResult(
     google::cloud::dialogflow::cx::v3::GetTestCaseResultRequest const&
         request) {
-  return child_->GetTestCaseResult(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TestCasesConnection::GetTestCaseResult");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTestCaseResult(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

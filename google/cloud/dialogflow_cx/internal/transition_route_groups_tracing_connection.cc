@@ -42,27 +42,43 @@ StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 TransitionRouteGroupsTracingConnection::GetTransitionRouteGroup(
     google::cloud::dialogflow::cx::v3::GetTransitionRouteGroupRequest const&
         request) {
-  return child_->GetTransitionRouteGroup(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::"
+      "GetTransitionRouteGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTransitionRouteGroup(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 TransitionRouteGroupsTracingConnection::CreateTransitionRouteGroup(
     google::cloud::dialogflow::cx::v3::CreateTransitionRouteGroupRequest const&
         request) {
-  return child_->CreateTransitionRouteGroup(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::"
+      "CreateTransitionRouteGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTransitionRouteGroup(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::TransitionRouteGroup>
 TransitionRouteGroupsTracingConnection::UpdateTransitionRouteGroup(
     google::cloud::dialogflow::cx::v3::UpdateTransitionRouteGroupRequest const&
         request) {
-  return child_->UpdateTransitionRouteGroup(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::"
+      "UpdateTransitionRouteGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateTransitionRouteGroup(request));
 }
 
 Status TransitionRouteGroupsTracingConnection::DeleteTransitionRouteGroup(
     google::cloud::dialogflow::cx::v3::DeleteTransitionRouteGroupRequest const&
         request) {
-  return child_->DeleteTransitionRouteGroup(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::TransitionRouteGroupsConnection::"
+      "DeleteTransitionRouteGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTransitionRouteGroup(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

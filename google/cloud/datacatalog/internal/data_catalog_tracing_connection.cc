@@ -40,24 +40,36 @@ DataCatalogTracingConnection::SearchCatalog(
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogTracingConnection::CreateEntryGroup(
     google::cloud::datacatalog::v1::CreateEntryGroupRequest const& request) {
-  return child_->CreateEntryGroup(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::CreateEntryGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateEntryGroup(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogTracingConnection::GetEntryGroup(
     google::cloud::datacatalog::v1::GetEntryGroupRequest const& request) {
-  return child_->GetEntryGroup(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::GetEntryGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEntryGroup(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::EntryGroup>
 DataCatalogTracingConnection::UpdateEntryGroup(
     google::cloud::datacatalog::v1::UpdateEntryGroupRequest const& request) {
-  return child_->UpdateEntryGroup(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::UpdateEntryGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateEntryGroup(request));
 }
 
 Status DataCatalogTracingConnection::DeleteEntryGroup(
     google::cloud::datacatalog::v1::DeleteEntryGroupRequest const& request) {
-  return child_->DeleteEntryGroup(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::DeleteEntryGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteEntryGroup(request));
 }
 
 StreamRange<google::cloud::datacatalog::v1::EntryGroup>
@@ -69,30 +81,45 @@ DataCatalogTracingConnection::ListEntryGroups(
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DataCatalogTracingConnection::CreateEntry(
     google::cloud::datacatalog::v1::CreateEntryRequest const& request) {
-  return child_->CreateEntry(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::CreateEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateEntry(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DataCatalogTracingConnection::UpdateEntry(
     google::cloud::datacatalog::v1::UpdateEntryRequest const& request) {
-  return child_->UpdateEntry(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::UpdateEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateEntry(request));
 }
 
 Status DataCatalogTracingConnection::DeleteEntry(
     google::cloud::datacatalog::v1::DeleteEntryRequest const& request) {
-  return child_->DeleteEntry(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::DeleteEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteEntry(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DataCatalogTracingConnection::GetEntry(
     google::cloud::datacatalog::v1::GetEntryRequest const& request) {
-  return child_->GetEntry(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::GetEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEntry(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Entry>
 DataCatalogTracingConnection::LookupEntry(
     google::cloud::datacatalog::v1::LookupEntryRequest const& request) {
-  return child_->LookupEntry(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::LookupEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->LookupEntry(request));
 }
 
 StreamRange<google::cloud::datacatalog::v1::Entry>
@@ -104,87 +131,130 @@ DataCatalogTracingConnection::ListEntries(
 StatusOr<google::cloud::datacatalog::v1::EntryOverview>
 DataCatalogTracingConnection::ModifyEntryOverview(
     google::cloud::datacatalog::v1::ModifyEntryOverviewRequest const& request) {
-  return child_->ModifyEntryOverview(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::ModifyEntryOverview");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ModifyEntryOverview(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Contacts>
 DataCatalogTracingConnection::ModifyEntryContacts(
     google::cloud::datacatalog::v1::ModifyEntryContactsRequest const& request) {
-  return child_->ModifyEntryContacts(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::ModifyEntryContacts");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ModifyEntryContacts(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogTracingConnection::CreateTagTemplate(
     google::cloud::datacatalog::v1::CreateTagTemplateRequest const& request) {
-  return child_->CreateTagTemplate(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::CreateTagTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTagTemplate(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogTracingConnection::GetTagTemplate(
     google::cloud::datacatalog::v1::GetTagTemplateRequest const& request) {
-  return child_->GetTagTemplate(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::GetTagTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTagTemplate(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplate>
 DataCatalogTracingConnection::UpdateTagTemplate(
     google::cloud::datacatalog::v1::UpdateTagTemplateRequest const& request) {
-  return child_->UpdateTagTemplate(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::UpdateTagTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateTagTemplate(request));
 }
 
 Status DataCatalogTracingConnection::DeleteTagTemplate(
     google::cloud::datacatalog::v1::DeleteTagTemplateRequest const& request) {
-  return child_->DeleteTagTemplate(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::DeleteTagTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTagTemplate(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogTracingConnection::CreateTagTemplateField(
     google::cloud::datacatalog::v1::CreateTagTemplateFieldRequest const&
         request) {
-  return child_->CreateTagTemplateField(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::CreateTagTemplateField");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTagTemplateField(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogTracingConnection::UpdateTagTemplateField(
     google::cloud::datacatalog::v1::UpdateTagTemplateFieldRequest const&
         request) {
-  return child_->UpdateTagTemplateField(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::UpdateTagTemplateField");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateTagTemplateField(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogTracingConnection::RenameTagTemplateField(
     google::cloud::datacatalog::v1::RenameTagTemplateFieldRequest const&
         request) {
-  return child_->RenameTagTemplateField(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::RenameTagTemplateField");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RenameTagTemplateField(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::TagTemplateField>
 DataCatalogTracingConnection::RenameTagTemplateFieldEnumValue(
     google::cloud::datacatalog::v1::
         RenameTagTemplateFieldEnumValueRequest const& request) {
-  return child_->RenameTagTemplateFieldEnumValue(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::RenameTagTemplateFieldEnumValue");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->RenameTagTemplateFieldEnumValue(request));
 }
 
 Status DataCatalogTracingConnection::DeleteTagTemplateField(
     google::cloud::datacatalog::v1::DeleteTagTemplateFieldRequest const&
         request) {
-  return child_->DeleteTagTemplateField(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::DeleteTagTemplateField");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTagTemplateField(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Tag>
 DataCatalogTracingConnection::CreateTag(
     google::cloud::datacatalog::v1::CreateTagRequest const& request) {
-  return child_->CreateTag(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::CreateTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTag(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::Tag>
 DataCatalogTracingConnection::UpdateTag(
     google::cloud::datacatalog::v1::UpdateTagRequest const& request) {
-  return child_->UpdateTag(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::UpdateTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateTag(request));
 }
 
 Status DataCatalogTracingConnection::DeleteTag(
     google::cloud::datacatalog::v1::DeleteTagRequest const& request) {
-  return child_->DeleteTag(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::DeleteTag");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTag(request));
 }
 
 StreamRange<google::cloud::datacatalog::v1::Tag>
@@ -196,29 +266,44 @@ DataCatalogTracingConnection::ListTags(
 StatusOr<google::cloud::datacatalog::v1::StarEntryResponse>
 DataCatalogTracingConnection::StarEntry(
     google::cloud::datacatalog::v1::StarEntryRequest const& request) {
-  return child_->StarEntry(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::StarEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->StarEntry(request));
 }
 
 StatusOr<google::cloud::datacatalog::v1::UnstarEntryResponse>
 DataCatalogTracingConnection::UnstarEntry(
     google::cloud::datacatalog::v1::UnstarEntryRequest const& request) {
-  return child_->UnstarEntry(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::UnstarEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UnstarEntry(request));
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy> DataCatalogTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span =
+      internal::MakeSpan("datacatalog::DataCatalogConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 DataCatalogTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "datacatalog::DataCatalogConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

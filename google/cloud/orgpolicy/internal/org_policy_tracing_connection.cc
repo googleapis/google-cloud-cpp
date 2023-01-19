@@ -46,30 +46,44 @@ OrgPolicyTracingConnection::ListPolicies(
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 OrgPolicyTracingConnection::GetPolicy(
     google::cloud::orgpolicy::v2::GetPolicyRequest const& request) {
-  return child_->GetPolicy(request);
+  auto span = internal::MakeSpan("orgpolicy::OrgPolicyConnection::GetPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPolicy(request));
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 OrgPolicyTracingConnection::GetEffectivePolicy(
     google::cloud::orgpolicy::v2::GetEffectivePolicyRequest const& request) {
-  return child_->GetEffectivePolicy(request);
+  auto span =
+      internal::MakeSpan("orgpolicy::OrgPolicyConnection::GetEffectivePolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEffectivePolicy(request));
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 OrgPolicyTracingConnection::CreatePolicy(
     google::cloud::orgpolicy::v2::CreatePolicyRequest const& request) {
-  return child_->CreatePolicy(request);
+  auto span =
+      internal::MakeSpan("orgpolicy::OrgPolicyConnection::CreatePolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreatePolicy(request));
 }
 
 StatusOr<google::cloud::orgpolicy::v2::Policy>
 OrgPolicyTracingConnection::UpdatePolicy(
     google::cloud::orgpolicy::v2::UpdatePolicyRequest const& request) {
-  return child_->UpdatePolicy(request);
+  auto span =
+      internal::MakeSpan("orgpolicy::OrgPolicyConnection::UpdatePolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdatePolicy(request));
 }
 
 Status OrgPolicyTracingConnection::DeletePolicy(
     google::cloud::orgpolicy::v2::DeletePolicyRequest const& request) {
-  return child_->DeletePolicy(request);
+  auto span =
+      internal::MakeSpan("orgpolicy::OrgPolicyConnection::DeletePolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeletePolicy(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

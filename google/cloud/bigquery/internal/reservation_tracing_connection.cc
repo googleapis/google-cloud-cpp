@@ -35,7 +35,10 @@ StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceTracingConnection::CreateReservation(
     google::cloud::bigquery::reservation::v1::CreateReservationRequest const&
         request) {
-  return child_->CreateReservation(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::CreateReservation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateReservation(request));
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Reservation>
@@ -48,27 +51,39 @@ StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceTracingConnection::GetReservation(
     google::cloud::bigquery::reservation::v1::GetReservationRequest const&
         request) {
-  return child_->GetReservation(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::GetReservation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetReservation(request));
 }
 
 Status ReservationServiceTracingConnection::DeleteReservation(
     google::cloud::bigquery::reservation::v1::DeleteReservationRequest const&
         request) {
-  return child_->DeleteReservation(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::DeleteReservation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteReservation(request));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Reservation>
 ReservationServiceTracingConnection::UpdateReservation(
     google::cloud::bigquery::reservation::v1::UpdateReservationRequest const&
         request) {
-  return child_->UpdateReservation(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::UpdateReservation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateReservation(request));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceTracingConnection::CreateCapacityCommitment(
     google::cloud::bigquery::reservation::v1::
         CreateCapacityCommitmentRequest const& request) {
-  return child_->CreateCapacityCommitment(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::CreateCapacityCommitment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateCapacityCommitment(request));
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::CapacityCommitment>
@@ -82,20 +97,29 @@ StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceTracingConnection::GetCapacityCommitment(
     google::cloud::bigquery::reservation::v1::
         GetCapacityCommitmentRequest const& request) {
-  return child_->GetCapacityCommitment(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::GetCapacityCommitment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCapacityCommitment(request));
 }
 
 Status ReservationServiceTracingConnection::DeleteCapacityCommitment(
     google::cloud::bigquery::reservation::v1::
         DeleteCapacityCommitmentRequest const& request) {
-  return child_->DeleteCapacityCommitment(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::DeleteCapacityCommitment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteCapacityCommitment(request));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceTracingConnection::UpdateCapacityCommitment(
     google::cloud::bigquery::reservation::v1::
         UpdateCapacityCommitmentRequest const& request) {
-  return child_->UpdateCapacityCommitment(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::UpdateCapacityCommitment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateCapacityCommitment(request));
 }
 
 StatusOr<
@@ -103,21 +127,30 @@ StatusOr<
 ReservationServiceTracingConnection::SplitCapacityCommitment(
     google::cloud::bigquery::reservation::v1::
         SplitCapacityCommitmentRequest const& request) {
-  return child_->SplitCapacityCommitment(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::SplitCapacityCommitment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SplitCapacityCommitment(request));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::CapacityCommitment>
 ReservationServiceTracingConnection::MergeCapacityCommitments(
     google::cloud::bigquery::reservation::v1::
         MergeCapacityCommitmentsRequest const& request) {
-  return child_->MergeCapacityCommitments(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::MergeCapacityCommitments");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->MergeCapacityCommitments(request));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceTracingConnection::CreateAssignment(
     google::cloud::bigquery::reservation::v1::CreateAssignmentRequest const&
         request) {
-  return child_->CreateAssignment(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::CreateAssignment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateAssignment(request));
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
@@ -129,7 +162,10 @@ ReservationServiceTracingConnection::ListAssignments(
 Status ReservationServiceTracingConnection::DeleteAssignment(
     google::cloud::bigquery::reservation::v1::DeleteAssignmentRequest const&
         request) {
-  return child_->DeleteAssignment(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::DeleteAssignment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAssignment(request));
 }
 
 StreamRange<google::cloud::bigquery::reservation::v1::Assignment>
@@ -150,28 +186,40 @@ StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceTracingConnection::MoveAssignment(
     google::cloud::bigquery::reservation::v1::MoveAssignmentRequest const&
         request) {
-  return child_->MoveAssignment(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::MoveAssignment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->MoveAssignment(request));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::Assignment>
 ReservationServiceTracingConnection::UpdateAssignment(
     google::cloud::bigquery::reservation::v1::UpdateAssignmentRequest const&
         request) {
-  return child_->UpdateAssignment(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::UpdateAssignment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateAssignment(request));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceTracingConnection::GetBiReservation(
     google::cloud::bigquery::reservation::v1::GetBiReservationRequest const&
         request) {
-  return child_->GetBiReservation(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::GetBiReservation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBiReservation(request));
 }
 
 StatusOr<google::cloud::bigquery::reservation::v1::BiReservation>
 ReservationServiceTracingConnection::UpdateBiReservation(
     google::cloud::bigquery::reservation::v1::UpdateBiReservationRequest const&
         request) {
-  return child_->UpdateBiReservation(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ReservationServiceConnection::UpdateBiReservation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateBiReservation(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

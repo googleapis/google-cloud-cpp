@@ -42,35 +42,50 @@ StatusOr<google::cloud::osconfig::agentendpoint::v1::StartNextTaskResponse>
 AgentEndpointServiceTracingConnection::StartNextTask(
     google::cloud::osconfig::agentendpoint::v1::StartNextTaskRequest const&
         request) {
-  return child_->StartNextTask(request);
+  auto span = internal::MakeSpan(
+      "osconfig::AgentEndpointServiceConnection::StartNextTask");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->StartNextTask(request));
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressResponse>
 AgentEndpointServiceTracingConnection::ReportTaskProgress(
     google::cloud::osconfig::agentendpoint::v1::ReportTaskProgressRequest const&
         request) {
-  return child_->ReportTaskProgress(request);
+  auto span = internal::MakeSpan(
+      "osconfig::AgentEndpointServiceConnection::ReportTaskProgress");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ReportTaskProgress(request));
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteResponse>
 AgentEndpointServiceTracingConnection::ReportTaskComplete(
     google::cloud::osconfig::agentendpoint::v1::ReportTaskCompleteRequest const&
         request) {
-  return child_->ReportTaskComplete(request);
+  auto span = internal::MakeSpan(
+      "osconfig::AgentEndpointServiceConnection::ReportTaskComplete");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ReportTaskComplete(request));
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::RegisterAgentResponse>
 AgentEndpointServiceTracingConnection::RegisterAgent(
     google::cloud::osconfig::agentendpoint::v1::RegisterAgentRequest const&
         request) {
-  return child_->RegisterAgent(request);
+  auto span = internal::MakeSpan(
+      "osconfig::AgentEndpointServiceConnection::RegisterAgent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RegisterAgent(request));
 }
 
 StatusOr<google::cloud::osconfig::agentendpoint::v1::ReportInventoryResponse>
 AgentEndpointServiceTracingConnection::ReportInventory(
     google::cloud::osconfig::agentendpoint::v1::ReportInventoryRequest const&
         request) {
-  return child_->ReportInventory(request);
+  auto span = internal::MakeSpan(
+      "osconfig::AgentEndpointServiceConnection::ReportInventory");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ReportInventory(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

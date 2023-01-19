@@ -46,7 +46,10 @@ LivestreamServiceTracingConnection::ListChannels(
 StatusOr<google::cloud::video::livestream::v1::Channel>
 LivestreamServiceTracingConnection::GetChannel(
     google::cloud::video::livestream::v1::GetChannelRequest const& request) {
-  return child_->GetChannel(request);
+  auto span =
+      internal::MakeSpan("video::LivestreamServiceConnection::GetChannel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetChannel(request));
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -88,7 +91,10 @@ LivestreamServiceTracingConnection::ListInputs(
 StatusOr<google::cloud::video::livestream::v1::Input>
 LivestreamServiceTracingConnection::GetInput(
     google::cloud::video::livestream::v1::GetInputRequest const& request) {
-  return child_->GetInput(request);
+  auto span =
+      internal::MakeSpan("video::LivestreamServiceConnection::GetInput");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInput(request));
 }
 
 future<StatusOr<google::cloud::video::livestream::v1::OperationMetadata>>
@@ -106,7 +112,10 @@ LivestreamServiceTracingConnection::UpdateInput(
 StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceTracingConnection::CreateEvent(
     google::cloud::video::livestream::v1::CreateEventRequest const& request) {
-  return child_->CreateEvent(request);
+  auto span =
+      internal::MakeSpan("video::LivestreamServiceConnection::CreateEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateEvent(request));
 }
 
 StreamRange<google::cloud::video::livestream::v1::Event>
@@ -118,12 +127,18 @@ LivestreamServiceTracingConnection::ListEvents(
 StatusOr<google::cloud::video::livestream::v1::Event>
 LivestreamServiceTracingConnection::GetEvent(
     google::cloud::video::livestream::v1::GetEventRequest const& request) {
-  return child_->GetEvent(request);
+  auto span =
+      internal::MakeSpan("video::LivestreamServiceConnection::GetEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEvent(request));
 }
 
 Status LivestreamServiceTracingConnection::DeleteEvent(
     google::cloud::video::livestream::v1::DeleteEventRequest const& request) {
-  return child_->DeleteEvent(request);
+  auto span =
+      internal::MakeSpan("video::LivestreamServiceConnection::DeleteEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteEvent(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

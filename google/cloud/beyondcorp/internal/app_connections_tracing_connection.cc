@@ -43,7 +43,10 @@ StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>
 AppConnectionsServiceTracingConnection::GetAppConnection(
     google::cloud::beyondcorp::appconnections::v1::
         GetAppConnectionRequest const& request) {
-  return child_->GetAppConnection(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp::AppConnectionsServiceConnection::GetAppConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAppConnection(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appconnections::v1::AppConnection>>

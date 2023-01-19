@@ -34,7 +34,10 @@ ProjectsTracingConnection::ProjectsTracingConnection(
 StatusOr<google::cloud::resourcemanager::v3::Project>
 ProjectsTracingConnection::GetProject(
     google::cloud::resourcemanager::v3::GetProjectRequest const& request) {
-  return child_->GetProject(request);
+  auto span =
+      internal::MakeSpan("resourcemanager::ProjectsConnection::GetProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetProject(request));
 }
 
 StreamRange<google::cloud::resourcemanager::v3::Project>
@@ -81,18 +84,27 @@ ProjectsTracingConnection::UndeleteProject(
 
 StatusOr<google::iam::v1::Policy> ProjectsTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span =
+      internal::MakeSpan("resourcemanager::ProjectsConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy> ProjectsTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span =
+      internal::MakeSpan("resourcemanager::ProjectsConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ProjectsTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "resourcemanager::ProjectsConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

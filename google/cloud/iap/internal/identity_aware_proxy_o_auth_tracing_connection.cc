@@ -35,26 +35,40 @@ IdentityAwareProxyOAuthServiceTracingConnection::
 StatusOr<google::cloud::iap::v1::ListBrandsResponse>
 IdentityAwareProxyOAuthServiceTracingConnection::ListBrands(
     google::cloud::iap::v1::ListBrandsRequest const& request) {
-  return child_->ListBrands(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyOAuthServiceConnection::ListBrands");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListBrands(request));
 }
 
 StatusOr<google::cloud::iap::v1::Brand>
 IdentityAwareProxyOAuthServiceTracingConnection::CreateBrand(
     google::cloud::iap::v1::CreateBrandRequest const& request) {
-  return child_->CreateBrand(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyOAuthServiceConnection::CreateBrand");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateBrand(request));
 }
 
 StatusOr<google::cloud::iap::v1::Brand>
 IdentityAwareProxyOAuthServiceTracingConnection::GetBrand(
     google::cloud::iap::v1::GetBrandRequest const& request) {
-  return child_->GetBrand(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyOAuthServiceConnection::GetBrand");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBrand(request));
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
 IdentityAwareProxyOAuthServiceTracingConnection::CreateIdentityAwareProxyClient(
     google::cloud::iap::v1::CreateIdentityAwareProxyClientRequest const&
         request) {
-  return child_->CreateIdentityAwareProxyClient(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyOAuthServiceConnection::"
+      "CreateIdentityAwareProxyClient");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateIdentityAwareProxyClient(request));
 }
 
 StreamRange<google::cloud::iap::v1::IdentityAwareProxyClient>
@@ -66,7 +80,11 @@ IdentityAwareProxyOAuthServiceTracingConnection::ListIdentityAwareProxyClients(
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
 IdentityAwareProxyOAuthServiceTracingConnection::GetIdentityAwareProxyClient(
     google::cloud::iap::v1::GetIdentityAwareProxyClientRequest const& request) {
-  return child_->GetIdentityAwareProxyClient(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyOAuthServiceConnection::"
+      "GetIdentityAwareProxyClient");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIdentityAwareProxyClient(request));
 }
 
 StatusOr<google::cloud::iap::v1::IdentityAwareProxyClient>
@@ -74,14 +92,24 @@ IdentityAwareProxyOAuthServiceTracingConnection::
     ResetIdentityAwareProxyClientSecret(
         google::cloud::iap::v1::
             ResetIdentityAwareProxyClientSecretRequest const& request) {
-  return child_->ResetIdentityAwareProxyClientSecret(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyOAuthServiceConnection::"
+      "ResetIdentityAwareProxyClientSecret");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->ResetIdentityAwareProxyClientSecret(request));
 }
 
 Status
 IdentityAwareProxyOAuthServiceTracingConnection::DeleteIdentityAwareProxyClient(
     google::cloud::iap::v1::DeleteIdentityAwareProxyClientRequest const&
         request) {
-  return child_->DeleteIdentityAwareProxyClient(request);
+  auto span = internal::MakeSpan(
+      "iap::IdentityAwareProxyOAuthServiceConnection::"
+      "DeleteIdentityAwareProxyClient");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteIdentityAwareProxyClient(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

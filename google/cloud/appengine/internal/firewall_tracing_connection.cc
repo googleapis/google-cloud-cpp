@@ -40,30 +40,45 @@ FirewallTracingConnection::ListIngressRules(
 StatusOr<google::appengine::v1::BatchUpdateIngressRulesResponse>
 FirewallTracingConnection::BatchUpdateIngressRules(
     google::appengine::v1::BatchUpdateIngressRulesRequest const& request) {
-  return child_->BatchUpdateIngressRules(request);
+  auto span = internal::MakeSpan(
+      "appengine::FirewallConnection::BatchUpdateIngressRules");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->BatchUpdateIngressRules(request));
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallTracingConnection::CreateIngressRule(
     google::appengine::v1::CreateIngressRuleRequest const& request) {
-  return child_->CreateIngressRule(request);
+  auto span =
+      internal::MakeSpan("appengine::FirewallConnection::CreateIngressRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateIngressRule(request));
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallTracingConnection::GetIngressRule(
     google::appengine::v1::GetIngressRuleRequest const& request) {
-  return child_->GetIngressRule(request);
+  auto span =
+      internal::MakeSpan("appengine::FirewallConnection::GetIngressRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIngressRule(request));
 }
 
 StatusOr<google::appengine::v1::FirewallRule>
 FirewallTracingConnection::UpdateIngressRule(
     google::appengine::v1::UpdateIngressRuleRequest const& request) {
-  return child_->UpdateIngressRule(request);
+  auto span =
+      internal::MakeSpan("appengine::FirewallConnection::UpdateIngressRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateIngressRule(request));
 }
 
 Status FirewallTracingConnection::DeleteIngressRule(
     google::appengine::v1::DeleteIngressRuleRequest const& request) {
-  return child_->DeleteIngressRule(request);
+  auto span =
+      internal::MakeSpan("appengine::FirewallConnection::DeleteIngressRule");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteIngressRule(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

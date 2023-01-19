@@ -58,7 +58,10 @@ DataplexServiceTracingConnection::ListLakes(
 StatusOr<google::cloud::dataplex::v1::Lake>
 DataplexServiceTracingConnection::GetLake(
     google::cloud::dataplex::v1::GetLakeRequest const& request) {
-  return child_->GetLake(request);
+  auto span =
+      internal::MakeSpan("dataplex::DataplexServiceConnection::GetLake");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetLake(request));
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
@@ -94,7 +97,10 @@ DataplexServiceTracingConnection::ListZones(
 StatusOr<google::cloud::dataplex::v1::Zone>
 DataplexServiceTracingConnection::GetZone(
     google::cloud::dataplex::v1::GetZoneRequest const& request) {
-  return child_->GetZone(request);
+  auto span =
+      internal::MakeSpan("dataplex::DataplexServiceConnection::GetZone");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetZone(request));
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
@@ -130,7 +136,10 @@ DataplexServiceTracingConnection::ListAssets(
 StatusOr<google::cloud::dataplex::v1::Asset>
 DataplexServiceTracingConnection::GetAsset(
     google::cloud::dataplex::v1::GetAssetRequest const& request) {
-  return child_->GetAsset(request);
+  auto span =
+      internal::MakeSpan("dataplex::DataplexServiceConnection::GetAsset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAsset(request));
 }
 
 StreamRange<google::cloud::dataplex::v1::Action>
@@ -166,7 +175,10 @@ DataplexServiceTracingConnection::ListTasks(
 StatusOr<google::cloud::dataplex::v1::Task>
 DataplexServiceTracingConnection::GetTask(
     google::cloud::dataplex::v1::GetTaskRequest const& request) {
-  return child_->GetTask(request);
+  auto span =
+      internal::MakeSpan("dataplex::DataplexServiceConnection::GetTask");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTask(request));
 }
 
 StreamRange<google::cloud::dataplex::v1::Job>
@@ -178,12 +190,17 @@ DataplexServiceTracingConnection::ListJobs(
 StatusOr<google::cloud::dataplex::v1::Job>
 DataplexServiceTracingConnection::GetJob(
     google::cloud::dataplex::v1::GetJobRequest const& request) {
-  return child_->GetJob(request);
+  auto span = internal::MakeSpan("dataplex::DataplexServiceConnection::GetJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetJob(request));
 }
 
 Status DataplexServiceTracingConnection::CancelJob(
     google::cloud::dataplex::v1::CancelJobRequest const& request) {
-  return child_->CancelJob(request);
+  auto span =
+      internal::MakeSpan("dataplex::DataplexServiceConnection::CancelJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelJob(request));
 }
 
 future<StatusOr<google::cloud::dataplex::v1::Environment>>
@@ -213,7 +230,10 @@ DataplexServiceTracingConnection::ListEnvironments(
 StatusOr<google::cloud::dataplex::v1::Environment>
 DataplexServiceTracingConnection::GetEnvironment(
     google::cloud::dataplex::v1::GetEnvironmentRequest const& request) {
-  return child_->GetEnvironment(request);
+  auto span =
+      internal::MakeSpan("dataplex::DataplexServiceConnection::GetEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEnvironment(request));
 }
 
 StreamRange<google::cloud::dataplex::v1::Session>

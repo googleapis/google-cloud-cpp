@@ -34,7 +34,10 @@ ApplicationsTracingConnection::ApplicationsTracingConnection(
 StatusOr<google::appengine::v1::Application>
 ApplicationsTracingConnection::GetApplication(
     google::appengine::v1::GetApplicationRequest const& request) {
-  return child_->GetApplication(request);
+  auto span =
+      internal::MakeSpan("appengine::ApplicationsConnection::GetApplication");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetApplication(request));
 }
 
 future<StatusOr<google::appengine::v1::Application>>

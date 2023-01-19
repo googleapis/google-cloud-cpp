@@ -40,24 +40,36 @@ VersionsTracingConnection::ListVersions(
 StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsTracingConnection::GetVersion(
     google::cloud::dialogflow::v2::GetVersionRequest const& request) {
-  return child_->GetVersion(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::VersionsConnection::GetVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetVersion(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsTracingConnection::CreateVersion(
     google::cloud::dialogflow::v2::CreateVersionRequest const& request) {
-  return child_->CreateVersion(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::VersionsConnection::CreateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateVersion(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Version>
 VersionsTracingConnection::UpdateVersion(
     google::cloud::dialogflow::v2::UpdateVersionRequest const& request) {
-  return child_->UpdateVersion(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::VersionsConnection::UpdateVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateVersion(request));
 }
 
 Status VersionsTracingConnection::DeleteVersion(
     google::cloud::dialogflow::v2::DeleteVersionRequest const& request) {
-  return child_->DeleteVersion(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::VersionsConnection::DeleteVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteVersion(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

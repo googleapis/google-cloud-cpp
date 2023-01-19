@@ -47,7 +47,11 @@ StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::
 ClientConnectorServicesServiceTracingConnection::GetClientConnectorService(
     google::cloud::beyondcorp::clientconnectorservices::v1::
         GetClientConnectorServiceRequest const& request) {
-  return child_->GetClientConnectorService(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp::ClientConnectorServicesServiceConnection::"
+      "GetClientConnectorService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetClientConnectorService(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::clientconnectorservices::v1::

@@ -41,7 +41,10 @@ ConversationModelsTracingConnection::CreateConversationModel(
 StatusOr<google::cloud::dialogflow::v2::ConversationModel>
 ConversationModelsTracingConnection::GetConversationModel(
     google::cloud::dialogflow::v2::GetConversationModelRequest const& request) {
-  return child_->GetConversationModel(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationModelsConnection::GetConversationModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConversationModel(request));
 }
 
 StreamRange<google::cloud::dialogflow::v2::ConversationModel>
@@ -78,7 +81,12 @@ StatusOr<google::cloud::dialogflow::v2::ConversationModelEvaluation>
 ConversationModelsTracingConnection::GetConversationModelEvaluation(
     google::cloud::dialogflow::v2::GetConversationModelEvaluationRequest const&
         request) {
-  return child_->GetConversationModelEvaluation(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationModelsConnection::"
+      "GetConversationModelEvaluation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetConversationModelEvaluation(request));
 }
 
 StreamRange<google::cloud::dialogflow::v2::ConversationModelEvaluation>

@@ -40,7 +40,10 @@ EnvironmentsTracingConnection::ListEnvironments(
 StatusOr<google::cloud::dialogflow::cx::v3::Environment>
 EnvironmentsTracingConnection::GetEnvironment(
     google::cloud::dialogflow::cx::v3::GetEnvironmentRequest const& request) {
-  return child_->GetEnvironment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::GetEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEnvironment(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::cx::v3::Environment>>
@@ -60,7 +63,10 @@ EnvironmentsTracingConnection::UpdateEnvironment(
 Status EnvironmentsTracingConnection::DeleteEnvironment(
     google::cloud::dialogflow::cx::v3::DeleteEnvironmentRequest const&
         request) {
-  return child_->DeleteEnvironment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::EnvironmentsConnection::DeleteEnvironment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteEnvironment(request));
 }
 
 StreamRange<google::cloud::dialogflow::cx::v3::Environment>

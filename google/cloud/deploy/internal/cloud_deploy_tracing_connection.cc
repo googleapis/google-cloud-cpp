@@ -40,7 +40,10 @@ CloudDeployTracingConnection::ListDeliveryPipelines(
 StatusOr<google::cloud::deploy::v1::DeliveryPipeline>
 CloudDeployTracingConnection::GetDeliveryPipeline(
     google::cloud::deploy::v1::GetDeliveryPipelineRequest const& request) {
-  return child_->GetDeliveryPipeline(request);
+  auto span =
+      internal::MakeSpan("deploy::CloudDeployConnection::GetDeliveryPipeline");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDeliveryPipeline(request));
 }
 
 future<StatusOr<google::cloud::deploy::v1::DeliveryPipeline>>
@@ -70,7 +73,9 @@ CloudDeployTracingConnection::ListTargets(
 StatusOr<google::cloud::deploy::v1::Target>
 CloudDeployTracingConnection::GetTarget(
     google::cloud::deploy::v1::GetTargetRequest const& request) {
-  return child_->GetTarget(request);
+  auto span = internal::MakeSpan("deploy::CloudDeployConnection::GetTarget");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTarget(request));
 }
 
 future<StatusOr<google::cloud::deploy::v1::Target>>
@@ -100,7 +105,9 @@ CloudDeployTracingConnection::ListReleases(
 StatusOr<google::cloud::deploy::v1::Release>
 CloudDeployTracingConnection::GetRelease(
     google::cloud::deploy::v1::GetReleaseRequest const& request) {
-  return child_->GetRelease(request);
+  auto span = internal::MakeSpan("deploy::CloudDeployConnection::GetRelease");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRelease(request));
 }
 
 future<StatusOr<google::cloud::deploy::v1::Release>>
@@ -112,13 +119,19 @@ CloudDeployTracingConnection::CreateRelease(
 StatusOr<google::cloud::deploy::v1::AbandonReleaseResponse>
 CloudDeployTracingConnection::AbandonRelease(
     google::cloud::deploy::v1::AbandonReleaseRequest const& request) {
-  return child_->AbandonRelease(request);
+  auto span =
+      internal::MakeSpan("deploy::CloudDeployConnection::AbandonRelease");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AbandonRelease(request));
 }
 
 StatusOr<google::cloud::deploy::v1::ApproveRolloutResponse>
 CloudDeployTracingConnection::ApproveRollout(
     google::cloud::deploy::v1::ApproveRolloutRequest const& request) {
-  return child_->ApproveRollout(request);
+  auto span =
+      internal::MakeSpan("deploy::CloudDeployConnection::ApproveRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ApproveRollout(request));
 }
 
 StreamRange<google::cloud::deploy::v1::Rollout>
@@ -130,7 +143,9 @@ CloudDeployTracingConnection::ListRollouts(
 StatusOr<google::cloud::deploy::v1::Rollout>
 CloudDeployTracingConnection::GetRollout(
     google::cloud::deploy::v1::GetRolloutRequest const& request) {
-  return child_->GetRollout(request);
+  auto span = internal::MakeSpan("deploy::CloudDeployConnection::GetRollout");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRollout(request));
 }
 
 future<StatusOr<google::cloud::deploy::v1::Rollout>>
@@ -142,7 +157,9 @@ CloudDeployTracingConnection::CreateRollout(
 StatusOr<google::cloud::deploy::v1::RetryJobResponse>
 CloudDeployTracingConnection::RetryJob(
     google::cloud::deploy::v1::RetryJobRequest const& request) {
-  return child_->RetryJob(request);
+  auto span = internal::MakeSpan("deploy::CloudDeployConnection::RetryJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RetryJob(request));
 }
 
 StreamRange<google::cloud::deploy::v1::JobRun>
@@ -154,13 +171,17 @@ CloudDeployTracingConnection::ListJobRuns(
 StatusOr<google::cloud::deploy::v1::JobRun>
 CloudDeployTracingConnection::GetJobRun(
     google::cloud::deploy::v1::GetJobRunRequest const& request) {
-  return child_->GetJobRun(request);
+  auto span = internal::MakeSpan("deploy::CloudDeployConnection::GetJobRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetJobRun(request));
 }
 
 StatusOr<google::cloud::deploy::v1::Config>
 CloudDeployTracingConnection::GetConfig(
     google::cloud::deploy::v1::GetConfigRequest const& request) {
-  return child_->GetConfig(request);
+  auto span = internal::MakeSpan("deploy::CloudDeployConnection::GetConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConfig(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -34,7 +34,10 @@ SessionsTracingConnection::SessionsTracingConnection(
 StatusOr<google::cloud::dialogflow::cx::v3::DetectIntentResponse>
 SessionsTracingConnection::DetectIntent(
     google::cloud::dialogflow::cx::v3::DetectIntentRequest const& request) {
-  return child_->DetectIntent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::SessionsConnection::DetectIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DetectIntent(request));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -47,13 +50,19 @@ SessionsTracingConnection::AsyncStreamingDetectIntent() {
 StatusOr<google::cloud::dialogflow::cx::v3::MatchIntentResponse>
 SessionsTracingConnection::MatchIntent(
     google::cloud::dialogflow::cx::v3::MatchIntentRequest const& request) {
-  return child_->MatchIntent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::SessionsConnection::MatchIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->MatchIntent(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::FulfillIntentResponse>
 SessionsTracingConnection::FulfillIntent(
     google::cloud::dialogflow::cx::v3::FulfillIntentRequest const& request) {
-  return child_->FulfillIntent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::SessionsConnection::FulfillIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FulfillIntent(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

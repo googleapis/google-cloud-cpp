@@ -39,24 +39,36 @@ GroupServiceTracingConnection::ListGroups(
 
 StatusOr<google::monitoring::v3::Group> GroupServiceTracingConnection::GetGroup(
     google::monitoring::v3::GetGroupRequest const& request) {
-  return child_->GetGroup(request);
+  auto span =
+      internal::MakeSpan("monitoring::GroupServiceConnection::GetGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGroup(request));
 }
 
 StatusOr<google::monitoring::v3::Group>
 GroupServiceTracingConnection::CreateGroup(
     google::monitoring::v3::CreateGroupRequest const& request) {
-  return child_->CreateGroup(request);
+  auto span =
+      internal::MakeSpan("monitoring::GroupServiceConnection::CreateGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateGroup(request));
 }
 
 StatusOr<google::monitoring::v3::Group>
 GroupServiceTracingConnection::UpdateGroup(
     google::monitoring::v3::UpdateGroupRequest const& request) {
-  return child_->UpdateGroup(request);
+  auto span =
+      internal::MakeSpan("monitoring::GroupServiceConnection::UpdateGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateGroup(request));
 }
 
 Status GroupServiceTracingConnection::DeleteGroup(
     google::monitoring::v3::DeleteGroupRequest const& request) {
-  return child_->DeleteGroup(request);
+  auto span =
+      internal::MakeSpan("monitoring::GroupServiceConnection::DeleteGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteGroup(request));
 }
 
 StreamRange<google::api::MonitoredResource>

@@ -40,75 +40,111 @@ SecurityCenterTracingConnection::BulkMuteFindings(
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterTracingConnection::CreateSource(
     google::cloud::securitycenter::v1::CreateSourceRequest const& request) {
-  return child_->CreateSource(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::CreateSource");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateSource(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterTracingConnection::CreateFinding(
     google::cloud::securitycenter::v1::CreateFindingRequest const& request) {
-  return child_->CreateFinding(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::CreateFinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateFinding(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterTracingConnection::CreateMuteConfig(
     google::cloud::securitycenter::v1::CreateMuteConfigRequest const& request) {
-  return child_->CreateMuteConfig(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::CreateMuteConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateMuteConfig(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterTracingConnection::CreateNotificationConfig(
     google::cloud::securitycenter::v1::CreateNotificationConfigRequest const&
         request) {
-  return child_->CreateNotificationConfig(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::CreateNotificationConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateNotificationConfig(request));
 }
 
 Status SecurityCenterTracingConnection::DeleteMuteConfig(
     google::cloud::securitycenter::v1::DeleteMuteConfigRequest const& request) {
-  return child_->DeleteMuteConfig(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::DeleteMuteConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteMuteConfig(request));
 }
 
 Status SecurityCenterTracingConnection::DeleteNotificationConfig(
     google::cloud::securitycenter::v1::DeleteNotificationConfigRequest const&
         request) {
-  return child_->DeleteNotificationConfig(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::DeleteNotificationConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteNotificationConfig(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterTracingConnection::GetBigQueryExport(
     google::cloud::securitycenter::v1::GetBigQueryExportRequest const&
         request) {
-  return child_->GetBigQueryExport(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::GetBigQueryExport");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBigQueryExport(request));
 }
 
 StatusOr<google::iam::v1::Policy> SecurityCenterTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterTracingConnection::GetMuteConfig(
     google::cloud::securitycenter::v1::GetMuteConfigRequest const& request) {
-  return child_->GetMuteConfig(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::GetMuteConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMuteConfig(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterTracingConnection::GetNotificationConfig(
     google::cloud::securitycenter::v1::GetNotificationConfigRequest const&
         request) {
-  return child_->GetNotificationConfig(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::GetNotificationConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetNotificationConfig(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 SecurityCenterTracingConnection::GetOrganizationSettings(
     google::cloud::securitycenter::v1::GetOrganizationSettingsRequest const&
         request) {
-  return child_->GetOrganizationSettings(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::GetOrganizationSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetOrganizationSettings(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterTracingConnection::GetSource(
     google::cloud::securitycenter::v1::GetSourceRequest const& request) {
-  return child_->GetSource(request);
+  auto span =
+      internal::MakeSpan("securitycenter::SecurityCenterConnection::GetSource");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSource(request));
 }
 
 StreamRange<google::cloud::securitycenter::v1::GroupResult>
@@ -165,90 +201,132 @@ SecurityCenterTracingConnection::RunAssetDiscovery(
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterTracingConnection::SetFindingState(
     google::cloud::securitycenter::v1::SetFindingStateRequest const& request) {
-  return child_->SetFindingState(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::SetFindingState");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetFindingState(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterTracingConnection::SetMute(
     google::cloud::securitycenter::v1::SetMuteRequest const& request) {
-  return child_->SetMute(request);
+  auto span =
+      internal::MakeSpan("securitycenter::SecurityCenterConnection::SetMute");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetMute(request));
 }
 
 StatusOr<google::iam::v1::Policy> SecurityCenterTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 SecurityCenterTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::ExternalSystem>
 SecurityCenterTracingConnection::UpdateExternalSystem(
     google::cloud::securitycenter::v1::UpdateExternalSystemRequest const&
         request) {
-  return child_->UpdateExternalSystem(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::UpdateExternalSystem");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateExternalSystem(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Finding>
 SecurityCenterTracingConnection::UpdateFinding(
     google::cloud::securitycenter::v1::UpdateFindingRequest const& request) {
-  return child_->UpdateFinding(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::UpdateFinding");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateFinding(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::MuteConfig>
 SecurityCenterTracingConnection::UpdateMuteConfig(
     google::cloud::securitycenter::v1::UpdateMuteConfigRequest const& request) {
-  return child_->UpdateMuteConfig(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::UpdateMuteConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateMuteConfig(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::NotificationConfig>
 SecurityCenterTracingConnection::UpdateNotificationConfig(
     google::cloud::securitycenter::v1::UpdateNotificationConfigRequest const&
         request) {
-  return child_->UpdateNotificationConfig(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::UpdateNotificationConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateNotificationConfig(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::OrganizationSettings>
 SecurityCenterTracingConnection::UpdateOrganizationSettings(
     google::cloud::securitycenter::v1::UpdateOrganizationSettingsRequest const&
         request) {
-  return child_->UpdateOrganizationSettings(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::UpdateOrganizationSettings");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateOrganizationSettings(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::Source>
 SecurityCenterTracingConnection::UpdateSource(
     google::cloud::securitycenter::v1::UpdateSourceRequest const& request) {
-  return child_->UpdateSource(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::UpdateSource");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateSource(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::SecurityMarks>
 SecurityCenterTracingConnection::UpdateSecurityMarks(
     google::cloud::securitycenter::v1::UpdateSecurityMarksRequest const&
         request) {
-  return child_->UpdateSecurityMarks(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::UpdateSecurityMarks");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateSecurityMarks(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterTracingConnection::CreateBigQueryExport(
     google::cloud::securitycenter::v1::CreateBigQueryExportRequest const&
         request) {
-  return child_->CreateBigQueryExport(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::CreateBigQueryExport");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateBigQueryExport(request));
 }
 
 Status SecurityCenterTracingConnection::DeleteBigQueryExport(
     google::cloud::securitycenter::v1::DeleteBigQueryExportRequest const&
         request) {
-  return child_->DeleteBigQueryExport(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::DeleteBigQueryExport");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteBigQueryExport(request));
 }
 
 StatusOr<google::cloud::securitycenter::v1::BigQueryExport>
 SecurityCenterTracingConnection::UpdateBigQueryExport(
     google::cloud::securitycenter::v1::UpdateBigQueryExportRequest const&
         request) {
-  return child_->UpdateBigQueryExport(request);
+  auto span = internal::MakeSpan(
+      "securitycenter::SecurityCenterConnection::UpdateBigQueryExport");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateBigQueryExport(request));
 }
 
 StreamRange<google::cloud::securitycenter::v1::BigQueryExport>

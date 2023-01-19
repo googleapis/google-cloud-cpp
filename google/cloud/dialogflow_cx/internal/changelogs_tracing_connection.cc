@@ -40,7 +40,10 @@ ChangelogsTracingConnection::ListChangelogs(
 StatusOr<google::cloud::dialogflow::cx::v3::Changelog>
 ChangelogsTracingConnection::GetChangelog(
     google::cloud::dialogflow::cx::v3::GetChangelogRequest const& request) {
-  return child_->GetChangelog(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::ChangelogsConnection::GetChangelog");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetChangelog(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

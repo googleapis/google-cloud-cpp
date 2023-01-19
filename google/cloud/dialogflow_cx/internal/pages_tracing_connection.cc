@@ -40,24 +40,32 @@ PagesTracingConnection::ListPages(
 StatusOr<google::cloud::dialogflow::cx::v3::Page>
 PagesTracingConnection::GetPage(
     google::cloud::dialogflow::cx::v3::GetPageRequest const& request) {
-  return child_->GetPage(request);
+  auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::GetPage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPage(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page>
 PagesTracingConnection::CreatePage(
     google::cloud::dialogflow::cx::v3::CreatePageRequest const& request) {
-  return child_->CreatePage(request);
+  auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::CreatePage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreatePage(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Page>
 PagesTracingConnection::UpdatePage(
     google::cloud::dialogflow::cx::v3::UpdatePageRequest const& request) {
-  return child_->UpdatePage(request);
+  auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::UpdatePage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdatePage(request));
 }
 
 Status PagesTracingConnection::DeletePage(
     google::cloud::dialogflow::cx::v3::DeletePageRequest const& request) {
-  return child_->DeletePage(request);
+  auto span = internal::MakeSpan("dialogflow_cx::PagesConnection::DeletePage");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeletePage(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

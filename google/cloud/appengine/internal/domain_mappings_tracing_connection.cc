@@ -40,7 +40,10 @@ DomainMappingsTracingConnection::ListDomainMappings(
 StatusOr<google::appengine::v1::DomainMapping>
 DomainMappingsTracingConnection::GetDomainMapping(
     google::appengine::v1::GetDomainMappingRequest const& request) {
-  return child_->GetDomainMapping(request);
+  auto span = internal::MakeSpan(
+      "appengine::DomainMappingsConnection::GetDomainMapping");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDomainMapping(request));
 }
 
 future<StatusOr<google::appengine::v1::DomainMapping>>

@@ -34,7 +34,9 @@ SpeechTracingConnection::SpeechTracingConnection(
 StatusOr<google::cloud::speech::v1::RecognizeResponse>
 SpeechTracingConnection::Recognize(
     google::cloud::speech::v1::RecognizeRequest const& request) {
-  return child_->Recognize(request);
+  auto span = internal::MakeSpan("speech::SpeechConnection::Recognize");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Recognize(request));
 }
 
 future<StatusOr<google::cloud::speech::v1::LongRunningRecognizeResponse>>

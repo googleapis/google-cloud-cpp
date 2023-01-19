@@ -40,24 +40,35 @@ IntentsTracingConnection::ListIntents(
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 IntentsTracingConnection::GetIntent(
     google::cloud::dialogflow::cx::v3::GetIntentRequest const& request) {
-  return child_->GetIntent(request);
+  auto span = internal::MakeSpan("dialogflow_cx::IntentsConnection::GetIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIntent(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 IntentsTracingConnection::CreateIntent(
     google::cloud::dialogflow::cx::v3::CreateIntentRequest const& request) {
-  return child_->CreateIntent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::IntentsConnection::CreateIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateIntent(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Intent>
 IntentsTracingConnection::UpdateIntent(
     google::cloud::dialogflow::cx::v3::UpdateIntentRequest const& request) {
-  return child_->UpdateIntent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::IntentsConnection::UpdateIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateIntent(request));
 }
 
 Status IntentsTracingConnection::DeleteIntent(
     google::cloud::dialogflow::cx::v3::DeleteIntentRequest const& request) {
-  return child_->DeleteIntent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::IntentsConnection::DeleteIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteIntent(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

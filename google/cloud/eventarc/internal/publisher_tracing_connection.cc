@@ -36,14 +36,21 @@ StatusOr<google::cloud::eventarc::publishing::v1::
 PublisherTracingConnection::PublishChannelConnectionEvents(
     google::cloud::eventarc::publishing::v1::
         PublishChannelConnectionEventsRequest const& request) {
-  return child_->PublishChannelConnectionEvents(request);
+  auto span = internal::MakeSpan(
+      "eventarc::PublisherConnection::PublishChannelConnectionEvents");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->PublishChannelConnectionEvents(request));
 }
 
 StatusOr<google::cloud::eventarc::publishing::v1::PublishEventsResponse>
 PublisherTracingConnection::PublishEvents(
     google::cloud::eventarc::publishing::v1::PublishEventsRequest const&
         request) {
-  return child_->PublishEvents(request);
+  auto span =
+      internal::MakeSpan("eventarc::PublisherConnection::PublishEvents");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->PublishEvents(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

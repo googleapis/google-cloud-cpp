@@ -41,21 +41,30 @@ StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsTracingConnection::CreateExecution(
     google::cloud::workflows::executions::v1::CreateExecutionRequest const&
         request) {
-  return child_->CreateExecution(request);
+  auto span =
+      internal::MakeSpan("workflows::ExecutionsConnection::CreateExecution");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateExecution(request));
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsTracingConnection::GetExecution(
     google::cloud::workflows::executions::v1::GetExecutionRequest const&
         request) {
-  return child_->GetExecution(request);
+  auto span =
+      internal::MakeSpan("workflows::ExecutionsConnection::GetExecution");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetExecution(request));
 }
 
 StatusOr<google::cloud::workflows::executions::v1::Execution>
 ExecutionsTracingConnection::CancelExecution(
     google::cloud::workflows::executions::v1::CancelExecutionRequest const&
         request) {
-  return child_->CancelExecution(request);
+  auto span =
+      internal::MakeSpan("workflows::ExecutionsConnection::CancelExecution");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelExecution(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

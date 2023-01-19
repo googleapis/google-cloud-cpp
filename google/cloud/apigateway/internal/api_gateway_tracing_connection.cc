@@ -40,7 +40,10 @@ ApiGatewayServiceTracingConnection::ListGateways(
 StatusOr<google::cloud::apigateway::v1::Gateway>
 ApiGatewayServiceTracingConnection::GetGateway(
     google::cloud::apigateway::v1::GetGatewayRequest const& request) {
-  return child_->GetGateway(request);
+  auto span =
+      internal::MakeSpan("apigateway::ApiGatewayServiceConnection::GetGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGateway(request));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Gateway>>
@@ -70,7 +73,10 @@ ApiGatewayServiceTracingConnection::ListApis(
 StatusOr<google::cloud::apigateway::v1::Api>
 ApiGatewayServiceTracingConnection::GetApi(
     google::cloud::apigateway::v1::GetApiRequest const& request) {
-  return child_->GetApi(request);
+  auto span =
+      internal::MakeSpan("apigateway::ApiGatewayServiceConnection::GetApi");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetApi(request));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::Api>>
@@ -100,7 +106,10 @@ ApiGatewayServiceTracingConnection::ListApiConfigs(
 StatusOr<google::cloud::apigateway::v1::ApiConfig>
 ApiGatewayServiceTracingConnection::GetApiConfig(
     google::cloud::apigateway::v1::GetApiConfigRequest const& request) {
-  return child_->GetApiConfig(request);
+  auto span = internal::MakeSpan(
+      "apigateway::ApiGatewayServiceConnection::GetApiConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetApiConfig(request));
 }
 
 future<StatusOr<google::cloud::apigateway::v1::ApiConfig>>

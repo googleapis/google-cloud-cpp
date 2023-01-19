@@ -35,14 +35,20 @@ StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 MigrationServiceTracingConnection::CreateMigrationWorkflow(
     google::cloud::bigquery::migration::v2::
         CreateMigrationWorkflowRequest const& request) {
-  return child_->CreateMigrationWorkflow(request);
+  auto span = internal::MakeSpan(
+      "bigquery::MigrationServiceConnection::CreateMigrationWorkflow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateMigrationWorkflow(request));
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationWorkflow>
 MigrationServiceTracingConnection::GetMigrationWorkflow(
     google::cloud::bigquery::migration::v2::GetMigrationWorkflowRequest const&
         request) {
-  return child_->GetMigrationWorkflow(request);
+  auto span = internal::MakeSpan(
+      "bigquery::MigrationServiceConnection::GetMigrationWorkflow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMigrationWorkflow(request));
 }
 
 StreamRange<google::cloud::bigquery::migration::v2::MigrationWorkflow>
@@ -55,20 +61,29 @@ MigrationServiceTracingConnection::ListMigrationWorkflows(
 Status MigrationServiceTracingConnection::DeleteMigrationWorkflow(
     google::cloud::bigquery::migration::v2::
         DeleteMigrationWorkflowRequest const& request) {
-  return child_->DeleteMigrationWorkflow(request);
+  auto span = internal::MakeSpan(
+      "bigquery::MigrationServiceConnection::DeleteMigrationWorkflow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteMigrationWorkflow(request));
 }
 
 Status MigrationServiceTracingConnection::StartMigrationWorkflow(
     google::cloud::bigquery::migration::v2::StartMigrationWorkflowRequest const&
         request) {
-  return child_->StartMigrationWorkflow(request);
+  auto span = internal::MakeSpan(
+      "bigquery::MigrationServiceConnection::StartMigrationWorkflow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->StartMigrationWorkflow(request));
 }
 
 StatusOr<google::cloud::bigquery::migration::v2::MigrationSubtask>
 MigrationServiceTracingConnection::GetMigrationSubtask(
     google::cloud::bigquery::migration::v2::GetMigrationSubtaskRequest const&
         request) {
-  return child_->GetMigrationSubtask(request);
+  auto span = internal::MakeSpan(
+      "bigquery::MigrationServiceConnection::GetMigrationSubtask");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMigrationSubtask(request));
 }
 
 StreamRange<google::cloud::bigquery::migration::v2::MigrationSubtask>

@@ -34,13 +34,19 @@ UserEventServiceTracingConnection::UserEventServiceTracingConnection(
 StatusOr<google::cloud::retail::v2::UserEvent>
 UserEventServiceTracingConnection::WriteUserEvent(
     google::cloud::retail::v2::WriteUserEventRequest const& request) {
-  return child_->WriteUserEvent(request);
+  auto span =
+      internal::MakeSpan("retail::UserEventServiceConnection::WriteUserEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->WriteUserEvent(request));
 }
 
 StatusOr<google::api::HttpBody>
 UserEventServiceTracingConnection::CollectUserEvent(
     google::cloud::retail::v2::CollectUserEventRequest const& request) {
-  return child_->CollectUserEvent(request);
+  auto span = internal::MakeSpan(
+      "retail::UserEventServiceConnection::CollectUserEvent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CollectUserEvent(request));
 }
 
 future<StatusOr<google::cloud::retail::v2::PurgeUserEventsResponse>>

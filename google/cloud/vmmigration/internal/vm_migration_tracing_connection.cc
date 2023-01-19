@@ -40,7 +40,10 @@ VmMigrationTracingConnection::ListSources(
 StatusOr<google::cloud::vmmigration::v1::Source>
 VmMigrationTracingConnection::GetSource(
     google::cloud::vmmigration::v1::GetSourceRequest const& request) {
-  return child_->GetSource(request);
+  auto span =
+      internal::MakeSpan("vmmigration::VmMigrationConnection::GetSource");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSource(request));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Source>>
@@ -64,7 +67,10 @@ VmMigrationTracingConnection::DeleteSource(
 StatusOr<google::cloud::vmmigration::v1::FetchInventoryResponse>
 VmMigrationTracingConnection::FetchInventory(
     google::cloud::vmmigration::v1::FetchInventoryRequest const& request) {
-  return child_->FetchInventory(request);
+  auto span =
+      internal::MakeSpan("vmmigration::VmMigrationConnection::FetchInventory");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FetchInventory(request));
 }
 
 StreamRange<google::cloud::vmmigration::v1::UtilizationReport>
@@ -77,7 +83,10 @@ StatusOr<google::cloud::vmmigration::v1::UtilizationReport>
 VmMigrationTracingConnection::GetUtilizationReport(
     google::cloud::vmmigration::v1::GetUtilizationReportRequest const&
         request) {
-  return child_->GetUtilizationReport(request);
+  auto span = internal::MakeSpan(
+      "vmmigration::VmMigrationConnection::GetUtilizationReport");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetUtilizationReport(request));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::UtilizationReport>>
@@ -104,7 +113,10 @@ StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>
 VmMigrationTracingConnection::GetDatacenterConnector(
     google::cloud::vmmigration::v1::GetDatacenterConnectorRequest const&
         request) {
-  return child_->GetDatacenterConnector(request);
+  auto span = internal::MakeSpan(
+      "vmmigration::VmMigrationConnection::GetDatacenterConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDatacenterConnector(request));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::DatacenterConnector>>
@@ -142,7 +154,10 @@ VmMigrationTracingConnection::ListMigratingVms(
 StatusOr<google::cloud::vmmigration::v1::MigratingVm>
 VmMigrationTracingConnection::GetMigratingVm(
     google::cloud::vmmigration::v1::GetMigratingVmRequest const& request) {
-  return child_->GetMigratingVm(request);
+  auto span =
+      internal::MakeSpan("vmmigration::VmMigrationConnection::GetMigratingVm");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMigratingVm(request));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::MigratingVm>>
@@ -202,7 +217,10 @@ VmMigrationTracingConnection::ListCloneJobs(
 StatusOr<google::cloud::vmmigration::v1::CloneJob>
 VmMigrationTracingConnection::GetCloneJob(
     google::cloud::vmmigration::v1::GetCloneJobRequest const& request) {
-  return child_->GetCloneJob(request);
+  auto span =
+      internal::MakeSpan("vmmigration::VmMigrationConnection::GetCloneJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCloneJob(request));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::CutoverJob>>
@@ -226,7 +244,10 @@ VmMigrationTracingConnection::ListCutoverJobs(
 StatusOr<google::cloud::vmmigration::v1::CutoverJob>
 VmMigrationTracingConnection::GetCutoverJob(
     google::cloud::vmmigration::v1::GetCutoverJobRequest const& request) {
-  return child_->GetCutoverJob(request);
+  auto span =
+      internal::MakeSpan("vmmigration::VmMigrationConnection::GetCutoverJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCutoverJob(request));
 }
 
 StreamRange<google::cloud::vmmigration::v1::Group>
@@ -238,7 +259,10 @@ VmMigrationTracingConnection::ListGroups(
 StatusOr<google::cloud::vmmigration::v1::Group>
 VmMigrationTracingConnection::GetGroup(
     google::cloud::vmmigration::v1::GetGroupRequest const& request) {
-  return child_->GetGroup(request);
+  auto span =
+      internal::MakeSpan("vmmigration::VmMigrationConnection::GetGroup");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGroup(request));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::Group>>
@@ -281,7 +305,10 @@ VmMigrationTracingConnection::ListTargetProjects(
 StatusOr<google::cloud::vmmigration::v1::TargetProject>
 VmMigrationTracingConnection::GetTargetProject(
     google::cloud::vmmigration::v1::GetTargetProjectRequest const& request) {
-  return child_->GetTargetProject(request);
+  auto span = internal::MakeSpan(
+      "vmmigration::VmMigrationConnection::GetTargetProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTargetProject(request));
 }
 
 future<StatusOr<google::cloud::vmmigration::v1::TargetProject>>
@@ -311,7 +338,10 @@ VmMigrationTracingConnection::ListReplicationCycles(
 StatusOr<google::cloud::vmmigration::v1::ReplicationCycle>
 VmMigrationTracingConnection::GetReplicationCycle(
     google::cloud::vmmigration::v1::GetReplicationCycleRequest const& request) {
-  return child_->GetReplicationCycle(request);
+  auto span = internal::MakeSpan(
+      "vmmigration::VmMigrationConnection::GetReplicationCycle");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetReplicationCycle(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

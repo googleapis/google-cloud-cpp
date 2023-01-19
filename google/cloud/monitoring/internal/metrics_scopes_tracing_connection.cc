@@ -35,7 +35,10 @@ StatusOr<google::monitoring::metricsscope::v1::MetricsScope>
 MetricsScopesTracingConnection::GetMetricsScope(
     google::monitoring::metricsscope::v1::GetMetricsScopeRequest const&
         request) {
-  return child_->GetMetricsScope(request);
+  auto span = internal::MakeSpan(
+      "monitoring::MetricsScopesConnection::GetMetricsScope");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMetricsScope(request));
 }
 
 StatusOr<google::monitoring::metricsscope::v1::
@@ -43,7 +46,12 @@ StatusOr<google::monitoring::metricsscope::v1::
 MetricsScopesTracingConnection::ListMetricsScopesByMonitoredProject(
     google::monitoring::metricsscope::v1::
         ListMetricsScopesByMonitoredProjectRequest const& request) {
-  return child_->ListMetricsScopesByMonitoredProject(request);
+  auto span = internal::MakeSpan(
+      "monitoring::MetricsScopesConnection::"
+      "ListMetricsScopesByMonitoredProject");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->ListMetricsScopesByMonitoredProject(request));
 }
 
 future<StatusOr<google::monitoring::metricsscope::v1::MonitoredProject>>

@@ -40,36 +40,54 @@ ExperimentsTracingConnection::ListExperiments(
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsTracingConnection::GetExperiment(
     google::cloud::dialogflow::cx::v3::GetExperimentRequest const& request) {
-  return child_->GetExperiment(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::ExperimentsConnection::GetExperiment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetExperiment(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsTracingConnection::CreateExperiment(
     google::cloud::dialogflow::cx::v3::CreateExperimentRequest const& request) {
-  return child_->CreateExperiment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::ExperimentsConnection::CreateExperiment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateExperiment(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsTracingConnection::UpdateExperiment(
     google::cloud::dialogflow::cx::v3::UpdateExperimentRequest const& request) {
-  return child_->UpdateExperiment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::ExperimentsConnection::UpdateExperiment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateExperiment(request));
 }
 
 Status ExperimentsTracingConnection::DeleteExperiment(
     google::cloud::dialogflow::cx::v3::DeleteExperimentRequest const& request) {
-  return child_->DeleteExperiment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::ExperimentsConnection::DeleteExperiment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteExperiment(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsTracingConnection::StartExperiment(
     google::cloud::dialogflow::cx::v3::StartExperimentRequest const& request) {
-  return child_->StartExperiment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::ExperimentsConnection::StartExperiment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->StartExperiment(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::Experiment>
 ExperimentsTracingConnection::StopExperiment(
     google::cloud::dialogflow::cx::v3::StopExperimentRequest const& request) {
-  return child_->StopExperiment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::ExperimentsConnection::StopExperiment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->StopExperiment(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -35,7 +35,10 @@ StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
 BigQueryWriteTracingConnection::CreateWriteStream(
     google::cloud::bigquery::storage::v1::CreateWriteStreamRequest const&
         request) {
-  return child_->CreateWriteStream(request);
+  auto span = internal::MakeSpan(
+      "bigquery::BigQueryWriteConnection::CreateWriteStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateWriteStream(request));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -49,27 +52,39 @@ StatusOr<google::cloud::bigquery::storage::v1::WriteStream>
 BigQueryWriteTracingConnection::GetWriteStream(
     google::cloud::bigquery::storage::v1::GetWriteStreamRequest const&
         request) {
-  return child_->GetWriteStream(request);
+  auto span =
+      internal::MakeSpan("bigquery::BigQueryWriteConnection::GetWriteStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetWriteStream(request));
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FinalizeWriteStreamResponse>
 BigQueryWriteTracingConnection::FinalizeWriteStream(
     google::cloud::bigquery::storage::v1::FinalizeWriteStreamRequest const&
         request) {
-  return child_->FinalizeWriteStream(request);
+  auto span = internal::MakeSpan(
+      "bigquery::BigQueryWriteConnection::FinalizeWriteStream");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FinalizeWriteStream(request));
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsResponse>
 BigQueryWriteTracingConnection::BatchCommitWriteStreams(
     google::cloud::bigquery::storage::v1::BatchCommitWriteStreamsRequest const&
         request) {
-  return child_->BatchCommitWriteStreams(request);
+  auto span = internal::MakeSpan(
+      "bigquery::BigQueryWriteConnection::BatchCommitWriteStreams");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->BatchCommitWriteStreams(request));
 }
 
 StatusOr<google::cloud::bigquery::storage::v1::FlushRowsResponse>
 BigQueryWriteTracingConnection::FlushRows(
     google::cloud::bigquery::storage::v1::FlushRowsRequest const& request) {
-  return child_->FlushRows(request);
+  auto span =
+      internal::MakeSpan("bigquery::BigQueryWriteConnection::FlushRows");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FlushRows(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

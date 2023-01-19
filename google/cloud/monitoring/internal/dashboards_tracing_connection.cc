@@ -34,7 +34,10 @@ DashboardsServiceTracingConnection::DashboardsServiceTracingConnection(
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceTracingConnection::CreateDashboard(
     google::monitoring::dashboard::v1::CreateDashboardRequest const& request) {
-  return child_->CreateDashboard(request);
+  auto span = internal::MakeSpan(
+      "monitoring::DashboardsServiceConnection::CreateDashboard");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateDashboard(request));
 }
 
 StreamRange<google::monitoring::dashboard::v1::Dashboard>
@@ -46,18 +49,27 @@ DashboardsServiceTracingConnection::ListDashboards(
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceTracingConnection::GetDashboard(
     google::monitoring::dashboard::v1::GetDashboardRequest const& request) {
-  return child_->GetDashboard(request);
+  auto span = internal::MakeSpan(
+      "monitoring::DashboardsServiceConnection::GetDashboard");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDashboard(request));
 }
 
 Status DashboardsServiceTracingConnection::DeleteDashboard(
     google::monitoring::dashboard::v1::DeleteDashboardRequest const& request) {
-  return child_->DeleteDashboard(request);
+  auto span = internal::MakeSpan(
+      "monitoring::DashboardsServiceConnection::DeleteDashboard");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteDashboard(request));
 }
 
 StatusOr<google::monitoring::dashboard::v1::Dashboard>
 DashboardsServiceTracingConnection::UpdateDashboard(
     google::monitoring::dashboard::v1::UpdateDashboardRequest const& request) {
-  return child_->UpdateDashboard(request);
+  auto span = internal::MakeSpan(
+      "monitoring::DashboardsServiceConnection::UpdateDashboard");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateDashboard(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

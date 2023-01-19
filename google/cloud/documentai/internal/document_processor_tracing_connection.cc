@@ -35,7 +35,10 @@ DocumentProcessorServiceTracingConnection::
 StatusOr<google::cloud::documentai::v1::ProcessResponse>
 DocumentProcessorServiceTracingConnection::ProcessDocument(
     google::cloud::documentai::v1::ProcessRequest const& request) {
-  return child_->ProcessDocument(request);
+  auto span = internal::MakeSpan(
+      "documentai::DocumentProcessorServiceConnection::ProcessDocument");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ProcessDocument(request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::BatchProcessResponse>>
@@ -47,7 +50,10 @@ DocumentProcessorServiceTracingConnection::BatchProcessDocuments(
 StatusOr<google::cloud::documentai::v1::FetchProcessorTypesResponse>
 DocumentProcessorServiceTracingConnection::FetchProcessorTypes(
     google::cloud::documentai::v1::FetchProcessorTypesRequest const& request) {
-  return child_->FetchProcessorTypes(request);
+  auto span = internal::MakeSpan(
+      "documentai::DocumentProcessorServiceConnection::FetchProcessorTypes");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->FetchProcessorTypes(request));
 }
 
 StreamRange<google::cloud::documentai::v1::ProcessorType>
@@ -65,13 +71,19 @@ DocumentProcessorServiceTracingConnection::ListProcessors(
 StatusOr<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceTracingConnection::GetProcessor(
     google::cloud::documentai::v1::GetProcessorRequest const& request) {
-  return child_->GetProcessor(request);
+  auto span = internal::MakeSpan(
+      "documentai::DocumentProcessorServiceConnection::GetProcessor");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetProcessor(request));
 }
 
 StatusOr<google::cloud::documentai::v1::ProcessorVersion>
 DocumentProcessorServiceTracingConnection::GetProcessorVersion(
     google::cloud::documentai::v1::GetProcessorVersionRequest const& request) {
-  return child_->GetProcessorVersion(request);
+  auto span = internal::MakeSpan(
+      "documentai::DocumentProcessorServiceConnection::GetProcessorVersion");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetProcessorVersion(request));
 }
 
 StreamRange<google::cloud::documentai::v1::ProcessorVersion>
@@ -105,7 +117,10 @@ DocumentProcessorServiceTracingConnection::UndeployProcessorVersion(
 StatusOr<google::cloud::documentai::v1::Processor>
 DocumentProcessorServiceTracingConnection::CreateProcessor(
     google::cloud::documentai::v1::CreateProcessorRequest const& request) {
-  return child_->CreateProcessor(request);
+  auto span = internal::MakeSpan(
+      "documentai::DocumentProcessorServiceConnection::CreateProcessor");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateProcessor(request));
 }
 
 future<StatusOr<google::cloud::documentai::v1::DeleteProcessorMetadata>>

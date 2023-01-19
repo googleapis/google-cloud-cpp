@@ -44,13 +44,17 @@ StreamRange<google::api::apikeys::v2::Key> ApiKeysTracingConnection::ListKeys(
 
 StatusOr<google::api::apikeys::v2::Key> ApiKeysTracingConnection::GetKey(
     google::api::apikeys::v2::GetKeyRequest const& request) {
-  return child_->GetKey(request);
+  auto span = internal::MakeSpan("apikeys::ApiKeysConnection::GetKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetKey(request));
 }
 
 StatusOr<google::api::apikeys::v2::GetKeyStringResponse>
 ApiKeysTracingConnection::GetKeyString(
     google::api::apikeys::v2::GetKeyStringRequest const& request) {
-  return child_->GetKeyString(request);
+  auto span = internal::MakeSpan("apikeys::ApiKeysConnection::GetKeyString");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetKeyString(request));
 }
 
 future<StatusOr<google::api::apikeys::v2::Key>>
@@ -74,7 +78,9 @@ ApiKeysTracingConnection::UndeleteKey(
 StatusOr<google::api::apikeys::v2::LookupKeyResponse>
 ApiKeysTracingConnection::LookupKey(
     google::api::apikeys::v2::LookupKeyRequest const& request) {
-  return child_->LookupKey(request);
+  auto span = internal::MakeSpan("apikeys::ApiKeysConnection::LookupKey");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->LookupKey(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

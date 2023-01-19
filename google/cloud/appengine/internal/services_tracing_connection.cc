@@ -39,7 +39,9 @@ ServicesTracingConnection::ListServices(
 
 StatusOr<google::appengine::v1::Service> ServicesTracingConnection::GetService(
     google::appengine::v1::GetServiceRequest const& request) {
-  return child_->GetService(request);
+  auto span = internal::MakeSpan("appengine::ServicesConnection::GetService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetService(request));
 }
 
 future<StatusOr<google::appengine::v1::Service>>

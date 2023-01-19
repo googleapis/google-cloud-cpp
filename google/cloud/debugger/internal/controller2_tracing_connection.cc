@@ -35,21 +35,30 @@ StatusOr<google::devtools::clouddebugger::v2::RegisterDebuggeeResponse>
 Controller2TracingConnection::RegisterDebuggee(
     google::devtools::clouddebugger::v2::RegisterDebuggeeRequest const&
         request) {
-  return child_->RegisterDebuggee(request);
+  auto span =
+      internal::MakeSpan("debugger::Controller2Connection::RegisterDebuggee");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RegisterDebuggee(request));
 }
 
 StatusOr<google::devtools::clouddebugger::v2::ListActiveBreakpointsResponse>
 Controller2TracingConnection::ListActiveBreakpoints(
     google::devtools::clouddebugger::v2::ListActiveBreakpointsRequest const&
         request) {
-  return child_->ListActiveBreakpoints(request);
+  auto span = internal::MakeSpan(
+      "debugger::Controller2Connection::ListActiveBreakpoints");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListActiveBreakpoints(request));
 }
 
 StatusOr<google::devtools::clouddebugger::v2::UpdateActiveBreakpointResponse>
 Controller2TracingConnection::UpdateActiveBreakpoint(
     google::devtools::clouddebugger::v2::UpdateActiveBreakpointRequest const&
         request) {
-  return child_->UpdateActiveBreakpoint(request);
+  auto span = internal::MakeSpan(
+      "debugger::Controller2Connection::UpdateActiveBreakpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateActiveBreakpoint(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

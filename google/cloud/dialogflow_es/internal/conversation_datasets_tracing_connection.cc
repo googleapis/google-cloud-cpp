@@ -42,7 +42,10 @@ StatusOr<google::cloud::dialogflow::v2::ConversationDataset>
 ConversationDatasetsTracingConnection::GetConversationDataset(
     google::cloud::dialogflow::v2::GetConversationDatasetRequest const&
         request) {
-  return child_->GetConversationDataset(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ConversationDatasetsConnection::GetConversationDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConversationDataset(request));
 }
 
 StreamRange<google::cloud::dialogflow::v2::ConversationDataset>

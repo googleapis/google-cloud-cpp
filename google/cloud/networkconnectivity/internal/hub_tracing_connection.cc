@@ -40,7 +40,10 @@ HubServiceTracingConnection::ListHubs(
 StatusOr<google::cloud::networkconnectivity::v1::Hub>
 HubServiceTracingConnection::GetHub(
     google::cloud::networkconnectivity::v1::GetHubRequest const& request) {
-  return child_->GetHub(request);
+  auto span =
+      internal::MakeSpan("networkconnectivity::HubServiceConnection::GetHub");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetHub(request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Hub>>
@@ -70,7 +73,10 @@ HubServiceTracingConnection::ListSpokes(
 StatusOr<google::cloud::networkconnectivity::v1::Spoke>
 HubServiceTracingConnection::GetSpoke(
     google::cloud::networkconnectivity::v1::GetSpokeRequest const& request) {
-  return child_->GetSpoke(request);
+  auto span =
+      internal::MakeSpan("networkconnectivity::HubServiceConnection::GetSpoke");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSpoke(request));
 }
 
 future<StatusOr<google::cloud::networkconnectivity::v1::Spoke>>

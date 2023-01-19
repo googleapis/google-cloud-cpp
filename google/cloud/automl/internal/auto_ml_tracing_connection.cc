@@ -40,7 +40,9 @@ AutoMlTracingConnection::CreateDataset(
 StatusOr<google::cloud::automl::v1::Dataset>
 AutoMlTracingConnection::GetDataset(
     google::cloud::automl::v1::GetDatasetRequest const& request) {
-  return child_->GetDataset(request);
+  auto span = internal::MakeSpan("automl::AutoMlConnection::GetDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDataset(request));
 }
 
 StreamRange<google::cloud::automl::v1::Dataset>
@@ -52,7 +54,9 @@ AutoMlTracingConnection::ListDatasets(
 StatusOr<google::cloud::automl::v1::Dataset>
 AutoMlTracingConnection::UpdateDataset(
     google::cloud::automl::v1::UpdateDatasetRequest const& request) {
-  return child_->UpdateDataset(request);
+  auto span = internal::MakeSpan("automl::AutoMlConnection::UpdateDataset");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateDataset(request));
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -76,7 +80,9 @@ AutoMlTracingConnection::ExportData(
 StatusOr<google::cloud::automl::v1::AnnotationSpec>
 AutoMlTracingConnection::GetAnnotationSpec(
     google::cloud::automl::v1::GetAnnotationSpecRequest const& request) {
-  return child_->GetAnnotationSpec(request);
+  auto span = internal::MakeSpan("automl::AutoMlConnection::GetAnnotationSpec");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAnnotationSpec(request));
 }
 
 future<StatusOr<google::cloud::automl::v1::Model>>
@@ -87,7 +93,9 @@ AutoMlTracingConnection::CreateModel(
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlTracingConnection::GetModel(
     google::cloud::automl::v1::GetModelRequest const& request) {
-  return child_->GetModel(request);
+  auto span = internal::MakeSpan("automl::AutoMlConnection::GetModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetModel(request));
 }
 
 StreamRange<google::cloud::automl::v1::Model>
@@ -104,7 +112,9 @@ AutoMlTracingConnection::DeleteModel(
 
 StatusOr<google::cloud::automl::v1::Model> AutoMlTracingConnection::UpdateModel(
     google::cloud::automl::v1::UpdateModelRequest const& request) {
-  return child_->UpdateModel(request);
+  auto span = internal::MakeSpan("automl::AutoMlConnection::UpdateModel");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateModel(request));
 }
 
 future<StatusOr<google::cloud::automl::v1::OperationMetadata>>
@@ -128,7 +138,10 @@ AutoMlTracingConnection::ExportModel(
 StatusOr<google::cloud::automl::v1::ModelEvaluation>
 AutoMlTracingConnection::GetModelEvaluation(
     google::cloud::automl::v1::GetModelEvaluationRequest const& request) {
-  return child_->GetModelEvaluation(request);
+  auto span =
+      internal::MakeSpan("automl::AutoMlConnection::GetModelEvaluation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetModelEvaluation(request));
 }
 
 StreamRange<google::cloud::automl::v1::ModelEvaluation>

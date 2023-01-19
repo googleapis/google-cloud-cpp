@@ -34,13 +34,19 @@ FulfillmentsTracingConnection::FulfillmentsTracingConnection(
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsTracingConnection::GetFulfillment(
     google::cloud::dialogflow::v2::GetFulfillmentRequest const& request) {
-  return child_->GetFulfillment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::FulfillmentsConnection::GetFulfillment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFulfillment(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Fulfillment>
 FulfillmentsTracingConnection::UpdateFulfillment(
     google::cloud::dialogflow::v2::UpdateFulfillmentRequest const& request) {
-  return child_->UpdateFulfillment(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::FulfillmentsConnection::UpdateFulfillment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateFulfillment(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

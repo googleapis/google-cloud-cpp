@@ -40,29 +40,44 @@ ContextsTracingConnection::ListContexts(
 StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsTracingConnection::GetContext(
     google::cloud::dialogflow::v2::GetContextRequest const& request) {
-  return child_->GetContext(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::ContextsConnection::GetContext");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetContext(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsTracingConnection::CreateContext(
     google::cloud::dialogflow::v2::CreateContextRequest const& request) {
-  return child_->CreateContext(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::ContextsConnection::CreateContext");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateContext(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Context>
 ContextsTracingConnection::UpdateContext(
     google::cloud::dialogflow::v2::UpdateContextRequest const& request) {
-  return child_->UpdateContext(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::ContextsConnection::UpdateContext");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateContext(request));
 }
 
 Status ContextsTracingConnection::DeleteContext(
     google::cloud::dialogflow::v2::DeleteContextRequest const& request) {
-  return child_->DeleteContext(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::ContextsConnection::DeleteContext");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteContext(request));
 }
 
 Status ContextsTracingConnection::DeleteAllContexts(
     google::cloud::dialogflow::v2::DeleteAllContextsRequest const& request) {
-  return child_->DeleteAllContexts(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ContextsConnection::DeleteAllContexts");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAllContexts(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

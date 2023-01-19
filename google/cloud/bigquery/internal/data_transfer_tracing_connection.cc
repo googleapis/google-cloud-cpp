@@ -35,7 +35,10 @@ StatusOr<google::cloud::bigquery::datatransfer::v1::DataSource>
 DataTransferServiceTracingConnection::GetDataSource(
     google::cloud::bigquery::datatransfer::v1::GetDataSourceRequest const&
         request) {
-  return child_->GetDataSource(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataTransferServiceConnection::GetDataSource");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDataSource(request));
 }
 
 StreamRange<google::cloud::bigquery::datatransfer::v1::DataSource>
@@ -48,27 +51,39 @@ StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DataTransferServiceTracingConnection::CreateTransferConfig(
     google::cloud::bigquery::datatransfer::v1::
         CreateTransferConfigRequest const& request) {
-  return child_->CreateTransferConfig(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataTransferServiceConnection::CreateTransferConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateTransferConfig(request));
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DataTransferServiceTracingConnection::UpdateTransferConfig(
     google::cloud::bigquery::datatransfer::v1::
         UpdateTransferConfigRequest const& request) {
-  return child_->UpdateTransferConfig(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataTransferServiceConnection::UpdateTransferConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateTransferConfig(request));
 }
 
 Status DataTransferServiceTracingConnection::DeleteTransferConfig(
     google::cloud::bigquery::datatransfer::v1::
         DeleteTransferConfigRequest const& request) {
-  return child_->DeleteTransferConfig(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataTransferServiceConnection::DeleteTransferConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTransferConfig(request));
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferConfig>
 DataTransferServiceTracingConnection::GetTransferConfig(
     google::cloud::bigquery::datatransfer::v1::GetTransferConfigRequest const&
         request) {
-  return child_->GetTransferConfig(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataTransferServiceConnection::GetTransferConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTransferConfig(request));
 }
 
 StreamRange<google::cloud::bigquery::datatransfer::v1::TransferConfig>
@@ -83,7 +98,10 @@ StatusOr<
 DataTransferServiceTracingConnection::ScheduleTransferRuns(
     google::cloud::bigquery::datatransfer::v1::
         ScheduleTransferRunsRequest const& request) {
-  return child_->ScheduleTransferRuns(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataTransferServiceConnection::ScheduleTransferRuns");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ScheduleTransferRuns(request));
 }
 
 StatusOr<
@@ -91,20 +109,29 @@ StatusOr<
 DataTransferServiceTracingConnection::StartManualTransferRuns(
     google::cloud::bigquery::datatransfer::v1::
         StartManualTransferRunsRequest const& request) {
-  return child_->StartManualTransferRuns(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataTransferServiceConnection::StartManualTransferRuns");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->StartManualTransferRuns(request));
 }
 
 StatusOr<google::cloud::bigquery::datatransfer::v1::TransferRun>
 DataTransferServiceTracingConnection::GetTransferRun(
     google::cloud::bigquery::datatransfer::v1::GetTransferRunRequest const&
         request) {
-  return child_->GetTransferRun(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataTransferServiceConnection::GetTransferRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetTransferRun(request));
 }
 
 Status DataTransferServiceTracingConnection::DeleteTransferRun(
     google::cloud::bigquery::datatransfer::v1::DeleteTransferRunRequest const&
         request) {
-  return child_->DeleteTransferRun(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataTransferServiceConnection::DeleteTransferRun");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteTransferRun(request));
 }
 
 StreamRange<google::cloud::bigquery::datatransfer::v1::TransferRun>
@@ -125,13 +152,19 @@ StatusOr<google::cloud::bigquery::datatransfer::v1::CheckValidCredsResponse>
 DataTransferServiceTracingConnection::CheckValidCreds(
     google::cloud::bigquery::datatransfer::v1::CheckValidCredsRequest const&
         request) {
-  return child_->CheckValidCreds(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataTransferServiceConnection::CheckValidCreds");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CheckValidCreds(request));
 }
 
 Status DataTransferServiceTracingConnection::EnrollDataSources(
     google::cloud::bigquery::datatransfer::v1::EnrollDataSourcesRequest const&
         request) {
-  return child_->EnrollDataSources(request);
+  auto span = internal::MakeSpan(
+      "bigquery::DataTransferServiceConnection::EnrollDataSources");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->EnrollDataSources(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

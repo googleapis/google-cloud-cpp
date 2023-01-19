@@ -40,24 +40,36 @@ EntityTypesTracingConnection::ListEntityTypes(
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesTracingConnection::GetEntityType(
     google::cloud::dialogflow::v2::GetEntityTypeRequest const& request) {
-  return child_->GetEntityType(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::EntityTypesConnection::GetEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEntityType(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesTracingConnection::CreateEntityType(
     google::cloud::dialogflow::v2::CreateEntityTypeRequest const& request) {
-  return child_->CreateEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::CreateEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateEntityType(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::EntityType>
 EntityTypesTracingConnection::UpdateEntityType(
     google::cloud::dialogflow::v2::UpdateEntityTypeRequest const& request) {
-  return child_->UpdateEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::UpdateEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateEntityType(request));
 }
 
 Status EntityTypesTracingConnection::DeleteEntityType(
     google::cloud::dialogflow::v2::DeleteEntityTypeRequest const& request) {
-  return child_->DeleteEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::EntityTypesConnection::DeleteEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteEntityType(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::BatchUpdateEntityTypesResponse>>

@@ -41,7 +41,10 @@ GameServerConfigsServiceTracingConnection::ListGameServerConfigs(
 StatusOr<google::cloud::gaming::v1::GameServerConfig>
 GameServerConfigsServiceTracingConnection::GetGameServerConfig(
     google::cloud::gaming::v1::GetGameServerConfigRequest const& request) {
-  return child_->GetGameServerConfig(request);
+  auto span = internal::MakeSpan(
+      "gameservices::GameServerConfigsServiceConnection::GetGameServerConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetGameServerConfig(request));
 }
 
 future<StatusOr<google::cloud::gaming::v1::GameServerConfig>>

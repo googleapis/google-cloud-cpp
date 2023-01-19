@@ -33,13 +33,18 @@ TraceServiceTracingConnection::TraceServiceTracingConnection(
 
 Status TraceServiceTracingConnection::BatchWriteSpans(
     google::devtools::cloudtrace::v2::BatchWriteSpansRequest const& request) {
-  return child_->BatchWriteSpans(request);
+  auto span =
+      internal::MakeSpan("trace::TraceServiceConnection::BatchWriteSpans");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->BatchWriteSpans(request));
 }
 
 StatusOr<google::devtools::cloudtrace::v2::Span>
 TraceServiceTracingConnection::CreateSpan(
     google::devtools::cloudtrace::v2::Span const& request) {
-  return child_->CreateSpan(request);
+  auto span = internal::MakeSpan("trace::TraceServiceConnection::CreateSpan");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateSpan(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

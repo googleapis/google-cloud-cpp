@@ -35,7 +35,10 @@ StatusOr<google::cloud::binaryauthorization::v1::Policy>
 SystemPolicyV1TracingConnection::GetSystemPolicy(
     google::cloud::binaryauthorization::v1::GetSystemPolicyRequest const&
         request) {
-  return child_->GetSystemPolicy(request);
+  auto span = internal::MakeSpan(
+      "binaryauthorization::SystemPolicyV1Connection::GetSystemPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSystemPolicy(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

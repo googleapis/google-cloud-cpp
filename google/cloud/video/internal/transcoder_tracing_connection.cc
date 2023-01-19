@@ -34,7 +34,10 @@ TranscoderServiceTracingConnection::TranscoderServiceTracingConnection(
 StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceTracingConnection::CreateJob(
     google::cloud::video::transcoder::v1::CreateJobRequest const& request) {
-  return child_->CreateJob(request);
+  auto span =
+      internal::MakeSpan("video::TranscoderServiceConnection::CreateJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateJob(request));
 }
 
 StreamRange<google::cloud::video::transcoder::v1::Job>
@@ -46,19 +49,27 @@ TranscoderServiceTracingConnection::ListJobs(
 StatusOr<google::cloud::video::transcoder::v1::Job>
 TranscoderServiceTracingConnection::GetJob(
     google::cloud::video::transcoder::v1::GetJobRequest const& request) {
-  return child_->GetJob(request);
+  auto span = internal::MakeSpan("video::TranscoderServiceConnection::GetJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetJob(request));
 }
 
 Status TranscoderServiceTracingConnection::DeleteJob(
     google::cloud::video::transcoder::v1::DeleteJobRequest const& request) {
-  return child_->DeleteJob(request);
+  auto span =
+      internal::MakeSpan("video::TranscoderServiceConnection::DeleteJob");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteJob(request));
 }
 
 StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
 TranscoderServiceTracingConnection::CreateJobTemplate(
     google::cloud::video::transcoder::v1::CreateJobTemplateRequest const&
         request) {
-  return child_->CreateJobTemplate(request);
+  auto span = internal::MakeSpan(
+      "video::TranscoderServiceConnection::CreateJobTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateJobTemplate(request));
 }
 
 StreamRange<google::cloud::video::transcoder::v1::JobTemplate>
@@ -71,13 +82,19 @@ StatusOr<google::cloud::video::transcoder::v1::JobTemplate>
 TranscoderServiceTracingConnection::GetJobTemplate(
     google::cloud::video::transcoder::v1::GetJobTemplateRequest const&
         request) {
-  return child_->GetJobTemplate(request);
+  auto span =
+      internal::MakeSpan("video::TranscoderServiceConnection::GetJobTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetJobTemplate(request));
 }
 
 Status TranscoderServiceTracingConnection::DeleteJobTemplate(
     google::cloud::video::transcoder::v1::DeleteJobTemplateRequest const&
         request) {
-  return child_->DeleteJobTemplate(request);
+  auto span = internal::MakeSpan(
+      "video::TranscoderServiceConnection::DeleteJobTemplate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteJobTemplate(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

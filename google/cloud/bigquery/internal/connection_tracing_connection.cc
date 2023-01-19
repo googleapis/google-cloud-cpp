@@ -35,14 +35,20 @@ StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceTracingConnection::CreateConnection(
     google::cloud::bigquery::connection::v1::CreateConnectionRequest const&
         request) {
-  return child_->CreateConnection(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ConnectionServiceConnection::CreateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateConnection(request));
 }
 
 StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceTracingConnection::GetConnection(
     google::cloud::bigquery::connection::v1::GetConnectionRequest const&
         request) {
-  return child_->GetConnection(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ConnectionServiceConnection::GetConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConnection(request));
 }
 
 StreamRange<google::cloud::bigquery::connection::v1::Connection>
@@ -55,31 +61,46 @@ StatusOr<google::cloud::bigquery::connection::v1::Connection>
 ConnectionServiceTracingConnection::UpdateConnection(
     google::cloud::bigquery::connection::v1::UpdateConnectionRequest const&
         request) {
-  return child_->UpdateConnection(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ConnectionServiceConnection::UpdateConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateConnection(request));
 }
 
 Status ConnectionServiceTracingConnection::DeleteConnection(
     google::cloud::bigquery::connection::v1::DeleteConnectionRequest const&
         request) {
-  return child_->DeleteConnection(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ConnectionServiceConnection::DeleteConnection");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteConnection(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 ConnectionServiceTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span =
+      internal::MakeSpan("bigquery::ConnectionServiceConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 ConnectionServiceTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span =
+      internal::MakeSpan("bigquery::ConnectionServiceConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 ConnectionServiceTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "bigquery::ConnectionServiceConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

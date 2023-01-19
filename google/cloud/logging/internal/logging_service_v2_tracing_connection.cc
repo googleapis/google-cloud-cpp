@@ -33,13 +33,19 @@ LoggingServiceV2TracingConnection::LoggingServiceV2TracingConnection(
 
 Status LoggingServiceV2TracingConnection::DeleteLog(
     google::logging::v2::DeleteLogRequest const& request) {
-  return child_->DeleteLog(request);
+  auto span =
+      internal::MakeSpan("logging::LoggingServiceV2Connection::DeleteLog");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteLog(request));
 }
 
 StatusOr<google::logging::v2::WriteLogEntriesResponse>
 LoggingServiceV2TracingConnection::WriteLogEntries(
     google::logging::v2::WriteLogEntriesRequest const& request) {
-  return child_->WriteLogEntries(request);
+  auto span = internal::MakeSpan(
+      "logging::LoggingServiceV2Connection::WriteLogEntries");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->WriteLogEntries(request));
 }
 
 StreamRange<google::logging::v2::LogEntry>

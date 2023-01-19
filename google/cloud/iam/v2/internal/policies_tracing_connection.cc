@@ -38,7 +38,9 @@ StreamRange<google::iam::v2::Policy> PoliciesTracingConnection::ListPolicies(
 
 StatusOr<google::iam::v2::Policy> PoliciesTracingConnection::GetPolicy(
     google::iam::v2::GetPolicyRequest const& request) {
-  return child_->GetPolicy(request);
+  auto span = internal::MakeSpan("iam_v2::PoliciesConnection::GetPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetPolicy(request));
 }
 
 future<StatusOr<google::iam::v2::Policy>>

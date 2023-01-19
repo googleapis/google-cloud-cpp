@@ -40,7 +40,9 @@ CloudBuildTracingConnection::CreateBuild(
 StatusOr<google::devtools::cloudbuild::v1::Build>
 CloudBuildTracingConnection::GetBuild(
     google::devtools::cloudbuild::v1::GetBuildRequest const& request) {
-  return child_->GetBuild(request);
+  auto span = internal::MakeSpan("cloudbuild::CloudBuildConnection::GetBuild");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBuild(request));
 }
 
 StreamRange<google::devtools::cloudbuild::v1::Build>
@@ -52,7 +54,10 @@ CloudBuildTracingConnection::ListBuilds(
 StatusOr<google::devtools::cloudbuild::v1::Build>
 CloudBuildTracingConnection::CancelBuild(
     google::devtools::cloudbuild::v1::CancelBuildRequest const& request) {
-  return child_->CancelBuild(request);
+  auto span =
+      internal::MakeSpan("cloudbuild::CloudBuildConnection::CancelBuild");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CancelBuild(request));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
@@ -71,13 +76,19 @@ StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildTracingConnection::CreateBuildTrigger(
     google::devtools::cloudbuild::v1::CreateBuildTriggerRequest const&
         request) {
-  return child_->CreateBuildTrigger(request);
+  auto span = internal::MakeSpan(
+      "cloudbuild::CloudBuildConnection::CreateBuildTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateBuildTrigger(request));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildTracingConnection::GetBuildTrigger(
     google::devtools::cloudbuild::v1::GetBuildTriggerRequest const& request) {
-  return child_->GetBuildTrigger(request);
+  auto span =
+      internal::MakeSpan("cloudbuild::CloudBuildConnection::GetBuildTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetBuildTrigger(request));
 }
 
 StreamRange<google::devtools::cloudbuild::v1::BuildTrigger>
@@ -89,14 +100,20 @@ CloudBuildTracingConnection::ListBuildTriggers(
 Status CloudBuildTracingConnection::DeleteBuildTrigger(
     google::devtools::cloudbuild::v1::DeleteBuildTriggerRequest const&
         request) {
-  return child_->DeleteBuildTrigger(request);
+  auto span = internal::MakeSpan(
+      "cloudbuild::CloudBuildConnection::DeleteBuildTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteBuildTrigger(request));
 }
 
 StatusOr<google::devtools::cloudbuild::v1::BuildTrigger>
 CloudBuildTracingConnection::UpdateBuildTrigger(
     google::devtools::cloudbuild::v1::UpdateBuildTriggerRequest const&
         request) {
-  return child_->UpdateBuildTrigger(request);
+  auto span = internal::MakeSpan(
+      "cloudbuild::CloudBuildConnection::UpdateBuildTrigger");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateBuildTrigger(request));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::Build>>
@@ -109,7 +126,10 @@ StatusOr<google::devtools::cloudbuild::v1::ReceiveTriggerWebhookResponse>
 CloudBuildTracingConnection::ReceiveTriggerWebhook(
     google::devtools::cloudbuild::v1::ReceiveTriggerWebhookRequest const&
         request) {
-  return child_->ReceiveTriggerWebhook(request);
+  auto span = internal::MakeSpan(
+      "cloudbuild::CloudBuildConnection::ReceiveTriggerWebhook");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ReceiveTriggerWebhook(request));
 }
 
 future<StatusOr<google::devtools::cloudbuild::v1::WorkerPool>>
@@ -121,7 +141,10 @@ CloudBuildTracingConnection::CreateWorkerPool(
 StatusOr<google::devtools::cloudbuild::v1::WorkerPool>
 CloudBuildTracingConnection::GetWorkerPool(
     google::devtools::cloudbuild::v1::GetWorkerPoolRequest const& request) {
-  return child_->GetWorkerPool(request);
+  auto span =
+      internal::MakeSpan("cloudbuild::CloudBuildConnection::GetWorkerPool");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetWorkerPool(request));
 }
 
 future<StatusOr<

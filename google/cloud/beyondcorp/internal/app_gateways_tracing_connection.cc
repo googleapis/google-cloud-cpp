@@ -42,7 +42,10 @@ StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>
 AppGatewaysServiceTracingConnection::GetAppGateway(
     google::cloud::beyondcorp::appgateways::v1::GetAppGatewayRequest const&
         request) {
-  return child_->GetAppGateway(request);
+  auto span = internal::MakeSpan(
+      "beyondcorp::AppGatewaysServiceConnection::GetAppGateway");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAppGateway(request));
 }
 
 future<StatusOr<google::cloud::beyondcorp::appgateways::v1::AppGateway>>

@@ -40,7 +40,10 @@ CloudFunctionsServiceTracingConnection::ListFunctions(
 StatusOr<google::cloud::functions::v1::CloudFunction>
 CloudFunctionsServiceTracingConnection::GetFunction(
     google::cloud::functions::v1::GetFunctionRequest const& request) {
-  return child_->GetFunction(request);
+  auto span = internal::MakeSpan(
+      "functions::CloudFunctionsServiceConnection::GetFunction");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFunction(request));
 }
 
 future<StatusOr<google::cloud::functions::v1::CloudFunction>>
@@ -64,37 +67,55 @@ CloudFunctionsServiceTracingConnection::DeleteFunction(
 StatusOr<google::cloud::functions::v1::CallFunctionResponse>
 CloudFunctionsServiceTracingConnection::CallFunction(
     google::cloud::functions::v1::CallFunctionRequest const& request) {
-  return child_->CallFunction(request);
+  auto span = internal::MakeSpan(
+      "functions::CloudFunctionsServiceConnection::CallFunction");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CallFunction(request));
 }
 
 StatusOr<google::cloud::functions::v1::GenerateUploadUrlResponse>
 CloudFunctionsServiceTracingConnection::GenerateUploadUrl(
     google::cloud::functions::v1::GenerateUploadUrlRequest const& request) {
-  return child_->GenerateUploadUrl(request);
+  auto span = internal::MakeSpan(
+      "functions::CloudFunctionsServiceConnection::GenerateUploadUrl");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateUploadUrl(request));
 }
 
 StatusOr<google::cloud::functions::v1::GenerateDownloadUrlResponse>
 CloudFunctionsServiceTracingConnection::GenerateDownloadUrl(
     google::cloud::functions::v1::GenerateDownloadUrlRequest const& request) {
-  return child_->GenerateDownloadUrl(request);
+  auto span = internal::MakeSpan(
+      "functions::CloudFunctionsServiceConnection::GenerateDownloadUrl");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateDownloadUrl(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 CloudFunctionsServiceTracingConnection::SetIamPolicy(
     google::iam::v1::SetIamPolicyRequest const& request) {
-  return child_->SetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "functions::CloudFunctionsServiceConnection::SetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::Policy>
 CloudFunctionsServiceTracingConnection::GetIamPolicy(
     google::iam::v1::GetIamPolicyRequest const& request) {
-  return child_->GetIamPolicy(request);
+  auto span = internal::MakeSpan(
+      "functions::CloudFunctionsServiceConnection::GetIamPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetIamPolicy(request));
 }
 
 StatusOr<google::iam::v1::TestIamPermissionsResponse>
 CloudFunctionsServiceTracingConnection::TestIamPermissions(
     google::iam::v1::TestIamPermissionsRequest const& request) {
-  return child_->TestIamPermissions(request);
+  auto span = internal::MakeSpan(
+      "functions::CloudFunctionsServiceConnection::TestIamPermissions");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->TestIamPermissions(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -34,13 +34,19 @@ ParticipantsTracingConnection::ParticipantsTracingConnection(
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsTracingConnection::CreateParticipant(
     google::cloud::dialogflow::v2::CreateParticipantRequest const& request) {
-  return child_->CreateParticipant(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ParticipantsConnection::CreateParticipant");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateParticipant(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsTracingConnection::GetParticipant(
     google::cloud::dialogflow::v2::GetParticipantRequest const& request) {
-  return child_->GetParticipant(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ParticipantsConnection::GetParticipant");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetParticipant(request));
 }
 
 StreamRange<google::cloud::dialogflow::v2::Participant>
@@ -52,13 +58,19 @@ ParticipantsTracingConnection::ListParticipants(
 StatusOr<google::cloud::dialogflow::v2::Participant>
 ParticipantsTracingConnection::UpdateParticipant(
     google::cloud::dialogflow::v2::UpdateParticipantRequest const& request) {
-  return child_->UpdateParticipant(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ParticipantsConnection::UpdateParticipant");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateParticipant(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::AnalyzeContentResponse>
 ParticipantsTracingConnection::AnalyzeContent(
     google::cloud::dialogflow::v2::AnalyzeContentRequest const& request) {
-  return child_->AnalyzeContent(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ParticipantsConnection::AnalyzeContent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->AnalyzeContent(request));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<
@@ -71,19 +83,28 @@ ParticipantsTracingConnection::AsyncStreamingAnalyzeContent() {
 StatusOr<google::cloud::dialogflow::v2::SuggestArticlesResponse>
 ParticipantsTracingConnection::SuggestArticles(
     google::cloud::dialogflow::v2::SuggestArticlesRequest const& request) {
-  return child_->SuggestArticles(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ParticipantsConnection::SuggestArticles");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SuggestArticles(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestFaqAnswersResponse>
 ParticipantsTracingConnection::SuggestFaqAnswers(
     google::cloud::dialogflow::v2::SuggestFaqAnswersRequest const& request) {
-  return child_->SuggestFaqAnswers(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ParticipantsConnection::SuggestFaqAnswers");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SuggestFaqAnswers(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SuggestSmartRepliesResponse>
 ParticipantsTracingConnection::SuggestSmartReplies(
     google::cloud::dialogflow::v2::SuggestSmartRepliesRequest const& request) {
-  return child_->SuggestSmartReplies(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::ParticipantsConnection::SuggestSmartReplies");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->SuggestSmartReplies(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

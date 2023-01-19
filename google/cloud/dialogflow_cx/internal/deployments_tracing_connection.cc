@@ -40,7 +40,10 @@ DeploymentsTracingConnection::ListDeployments(
 StatusOr<google::cloud::dialogflow::cx::v3::Deployment>
 DeploymentsTracingConnection::GetDeployment(
     google::cloud::dialogflow::cx::v3::GetDeploymentRequest const& request) {
-  return child_->GetDeployment(request);
+  auto span =
+      internal::MakeSpan("dialogflow_cx::DeploymentsConnection::GetDeployment");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDeployment(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

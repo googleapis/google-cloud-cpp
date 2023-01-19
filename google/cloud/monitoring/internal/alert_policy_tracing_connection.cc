@@ -40,24 +40,36 @@ AlertPolicyServiceTracingConnection::ListAlertPolicies(
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceTracingConnection::GetAlertPolicy(
     google::monitoring::v3::GetAlertPolicyRequest const& request) {
-  return child_->GetAlertPolicy(request);
+  auto span = internal::MakeSpan(
+      "monitoring::AlertPolicyServiceConnection::GetAlertPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAlertPolicy(request));
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceTracingConnection::CreateAlertPolicy(
     google::monitoring::v3::CreateAlertPolicyRequest const& request) {
-  return child_->CreateAlertPolicy(request);
+  auto span = internal::MakeSpan(
+      "monitoring::AlertPolicyServiceConnection::CreateAlertPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateAlertPolicy(request));
 }
 
 Status AlertPolicyServiceTracingConnection::DeleteAlertPolicy(
     google::monitoring::v3::DeleteAlertPolicyRequest const& request) {
-  return child_->DeleteAlertPolicy(request);
+  auto span = internal::MakeSpan(
+      "monitoring::AlertPolicyServiceConnection::DeleteAlertPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAlertPolicy(request));
 }
 
 StatusOr<google::monitoring::v3::AlertPolicy>
 AlertPolicyServiceTracingConnection::UpdateAlertPolicy(
     google::monitoring::v3::UpdateAlertPolicyRequest const& request) {
-  return child_->UpdateAlertPolicy(request);
+  auto span = internal::MakeSpan(
+      "monitoring::AlertPolicyServiceConnection::UpdateAlertPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateAlertPolicy(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

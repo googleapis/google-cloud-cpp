@@ -40,7 +40,10 @@ DocumentsTracingConnection::ListDocuments(
 StatusOr<google::cloud::dialogflow::v2::Document>
 DocumentsTracingConnection::GetDocument(
     google::cloud::dialogflow::v2::GetDocumentRequest const& request) {
-  return child_->GetDocument(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::DocumentsConnection::GetDocument");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDocument(request));
 }
 
 future<StatusOr<google::cloud::dialogflow::v2::Document>>

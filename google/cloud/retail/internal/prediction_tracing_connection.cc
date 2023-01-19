@@ -34,7 +34,10 @@ PredictionServiceTracingConnection::PredictionServiceTracingConnection(
 StatusOr<google::cloud::retail::v2::PredictResponse>
 PredictionServiceTracingConnection::Predict(
     google::cloud::retail::v2::PredictRequest const& request) {
-  return child_->Predict(request);
+  auto span =
+      internal::MakeSpan("retail::PredictionServiceConnection::Predict");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Predict(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

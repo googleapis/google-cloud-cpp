@@ -41,7 +41,10 @@ StatusOr<google::cloud::certificatemanager::v1::Certificate>
 CertificateManagerTracingConnection::GetCertificate(
     google::cloud::certificatemanager::v1::GetCertificateRequest const&
         request) {
-  return child_->GetCertificate(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager::CertificateManagerConnection::GetCertificate");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCertificate(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::Certificate>>
@@ -75,7 +78,10 @@ StatusOr<google::cloud::certificatemanager::v1::CertificateMap>
 CertificateManagerTracingConnection::GetCertificateMap(
     google::cloud::certificatemanager::v1::GetCertificateMapRequest const&
         request) {
-  return child_->GetCertificateMap(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager::CertificateManagerConnection::GetCertificateMap");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCertificateMap(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMap>>
@@ -110,7 +116,11 @@ StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>
 CertificateManagerTracingConnection::GetCertificateMapEntry(
     google::cloud::certificatemanager::v1::GetCertificateMapEntryRequest const&
         request) {
-  return child_->GetCertificateMapEntry(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager::CertificateManagerConnection::"
+      "GetCertificateMapEntry");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCertificateMapEntry(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::CertificateMapEntry>>
@@ -145,7 +155,10 @@ StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>
 CertificateManagerTracingConnection::GetDnsAuthorization(
     google::cloud::certificatemanager::v1::GetDnsAuthorizationRequest const&
         request) {
-  return child_->GetDnsAuthorization(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager::CertificateManagerConnection::GetDnsAuthorization");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetDnsAuthorization(request));
 }
 
 future<StatusOr<google::cloud::certificatemanager::v1::DnsAuthorization>>
@@ -180,7 +193,12 @@ StatusOr<google::cloud::certificatemanager::v1::CertificateIssuanceConfig>
 CertificateManagerTracingConnection::GetCertificateIssuanceConfig(
     google::cloud::certificatemanager::v1::
         GetCertificateIssuanceConfigRequest const& request) {
-  return child_->GetCertificateIssuanceConfig(request);
+  auto span = internal::MakeSpan(
+      "certificatemanager::CertificateManagerConnection::"
+      "GetCertificateIssuanceConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetCertificateIssuanceConfig(request));
 }
 
 future<

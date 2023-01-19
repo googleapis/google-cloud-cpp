@@ -40,13 +40,19 @@ RecommenderTracingConnection::ListInsights(
 StatusOr<google::cloud::recommender::v1::Insight>
 RecommenderTracingConnection::GetInsight(
     google::cloud::recommender::v1::GetInsightRequest const& request) {
-  return child_->GetInsight(request);
+  auto span =
+      internal::MakeSpan("recommender::RecommenderConnection::GetInsight");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInsight(request));
 }
 
 StatusOr<google::cloud::recommender::v1::Insight>
 RecommenderTracingConnection::MarkInsightAccepted(
     google::cloud::recommender::v1::MarkInsightAcceptedRequest const& request) {
-  return child_->MarkInsightAccepted(request);
+  auto span = internal::MakeSpan(
+      "recommender::RecommenderConnection::MarkInsightAccepted");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->MarkInsightAccepted(request));
 }
 
 StreamRange<google::cloud::recommender::v1::Recommendation>
@@ -58,56 +64,80 @@ RecommenderTracingConnection::ListRecommendations(
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderTracingConnection::GetRecommendation(
     google::cloud::recommender::v1::GetRecommendationRequest const& request) {
-  return child_->GetRecommendation(request);
+  auto span = internal::MakeSpan(
+      "recommender::RecommenderConnection::GetRecommendation");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRecommendation(request));
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderTracingConnection::MarkRecommendationClaimed(
     google::cloud::recommender::v1::MarkRecommendationClaimedRequest const&
         request) {
-  return child_->MarkRecommendationClaimed(request);
+  auto span = internal::MakeSpan(
+      "recommender::RecommenderConnection::MarkRecommendationClaimed");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->MarkRecommendationClaimed(request));
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderTracingConnection::MarkRecommendationSucceeded(
     google::cloud::recommender::v1::MarkRecommendationSucceededRequest const&
         request) {
-  return child_->MarkRecommendationSucceeded(request);
+  auto span = internal::MakeSpan(
+      "recommender::RecommenderConnection::MarkRecommendationSucceeded");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->MarkRecommendationSucceeded(request));
 }
 
 StatusOr<google::cloud::recommender::v1::Recommendation>
 RecommenderTracingConnection::MarkRecommendationFailed(
     google::cloud::recommender::v1::MarkRecommendationFailedRequest const&
         request) {
-  return child_->MarkRecommendationFailed(request);
+  auto span = internal::MakeSpan(
+      "recommender::RecommenderConnection::MarkRecommendationFailed");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->MarkRecommendationFailed(request));
 }
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
 RecommenderTracingConnection::GetRecommenderConfig(
     google::cloud::recommender::v1::GetRecommenderConfigRequest const&
         request) {
-  return child_->GetRecommenderConfig(request);
+  auto span = internal::MakeSpan(
+      "recommender::RecommenderConnection::GetRecommenderConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetRecommenderConfig(request));
 }
 
 StatusOr<google::cloud::recommender::v1::RecommenderConfig>
 RecommenderTracingConnection::UpdateRecommenderConfig(
     google::cloud::recommender::v1::UpdateRecommenderConfigRequest const&
         request) {
-  return child_->UpdateRecommenderConfig(request);
+  auto span = internal::MakeSpan(
+      "recommender::RecommenderConnection::UpdateRecommenderConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateRecommenderConfig(request));
 }
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
 RecommenderTracingConnection::GetInsightTypeConfig(
     google::cloud::recommender::v1::GetInsightTypeConfigRequest const&
         request) {
-  return child_->GetInsightTypeConfig(request);
+  auto span = internal::MakeSpan(
+      "recommender::RecommenderConnection::GetInsightTypeConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetInsightTypeConfig(request));
 }
 
 StatusOr<google::cloud::recommender::v1::InsightTypeConfig>
 RecommenderTracingConnection::UpdateInsightTypeConfig(
     google::cloud::recommender::v1::UpdateInsightTypeConfigRequest const&
         request) {
-  return child_->UpdateInsightTypeConfig(request);
+  auto span = internal::MakeSpan(
+      "recommender::RecommenderConnection::UpdateInsightTypeConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateInsightTypeConfig(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

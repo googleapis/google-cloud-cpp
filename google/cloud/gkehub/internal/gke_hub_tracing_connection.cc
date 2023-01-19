@@ -46,13 +46,17 @@ GkeHubTracingConnection::ListFeatures(
 StatusOr<google::cloud::gkehub::v1::Membership>
 GkeHubTracingConnection::GetMembership(
     google::cloud::gkehub::v1::GetMembershipRequest const& request) {
-  return child_->GetMembership(request);
+  auto span = internal::MakeSpan("gkehub::GkeHubConnection::GetMembership");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetMembership(request));
 }
 
 StatusOr<google::cloud::gkehub::v1::Feature>
 GkeHubTracingConnection::GetFeature(
     google::cloud::gkehub::v1::GetFeatureRequest const& request) {
-  return child_->GetFeature(request);
+  auto span = internal::MakeSpan("gkehub::GkeHubConnection::GetFeature");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetFeature(request));
 }
 
 future<StatusOr<google::cloud::gkehub::v1::Membership>>
@@ -94,7 +98,10 @@ GkeHubTracingConnection::UpdateFeature(
 StatusOr<google::cloud::gkehub::v1::GenerateConnectManifestResponse>
 GkeHubTracingConnection::GenerateConnectManifest(
     google::cloud::gkehub::v1::GenerateConnectManifestRequest const& request) {
-  return child_->GenerateConnectManifest(request);
+  auto span =
+      internal::MakeSpan("gkehub::GkeHubConnection::GenerateConnectManifest");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateConnectManifest(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

@@ -36,20 +36,29 @@ StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceTracingConnection::CreateAutoscalingPolicy(
     google::cloud::dataproc::v1::CreateAutoscalingPolicyRequest const&
         request) {
-  return child_->CreateAutoscalingPolicy(request);
+  auto span = internal::MakeSpan(
+      "dataproc::AutoscalingPolicyServiceConnection::CreateAutoscalingPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateAutoscalingPolicy(request));
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceTracingConnection::UpdateAutoscalingPolicy(
     google::cloud::dataproc::v1::UpdateAutoscalingPolicyRequest const&
         request) {
-  return child_->UpdateAutoscalingPolicy(request);
+  auto span = internal::MakeSpan(
+      "dataproc::AutoscalingPolicyServiceConnection::UpdateAutoscalingPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateAutoscalingPolicy(request));
 }
 
 StatusOr<google::cloud::dataproc::v1::AutoscalingPolicy>
 AutoscalingPolicyServiceTracingConnection::GetAutoscalingPolicy(
     google::cloud::dataproc::v1::GetAutoscalingPolicyRequest const& request) {
-  return child_->GetAutoscalingPolicy(request);
+  auto span = internal::MakeSpan(
+      "dataproc::AutoscalingPolicyServiceConnection::GetAutoscalingPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetAutoscalingPolicy(request));
 }
 
 StreamRange<google::cloud::dataproc::v1::AutoscalingPolicy>
@@ -61,7 +70,10 @@ AutoscalingPolicyServiceTracingConnection::ListAutoscalingPolicies(
 Status AutoscalingPolicyServiceTracingConnection::DeleteAutoscalingPolicy(
     google::cloud::dataproc::v1::DeleteAutoscalingPolicyRequest const&
         request) {
-  return child_->DeleteAutoscalingPolicy(request);
+  auto span = internal::MakeSpan(
+      "dataproc::AutoscalingPolicyServiceConnection::DeleteAutoscalingPolicy");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteAutoscalingPolicy(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

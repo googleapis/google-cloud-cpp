@@ -40,7 +40,9 @@ WorkflowsTracingConnection::ListWorkflows(
 StatusOr<google::cloud::workflows::v1::Workflow>
 WorkflowsTracingConnection::GetWorkflow(
     google::cloud::workflows::v1::GetWorkflowRequest const& request) {
-  return child_->GetWorkflow(request);
+  auto span = internal::MakeSpan("workflows::WorkflowsConnection::GetWorkflow");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetWorkflow(request));
 }
 
 future<StatusOr<google::cloud::workflows::v1::Workflow>>

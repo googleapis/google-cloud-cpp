@@ -40,27 +40,39 @@ SessionEntityTypesTracingConnection::ListSessionEntityTypes(
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 SessionEntityTypesTracingConnection::GetSessionEntityType(
     google::cloud::dialogflow::v2::GetSessionEntityTypeRequest const& request) {
-  return child_->GetSessionEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::SessionEntityTypesConnection::GetSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSessionEntityType(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 SessionEntityTypesTracingConnection::CreateSessionEntityType(
     google::cloud::dialogflow::v2::CreateSessionEntityTypeRequest const&
         request) {
-  return child_->CreateSessionEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::SessionEntityTypesConnection::CreateSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateSessionEntityType(request));
 }
 
 StatusOr<google::cloud::dialogflow::v2::SessionEntityType>
 SessionEntityTypesTracingConnection::UpdateSessionEntityType(
     google::cloud::dialogflow::v2::UpdateSessionEntityTypeRequest const&
         request) {
-  return child_->UpdateSessionEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::SessionEntityTypesConnection::UpdateSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateSessionEntityType(request));
 }
 
 Status SessionEntityTypesTracingConnection::DeleteSessionEntityType(
     google::cloud::dialogflow::v2::DeleteSessionEntityTypeRequest const&
         request) {
-  return child_->DeleteSessionEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_es::SessionEntityTypesConnection::DeleteSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteSessionEntityType(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

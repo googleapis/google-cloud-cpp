@@ -46,7 +46,10 @@ ServiceUsageTracingConnection::DisableService(
 StatusOr<google::api::serviceusage::v1::Service>
 ServiceUsageTracingConnection::GetService(
     google::api::serviceusage::v1::GetServiceRequest const& request) {
-  return child_->GetService(request);
+  auto span =
+      internal::MakeSpan("serviceusage::ServiceUsageConnection::GetService");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetService(request));
 }
 
 StreamRange<google::api::serviceusage::v1::Service>
@@ -64,7 +67,10 @@ ServiceUsageTracingConnection::BatchEnableServices(
 StatusOr<google::api::serviceusage::v1::BatchGetServicesResponse>
 ServiceUsageTracingConnection::BatchGetServices(
     google::api::serviceusage::v1::BatchGetServicesRequest const& request) {
-  return child_->BatchGetServices(request);
+  auto span = internal::MakeSpan(
+      "serviceusage::ServiceUsageConnection::BatchGetServices");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->BatchGetServices(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY

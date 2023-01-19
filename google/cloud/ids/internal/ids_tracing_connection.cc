@@ -39,7 +39,9 @@ IDSTracingConnection::ListEndpoints(
 
 StatusOr<google::cloud::ids::v1::Endpoint> IDSTracingConnection::GetEndpoint(
     google::cloud::ids::v1::GetEndpointRequest const& request) {
-  return child_->GetEndpoint(request);
+  auto span = internal::MakeSpan("ids::IDSConnection::GetEndpoint");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEndpoint(request));
 }
 
 future<StatusOr<google::cloud::ids::v1::Endpoint>>

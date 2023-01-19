@@ -64,7 +64,10 @@ ClusterControllerTracingConnection::DeleteCluster(
 StatusOr<google::cloud::dataproc::v1::Cluster>
 ClusterControllerTracingConnection::GetCluster(
     google::cloud::dataproc::v1::GetClusterRequest const& request) {
-  return child_->GetCluster(request);
+  auto span =
+      internal::MakeSpan("dataproc::ClusterControllerConnection::GetCluster");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCluster(request));
 }
 
 StreamRange<google::cloud::dataproc::v1::Cluster>

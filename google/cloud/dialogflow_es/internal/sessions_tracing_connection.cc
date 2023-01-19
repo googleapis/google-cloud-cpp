@@ -34,7 +34,10 @@ SessionsTracingConnection::SessionsTracingConnection(
 StatusOr<google::cloud::dialogflow::v2::DetectIntentResponse>
 SessionsTracingConnection::DetectIntent(
     google::cloud::dialogflow::v2::DetectIntentRequest const& request) {
-  return child_->DetectIntent(request);
+  auto span =
+      internal::MakeSpan("dialogflow_es::SessionsConnection::DetectIntent");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DetectIntent(request));
 }
 
 std::unique_ptr<::google::cloud::AsyncStreamingReadWriteRpc<

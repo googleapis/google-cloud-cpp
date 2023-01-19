@@ -40,7 +40,10 @@ VpcAccessServiceTracingConnection::CreateConnector(
 StatusOr<google::cloud::vpcaccess::v1::Connector>
 VpcAccessServiceTracingConnection::GetConnector(
     google::cloud::vpcaccess::v1::GetConnectorRequest const& request) {
-  return child_->GetConnector(request);
+  auto span =
+      internal::MakeSpan("vpcaccess::VpcAccessServiceConnection::GetConnector");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetConnector(request));
 }
 
 StreamRange<google::cloud::vpcaccess::v1::Connector>

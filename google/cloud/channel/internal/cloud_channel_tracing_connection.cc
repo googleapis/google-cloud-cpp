@@ -40,37 +40,57 @@ CloudChannelServiceTracingConnection::ListCustomers(
 StatusOr<google::cloud::channel::v1::Customer>
 CloudChannelServiceTracingConnection::GetCustomer(
     google::cloud::channel::v1::GetCustomerRequest const& request) {
-  return child_->GetCustomer(request);
+  auto span =
+      internal::MakeSpan("channel::CloudChannelServiceConnection::GetCustomer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCustomer(request));
 }
 
 StatusOr<google::cloud::channel::v1::CheckCloudIdentityAccountsExistResponse>
 CloudChannelServiceTracingConnection::CheckCloudIdentityAccountsExist(
     google::cloud::channel::v1::CheckCloudIdentityAccountsExistRequest const&
         request) {
-  return child_->CheckCloudIdentityAccountsExist(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::"
+      "CheckCloudIdentityAccountsExist");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->CheckCloudIdentityAccountsExist(request));
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
 CloudChannelServiceTracingConnection::CreateCustomer(
     google::cloud::channel::v1::CreateCustomerRequest const& request) {
-  return child_->CreateCustomer(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::CreateCustomer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateCustomer(request));
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
 CloudChannelServiceTracingConnection::UpdateCustomer(
     google::cloud::channel::v1::UpdateCustomerRequest const& request) {
-  return child_->UpdateCustomer(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::UpdateCustomer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateCustomer(request));
 }
 
 Status CloudChannelServiceTracingConnection::DeleteCustomer(
     google::cloud::channel::v1::DeleteCustomerRequest const& request) {
-  return child_->DeleteCustomer(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::DeleteCustomer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteCustomer(request));
 }
 
 StatusOr<google::cloud::channel::v1::Customer>
 CloudChannelServiceTracingConnection::ImportCustomer(
     google::cloud::channel::v1::ImportCustomerRequest const& request) {
-  return child_->ImportCustomer(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::ImportCustomer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ImportCustomer(request));
 }
 
 future<StatusOr<google::cloud::channel::v1::Customer>>
@@ -100,7 +120,10 @@ CloudChannelServiceTracingConnection::ListTransferableOffers(
 StatusOr<google::cloud::channel::v1::Entitlement>
 CloudChannelServiceTracingConnection::GetEntitlement(
     google::cloud::channel::v1::GetEntitlementRequest const& request) {
-  return child_->GetEntitlement(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::GetEntitlement");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetEntitlement(request));
 }
 
 future<StatusOr<google::cloud::channel::v1::Entitlement>>
@@ -173,28 +196,40 @@ CloudChannelServiceTracingConnection::ListChannelPartnerLinks(
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
 CloudChannelServiceTracingConnection::GetChannelPartnerLink(
     google::cloud::channel::v1::GetChannelPartnerLinkRequest const& request) {
-  return child_->GetChannelPartnerLink(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::GetChannelPartnerLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetChannelPartnerLink(request));
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
 CloudChannelServiceTracingConnection::CreateChannelPartnerLink(
     google::cloud::channel::v1::CreateChannelPartnerLinkRequest const&
         request) {
-  return child_->CreateChannelPartnerLink(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::CreateChannelPartnerLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateChannelPartnerLink(request));
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerLink>
 CloudChannelServiceTracingConnection::UpdateChannelPartnerLink(
     google::cloud::channel::v1::UpdateChannelPartnerLinkRequest const&
         request) {
-  return child_->UpdateChannelPartnerLink(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::UpdateChannelPartnerLink");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateChannelPartnerLink(request));
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
 CloudChannelServiceTracingConnection::GetCustomerRepricingConfig(
     google::cloud::channel::v1::GetCustomerRepricingConfigRequest const&
         request) {
-  return child_->GetCustomerRepricingConfig(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::GetCustomerRepricingConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetCustomerRepricingConfig(request));
 }
 
 StreamRange<google::cloud::channel::v1::CustomerRepricingConfig>
@@ -207,27 +242,44 @@ StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
 CloudChannelServiceTracingConnection::CreateCustomerRepricingConfig(
     google::cloud::channel::v1::CreateCustomerRepricingConfigRequest const&
         request) {
-  return child_->CreateCustomerRepricingConfig(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::CreateCustomerRepricingConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->CreateCustomerRepricingConfig(request));
 }
 
 StatusOr<google::cloud::channel::v1::CustomerRepricingConfig>
 CloudChannelServiceTracingConnection::UpdateCustomerRepricingConfig(
     google::cloud::channel::v1::UpdateCustomerRepricingConfigRequest const&
         request) {
-  return child_->UpdateCustomerRepricingConfig(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::UpdateCustomerRepricingConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->UpdateCustomerRepricingConfig(request));
 }
 
 Status CloudChannelServiceTracingConnection::DeleteCustomerRepricingConfig(
     google::cloud::channel::v1::DeleteCustomerRepricingConfigRequest const&
         request) {
-  return child_->DeleteCustomerRepricingConfig(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::DeleteCustomerRepricingConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->DeleteCustomerRepricingConfig(request));
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 CloudChannelServiceTracingConnection::GetChannelPartnerRepricingConfig(
     google::cloud::channel::v1::GetChannelPartnerRepricingConfigRequest const&
         request) {
-  return child_->GetChannelPartnerRepricingConfig(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::"
+      "GetChannelPartnerRepricingConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span,
+                           child_->GetChannelPartnerRepricingConfig(request));
 }
 
 StreamRange<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
@@ -241,27 +293,45 @@ StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 CloudChannelServiceTracingConnection::CreateChannelPartnerRepricingConfig(
     google::cloud::channel::v1::
         CreateChannelPartnerRepricingConfigRequest const& request) {
-  return child_->CreateChannelPartnerRepricingConfig(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::"
+      "CreateChannelPartnerRepricingConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->CreateChannelPartnerRepricingConfig(request));
 }
 
 StatusOr<google::cloud::channel::v1::ChannelPartnerRepricingConfig>
 CloudChannelServiceTracingConnection::UpdateChannelPartnerRepricingConfig(
     google::cloud::channel::v1::
         UpdateChannelPartnerRepricingConfigRequest const& request) {
-  return child_->UpdateChannelPartnerRepricingConfig(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::"
+      "UpdateChannelPartnerRepricingConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->UpdateChannelPartnerRepricingConfig(request));
 }
 
 Status
 CloudChannelServiceTracingConnection::DeleteChannelPartnerRepricingConfig(
     google::cloud::channel::v1::
         DeleteChannelPartnerRepricingConfigRequest const& request) {
-  return child_->DeleteChannelPartnerRepricingConfig(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::"
+      "DeleteChannelPartnerRepricingConfig");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(
+      *span, child_->DeleteChannelPartnerRepricingConfig(request));
 }
 
 StatusOr<google::cloud::channel::v1::Offer>
 CloudChannelServiceTracingConnection::LookupOffer(
     google::cloud::channel::v1::LookupOfferRequest const& request) {
-  return child_->LookupOffer(request);
+  auto span =
+      internal::MakeSpan("channel::CloudChannelServiceConnection::LookupOffer");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->LookupOffer(request));
 }
 
 StreamRange<google::cloud::channel::v1::Product>
@@ -297,13 +367,19 @@ CloudChannelServiceTracingConnection::ListPurchasableOffers(
 StatusOr<google::cloud::channel::v1::RegisterSubscriberResponse>
 CloudChannelServiceTracingConnection::RegisterSubscriber(
     google::cloud::channel::v1::RegisterSubscriberRequest const& request) {
-  return child_->RegisterSubscriber(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::RegisterSubscriber");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->RegisterSubscriber(request));
 }
 
 StatusOr<google::cloud::channel::v1::UnregisterSubscriberResponse>
 CloudChannelServiceTracingConnection::UnregisterSubscriber(
     google::cloud::channel::v1::UnregisterSubscriberRequest const& request) {
-  return child_->UnregisterSubscriber(request);
+  auto span = internal::MakeSpan(
+      "channel::CloudChannelServiceConnection::UnregisterSubscriber");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UnregisterSubscriber(request));
 }
 
 StreamRange<std::string> CloudChannelServiceTracingConnection::ListSubscribers(

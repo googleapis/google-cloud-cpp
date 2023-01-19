@@ -41,27 +41,39 @@ StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesTracingConnection::GetSessionEntityType(
     google::cloud::dialogflow::cx::v3::GetSessionEntityTypeRequest const&
         request) {
-  return child_->GetSessionEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::SessionEntityTypesConnection::GetSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GetSessionEntityType(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesTracingConnection::CreateSessionEntityType(
     google::cloud::dialogflow::cx::v3::CreateSessionEntityTypeRequest const&
         request) {
-  return child_->CreateSessionEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::SessionEntityTypesConnection::CreateSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->CreateSessionEntityType(request));
 }
 
 StatusOr<google::cloud::dialogflow::cx::v3::SessionEntityType>
 SessionEntityTypesTracingConnection::UpdateSessionEntityType(
     google::cloud::dialogflow::cx::v3::UpdateSessionEntityTypeRequest const&
         request) {
-  return child_->UpdateSessionEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::SessionEntityTypesConnection::UpdateSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->UpdateSessionEntityType(request));
 }
 
 Status SessionEntityTypesTracingConnection::DeleteSessionEntityType(
     google::cloud::dialogflow::cx::v3::DeleteSessionEntityTypeRequest const&
         request) {
-  return child_->DeleteSessionEntityType(request);
+  auto span = internal::MakeSpan(
+      "dialogflow_cx::SessionEntityTypesConnection::DeleteSessionEntityType");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DeleteSessionEntityType(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
