@@ -33,17 +33,23 @@ GoldenKitchenSinkTracingConnection::GoldenKitchenSinkTracingConnection(
 
 StatusOr<google::test::admin::database::v1::GenerateAccessTokenResponse>
 GoldenKitchenSinkTracingConnection::GenerateAccessToken(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-  return child_->GenerateAccessToken(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::GenerateAccessToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateAccessToken(request));
 }
 
 StatusOr<google::test::admin::database::v1::GenerateIdTokenResponse>
 GoldenKitchenSinkTracingConnection::GenerateIdToken(google::test::admin::database::v1::GenerateIdTokenRequest const& request) {
-  return child_->GenerateIdToken(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::GenerateIdToken");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->GenerateIdToken(request));
 }
 
 StatusOr<google::test::admin::database::v1::WriteLogEntriesResponse>
 GoldenKitchenSinkTracingConnection::WriteLogEntries(google::test::admin::database::v1::WriteLogEntriesRequest const& request) {
-  return child_->WriteLogEntries(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::WriteLogEntries");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->WriteLogEntries(request));
 }
 
 StreamRange<std::string>
@@ -53,17 +59,23 @@ GoldenKitchenSinkTracingConnection::ListLogs(google::test::admin::database::v1::
 
 StatusOr<google::test::admin::database::v1::ListServiceAccountKeysResponse>
 GoldenKitchenSinkTracingConnection::ListServiceAccountKeys(google::test::admin::database::v1::ListServiceAccountKeysRequest const& request) {
-  return child_->ListServiceAccountKeys(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::ListServiceAccountKeys");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ListServiceAccountKeys(request));
 }
 
 Status
 GoldenKitchenSinkTracingConnection::DoNothing(google::protobuf::Empty const& request) {
-  return child_->DoNothing(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::DoNothing");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->DoNothing(request));
 }
 
 Status
 GoldenKitchenSinkTracingConnection::Deprecated2(google::test::admin::database::v1::GenerateAccessTokenRequest const& request) {
-  return child_->Deprecated2(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::Deprecated2");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->Deprecated2(request));
 }
 
 StreamRange<google::test::admin::database::v1::Response>
@@ -79,12 +91,16 @@ GoldenKitchenSinkTracingConnection::AsyncStreamingReadWrite() {
 
 Status
 GoldenKitchenSinkTracingConnection::ExplicitRouting1(google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-  return child_->ExplicitRouting1(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::ExplicitRouting1");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ExplicitRouting1(request));
 }
 
 Status
 GoldenKitchenSinkTracingConnection::ExplicitRouting2(google::test::admin::database::v1::ExplicitRoutingRequest const& request) {
-  return child_->ExplicitRouting2(request);
+  auto span = internal::MakeSpan("golden_v1::GoldenKitchenSinkConnection::ExplicitRouting2");
+  auto scope = opentelemetry::trace::Scope(span);
+  return internal::EndSpan(*span, child_->ExplicitRouting2(request));
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
