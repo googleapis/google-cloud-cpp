@@ -77,6 +77,7 @@ set(GOOGLE_CLOUD_CPP_GA_LIBRARIES
     "gameservices"
     "gkehub"
     "gkemulticloud"
+    "iam"
     "iap"
     "ids"
     "iot"
