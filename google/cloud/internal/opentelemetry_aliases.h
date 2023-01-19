@@ -34,7 +34,9 @@ using Span = opentelemetry::nostd::shared_ptr<opentelemetry::trace::Span>;
 using ScopedSpan = opentelemetry::trace::Scope;
 #else
 using Span = std::nullptr_t;
-using ScopedSpan = std::nullptr_t;
+struct ScopedSpan {
+  explicit ScopedSpan(Span) {}
+};
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 Span CurrentSpan();

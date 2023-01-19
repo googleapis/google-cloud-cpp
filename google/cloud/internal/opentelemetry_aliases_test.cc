@@ -47,7 +47,6 @@ TEST(CurrentSpan, WithoutOpenTelemetry) {
   Span span = CurrentSpan();
   ScopedSpan scope(span);
   EXPECT_EQ(span, nullptr);
-  EXPECT_EQ(scope, nullptr);
 }
 
 #endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
