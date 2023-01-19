@@ -28,7 +28,6 @@ export CXX=clang++
 INSTALL_PREFIX="$(mktemp -d)"
 readonly INSTALL_PREFIX
 
-read -r ENABLED_FEATURES < <(features::list_full_cmake)
 mapfile -t cmake_args < <(cmake::common_args)
 
 # Compiles and installs all libraries and headers.
@@ -37,7 +36,7 @@ cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
   -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
+  -DGOOGLE_CLOUD_CPP_ENABLE="__ga_libraries__,__experimental_libraries__"
 cmake --build cmake-out
 cmake --install cmake-out --component google_cloud_cpp_development
 

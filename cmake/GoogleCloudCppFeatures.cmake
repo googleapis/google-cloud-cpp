@@ -139,6 +139,17 @@ export_list_to_bazel(
 # Handle the dependencies between features. That is, if feature "X" is enabled
 # also enable feature "Y" because "X" depends on "Y".
 function (google_cloud_cpp_enable_deps)
+    if (__ga_libraries__ IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE __ga_libraries__)
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE ${GOOGLE_CLOUD_CPP_GA_LIBRARIES})
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE
+             ${GOOGLE_CLOUD_CPP_TRANSITION_LIBRARIES})
+    endif ()
+    if (__experimental_libraries__ IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
+        list(REMOVE_ITEM GOOGLE_CLOUD_CPP_ENABLE __experimental_libraries__)
+        list(APPEND GOOGLE_CLOUD_CPP_ENABLE
+             ${GOOGLE_CLOUD_CPP_EXPERIMENTAL_LIBRARIES})
+    endif ()
     if (asset IN_LIST GOOGLE_CLOUD_CPP_ENABLE)
         list(INSERT GOOGLE_CLOUD_CPP_ENABLE 0 accesscontextmanager osconfig)
     endif ()
