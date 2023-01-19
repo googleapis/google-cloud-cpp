@@ -373,6 +373,7 @@ function (google_cloud_cpp_proto_library libname)
     endif ()
 
     add_library(${libname} ${proto_sources})
+    target_compile_features(${libname} PUBLIC cxx_std_14)
     set_property(TARGET ${libname} PROPERTY PROTO_SOURCES
                                             ${_opt_UNPARSED_ARGUMENTS})
     target_link_libraries(${libname} PUBLIC gRPC::grpc++ gRPC::grpc
