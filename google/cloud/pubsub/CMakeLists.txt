@@ -261,7 +261,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         testing/fake_streaming_pull.h
         testing/mock_batch_sink.h
         testing/mock_publisher_stub.h
-        testing/mock_schema_stub.h
         testing/mock_subscriber_stub.h
         testing/mock_subscription_batch_source.h
         testing/mock_subscription_message_source.h
