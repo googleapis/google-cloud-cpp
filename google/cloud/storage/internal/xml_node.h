@@ -16,6 +16,9 @@
 #define GOOGLE_CLOUD_CPP_GOOGLE_CLOUD_STORAGE_INTERNAL_XML_NODE_H
 
 #include "google/cloud/storage/version.h"
+#include "google/cloud/options.h"
+#include "google/cloud/status_or.h"
+#include "absl/strings/string_view.h"
 #include <memory>
 #include <string>
 #include <vector>
@@ -45,8 +48,26 @@ class XmlNode : public std::enable_shared_from_this<XmlNode> {
 
   /// Create a root node.
   static std::shared_ptr<XmlNode> CreateRoot() {
-    return std::shared_ptr<XmlNode>{new XmlNode()};
+    return std::shared_ptr<XmlNode>{new XmlNode};
   }
+
+  /**
+   * Parses the given string and returns an XML tree.
+   *
+   * Note: This is not a general purpose XML parser. It is only intended to
+   * parse XML responses from the [GCS MPU]. It does not support many XML
+   * features.
+   *
+   * As a defence to DOS type attacks, it has several limits. The default values
+   * of these limits are large enough for API responses from [GCS MPU], but in
+   * case you need to configure these limits, use the following options:
+   * `XmlParserMaxSourceSize`, `XmlParserMaxNodeCount`, and
+   * `XmlParserMaxNodeDepth`. See
+   * `google::cloud::storage::internal::xml_parser_options.h` for the default
+   * values of these limits.
+   */
+  static StatusOr<std::shared_ptr<XmlNode>> Parse(absl::string_view content,
+                                                  Options = {});
 
   /// Get the tag name.
   std::string GetTagName() const { return tag_name_; };
