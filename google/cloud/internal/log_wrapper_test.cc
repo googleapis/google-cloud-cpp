@@ -205,6 +205,7 @@ TEST(LogWrapper, FutureStatusWithContextAndCQ) {
 }
 
 struct TestContext {};
+
 /// @test the overload for functions returning FutureStatusOr and using
 /// CompletionQueue as input
 TEST(LogWrapper, FutureStatusOrValueWithTestContextAndCQ) {

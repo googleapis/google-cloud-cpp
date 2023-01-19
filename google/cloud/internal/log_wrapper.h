@@ -265,9 +265,6 @@ Result LogWrapper(Functor&& functor, google::cloud::CompletionQueue& cq,
   auto prefix = std::string(where) + "(" + RequestIdForLogging() + ")";
   GCP_LOG(DEBUG) << prefix << " << " << DebugString(request, options);
   auto response = functor(cq, context, request);
-  // Ideally we would have an ID to match the request with the asynchronous
-  // response, but for functions with this signature there is nothing that comes
-  // to mind.
   GCP_LOG(DEBUG) << prefix << " >> future_status="
                  << DebugFutureStatus(
                         response.wait_for(std::chrono::microseconds(0)));
