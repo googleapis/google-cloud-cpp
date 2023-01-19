@@ -15,10 +15,14 @@
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_tracing_connection.h"
 #include "google/cloud/mocks/mock_stream_range.h"
 #include "google/cloud/internal/make_status.h"
+#include "google/cloud/testing_util/opentelemetry_matchers.h"
 #include "google/cloud/testing_util/status_matchers.h"
 #include "generator/integration_tests/golden/v1/mocks/mock_golden_thing_admin_connection.h"
 #include "generator/integration_tests/test.pb.h"
 #include <gmock/gmock.h>
+#ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
+#include <opentelemetry/trace/provider.h>
+#endif  // GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 #include <memory>
 
 namespace google {
@@ -30,10 +34,21 @@ namespace {
 #ifdef GOOGLE_CLOUD_CPP_HAVE_OPENTELEMETRY
 
 using ::google::cloud::golden_v1_mocks::MockGoldenThingAdminConnection;
+using ::google::cloud::testing_util::InstallSpanCatcher;
+using ::google::cloud::testing_util::SpanAttribute;
+using ::google::cloud::testing_util::SpanHasAttributes;
+using ::google::cloud::testing_util::SpanHasInstrumentationScope;
+using ::google::cloud::testing_util::SpanKindIsClient;
+using ::google::cloud::testing_util::SpanNamed;
+using ::google::cloud::testing_util::SpanWithStatus;
 using ::google::cloud::testing_util::StatusIs;
 using ::google::test::admin::database::v1::Backup;
 using ::google::test::admin::database::v1::Database;
+using ::testing::AllOf;
+using ::testing::ElementsAre;
 using ::testing::Return;
+
+auto constexpr kErrorCode = static_cast<int>(StatusCode::kAborted);
 
 TEST(GoldenThingAdminTracingConnectionTest, Options) {
   struct TestOption {
@@ -75,14 +90,29 @@ TEST(GoldenThingAdminTracingConnectionTest, CreateDatabase) {
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, GetDatabase) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
-  EXPECT_CALL(*mock, GetDatabase)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, GetDatabase).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenThingAdminTracingConnection(mock);
   google::test::admin::database::v1::GetDatabaseRequest request;
   auto result = under_test.GetDatabase(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenThingAdminConnection::GetDatabase"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, UpdateDatabaseDdl) {
@@ -99,58 +129,134 @@ TEST(GoldenThingAdminTracingConnectionTest, UpdateDatabaseDdl) {
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, DropDatabase) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
-  EXPECT_CALL(*mock, DropDatabase)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, DropDatabase).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenThingAdminTracingConnection(mock);
   google::test::admin::database::v1::DropDatabaseRequest request;
   auto result = under_test.DropDatabase(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenThingAdminConnection::DropDatabase"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, GetDatabaseDdl) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
-  EXPECT_CALL(*mock, GetDatabaseDdl)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, GetDatabaseDdl).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenThingAdminTracingConnection(mock);
   google::test::admin::database::v1::GetDatabaseDdlRequest request;
   auto result = under_test.GetDatabaseDdl(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenThingAdminConnection::GetDatabaseDdl"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, SetIamPolicy) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
-  EXPECT_CALL(*mock, SetIamPolicy)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, SetIamPolicy).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenThingAdminTracingConnection(mock);
   google::iam::v1::SetIamPolicyRequest request;
   auto result = under_test.SetIamPolicy(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenThingAdminConnection::SetIamPolicy"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, GetIamPolicy) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
-  EXPECT_CALL(*mock, GetIamPolicy)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, GetIamPolicy).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenThingAdminTracingConnection(mock);
   google::iam::v1::GetIamPolicyRequest request;
   auto result = under_test.GetIamPolicy(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenThingAdminConnection::GetIamPolicy"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, TestIamPermissions) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
-  EXPECT_CALL(*mock, TestIamPermissions)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, TestIamPermissions).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenThingAdminTracingConnection(mock);
   google::iam::v1::TestIamPermissionsRequest request;
   auto result = under_test.TestIamPermissions(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed(
+              "golden_v1::GoldenThingAdminConnection::TestIamPermissions"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, CreateBackup) {
@@ -166,14 +272,29 @@ TEST(GoldenThingAdminTracingConnectionTest, CreateBackup) {
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, GetBackup) {
+  auto span_catcher = InstallSpanCatcher();
+
   auto mock = std::make_shared<MockGoldenThingAdminConnection>();
-  EXPECT_CALL(*mock, GetBackup)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, GetBackup).WillOnce([]() {
+    EXPECT_TRUE(
+        opentelemetry::trace::Tracer::GetCurrentSpan()->GetContext().IsValid());
+    return internal::AbortedError("fail");
+  });
 
   auto under_test = GoldenThingAdminTracingConnection(mock);
   google::test::admin::database::v1::GetBackupRequest request;
   auto result = under_test.GetBackup(request);
   EXPECT_THAT(result, StatusIs(StatusCode::kAborted));
+
+  auto spans = span_catcher->GetSpans();
+  EXPECT_THAT(
+      spans,
+      ElementsAre(AllOf(
+          SpanHasInstrumentationScope(), SpanKindIsClient(),
+          SpanNamed("golden_v1::GoldenThingAdminConnection::GetBackup"),
+          SpanWithStatus(opentelemetry::trace::StatusCode::kError, "fail"),
+          SpanHasAttributes(
+              SpanAttribute<int>("gcloud.status_code", kErrorCode)))));
 }
 
 TEST(GoldenThingAdminTracingConnectionTest, UpdateBackup) {
