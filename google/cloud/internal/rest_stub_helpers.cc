@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "google/cloud/internal/rest_stub_helpers.h"
+#include "google/cloud/internal/make_status.h"
 
 namespace google {
 namespace cloud {
@@ -30,8 +31,14 @@ Status RestResponseToProto(google::protobuf::Message& destination,
   auto json_to_proto_status =
       google::protobuf::util::JsonStringToMessage(*json_response, &destination);
   if (!json_to_proto_status.ok()) {
-    return Status{
-        StatusCode::kInternal, std::string{json_to_proto_status.message()}, {}};
+    return Status(
+        static_cast<StatusCode>(json_to_proto_status.code()),
+        std::string(json_to_proto_status.message()),
+        GCP_ERROR_INFO()
+            .WithReason("Failure creating proto Message from Json")
+            .WithMetadata("message_type", destination.GetTypeName())
+            .WithMetadata("json_string", *json_response)
+            .Build(static_cast<StatusCode>(json_to_proto_status.code())));
   }
   return {};
 }
