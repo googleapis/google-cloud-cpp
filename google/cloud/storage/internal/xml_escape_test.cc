@@ -47,6 +47,19 @@ TEST(XmlNodeTest, EscapeXmlContent) {
   }
 }
 
+TEST(XmlNodeTest, UnescapeXmlString) {
+  std::vector<std::pair<std::string, std::string>> cases = {
+      {"&quot;Google&quot;", "\"Google\""},
+      {"&apos;Google&apos;", "'Google'"},
+      {"&lt;html&gt;", "<html>"},
+      {"Bread&amp;Butter", "Bread&Butter"},
+  };
+  for (auto& p : cases) {
+    auto after = UnescapeXmlString(p.first);
+    EXPECT_EQ(after, p.second);
+  }
+}
+
 }  // namespace
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END
 }  // namespace storage_internal
