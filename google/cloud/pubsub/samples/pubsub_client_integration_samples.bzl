@@ -20,5 +20,4 @@ pubsub_client_integration_samples = [
     "blocking_samples.cc",
     "client_samples.cc",
     "samples.cc",
-    "iam_samples.cc",
 ]
