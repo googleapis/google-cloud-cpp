@@ -46,6 +46,7 @@ Status StubRestGenerator::GenerateHeader() {
 
   HeaderPrint("\n");
   HeaderLocalIncludes({"google/cloud/internal/rest_client.h",
+                       "google/cloud/completion_queue.h",
                        "google/cloud/internal/rest_context.h",
                        "google/cloud/status_or.h", "google/cloud/version.h"});
   std::vector<std::string> additional_pb_header_paths =
@@ -68,20 +69,64 @@ class $stub_rest_class_name$ {
 
   for (auto const& method : methods()) {
     if (HasHttpAnnotation(method) && IsNonStreaming(method)) {
-      if (IsResponseTypeEmpty(method)) {
+      if (IsLongrunningOperation(method)) {
         HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  virtual Status $method_name$(
+  virtual future<StatusOr<google::longrunning::Operation>> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) = 0;
 )""");
       } else {
-        HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+        if (IsResponseTypeEmpty(method)) {
+          HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  virtual Status $method_name$(
+      google::cloud::rest_internal::RestContext& rest_context,
+      $request_type$ const& request) = 0;
+)""");
+        } else {
+          HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   virtual StatusOr<$response_type$> $method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) = 0;
 )""");
+        }
       }
     }
+  }
+
+  for (auto const& method : async_methods()) {
+    if (IsStreaming(method)) continue;
+    if (IsResponseTypeEmpty(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  virtual future<Status> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      $request_type$ const& request) = 0;
+)""");
+    } else {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  virtual future<StatusOr<$response_type$>> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      $request_type$ const& request) = 0;
+)""");
+    }
+  }
+
+  // long running operation support methods
+  if (HasLongrunningMethod()) {
+    HeaderPrint(
+        R"""(
+  virtual future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::longrunning::GetOperationRequest const& request) = 0;
+
+  virtual future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::longrunning::CancelOperationRequest const& request) = 0;
+)""");
   }
 
   // close abstract interface Stub base class
@@ -95,35 +140,89 @@ class Default$stub_rest_class_name$ : public $stub_rest_class_name$ {
 
   explicit Default$stub_rest_class_name$(Options options);
   Default$stub_rest_class_name$(
-      std::shared_ptr<rest_internal::RestClient> rest_client,
+      std::shared_ptr<rest_internal::RestClient> service,)""");
+  if (HasLongrunningMethod()) {
+    HeaderPrint(R"""(
+      std::shared_ptr<rest_internal::RestClient> operations,)""");
+  }
+  HeaderPrint(R"""(
       Options options);
 )""");
 
   for (auto const& method : methods()) {
     if (HasHttpAnnotation(method) && IsNonStreaming(method)) {
-      if (IsResponseTypeEmpty(method)) {
+      if (IsLongrunningOperation(method)) {
         HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
-  Status $method_name$(
+  future<StatusOr<google::longrunning::Operation>> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) override;
 )""");
       } else {
-        HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+        if (IsResponseTypeEmpty(method)) {
+          HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  Status $method_name$(
+      google::cloud::rest_internal::RestContext& rest_context,
+      $request_type$ const& request) override;
+)""");
+        } else {
+          HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   StatusOr<$response_type$> $method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) override;
 )""");
+        }
       }
     }
+  }
+
+  for (auto const& method : async_methods()) {
+    if (IsStreaming(method)) continue;
+    if (IsResponseTypeEmpty(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  future<Status> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      $request_type$ const& request) override;
+)""");
+    } else {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  future<StatusOr<$response_type$>> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      $request_type$ const& request) override;
+)""");
+    }
+  }
+
+  if (HasLongrunningMethod()) {
+    // long running operation support methods
+    HeaderPrint(
+        R"""(
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::longrunning::CancelOperationRequest const& request) override;
+)""");
   }
 
   // private members and close default stub class definition
   HeaderPrint(R"""(
  private:
-  std::shared_ptr<rest_internal::RestClient> rest_client_;
+  std::shared_ptr<rest_internal::RestClient> service_;)""");
+  if (HasLongrunningMethod()) {
+    HeaderPrint(R"""(
+  std::shared_ptr<rest_internal::RestClient> operations_;)""");
+  }
+  HeaderPrint(R"""(
   Options options_;
+};
 )""");
-  HeaderPrint("};\n");
 
   HeaderCloseNamespaces();
   // close header guard
@@ -155,25 +254,62 @@ Status StubRestGenerator::GenerateCc() {
 
   CcPrint(R"""(
 Default$stub_rest_class_name$::Default$stub_rest_class_name$(Options options)
-    : rest_client_(rest_internal::MakePooledRestClient(
-          options.get<EndpointOption>(), options)),
+    : service_(rest_internal::MakePooledRestClient(
+          options.get<EndpointOption>(), options)),)""");
+  if (HasLongrunningMethod()) {
+    CcPrint(R"""(
+      operations_(rest_internal::MakePooledRestClient(
+          options.get<rest_internal::LongrunningEndpointOption>(), options)),)""");
+  }
+  CcPrint(R"""(
       options_(std::move(options)) {}
 
 Default$stub_rest_class_name$::Default$stub_rest_class_name$(
-    std::shared_ptr<rest_internal::RestClient> rest_client, Options options)
-    : rest_client_(std::move(rest_client)), options_(std::move(options)) {}
+    std::shared_ptr<rest_internal::RestClient> service,)""");
+  if (HasLongrunningMethod()) {
+    CcPrint(R"""(
+    std::shared_ptr<rest_internal::RestClient> operations,)""");
+  }
+  CcPrint(R"""(
+    Options options)
+    : service_(std::move(service)),)""");
+  if (HasLongrunningMethod()) {
+    CcPrint(R"""(
+      operations_(std::move(operations)),)""");
+  }
+  CcPrint(R"""(
+      options_(std::move(options)) {}
 )""");
 
   // default stub class member methods
   for (auto const& method : methods()) {
-    if (HasHttpAnnotation(method) && IsNonStreaming(method)) {
+    if (IsStreaming(method)) continue;
+    if (!HasHttpAnnotation(method)) continue;
+    if (IsLongrunningOperation(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+future<StatusOr<google::longrunning::Operation>>
+Default$stub_rest_class_name$::Async$method_name$(
+      CompletionQueue& cq,
+      rest_internal::RestContext& rest_context,
+      $request_type$ const& request) {
+  promise<StatusOr<google::longrunning::Operation>> p;
+  future<StatusOr<google::longrunning::Operation>> f = p.get_future();
+  cq.RunAsync([&, this] {
+        p.set_value(rest_internal::$method_http_verb$<google::longrunning::Operation>(
+            *service_, rest_context, request,
+            $method_rest_path$$method_http_query_parameters$));
+  });
+  return f;
+}
+)""");
+    } else {
       if (IsResponseTypeEmpty(method)) {
         CcPrintMethod(method, __FILE__, __LINE__, R"""(
 Status Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) {
   return rest_internal::$method_http_verb$(
-      *rest_client_, rest_context, request,
+      *service_, rest_context, request,
       $method_rest_path$$method_http_query_parameters$);
 }
 )""");
@@ -184,12 +320,92 @@ Default$stub_rest_class_name$::$method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) {
   return rest_internal::$method_http_verb$<$response_type$>(
-      *rest_client_, rest_context, request,
+      *service_, rest_context, request,
       $method_rest_path$$method_http_query_parameters$);
 }
 )""");
       }
     }
+  }
+
+  for (auto const& method : async_methods()) {
+    if (IsStreaming(method)) continue;
+    if (!HasHttpAnnotation(method)) continue;
+    if (IsResponseTypeEmpty(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+future<Status>
+Default$stub_rest_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue& cq,
+    google::cloud::rest_internal::RestContext& rest_context,
+    $request_type$ const& request) {
+  promise<StatusOr<google::protobuf::Empty>> p;
+  future<StatusOr<google::protobuf::Empty>> f = p.get_future();
+  cq.RunAsync([&, this] {
+        p.set_value(rest_internal::$method_http_verb$<google::protobuf::Empty>(
+            *service_, rest_context, request,
+            $method_rest_path$$method_http_query_parameters$));
+  });
+  return f.then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      });
+}
+)""");
+    } else {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+future<StatusOr<$response_type$>>
+Default$stub_rest_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue& cq,
+    google::cloud::rest_internal::RestContext& rest_context,
+    $request_type$ const& request) {
+  promise<StatusOr<$response_type$>> p;
+  future<StatusOr<$response_type$>> f = p.get_future();
+  cq.RunAsync([&, this] {
+        p.set_value(rest_internal::$method_http_verb$<$response_type$>(
+            *service_, rest_context, request,
+            $method_rest_path$$method_http_query_parameters$));
+  });
+  return f;
+}
+)""");
+    }
+  }
+
+  if (HasLongrunningMethod()) {
+    // long running operation support methods
+    CcPrint(
+        R"""(
+future<StatusOr<google::longrunning::Operation>>
+Default$stub_rest_class_name$::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::longrunning::GetOperationRequest const& request) {
+  promise<StatusOr<google::longrunning::Operation>> p;
+  future<StatusOr<google::longrunning::Operation>> f = p.get_future();
+  cq.RunAsync([&, this] {
+        p.set_value(rest_internal::Get<google::longrunning::Operation>(
+            *operations_, rest_context, request,
+            absl::StrCat("/v1/", request.name())));
+  });
+  return f;
+}
+
+future<Status>
+Default$stub_rest_class_name$::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::longrunning::CancelOperationRequest const& request) {
+  promise<StatusOr<google::protobuf::Empty>> p;
+  future<StatusOr<google::protobuf::Empty>> f = p.get_future();
+  cq.RunAsync([&, this] {
+        p.set_value(rest_internal::Post<google::protobuf::Empty>(
+            *operations_, rest_context, request,
+            absl::StrCat("/v1/", request.name(), ":cancel")));
+  });
+  return f.then([](future<StatusOr<google::protobuf::Empty>> f) {
+        return f.get().status();
+      });
+}
+)""");
   }
 
   CcCloseNamespaces();
