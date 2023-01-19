@@ -61,10 +61,3 @@ function features::list_full() {
   feature_list+=(experimental-opentelemetry experimental-storage-grpc grafeas)
   printf "%s\n" "${feature_list[@]}" | sort -u
 }
-
-function features::list_full_cmake() {
-  local features
-  mapfile -t feature_list < <(features::list_full)
-  features="$(printf ",%s" "${feature_list[@]}")"
-  echo "${features:1}"
-}
