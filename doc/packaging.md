@@ -93,15 +93,15 @@ the scope of this document, but here are a few highlights:
   - The `google/cloud/${library}/README.md` files describe what services are
     supported by each library.
   - You can provide more than one library. For example,
-    `-DGOOGLE_CLOUD_CPP_ENABLE=pubsub;iam;speech` will compile the `pubsub`,
+    `-DGOOGLE_CLOUD_CPP_ENABLE=pubsub,iam,speech` will compile the `pubsub`,
     `iam`, and `speech` libraries.
-  - Be aware of how your shell treats semicolons and use appropriate quoting if
-    needed.
   - The default is to compile `bigtable`, `bigquery`, `iam`, `logging`,
     `pubsub`, `spanner`, and `storage`.
-  - Currently, there is no way to compile all libraries (see [#9333]).
+  - You can use `-DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__` to compile all
+    the GA libraries.
   - The `storage` library does not depend on `gRPC` or `Protobuf`. Customers
-    only using this library may want to customize their build.
+    only using this library can remove the build steps to compile these
+    dependencies.
 
 To find out about other configuration options, consider using
 [`ccmake`][ccmake], or `cmake -L`.
@@ -1940,7 +1940,6 @@ cmake --build cmake-out --target install
 
 </details>
 
-[#9333]: https://github.com/googleapis/google-cloud-cpp/issues/9333
 [abseil-gh]: https://github.com/abseil/abseil-cpp
 [abseil/abseil-cpp#696]: https://github.com/abseil/abseil-cpp/issues/696
 [ccmake]: https://cmake.org/cmake/help/latest/manual/ccmake.1.html

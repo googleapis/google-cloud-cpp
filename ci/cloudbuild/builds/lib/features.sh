@@ -63,8 +63,5 @@ function features::list_full() {
 }
 
 function features::list_full_cmake() {
-  local features
-  mapfile -t feature_list < <(features::list_full)
-  features="$(printf ",%s" "${feature_list[@]}")"
-  echo "${features:1}"
+  echo "__ga_libraries__,__experimental_libraries__,experimental-storage-grpc,experimental-opentelemetry"
 }
