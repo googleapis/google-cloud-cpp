@@ -51,6 +51,7 @@ google_cloud_cpp_generator_hdrs = [
     "internal/stub_generator_base.h",
     "internal/stub_rest_generator.h",
     "internal/tracing_connection_generator.h",
+    "internal/tracing_stub_generator.h",
 ]
 
 google_cloud_cpp_generator_srcs = [
@@ -86,4 +87,5 @@ google_cloud_cpp_generator_srcs = [
     "internal/stub_generator_base.cc",
     "internal/stub_rest_generator.cc",
     "internal/tracing_connection_generator.cc",
+    "internal/tracing_stub_generator.cc",
 ]
