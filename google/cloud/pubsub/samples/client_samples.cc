@@ -14,7 +14,6 @@
 
 #include "google/cloud/pubsub/blocking_publisher.h"
 #include "google/cloud/pubsub/samples/pubsub_samples_common.h"
-#include "google/cloud/pubsub/schema_admin_client.h"
 #include "google/cloud/pubsub/subscriber.h"
 #include "google/cloud/pubsub/subscription_admin_client.h"
 #include "google/cloud/pubsub/subscription_builder.h"
@@ -235,43 +234,6 @@ void SubscriptionAdminClientServiceAccountKey(
   (argv.at(0));
 }
 
-void SchemaAdminClientSetEndpoint(std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::testing_util;
-  if (!argv.empty()) {
-    throw examples::Usage{"schema-admin-client-set-endpoint"};
-  }
-  //! [schema-admin-client-set-endpoint]
-  namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::Options;
-  []() {
-    return pubsub::SchemaAdminClient(pubsub::MakeSchemaAdminConnection(
-        Options{}.set<google::cloud::EndpointOption>(
-            "private.googleapis.com")));
-  }
-  //! [schema-admin-client-set-endpoint]
-  ();
-}
-
-void SchemaAdminClientServiceAccountKey(std::vector<std::string> const& argv) {
-  namespace examples = ::google::cloud::testing_util;
-  if (argv.size() != 1 || argv[0] == "--help") {
-    throw examples::Usage{"schema-admin-client-service-account <keyfile>"};
-  }
-  //! [schema-admin-client-service-account]
-  namespace pubsub = ::google::cloud::pubsub;
-  using ::google::cloud::Options;
-  [](std::string const& keyfile) {
-    auto is = std::ifstream(keyfile);
-    is.exceptions(std::ios::badbit);
-    auto contents = std::string(std::istreambuf_iterator<char>(is.rdbuf()), {});
-    return pubsub::SchemaAdminClient(pubsub::MakeSchemaAdminConnection(
-        Options{}.set<google::cloud::UnifiedCredentialsOption>(
-            google::cloud::MakeServiceAccountCredentials(contents))));
-  }
-  //! [schema-admin-client-service-account]
-  (argv.at(0));
-}
-
 void AutoRun(std::vector<std::string> const& argv) {
   namespace examples = ::google::cloud::testing_util;
 
@@ -315,13 +277,6 @@ void AutoRun(std::vector<std::string> const& argv) {
             << std::endl;
   SubscriptionAdminClientServiceAccountKey({keyfile});
 
-  std::cout << "\nRunning SchemaAdminClientSetEndpoint() sample" << std::endl;
-  SchemaAdminClientSetEndpoint({});
-
-  std::cout << "\nRunning SchemaAdminClientServiceAccountKey() sample"
-            << std::endl;
-  SchemaAdminClientServiceAccountKey({keyfile});
-
   std::cout << "\nAutoRun done" << std::endl;
 }
 
@@ -343,9 +298,6 @@ int main(int argc, char* argv[]) {  // NOLINT(bugprone-exception-escape)
        SubscriptionAdminClientSetEndpoint},
       {"subscription-admin-client-service-account-key",
        SubscriptionAdminClientServiceAccountKey},
-      {"schema-admin-client-set-endpoint", SchemaAdminClientSetEndpoint},
-      {"schema-admin-client-service-account-key",
-       SchemaAdminClientServiceAccountKey},
       {"auto", AutoRun},
   });
   return example.Run(argc, argv);
