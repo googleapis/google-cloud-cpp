@@ -150,7 +150,7 @@ TEST(PubSubSamplesCommon, SubscriptionAdminCommand) {
   EXPECT_EQ(1, call_count);
 }
 
-TEST(PubSubSamplesCommon, SchemaAdminCommand) {
+TEST(PubSubSamplesCommon, SchemaServiceCommand) {
   using ::google::cloud::testing_util::Usage;
 
   // Pretend we are using the emulator to avoid loading the default
@@ -158,7 +158,7 @@ TEST(PubSubSamplesCommon, SchemaAdminCommand) {
   google::cloud::testing_util::ScopedEnvironment emulator(
       "PUBSUB_EMULATOR_HOST", "localhost:8085");
   int call_count = 0;
-  auto command = [&call_count](pubsub::SchemaAdminClient const&,
+  auto command = [&call_count](pubsub::SchemaServiceClient const&,
                                std::vector<std::string> const& argv) {
     ++call_count;
     ASSERT_EQ(2, argv.size());
@@ -166,7 +166,7 @@ TEST(PubSubSamplesCommon, SchemaAdminCommand) {
     EXPECT_EQ("b", argv[1]);
   };
   auto const actual =
-      CreateSchemaAdminCommand("command-name", {"foo", "bar"}, command);
+      CreateSchemaServiceCommand("command-name", {"foo", "bar"}, command);
   EXPECT_EQ("command-name", actual.first);
   EXPECT_THROW(
       try { actual.second({}); } catch (Usage const& ex) {
