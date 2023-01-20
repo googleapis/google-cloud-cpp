@@ -1002,6 +1002,7 @@ void ValidateMessageAvro(google::cloud::pubsub::SchemaServiceClient client,
     request.mutable_schema()->set_type(google::pubsub::v1::Schema::AVRO);
     request.mutable_schema()->set_definition(kDefinition);
     request.set_message(kMessage);
+    request.set_encoding(google::pubsub::v1::JSON);
     auto response = client.ValidateMessage(request);
     if (!response) throw std::move(response).status();
     std::cout << "Message is valid\n";
