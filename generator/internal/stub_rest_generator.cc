@@ -68,34 +68,35 @@ class $stub_rest_class_name$ {
 )""");
 
   for (auto const& method : methods()) {
-    if (HasHttpAnnotation(method) && IsNonStreaming(method)) {
-      if (IsLongrunningOperation(method)) {
-        HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+    if (IsStreaming(method)) continue;
+    if (!HasHttpAnnotation(method)) continue;
+    if (IsLongrunningOperation(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   virtual future<StatusOr<google::longrunning::Operation>> Async$method_name$(
       google::cloud::CompletionQueue& cq,
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) = 0;
 )""");
-      } else {
-        if (IsResponseTypeEmpty(method)) {
-          HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+    } else {
+      if (IsResponseTypeEmpty(method)) {
+        HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   virtual Status $method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) = 0;
 )""");
-        } else {
-          HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+      } else {
+        HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   virtual StatusOr<$response_type$> $method_name$(
       google::cloud::rest_internal::RestContext& rest_context,
       $request_type$ const& request) = 0;
 )""");
-        }
       }
     }
   }
 
   for (auto const& method : async_methods()) {
     if (IsStreaming(method)) continue;
+    if (!HasHttpAnnotation(method)) continue;
     if (IsResponseTypeEmpty(method)) {
       HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   virtual future<Status> Async$method_name$(
@@ -252,34 +253,37 @@ Status StubRestGenerator::GenerateCc() {
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
 
-  CcPrint(R"""(
-Default$stub_rest_class_name$::Default$stub_rest_class_name$(Options options)
-    : service_(rest_internal::MakePooledRestClient(
-          options.get<EndpointOption>(), options)),)""");
   if (HasLongrunningMethod()) {
     CcPrint(R"""(
+Default$stub_rest_class_name$::Default$stub_rest_class_name$(Options options)
+    : service_(rest_internal::MakePooledRestClient(
+          options.get<EndpointOption>(), options)),
       operations_(rest_internal::MakePooledRestClient(
-          options.get<rest_internal::LongrunningEndpointOption>(), options)),)""");
-  }
-  CcPrint(R"""(
+          options.get<rest_internal::LongrunningEndpointOption>(), options)),
       options_(std::move(options)) {}
 
 Default$stub_rest_class_name$::Default$stub_rest_class_name$(
-    std::shared_ptr<rest_internal::RestClient> service,)""");
-  if (HasLongrunningMethod()) {
-    CcPrint(R"""(
-    std::shared_ptr<rest_internal::RestClient> operations,)""");
-  }
-  CcPrint(R"""(
+    std::shared_ptr<rest_internal::RestClient> service,
+    std::shared_ptr<rest_internal::RestClient> operations,
     Options options)
-    : service_(std::move(service)),)""");
-  if (HasLongrunningMethod()) {
-    CcPrint(R"""(
-      operations_(std::move(operations)),)""");
-  }
-  CcPrint(R"""(
+    : service_(std::move(service)),
+      operations_(std::move(operations)),
       options_(std::move(options)) {}
 )""");
+  } else {
+    CcPrint(R"""(
+Default$stub_rest_class_name$::Default$stub_rest_class_name$(Options options)
+    : service_(rest_internal::MakePooledRestClient(
+          options.get<EndpointOption>(), options)),
+      options_(std::move(options)) {}
+
+Default$stub_rest_class_name$::Default$stub_rest_class_name$(
+    std::shared_ptr<rest_internal::RestClient> service,
+    Options options)
+    : service_(std::move(service)),
+      options_(std::move(options)) {}
+)""");
+  }
 
   // default stub class member methods
   for (auto const& method : methods()) {
@@ -294,12 +298,17 @@ Default$stub_rest_class_name$::Async$method_name$(
       $request_type$ const& request) {
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::$method_http_verb$<google::longrunning::Operation>(
-            *service_, rest_context, request,
-            $method_rest_path$$method_http_query_parameters$));
+  std::thread t1{[service = service_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::$method_http_verb$<google::longrunning::Operation>(
+          *service, rest_context, request,
+          $method_rest_path$$method_http_query_parameters$));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get();
   });
-  return f;
 }
 )""");
     } else {
@@ -340,14 +349,17 @@ Default$stub_rest_class_name$::Async$method_name$(
     $request_type$ const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::$method_http_verb$<google::protobuf::Empty>(
-            *service_, rest_context, request,
-            $method_rest_path$$method_http_query_parameters$));
+  std::thread t1{[service = service_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::$method_http_verb$<google::protobuf::Empty>(
+          *service, rest_context, request,
+          $method_rest_path$$method_http_query_parameters$));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get().status();
   });
-  return f.then([](future<StatusOr<google::protobuf::Empty>> f) {
-        return f.get().status();
-      });
 }
 )""");
     } else {
@@ -359,12 +371,17 @@ Default$stub_rest_class_name$::Async$method_name$(
     $request_type$ const& request) {
   promise<StatusOr<$response_type$>> p;
   future<StatusOr<$response_type$>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::$method_http_verb$<$response_type$>(
-            *service_, rest_context, request,
-            $method_rest_path$$method_http_query_parameters$));
+  std::thread t1{[service = service_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::$method_http_verb$<$response_type$>(
+          *service, rest_context, request,
+          $method_rest_path$$method_http_query_parameters$));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get();
   });
-  return f;
 }
 )""");
     }
@@ -381,12 +398,17 @@ Default$stub_rest_class_name$::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::Get<google::longrunning::Operation>(
-            *operations_, rest_context, request,
-            absl::StrCat("/v1/", request.name())));
+  std::thread t1{[operations = operations_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::Get<google::longrunning::Operation>(
+          *operations, rest_context, request,
+          absl::StrCat("/v1/", request.name())));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get();
   });
-  return f;
 }
 
 future<Status>
@@ -396,14 +418,17 @@ Default$stub_rest_class_name$::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations_, rest_context, request,
-            absl::StrCat("/v1/", request.name(), ":cancel")));
+  std::thread t1{[operations = operations_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::Post<google::protobuf::Empty>(
+          *operations, rest_context, request,
+          absl::StrCat("/v1/", request.name(), ":cancel")));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get().status();
   });
-  return f.then([](future<StatusOr<google::protobuf::Empty>> f) {
-        return f.get().status();
-      });
 }
 )""");
   }

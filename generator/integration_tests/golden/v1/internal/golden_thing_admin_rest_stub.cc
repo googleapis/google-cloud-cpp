@@ -63,12 +63,17 @@ DefaultGoldenThingAdminRestStub::AsyncCreateDatabase(
       google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service_, rest_context, request,
-            absl::StrCat("/v1/", request.parent(), "/databases")));
+  std::thread t1{[service = service_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::Post<google::longrunning::Operation>(
+          *service, rest_context, request,
+          absl::StrCat("/v1/", request.parent(), "/databases")));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get();
   });
-  return f;
 }
 
 StatusOr<google::test::admin::database::v1::Database>
@@ -87,12 +92,17 @@ DefaultGoldenThingAdminRestStub::AsyncUpdateDatabaseDdl(
       google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::Patch<google::longrunning::Operation>(
-            *service_, rest_context, request,
-            absl::StrCat("/v1/", request.database(), "/ddl")));
+  std::thread t1{[service = service_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::Patch<google::longrunning::Operation>(
+          *service, rest_context, request,
+          absl::StrCat("/v1/", request.database(), "/ddl")));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get();
   });
-  return f;
 }
 
 Status DefaultGoldenThingAdminRestStub::DropDatabase(
@@ -146,12 +156,17 @@ DefaultGoldenThingAdminRestStub::AsyncCreateBackup(
       google::test::admin::database::v1::CreateBackupRequest const& request) {
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service_, rest_context, request,
-            absl::StrCat("/v1/", request.parent(), "/backups")));
+  std::thread t1{[service = service_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::Post<google::longrunning::Operation>(
+          *service, rest_context, request,
+          absl::StrCat("/v1/", request.parent(), "/backups")));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get();
   });
-  return f;
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
@@ -199,12 +214,17 @@ DefaultGoldenThingAdminRestStub::AsyncRestoreDatabase(
       google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::Post<google::longrunning::Operation>(
-            *service_, rest_context, request,
-            absl::StrCat("/v1/", request.parent(), "/databases:restore")));
+  std::thread t1{[service = service_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::Post<google::longrunning::Operation>(
+          *service, rest_context, request,
+          absl::StrCat("/v1/", request.parent(), "/databases:restore")));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get();
   });
-  return f;
 }
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
@@ -238,12 +258,17 @@ DefaultGoldenThingAdminRestStub::AsyncGetDatabase(
     google::test::admin::database::v1::GetDatabaseRequest const& request) {
   promise<StatusOr<google::test::admin::database::v1::Database>> p;
   future<StatusOr<google::test::admin::database::v1::Database>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::Get<google::test::admin::database::v1::Database>(
-            *service_, rest_context, request,
-            absl::StrCat("/v1/", request.name(), ""), {}));
+  std::thread t1{[service = service_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::Get<google::test::admin::database::v1::Database>(
+          *service, rest_context, request,
+          absl::StrCat("/v1/", request.name(), ""), {}));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get();
   });
-  return f;
 }
 
 future<Status>
@@ -253,14 +278,17 @@ DefaultGoldenThingAdminRestStub::AsyncDropDatabase(
     google::test::admin::database::v1::DropDatabaseRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::Delete<google::protobuf::Empty>(
-            *service_, rest_context, request,
-            absl::StrCat("/v1/", request.database(), "")));
+  std::thread t1{[service = service_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::Delete<google::protobuf::Empty>(
+          *service, rest_context, request,
+          absl::StrCat("/v1/", request.database(), "")));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get().status();
   });
-  return f.then([](future<StatusOr<google::protobuf::Empty>> f) {
-        return f.get().status();
-      });
 }
 
 future<StatusOr<google::longrunning::Operation>>
@@ -270,12 +298,17 @@ DefaultGoldenThingAdminRestStub::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::Get<google::longrunning::Operation>(
-            *operations_, rest_context, request,
-            absl::StrCat("/v1/", request.name())));
+  std::thread t1{[operations = operations_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::Get<google::longrunning::Operation>(
+          *operations, rest_context, request,
+          absl::StrCat("/v1/", request.name())));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get();
   });
-  return f;
 }
 
 future<Status>
@@ -285,14 +318,17 @@ DefaultGoldenThingAdminRestStub::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  cq.RunAsync([&, this] {
-        p.set_value(rest_internal::Post<google::protobuf::Empty>(
-            *operations_, rest_context, request,
-            absl::StrCat("/v1/", request.name(), ":cancel")));
+  std::thread t1{[operations = operations_, request, &rest_context](auto p) {
+      p.set_value(rest_internal::Post<google::protobuf::Empty>(
+          *operations, rest_context, request,
+          absl::StrCat("/v1/", request.name(), ":cancel")));
+  }, std::move(p)};
+  return f.then([t2 = std::move(t1), cq](auto f) mutable {
+    cq.RunAsync([t3 = std::move(t2)]() mutable {
+      t3.join();
+    });
+    return f.get().status();
   });
-  return f.then([](future<StatusOr<google::protobuf::Empty>> f) {
-        return f.get().status();
-      });
 }
 
 GOOGLE_CLOUD_CPP_INLINE_NAMESPACE_END

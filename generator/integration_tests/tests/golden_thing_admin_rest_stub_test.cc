@@ -13,6 +13,7 @@
 // limitations under the License.
 
 #include "generator/integration_tests/golden/v1/internal/golden_thing_admin_rest_stub.h"
+#include "google/cloud/internal/rest_completion_queue_impl.h"
 #include "google/cloud/internal/rest_context.h"
 #include "google/cloud/testing_util/mock_completion_queue_impl.h"
 #include "google/cloud/testing_util/mock_http_payload.h"
@@ -34,7 +35,6 @@ using ::google::cloud::rest_internal::RestContext;
 using ::google::cloud::rest_internal::RestRequest;
 using ::google::cloud::testing_util::IsOk;
 using ::google::cloud::testing_util::MakeMockHttpPayloadSuccess;
-using ::google::cloud::testing_util::MockCompletionQueueImpl;
 using ::google::cloud::testing_util::MockRestClient;
 using ::google::cloud::testing_util::MockRestResponse;
 using ::testing::_;
@@ -119,9 +119,10 @@ TEST(GoldenThingAdminRestStubTest, ListDatabases) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncCreateDatabase) {
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, RunAsync)
-      .WillOnce([](std::unique_ptr<internal::RunAsyncBase> f) { f->exec(); });
+  auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+  std::thread t{[&] { cq.Run(); }};
+
   auto mock_service_client = absl::make_unique<MockRestClient>();
   auto mock_operations_client = absl::make_unique<MockRestClient>();
   auto constexpr kJsonResponsePayload =
@@ -142,11 +143,13 @@ TEST(GoldenThingAdminRestStubTest, AsyncCreateDatabase) {
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response.release());
       });
-  CompletionQueue cq(mock_cq);
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   StatusOr<google::longrunning::Operation> success =
       stub.AsyncCreateDatabase(cq, rest_context, proto_request).get();
+  cq.Shutdown();
+  t.join();
+
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(success->name(), Eq("my_operation"));
   EXPECT_TRUE(success->done());
@@ -183,9 +186,9 @@ TEST(GoldenThingAdminRestStubTest, GetDatabase) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncUpdateDatabaseDdl) {
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, RunAsync)
-      .WillOnce([](std::unique_ptr<internal::RunAsyncBase> f) { f->exec(); });
+  auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+  std::thread t{[&] { cq.Run(); }};
   auto mock_service_client = absl::make_unique<MockRestClient>();
   auto mock_operations_client = absl::make_unique<MockRestClient>();
   auto constexpr kJsonResponsePayload =
@@ -206,11 +209,13 @@ TEST(GoldenThingAdminRestStubTest, AsyncUpdateDatabaseDdl) {
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response.release());
       });
-  CompletionQueue cq(mock_cq);
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success =
       stub.AsyncUpdateDatabaseDdl(cq, rest_context, proto_request).get();
+  cq.Shutdown();
+  t.join();
+
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(success->name(), Eq("my_operation"));
   EXPECT_TRUE(success->done());
@@ -433,9 +438,9 @@ TEST(GoldenThingAdminRestStubTest, TestIamPermissions) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncCreateBackup) {
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, RunAsync)
-      .WillOnce([](std::unique_ptr<internal::RunAsyncBase> f) { f->exec(); });
+  auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+  std::thread t{[&] { cq.Run(); }};
   auto mock_service_client = absl::make_unique<MockRestClient>();
   auto mock_operations_client = absl::make_unique<MockRestClient>();
   auto constexpr kJsonResponsePayload =
@@ -456,10 +461,12 @@ TEST(GoldenThingAdminRestStubTest, AsyncCreateBackup) {
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response.release());
       });
-  CompletionQueue cq(mock_cq);
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success = stub.AsyncCreateBackup(cq, rest_context, proto_request).get();
+  cq.Shutdown();
+  t.join();
+
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(success->name(), Eq("my_operation"));
   EXPECT_TRUE(success->done());
@@ -597,9 +604,9 @@ TEST(GoldenThingAdminRestStubTest, ListBackups) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncRestoreDatabase) {
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, RunAsync)
-      .WillOnce([](std::unique_ptr<internal::RunAsyncBase> f) { f->exec(); });
+  auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+  std::thread t{[&] { cq.Run(); }};
   auto mock_service_client = absl::make_unique<MockRestClient>();
   auto mock_operations_client = absl::make_unique<MockRestClient>();
   auto constexpr kJsonResponsePayload =
@@ -619,11 +626,13 @@ TEST(GoldenThingAdminRestStubTest, AsyncRestoreDatabase) {
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response.release());
       });
-  CompletionQueue cq(mock_cq);
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success =
       stub.AsyncRestoreDatabase(cq, rest_context, proto_request).get();
+  cq.Shutdown();
+  t.join();
+
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(success->name(), Eq("my_operation"));
   EXPECT_TRUE(success->done());
@@ -709,9 +718,9 @@ TEST(GoldenThingAdminRestStubTest, ListBackupOperations) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncGetDatabase) {
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, RunAsync)
-      .WillOnce([](std::unique_ptr<internal::RunAsyncBase> f) { f->exec(); });
+  auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+  std::thread t{[&] { cq.Run(); }};
   auto mock_service_client = absl::make_unique<MockRestClient>();
   auto mock_operations_client = absl::make_unique<MockRestClient>();
   auto constexpr kJsonResponsePayload =
@@ -730,10 +739,12 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetDatabase) {
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response.release());
       });
-  CompletionQueue cq(mock_cq);
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success = stub.AsyncGetDatabase(cq, rest_context, proto_request).get();
+  cq.Shutdown();
+  t.join();
+
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(
       success->name(),
@@ -743,9 +754,9 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetDatabase) {
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncDropDatabase) {
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, RunAsync)
-      .WillOnce([](std::unique_ptr<internal::RunAsyncBase> f) { f->exec(); });
+  auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+  std::thread t{[&] { cq.Run(); }};
   auto mock_service_client = absl::make_unique<MockRestClient>();
   auto mock_operations_client = absl::make_unique<MockRestClient>();
   auto constexpr kJsonResponsePayload = R"({})";
@@ -763,17 +774,19 @@ TEST(GoldenThingAdminRestStubTest, AsyncDropDatabase) {
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response.release());
       });
-  CompletionQueue cq(mock_cq);
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success = stub.AsyncDropDatabase(cq, rest_context, proto_request).get();
+  cq.Shutdown();
+  t.join();
+
   EXPECT_THAT(success, IsOk());
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncGetOperation) {
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, RunAsync)
-      .WillOnce([](std::unique_ptr<internal::RunAsyncBase> f) { f->exec(); });
+  auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+  std::thread t{[&] { cq.Run(); }};
   auto mock_service_client = absl::make_unique<MockRestClient>();
   auto mock_operations_client = absl::make_unique<MockRestClient>();
   auto constexpr kJsonResponsePayload =
@@ -790,19 +803,21 @@ TEST(GoldenThingAdminRestStubTest, AsyncGetOperation) {
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response.release());
       });
-  CompletionQueue cq(mock_cq);
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success = stub.AsyncGetOperation(cq, rest_context, proto_request).get();
+  cq.Shutdown();
+  t.join();
+
   ASSERT_THAT(success, IsOk());
   EXPECT_THAT(success->name(), Eq("my_operation"));
   EXPECT_TRUE(success->done());
 }
 
 TEST(GoldenThingAdminRestStubTest, AsyncCancelOperation) {
-  auto mock_cq = std::make_shared<MockCompletionQueueImpl>();
-  EXPECT_CALL(*mock_cq, RunAsync)
-      .WillOnce([](std::unique_ptr<internal::RunAsyncBase> f) { f->exec(); });
+  auto impl = std::make_shared<rest_internal::RestCompletionQueueImpl>();
+  CompletionQueue cq(impl);
+  std::thread t{[&] { cq.Run(); }};
   auto mock_service_client = absl::make_unique<MockRestClient>();
   auto mock_operations_client = absl::make_unique<MockRestClient>();
   auto constexpr kJsonResponsePayload = R"({})";
@@ -820,11 +835,13 @@ TEST(GoldenThingAdminRestStubTest, AsyncCancelOperation) {
         return std::unique_ptr<rest_internal::RestResponse>(
             mock_200_response.release());
       });
-  CompletionQueue cq(mock_cq);
   DefaultGoldenThingAdminRestStub stub(std::move(mock_service_client),
                                        std::move(mock_operations_client), {});
   auto success =
       stub.AsyncCancelOperation(cq, rest_context, proto_request).get();
+  cq.Shutdown();
+  t.join();
+
   EXPECT_THAT(success, IsOk());
 }
 
