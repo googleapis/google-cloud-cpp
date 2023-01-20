@@ -39,7 +39,8 @@ cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ## [DONE packaging.md]
