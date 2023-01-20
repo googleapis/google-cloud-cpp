@@ -298,6 +298,7 @@
 ./include/google/cloud/profiler/mocks
 ./include/google/cloud/pubsub
 ./include/google/cloud/pubsub/internal
+./include/google/cloud/pubsub/mocks
 ./include/google/cloud/pubsublite
 ./include/google/cloud/pubsublite/internal
 ./include/google/cloud/pubsublite/mocks
