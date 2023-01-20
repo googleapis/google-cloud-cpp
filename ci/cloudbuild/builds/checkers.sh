@@ -65,7 +65,7 @@ git_files() {
   if [ -z "${GOOGLE_CLOUD_CPP_FAST_CHECKERS-}" ]; then
     git ls-files "${@}"
   else
-    git diff main --name-only "${@}"
+    git diff main --name-only --diff-filter=d "${@}"
   fi
 }
 
