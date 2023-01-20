@@ -73,8 +73,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, WriteLogEntries) {
 
 TEST(GoldenKitchenSinkAuthDecoratorTest, ListLogs) {
   auto mock = std::make_shared<MockGoldenKitchenSinkStub>();
-  EXPECT_CALL(*mock, ListLogs)
-      .WillOnce(Return(internal::AbortedError("fail")));
+  EXPECT_CALL(*mock, ListLogs).WillOnce(Return(internal::AbortedError("fail")));
 
   auto under_test = GoldenKitchenSinkTracingStub(mock);
   grpc::ClientContext context;
@@ -127,8 +126,7 @@ TEST(GoldenKitchenSinkAuthDecoratorTest, StreamingWrite) {
   EXPECT_CALL(*mock, StreamingWrite)
       .WillOnce([](std::unique_ptr<grpc::ClientContext>) {
         auto stream = absl::make_unique<MockStreamingWriteRpc>();
-        EXPECT_CALL(*stream, Write)
-            .WillOnce(Return(false));
+        EXPECT_CALL(*stream, Write).WillOnce(Return(false));
         EXPECT_CALL(*stream, Close)
             .WillOnce(
                 Return(StatusOr<Response>(internal::AbortedError("fail"))));
