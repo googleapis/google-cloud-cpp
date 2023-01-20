@@ -1,16 +1,17 @@
 # Packaging `google-cloud-cpp`
 
-<!-- This is an automatically generated file -->
+This document is intended for:
 
-<!-- Make changes in ci/generate-markdown/generate-packaging.sh -->
+- Package maintainers that need to understand how to compile `google-cloud-cpp`
+  from source to create their packaging scripts.
+- Developers who may not be able to use a package manager and want to compile
+  the `google-cloud-cpp` libraries from source, including their dependencies.
+- Developers who might like to install the `google-cloud-cpp` libraries in
+  `/usr/local` or a similar directory.
 
-This document is intended for package maintainers or for people who might like
-to "install" the `google-cloud-cpp` libraries in `/usr/local` or a similar
-directory.
+This document does not cover all cases for building `google-cloud-cpp`. The
+following are out of scope:
 
-- Packaging maintainers or developers who prefer to install the library in a
-  fixed directory (such as `/usr/local` or `/opt`) should consult the current
-  document.
 - Developers who prefer using a package manager such as
   [vcpkg](https://vcpkg.io), [Conda](https://conda.io),
   or [Conan](https://conan.io) should follow the instructions for their package
@@ -24,7 +25,10 @@ directory.
 - Contributors and developers to `google-cloud-cpp` should consult the guide to
   [set up a development workstation][howto-setup-dev-workstation].
 
-There are two primary ways of obtaining `google-cloud-cpp`. You can use git:
+## Getting the source code
+
+There are two primary ways of obtaining `google-cloud-cpp`'s source code. You
+can use git:
 
 ```bash
 git clone https://github.com/googleapis/google-cloud-cpp.git $HOME/google-cloud-cpp
@@ -41,14 +45,7 @@ wget -q https://github.com/googleapis/google-cloud-cpp/archive/${VERSION}.tar.gz
 tar -xf ${VERSION}.tar.gz -C $HOME/google-cloud-cpp --strip=1
 ```
 
-# Installing `google-cloud-cpp`
-
-<!-- This is an automatically generated file -->
-
-<!-- Make changes in ci/generate-markdown/generate-packaging.sh -->
-
-This document provides instructions to install the dependencies of
-`google-cloud-cpp`.
+## Installing `google-cloud-cpp` with pre-existing dependencies
 
 **If** all the dependencies of `google-cloud-cpp` are installed and provide
 CMake support files, then compiling and installing the libraries
@@ -131,11 +128,15 @@ quickstart guides also cover this use-case.
 Note that these libraries may also depend on other libraries. The following
 instructions include steps to install these indirect dependencies too.
 
+## Install Instructions per Platform
+
 When possible, the instructions below prefer to use pre-packaged versions of
 these libraries and their dependencies. In some cases the packages do not exist,
 or the packaged versions are too old to support `google-cloud-cpp`. If this is
 the case, the instructions describe how you can manually download and install
 these dependencies.
+
+<!-- inject-distro-instructions-start -->
 
 <details>
 <summary>Alpine (Stable)</summary>
@@ -1707,6 +1708,7 @@ sudo ln -sf /usr/bin/cmake3 /usr/bin/cmake && sudo ln -sf /usr/bin/ctest3 /usr/b
 
 Start a bash shell with its environment configured to use the tools installed
 by `devtoolset-7`.
+
 **IMPORTANT**: All the following commands should be run from this new shell.
 
 ```bash
@@ -1889,6 +1891,9 @@ cmake --build cmake-out --target install
 ```
 
 </details>
+
+<!-- inject-distro-instructions-end -->
+
 <details>
 <summary>macOS</summary>
 <br>

@@ -47,7 +47,9 @@ ENV LD_LIBRARY_PATH /opt/rh/devtoolset-7/root/usr/lib64:/opt/rh/devtoolset-7/roo
 ## [DONE IGNORED]
 # Start a bash shell with its environment configured to use the tools installed
 # by `devtoolset-7`.
+
 # **IMPORTANT**: All the following commands should be run from this new shell.
+
 # ```bash
 # scl enable devtoolset-7 bash
 # ```
