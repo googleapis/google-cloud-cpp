@@ -124,8 +124,22 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz 
     cmake --build cmake-out --target install && \
     ldconfig && cd /var/tmp && rm -fr build
 
+# The version of RE2 installed with Fedora:36 forces C++11 in its pkg-config
+# files. This is fixed in Fedora:37, but until then it is easier to just install
+# the source code.
+WORKDIR /var/tmp/build/re2
+RUN curl -sSL https://github.com/google/re2/archive/2022-12-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+
 WORKDIR /var/tmp/build/grpc
-RUN dnf makecache && dnf install -y c-ares-devel re2-devel
+RUN dnf makecache && dnf install -y c-ares-devel
 RUN curl -sSL https://github.com/grpc/grpc/archive/v1.51.1.tar.gz | \
     tar -xzf - --strip-components=1 && \
     cmake \

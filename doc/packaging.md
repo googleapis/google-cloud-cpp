@@ -235,7 +235,7 @@ dependencies of libcurl, Protobuf, and gRPC are recent enough for our needs.
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y c-ares-devel re2-devel libcurl-devel
+sudo dnf install -y c-ares-devel libcurl-devel
 ```
 
 Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
@@ -350,6 +350,25 @@ curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
         -S . -B cmake-out && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### RE2
+
+The version of RE2 included with this distro hard-codes C++11 in its
+pkg-config file. You can skip this build and use the system's package if
+you are not planning to use pkg-config.
+
+```bash
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -sSL https://github.com/google/re2/archive/2022-12-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -H. -Bcmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
 ```
@@ -1336,7 +1355,7 @@ sudo dnf update -y && \
 sudo dnf install -y epel-release && \
 sudo dnf makecache && \
 sudo dnf install -y ccache cmake curl findutils gcc-c++ git make openssl-devel \
-        patch re2-devel zlib-devel libcurl-devel c-ares-devel tar wget which
+        patch zlib-devel libcurl-devel c-ares-devel tar wget which
 ```
 
 Rocky Linux's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is
@@ -1411,6 +1430,25 @@ curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
         -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### RE2
+
+The version of RE2 included with this distro hard-codes C++11 in its
+pkg-config file. You can skip this build and use the system's package if
+you are not planning to use pkg-config.
+
+```bash
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -sSL https://github.com/google/re2/archive/2022-12-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig
@@ -1515,7 +1553,7 @@ sudo dnf update -y && \
 sudo dnf install -y epel-release && \
 sudo dnf makecache && \
 sudo dnf install -y ccache cmake findutils gcc-c++ git make openssl-devel \
-        patch re2-devel zlib-devel libcurl-devel c-ares-devel tar wget which
+        patch zlib-devel libcurl-devel c-ares-devel tar wget which
 ```
 
 Rocky Linux's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is
@@ -1593,6 +1631,25 @@ curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz | \
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
         -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+sudo ldconfig
+```
+
+#### RE2
+
+The version of RE2 included with this distro hard-codes C++11 in its
+pkg-config file. You can skip this build and use the system's package if
+you are not planning to use pkg-config.
+
+```bash
+mkdir -p $HOME/Downloads/re2 && cd $HOME/Downloads/re2
+curl -sSL https://github.com/google/re2/archive/2022-12-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
 sudo cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
 sudo ldconfig

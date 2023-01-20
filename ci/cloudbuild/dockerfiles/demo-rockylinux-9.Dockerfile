@@ -26,7 +26,7 @@ RUN dnf makecache && \
     dnf install -y epel-release && \
     dnf makecache && \
     dnf install -y ccache cmake findutils gcc-c++ git make openssl-devel \
-        patch re2-devel zlib-devel libcurl-devel c-ares-devel tar wget which
+        patch zlib-devel libcurl-devel c-ares-devel tar wget which
 # ```
 
 # Rocky Linux's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is
@@ -104,6 +104,25 @@ RUN curl -sSL https://github.com/protocolbuffers/protobuf/archive/v21.12.tar.gz 
         -Dprotobuf_BUILD_TESTS=OFF \
         -Dprotobuf_ABSL_PROVIDER=package \
         -S . -B cmake-out && \
+    cmake --build cmake-out -- -j ${NCPU:-4} && \
+    cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
+    ldconfig
+# ```
+
+# #### RE2
+
+# The version of RE2 included with this distro hard-codes C++11 in its
+# pkg-config file. You can skip this build and use the system's package if
+# you are not planning to use pkg-config.
+
+# ```bash
+WORKDIR /var/tmp/build/re2
+RUN curl -sSL https://github.com/google/re2/archive/2022-12-01.tar.gz | \
+    tar -xzf - --strip-components=1 && \
+    cmake -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=ON \
+        -DRE2_BUILD_TESTING=OFF \
+        -H. -Bcmake-out && \
     cmake --build cmake-out -- -j ${NCPU:-4} && \
     cmake --build cmake-out --target install -- -j ${NCPU:-4} && \
     ldconfig
