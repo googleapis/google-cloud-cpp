@@ -44,12 +44,13 @@ GoldenThingAdminRestMetadata::ListDatabases(
   return child_->ListDatabases(rest_context, request);
 }
 
-StatusOr<google::longrunning::Operation>
-GoldenThingAdminRestMetadata::CreateDatabase(
-    rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::CreateDatabaseRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+GoldenThingAdminRestMetadata::AsyncCreateDatabase(
+      CompletionQueue& cq,
+      rest_internal::RestContext& rest_context,
+      google::test::admin::database::v1::CreateDatabaseRequest const& request) {
   SetMetadata(rest_context);
-  return child_->CreateDatabase(rest_context, request);
+  return child_->AsyncCreateDatabase(cq, rest_context, request);
 }
 
 StatusOr<google::test::admin::database::v1::Database>
@@ -60,12 +61,13 @@ GoldenThingAdminRestMetadata::GetDatabase(
   return child_->GetDatabase(rest_context, request);
 }
 
-StatusOr<google::longrunning::Operation>
-GoldenThingAdminRestMetadata::UpdateDatabaseDdl(
-    rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+GoldenThingAdminRestMetadata::AsyncUpdateDatabaseDdl(
+      CompletionQueue& cq,
+      rest_internal::RestContext& rest_context,
+      google::test::admin::database::v1::UpdateDatabaseDdlRequest const& request) {
   SetMetadata(rest_context);
-  return child_->UpdateDatabaseDdl(rest_context, request);
+  return child_->AsyncUpdateDatabaseDdl(cq, rest_context, request);
 }
 
 Status
@@ -145,12 +147,13 @@ GoldenThingAdminRestMetadata::TestIamPermissions(
   return child_->TestIamPermissions(rest_context, request);
 }
 
-StatusOr<google::longrunning::Operation>
-GoldenThingAdminRestMetadata::CreateBackup(
-    rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::CreateBackupRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+GoldenThingAdminRestMetadata::AsyncCreateBackup(
+      CompletionQueue& cq,
+      rest_internal::RestContext& rest_context,
+      google::test::admin::database::v1::CreateBackupRequest const& request) {
   SetMetadata(rest_context);
-  return child_->CreateBackup(rest_context, request);
+  return child_->AsyncCreateBackup(cq, rest_context, request);
 }
 
 StatusOr<google::test::admin::database::v1::Backup>
@@ -185,12 +188,13 @@ GoldenThingAdminRestMetadata::ListBackups(
   return child_->ListBackups(rest_context, request);
 }
 
-StatusOr<google::longrunning::Operation>
-GoldenThingAdminRestMetadata::RestoreDatabase(
-    rest_internal::RestContext& rest_context,
-    google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
+future<StatusOr<google::longrunning::Operation>>
+GoldenThingAdminRestMetadata::AsyncRestoreDatabase(
+      CompletionQueue& cq,
+      rest_internal::RestContext& rest_context,
+      google::test::admin::database::v1::RestoreDatabaseRequest const& request) {
   SetMetadata(rest_context);
-  return child_->RestoreDatabase(rest_context, request);
+  return child_->AsyncRestoreDatabase(cq, rest_context, request);
 }
 
 StatusOr<google::test::admin::database::v1::ListDatabaseOperationsResponse>
@@ -207,6 +211,79 @@ GoldenThingAdminRestMetadata::ListBackupOperations(
     google::test::admin::database::v1::ListBackupOperationsRequest const& request) {
   SetMetadata(rest_context);
   return child_->ListBackupOperations(rest_context, request);
+}
+
+future<StatusOr<google::test::admin::database::v1::Database>>
+GoldenThingAdminRestMetadata::AsyncGetDatabase(
+    google::cloud::CompletionQueue& cq,
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::test::admin::database::v1::GetDatabaseRequest const& request) {
+  SetMetadata(rest_context);
+  return child_->AsyncGetDatabase(cq, rest_context, request);
+}
+
+future<Status>
+GoldenThingAdminRestMetadata::AsyncDropDatabase(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+    google::test::admin::database::v1::DropDatabaseRequest const& request) {
+  std::vector<std::string> params;
+  params.reserve(3);
+
+  static auto* project_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::test::admin::database::v1::DropDatabaseRequest>{
+      "project=", {
+      {[](google::test::admin::database::v1::DropDatabaseRequest const& request) -> std::string const& {
+        return request.database();
+      },
+      std::regex{"(projects/[^/]+)/instances/[^/]+/databases/[^/]+", std::regex::optimize}},
+      }};
+  }();
+  project_matcher->AppendParam(request, params);
+
+  static auto* instance_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::test::admin::database::v1::DropDatabaseRequest>{
+      "instance=", {
+      {[](google::test::admin::database::v1::DropDatabaseRequest const& request) -> std::string const& {
+        return request.database();
+      },
+      std::regex{"projects/[^/]+/(instances/[^/]+)/databases/[^/]+", std::regex::optimize}},
+      }};
+  }();
+  instance_matcher->AppendParam(request, params);
+
+  static auto* database_matcher = []{
+    return new google::cloud::internal::RoutingMatcher<google::test::admin::database::v1::DropDatabaseRequest>{
+      "database=", {
+      {[](google::test::admin::database::v1::DropDatabaseRequest const& request) -> std::string const& {
+        return request.database();
+      },
+      std::regex{"projects/[^/]+/instances/[^/]+/(databases/[^/]+)", std::regex::optimize}},
+      }};
+  }();
+  database_matcher->AppendParam(request, params);
+
+  SetMetadata(rest_context, params);
+
+  return child_->AsyncDropDatabase(cq, rest_context, request);
+}
+
+future<StatusOr<google::longrunning::Operation>>
+GoldenThingAdminRestMetadata::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::longrunning::GetOperationRequest const& request) {
+  SetMetadata(rest_context);
+  return child_->AsyncGetOperation(cq, rest_context, request);
+}
+
+future<Status>
+GoldenThingAdminRestMetadata::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::longrunning::CancelOperationRequest const& request) {
+  SetMetadata(rest_context);
+  return child_->AsyncCancelOperation(cq, rest_context, request);
 }
 
 void GoldenThingAdminRestMetadata::SetMetadata(

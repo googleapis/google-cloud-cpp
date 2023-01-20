@@ -48,7 +48,8 @@ Status LoggingDecoratorRestGenerator::GenerateHeader() {
   // includes
   HeaderLocalIncludes(
       {vars("stub_rest_header_path"), "google/cloud/internal/rest_context.h",
-       "google/cloud/tracing_options.h", "google/cloud/version.h"});
+       "google/cloud/future.h", "google/cloud/tracing_options.h",
+       "google/cloud/version.h"});
   HeaderSystemIncludes(
       {vars("proto_header_path"),
        HasLongrunningMethod() ? "google/longrunning/operations.pb.h" : "",
@@ -68,7 +69,16 @@ class $logging_rest_class_name$ : public $stub_rest_class_name$ {
 )""");
 
   for (auto const& method : methods()) {
-    if (HasHttpAnnotation(method) && IsNonStreaming(method)) {
+    if (IsStreaming(method)) continue;
+    if (!HasHttpAnnotation(method)) continue;
+    if (IsLongrunningOperation(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  future<StatusOr<google::longrunning::Operation>> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      $request_type$ const& request) override;
+)""");
+    } else {
       if (IsResponseTypeEmpty(method)) {
         HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
   Status $method_name$(
@@ -83,6 +93,42 @@ class $logging_rest_class_name$ : public $stub_rest_class_name$ {
 )""");
       }
     }
+  }
+
+  for (auto const& method : async_methods()) {
+    if (IsStreaming(method)) continue;
+    if (!HasHttpAnnotation(method)) continue;
+    if (IsResponseTypeEmpty(method)) {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  future<Status> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      $request_type$ const& request) override;
+)""");
+    } else {
+      HeaderPrintMethod(method, __FILE__, __LINE__, R"""(
+  future<StatusOr<$response_type$>> Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      $request_type$ const& request) override;
+)""");
+    }
+  }
+
+  if (HasLongrunningMethod()) {
+    // long running operation support methods
+    HeaderPrint(
+        R"""(
+  future<StatusOr<google::longrunning::Operation>> AsyncGetOperation(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::longrunning::GetOperationRequest const& request) override;
+
+  future<Status> AsyncCancelOperation(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      google::longrunning::CancelOperationRequest const& request) override;
+)""");
   }
 
   HeaderPrint(R"""(
@@ -127,9 +173,26 @@ $logging_rest_class_name$::$logging_rest_class_name$(
 )""");
 
   // logging decorator class member methods
-
   for (auto const& method : methods()) {
-    if (HasHttpAnnotation(method) && IsNonStreaming(method)) {
+    if (IsStreaming(method)) continue;
+    if (!HasHttpAnnotation(method)) continue;
+    if (IsLongrunningOperation(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+future<StatusOr<google::longrunning::Operation>>
+$logging_rest_class_name$::Async$method_name$(
+      CompletionQueue& cq,
+      rest_internal::RestContext& rest_context,
+      $request_type$ const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             rest_internal::RestContext& rest_context,
+             $request_type$ const& request) {
+        return child_->Async$method_name$(cq, rest_context, request);
+      },
+      cq, rest_context, request, __func__, tracing_options_);
+}
+)""");
+    } else {
       if (IsResponseTypeEmpty(method)) {
         CcPrintMethod(method, __FILE__, __LINE__, R"""(
 Status
@@ -160,6 +223,77 @@ $logging_rest_class_name$::$method_name$(
 )""");
       }
     }
+  }
+
+  for (auto const& method : async_methods()) {
+    if (IsStreaming(method)) continue;
+    if (!HasHttpAnnotation(method)) continue;
+    if (IsResponseTypeEmpty(method)) {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+future<Status>
+$logging_rest_class_name$::Async$method_name$(
+      google::cloud::CompletionQueue& cq,
+      google::cloud::rest_internal::RestContext& rest_context,
+      $request_type$ const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             rest_internal::RestContext& rest_context,
+             $request_type$ const& request) {
+        return child_->Async$method_name$(cq, rest_context, request);
+      },
+      cq, rest_context, request, __func__, tracing_options_);
+}
+)""");
+    } else {
+      CcPrintMethod(method, __FILE__, __LINE__, R"""(
+future<StatusOr<$response_type$>>
+$logging_rest_class_name$::Async$method_name$(
+    google::cloud::CompletionQueue& cq,
+    google::cloud::rest_internal::RestContext& rest_context,
+    $request_type$ const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             rest_internal::RestContext& rest_context,
+             $request_type$ const& request) {
+        return child_->Async$method_name$(cq, rest_context, request);
+      },
+      cq, rest_context, request, __func__, tracing_options_);
+}
+)""");
+    }
+  }
+
+  if (HasLongrunningMethod()) {
+    // long running operation support methods
+    CcPrint(R"""(
+future<StatusOr<google::longrunning::Operation>>
+$logging_rest_class_name$::AsyncGetOperation(
+    google::cloud::CompletionQueue& cq,
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::longrunning::GetOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             rest_internal::RestContext& rest_context,
+             google::longrunning::GetOperationRequest const& request) {
+        return child_->AsyncGetOperation(cq, rest_context, request);
+      },
+      cq, rest_context, request, __func__, tracing_options_);
+}
+
+future<Status>
+$logging_rest_class_name$::AsyncCancelOperation(
+    google::cloud::CompletionQueue& cq,
+    google::cloud::rest_internal::RestContext& rest_context,
+    google::longrunning::CancelOperationRequest const& request) {
+  return google::cloud::internal::LogWrapper(
+      [this](CompletionQueue& cq,
+             rest_internal::RestContext& rest_context,
+             google::longrunning::CancelOperationRequest const& request) {
+        return child_->AsyncCancelOperation(cq, rest_context, request);
+      },
+      cq, rest_context, request, __func__, tracing_options_);
+}
+)""");
   }
 
   CcCloseNamespaces();
