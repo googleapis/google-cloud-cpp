@@ -58,8 +58,8 @@ CreateSubscriptionAdminCommand(std::string const& name,
                                std::vector<std::string> const& arg_names,
                                SubscriptionAdminCommand const& command);
 
-using SchemaServiceCommand = std::function<void(pubsub::SchemaServiceClient,
-                                              std::vector<std::string> const&)>;
+using SchemaServiceCommand = std::function<void(
+    pubsub::SchemaServiceClient, std::vector<std::string> const&)>;
 
 google::cloud::testing_util::Commands::value_type CreateSchemaServiceCommand(
     std::string const& name, std::vector<std::string> const& arg_names,
