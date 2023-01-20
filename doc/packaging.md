@@ -235,7 +235,7 @@ dependencies of libcurl, Protobuf, and gRPC are recent enough for our needs.
 
 ```bash
 sudo dnf makecache && \
-sudo dnf install -y c-ares-devel re2-devel libcurl-devel
+sudo dnf install -y c-ares-devel libcurl-devel
 ```
 
 Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow

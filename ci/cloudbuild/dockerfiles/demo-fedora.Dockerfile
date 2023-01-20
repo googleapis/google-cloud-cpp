@@ -31,7 +31,7 @@ RUN dnf makecache && \
 
 # ```bash
 RUN dnf makecache && \
-    dnf install -y c-ares-devel re2-devel libcurl-devel
+    dnf install -y c-ares-devel libcurl-devel
 # ```
 
 # Fedora's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
