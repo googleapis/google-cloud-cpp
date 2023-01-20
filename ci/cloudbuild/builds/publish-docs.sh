@@ -21,13 +21,14 @@ source module ci/cloudbuild/builds/lib/cmake.sh
 source module ci/cloudbuild/builds/lib/features.sh
 
 mapfile -t FEATURE_LIST < <(features::list_full)
+read -r ENABLED_FEATURES < <(features::list_full_cmake)
 
 version=""
 doc_args=(
   "-DCMAKE_BUILD_TYPE=Debug"
   "-DGOOGLE_CLOUD_CPP_GENERATE_DOXYGEN=ON"
   "-DGOOGLE_CLOUD_CPP_GEN_DOCS_FOR_GOOGLEAPIS_DEV=ON"
-  "-DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__,__experimental_libraries__"
+  "-DGOOGLE_CLOUD_CPP_ENABLE=${ENABLED_FEATURES}"
   "-DDOXYGEN_CLANG_OPTIONS=-resource-dir=$(clang -print-resource-dir) -Wno-deprecated-declarations"
 )
 

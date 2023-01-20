@@ -24,6 +24,7 @@ source module ci/cloudbuild/builds/lib/features.sh
 export CC=gcc
 export CXX=g++
 
+read -r ENABLED_FEATURES < <(features::list_full_cmake)
 mapfile -t cmake_args < <(cmake::common_args)
 
 INSTALL_PREFIX="/var/tmp/google-cloud-cpp"
@@ -31,7 +32,7 @@ cmake "${cmake_args[@]}" \
   -DCMAKE_INSTALL_PREFIX="${INSTALL_PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_SHARED_LIBS=ON \
-  -DGOOGLE_CLOUD_CPP_ENABLE="__ga_libraries__,__experimental_libraries__"
+  -DGOOGLE_CLOUD_CPP_ENABLE="${ENABLED_FEATURES}"
 cmake --build cmake-out
 mapfile -t ctest_args < <(ctest::common_args)
 env -C cmake-out ctest "${ctest_args[@]}" -LE "integration-test"

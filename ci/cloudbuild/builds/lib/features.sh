@@ -61,3 +61,7 @@ function features::list_full() {
   feature_list+=(experimental-opentelemetry experimental-storage-grpc grafeas)
   printf "%s\n" "${feature_list[@]}" | sort -u
 }
+
+function features::list_full_cmake() {
+  echo "__ga_libraries__,__experimental_libraries__,experimental-storage-grpc,experimental-opentelemetry"
+}
