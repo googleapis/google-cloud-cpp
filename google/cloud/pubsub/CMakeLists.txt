@@ -88,14 +88,23 @@ add_library(
     internal/rejects_with_ordering_key.h
     internal/schema_auth_decorator.cc
     internal/schema_auth_decorator.h
+    internal/schema_connection_impl.cc
+    internal/schema_connection_impl.h
     internal/schema_logging_decorator.cc
     internal/schema_logging_decorator.h
     internal/schema_metadata_decorator.cc
     internal/schema_metadata_decorator.h
+    internal/schema_option_defaults.cc
+    internal/schema_option_defaults.h
+    internal/schema_retry_traits.h
     internal/schema_stub.cc
     internal/schema_stub.h
     internal/schema_stub_factory.cc
+    internal/schema_stub_factory.cc
     internal/schema_stub_factory.h
+    internal/schema_stub_factory.h
+    internal/schema_tracing_connection.cc
+    internal/schema_tracing_connection.h
     internal/sequential_batch_sink.cc
     internal/sequential_batch_sink.h
     internal/session_shutdown_manager.cc
@@ -141,10 +150,13 @@ add_library(
     retry_policy.h
     schema.cc
     schema.h
-    schema_admin_client.cc
-    schema_admin_client.h
-    schema_admin_connection.cc
-    schema_admin_connection.h
+    schema_client.cc
+    schema_client.h
+    schema_connection.cc
+    schema_connection.h
+    schema_connection_idempotency_policy.cc
+    schema_connection_idempotency_policy.h
+    schema_options.h
     snapshot.cc
     snapshot.h
     snapshot_builder.cc
@@ -210,7 +222,7 @@ set(google_cloud_cpp_pubsub_mocks_hdrs
     mocks/mock_exactly_once_ack_handler.h
     mocks/mock_publisher_connection.h
     mocks/mock_pull_ack_handler.h
-    mocks/mock_schema_admin_connection.h
+    mocks/mock_schema_connection.h
     mocks/mock_subscriber_connection.h
     mocks/mock_subscription_admin_connection.h
     mocks/mock_topic_admin_connection.h)
@@ -247,7 +259,6 @@ function (google_cloud_cpp_pubsub_client_define_tests)
         testing/fake_streaming_pull.h
         testing/mock_batch_sink.h
         testing/mock_publisher_stub.h
-        testing/mock_schema_stub.h
         testing/mock_subscriber_stub.h
         testing/mock_subscription_batch_source.h
         testing/mock_subscription_message_source.h
