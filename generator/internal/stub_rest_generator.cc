@@ -298,14 +298,14 @@ Default$stub_rest_class_name$::Async$method_name$(
       $request_type$ const& request) {
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
-  std::thread t1{[service = service_, request, &rest_context](auto p) {
+  std::thread t{[&rest_context](auto p, auto service, auto request) {
       p.set_value(rest_internal::$method_http_verb$<google::longrunning::Operation>(
           *service, rest_context, request,
           $method_rest_path$$method_http_query_parameters$));
-  }, std::move(p)};
-  return f.then([t2 = std::move(t1), cq](auto f) mutable {
-    cq.RunAsync([t3 = std::move(t2)]() mutable {
-      t3.join();
+  }, std::move(p), service_, request};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
     });
     return f.get();
   });
@@ -349,14 +349,14 @@ Default$stub_rest_class_name$::Async$method_name$(
     $request_type$ const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t1{[service = service_, request, &rest_context](auto p) {
+  std::thread t{[&rest_context](auto p, auto service, auto request) {
       p.set_value(rest_internal::$method_http_verb$<google::protobuf::Empty>(
           *service, rest_context, request,
           $method_rest_path$$method_http_query_parameters$));
-  }, std::move(p)};
-  return f.then([t2 = std::move(t1), cq](auto f) mutable {
-    cq.RunAsync([t3 = std::move(t2)]() mutable {
-      t3.join();
+  }, std::move(p), service_, request};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
     });
     return f.get().status();
   });
@@ -371,14 +371,14 @@ Default$stub_rest_class_name$::Async$method_name$(
     $request_type$ const& request) {
   promise<StatusOr<$response_type$>> p;
   future<StatusOr<$response_type$>> f = p.get_future();
-  std::thread t1{[service = service_, request, &rest_context](auto p) {
+  std::thread t{[&rest_context](auto p, auto service, auto request) {
       p.set_value(rest_internal::$method_http_verb$<$response_type$>(
           *service, rest_context, request,
           $method_rest_path$$method_http_query_parameters$));
-  }, std::move(p)};
-  return f.then([t2 = std::move(t1), cq](auto f) mutable {
-    cq.RunAsync([t3 = std::move(t2)]() mutable {
-      t3.join();
+  }, std::move(p), service_, request};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
     });
     return f.get();
   });
@@ -398,14 +398,14 @@ Default$stub_rest_class_name$::AsyncGetOperation(
     google::longrunning::GetOperationRequest const& request) {
   promise<StatusOr<google::longrunning::Operation>> p;
   future<StatusOr<google::longrunning::Operation>> f = p.get_future();
-  std::thread t1{[operations = operations_, request, &rest_context](auto p) {
+  std::thread t{[&rest_context](auto p, auto operations, auto request) {
       p.set_value(rest_internal::Get<google::longrunning::Operation>(
           *operations, rest_context, request,
           absl::StrCat("/v1/", request.name())));
-  }, std::move(p)};
-  return f.then([t2 = std::move(t1), cq](auto f) mutable {
-    cq.RunAsync([t3 = std::move(t2)]() mutable {
-      t3.join();
+  }, std::move(p), operations_, request};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
     });
     return f.get();
   });
@@ -418,14 +418,14 @@ Default$stub_rest_class_name$::AsyncCancelOperation(
     google::longrunning::CancelOperationRequest const& request) {
   promise<StatusOr<google::protobuf::Empty>> p;
   future<StatusOr<google::protobuf::Empty>> f = p.get_future();
-  std::thread t1{[operations = operations_, request, &rest_context](auto p) {
+  std::thread t{[&rest_context](auto p, auto operations, auto request) {
       p.set_value(rest_internal::Post<google::protobuf::Empty>(
           *operations, rest_context, request,
           absl::StrCat("/v1/", request.name(), ":cancel")));
-  }, std::move(p)};
-  return f.then([t2 = std::move(t1), cq](auto f) mutable {
-    cq.RunAsync([t3 = std::move(t2)]() mutable {
-      t3.join();
+  }, std::move(p), operations_, request};
+  return f.then([t = std::move(t), cq](auto f) mutable {
+    cq.RunAsync([t = std::move(t)]() mutable {
+      t.join();
     });
     return f.get().status();
   });
