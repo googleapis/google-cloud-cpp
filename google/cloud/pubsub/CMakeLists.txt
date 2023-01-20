@@ -100,8 +100,6 @@ add_library(
     internal/schema_stub.cc
     internal/schema_stub.h
     internal/schema_stub_factory.cc
-    internal/schema_stub_factory.cc
-    internal/schema_stub_factory.h
     internal/schema_stub_factory.h
     internal/schema_tracing_connection.cc
     internal/schema_tracing_connection.h
