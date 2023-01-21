@@ -14,7 +14,7 @@
 # limitations under the License.
 # ~~~
 
-find_package(Doxygen)
+find_package(Doxygen QUIET)
 
 function (google_cloud_cpp_doxygen_deploy_version VAR)
     set(VERSION "${PROJECT_VERSION}")
