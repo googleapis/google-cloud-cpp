@@ -20,7 +20,8 @@ if (APPLE)
                     "on Apple platforms until #8125 is fixed.")
     return()
 endif ()
-if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 8.0)
+if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION
+                                                  VERSION_LESS 8.0)
     message(WARNING "Cannot build this google/cloud/channel "
                     "on with GCC < 8.0 until #8125 is fixed.")
     return()

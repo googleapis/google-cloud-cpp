@@ -147,7 +147,7 @@ Install the minimal development tools, libcurl, and OpenSSL:
 ```bash
 apk update && \
     apk add bash ca-certificates ccache cmake curl git \
-        gcc g++ make tar unzip zip zlib-dev
+        gcc g++ make patch tar unzip zip zlib-dev
 ```
 
 Alpine's version of `pkg-config` (https://github.com/pkgconf/pkgconf) is slow
@@ -210,7 +210,8 @@ cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -408,7 +409,8 @@ cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -584,7 +586,8 @@ cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -735,7 +738,8 @@ cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -904,7 +908,8 @@ cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1070,7 +1075,8 @@ cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1226,7 +1232,8 @@ cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1393,7 +1400,8 @@ cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1591,7 +1599,8 @@ cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -1795,7 +1804,8 @@ cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
@@ -2000,7 +2010,8 @@ cmake -H. -Bcmake-out \
   -DCMAKE_INSTALL_PREFIX="${PREFIX}" \
   -DCMAKE_INSTALL_MESSAGE=NEVER \
   -DBUILD_TESTING=OFF \
-  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF
+  -DGOOGLE_CLOUD_CPP_ENABLE_EXAMPLES=OFF \
+  -DGOOGLE_CLOUD_CPP_ENABLE=__ga_libraries__
 cmake --build cmake-out -- -j "$(nproc)"
 cmake --build cmake-out --target install
 ```
