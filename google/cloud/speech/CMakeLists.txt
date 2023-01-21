@@ -47,11 +47,8 @@ endif ()
 add_library(google_cloud_cpp_speech_protos INTERFACE)
 target_link_libraries(google_cloud_cpp_speech_protos
                       INTERFACE google-cloud-cpp::cloud_speech_protos)
-set_target_properties(
-    google_cloud_cpp_speech_protos
-    PROPERTIES EXPORT_NAME google-cloud-cpp::speech_protos
-               VERSION "${PROJECT_VERSION}"
-               SOVERSION "${PROJECT_VERSION_MAJOR}")
+set_target_properties(google_cloud_cpp_speech_protos
+                      PROPERTIES EXPORT_NAME google-cloud-cpp::speech_protos)
 target_compile_options(google_cloud_cpp_speech_protos
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(google-cloud-cpp::speech_protos ALIAS
