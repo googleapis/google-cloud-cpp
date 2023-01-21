@@ -39,9 +39,7 @@ target_link_libraries(google_cloud_cpp_texttospeech_protos
                       INTERFACE google-cloud-cpp::cloud_texttospeech_protos)
 set_target_properties(
     google_cloud_cpp_texttospeech_protos
-    PROPERTIES EXPORT_NAME google-cloud-cpp::texttospeech_protos
-               VERSION "${PROJECT_VERSION}"
-               SOVERSION "${PROJECT_VERSION_MAJOR}")
+    PROPERTIES EXPORT_NAME google-cloud-cpp::texttospeech_protos)
 target_compile_options(google_cloud_cpp_texttospeech_protos
                        INTERFACE ${GOOGLE_CLOUD_CPP_EXCEPTIONS_FLAG})
 add_library(google-cloud-cpp::texttospeech_protos ALIAS

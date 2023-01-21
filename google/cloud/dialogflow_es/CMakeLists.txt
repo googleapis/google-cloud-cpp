@@ -35,7 +35,12 @@ endif ()
 
 include(CompileProtos)
 add_library(google_cloud_cpp_dialogflow_es_protos INTERFACE)
-external_googleapis_set_version_and_alias(dialogflow_es_protos)
+set_target_properties(
+    google_cloud_cpp_dialogflow_es_protos
+    PROPERTIES EXPORT_NAME google-cloud-cpp::dialogflow_es_protos)
+add_library(google-cloud-cpp::dialogflow_es_protos ALIAS
+            google_cloud_cpp_dialogflow_es_protos)
+
 target_link_libraries(
     google_cloud_cpp_dialogflow_es_protos
     PUBLIC
