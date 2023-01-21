@@ -325,7 +325,7 @@ class SchemaServiceClient {
   /// @param name  Required. The name of the schema revision to be deleted, with
   /// a revision ID
   ///  explicitly included.
-  ///  Example: projects/123/schemas/my-schema@c7cfa2a8
+  ///  Example: `projects/123/schemas/my-schema@c7cfa2a8`
   /// @param revision_id  Required. The revision ID to roll back to.
   ///  It must be a revision of the same schema.
   ///    Example: c7cfa2a8
