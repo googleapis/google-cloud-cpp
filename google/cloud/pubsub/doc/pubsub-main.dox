@@ -135,7 +135,7 @@ Follow these links for additional examples
 
 /*! @page SubscriptionAdminClient-endpoint-snippet Override @c SubscriptionAdminClient Default Endpoint
 
-@snippet google/cloud/pubsub/samples/client_samples.cc schema-admin-client-set-endpoint
+@snippet google/cloud/pubsub/samples/client_samples.cc subscription-admin-client-set-endpoint
 
 */
 
@@ -173,7 +173,7 @@ Follow these links for additional examples
 
 /*! @page SubscriptionAdminClient-service-account-snippet Override @c SubscriptionAdminClient Default Authentication
 
-@snippet google/cloud/pubsub/samples/client_samples.cc schema-admin-client-service-account
+@snippet google/cloud/pubsub/samples/client_samples.cc subscription-admin-client-service-account
 
 */
 
