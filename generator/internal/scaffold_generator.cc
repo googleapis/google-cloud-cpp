@@ -371,8 +371,9 @@ foreach (dir IN LISTS service_dirs)
     list(APPEND DOXYGEN_EXCLUDE_SYMBOLS "$library$_$${ns}internal")
 endforeach ()
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::$library$_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("$library$"
+                                 DEPENDS google-cloud-cpp::$library$_protos)
 
 include(GoogleCloudCppCommon)
 

@@ -23,11 +23,12 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "asset_internal" "asset_testing"
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::asset_protos)
+include(GoogleCloudCppDoxygen)
 set(GOOGLE_CLOUD_CPP_DOXYGEN_EXTRA_INCLUDES
     "${PROJECT_BINARY_DIR}/google/cloud/accesscontextmanager"
     "${PROJECT_BINARY_DIR}/google/cloud/osconfig")
+google_cloud_cpp_doxygen_targets("asset" DEPENDS cloud-docs
+                                 google-cloud-cpp::asset_protos)
 
 include(GoogleCloudCppCommon)
 

@@ -23,8 +23,9 @@ set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "functions_internal" "functions_testing"
 set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
                          ${CMAKE_CURRENT_SOURCE_DIR}/quickstart)
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::functions_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("functions" DEPENDS cloud-docs
+                                 google-cloud-cpp::functions_protos)
 
 include(GoogleCloudCppCommon)
 

@@ -23,8 +23,9 @@ set(DOXYGEN_EXAMPLE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/samples
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "bigquery_internal" "bigquery_testing"
                             "examples")
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::cloud_bigquery_protos)
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets("bigquery" DEPENDS cloud-docs
+                                 google-cloud-cpp::cloud_bigquery_protos)
 
 include(GoogleCloudCppCommon)
 

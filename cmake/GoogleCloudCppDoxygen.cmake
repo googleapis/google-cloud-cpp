@@ -142,42 +142,19 @@ function (google_cloud_cpp_doxygen_targets_impl library)
 endfunction ()
 
 function (google_cloud_cpp_doxygen_targets library)
+    cmake_parse_arguments(opt "" "" "DEPENDS" ${ARGN})
+
     google_cloud_cpp_doxygen_deploy_version(VERSION)
     set(GOOGLE_CLOUD_CPP_COMMON_TAG
         "${PROJECT_BINARY_DIR}/google/cloud/cloud.tag")
-    cmake_parse_arguments(opt "" "" "INPUTS;TAGFILES;DEPS" ${ARGN})
     google_cloud_cpp_doxygen_targets_impl(
         "${library}"
         RECURSIVE
         INPUTS
         "${CMAKE_CURRENT_SOURCE_DIR}"
         DEPENDS
-        "cloud-docs"
-        ${GOOGLE_CLOUD_CPP_DOXYGEN_DEPS}
+        ${opt_DEPENDS}
         TAGFILES
         "${GOOGLE_CLOUD_CPP_COMMON_TAG}=https://googleapis.dev/cpp/google-cloud-common/${VERSION}/"
     )
 endfunction ()
-
-# TODO(#10519) - have each subproject call this directly.
-# ~~~
-# Find out the name of the subproject.
-# ~~~
-get_filename_component(GOOGLE_CLOUD_CPP_SUBPROJECT
-                       "${CMAKE_CURRENT_SOURCE_DIR}" NAME)
-
-if ("cloud" STREQUAL "${GOOGLE_CLOUD_CPP_SUBPROJECT}")
-    # We cannot recurse from the google/cloud directory, because it will
-    # traverse all of the libraries. So we turn off recursion and manually
-    # provide the subdirectories to be traversed.
-    google_cloud_cpp_doxygen_targets_impl(
-        "cloud"
-        INPUTS
-        "${CMAKE_CURRENT_SOURCE_DIR}"
-        "${CMAKE_CURRENT_SOURCE_DIR}/mocks"
-        "${CMAKE_CURRENT_SOURCE_DIR}/doc"
-        DEPENDS
-        ${GOOGLE_CLOUD_CPP_DOXYGEN_DEPS})
-else ()
-    google_cloud_cpp_doxygen_targets("${GOOGLE_CLOUD_CPP_SUBPROJECT}")
-endif ()

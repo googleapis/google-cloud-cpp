@@ -20,9 +20,19 @@ set(DOXYGEN_PROJECT_NUMBER "${PROJECT_VERSION}")
 set(DOXYGEN_EXAMPLE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/samples")
 set(DOXYGEN_EXCLUDE_SYMBOLS "internal" "testing_util" "examples")
 
-# Creates the proto headers needed by doxygen.
-set(GOOGLE_CLOUD_CPP_DOXYGEN_DEPS google-cloud-cpp::rpc_status_protos
-                                  google-cloud-cpp::bigtable_protos)
+# We cannot recurse from the google/cloud directory, because it will traverse
+# all of the libraries. So we turn off recursion and manually provide the
+# subdirectories to be traversed.
+include(GoogleCloudCppDoxygen)
+google_cloud_cpp_doxygen_targets_impl(
+    "cloud"
+    INPUTS
+    "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${CMAKE_CURRENT_SOURCE_DIR}/mocks"
+    "${CMAKE_CURRENT_SOURCE_DIR}/doc"
+    DEPENDS
+    google-cloud-cpp::rpc_status_protos
+    google-cloud-cpp::bigtable_protos)
 
 include(GoogleCloudCppCommon)
 include(CreateBazelConfig)
