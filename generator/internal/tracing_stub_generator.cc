@@ -83,10 +83,7 @@ Status TracingStubGenerator::GenerateCc() {
 
   // includes
   CcPrint("\n");
-  CcLocalIncludes({
-      vars("tracing_stub_header_path"),
-  });
-  CcSystemIncludes({vars("proto_grpc_header_path"), "memory"});
+  CcLocalIncludes({vars("tracing_stub_header_path")});
 
   auto result = CcOpenNamespaces(NamespaceType::kInternal);
   if (!result.ok()) return result;
